@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { locales } from "@/navigation";
 import { NextIntlClientProvider, useMessages } from "next-intl";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { notFound } from "next/navigation";
 import { Inter } from "next/font/google";
 import "@/styles/globals.scss";
@@ -23,12 +24,14 @@ export default function RootLayout({
   const messages = useMessages();
 
   return (
-    <html lang={locale}>
-      <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <UserProvider>
+      <html lang={locale}>
+        <body className={inter.className}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </UserProvider>
   );
 }
