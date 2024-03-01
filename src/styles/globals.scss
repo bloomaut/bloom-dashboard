@@ -1,0 +1,26 @@
+@import "@/styles/theme";
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  text-decoration: none;
+}
+
+/* Toast */
+
+.toastUpdateBody {
+  font-size: 16px;
+}
+
+.toastOk {
+  background-color: $blue;
+  color: white;
+  font-size: 16px;
+}
+
+.toastBad {
+  background-color: $error;
+  color: white;
+}

@@ -1,0 +1,23 @@
+// Backgrounds
+
+// Global colors
+$blue: rgb(22, 22, 165);
+
+$error: rgb(168, 7, 7);
+
+//Mixins
+@mixin flex($direction, $justify, $align, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+@mixin width-height($width, $height) {
+  width: $width;
+  height: $height;
+}
+@mixin fontSize-fontWeight($size, $weight) {
+  font-size: $size;
+  font-weight: $weight;
+}
