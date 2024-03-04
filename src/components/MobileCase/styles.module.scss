@@ -1,0 +1,17 @@
+.container {
+  .phone {
+    position: relative;
+    width: 550px;
+    height: 500px;
+
+    iframe {
+      position: absolute;
+      top: 60px;
+      left: 210px;
+      width: 280px;
+      height: 480px;
+      border: none;
+      overflow-y: hidden;
+    }
+  }
+}
