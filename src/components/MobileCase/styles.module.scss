@@ -7,7 +7,7 @@
   .phone {
     @include width-height(550px, 500px);
     position: absolute;
-    margin-top: 30px;
+    margin-top: 40px;
   }
   .phone_container {
     @include width-height(224px, 443px);
