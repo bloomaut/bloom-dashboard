@@ -10,7 +10,7 @@ const MobileCase = () => {
   return (
     <section className={styles.container}>
       <Image src={caseImage} width={550} height={500} alt='Phone case' className={styles.phone} />
-      <iframe src={iframeSrc} width='500' height='500' title='Otra Aplicación'></iframe>
+      <iframe src={iframeSrc} width='500' height='500' title='Otra Aplicación' className={styles.iframe}></iframe>
     </section>
   );
 };

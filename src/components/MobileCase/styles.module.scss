@@ -1,17 +1,17 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(550px, 500px);
+  @include width-height(870px, 650px);
   position: relative;
   .phone {
-    @include width-height(550px, 500px);
+    @include width-height(870px, 650px);
     position: absolute;
   }
-  iframe {
-    @include width-height(210px, 420px);
+  .iframe {
+    @include width-height(40%, 80%);
     position: absolute;
-    top: 45px;
-    left: 170px;
+    top: 70px;
+    left: 260px;
     border: none;
     overflow-y: hidden;
   }
