@@ -14,7 +14,6 @@ const MobileCase = () => {
 
   const fetchOpenGraphData = async () => {
     let newUrl = encodeURIComponent(url);
-    console.log(newUrl);
     try {
       const response = await axios.get(
         `https://opengraph.io/api/1.0/site/${newUrl}?app_id=d46803c3-71c8-405f-8aeb-cd87881ced85`,
@@ -49,14 +48,15 @@ const MobileCase = () => {
         <br />
       </div>
       <Image src={caseImage} width={550} height={500} alt='Phone case' className={styles.phone} />
-      <div className={styles.iframeContainer}>
+      <div className={styles.phone_container}>
+        {/* OG */}
         {showPreview && previewData && (
           <a href='#' onClick={handlePreviewClick}>
-            <div>
+            <div className={styles.og_styles}>
+              <Image src={previewData.openGraph.image.url} width={500} height={250} alt='Preview' />
               <h2>{previewData.openGraph.title}</h2>
               <p>{previewData.openGraph.description}</p>
               <br />
-              <Image src={previewData.openGraph.image.url} width={500} height={250} alt='Preview' />
             </div>
           </a>
         )}
