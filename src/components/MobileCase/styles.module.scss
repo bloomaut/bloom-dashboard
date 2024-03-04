@@ -8,13 +8,13 @@
     position: absolute;
   }
   .iframeContainer {
-    @include width-height(210px, 420px);
+    @include width-height(224px, 443px);
     position: absolute;
-    top: 50px;
-    left: 170px;
+    top: 29px;
+    left: 162px;
     border: none;
-    overflow-y: hidden;
-
+    overflow: hidden;
+    border-radius: 20px;
     iframe {
       @include width-height(200%, 200%);
       transform-origin: 0 0;
