@@ -7,9 +7,8 @@ import styles from "./styles.module.scss";
 import caseImage from "../../../public/assets/mobileCase.png";
 
 const MobileCase = () => {
-  const [iframeSrc, setIframeSrc] = useState("https://power-app-engine.vercel.app/4b04b0dcd2ade339a3d7ce13252a29d4");
   const [showPreview, setShowPreview] = useState(true);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("https://power-app-engine.vercel.app/4b04b0dcd2ade339a3d7ce13252a29d4");
   const [previewData, setPreviewData] = useState<any | null>(null);
 
   const fetchOpenGraphData = async () => {
@@ -61,7 +60,7 @@ const MobileCase = () => {
           </a>
         )}
         {/* IFRAME */}
-        {!showPreview && <iframe src={iframeSrc} title='Power App'></iframe>}
+        {!showPreview && <iframe src={url} title='Power App'></iframe>}
       </div>
     </section>
   );

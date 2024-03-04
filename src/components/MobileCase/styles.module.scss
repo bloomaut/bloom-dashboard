@@ -1,11 +1,13 @@
 @import "@/styles/theme.scss";
 
 .container {
+  @include flex(column, flex-start, center);
   @include width-height(550px, 500px);
   position: relative;
   .phone {
     @include width-height(550px, 500px);
     position: absolute;
+    margin-top: 30px;
   }
   .phone_container {
     @include width-height(224px, 443px);
