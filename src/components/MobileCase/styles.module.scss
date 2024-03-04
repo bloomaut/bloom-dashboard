@@ -1,17 +1,20 @@
 .container {
+  position: relative;
+  width: 550px;
+  height: 500px;
   .phone {
-    position: relative;
+    position: absolute;
     width: 550px;
     height: 500px;
+  }
 
-    iframe {
-      position: absolute;
-      top: 60px;
-      left: 210px;
-      width: 280px;
-      height: 480px;
-      border: none;
-      overflow-y: hidden;
-    }
+  iframe {
+    position: absolute;
+    top: 45px;
+    left: 170px;
+    width: 210px;
+    height: 420px;
+    border: none;
+    overflow-y: hidden;
   }
 }

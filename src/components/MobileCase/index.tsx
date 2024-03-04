@@ -9,10 +9,8 @@ const MobileCase = () => {
   const [iframeSrc, setIframeSrc] = useState("https://notimation.com");
   return (
     <section className={styles.container}>
-      <div className={styles.phone}>
-        <Image src={caseImage} width={700} height={600} alt='Picture of the author' />
-        <iframe src={iframeSrc} width='500' height='500' title='Otra Aplicación'></iframe>
-      </div>
+      <Image src={caseImage} width={550} height={500} alt='Phone case' className={styles.phone} />
+      <iframe src={iframeSrc} width='500' height='500' title='Otra Aplicación'></iframe>
     </section>
   );
 };
