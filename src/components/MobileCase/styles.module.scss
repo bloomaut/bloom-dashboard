@@ -1,18 +1,24 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(870px, 650px);
+  @include width-height(550px, 500px);
   position: relative;
   .phone {
-    @include width-height(870px, 650px);
+    @include width-height(550px, 500px);
     position: absolute;
   }
-  .iframe {
-    @include width-height(40%, 80%);
+  .iframeContainer {
+    @include width-height(210px, 420px);
     position: absolute;
-    top: 70px;
-    left: 260px;
+    top: 50px;
+    left: 170px;
     border: none;
     overflow-y: hidden;
+
+    iframe {
+      @include width-height(200%, 200%);
+      transform-origin: 0 0;
+      transform: scale(0.5);
+    }
   }
 }
