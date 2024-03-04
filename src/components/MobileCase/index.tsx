@@ -31,6 +31,7 @@ const MobileCase = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    setShowPreview(true);
     fetchOpenGraphData();
   };
 
@@ -56,7 +57,6 @@ const MobileCase = () => {
               <Image src={previewData.openGraph.image.url} width={500} height={250} alt='Preview' />
               <h2>{previewData.openGraph.title}</h2>
               <p>{previewData.openGraph.description}</p>
-              <br />
             </div>
           </a>
         )}
