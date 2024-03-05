@@ -5,6 +5,7 @@ import axios from "axios";
 
 import styles from "./styles.module.scss";
 import caseImage from "../../../public/assets/mobileCase.png";
+import whatsappImage from "../../../public/assets/wa.png";
 
 const MobileCase = () => {
   const [showPreview, setShowPreview] = useState(true);
@@ -48,14 +49,17 @@ const MobileCase = () => {
         <br />
       </div>
       <Image src={caseImage} width={550} height={500} alt='Phone case' className={styles.phone} />
+      <Image src={whatsappImage} width={250} height={500} alt='Whatsapp' className={styles.wa} />
       <div className={styles.phone_container}>
         {/* OG */}
         {showPreview && previewData && (
           <a href='#' onClick={handlePreviewClick}>
-            <div className={styles.og_styles}>
-              <Image src={previewData.openGraph.image.url} width={500} height={250} alt='Preview' />
-              <h2>{previewData.openGraph.title}</h2>
-              <p>{previewData.openGraph.description}</p>
+            <div className={styles.message}>
+              <Image src={previewData.openGraph.image.url} width={180} height={150} alt='Preview' />
+              <div className={styles.og_styles}>
+                <h2>{previewData.openGraph.title}</h2>
+                <p>{previewData.openGraph.description}</p>
+              </div>
             </div>
           </a>
         )}
