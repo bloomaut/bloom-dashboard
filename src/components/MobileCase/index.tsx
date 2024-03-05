@@ -17,7 +17,7 @@ const MobileCase = () => {
     let newUrl = encodeURIComponent(url);
     try {
       const response = await axios.get(
-        `https://opengraph.io/api/1.0/site/${newUrl}?app_id=d46803c3-71c8-405f-8aeb-cd87881ced85`,
+        `https://opengraph.io/api/1.0/site/${newUrl}?app_id=e920319f-bb40-4d46-b146-d3e79df591bc`,
       );
       setPreviewData(response.data);
 
@@ -67,8 +67,7 @@ const MobileCase = () => {
                 <h2>{previewData.openGraph.title}</h2>
                 <p>{previewData.openGraph.description}</p>
               </div>
-
-              <p>{captureTime}</p>
+              <p className={styles.message_date}>{captureTime}</p>
             </div>
           </a>
         )}
