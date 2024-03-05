@@ -54,6 +54,9 @@ const MobileCase = () => {
         {/* OG */}
         {showPreview && (
           <a href='#' onClick={handlePreviewClick}>
+            <div className={styles.date}>
+              <p>Hoy</p>
+            </div>
             <div className={styles.message}>
               {/* 
               <Image src={previewData.openGraph.image.url} width={180} height={150} alt='Preview' />
