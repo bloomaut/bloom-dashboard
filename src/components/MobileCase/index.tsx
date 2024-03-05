@@ -52,14 +52,18 @@ const MobileCase = () => {
       <Image src={whatsappImage} width={250} height={500} alt='Whatsapp' className={styles.wa} />
       <div className={styles.phone_container}>
         {/* OG */}
-        {showPreview && previewData && (
+        {showPreview && (
           <a href='#' onClick={handlePreviewClick}>
             <div className={styles.message}>
+              {/* 
               <Image src={previewData.openGraph.image.url} width={180} height={150} alt='Preview' />
               <div className={styles.og_styles}>
                 <h2>{previewData.openGraph.title}</h2>
                 <p>{previewData.openGraph.description}</p>
-              </div>
+              
+                </div>
+                */}
+              <h1>HOla</h1>
             </div>
           </a>
         )}
