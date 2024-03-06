@@ -1,0 +1,65 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include flex(row, space-around, center, 5px);
+  position: relative;
+  cursor: pointer;
+
+  .logo {
+    @include width-height(20px, 20px);
+    object-fit: contain;
+  }
+  .user_name {
+    @include fontSize-fontWeight(12px, 400);
+    color: $gray;
+    text-decoration: underline;
+
+    &:hover {
+      color: $orange;
+    }
+
+    .arrow {
+      transition: all 0.3s;
+      margin-left: 5px;
+    }
+    .arrow_open {
+      transform: rotate(180deg);
+    }
+    .arrow_closed {
+      transform: rotate(0deg);
+    }
+  }
+  .list_container {
+    @include flex(column, center, center, 5px);
+    position: absolute;
+    cursor: pointer;
+    top: 38px;
+
+    transition: all 0.3s ease;
+
+    li {
+      @include fontSize-fontWeight(12px, 400);
+      @include width-height(100px, 30px);
+      list-style: none;
+      color: $gray;
+      transition: all 0.3s;
+      border: $gray 0.5px solid;
+      border-top: none;
+      padding: 10px;
+      cursor: pointer;
+      a {
+        color: $gray;
+      }
+      &:hover {
+        color: $orange;
+      }
+      max-height: auto;
+    }
+  }
+  .list_hidden {
+    opacity: 0;
+    overflow: hidden;
+    cursor: none;
+    max-height: 0px;
+  }
+}

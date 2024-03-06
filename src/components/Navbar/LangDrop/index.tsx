@@ -21,8 +21,8 @@ const LangDrop = () => {
         src={langIcon}
         alt='Lang Icon'
         className={styles.logo}
-        width={26}
-        height={22}
+        width={20}
+        height={20}
         priority
         onClick={() => setOpen(!open)}
       />

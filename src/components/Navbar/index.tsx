@@ -6,6 +6,7 @@ import { Link } from "@/navigation";
 import small from "@/../public/assets/Small.png";
 import logo_knowledge from "@/../public/icons/KnowledgeIcon.png";
 import LangDrop from "./LangDrop";
+import UserDrop from "./UserDrop";
 
 //Components
 
@@ -26,7 +27,7 @@ const Navbar = () => {
 
         <LangDrop />
         <Link href='/'>Icon</Link>
-        <Link href='/'>User</Link>
+        <UserDrop />
       </div>
     </nav>
   );
