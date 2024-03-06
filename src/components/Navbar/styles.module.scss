@@ -1,12 +1,38 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(1920px, 80px);
-  padding: 6px;
+  @include width-height(100%, 50px);
+  @include flex(row, space-between, center);
+  flex-wrap: nowrap;
+  padding: 0 20px;
 
   .logo {
     @include width-height(106px, 60px);
     object-fit: contain;
     cursor: pointer;
+  }
+  .inner_container {
+    @include flex(row, center, center, 40px);
+    padding: 0 20px;
+
+    .knowledge {
+      @include flex(row, space-around, center, 10px);
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      .logo_knowledge {
+        @include width-height(20px, 20px);
+        object-fit: contain;
+      }
+      .text_knowledge {
+        @include fontSize-fontWeight(16px, 400);
+        line-height: 24px;
+        text-decoration: underline;
+        color: $gray;
+        &:hover {
+          color: $orange;
+        }
+      }
+    }
   }
 }
