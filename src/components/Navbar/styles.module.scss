@@ -8,12 +8,12 @@
   border-bottom: 1px solid $gray;
 
   .logo {
-    @include width-height(106px, 60px);
+    @include width-height(103px, 47px);
     object-fit: contain;
     cursor: pointer;
   }
   .inner_container {
-    @include flex(row, center, center, 50px);
+    @include flex(row, center, center, 40px);
     padding: 0 20px;
 
     .knowledge {
@@ -34,6 +34,12 @@
           color: $orange;
         }
       }
+    }
+    .logo_suite {
+      @include width-height(20px, 20px);
+      object-fit: contain;
+      cursor: pointer;
+      margin-top: 5px;
     }
   }
 }

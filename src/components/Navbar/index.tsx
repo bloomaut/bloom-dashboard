@@ -5,28 +5,29 @@ import { Link } from "@/navigation";
 //Icons
 import small from "@/../public/assets/Small.png";
 import logo_knowledge from "@/../public/icons/KnowledgeIcon.png";
+import suiteIcon from "@/../public/icons/SuiteIcon.png";
+//Components
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
-
-//Components
 
 const Navbar = () => {
   return (
     <nav className={styles.container}>
       <Link href='/'>
-        <Image src={small} alt='Small' className={styles.logo} height={60} width={166} priority />
+        <Image src={small} alt='Small' className={styles.logo} width={103} height={47} priority />
       </Link>
       <div className={styles.inner_container}>
         {/* Knowledge */}
         <Link href='https://noti-knowledge.vercel.app/es/' target='_blank'>
           <div className={styles.knowledge}>
-            <Image src={logo_knowledge} alt='Logo' priority width={26} height={22} className={styles.logo_knowledge} />
+            <Image src={logo_knowledge} alt='Logo' priority width={20} height={20} className={styles.logo_knowledge} />
             <p className={styles.text_knowledge}>Knowledge</p>
           </div>
         </Link>
-
         <LangDrop />
-        <Link href='/'>Icon</Link>
+        <Link href='/'>
+          <Image src={suiteIcon} alt='Lang Icon' className={styles.logo_suite} width={20} height={20} priority />
+        </Link>
         <UserDrop />
       </div>
     </nav>

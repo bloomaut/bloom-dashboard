@@ -5,7 +5,7 @@
   position: relative;
   cursor: pointer;
   .logo {
-    @include width-height(20px, 20px);
+    @include width-height(17px, 17px);
     object-fit: contain;
   }
   .list_container {
