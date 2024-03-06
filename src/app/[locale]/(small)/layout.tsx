@@ -6,9 +6,12 @@ import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Navbar from "@/components/Navbar";
+
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={styles.container}>
+      <Navbar />
       <ToastContainer
         position='bottom-right'
         limit={2}

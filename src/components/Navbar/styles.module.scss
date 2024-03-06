@@ -1,0 +1,12 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(1920px, 80px);
+  padding: 6px;
+
+  .logo {
+    @include width-height(106px, 60px);
+    object-fit: contain;
+    cursor: pointer;
+  }
+}
