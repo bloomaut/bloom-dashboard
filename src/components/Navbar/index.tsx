@@ -1,8 +1,13 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
+import { Link } from "@/navigation";
+
+//Icons
 import small from "@/../public/assets/Small.png";
 import logo_knowledge from "@/../public/icons/KnowledgeIcon.png";
-import { Link } from "@/navigation";
+import LangDrop from "./LangDrop";
+
+//Components
 
 const Navbar = () => {
   return (
@@ -19,7 +24,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <Link href='/'>Lang Drop</Link>
+        <LangDrop />
         <Link href='/'>Icon</Link>
         <Link href='/'>User</Link>
       </div>

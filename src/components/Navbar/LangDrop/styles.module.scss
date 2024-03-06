@@ -1,0 +1,40 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include flex(column, center, center);
+  position: relative;
+  cursor: pointer;
+  .logo {
+    @include width-height(20px, 20px);
+    object-fit: contain;
+  }
+  .list_container {
+    list-style: none;
+    position: absolute;
+    cursor: pointer;
+    top: 35px;
+    transition: all 0.3s ease;
+    .list_text {
+      @include flex(column, center, center);
+      @include width-height(50px, 30px);
+      @include fontSize-fontWeight(12px, 400);
+      color: $gray;
+      transition: all 0.3s;
+      border: $gray 0.5px solid;
+      border-top: none;
+      background: transparent;
+      text-transform: uppercase;
+      padding: 0 30px;
+      cursor: pointer;
+      &:hover {
+        color: $orange;
+      }
+      max-height: auto;
+    }
+  }
+  .list_hidden {
+    opacity: 0;
+    overflow: hidden;
+    max-height: 0px;
+  }
+}
