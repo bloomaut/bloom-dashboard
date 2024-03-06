@@ -1,15 +1,12 @@
-import MobileCase from "@/components/MobileCase";
 import styles from "./styles.module.scss";
+import MobileCase from "./MobileCase";
 
 const HomePage = () => {
   return (
-    <>
-      <div className={styles.home}>
-        {/*<h1>Home Page</h1> */}
-        <MobileCase />
-        <a href='/api/auth/logout'>Logout</a>
-      </div>
-    </>
+    <div className={styles.container}>
+      <MobileCase />
+      <a href='/api/auth/logout'>Logout</a>
+    </div>
   );
 };
 
