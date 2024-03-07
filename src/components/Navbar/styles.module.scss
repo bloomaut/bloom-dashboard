@@ -22,11 +22,11 @@
       transition: color 0.3s ease;
 
       .logo_knowledge {
-        @include width-height(20px, 20px);
+        @include width-height(25px, auto);
         object-fit: contain;
       }
       .text_knowledge {
-        @include fontSize-fontWeight(12px, 400);
+        @include fontSize-fontWeight(16px, 400);
         line-height: 24px;
         text-decoration: underline;
         color: $gray;
