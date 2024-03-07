@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./styles.module.scss";
 import { Link } from "@/navigation";
 import { usePathname } from "next/navigation";
@@ -5,7 +6,7 @@ import { usePathname } from "next/navigation";
 interface CardProps {
   text: string;
   path: string;
-  icon: any;
+  icon: React.ReactNode;
 }
 
 const Card = ({ text, path, icon }: CardProps) => {

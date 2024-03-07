@@ -28,7 +28,7 @@ const LangDrop = () => {
       />
       <li className={`${styles.list_container} ${!open && styles.list_hidden}`}>
         {locales
-          .filter(loc => loc != locale)
+          .filter(loc => loc !== locale)
           .map(loc => {
             return (
               <div key={loc}>
