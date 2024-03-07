@@ -8,7 +8,7 @@ const Banner = () => {
   const dict = useTranslations("dict.home.banner");
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3 className={styles.welcome}>{dict("welcome")}</h3>
       <article className={styles.banner}>
         <div className={styles.banner_text}>
