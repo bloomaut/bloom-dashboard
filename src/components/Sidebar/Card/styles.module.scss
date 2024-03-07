@@ -7,7 +7,7 @@
   align-items: center;
   @include width-height(150px, 50px);
   background-color: $white;
-  border: 2px solid #c7c7c7c7;
+  border: 1px solid $grey;
   border-radius: 4px;
   padding: 10px;
   flex-wrap: nowrap;
@@ -27,34 +27,31 @@
     }
   }
   &:hover {
-    background-color: $orange;
-    border: 2px solid $lightOrange;
     .text {
-      color: $white;
+      color: $black;
     }
     svg {
       path[stroke="#FF5722"] {
-        stroke: $white;
+        stroke: $black;
       }
       path[fill="#FF5722"] {
-        fill: $white;
+        fill: $black;
       }
     }
   }
 }
 
 .container_selected {
-  background-color: $orange;
-  border: 2px solid $lightOrange;
+  border-width: 2px;
   .text {
-    color: $white;
+    color: $black;
   }
   svg {
     path[stroke="#FF5722"] {
-      stroke: $white;
+      stroke: $black;
     }
     path[fill="#FF5722"] {
-      fill: $white;
+      fill: $black;
     }
   }
 }
