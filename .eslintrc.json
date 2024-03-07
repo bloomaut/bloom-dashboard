@@ -11,6 +11,12 @@
     "no-empty-function": "error",
     "no-implicit-coercion": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/no-duplicate-enum-values": "error"
+    "@typescript-eslint/no-duplicate-enum-values": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
