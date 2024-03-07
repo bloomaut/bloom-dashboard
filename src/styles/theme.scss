@@ -2,8 +2,11 @@
 
 // Global colors
 $blue: rgb(22, 22, 165);
-
 $error: rgb(168, 7, 7);
+$orange: #ff5722;
+$orange_hover: #ed4b1a;
+$black: #000;
+$white: #fff;
 
 //Mixins
 @mixin flex($direction, $justify, $align, $gap: 0) {
