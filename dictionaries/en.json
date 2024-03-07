@@ -1,7 +1,8 @@
 {
   "dict": {
     "navbar": {
-      "ejemplo": "borrar"
+      "login": "Login",
+      "logout": "Log Out"
     },
     "popup": {
       "ejemplo": "borrar"
