@@ -10,16 +10,15 @@ interface CardProps {
 
 const Card = ({ text, path, icon }: CardProps) => {
   const pathname = usePathname();
-  let shortPath = pathname.slice(3, pathname.length);
-
-  console.log(shortPath);
+  const shortPath = pathname.slice(3, pathname.length);
+  const isSelected = shortPath === path || (shortPath === "" && path === "/");
 
   return (
     <Link
       className={
-        shortPath === path
-          ? ` ${styles.container} ${styles.container_selected}`
-          : ` ${styles.container} ${styles.container_noselected}`
+        isSelected
+          ? `${styles.container} ${styles.container_selected}`
+          : `${styles.container} ${styles.container_noselected}`
       }
       href={path}
     >
