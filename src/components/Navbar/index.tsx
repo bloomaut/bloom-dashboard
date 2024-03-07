@@ -16,7 +16,7 @@ import { Dropdown } from "./Suite/dropdown";
 import Button from "../Button";
 
 const Navbar = () => {
-  const { user, isLoading, error } = useUser();
+  const { user } = useUser();
   const dict = useTranslations("dict.navbar");
 
   return (

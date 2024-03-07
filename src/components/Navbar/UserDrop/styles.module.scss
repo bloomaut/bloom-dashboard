@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(row, space-around, center, 5px);
+  @include flex(row, space-around, center, 10px);
   position: relative;
   cursor: pointer;
 
@@ -21,7 +21,7 @@
 
     .arrow {
       transition: all 0.3s;
-      margin-left: 5px;
+      margin-left: 10px;
     }
     .arrow_open {
       transform: rotate(180deg);
@@ -35,7 +35,6 @@
     position: absolute;
     cursor: pointer;
     top: 40px;
-
     transition: all 0.3s ease;
 
     li {
@@ -53,9 +52,9 @@
       a {
         color: $gray;
         transition: color 0.7s;
-        &:hover {
-          color: $orange;
-        }
+      }
+      &:hover > a {
+        color: $orange;
       }
 
       max-height: auto;
