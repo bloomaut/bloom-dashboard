@@ -1,6 +1,7 @@
 import Card from "./Card";
 import styles from "./styles.module.scss";
 import DashboardIcon from "./Icons/Dashboard";
+import { useTranslations } from "next-intl";
 
 interface SidebarCard {
   title: string;
@@ -9,24 +10,26 @@ interface SidebarCard {
 }
 
 const Sidebar = () => {
+  const dict = useTranslations("dict.sidebar");
+
   const sidebar: Array<SidebarCard> = [
     {
-      title: "Home",
+      title: `${dict("home")}`,
       icon: <DashboardIcon />,
       path: "/",
     },
     {
-      title: "Guía",
+      title: `${dict("guide")}`,
       icon: <DashboardIcon />,
       path: "/guía",
     },
     {
-      title: "Mi Negocio",
+      title: `${dict("my_business")}`,
       icon: <DashboardIcon />,
       path: "/mi-negocio",
     },
     {
-      title: "Diseño",
+      title: `${dict("design")}`,
       icon: <DashboardIcon />,
       path: "/diseño",
     },

@@ -1,5 +1,11 @@
 {
   "dict": {
+    "sidebar": {
+      "home": "Home",
+      "guide": "Guía",
+      "my_business": "Mi negocio",
+      "design": "Diseño"
+    },
     "navbar": {
       "ejemplo": "borrar"
     },
