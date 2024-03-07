@@ -13,6 +13,7 @@
     @include fontSize-fontWeight(14px, 400);
     color: $gray;
     text-decoration: underline;
+    transition: color 0.7s;
 
     &:hover {
       color: $orange;
@@ -38,8 +39,9 @@
     transition: all 0.3s ease;
 
     li {
-      @include fontSize-fontWeight(12px, 400);
-      @include width-height(100px, 30px);
+      @include flex(column, center, center);
+      @include fontSize-fontWeight(14px, 400);
+      @include width-height(120px, 30px);
       list-style: none;
       color: $gray;
       transition: all 0.3s;
@@ -50,10 +52,12 @@
       text-align: center;
       a {
         color: $gray;
+        transition: color 0.7s;
+        &:hover {
+          color: $orange;
+        }
       }
-      &:hover {
-        color: $orange;
-      }
+
       max-height: auto;
     }
   }
