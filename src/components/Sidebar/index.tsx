@@ -1,6 +1,9 @@
 import Card from "./Card";
 import styles from "./styles.module.scss";
-import DashboardIcon from "./Icons/Dashboard";
+import HomeIcon from "./Icons/Home";
+import DesignIcon from "./Icons/Design";
+import GuideIcon from "./Icons/Guide";
+import MyBusinessIcon from "./Icons/MyBusiness";
 import { useTranslations } from "next-intl";
 
 interface SidebarCard {
@@ -15,22 +18,22 @@ const Sidebar = () => {
   const sidebar: Array<SidebarCard> = [
     {
       title: `${dict("home")}`,
-      icon: <DashboardIcon />,
+      icon: <HomeIcon />,
       path: "/",
     },
     {
       title: `${dict("guide")}`,
-      icon: <DashboardIcon />,
+      icon: <GuideIcon />,
       path: "/guide",
     },
     {
       title: `${dict("my_business")}`,
-      icon: <DashboardIcon />,
+      icon: <MyBusinessIcon />,
       path: "/my-business",
     },
     {
       title: `${dict("design")}`,
-      icon: <DashboardIcon />,
+      icon: <DesignIcon />,
       path: "/design",
     },
   ];
