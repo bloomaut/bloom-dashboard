@@ -1,0 +1,58 @@
+@import "@/styles/theme.scss";
+
+.container,
+.container_noselected {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  align-items: center;
+  @include width-height(140px, 50px);
+  background-color: $white;
+  border: 2px solid $orange;
+  border-radius: 4px;
+  padding: 10px;
+  flex-wrap: nowrap;
+  transition: all 0.3s;
+  .text {
+    @include fontSize-fontWeight(14px, 400);
+    color: $orange;
+    text-align: start;
+    line-height: 12px;
+  }
+  svg {
+    path[stroke="#FF5722"] {
+      stroke: $orange;
+    }
+    path[fill="#FF5722"] {
+      fill: $orange;
+    }
+  }
+  &:hover {
+    background-color: $orange;
+    .text {
+      color: $white;
+    }
+    svg {
+      path[stroke="#FF5722"] {
+        stroke: $white;
+      }
+      path[fill="#FF5722"] {
+        fill: $white;
+      }
+    }
+  }
+}
+
+.container_selected {
+  background-color: $orange;
+  .text {
+    color: $white;
+  }
+  svg {
+    path[stroke="#FF5722"] {
+      stroke: $white;
+    }
+    path[fill="#FF5722"] {
+      fill: $white;
+    }
+  }
+}
