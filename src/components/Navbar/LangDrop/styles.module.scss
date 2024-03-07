@@ -5,14 +5,14 @@
   position: relative;
   cursor: pointer;
   .logo {
-    @include width-height(25px, auto);
+    @include width-height(20px, auto);
     object-fit: contain;
   }
   .list_container {
     list-style: none;
     position: absolute;
     cursor: pointer;
-    top: 38px;
+    top: 36px;
     transition: all 0.3s ease;
     .list_text {
       @include flex(column, center, center);

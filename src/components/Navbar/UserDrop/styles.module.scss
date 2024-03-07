@@ -6,11 +6,11 @@
   cursor: pointer;
 
   .logo {
-    @include width-height(25px, auto);
+    @include width-height(20px, auto);
     object-fit: contain;
   }
   .user_name {
-    @include fontSize-fontWeight(16px, 400);
+    @include fontSize-fontWeight(14px, 400);
     color: $gray;
     text-decoration: underline;
 
@@ -33,7 +33,7 @@
     @include flex(column, center, center, 5px);
     position: absolute;
     cursor: pointer;
-    top: 38px;
+    top: 36px;
 
     transition: all 0.3s ease;
 

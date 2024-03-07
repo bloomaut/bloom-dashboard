@@ -13,7 +13,7 @@
     cursor: pointer;
   }
   .inner_container {
-    @include flex(row, center, center, 40px);
+    @include flex(row, center, center, 50px);
     padding: 0 20px;
 
     .knowledge {
@@ -22,11 +22,11 @@
       transition: color 0.3s ease;
 
       .logo_knowledge {
-        @include width-height(25px, auto);
+        @include width-height(20px, auto);
         object-fit: contain;
       }
       .text_knowledge {
-        @include fontSize-fontWeight(16px, 400);
+        @include fontSize-fontWeight(14px, 400);
         line-height: 24px;
         text-decoration: underline;
         color: $gray;
