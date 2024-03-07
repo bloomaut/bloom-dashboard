@@ -1,8 +1,10 @@
+import Banner from "./Banner";
+
 const HomePage = () => {
   return (
     <>
-      <h1>Home Page</h1>
-      <a href='/api/auth/logout'>Logout</a>
+      <Banner />
+      {/* <a href='/api/auth/logout'>Logout</a> */}
     </>
   );
 };
