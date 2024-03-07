@@ -9,6 +9,7 @@ import suiteIcon from "@/../public/icons/SuiteIcon.png";
 //Components
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
+import { Dropdown } from "./Suite/dropdown";
 
 const Navbar = () => {
   return (
@@ -25,9 +26,7 @@ const Navbar = () => {
           </div>
         </Link>
         <LangDrop />
-        <Link href='/'>
-          <Image src={suiteIcon} alt='Lang Icon' className={styles.logo_suite} width={20} height={20} priority />
-        </Link>
+        <Dropdown app='uitrade' />
         <UserDrop />
       </div>
     </nav>
