@@ -1,0 +1,15 @@
+@import "@/styles/theme";
+
+.btn {
+  @include fontSize-fontWeight(14px, 300);
+  padding: 12px 14px;
+  color: $white;
+  background-color: $orange;
+  border: none;
+  border-radius: 5.6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  &:hover {
+    background-color: $orange_hover;
+  }
+}
