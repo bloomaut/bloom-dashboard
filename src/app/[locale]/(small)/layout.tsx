@@ -5,6 +5,7 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Sidebar from "@/components/Sidebar";
 
 import Navbar from "@/components/Navbar";
 
@@ -26,6 +27,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
         transition={Slide}
       />
       <div className={styles.inner_container}>
+        <Sidebar />
         <div className={styles.children_container}>{children}</div>
       </div>
     </div>

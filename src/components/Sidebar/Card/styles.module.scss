@@ -1,0 +1,57 @@
+@import "@/styles/theme.scss";
+
+.container,
+.container_noselected {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  align-items: center;
+  @include width-height(150px, 50px);
+  background-color: $white;
+  border: 1px solid $grey;
+  border-radius: 4px;
+  padding: 10px;
+  flex-wrap: nowrap;
+  transition: all 0.3s;
+  .text {
+    @include fontSize-fontWeight(14px, 600);
+    color: #c7c7c7c7;
+    text-align: start;
+    line-height: 12px;
+  }
+  svg {
+    path[stroke="#FF5722"] {
+      stroke: #c7c7c7c7;
+    }
+    path[fill="#FF5722"] {
+      fill: #c7c7c7c7;
+    }
+  }
+  &:hover {
+    .text {
+      color: $black;
+    }
+    svg {
+      path[stroke="#FF5722"] {
+        stroke: $black;
+      }
+      path[fill="#FF5722"] {
+        fill: $black;
+      }
+    }
+  }
+}
+
+.container_selected {
+  border-width: 2px;
+  .text {
+    color: $black;
+  }
+  svg {
+    path[stroke="#FF5722"] {
+      stroke: $black;
+    }
+    path[fill="#FF5722"] {
+      fill: $black;
+    }
+  }
+}
