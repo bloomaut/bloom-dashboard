@@ -21,17 +21,17 @@ const Sidebar = () => {
     {
       title: `${dict("guide")}`,
       icon: <DashboardIcon />,
-      path: "/guía",
+      path: "/guide",
     },
     {
       title: `${dict("my_business")}`,
       icon: <DashboardIcon />,
-      path: "/mi-negocio",
+      path: "/my-business",
     },
     {
       title: `${dict("design")}`,
       icon: <DashboardIcon />,
-      path: "/diseño",
+      path: "/design",
     },
   ];
 

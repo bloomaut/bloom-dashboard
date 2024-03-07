@@ -3,31 +3,32 @@
 .container,
 .container_noselected {
   display: grid;
-  grid-template-columns: 35% 65%;
+  grid-template-columns: 30% 70%;
   align-items: center;
-  @include width-height(140px, 50px);
+  @include width-height(150px, 50px);
   background-color: $white;
-  border: 2px solid $orange;
+  border: 2px solid #c7c7c7c7;
   border-radius: 4px;
   padding: 10px;
   flex-wrap: nowrap;
   transition: all 0.3s;
   .text {
-    @include fontSize-fontWeight(12.5px, 400);
-    color: $orange;
+    @include fontSize-fontWeight(14px, 600);
+    color: #c7c7c7c7;
     text-align: start;
     line-height: 12px;
   }
   svg {
     path[stroke="#FF5722"] {
-      stroke: $orange;
+      stroke: #c7c7c7c7;
     }
     path[fill="#FF5722"] {
-      fill: $orange;
+      fill: #c7c7c7c7;
     }
   }
   &:hover {
     background-color: $orange;
+    border: 2px solid $lightOrange;
     .text {
       color: $white;
     }
@@ -44,6 +45,7 @@
 
 .container_selected {
   background-color: $orange;
+  border: 2px solid $lightOrange;
   .text {
     color: $white;
   }
