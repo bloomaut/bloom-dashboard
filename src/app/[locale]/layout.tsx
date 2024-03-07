@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  if (!locales.includes(locale as any)) notFound();
+  if (!locales.includes(locale as "en" | "es")) notFound();
   const messages = useMessages();
 
   return (

@@ -1,1 +1,1 @@
-export type POST = any;
+export type POST = null;

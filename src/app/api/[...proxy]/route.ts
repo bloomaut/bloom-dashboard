@@ -2,7 +2,7 @@ import { getAccessToken, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextRequest, NextResponse } from "next/server";
 import axios, { AxiosRequestConfig } from "axios";
 
-const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRequest, res) {
+const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRequest) {
   try {
     const res = new NextResponse();
     const { accessToken } = await getAccessToken(req, res);
@@ -35,9 +35,15 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
 
     const { data } = await axios(fetchOptions);
     return NextResponse.json({ data });
-  } catch (error: any) {
-    console.error("----------Error----------", error.response?.data);
-    return NextResponse.json({ error: error.response?.data?.message }, { status: error.response?.status || 500 });
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("----------Axios Error----------", error.response?.data);
+      return NextResponse.json({ error: error.response?.data?.message }, { status: error.response?.status || 500 });
+    } else {
+      // Handle other types of errors here
+      console.error("----------Other Error----------", error);
+      return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
+    }
   }
 });
 
