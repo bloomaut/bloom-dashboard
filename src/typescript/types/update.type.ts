@@ -1,1 +1,1 @@
-export type UPDATE = any;
+export type UPDATE = null;
