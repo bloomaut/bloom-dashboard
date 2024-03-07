@@ -1,6 +1,7 @@
 {
   "dict": {
     "navbar": {
+      "login": "Iniciar Sesión",
       "logout": "Cerrar Sesión"
     },
     "popup": {

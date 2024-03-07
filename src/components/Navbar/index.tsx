@@ -1,17 +1,24 @@
+"use client";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import { Link } from "@/navigation";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useTranslations } from "next-intl";
 
 //Icons
 import small from "@/../public/assets/Small.png";
 import logo_knowledge from "@/../public/icons/KnowledgeIcon.png";
-import suiteIcon from "@/../public/icons/SuiteIcon.png";
+
 //Components
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import { Dropdown } from "./Suite/dropdown";
+import Button from "../Button";
 
 const Navbar = () => {
+  const { user, isLoading, error } = useUser();
+  const dict = useTranslations("dict.navbar");
+
   return (
     <nav className={styles.container}>
       <Link href='/'>
@@ -25,9 +32,12 @@ const Navbar = () => {
             <p className={styles.text_knowledge}>Knowledge</p>
           </div>
         </Link>
+        {/* Language Dropdown */}
         <LangDrop />
+        {/* Suite */}
         <Dropdown app='uitrade' />
-        <UserDrop />
+        {/* User | Login */}
+        {user ? <UserDrop /> : <Button href='/api/auth/login' title={dict("login")} />}
       </div>
     </nav>
   );

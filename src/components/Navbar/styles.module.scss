@@ -4,7 +4,7 @@
   @include width-height(100%, 50px);
   @include flex(row, space-between, center);
   flex-wrap: nowrap;
-  padding: 0 20px;
+  padding: 30px 20px;
   border-bottom: 1px solid $gray;
 
   .logo {
@@ -34,12 +34,6 @@
           color: $orange;
         }
       }
-    }
-    .logo_suite {
-      @include width-height(20px, 20px);
-      object-fit: contain;
-      cursor: pointer;
-      margin-top: 5px;
     }
   }
 }
