@@ -1,0 +1,47 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, auto);
+  max-width: 1200px;
+  @include flex(column, center, flex-start, 20px);
+  .breadcrum_container {
+    @include width-height(100%, auto);
+    @include flex(row, flex-start, center, 20px);
+  }
+  .inner_container {
+    @include flex(row, center, center, 20px);
+    padding: 0 40px;
+    .content {
+      @include width-height(100%, 450px);
+      @include flex(column, flex-start, flex-start, 20px);
+      overflow-y: auto;
+    }
+  }
+  .checkbox {
+    @include width-height(100%, auto);
+    @include flex(row, flex-end, center);
+    padding: 0 100px;
+  }
+}
+
+.content::-webkit-scrollbar {
+  width: 7px;
+  height: 10px;
+  background-color: $greyBackground;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: $lightGrey;
+  border-radius: 7px;
+}
+
+@media (min-width: $queryXl) {
+  .container {
+    max-width: 1600px;
+    .inner_container {
+      .content {
+        height: 700px;
+      }
+    }
+  }
+}
