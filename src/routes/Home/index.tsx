@@ -5,12 +5,6 @@ const HomePage = () => {
   return (
     <section className={styles.container}>
       <Banner />
-      <Banner />
-      <Banner />
-      <Banner />
-      <Banner />
-      <Banner />
-      <Banner />
     </section>
   );
 };
