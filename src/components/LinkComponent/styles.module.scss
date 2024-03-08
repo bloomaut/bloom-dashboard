@@ -14,17 +14,6 @@
   }
 }
 
-.btnOutline {
-  @extend .btn;
-  background: transparent;
-  color: $orange;
-  font-weight: 700;
-  padding: 10px;
-  border: 1px solid $orange;
-  &:hover {
-    color: white;
-  }
-}
 
 @media (min-width: $queryLg) {
   .btn {

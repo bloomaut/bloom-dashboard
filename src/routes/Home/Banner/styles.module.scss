@@ -1,0 +1,26 @@
+@import "@/styles/theme";
+
+.container {
+  @include width-height(auto, 100%);
+  max-width: 950px;
+  .welcome {
+    @include fontSize-fontWeight(24px, 500);
+    color: $black;
+    margin-bottom: 15px;
+  }
+  .banner {
+    @include flex(row, space-between, flex-start);
+    padding: 20px;
+    border-radius: 8px;
+    background-color: $greyBackground;
+    .banner_text {
+      @include flex(column, space-between, flex-start, 30px);
+      .title {
+        @include fontSize-fontWeight(34px, 400);
+      }
+      .paragraph {
+        @include fontSize-fontWeight(16px, 400);
+      }
+    }
+  }
+}

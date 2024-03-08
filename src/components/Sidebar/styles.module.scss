@@ -4,7 +4,7 @@
   @include width-height(210px, 100%);
   @include flex(column, space-between, center, 20px);
   background-color: $white;
-  border-right: 2px solid #c7c7c7;
+  border-right: 1px solid $lightGrey;
   padding: 40px 0;
   overflow-y: auto;
   .cards_container {

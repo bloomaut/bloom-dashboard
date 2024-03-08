@@ -1,1 +1,2 @@
-export type POST = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type POST = any;

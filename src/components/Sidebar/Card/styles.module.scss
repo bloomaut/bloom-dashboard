@@ -7,7 +7,7 @@
   align-items: center;
   @include width-height(150px, 50px);
   background-color: $white;
-  border: 1px solid $ligthGreyWithOpacity;
+  border: 2px solid $ligthGreyWithOpacity;
   border-radius: 4px;
   padding: 10px;
   flex-wrap: nowrap;
@@ -27,8 +27,9 @@
     }
   }
   &:hover {
+    border: 2px solid $darkGrey;
     .text {
-      color: $lightGrey;
+      color: $darkGrey;
     }
     svg {
       path[stroke="#FF5722"] {
@@ -43,10 +44,10 @@
 
 .container_selected {
   border-width: 2px;
-  border-color: $lightGrey;
+  border-color: $darkGrey;
   transition: all 100ms ease-in;
   .text {
-    color: $lightGrey;
+    color: $darkGrey;
   }
   svg {
     path[stroke="#FF5722"] {
