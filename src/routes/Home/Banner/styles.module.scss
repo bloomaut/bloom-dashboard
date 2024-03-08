@@ -2,6 +2,7 @@
 
 .container {
   @include width-height(auto, 100%);
+  max-width: 950px;
   .welcome {
     @include fontSize-fontWeight(24px, 500);
     color: $black;
@@ -9,19 +10,16 @@
   }
   .banner {
     @include flex(row, space-between, flex-start);
-    max-width: 950px;
     padding: 20px;
     border-radius: 8px;
-    background: #f1f1f1;
+    background-color: $bannerBackground;
     .banner_text {
       @include flex(column, space-between, flex-start, 30px);
       .title {
         @include fontSize-fontWeight(34px, 400);
-        color: $black;
       }
       .paragraph {
         @include fontSize-fontWeight(16px, 400);
-        color: $black;
       }
     }
   }
