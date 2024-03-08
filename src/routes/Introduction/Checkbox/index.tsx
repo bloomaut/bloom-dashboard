@@ -18,8 +18,6 @@ const Checkbox = () => {
     router.push("/");
   };
 
-  console.log(isButtonDisabled);
-
   return (
     <div className={styles.container}>
       <div className={styles.checkbox}>

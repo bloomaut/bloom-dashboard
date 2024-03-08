@@ -1,6 +1,7 @@
 @import "@/styles/theme.scss";
 
 .btn {
+  @include flex(row, center, center, 10px);
   @include fontSize-fontWeight(14px, 300);
   padding: 12px 14px;
   color: $white;
