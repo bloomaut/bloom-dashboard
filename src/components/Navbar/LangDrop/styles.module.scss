@@ -18,9 +18,9 @@
       @include flex(column, center, center);
       @include width-height(50px, 30px);
       @include fontSize-fontWeight(14px, 400);
-      color: $gray;
+      color: $lightGrey;
       transition: color 0.7s;
-      border: $gray 0.5px solid;
+      border: $lightGrey 0.5px solid;
       border-top: none;
       background: transparent;
       text-transform: uppercase;

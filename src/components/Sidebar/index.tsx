@@ -4,9 +4,7 @@ import HomeIcon from "./Icons/Home";
 import DesignIcon from "./Icons/Design";
 import GuideIcon from "./Icons/Guide";
 import MyBusinessIcon from "./Icons/MyBusiness";
-import LogoutIcon from "/public/assets/logout.svg";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
 interface SidebarCard {
   title: string;
@@ -47,10 +45,6 @@ const Sidebar = () => {
           <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
         ))}
       </div>
-      <a href='/api/auth/logout' className={styles.btn}>
-        <Image src={LogoutIcon} className={styles.icon} alt='Logout' />
-        Logout
-      </a>
     </div>
   );
 };

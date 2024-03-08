@@ -7,51 +7,53 @@
   align-items: center;
   @include width-height(150px, 50px);
   background-color: $white;
-  border: 1px solid $grey;
+  border: 1px solid $ligthGreyWithOpacity;
   border-radius: 4px;
   padding: 10px;
   flex-wrap: nowrap;
-  transition: all 0.3s;
+  transition: all 100ms ease-in;
   .text {
     @include fontSize-fontWeight(14px, 600);
-    color: #c7c7c7c7;
+    color: $ligthGreyWithOpacity;
     text-align: start;
     line-height: 12px;
   }
   svg {
     path[stroke="#FF5722"] {
-      stroke: #c7c7c7c7;
+      stroke: $ligthGreyWithOpacity;
     }
     path[fill="#FF5722"] {
-      fill: #c7c7c7c7;
+      fill: $ligthGreyWithOpacity;
     }
   }
   &:hover {
     .text {
-      color: $black;
+      color: $lightGrey;
     }
     svg {
       path[stroke="#FF5722"] {
-        stroke: $black;
+        stroke: $darkGrey;
       }
       path[fill="#FF5722"] {
-        fill: $black;
+        fill: $darkGrey;
       }
     }
   }
 }
 
 .container_selected {
-  box-shadow: 4px 5px 5px 0 rgba(0, 0, 0, 0.25);
+  border-width: 2px;
+  border-color: $lightGrey;
+  transition: all 100ms ease-in;
   .text {
-    color: $black;
+    color: $lightGrey;
   }
   svg {
     path[stroke="#FF5722"] {
-      stroke: $black;
+      stroke: $darkGrey;
     }
     path[fill="#FF5722"] {
-      fill: $black;
+      fill: $darkGrey;
     }
   }
 }
