@@ -1,33 +1,14 @@
-// @import "@/styles/theme";
-
-// .btn {
-//   @include fontSize-fontWeight(14px, 300);
-//   padding: 12px 14px;
-//   color: $white;
-//   background-color: $orange;
-//   border: none;
-//   border-radius: 5.6px;
-//   cursor: pointer;
-//   transition: background 0.3s ease;
-//   &:hover {
-//     background-color: $orangeDark;
-//   }
-// }
-
 @import "@/styles/theme.scss";
 
 .btn {
-  @include width-height(180px, 35px);
-  @include flex(column, center, center, 10px);
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
+  @include fontSize-fontWeight(14px, 300);
+  padding: 12px 14px;
+  color: $white;
   background-color: $orange;
-  color: white;
-  @include fontSize-fontWeight(14px, 400);
-  line-height: 24px;
+  border: none;
+  border-radius: 5.6px;
   cursor: pointer;
-  transition: all 200ms ease-in-out;
+  transition: background 0.3s ease;
   &:hover {
     background-color: $darkOrange;
   }
@@ -45,26 +26,13 @@
   }
 }
 
-/*.btnBlue {
-  @extend .btn;
-  background: $gradientLeft;
-  transition: all 0.3 ease;
-  &:hover {
-    background: $gradientRigth;
-    box-shadow: 1px 2px 6px 0px rgba(0, 0, 0, 0.3);
-  }
-}
-*/
-
 @media (min-width: $queryLg) {
   .btn {
-    @include width-height(150px, 40px);
     @include fontSize-fontWeight(15px, 500);
     padding: 10px;
   }
 
   .btnBlue {
-    @include width-height(205px, 45px);
     @include fontSize-fontWeight(16px, 500);
     left: 20px;
   }

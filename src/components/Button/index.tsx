@@ -1,13 +1,3 @@
-// import styles from "./styles.module.scss";
-
-// interface Props {
-//   text: string;
-// }
-
-// const Button = ({ text }: Props) => {
-//   return <button className={styles.btn}>{text}</button>;
-// }
-
 import Link from "next/link";
 import styles from "./styles.module.scss";
 
