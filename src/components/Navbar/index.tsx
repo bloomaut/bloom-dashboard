@@ -37,7 +37,7 @@ const Navbar = () => {
         {/* Suite */}
         <Dropdown app='uitrade' />
         {/* User | Login */}
-        {!user ? <UserDrop /> : <Button href='/api/auth/login' title={dict("login")} />}
+        {user ? <UserDrop /> : <Button href='/api/auth/login' title={dict("login")} />}
       </div>
     </nav>
   );
