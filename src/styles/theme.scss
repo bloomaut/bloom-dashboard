@@ -1,12 +1,17 @@
 // Backgrounds
+$bannerBackground: #F1F1F1;
 
 // Global colors
+$lightGrey: #858796;
+$grey: #7f7f7f;
+$darkGrey: #505050;
+
 $blue: rgb(22, 22, 165);
-$gray: #7f7f7f;
+$error: rgb(168, 7, 7);
 $orange: #ff5722;
 $darkOrange: #ff3d02;
-
-$error: rgb(168, 7, 7);
+$black: #000;
+$white: #fff;
 
 // Media querys
 $querySm: 640px;

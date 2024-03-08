@@ -1,21 +1,24 @@
+import Link from "next/link";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
-  onclick: () => void;
+  href: string;
   title: string;
   icon?: string;
   styleName?: string;
+  type?: string;
 }
 
-const Button: React.FC<ButtonProps> = props => {
+const LinkComponent: React.FC<ButtonProps> = props => {
   return (
-    <button
+    <Link
       className={`${styles[props.styleName || ""]} ${styles.btn}`}
-     onClick={props.onclick}
+      target={props.type === "wp" ? "_blank" : "_self"}
+      href={props.href}
     >
       {props.title} {props.icon}
-    </button>
+    </Link>
   );
 };
 
-export default Button;
+export default LinkComponent;

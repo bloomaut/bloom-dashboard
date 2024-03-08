@@ -15,6 +15,7 @@ enum Colors {
   uitool_bg = "#000000",
   uitool_suite_bg = "#818181",
   uitrade_bg = "#F1F1F1",
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   uitrade_suite_bg = "#F1F1F1",
   dashboard_bg = `linear-gradient(
     125deg,

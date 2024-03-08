@@ -13,7 +13,7 @@ import logo_knowledge from "@/../public/icons/KnowledgeIcon.png";
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import { Dropdown } from "./Suite/dropdown";
-import Button from "../Button";
+import LinkComponent from "../LinkComponent";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -37,7 +37,7 @@ const Navbar = () => {
         {/* Suite */}
         <Dropdown app='uitrade' />
         {/* User | Login */}
-        {user ? <UserDrop /> : <Button href='/api/auth/login' title={dict("login")} />}
+        {user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("login")} />}
       </div>
     </nav>
   );

@@ -99,6 +99,7 @@ export const List = ({ app }: Props) => {
     data_hover = Colors.uitool_data_hover;
   } else if (app === "uitrade") {
     list_bg = Colors.uitrade_list_bg;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     data_hover = "dataTrade";
   } else {
     list_bg = Colors.dashboard_list_bg;

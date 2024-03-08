@@ -11,7 +11,7 @@
   }
   .user_name {
     @include fontSize-fontWeight(14px, 400);
-    color: $gray;
+    color: $grey;
     text-decoration: underline;
     transition: color 0.7s;
 
@@ -42,15 +42,15 @@
       @include fontSize-fontWeight(14px, 400);
       @include width-height(120px, 30px);
       list-style: none;
-      color: $gray;
+      color: $grey;
       transition: all 0.3s;
-      border: $gray 0.5px solid;
+      border: $grey 0.5px solid;
       border-top: none;
       padding: 20px 10px;
       cursor: pointer;
       text-align: center;
       a {
-        color: $gray;
+        color: $grey;
         transition: color 0.7s;
       }
       &:hover > a {
