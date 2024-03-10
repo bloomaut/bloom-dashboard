@@ -24,3 +24,9 @@
     }
   }
 }
+
+@media (min-width: $queryXl) {
+  .container {
+    max-width: 1400px;
+  }
+}
