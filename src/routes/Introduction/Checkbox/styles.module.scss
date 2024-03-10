@@ -7,6 +7,7 @@
     @include flex(row, center, flex-start, 10px);
     position: relative;
     input {
+      cursor: pointer;
       position: absolute;
       bottom: 2px;
       left: -20px;
@@ -15,16 +16,5 @@
       @include fontSize-fontWeight(20px, 400);
       color: $lightGrey;
     }
-  }
-  .btn_disabled {
-    @include main-btn;
-    background-color: lightGrey;
-    &:hover {
-      background-color: lightGrey;
-      cursor: default;
-    }
-  }
-  .btn {
-    @include main-btn;
   }
 }

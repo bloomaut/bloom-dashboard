@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
@@ -5,12 +6,14 @@ interface ButtonProps {
   title: string;
   icon?: string;
   styleName?: string;
+  isDisabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = props => {
+const Button = ({ title, icon, styleName, onclick, isDisabled }: ButtonProps) => {
   return (
-    <button className={`${styles[props.styleName || ""]} ${styles.btn}`} onClick={props.onclick}>
-      {props.title} {props.icon}
+    <button className={styleName ? `${styles[styleName]}` : styles.btn} onClick={onclick} disabled={isDisabled}>
+      {icon && <Image src={icon} width={30} height={30} alt='icon' />}
+      {title}
     </button>
   );
 };

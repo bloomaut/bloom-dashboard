@@ -1,17 +1,15 @@
 @import "@/styles/theme.scss";
 
 .btn {
-  @include flex(row, center, center, 10px);
-  @include fontSize-fontWeight(14px, 300);
-  padding: 12px 14px;
-  color: $white;
-  background-color: $orange;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  @include main-btn;
+}
+
+.btn_disabled {
+  @include main-btn;
+  background-color: lightGrey;
   &:hover {
-    background-color: $darkOrange;
+    background-color: lightGrey;
+    cursor: default;
   }
 }
 
@@ -28,7 +26,8 @@
 }
 
 @media (min-width: $queryLg) {
-  .btn {
+  .btn,
+  .btn_disabled {
     @include fontSize-fontWeight(15px, 500);
     padding: 10px;
   }
