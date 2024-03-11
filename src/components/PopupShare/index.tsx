@@ -40,26 +40,29 @@ const PopupShare = ({ setShowPopup }: PopupShareProps) => {
   return (
     <section className={styles.container}>
       <div className={styles.inner_container} ref={dropdownRef}>
-        <div className={styles.preview}></div>
-        <div className={styles.content}>
-          <button className={styles.btn_close} onClick={handleCancel}>
-            <Image src={closeIcon} className={styles.icon} alt='close-icon' />
-          </button>
-          <div className={styles.header}>
-            <Image src={hotlinkIcon} className={styles.icon} alt='Hotlink Icon' />
-            <p className={styles.title}>Hotlink</p>
-          </div>
-          <div className={styles.link_container}>
-            <Link className={styles.link} href={"/"} target='_blank'>
-              {value}
+        <h2 className={styles.title}>Compartir y probar en Whatsapp</h2>
+        <div className={styles.wrapper}>
+          <div className={styles.preview}></div>
+          <div className={styles.content}>
+            <button className={styles.btn_close} onClick={handleCancel}>
+              <Image src={closeIcon} className={styles.icon} alt='close-icon' />
+            </button>
+            <div className={styles.header}>
+              <Image src={hotlinkIcon} className={styles.icon} alt='Hotlink Icon' />
+              <p className={styles.title}>Hotlink</p>
+            </div>
+            <div className={styles.link_container}>
+              <Link className={styles.link} href={"/"} target='_blank'>
+                {value}
+              </Link>
+              <Button onclick={handleCopyClick} title='Copiar' icon={copyIcon} styleName='btn_copy' />
+            </div>
+            <Link href={"/"} className={styles.shared_container} target='_blank'>
+              <Image src={sharedIcon} className={styles.icon} alt='Hotlink Icon' />
+              <p className={styles.text}>Compartir en Whatsapp</p>
+              <Image src={whatsappIcon} className={styles.icon} alt='Hotlink Icon' />
             </Link>
-            <Button onclick={handleCopyClick} title='Copiar' icon={copyIcon} styleName='btn_copy' />
           </div>
-          <Link href={"/"} className={styles.shared_container} target='_blank'>
-            <Image src={sharedIcon} className={styles.icon} alt='Hotlink Icon' />
-            <p className={styles.text}>Compartir en Whatsapp</p>
-            <Image src={whatsappIcon} className={styles.icon} alt='Hotlink Icon' />
-          </Link>
         </div>
       </div>
     </section>
