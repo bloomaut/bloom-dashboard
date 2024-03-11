@@ -8,12 +8,12 @@ const LoadingSpinner = ({ home = false }: { home?: boolean }) => {
       <Oval
         height={50}
         width={50}
-        color='#5282fd'
+        color='#ff3d02'
         wrapperStyle={{}}
         wrapperClass=''
         visible={true}
         ariaLabel='oval-loading'
-        secondaryColor='#5551f3'
+        secondaryColor='#ffc8b8'
         strokeWidth={2}
         strokeWidthSecondary={2}
       />
