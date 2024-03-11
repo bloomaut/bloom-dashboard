@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import styles from "./styles.module.scss";
+import { useTranslations } from "use-intl";
 
 interface OpenGraphProps {
   handlePreviewClick: () => void;
@@ -9,10 +10,11 @@ interface OpenGraphProps {
 }
 
 const OpenGraph = ({ handlePreviewClick, previewData, captureTime }: OpenGraphProps) => {
+  const dict = useTranslations("dict.playground.phoneCase")
   return (
     <button onClick={handlePreviewClick} className={styles.container}>
       <div className={styles.date}>
-        <p>Hoy</p>
+        <p>{dict("today")}</p>
       </div>
       <div className={styles.message}>
         <Image src={previewData.openGraph.image.url} width={180} height={120} alt='Preview' />
