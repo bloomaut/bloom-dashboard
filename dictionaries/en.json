@@ -1,5 +1,11 @@
 {
   "dict": {
+    "sidebar": {
+      "home": "Home",
+      "guide": "Guide",
+      "my_business": "My Business",
+      "design": "Design"
+    },
     "navbar": {
       "login": "Login",
       "logout": "Log Out"
@@ -9,6 +15,14 @@
     },
     "toast": {
       "ejemplo": "borrar"
+    },
+    "home": {
+      "banner": {
+        "welcome": "We welcome you to Small",
+        "title": "Learn with Playground",
+        "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
+        "btn": "Create your own design"
+      }
     }
   }
 }

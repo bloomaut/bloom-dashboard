@@ -92,12 +92,11 @@ export const List = ({ app }: Props) => {
   /* Condicional para cambiar estilos de la lista*/
   let change_svg: boolean = false;
   let list_bg: string;
-  // Comentado por eslint
   //let data_hover: string;
   if (app === "uitool" || app === "sxpert") {
     change_svg = true;
     list_bg = Colors.uitool_list_bg;
-    // data_hover = Colors.uitool_data_hover;
+    //data_hover = Colors.uitool_data_hover;
   } else if (app === "uitrade") {
     list_bg = Colors.uitrade_list_bg;
     // data_hover = "dataTrade";
