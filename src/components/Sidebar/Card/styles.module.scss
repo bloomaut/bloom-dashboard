@@ -7,23 +7,23 @@
   align-items: center;
   @include width-height(150px, 50px);
   background-color: $white;
-  border: 2px solid $ligthGreyWithOpacity;
+  border: 2px solid $opacityGrey;
   border-radius: 4px;
   padding: 10px;
   flex-wrap: nowrap;
   transition: all 100ms ease-in;
   .text {
     @include fontSize-fontWeight(14px, 600);
-    color: $ligthGreyWithOpacity;
+    color: $opacityGrey;
     text-align: start;
     line-height: 12px;
   }
   svg {
     path[stroke="#FF5722"] {
-      stroke: $ligthGreyWithOpacity;
+      stroke: $opacityGrey;
     }
     path[fill="#FF5722"] {
-      fill: $ligthGreyWithOpacity;
+      fill: $opacityGrey;
     }
   }
   &:hover {

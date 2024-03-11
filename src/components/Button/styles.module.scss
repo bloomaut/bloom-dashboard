@@ -1,20 +1,18 @@
 @import "@/styles/theme.scss";
 
 .btn {
-  @include fontSize-fontWeight(14px, 300);
-  padding: 12px 14px;
-  color: $white;
-  background-color: $orange;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  @include main-btn;
+}
+
+.btn_disabled {
+  background-color: lightGrey;
   &:hover {
-    background-color: $darkOrange;
+    background-color: lightGrey;
+    cursor: default;
   }
 }
 
-.btnOutline {
+.btn_outline {
   @extend .btn;
   background: transparent;
   color: $orange;
