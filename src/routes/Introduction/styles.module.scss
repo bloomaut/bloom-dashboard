@@ -1,29 +1,28 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, auto);
-  max-width: 1200px;
-  @include flex(column, center, flex-start, 20px);
+  @include width-height(100%, 100%);
+  max-width: 1000px;
+  @include flex(column, center, center, 30px);
   .breadcrumb_container {
-    @include width-height(100%, auto);
+    @include width-height(100%, 10%);
     @include flex(row, flex-start, flex-start);
-    padding-top: 20px;
   }
   .inner_container {
+    @include width-height(100%, 70%);
     display: grid;
     grid-template-columns: 50% 50%;
     justify-content: center;
     align-items: center;
     gap: 20px;
-    padding: 0 40px;
     .content {
-      @include width-height(100%, 400px);
+       @include width-height(100%, 100%); 
       @include flex(column, flex-start, flex-start, 20px);
       overflow-y: auto;
       color: $lightGrey;
       div {
         h2 {
-          @include fontSize-fontWeight(24px, 600);
+          @include fontSize-fontWeight(20px, 600);
         }
         p {
           @include fontSize-fontWeight(16px, 400);
@@ -32,9 +31,8 @@
     }
   }
   .checkbox {
-    @include width-height(100%, auto);
+    @include width-height(100%, 10%);
     @include flex(row, flex-end, center);
-    padding: 0 100px;
   }
 }
 
@@ -51,11 +49,6 @@
 
 @media (min-width: $queryXl) {
   .container {
-    max-width: 1600px;
-    .inner_container {
-      .content {
-        height: 630px;
-      }
-    }
+    max-width: 1400px;
   }
 }

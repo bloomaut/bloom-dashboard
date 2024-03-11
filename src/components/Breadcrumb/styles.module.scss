@@ -4,7 +4,7 @@
   @include flex(column, flex-start, flex-start, 5px);
   list-style: none;
   .title {
-    @include fontSize-fontWeight(32px, 700);
+    @include fontSize-fontWeight(28px, 700);
     color: $lightGrey;
     text-decoration-line: underline;
   }

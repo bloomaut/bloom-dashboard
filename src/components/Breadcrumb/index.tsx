@@ -18,7 +18,7 @@ const Breadcrumb = ({ title, route }: BreadcrumbProps) => {
       <li className={styles.title}>{title}</li>
       <li>
         <Link href={`/${locale}/${route}`} className={styles.link}>
-          <Image src={ArrowIcon} alt='arrow' className={styles.arrow} width={20} height={20} />
+          <Image src={ArrowIcon} alt='arrow' className={styles.arrow} width={15} height={20} />
           <p className={styles.text}>{`Volver a ${uppercaseRoute}`}</p>
         </Link>
       </li>

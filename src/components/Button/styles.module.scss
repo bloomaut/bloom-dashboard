@@ -25,8 +25,7 @@
 }
 
 @media (min-width: $queryLg) {
-  .btn
-   {
+  .btn {
     @include fontSize-fontWeight(15px, 500);
     padding: 10px;
   }

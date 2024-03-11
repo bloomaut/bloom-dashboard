@@ -37,10 +37,10 @@ $queryXl: 1400px;
 }
 
 @mixin main-btn() {
-  @include flex(row-reverse, center, center, 10px);
+  @include flex(row-reverse, center, center, 5px);
   @include fontSize-fontWeight(16px, 400);
   height: fit-content;
-  padding: 10px 20px;
+  padding: 10px 28px;
   border: none;
   border-radius: 4px;
   background: $darkOrange;
