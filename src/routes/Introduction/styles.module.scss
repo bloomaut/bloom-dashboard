@@ -12,7 +12,7 @@
     @include flex(row, center, center, 20px);
     padding: 0 40px;
     .content {
-      @include width-height(100%, 450px);
+      @include width-height(100%, 430px);
       @include flex(column, flex-start, flex-start, 20px);
       overflow-y: auto;
     }
@@ -40,7 +40,7 @@
     max-width: 1600px;
     .inner_container {
       .content {
-        height: 700px;
+        height: 630px;
       }
     }
   }
