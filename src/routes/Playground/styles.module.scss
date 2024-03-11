@@ -15,18 +15,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-    .column_one{
-      @include width-height(100%, 100%);
-background-color: red;
-    }
-    .column_two{
-      @include width-height(100%, 100%);
-      background-color: blue;
-    }
-    .column_three{
-      @include width-height(100%, 100%);
-      background-color: green;
-    }
+   
   }
 }
 
