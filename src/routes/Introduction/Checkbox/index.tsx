@@ -3,11 +3,13 @@ import arrowRigth from "/public/icons/arrow_rigth.svg";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
+import { useLocale } from "next-intl";
 
 const Checkbox = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const router = useRouter();
+  const locale = useLocale();
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
@@ -15,7 +17,7 @@ const Checkbox = () => {
   };
 
   const handleButtonClick = () => {
-    router.push("/");
+    router.push(`/${locale}/playground`);
   };
 
   return (
@@ -29,7 +31,7 @@ const Checkbox = () => {
         icon={arrowRigth}
         onclick={handleButtonClick}
         isDisabled={isButtonDisabled}
-        styleName={isButtonDisabled && "btn_disabled"}
+        styleName={isButtonDisabled ? "btn_disabled" : "btn"}
       />
     </div>
   );
