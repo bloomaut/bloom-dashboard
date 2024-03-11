@@ -17,6 +17,12 @@
       {
         "endOfLine": "auto"
       }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
     ]
   }
 }

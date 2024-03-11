@@ -1,7 +1,6 @@
 "use client";
 import "@/styles/globals.scss";
 import styles from "./styles.module.scss";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,4 +33,4 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default withPageAuthRequired(SmallLayout);
+export default SmallLayout;

@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 import suiteUitool from "../assets/dropdown_uitool.svg";
 import suiteUitrade from "../assets/dropdown_uitrade.svg";
 import suiteDashboard from "../assets/dropdown_dashboard.svg";
-import { useCloseDrop } from "../hooks/useCloseDrop";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { List } from "./list";
 
 interface Props {
@@ -26,7 +26,7 @@ enum Colors {
 
 export const Dropdown = ({ app }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { tagRef } = useCloseDrop(setIsOpen);
+  const { dropdownRef } = useCloseDropdown(setIsOpen);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -55,7 +55,7 @@ export const Dropdown = ({ app }: Props) => {
     <div
       className={`${styles.container} ${app === "uitrade" && "border border-[#888888]"}`}
       onClick={toggleDropdown}
-      ref={tagRef}
+      ref={dropdownRef}
       style={{ background: suite_bg }}
     >
       <Image src={suite_Icon} className={styles.img} alt='Dropdown Image' />
