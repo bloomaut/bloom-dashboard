@@ -11,7 +11,8 @@ const PopupShare = ({ setShowPopup }: PopupShareProps) => {
   return (
     <section className={styles.container}>
       <div className={styles.inner_container} ref={dropdownRef}>
-        <h2>Soy un Popup</h2>
+        <div className={styles.preview}></div>
+        <div className={styles.content}></div>
       </div>
     </section>
   );
