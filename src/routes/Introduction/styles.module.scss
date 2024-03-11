@@ -4,17 +4,31 @@
   @include width-height(100%, auto);
   max-width: 1200px;
   @include flex(column, center, flex-start, 20px);
-  .breadcrum_container {
+  .breadcrumb_container {
     @include width-height(100%, auto);
-    @include flex(row, flex-start, center, 20px);
+    @include flex(row, flex-start, flex-start);
+    padding-top: 20px;
   }
   .inner_container {
-    @include flex(row, center, center, 20px);
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
     padding: 0 40px;
     .content {
-      @include width-height(100%, 430px);
+      @include width-height(100%, 400px);
       @include flex(column, flex-start, flex-start, 20px);
       overflow-y: auto;
+      color: $lightGrey;
+      div {
+        h2 {
+          @include fontSize-fontWeight(24px, 600);
+        }
+        p {
+          @include fontSize-fontWeight(16px, 400);
+        }
+      }
     }
   }
   .checkbox {

@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
 
 const IntroVideo = () => {
-  const [width, setWidth] = useState(600);
   const [height, setHeight] = useState(500);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 1280) {
-        setWidth(500);
+      if (window.innerWidth <= 1399) {
         setHeight(400);
       } else {
-        setWidth(700);
-        setHeight(600);
+        setHeight(500);
       }
     };
 
@@ -26,7 +23,7 @@ const IntroVideo = () => {
   return (
     <div>
       <iframe
-        width={width}
+        width='100%'
         height={height}
         src='https://www.youtube.com/embed/HdHaSAqO1I0'
         title='YouTube video player'

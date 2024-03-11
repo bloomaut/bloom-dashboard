@@ -1,8 +1,7 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(column, center, flex-start, 10px);
-  padding: 10px;
+  @include flex(column, flex-start, flex-start, 5px);
   list-style: none;
   .title {
     @include fontSize-fontWeight(32px, 700);
