@@ -2,7 +2,7 @@
 import styles from "./styles.module.scss";
 import { Oval } from "react-loader-spinner";
 
-const LoadingMsg = ({ home = false }: { home?: boolean }) => {
+const LoadingSpinner = ({ home = false }: { home?: boolean }) => {
   return (
     <div className={home ? `${styles.loadingWrapper} ${styles.loadingHome}` : `${styles.loadingWrapper}`}>
       <Oval
@@ -21,4 +21,4 @@ const LoadingMsg = ({ home = false }: { home?: boolean }) => {
   );
 };
 
-export default LoadingMsg;
+export default LoadingSpinner;
