@@ -5,7 +5,6 @@
 }
 
 .btn_disabled {
-  @include main-btn;
   background-color: lightGrey;
   &:hover {
     background-color: lightGrey;
@@ -13,7 +12,7 @@
   }
 }
 
-.btnOutline {
+.btn_outline {
   @extend .btn;
   background: transparent;
   color: $orange;
@@ -26,8 +25,8 @@
 }
 
 @media (min-width: $queryLg) {
-  .btn,
-  .btn_disabled {
+  .btn
+   {
     @include fontSize-fontWeight(15px, 500);
     padding: 10px;
   }

@@ -38,9 +38,9 @@ $queryXl: 1400px;
 
 @mixin main-btn() {
   @include flex(row-reverse, center, center, 10px);
-  @include fontSize-fontWeight(14px, 400);
+  @include fontSize-fontWeight(16px, 400);
   height: fit-content;
-  padding: 12px 22px;
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   background: $darkOrange;

@@ -29,7 +29,7 @@ const Checkbox = () => {
         icon={arrowRigth}
         onclick={handleButtonClick}
         isDisabled={isButtonDisabled}
-        styleName={isButtonDisabled ? "btn_disabled" : "btn"}
+        styleName={isButtonDisabled && "btn_disabled"}
       />
     </div>
   );
