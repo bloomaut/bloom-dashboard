@@ -9,9 +9,9 @@
   z-index: 99999;
   background-color: rgba(0, 0, 0, 0.5);
   .inner_container {
-    @include width-height(700px, 400px);
+    @include width-height(800px, 400px);
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 50% 50%;
     justify-content: center;
     align-items: center;
     padding: 15px;
@@ -20,9 +20,65 @@
     border-radius: 15px;
     text-align: center;
     box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    position: relative;
     .preview {
       @include width-height(100%, 100%);
       background-color: $greyBackground;
+    }
+    .content {
+      @include width-height(100%, 100%);
+      @include flex(column, space-between, center, 20px);
+      padding: 15px 0;
+      .btn_close {
+        @include flex(column, center, center);
+        position: absolute;
+        right: 12px;
+        top: 10px;
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        .icon {
+          @include width-height(20px, auto);
+          object-fit: contain;
+        }
+      }
+      .header {
+        @include flex(row, center, center, 20px);
+        .icon {
+          @include width-height(60px, auto);
+          object-fit: contain;
+        }
+        .title {
+          @include fontSize-fontWeight(32px, 400);
+          color: $lightGrey;
+        }
+      }
+      .link_container {
+        @include flex(column, center, center, 25px);
+        .link {
+          max-width: 280px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          @include fontSize-fontWeight(20px, 400);
+          color: $lightGrey;
+        }
+      }
+      .shared_container {
+        @include flex(row, center, center, 10px);
+        padding: 5px;
+        border-radius: 10px;
+        border: 2px solid $orange;
+        .icon {
+          @include width-height(40px, auto);
+          object-fit: contain;
+        }
+        .text {
+          color: $lightGrey;
+        }
+      }
     }
   }
 }

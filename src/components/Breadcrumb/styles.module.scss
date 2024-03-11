@@ -1,0 +1,19 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include flex(column, flex-start, flex-start, 5px);
+  list-style: none;
+  .title {
+    @include fontSize-fontWeight(28px, 700);
+    color: $lightGrey;
+    text-decoration-line: underline;
+  }
+  .link {
+    @include flex(row, center, flex-start, 5px);
+    .text {
+      @include fontSize-fontWeight(15px, 400);
+      color: $lightGrey;
+      text-decoration-line: underline;
+    }
+  }
+}
