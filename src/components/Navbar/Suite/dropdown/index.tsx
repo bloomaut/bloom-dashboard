@@ -15,7 +15,7 @@ enum Colors {
   uitool_bg = "#000000",
   uitool_suite_bg = "#818181",
   uitrade_bg = "#F1F1F1",
-  uitrade_suite_bg = "#F1F1F1",
+  uitrade_suite_bg = "#F1F1F2",
   dashboard_bg = `linear-gradient(
     125deg,
     rgba(87, 45, 237, 1) 0%,

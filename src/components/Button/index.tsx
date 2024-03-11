@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = props => {
   return (
     <Link
       className={`${styles[props.styleName || ""]} ${styles.btn}`}
-      target={props.type == "wp" ? "_blank" : "_self"}
+      target={props.type === "wp" ? "_blank" : "_self"}
       href={props.href}
     >
       {props.title} {props.icon}
