@@ -1,3 +1,4 @@
+"use client";
 import { get } from "@/services/fetch";
 import styles from "./styles.module.scss";
 import Image from "next/image";
