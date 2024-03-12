@@ -2,6 +2,7 @@ import { get } from "@/services/fetch";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { ENV } from "@/typescript/types/environment.enum";
 
 const TemplatesSelector = async () => {
   const [flakes, setFlakes] = useState<Powerapp[]>();
@@ -9,7 +10,7 @@ const TemplatesSelector = async () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const allFlakes = await get("small/flakes/playground", "NEXT_PUBLIC_API_UITOOL");
+      const allFlakes = await get("small/flakes/playground", ENV.IUTOOL);
       setFlakes(allFlakes.result.powerapps);
 
       if (allFlakes.result.powerapps.length > 0) {
