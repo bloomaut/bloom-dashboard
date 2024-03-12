@@ -5,7 +5,6 @@
   @include flex(row, space-between, flex-start, 10px);
   flex-wrap: wrap;
   border-radius: 4.775px;
-  padding: 15px;
   overflow-y: auto;
   row-gap: 20px;
   .template_container {
@@ -16,23 +15,34 @@
       text-align: center;
     }
     .template {
-      @include width-height(335px, 300px);
+      @include width-height(350px, 300px);
       @include flex(row, space-between, flex-start);
-      border: 0.298px solid $lightGrey;
+      border: 0.298px solid transparent;
       border-radius: 4.775px;
       padding: 10px;
+      cursor: pointer;
+      transition: border 0.3s ease;
       .sm_card,
       .lg_card {
         border: 0.298px solid $lightGrey;
         border-radius: 2.495px;
         background-color: $greyBackground;
+        img {
+          @include width-height(100%, 100%);
+        }
       }
       .sm_card {
-        @include width-height(167px, 120px);
+        @include width-height(170px, 120px);
       }
       .lg_card {
-        @include width-height(137px, 100%);
+        @include width-height(145px, 100%);
       }
+      &:hover {
+        border: 0.298px solid $lightGrey;
+      }
+    }
+    .selected_template {
+      border: 0.298px solid $orange;
     }
   }
 }

@@ -1,17 +1,50 @@
+import { get } from "@/services/fetch";
 import styles from "./styles.module.scss";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
-const TemplatesSelector = () => {
+const TemplatesSelector = async () => {
+  const [flakes, setFlakes] = useState<Powerapp[]>();
+  const [flakeId, setFlakeId] = useState<string | null>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const allFlakes = await get("small/flakes/playground", "NEXT_PUBLIC_API_UITOOL");
+      setFlakes(allFlakes.result.powerapps);
+
+      if (allFlakes.result.powerapps.length > 0) {
+        setFlakeId(allFlakes.result.powerapps[0]._id);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const changeFlakeId = (id: string) => {
+    setFlakeId(id);
+  };
+
   return (
     <div className={styles.container}>
-      <div className={styles.template_container}>
-        <h4 className={styles.title}>Título del Skin</h4>
-        <div className={styles.template}>
-          <div className={styles.sm_card}></div>
-          <div className={styles.lg_card}></div>
-        </div>
-      </div>
+      {flakes &&
+        flakes.map((app: Powerapp) => (
+          <div className={styles.template_container} key={app._id}>
+            <h4 className={styles.title}>{app.skinx.title}</h4>
+            <div
+              className={`${styles.template} ${flakeId === app._id ? styles.selected_template : ""}`}
+              onClick={() => changeFlakeId(app._id)}
+            >
+              <div className={styles.sm_card}>
+                <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
+              </div>
+              <div className={styles.lg_card}>
+                <Image src={app.thumbnail} alt={app.skinx.title} width={137} height={100} />
+              </div>
+            </div>
+          </div>
+        ))}
     </div>
   );
 };
 
-export default TemplatesSelector;
+export default React.memo(TemplatesSelector);
