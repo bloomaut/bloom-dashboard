@@ -1,1 +1,27 @@
+@import "@/styles/theme.scss";
 
+.container {
+  @include fontSize-fontWeight(100%, 100%);
+  @include flex(row, flex-start, flex-start, 30px);
+  color: $lightGrey;
+  .step_number {
+    @include fontSize-fontWeight(30px, 400);
+    border: $lightGrey 8px solid;
+    border-radius: 50%;
+    padding: 15px 10px;
+    @include width-height(100px, 100px);
+    text-align: center;
+  }
+
+  .text_container {
+    @include flex(column, flex-start, flex-start, 5px);
+
+    h2 {
+      @include fontSize-fontWeight(24px, 400);
+    }
+
+    p {
+      @include fontSize-fontWeight(20px, 400);
+    }
+  }
+}

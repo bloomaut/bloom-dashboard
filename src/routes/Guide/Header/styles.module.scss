@@ -4,7 +4,7 @@
   @include flex(row, flex-start, flex-start, 20px);
   .container {
     @include flex(column, flex-start, flex-start);
-    padding: 10px 20px 10px 20px;
+    padding: 0 10px;
     color: $lightGrey;
     cursor: pointer;
     transition: all 0.3s ease;

@@ -6,12 +6,14 @@ interface StepsProps {
   subtitle: string;
 }
 
-const Steps: React.FC<StepsProps> = ({ step_number, title, subtitle }) => {
+const Steps = ({ step_number, title, subtitle }: StepsProps) => {
   return (
-    <div>
-      <h1>{step_number}</h1>
-      <h2>{title} </h2>
-      <p>{subtitle} </p>
+    <div className={styles.container}>
+      <h1 className={styles.step_number}>{step_number}</h1>
+      <div className={styles.text_container}>
+        <h2>{title} </h2>
+        <p>{subtitle} </p>
+      </div>
     </div>
   );
 };

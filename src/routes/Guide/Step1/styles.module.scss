@@ -1,12 +1,16 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(column, flex-start, flex-start);
+  @include flex(column, flex-start, flex-start, 20px);
   @include width-height(100%, 100%);
   overflow-y: auto;
   margin-left: 100px;
 
   h1 {
-    @include fontSize-fontWeight(20px, 400);
+    @include fontSize-fontWeight(24px, 400);
+  }
+
+  .step_container {
+    @include flex(column, flex-start, flex-start, 30px);
   }
 }

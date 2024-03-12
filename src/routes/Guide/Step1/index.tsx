@@ -8,7 +8,12 @@ const Step1 = () => {
   return (
     <div className={styles.container}>
       <h1>Pasos</h1>
-      <Steps step_number={1} title={dict("title_one")} subtitle={dict("subtitle_one")} />
+      <div className={styles.step_container}>
+        <Steps step_number={1} title={dict("title_one")} subtitle={dict("subtitle_one")} />
+        <Steps step_number={2} title={dict("title_two")} subtitle={dict("subtitle_two")} />
+        <Steps step_number={3} title={dict("title_three")} subtitle={dict("subtitle_three")} />
+        <Steps step_number={4} title={dict("title_four")} subtitle={dict("subtitle_four")} />
+      </div>
     </div>
   );
 };
