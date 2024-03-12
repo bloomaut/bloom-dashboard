@@ -5,9 +5,9 @@
 }
 
 .btn_disabled {
-  background-color: lightGrey;
+  background: $lightGrey;
   &:hover {
-    background-color: lightGrey;
+    background-color: $lightGrey;
     cursor: default;
   }
 }
@@ -21,6 +21,16 @@
   border: 1px solid $orange;
   &:hover {
     color: white;
+  }
+}
+
+.btn_copy {
+  flex-direction: row;
+  background: $greyBackground;
+  color: $lightGrey;
+  &:hover {
+    color: $white;
+    background: $opacityGrey;
   }
 }
 
