@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { ENV } from "@/typescript/types/environment.enum";
 
-const TemplatesSelector = async () => {
+const TemplatesSelector = () => {
   const [flakes, setFlakes] = useState<Powerapp[]>();
   const [flakeId, setFlakeId] = useState<string | null>();
 
