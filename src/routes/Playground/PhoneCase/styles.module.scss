@@ -2,7 +2,8 @@
 
 .container {
   @include width-height(100%, 100%);
-  @include flex(column,center, center);
+  @include flex(column, center, center, 10px);
+  border-left: 1px solid $lightGrey;
   .phone_container {
     @include flex(column, flex-start, center);
     @include width-height(240px, 450px);
@@ -29,5 +30,19 @@
       }
     }
   }
-    
+  .dot_container {
+    @include flex(row, center, center, 10px);
+    .dot {
+      display: block;
+      @include width-height(10px, 10px);
+      cursor: pointer;
+      border-radius: 100%;
+    }
+    .dot_active {
+      background-color: $darkGrey;
+    }
+    .dot_inactive {
+      background-color: $lighterGrey;
+    }
+  }
 }
