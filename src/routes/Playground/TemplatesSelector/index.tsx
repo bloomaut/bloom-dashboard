@@ -12,6 +12,7 @@ const TemplatesSelector = () => {
   useEffect(() => {
     const fetchData = async () => {
       const allFlakes = await get("small/flakes/playground", ENV.IUTOOL);
+
       setFlakes(allFlakes.result.powerapps);
 
       if (allFlakes.result.powerapps.length > 0) {

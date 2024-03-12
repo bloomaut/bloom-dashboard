@@ -2,11 +2,12 @@
 
 .container {
   @include width-height(100%, 100%);
-  @include flex(row, space-between, flex-start, 10px);
+  @include flex(row, space-evenly, flex-start, 10px);
   flex-wrap: wrap;
   border-radius: 4.775px;
   overflow-y: auto;
   row-gap: 20px;
+  padding-right: 10px;
   .template_container {
     .title {
       @include fontSize-fontWeight(14px, 400);
