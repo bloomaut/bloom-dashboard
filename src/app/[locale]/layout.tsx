@@ -3,10 +3,14 @@ import { locales } from "@/navigation";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { notFound } from "next/navigation";
-import { Inter } from "next/font/google";
+import { Barlow } from "next/font/google";
 import "@/styles/globals.scss";
 
-const inter = Inter({ subsets: ["latin"] });
+const barlow = Barlow({
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Small",
@@ -26,7 +30,7 @@ export default function RootLayout({
   return (
     <UserProvider>
       <html lang={locale}>
-        <body className={inter.className}>
+        <body className={barlow.className}>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
           </NextIntlClientProvider>

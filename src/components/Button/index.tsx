@@ -11,7 +11,11 @@ interface ButtonProps {
 
 const Button = ({ title, icon, styleName, onclick, isDisabled }: ButtonProps) => {
   return (
-    <button className={`${styles.btn} ${styleName ? styles[styleName] : ""}`} onClick={onclick} disabled={isDisabled}>
+    <button
+      className={`${styles.btn} ${styleName ? styles[styleName] : styles.btn}`}
+      onClick={onclick}
+      disabled={isDisabled}
+    >
       {icon && <Image src={icon} width={30} height={30} alt='icon' />}
       {title}
     </button>
