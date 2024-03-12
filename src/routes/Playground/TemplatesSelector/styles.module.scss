@@ -43,6 +43,9 @@
     }
     .selected_template {
       border: 0.298px solid $orange;
+      &:hover {
+        border: 0.298px solid $orange;
+      }
     }
   }
 }
