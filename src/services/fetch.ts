@@ -3,7 +3,7 @@ import { UPDATE } from "@/typescript/types/update.type";
 import axios from "axios";
 const API = "/api";
 
-export const get = async (url: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_BOX") => {
+export const get = async (url: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL") => {
   try {
     const response = await axios.get(`${API}/${url}`, {
       headers: {
@@ -20,7 +20,7 @@ export const get = async (url: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLI
   }
 };
 
-export const post = async (url: string, data: POST, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_BOX") => {
+export const post = async (url: string, data: POST, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL") => {
   try {
     const baseURL = process.env[api];
     if (!baseURL) {
@@ -44,7 +44,7 @@ export const post = async (url: string, data: POST, api: "NEXT_PUBLIC_API_DASH" 
 export const update = async (
   url: string,
   id: string,
-  api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_BOX",
+  api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL",
   data?: UPDATE,
 ) => {
   try {
@@ -67,7 +67,7 @@ export const update = async (
   }
 };
 
-export const remove = async (url: string, id: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_BOX") => {
+export const remove = async (url: string, id: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL") => {
   try {
     const baseURL = process.env[api];
     if (!baseURL) {
