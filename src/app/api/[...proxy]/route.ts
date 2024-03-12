@@ -10,7 +10,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     console.log("My Access Token:", accessToken);
 
     const path = req.nextUrl.pathname.substring(req.nextUrl.pathname.indexOf("/api"));
-    const apiName = req.headers.get("X-Api") || "";
+    const apiName = req.headers.get("X-API") || "";
     const EXTERNAL_API_URL = process.env[apiName];
 
     if (!EXTERNAL_API_URL) {

@@ -7,7 +7,7 @@ export const get = async (url: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLI
   try {
     const response = await axios.get(`${API}/${url}`, {
       headers: {
-        "X-Api": api,
+        "X-API": api,
       },
     });
     return response.data.data;
@@ -20,13 +20,17 @@ export const get = async (url: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLI
   }
 };
 
-export const post = async (url: string, data: POST, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL") => {
+export const post = async (url: string, data: POST, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_BOX") => {
   try {
     const baseURL = process.env[api];
     if (!baseURL) {
       throw new Error(`Invalid API: ${api}`);
     }
-    const response = await axios.post(`${baseURL}/${url}`, data);
+    const response = await axios.post(`${API}/${url}`, data, {
+      headers: {
+        "X-API": api,
+      },
+    });
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -40,7 +44,7 @@ export const post = async (url: string, data: POST, api: "NEXT_PUBLIC_API_DASH" 
 export const update = async (
   url: string,
   id: string,
-  api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL",
+  api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_BOX",
   data?: UPDATE,
 ) => {
   try {
@@ -48,7 +52,11 @@ export const update = async (
     if (!baseURL) {
       throw new Error(`Invalid API: ${api}`);
     }
-    const response = await axios.put(`${baseURL}/${url}/${id}`, data);
+    const response = await axios.put(`${API}/${url}/${id}`, data, {
+      headers: {
+        "X-API": api,
+      },
+    });
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -59,13 +67,17 @@ export const update = async (
   }
 };
 
-export const remove = async (url: string, id: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL") => {
+export const remove = async (url: string, id: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_BOX") => {
   try {
     const baseURL = process.env[api];
     if (!baseURL) {
       throw new Error(`Invalid API: ${api}`);
     }
-    const response = await axios.delete(`${baseURL}/${url}/${id}`);
+    const response = await axios.delete(`${API}/${url}/${id}`, {
+      headers: {
+        "X-API": api,
+      },
+    });
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
