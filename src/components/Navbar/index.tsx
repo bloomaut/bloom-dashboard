@@ -29,7 +29,7 @@ const Navbar = () => {
         {/* Knowledge */}
         <Link href='https://noti-knowledge.vercel.app/es/' target='_blank'>
           <div className={styles.knowledge}>
-            <Image src={logo_knowledge} alt='Logo' priority width={20} height={20} className={styles.logo_knowledge} />
+            <Image src={logo_knowledge} alt='Logo' className={styles.logo_knowledge} />
             <p className={styles.text_knowledge}>Knowledge</p>
           </div>
         </Link>

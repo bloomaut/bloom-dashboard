@@ -2,5 +2,12 @@
 
 .container {
   @include width-height(100%, 100%);
-  background-color: blue;
+  @include flex(column, flex-start, flex-start, 30px);
+  .cards_container {
+    @include flex(column, flex-start, flex-start, 20px);
+  }
+  .btn_container {
+    @include width-height(100%, auto);
+    @include flex(row, flex-end, center);
+  }
 }
