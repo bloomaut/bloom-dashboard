@@ -18,7 +18,7 @@ const Playground = () => {
     const currentTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     setCaptureTime(currentTime);
     setShowPreview(true);
-    fetchOpenGraphData();
+    /*  fetchOpenGraphData(); */
   };
 
   const fetchOpenGraphData = async () => {
@@ -35,7 +35,7 @@ const Playground = () => {
     }
   };
 
-  const getData = async (event: any) => {
+  /* const getData = async (event: any) => {
     event.preventDefault();
     try {
       const response = await fetch("/api/opengraph");
@@ -44,7 +44,7 @@ const Playground = () => {
     } catch (error) {
       console.log("Error fetching Open Graph data:", error);
     }
-  };
+  }; */
 
   return (
     <section className={styles.container}>
@@ -53,7 +53,7 @@ const Playground = () => {
       </div>
       <div className={styles.inner_container}>
         <TemplatesSelector />
-        <Form setUrl={setUrl} url={url} submitForm={getData} />
+        <Form setUrl={setUrl} url={url} submitForm={submitForm} />
         <PhoneCase
           previewData={previewData}
           showPreview={showPreview}
