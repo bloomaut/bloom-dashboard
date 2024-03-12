@@ -1,6 +1,5 @@
-// GuidePage.js
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./styles.module.scss";
 import Step1 from "./Stepper/Step1";
 import Step2 from "./Stepper/Step2";

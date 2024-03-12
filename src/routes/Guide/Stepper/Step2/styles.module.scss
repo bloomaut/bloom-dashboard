@@ -9,7 +9,7 @@
 .active {
   border: $lightGrey 1px solid;
   border-radius: 8px;
-  min-width: 800px;
+  min-width: 600px;
   h1 {
     @include fontSize-fontWeight(20px, 400);
     line-height: 36px;

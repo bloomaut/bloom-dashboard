@@ -1,7 +1,6 @@
-// Step2.js
 "use client";
-import React from "react";
 import styles from "./styles.module.scss";
+import { useTranslations } from "next-intl";
 
 interface Step1Props {
   isActive: boolean;
@@ -9,10 +8,11 @@ interface Step1Props {
 }
 
 const Step2: React.FC<Step1Props> = ({ isActive, onClick }) => {
+  const dict = useTranslations("dict.guide");
   return (
     <div className={`${styles.container} ${isActive ? styles.active : styles.inactive}`} onClick={onClick}>
-      <h1>Sección 2</h1>
-      <p>Compartir y Utilizar</p>
+      <h1>{dict("stepper_title2")}</h1>
+      <p>{dict("stepper_subtitle2")}</p>
     </div>
   );
 };
