@@ -5,6 +5,7 @@
   color: $lightGrey;
   padding: 10px 20px 10px 20px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 .active {
   border: $lightGrey 1px solid;

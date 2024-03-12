@@ -2,13 +2,14 @@
 
 .container {
   @include flex(column, flex-start, flex-start);
-  border: $lightGrey 1px solid;
-  color: $lightGrey;
   padding: 10px 20px 10px 20px;
-  border-radius: 8px;
+  color: $lightGrey;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 .active {
+  border: $lightGrey 1px solid;
+  border-radius: 8px;
   min-width: 600px;
   h1 {
     @include fontSize-fontWeight(20px, 400);
