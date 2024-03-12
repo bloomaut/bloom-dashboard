@@ -1,9 +1,12 @@
 import { get } from "@/services/fetch";
 import Banner from "./Banner";
 import styles from "./styles.module.scss";
-import { useEffect } from "react";
+import PopupShare from "@/components/PopupShare";
+import { useState, useEffect } from "react";
 
 const HomePage = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
   useEffect(() => {
     const handleFetch = async () => {
       try {
@@ -19,9 +22,15 @@ const HomePage = () => {
     handleFetch();
   }, []);
 
+  const handleShare = () => {
+    setShowPopup(!showPopup);
+  };
+
   return (
     <section className={styles.container}>
       <Banner />
+      <button onClick={handleShare}>Abrir Popup</button>
+      {showPopup && <PopupShare setShowPopup={setShowPopup} />}
     </section>
   );
 };

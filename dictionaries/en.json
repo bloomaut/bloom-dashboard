@@ -22,7 +22,25 @@
         "title": "Learn with Playground",
         "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
         "btn": "Create your own design"
+      },
+      "popup": {
+        "title": "Share and test on Whatsapp",
+        "copy": "Copy",
+        "btn": "Share on Whatsapp",
+        "copy_succes": "URL copied to clipboard",
+        "copy_error": "Error copying URL"
       }
+    },
+    "playground":{
+      "phoneCase":{
+        "today": "Today"
+      }
+    },
+    "guide": {
+      "stepper_title1": "Section 1",
+      "stepper_subtitle1": "Know, Play, and Load",
+      "stepper_title2": "Section 2",
+      "stepper_subtitle2": "Share and Use"
     }
   }
 }

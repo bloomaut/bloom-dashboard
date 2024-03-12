@@ -4,6 +4,7 @@
   @include flex(column, center, center);
   position: relative;
   cursor: pointer;
+
   .logo {
     @include width-height(20px, auto);
     object-fit: contain;
@@ -21,8 +22,8 @@
       color: $lightGrey;
       transition: color 0.7s;
       border: $lightGrey 0.5px solid;
-      border-top: none;
-      background: transparent;
+
+      background: white;
       text-transform: uppercase;
       padding: 0 30px;
       cursor: pointer;
