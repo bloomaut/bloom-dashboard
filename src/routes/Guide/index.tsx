@@ -1,20 +1,18 @@
 "use client";
 import { useState } from "react";
 import styles from "./styles.module.scss";
-import Step1 from "./Stepper/Step1";
-import Step2 from "./Stepper/Step2";
+import Step1 from "./Step1";
+import Step2 from "./Step2";
+import Header from "./Header";
 
 const GuidePage = () => {
   const [activeStep, setActiveStep] = useState(1);
 
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
-  };
-
   return (
     <section className={styles.container}>
-      <Step1 isActive={activeStep === 1} onClick={() => handleStepChange(1)} />
-      <Step2 isActive={activeStep === 2} onClick={() => handleStepChange(2)} />
+      <Header handleStepChange={setActiveStep} activeStep={activeStep}></Header>
+      {activeStep === 1 && <Step1 />}
+      {activeStep === 2 && <Step2 />}
     </section>
   );
 };

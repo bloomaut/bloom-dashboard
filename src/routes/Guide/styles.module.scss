@@ -1,6 +1,6 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(row, flex-start, flex-start, 20px);
+  @include flex(column, flex-start, flex-start, 20px);
   margin-top: 22px;
 }
