@@ -38,21 +38,19 @@ const Navbar = () => {
         {/* Suite */}
         <Dropdown app='uitrade' />
         {/* User | Login */}
-        {!isLoading ? 
-        <>
-        {user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("login")} />}
-        </>
-        :
-        <Oval
-        height={25}
-        width={50}
-        color='#ff3d02'
-        visible={true}
-        secondaryColor='#ffc8b8'
-        strokeWidth={3}
-        strokeWidthSecondary={3}
-      />
-        }
+        {!isLoading ? (
+          <>{user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("login")} />}</>
+        ) : (
+          <Oval
+            height={25}
+            width={50}
+            color='#ff3d02'
+            visible={true}
+            secondaryColor='#ffc8b8'
+            strokeWidth={3}
+            strokeWidthSecondary={3}
+          />
+        )}
       </div>
     </nav>
   );

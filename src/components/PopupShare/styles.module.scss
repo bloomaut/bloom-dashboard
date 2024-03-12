@@ -56,7 +56,7 @@
           }
         }
         .header {
-          @include flex(row, center, center, 20px);
+          @include flex(row, center, center);
           .icon {
             @include width-height(60px, auto);
             object-fit: contain;
