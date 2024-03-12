@@ -2,5 +2,46 @@
 
 .container {
   @include width-height(100%, 100%);
-      background-color: red;
+  @include flex(row, space-between, flex-start, 10px);
+  flex-wrap: wrap;
+  border-radius: 4.775px;
+  padding: 15px;
+  overflow-y: auto;
+  row-gap: 20px;
+  .template_container {
+    .title {
+      @include fontSize-fontWeight(14px, 400);
+      color: $darkGrey;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .template {
+      @include width-height(335px, 300px);
+      @include flex(row, space-between, flex-start);
+      border: 0.298px solid $lightGrey;
+      border-radius: 4.775px;
+      padding: 10px;
+      .sm_card,
+      .lg_card {
+        border: 0.298px solid $lightGrey;
+        border-radius: 2.495px;
+        background-color: $greyBackground;
+      }
+      .sm_card {
+        @include width-height(167px, 120px);
+      }
+      .lg_card {
+        @include width-height(137px, 100%);
+      }
+    }
+  }
+}
+
+.container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
 }
