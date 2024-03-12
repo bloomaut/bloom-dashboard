@@ -35,6 +35,12 @@
       "phoneCase":{
         "today": "Hoy"
       }
+    },
+    "guide": {
+      "stepper_title1": "Sección 1",
+      "stepper_subtitle1": "Conocer, Jugar y Cargar",
+      "stepper_title2": "Sección 2",
+      "stepper_subtitle2": "Compartir y Utilizar"
     }
   }
 }

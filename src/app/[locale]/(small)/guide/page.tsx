@@ -1,3 +1,5 @@
+import GuidePage from "@/routes/Guide";
+
 export default function Page() {
-  return <h1>Guide Page</h1>;
+  return <GuidePage />;
 }

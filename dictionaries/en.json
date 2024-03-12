@@ -35,6 +35,12 @@
       "phoneCase":{
         "today": "Today"
       }
+    },
+    "guide": {
+      "stepper_title1": "Section 1",
+      "stepper_subtitle1": "Know, Play, and Load",
+      "stepper_title2": "Section 2",
+      "stepper_subtitle2": "Share and Use"
     }
   }
 }
