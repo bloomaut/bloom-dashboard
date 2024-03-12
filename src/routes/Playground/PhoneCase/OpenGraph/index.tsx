@@ -10,7 +10,7 @@ interface OpenGraphProps {
 }
 
 const OpenGraph = ({ handlePreviewClick, previewData, captureTime }: OpenGraphProps) => {
-  const dict = useTranslations("dict.playground.phoneCase")
+  const dict = useTranslations("dict.playground.phoneCase");
   return (
     <button onClick={handlePreviewClick} className={styles.container}>
       <div className={styles.date}>
