@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 import caseImage from "@/../public/assets/mobileCase.png";
 import whatsappImage from "@/../public/assets/wa.png";
 import OpenGraph from "./OpenGraph";
@@ -10,11 +10,10 @@ interface PropsPhoneCase {
   showPreview: boolean;
   url: string;
   setShowPreview: (showPreview: boolean) => void;
-  captureTime: string
+  captureTime: string;
 }
 
-const PhoneCase = ({previewData,showPreview, url, setShowPreview, captureTime } : PropsPhoneCase) => {
-
+const PhoneCase = ({ previewData, showPreview, url, setShowPreview, captureTime }: PropsPhoneCase) => {
   return (
     <div className={styles.container}>
       <div className={styles.phone_container}>
@@ -23,7 +22,11 @@ const PhoneCase = ({previewData,showPreview, url, setShowPreview, captureTime } 
         <div className={styles.phone_inner_container}>
           {/* OG */}
           {showPreview && previewData && (
-            <OpenGraph handlePreviewClick={() => setShowPreview(false)} previewData={previewData} captureTime={captureTime} />
+            <OpenGraph
+              handlePreviewClick={() => setShowPreview(false)}
+              previewData={previewData}
+              captureTime={captureTime}
+            />
           )}
           {/* IFRAME */}
           {!showPreview && <iframe src={url} title='Power App'></iframe>}
