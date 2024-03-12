@@ -1,0 +1,5 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include flex(row, flex-start, flex-start, 20px);
+}
