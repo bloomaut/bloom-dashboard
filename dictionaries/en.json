@@ -61,7 +61,8 @@
         "title_two": "Manage",
         "subtitle_two": "Manage the messages that arrive in your Inbox and chat with your clients",
         "title_three": "Campaigns",
-        "subtitle_three": "Send campaigns and visualize the results of the interactions"
+        "subtitle_three": "Send campaigns and visualize the results of the interactions",
+        "button": "I have completed the steps"
       }
     },
     "business": {
