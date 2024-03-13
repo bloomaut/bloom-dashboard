@@ -10,11 +10,11 @@ interface StepsProps {
 
 const FileDragDrop = ({ files, setFiles }: StepsProps) => {
   const onDrop = (acceptedFiles: File[]) => {
-    setFiles(acceptedFiles);
+    setFiles(prevFiles => (prevFiles ? [...prevFiles, ...acceptedFiles] : acceptedFiles));
   };
 
   /* Config of dropzone */
-  const { acceptedFiles, getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
     onDrop,
     accept: {
       "application/vnd.ms-excel": [".xls"],
@@ -26,32 +26,18 @@ const FileDragDrop = ({ files, setFiles }: StepsProps) => {
       "application/pdf": [".pdf"],
       "application/json": [".json"],
     },
-    maxFiles: 1,
   });
+
+  const lastFileName = files && files.length > 0 ? files[files.length - 1].name : "";
 
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
       {files ? (
-        <>
-          {fileRejections[0]?.errors ? (
-            <p className={styles.name}>texto</p>
-          ) : (
-            <>
-              {files.map(fil => {
-                return (
-                  <p className={styles.name} key={fil.name}>
-                    {fil.name}
-                  </p>
-                );
-              })}
-            </>
-          )}
-        </>
+        <>{fileRejections[0]?.errors ? <p className={styles.name}>Error</p> : <p>{lastFileName}</p>}</>
       ) : (
         <div className={styles.content}>
-          <Image src={fileImage} alt='' />
-          <p className={styles.text}>Logo</p>
+          <Image src={fileImage} alt='cloud-icon' />
         </div>
       )}
     </div>

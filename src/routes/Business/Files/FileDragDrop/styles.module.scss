@@ -15,10 +15,6 @@
       @include width-height(100%, 80px);
       object-fit: contain;
     }
-    .text {
-      @include fontSize-fontWeight(16px, 400);
-      color: $darkGrey;
-    }
   }
   .name {
     display: inline-block;
