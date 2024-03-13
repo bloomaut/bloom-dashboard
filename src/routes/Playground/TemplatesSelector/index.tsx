@@ -1,29 +1,20 @@
-"use client";
-import { get } from "@/services/fetch";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { ENV } from "@/typescript/types/environment.enum";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import { useState } from "react";
+import { useFlakesContext } from "@/context/FlakesContext";
+
+interface Context {
+  flakes: Powerapp[];
+  loading: boolean;
+  selectedFlakeId: string;
+  setSelectedFlakeId: (id: string) => void;
+}
 
 const TemplatesSelector = () => {
-  const [flakes, setFlakes] = useState<Powerapp[]>();
-  const [flakeId, setFlakeId] = useState<string | null>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const allFlakes = await get("small/flakes/playground", ENV.IUTOOL);
-
-      setFlakes(allFlakes.result.powerapps);
-
-      if (allFlakes.result.powerapps.length > 0) {
-        setFlakeId(allFlakes.result.powerapps[0]._id);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { flakes, loading, selectedFlakeId } = useFlakesContext() as Context;
+  const [flakeId, setFlakeId] = useState(selectedFlakeId);
 
   const changeFlakeId = (id: string) => {
     setFlakeId(id);
@@ -33,7 +24,7 @@ const TemplatesSelector = () => {
     <section className={styles.container}>
       <SectionTitle text='Plantillas' />
       <div className={styles.flakes}>
-        {flakes ? (
+        {!loading ? (
           flakes.map((app: Powerapp) => (
             <div className={styles.template_container} key={app._id}>
               <h4 className={styles.title}>{app.skinx.title}</h4>
@@ -60,4 +51,4 @@ const TemplatesSelector = () => {
   );
 };
 
-export default React.memo(TemplatesSelector);
+export default TemplatesSelector;
