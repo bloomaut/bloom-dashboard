@@ -1,4 +1,6 @@
+import Input from "@/components/Input";
 import styles from "./styles.module.scss";
+import SectionTitle from "@/components/SectionTitle";
 
 interface PropsForm {
   setUrl: (url: string) => void;
@@ -7,10 +9,15 @@ interface PropsForm {
 }
 
 const Form = ({ setUrl, url, submitForm }: PropsForm) => {
+  const handleSetUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUrl(e.target.value);
+  };
+
   return (
     <div className={styles.container}>
+      <SectionTitle text='Campos' />
       <form onSubmit={submitForm}>
-        <input type='text' value={url} onChange={e => setUrl(e.target.value)} placeholder='Enter URL' />
+        <Input type='text' textLabel='Título' value={url} handleChange={handleSetUrl} textHolder='Enter URL' />
         <button type='submit'>Generate Preview</button>
       </form>
     </div>
