@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import { useTranslations, useLocale } from "next-intl";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CardSteps from "../CardSteps";
 import Button from "@/components/Button";
 
@@ -16,6 +16,10 @@ const Step2 = ({ userStep }: Steps2Props) => {
   const handleButtonClick = () => {
     setIsButtonDisabled(false);
   };
+
+  useEffect(() => {
+    setIsButtonDisabled(userStep !== 7);
+  }, [userStep]);
 
   return (
     <div className={styles.container}>
@@ -47,7 +51,7 @@ const Step2 = ({ userStep }: Steps2Props) => {
             title={dict("button")}
             onclick={handleButtonClick}
             isDisabled={isButtonDisabled}
-            styleName={isButtonDisabled ? "btn_disabled_sequence" : "btn"}
+            styleName={isButtonDisabled ? "btn_disabled_sequence" : "btn_outlined"}
           />
         </div>
       </div>
