@@ -1,53 +1,59 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, 100%);
-  @include flex(row, space-evenly, flex-start, 10px);
-  flex-wrap: wrap;
-  border-radius: 4.775px;
-  overflow-y: auto;
-  row-gap: 20px;
-  padding-right: 10px;
-  .template_container {
-    .title {
-      @include fontSize-fontWeight(14px, 400);
-      color: $darkGrey;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    .template {
-      @include width-height(350px, 300px);
-      @include flex(row, space-between, flex-start);
-      border: 0.298px solid transparent;
-      border-radius: 4.775px;
-      padding: 10px;
-      cursor: pointer;
-      transition: border 0.3s ease;
-      .sm_card,
-      .lg_card {
-        border: 0.298px solid $lightGrey;
-        border-radius: 2.495px;
-        background-color: $greyBackground;
-        img {
-          @include width-height(100%, 100%);
+  .flakes {
+    @include width-height(100%, 100%);
+    @include flex(row, space-evenly, flex-start, 10px);
+    flex-wrap: wrap;
+    border-radius: 4.775px;
+    overflow-y: auto;
+    row-gap: 20px;
+    padding-right: 10px;
+    .template_container {
+      .title {
+        @include fontSize-fontWeight(14px, 400);
+        color: $darkGrey;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .template {
+        @include width-height(345px, 300px);
+        @include flex(row, space-between, flex-start);
+        border: 0.298px solid transparent;
+        border-radius: 4.775px;
+        padding: 10px;
+        cursor: pointer;
+        transition: border 0.3s ease;
+        .sm_card,
+        .lg_card {
+          border: 0.298px solid $lightGrey;
+          border-radius: 2.495px;
+          background-color: $greyBackground;
+          img {
+            @include width-height(100%, 100%);
+          }
+        }
+        .sm_card {
+          @include width-height(170px, 120px);
+        }
+        .lg_card {
+          @include width-height(145px, 100%);
+        }
+        &:hover {
+          border: 0.298px solid $lightGrey;
         }
       }
-      .sm_card {
-        @include width-height(170px, 120px);
-      }
-      .lg_card {
-        @include width-height(145px, 100%);
-      }
-      &:hover {
-        border: 0.298px solid $lightGrey;
-      }
-    }
-    .selected_template {
-      border: 0.298px solid $orange;
-      &:hover {
+      .selected_template {
         border: 0.298px solid $orange;
+        &:hover {
+          border: 0.298px solid $orange;
+        }
       }
     }
+  }
+  .loader {
+    @include width-height(100%, 60vh);
+    @include flex(row, center, center);
   }
 }
 
