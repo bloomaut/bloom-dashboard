@@ -11,7 +11,7 @@ interface Powerapp {
   variables_in_use: Variablesinuse[];
 }
 
-interface Variablesinuse {
+export interface Variablesinuse {
   key: string;
   name: string;
   target: string;

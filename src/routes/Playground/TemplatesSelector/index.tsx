@@ -2,7 +2,6 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import { useState } from "react";
 import { useFlakesContext } from "@/context/FlakesContext";
 
 interface Context {
