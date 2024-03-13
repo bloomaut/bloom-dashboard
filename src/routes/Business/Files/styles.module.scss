@@ -2,5 +2,5 @@
 
 .container {
   @include width-height(100%, 100%);
-      background-color: red;
+  @include flex(column, flex-start, flex-start, 20px);
 }

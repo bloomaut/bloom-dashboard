@@ -1,0 +1,39 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, 140px);
+  @include flex(row, center, center);
+  background: $greyBackground;
+  border-radius: 8px;
+  border: 2px dashed $lightGrey;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+  .content {
+    @include flex(row, center, center, 10px);
+    transition: all 100ms ease-in-out;
+    img {
+      @include width-height(100%, 80px);
+      object-fit: contain;
+    }
+    .text {
+      @include fontSize-fontWeight(16px, 400);
+      color: $darkGrey;
+    }
+  }
+  .name {
+    display: inline-block;
+    max-width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &:hover {
+    border-color: $orange;
+    .content {
+      transform: scale(1.2);
+    }
+  }
+}
+.isActive {
+  border: 1px solid $orange;
+}
