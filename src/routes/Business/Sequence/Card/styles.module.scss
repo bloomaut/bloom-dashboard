@@ -1,22 +1,22 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, auto);
+  @include width-height(95%, auto);
   @include flex(column, flex-start, flex-start, 15px);
   border-radius: 8px;
   border: 1px solid $lightGrey;
   background: $white;
-  padding: 15px;
+  padding: 10px;
   color: $lightGrey;
   .header {
     @include flex(row, flex-start, center, 10px);
     .step,
     .title {
-      @include fontSize-fontWeight(21px, 400);
+      @include fontSize-fontWeight(18px, 400);
     }
   }
   .description {
-    @include fontSize-fontWeight(18px, 400);
+    @include fontSize-fontWeight(16px, 400);
   }
   &:nth-child(2),
   &:nth-child(3),
@@ -24,5 +24,21 @@
     border-color: $lighterGrey;
     color: $lighterGrey;
     background: $greyBackground;
+  }
+}
+
+@media (min-width: $queryXl) {
+  .container {
+    width: 100%;
+    padding: 15px;
+    .header {
+      .step,
+      .title {
+        font-size: 22px;
+      }
+    }
+    .description {
+      font-size: 18px;
+    }
   }
 }
