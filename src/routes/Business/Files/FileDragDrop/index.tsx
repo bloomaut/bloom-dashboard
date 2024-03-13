@@ -52,7 +52,13 @@ const FileDragDrop = ({ files, setFiles, logo, setLogo }: FileDragDropProps) => 
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
       {files && files.length > 0 ? (
-        <>{fileRejections[0]?.errors ? <p className={styles.name}>Error</p> : <p>{lastFileName}</p>}</>
+        <>
+          {fileRejections[0]?.errors ? (
+            <p className={styles.name}>Error</p>
+          ) : (
+            <p className={styles.name}>{lastFileName}</p>
+          )}
+        </>
       ) : (
         <div className={styles.content}>
           <Image src={fileImage} alt='cloud-icon' />

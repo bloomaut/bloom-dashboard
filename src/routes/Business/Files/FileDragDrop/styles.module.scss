@@ -8,6 +8,13 @@
   border: 2px dashed $lightGrey;
   cursor: pointer;
   transition: all 100ms ease-in-out;
+  .name {
+    display: inline-block;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .content {
     @include flex(row, center, center, 10px);
     transition: all 100ms ease-in-out;
@@ -16,13 +23,7 @@
       object-fit: contain;
     }
   }
-  .name {
-    display: inline-block;
-    max-width: 280px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+
   &:hover {
     border-color: $orange;
     .content {

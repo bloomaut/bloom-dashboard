@@ -22,7 +22,7 @@
         span {
           @include fontSize-fontWeight(14px, 400);
           display: inline-block;
-          max-width: 200px;
+          max-width: 100px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;

@@ -19,7 +19,8 @@ const FileLogo = ({ file }: FileLogoProps) => {
 
   return (
     <div className={styles.card}>
-      <Image src={image} alt='logo' width={150} height={150} />
+      <Image src={image} alt='logo' width={100} height={100} />
+      <p>Logo</p>
     </div>
   );
 };

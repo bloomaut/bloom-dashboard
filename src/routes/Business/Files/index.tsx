@@ -17,7 +17,7 @@ const Files = () => {
 
   return (
     <div className={styles.container}>
-      <Subtitle text={files && files.length >= 1 ? "Arrojá tus archivos aquí" : "Subí tu logo para iniciar"} />
+      <Subtitle text={logo ? "Arrojá tus archivos aquí" : "Subí tu logo para iniciar"} />
       <FileDragDrop files={files} setFiles={setFiles} logo={logo} setLogo={setLogo} />
       <div className={styles.files}>
         {logo && <FileLogo file={logo} />}
