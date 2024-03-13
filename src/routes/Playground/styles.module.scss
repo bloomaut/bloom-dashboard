@@ -3,8 +3,9 @@
 .container {
   @include width-height(100%, 100%);
   @include flex(column, center, center, 30px);
+  max-width: 1200px;
   .breadcrumb_container {
-    @include width-height(96%, 10%);
+    @include width-height(100%, 10%);
     @include flex(row, flex-start, flex-start);
   }
   .inner_container {

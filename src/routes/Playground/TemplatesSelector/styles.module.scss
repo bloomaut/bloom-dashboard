@@ -17,7 +17,7 @@
         text-align: center;
       }
       .template {
-        @include width-height(345px, 300px);
+        @include width-height(320px, 300px);
         @include flex(row, space-between, flex-start);
         border: 0.298px solid transparent;
         border-radius: 4.775px;
@@ -34,10 +34,10 @@
           }
         }
         .sm_card {
-          @include width-height(170px, 120px);
+          @include width-height(160px, 110px);
         }
         .lg_card {
-          @include width-height(145px, 100%);
+          @include width-height(130px, 100%);
         }
         &:hover {
           border: 0.298px solid $lightGrey;
