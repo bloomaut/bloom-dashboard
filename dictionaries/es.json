@@ -44,6 +44,7 @@
         "stepper_subtitle2": "Compartir y Utilizar"
       },
       "stepper_one": {
+        "title": "Pasos",
         "title_one": "Introducción",
         "subtitle_one": "Introducción y entendimiento de la plataforma. Video explicativo",
         "title_two": "Jugar",
@@ -51,9 +52,10 @@
         "title_three": "Carga",
         "subtitle_three": "Carga de datos de tu empresa y archivos de marca para tus diseños",
         "title_four": "Diseño",
-        "subtitle_four": "Nos encargamos del diseñocon nuestra herramienta UiTool"
+        "subtitle_four": "Nos encargamos del diseño con nuestra herramienta UiTool"
       },
       "stepper_two": {
+        "title": "Pasos",
         "title_one": "Distribuir",
         "subtitle_one": "Genera los links para tus clientes y distribuí tus apps personalizadas",
         "title_two": "Gestionar",

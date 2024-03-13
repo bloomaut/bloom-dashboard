@@ -13,7 +13,7 @@ const Step1 = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Pasos</h1>
+      <h1>{dict("title")}</h1>
       <div className={styles.step_container}>
         <div onClick={() => handleStepClick(1)}>
           <Steps

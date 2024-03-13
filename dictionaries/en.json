@@ -44,6 +44,7 @@
         "stepper_subtitle2": "Share and Use"
       },
       "stepper_one": {
+        "title": "Steps",
         "title_one": "Introduction",
         "subtitle_one": "Introduction and Understanding of the Platform. Explanatory Video",
         "title_two": "Play",
@@ -54,6 +55,7 @@
         "subtitle_four": "Take care of the design with our UiTool tool"
       },
       "stepper_two": {
+        "title": "Steps",
         "title_one": "Distribute",
         "subtitle_one": "Generate links for your clients and distribute your customized apps",
         "title_two": "Manage",
