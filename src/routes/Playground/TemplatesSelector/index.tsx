@@ -13,11 +13,10 @@ interface Context {
 }
 
 const TemplatesSelector = () => {
-  const { flakes, loading, selectedFlakeId } = useFlakesContext() as Context;
-  const [flakeId, setFlakeId] = useState(selectedFlakeId);
+  const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext() as Context;
 
   const changeFlakeId = (id: string) => {
-    setFlakeId(id);
+    setSelectedFlakeId(id);
   };
 
   return (
@@ -29,7 +28,7 @@ const TemplatesSelector = () => {
             <div className={styles.template_container} key={app._id}>
               <h4 className={styles.title}>{app.skinx.title}</h4>
               <div
-                className={`${styles.template} ${flakeId === app._id ? styles.selected_template : ""}`}
+                className={`${styles.template} ${selectedFlakeId === app._id ? styles.selected_template : ""}`}
                 onClick={() => changeFlakeId(app._id)}
               >
                 <div className={styles.sm_card}>
