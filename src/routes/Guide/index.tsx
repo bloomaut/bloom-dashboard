@@ -6,17 +6,21 @@ import { get } from "@/services/fetch";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Header from "./Header";
+import LoadingSpinner from "@/components/Loading";
 
 const GuidePage = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [step, setStep] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserStep = async () => {
+      setIsLoading(true);
       const userData = await get("small-business/me", "NEXT_PUBLIC_API_DASH");
       if (userData.statusCode === 200) {
         const userStep = userData.result.data.smallBusiness.step;
         setStep(userStep);
+        setIsLoading(false);
       } else {
         console.log("Acá va a ir un toast");
       }
@@ -27,8 +31,14 @@ const GuidePage = () => {
   return (
     <section className={styles.container}>
       <Header handleStepChange={setActiveStep} activeStep={activeStep} />
-      {activeStep === 1 && <Step1 userStep={step} />}
-      {activeStep === 2 && <Step2 userStep={step} />}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {activeStep === 1 && <Step1 userStep={step} />}
+          {activeStep === 2 && <Step2 userStep={step} />}
+        </>
+      )}
     </section>
   );
 };
