@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { locales } from "@/navigation";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { Providers } from "@/store/provider";
 import { notFound } from "next/navigation";
 import { Barlow } from "next/font/google";
 import "@/styles/globals.scss";
@@ -28,14 +29,16 @@ export default function RootLayout({
   const messages = useMessages();
 
   return (
-    <UserProvider>
-      <html lang={locale}>
-        <body className={barlow.className}>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </UserProvider>
+    <Providers>
+      <UserProvider>
+        <html lang={locale}>
+          <body className={barlow.className}>
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </body>
+        </html>
+      </UserProvider>
+    </Providers>
   );
 }
