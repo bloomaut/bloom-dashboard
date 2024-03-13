@@ -11,7 +11,7 @@
   .inner_container {
     @include width-height(100%, 100%);
     display: grid;
-    grid-template-columns: 56% 20% 20%;
+    grid-template-columns: 55% 19% 22%;
     justify-content: center;
     align-items: flex-start;
     gap: 20px;

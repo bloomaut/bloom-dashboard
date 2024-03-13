@@ -2,21 +2,21 @@
 
 .container {
   @include width-height(100%, 100%);
-  @include flex(column,center, center);
+  @include flex(column, flex-start, center);
   .phone_container {
     @include flex(column, flex-start, center);
-    @include width-height(240px, 450px);
+    @include width-height(255px, 530px);
     position: relative;
     .phone {
-      @include width-height(240px, 450px);
+      @include width-height(100%, 100%);
       position: absolute;
     }
     .wa {
-      @include width-height(240px, 450px);
+      @include width-height(100%, 100%);
       position: absolute;
     }
     .phone_inner_container {
-      @include width-height(224px, 430px);
+      @include width-height(100%, 100%);
       position: absolute;
       top: 10px;
       border: none;
@@ -29,5 +29,4 @@
       }
     }
   }
-    
 }
