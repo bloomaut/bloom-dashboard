@@ -31,8 +31,8 @@
         "copy_error": "Error copying URL"
       }
     },
-    "playground":{
-      "phoneCase":{
+    "playground": {
+      "phoneCase": {
         "today": "Today"
       }
     },
@@ -41,6 +41,20 @@
       "stepper_subtitle1": "Know, Play, and Load",
       "stepper_title2": "Section 2",
       "stepper_subtitle2": "Share and Use"
+    },
+    "business": {
+      "sequence": {
+        "title": "Sequence",
+        "card_title_01": "Upload commercial information",
+        "card_title_02": "I uploaded your company logo",
+        "card_title_03": "Descriptive documents",
+        "card_title_04": "Flyer, brochure, brandin or advertising",
+        "card_description_01": "With this context information we design the content and conversation of the chatbots. Your website helps",
+        "card_description_02": "From the logo we automatically take the color palette that you can then edit",
+        "card_description_03": "You can attach the amount of information you consider necessary for your business",
+        "card_description_04": "I uploaded files related to your business to extract information",
+        "button": "I finished loading the data"
+      }
     }
   }
 }

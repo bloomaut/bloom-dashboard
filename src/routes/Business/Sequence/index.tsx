@@ -4,6 +4,7 @@ import Subtitle from "../Subtitle";
 import Card from "./Card";
 import styles from "./styles.module.scss";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export interface ContentProps {
   step: number;
@@ -13,28 +14,28 @@ export interface ContentProps {
 
 const Sequence = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const dict = useTranslations("dict.business.sequence");
 
   const content: ContentProps[] = [
     {
       step: 1,
-      title: "Cargar información del negocio",
-      description:
-        "Con esta información de contexto diseñamos el contenido y la conversación de los chatbots. Tu sitio web ayuda",
+      title: `${dict("card_title_01")}`,
+      description: `${dict("card_description_01")}`,
     },
     {
       step: 2,
-      title: "Subí el logo de tu empresa",
-      description: "Del logo tomamos automáticamente la paleta de color que luego podrás editar",
+      title: `${dict("card_title_02")}`,
+      description: `${dict("card_description_02")}`,
     },
     {
       step: 3,
-      title: "Documentos descriptivos",
-      description: "Podes adjuntar la cantidad de información que consideres necesaria para tu negocio ",
+      title: `${dict("card_title_03")}`,
+      description: `${dict("card_description_03")}`,
     },
     {
       step: 4,
-      title: "Flyer, brochure, brandin o publicidad",
-      description: "Subí archivos referentes a tu negocio para extraer informacion",
+      title: `${dict("card_title_04")}`,
+      description: `${dict("card_description_04")}`,
     },
   ];
 
@@ -45,7 +46,7 @@ const Sequence = () => {
 
   return (
     <div className={styles.container}>
-      <Subtitle text='Secuencia' />
+      <Subtitle text={dict("title")} />
       <div className={styles.cards_container}>
         {content.map((data, index) => (
           <Card key={index} data={data} />
@@ -53,7 +54,7 @@ const Sequence = () => {
       </div>
       <div className={styles.btn_container}>
         <Button
-          title='Terminé de cargar los datos'
+          title={dict("button")}
           onclick={handleButtonClick}
           isDisabled={isButtonDisabled}
           styleName={isButtonDisabled ? "btn_disabled_sequence" : "btn"}

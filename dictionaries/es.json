@@ -31,8 +31,8 @@
         "copy_error": "Error al copiar URL"
       }
     },
-    "playground":{
-      "phoneCase":{
+    "playground": {
+      "phoneCase": {
         "today": "Hoy"
       }
     },
@@ -41,6 +41,20 @@
       "stepper_subtitle1": "Conocer, Jugar y Cargar",
       "stepper_title2": "Sección 2",
       "stepper_subtitle2": "Compartir y Utilizar"
+    },
+    "business": {
+      "sequence": {
+        "title": "Secuencia",
+        "card_title_01": "Cargar información del negocio",
+        "card_title_02": "Subí el logo de tu empresa",
+        "card_title_03": "Documentos descriptivos",
+        "card_title_04": "Flyer, brochure, brandin o publicidad",
+        "card_description_01": "Con esta información de contexto diseñamos el contenido y la conversación de los chatbots. Tu sitio web ayuda",
+        "card_description_02": "Del logo tomamos automáticamente la paleta de color que luego podrás editar",
+        "card_description_03": "Podes adjuntar la cantidad de información que consideres necesaria para tu negocio",
+        "card_description_04": "Subí archivos referentes a tu negocio para extraer informacion",
+        "button": "Terminé de cargar los datos"
+      }
     }
   }
 }
