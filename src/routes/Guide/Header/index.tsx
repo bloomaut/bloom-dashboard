@@ -1,4 +1,3 @@
-"use client";
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 
