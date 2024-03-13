@@ -2,9 +2,10 @@
 
 .container {
   @include width-height(100%, 100%);
-  @include flex(column, flex-start, flex-start, 30px);
+  @include flex(column, space-evenly, flex-start);
   .cards_container {
-    @include flex(column, flex-start, flex-start, 20px);
+    @include width-height(100%, 100%);
+    @include flex(column, space-evenly, flex-start);
   }
   .btn_container {
     @include width-height(95%, auto);
