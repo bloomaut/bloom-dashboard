@@ -22,21 +22,21 @@ const Step2 = ({ userStep }: Steps2Props) => {
       <h1>{dict("title")}</h1>
       <div className={styles.step_container}>
         <CardSteps
-          step_number={1}
+          step_number={5}
           title={dict("title_one")}
           subtitle={dict("subtitle_one")}
           isActive={userStep >= 5}
           linkTo={`/${locale}/`}
         />
         <CardSteps
-          step_number={2}
+          step_number={6}
           title={dict("title_two")}
           subtitle={dict("subtitle_two")}
           isActive={userStep >= 6}
           linkTo={`/${locale}/`}
         />
         <CardSteps
-          step_number={3}
+          step_number={7}
           title={dict("title_three")}
           subtitle={dict("subtitle_three")}
           isActive={userStep >= 7}

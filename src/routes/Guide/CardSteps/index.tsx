@@ -18,7 +18,7 @@ const CardSteps = ({ step_number, title, subtitle, isActive, linkTo }: StepsProp
       <div className={styles.container}>
         <span className={styles.step_number}>{step_number}</span>
         <div className={styles.text_container}>
-          <h1>{title} </h1>
+          <h2>{title} </h2>
           <p>{subtitle} </p>
         </div>
       </div>
