@@ -8,6 +8,7 @@ import doc from "@/../public/icons/doc.svg";
 import pdf from "@/../public/icons/pdf.svg";
 import excel from "@/../public/icons/excel.svg";
 import file from "@/../public/icons/file.svg";
+import useFormattedDate from "@/hooks/useFormattedDate";
 
 interface FileCardProps {
   docType: string;
@@ -17,6 +18,8 @@ interface FileCardProps {
 }
 
 const FileCard = ({ title, docType, updated, onDelete }: FileCardProps) => {
+  const formattedDate = useFormattedDate(updated);
+
   return (
     <div className={styles.card}>
       <div className={styles.header}>
@@ -31,7 +34,7 @@ const FileCard = ({ title, docType, updated, onDelete }: FileCardProps) => {
             File Name: <span>{title}</span>
           </p>
           <p className={styles.updated}>
-            Last Updated: <span>{updated}</span>
+            Last Updated: <span>{formattedDate}</span>
           </p>
         </div>
       </div>

@@ -48,3 +48,18 @@
     }
   }
 }
+
+@media (min-width: $queryLg) {
+  .card {
+    .header {
+      .content {
+        .title,
+        .updated {
+          span {
+            max-width: 200px;
+          }
+        }
+      }
+    }
+  }
+}
