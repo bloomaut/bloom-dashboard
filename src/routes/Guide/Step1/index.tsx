@@ -18,28 +18,28 @@ const Step1 = ({ userStep }: Steps1Props) => {
           step_number={1}
           title={dict("title_one")}
           subtitle={dict("subtitle_one")}
-          isActive={userStep === 1}
+          isActive={userStep >= 1}
           linkTo={`/${locale}/introduction`}
         />
         <CardSteps
           step_number={2}
           title={dict("title_two")}
           subtitle={dict("subtitle_two")}
-          isActive={userStep === 2}
+          isActive={userStep >= 2}
           linkTo={`/${locale}/playground`}
         />
         <CardSteps
           step_number={3}
           title={dict("title_three")}
           subtitle={dict("subtitle_three")}
-          isActive={userStep === 3}
+          isActive={userStep >= 3}
           linkTo={`/${locale}/my-business`}
         />
         <CardSteps
           step_number={4}
           title={dict("title_four")}
           subtitle={dict("subtitle_four")}
-          isActive={userStep === 4}
+          isActive={userStep >= 4}
           linkTo={`/${locale}/design`}
         />
       </div>
