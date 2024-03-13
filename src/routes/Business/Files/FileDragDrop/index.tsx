@@ -1,16 +1,34 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import fileImage from "/public/icons/cloud.svg";
+import { Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { useState } from "react";
 
-interface StepsProps {
-  files: File[] | undefined;
-  setFiles: React.Dispatch<React.SetStateAction<File[] | undefined>>;
+interface FileDragDropProps {
+  files: File[];
+  setFiles: Dispatch<SetStateAction<File[]>>;
+  logo?: File | null;
+  setLogo?: Dispatch<SetStateAction<File | null>>;
 }
 
-const FileDragDrop = ({ files, setFiles }: StepsProps) => {
+const FileDragDrop = ({ files, setFiles, logo, setLogo }: FileDragDropProps) => {
+  const [logoUploaded, setLogoUploaded] = useState(false);
+  const { notify, notifyError } = useMessageToast();
+
   const onDrop = (acceptedFiles: File[]) => {
-    setFiles(prevFiles => (prevFiles ? [...prevFiles, ...acceptedFiles] : acceptedFiles));
+    if (!logo) {
+      if (acceptedFiles.length > 0 && !acceptedFiles[0].type.startsWith("image/")) {
+        notifyError("Debes subir primero el Logo en formato PNG, JPEG, JPG, WEBP ");
+        return;
+      }
+      if (setLogo) {
+        setLogo(acceptedFiles[0]);
+      }
+    } else {
+      setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
+    }
   };
 
   /* Config of dropzone */
@@ -19,7 +37,7 @@ const FileDragDrop = ({ files, setFiles }: StepsProps) => {
     accept: {
       "application/vnd.ms-excel": [".xls"],
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-      "image/*": [".png", ".gif", ".jpeg", ".jpg"],
+      "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp"],
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
       "application/msword": [".doc"],
       "text/plain": [".txt"],
@@ -28,12 +46,12 @@ const FileDragDrop = ({ files, setFiles }: StepsProps) => {
     },
   });
 
-  const lastFileName = files && files.length > 0 ? files[files.length - 1].name : "";
+  const lastFileName = files && files.length > 0 && files[files.length - 1].name;
 
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
-      {files ? (
+      {files && files.length > 0 ? (
         <>{fileRejections[0]?.errors ? <p className={styles.name}>Error</p> : <p>{lastFileName}</p>}</>
       ) : (
         <div className={styles.content}>

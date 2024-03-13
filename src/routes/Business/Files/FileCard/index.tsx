@@ -13,11 +13,10 @@ interface FileCardProps {
   docType: string;
   title: string;
   updated: number;
+  onDelete: () => void;
 }
 
-const FileCard = ({ title, docType, updated }: FileCardProps) => {
-  console.log(docType);
-
+const FileCard = ({ title, docType, updated, onDelete }: FileCardProps) => {
   return (
     <div className={styles.card}>
       <div className={styles.header}>
@@ -40,7 +39,7 @@ const FileCard = ({ title, docType, updated }: FileCardProps) => {
         <button className={styles.btn}>
           <Image className={styles.controls_icons} src={folderIcon} alt='folder-icon' />
         </button>
-        <button className={styles.btn}>
+        <button className={styles.btn} onClick={onDelete}>
           <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
         </button>
       </div>
