@@ -12,6 +12,16 @@
   }
 }
 
+.btn_disabled_sequence {
+  background: $white;
+  border: 1px solid $lighterGrey;
+  color: $lighterGrey;
+  &:hover {
+    background-color: $white;
+    cursor: default;
+  }
+}
+
 .btn_outline {
   @extend .btn;
   background: transparent;

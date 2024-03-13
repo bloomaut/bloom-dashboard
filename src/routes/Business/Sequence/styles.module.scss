@@ -2,5 +2,21 @@
 
 .container {
   @include width-height(100%, 100%);
-  background-color: blue;
+  @include flex(column, space-evenly, flex-start);
+  .cards_container {
+    @include width-height(100%, 100%);
+    @include flex(column, space-evenly, flex-start);
+  }
+  .btn_container {
+    @include width-height(95%, auto);
+    @include flex(row, flex-end, center);
+  }
+}
+
+@media (min-width: $queryXl) {
+  .container {
+    .btn_container {
+      width: 100%;
+    }
+  }
 }
