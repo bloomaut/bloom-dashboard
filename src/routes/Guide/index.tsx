@@ -1,18 +1,34 @@
 "use client";
-import { useState } from "react";
 import styles from "./styles.module.scss";
+import { useState, useEffect } from "react";
+import { get } from "@/services/fetch";
+//Componentes
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Header from "./Header";
 
 const GuidePage = () => {
   const [activeStep, setActiveStep] = useState(1);
+  const [step, setStep] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchUserStep = async () => {
+      const userData = await get("small-business/me", "NEXT_PUBLIC_API_DASH");
+      if (userData.statusCode === 200) {
+        const userStep = userData.result.data.smallBusiness.step;
+        setStep(userStep);
+      } else {
+        console.log("Acá va a ir un toast");
+      }
+    };
+    fetchUserStep();
+  }, []);
 
   return (
     <section className={styles.container}>
       <Header handleStepChange={setActiveStep} activeStep={activeStep}></Header>
-      {activeStep === 1 && <Step1 />}
-      {activeStep === 2 && <Step2 />}
+      {step === 1 && <Step1 userStep={step} />}
+      {step === 2 && <Step2 userStep={step} />}
     </section>
   );
 };

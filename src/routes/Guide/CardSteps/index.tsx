@@ -12,7 +12,7 @@ interface StepsProps {
   linkTo: string;
 }
 
-const Steps = ({ step_number, title, subtitle, isActive, linkTo }: StepsProps) => {
+const CardSteps = ({ step_number, title, subtitle, isActive, linkTo }: StepsProps) => {
   return (
     <Link href={linkTo}>
       <div className={`${styles.main_container} ${isActive ? styles.active : styles.inactive}`}>
@@ -36,4 +36,4 @@ const Steps = ({ step_number, title, subtitle, isActive, linkTo }: StepsProps) =
   );
 };
 
-export default Steps;
+export default CardSteps;
