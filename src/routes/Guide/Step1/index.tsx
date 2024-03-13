@@ -3,9 +3,11 @@ import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import Steps from "../Steps";
 import { useState } from "react";
+import { useLocale } from "next-intl";
 
 const Step1 = () => {
   const dict = useTranslations("dict.guide.stepper_one");
+  const locale = useLocale();
   const [activeStep, setActiveStep] = useState(1);
   const handleStepClick = (stepNumber: number) => {
     setActiveStep(stepNumber);
@@ -21,6 +23,7 @@ const Step1 = () => {
             title={dict("title_one")}
             subtitle={dict("subtitle_one")}
             isActive={activeStep === 1}
+            linkTo={`/${locale}/introduction`}
           />
         </div>
         <div onClick={() => handleStepClick(2)}>
@@ -29,6 +32,7 @@ const Step1 = () => {
             title={dict("title_two")}
             subtitle={dict("subtitle_two")}
             isActive={activeStep === 2}
+            linkTo={`/${locale}/playground`}
           />
         </div>
         <div onClick={() => handleStepClick(3)}>
@@ -37,6 +41,7 @@ const Step1 = () => {
             title={dict("title_three")}
             subtitle={dict("subtitle_three")}
             isActive={activeStep === 3}
+            linkTo={`/${locale}/my-business`}
           />
         </div>
         <div onClick={() => handleStepClick(4)}>
@@ -45,6 +50,7 @@ const Step1 = () => {
             title={dict("title_four")}
             subtitle={dict("subtitle_four")}
             isActive={activeStep === 4}
+            linkTo={`/${locale}/design`}
           />
         </div>
       </div>

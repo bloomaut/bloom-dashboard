@@ -1,7 +1,7 @@
 import Banner from "./Banner";
 import styles from "./styles.module.scss";
-import { useState } from "react";
 import PopupShare from "@/components/PopupShare";
+import { useState } from "react";
 
 const HomePage = () => {
   const [showPopup, setShowPopup] = useState(false);
