@@ -8,25 +8,15 @@
   border: 2px dashed $lightGrey;
   cursor: pointer;
   transition: all 100ms ease-in-out;
-  .name {
-    display: inline-block;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .content {
-    @include flex(row, center, center, 10px);
-    transition: all 100ms ease-in-out;
-    img {
-      @include width-height(100%, 80px);
-      object-fit: contain;
-    }
-  }
-
   &:hover {
     border-color: $orange;
-    .content {
+  }
+  img {
+    @include width-height(100%, 80px);
+    @include flex(row, center, center, 10px);
+    transition: all 100ms ease-in-out;
+    object-fit: contain;
+    &:hover {
       transform: scale(1.2);
     }
   }

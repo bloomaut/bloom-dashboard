@@ -4,7 +4,6 @@ import fileImage from "/public/icons/cloud.svg";
 import { Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { useState } from "react";
 
 interface FileDragDropProps {
   files: File[];
@@ -14,7 +13,6 @@ interface FileDragDropProps {
 }
 
 const FileDragDrop = ({ files, setFiles, logo, setLogo }: FileDragDropProps) => {
-  const [logoUploaded, setLogoUploaded] = useState(false);
   const { notify, notifyError } = useMessageToast();
 
   const onDrop = (acceptedFiles: File[]) => {
@@ -46,23 +44,17 @@ const FileDragDrop = ({ files, setFiles, logo, setLogo }: FileDragDropProps) => 
     },
   });
 
-  const lastFileName = files && files.length > 0 && files[files.length - 1].name;
-
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
       {files && files.length > 0 ? (
-        <>
-          {fileRejections[0]?.errors ? (
-            <p className={styles.name}>Error</p>
-          ) : (
-            <p className={styles.name}>{lastFileName}</p>
-          )}
-        </>
-      ) : (
-        <div className={styles.content}>
+        fileRejections[0]?.errors ? (
+          <p className={styles.name}>Error</p>
+        ) : (
           <Image src={fileImage} alt='cloud-icon' />
-        </div>
+        )
+      ) : (
+        <Image src={fileImage} alt='cloud-icon' />
       )}
     </div>
   );
