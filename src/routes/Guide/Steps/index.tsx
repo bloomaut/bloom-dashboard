@@ -12,19 +12,21 @@ interface StepsProps {
 
 const Steps = ({ step_number, title, subtitle, isActive }: StepsProps) => {
   return (
-    <div className={`${styles.container} ${isActive ? styles.active : styles.inactive}`}>
-      <h1 className={styles.step_number}>{step_number}</h1>
-      <div className={styles.text_container}>
-        <h2>{title} </h2>
-        <p>{subtitle} </p>
-      </div>
-      <div className={styles.check_container}>
-        <Image
-          src={isActive ? green_check : gray_check}
-          alt={isActive ? "Green check" : "Gray check"}
-          width={39}
-          height={30}
-        />
+    <div className={`${styles.main_container} ${isActive ? styles.active : styles.inactive}`}>
+      <span className={styles.step_number}>{step_number}</span>
+      <div className={styles.container}>
+        <div className={styles.text_container}>
+          <h1>{title} </h1>
+          <p>{subtitle} </p>
+        </div>
+        <div className={styles.check_container}>
+          <Image
+            src={isActive ? green_check : gray_check}
+            alt={isActive ? "Green check" : "Gray check"}
+            width={39}
+            height={30}
+          />
+        </div>
       </div>
     </div>
   );
