@@ -32,7 +32,7 @@ const Form = ({ submitForm }: PropsForm) => {
   return (
     <div className={styles.container}>
       <SectionTitle text={dict("title")} />
-      <h4>{dict("subtitle")}</h4>
+      <h4>*{dict("subtitle")}</h4>
       <form className={styles.form} onSubmit={submitForm}>
         <Input
           textLabel={dict("name")}
