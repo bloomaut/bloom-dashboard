@@ -2,34 +2,29 @@
 
 .container {
   height: inherit;
+  @include flex(column, center, flex-start, 5px);
+  h4 {
+    color: $lighterGrey;
+    @include fontSize-fontWeight(14px, 400);
+    white-space: nowrap;
+  }
   .form {
     @include width-height(100%, 100%);
-    position: relative;
-    overflow-y: auto;
-    .btn {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      background-color: $orange;
-      border: none;
-      border-radius: 4px;
-      padding: 10px 15px;
-      color: $white;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      &:hover {
-        background-color: $darkOrange;
+    .btn_container {
+      @include flex(column, flex-end, flex-end);
+      .btn {
+        margin-top: 10px;
+        background-color: $orange;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 15px;
+        color: $white;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        &:hover {
+          background-color: $darkOrange;
+        }
       }
     }
   }
-}
-
-.form::-webkit-scrollbar {
-  width: 5px;
-  background-color: $greyBackground;
-}
-
-.form::-webkit-scrollbar-thumb {
-  background-color: $orange;
-  border-radius: 10px;
 }

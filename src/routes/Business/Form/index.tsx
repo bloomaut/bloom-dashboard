@@ -54,7 +54,9 @@ const Form = () => {
           value=''
           handleChange={handleChange}
         />
-        <button className={styles.btn}>Guardar</button>
+        <div className={styles.btn_container}>
+          <button className={styles.btn}>Guardar</button>
+        </div>
       </form>
     </div>
   );
