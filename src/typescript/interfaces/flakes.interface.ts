@@ -12,8 +12,8 @@ export interface Variablesinuse {
   name: string;
   target: string;
   description: string;
-  placeholder: string;
-  tableColumns: any[];
+  placeholder?: string;
+  tableColumns?: any[];
   value?: string;
 }
 

@@ -40,7 +40,7 @@ const Playground = () => {
     <FlakesProvider>
       <section className={styles.container}>
         <div className={styles.breadcrumb_container}>
-          <Breadcrumb title={"Simulador"} route={"introduction"} />
+          <Breadcrumb title={"Simulador"} />
         </div>
         <div className={styles.inner_container}>
           <TemplatesSelector />

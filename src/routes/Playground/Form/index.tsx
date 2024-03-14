@@ -82,7 +82,7 @@ const Form = () => {
                 textLabel={info.description}
                 value={info.value!}
                 handleChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
-                textHolder={info.placeholder}
+                textHolder={info.placeholder!}
                 name={info.name}
               />
             ))}

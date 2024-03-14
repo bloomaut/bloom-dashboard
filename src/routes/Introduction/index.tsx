@@ -61,7 +61,7 @@ const IntroductionPage = () => {
   return (
     <section className={styles.container}>
       <div className={styles.breadcrumb_container}>
-        <Breadcrumb title={"Introducción"} route={"design"} />
+        <Breadcrumb title={"Introducción"} />
       </div>
       <div className={styles.inner_container}>
         <div className={styles.content}>

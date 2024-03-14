@@ -1,4 +1,5 @@
 import { get } from "@/services/fetch";
+import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { ENV } from "@/typescript/types/environment.enum";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -24,7 +25,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const allFlakes = await get("small/flakes/playground", ENV.IUTOOL);
+      const allFlakes = await get("small/flakes/playground", ENV.UITOOL);
       if (allFlakes.statusCode === 200) {
         setFlakes(allFlakes.result.powerapps);
         setSelectedFlakeId(allFlakes.result.powerapps[0]._id);
