@@ -47,7 +47,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     } else {
       // Handle other types of errors here
       console.error("----------Other Error----------", error);
-      return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
+      return NextResponse.json({ error: error }, { status: 500 });
     }
   }
 });
