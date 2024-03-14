@@ -36,6 +36,7 @@ const Form = () => {
           name='nombre'
           value=''
           handleChange={handleChange}
+          isDescription={true}
         />
         <Input
           textLabel='Instagram'

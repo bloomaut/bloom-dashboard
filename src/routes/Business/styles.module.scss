@@ -10,12 +10,13 @@
     @include flex(row, flex-start, flex-start);
   }
   .inner_container {
-    @include width-height(100%, 100%);
+    @include width-height(100%, 90%);
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 30% 33% 33%;
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
+    overflow: hidden;
   }
 }
 
