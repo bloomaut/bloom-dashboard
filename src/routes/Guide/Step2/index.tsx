@@ -1,6 +1,5 @@
 import styles from "./styles.module.scss";
 import { useTranslations, useLocale } from "next-intl";
-import { useState } from "react";
 import CardSteps from "../CardSteps";
 import Button from "@/components/Button";
 
@@ -11,10 +10,9 @@ interface Steps2Props {
 const Step2 = ({ userStep }: Steps2Props) => {
   const dict = useTranslations("dict.guide.stepper_two");
   const locale = useLocale();
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleButtonClick = () => {
-    setIsButtonDisabled(false);
+    console.log("click");
   };
 
   return (
