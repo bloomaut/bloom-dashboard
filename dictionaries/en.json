@@ -36,6 +36,10 @@
         "today": "Today"
       }
     },
+    "breadcrumb": {
+      "breadcrumb_link": "Go back"
+    },
+
     "guide": {
       "header": {
         "stepper_title1": "Section 1",
@@ -66,6 +70,7 @@
       }
     },
     "business": {
+      "breadcrumb_title": "Data Upload",
       "sequence": {
         "title": "Sequence",
         "card_title_01": "Upload commercial information",
@@ -77,6 +82,20 @@
         "card_description_03": "You can attach the amount of information you consider necessary for your business",
         "card_description_04": "I uploaded files related to your business to extract information",
         "button": "I finished loading the data"
+      },
+      "form": {
+        "title": "Business Information",
+        "subtitle": "The more fields you complete, the better the result will be",
+        "name": "Name",
+        "placeholder_name": "Enter the name",
+        "website": "Website",
+        "placeholder_website": "Enter the website",
+        "description": "Description",
+        "placeholder_description": "Enter the description",
+        "placeholder_instagram": "Enter Instagram",
+        "phone": "Phone",
+        "placeholder_phone": "Enter the phone number",
+        "button": "Save"
       }
     }
   }

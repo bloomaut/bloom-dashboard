@@ -32,6 +32,7 @@ const Form = () => {
   useEffect(() => {
     if (formVariableData) {
       const { _id, variables_in_use } = formVariableData;
+      console.log(variables_in_use);
 
       const variablesData = variables_in_use.map(({ key, name, description, target, value }: Variablesinuse) => ({
         key,
@@ -55,8 +56,8 @@ const Form = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     console.log(formDataPost);
+    const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     console.log(response);
     // setFormDataPost(EmptyFormData);
   };
