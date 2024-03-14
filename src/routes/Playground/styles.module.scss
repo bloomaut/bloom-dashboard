@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, 100%);
+  @include width-height(100%, calc(100vh - 90px));
   @include flex(column, center, center, 30px);
   max-width: 1200px;
   .breadcrumb_container {
@@ -9,7 +9,7 @@
     @include flex(row, flex-start, flex-start);
   }
   .inner_container {
-    @include width-height(100%, 100%);
+    @include width-height(100%, 90%);
     display: grid;
     grid-template-columns: 55% 19% 22%;
     justify-content: center;

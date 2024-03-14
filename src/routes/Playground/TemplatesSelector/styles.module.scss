@@ -1,6 +1,7 @@
 @import "@/styles/theme.scss";
 
 .container {
+  height: inherit;
   .flakes {
     @include width-height(100%, 100%);
     @include flex(row, space-evenly, flex-start, 10px);
@@ -59,6 +60,7 @@
 
 .container::-webkit-scrollbar {
   width: 5px;
+  background-color: $greyBackground;
 }
 
 .container::-webkit-scrollbar-thumb {

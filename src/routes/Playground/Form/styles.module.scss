@@ -1,13 +1,14 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, 100%);
+  height: inherit;
   .form {
-    min-height: 500px;
+    @include width-height(100%, 100%);
     position: relative;
+    overflow-y: scroll;
     .btn {
       position: absolute;
-      top: 70%;
+      bottom: 0;
       right: 0;
       background-color: $orange;
       border: none;
@@ -21,4 +22,14 @@
       }
     }
   }
+}
+
+.form::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.form::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
 }
