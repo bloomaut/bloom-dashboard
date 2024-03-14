@@ -12,7 +12,6 @@ const GuidePage = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [step, setStep] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchUserStep = async () => {
@@ -22,10 +21,9 @@ const GuidePage = () => {
         const userStep = userData.result.data.smallBusiness.step;
         setStep(userStep);
         setIsLoading(false);
-        setIsLoggedIn(true);
       } else {
         console.log("Acá va a ir un toast");
-        setIsLoggedIn(false);
+        setStep(0);
       }
       setIsLoading(false);
     };
@@ -37,16 +35,10 @@ const GuidePage = () => {
       <Header handleStepChange={setActiveStep} activeStep={activeStep} />
       {isLoading ? (
         <LoadingSpinner />
-      ) : isLoggedIn ? ( // Si el usuario está logueado
+      ) : (
         <>
           {activeStep === 1 && <Step1 userStep={step} />}
           {activeStep === 2 && <Step2 userStep={step} />}
-        </>
-      ) : (
-        // Si no está logueado, cargar pasos deshabilitados
-        <>
-          {activeStep === 1 && <Step1 userStep={0} />}
-          {activeStep === 2 && <Step2 userStep={0} />}
         </>
       )}
     </section>
