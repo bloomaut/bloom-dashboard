@@ -8,6 +8,7 @@
     @include flex(column, flex-start, center);
     @include width-height(255px, 430px);
     position: relative;
+    margin-left: 20px;
     .phone {
       @include width-height(100%, 100%);
       position: absolute;
@@ -32,6 +33,7 @@
   }
   .dot_container {
     @include flex(row, center, center, 10px);
+    margin-left: 20px;
     .dot {
       display: block;
       @include width-height(10px, 10px);
