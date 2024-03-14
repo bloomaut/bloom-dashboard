@@ -1,6 +1,8 @@
 "use client";
 import styles from "./styles.module.scss";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+
 //Componentes
 import SectionTitle from "@/components/SectionTitle";
 import Input from "@/components/Input";
@@ -10,6 +12,7 @@ interface PropsForm {
 }
 
 const Form = ({ submitForm }: PropsForm) => {
+  const dict = useTranslations("dict.business.form");
   const [formData, setFormData] = useState({
     name: "",
     website: "",
@@ -28,28 +31,28 @@ const Form = ({ submitForm }: PropsForm) => {
 
   return (
     <div className={styles.container}>
-      <SectionTitle text='Información del negocio' />
-      <h4>*Mientras más campos se completen mejor será el resultado</h4>
+      <SectionTitle text={dict("title")} />
+      <h4>{dict("subtitle")}</h4>
       <form className={styles.form} onSubmit={submitForm}>
         <Input
-          textLabel='Nombre'
-          textHolder='Ingrese el nombre'
+          textLabel={dict("name")}
+          textHolder={dict("placeholder_name")}
           type='text'
           name='name'
           value={formData.name}
           handleChange={handleChange}
         />
         <Input
-          textLabel='Sitio web'
-          textHolder='Ingrese el sitio web'
+          textLabel={dict("website")}
+          textHolder={dict("placeholder_website")}
           type='text'
           name='website'
           value={formData.website}
           handleChange={handleChange}
         />
         <Input
-          textLabel='Descripción'
-          textHolder='Ingrese una descripción'
+          textLabel={dict("description")}
+          textHolder={dict("placeholder_description")}
           type='text'
           name='description'
           value={formData.description}
@@ -58,22 +61,22 @@ const Form = ({ submitForm }: PropsForm) => {
         />
         <Input
           textLabel='Instagram'
-          textHolder='Ingrese el instagram'
+          textHolder={dict("placeholder_instagram")}
           type='text'
           name='instagram'
           value={formData.instagram}
           handleChange={handleChange}
         />
         <Input
-          textLabel='Teléfono'
-          textHolder='Ingrese el teléfono'
+          textLabel={dict("phone")}
+          textHolder={dict("placeholder_phone")}
           type='text'
           name='phone'
           value={formData.phone}
           handleChange={handleChange}
         />
         <div className={styles.btn_container}>
-          <button className={styles.btn}>Guardar</button>
+          <button className={styles.btn}>{dict("button")}</button>
         </div>
       </form>
     </div>

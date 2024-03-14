@@ -16,6 +16,9 @@
     "toast": {
       "ejemplo": "borrar"
     },
+    "breadcrumb": {
+      "breadcrumb_link": "Volver a"
+    },
     "home": {
       "banner": {
         "welcome": "Te damos la bienvenida a Small",
@@ -66,6 +69,7 @@
       }
     },
     "business": {
+      "breadcrumb_title": "Carga de Datos",
       "sequence": {
         "title": "Secuencia",
         "card_title_01": "Cargar información del negocio",
@@ -77,6 +81,20 @@
         "card_description_03": "Podes adjuntar la cantidad de información que consideres necesaria para tu negocio",
         "card_description_04": "Subí archivos referentes a tu negocio para extraer informacion",
         "button": "Terminé de cargar los datos"
+      },
+      "form": {
+        "title": "Información del negocio",
+        "subtitle": "Mientras más campos se completen mejor será el resultado",
+        "name": "Nombre",
+        "placeholder_name": "Ingrese el nombre",
+        "website": "Sitio web",
+        "placeholder_website": "Ingrese el sitio web",
+        "description": "Descripción",
+        "placeholder_description": "Ingrese la descripción",
+        "placeholder_instagram": "Ingrese el instagram",
+        "phone": "Teléfono",
+        "placeholder_phone": "Ingrese el teléfono",
+        "button": "Guardar"
       }
     }
   }
