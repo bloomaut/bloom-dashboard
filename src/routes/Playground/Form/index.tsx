@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
+import PopupShare from "@/routes/Playground/PopupShare";
+import Button from "@/components/Button";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -25,6 +27,8 @@ const EmptyFormData = {
 const Form = () => {
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
+  const [showButton, setShowButton] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
   const { setTime, setShowPreview, setPaUrl } = useFlakesContext();
 
@@ -55,13 +59,13 @@ const Form = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     if (response?.status === 200) {
       const { hotlink, message } = response.data.data.result;
       setPaUrl(`https://power-app-engine.vercel.app/${hotlink.power_app_hash}`);
       setTime();
       setShowPreview(true);
+      setShowButton(true);
     } else {
       console.log(response);
     }
@@ -94,7 +98,15 @@ const Form = () => {
                 name={info.name}
               />
             ))}
-          <button className={styles.btn}>Generar Hotlink</button>
+          <Button title='Generar Hotlink' styleName='btn_playground_outline' type='submit' />
+          {showButton && (
+            <Button
+              title='Compartir Hotlink'
+              styleName='btn2_playground_outline'
+              onclick={() => setShowPopup(!showPopup)}
+            />
+          )}
+          {showPopup && <PopupShare setShowPopup={() => setShowPopup(!showPopup)} />}
         </form>
       )}
     </div>
