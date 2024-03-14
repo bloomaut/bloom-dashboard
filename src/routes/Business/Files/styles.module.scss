@@ -7,6 +7,10 @@
     @include width-height(100%, 100%);
     @include flex(column, flex-start, flex-start, 20px);
     overflow-y: auto;
+    .btn_container {
+      @include width-height(100%, auto);
+      @include flex(row, flex-end, center);
+    }
   }
 }
 

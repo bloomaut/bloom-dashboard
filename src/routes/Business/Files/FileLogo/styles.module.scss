@@ -6,4 +6,8 @@
   border-radius: 8px;
   border: 1px solid $lightGrey;
   padding: 20px 10px;
+  .logo {
+    @include width-height(80px, auto);
+    object-fit: contain;
+  }
 }

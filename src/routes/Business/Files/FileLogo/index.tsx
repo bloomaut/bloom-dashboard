@@ -8,7 +8,7 @@ interface FileLogoProps {
 }
 
 const FileLogo = ({ file }: FileLogoProps) => {
-  const [image, setImage] = useState<string | StaticImport>("");
+  const [image, setImage] = useState<string | undefined>("");
 
   useEffect(() => {
     if (file) {
@@ -19,7 +19,8 @@ const FileLogo = ({ file }: FileLogoProps) => {
 
   return (
     <div className={styles.card}>
-      <Image src={image} alt='logo' width={100} height={100} />
+      {/* <Image src={image} alt='logo' width={100} height={100} /> */}
+      <img src={image} className={styles.logo} />
       <p>Logo</p>
     </div>
   );
