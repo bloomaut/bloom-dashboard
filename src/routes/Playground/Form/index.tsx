@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
-import { useMessageToast } from "@/hooks/useMessageToast";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -24,7 +23,6 @@ const EmptyFormData = {
 };
 
 const Form = () => {
-  const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading, setHotlinkData } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
@@ -62,7 +60,6 @@ const Form = () => {
     if (response?.status === 200) {
       const { hotlink, message } = response.data.data.result;
       setHotlinkData({ hotlink });
-      notify(message);
       setTime();
       fetchOpenGraphData();
       setShowPreview(true);

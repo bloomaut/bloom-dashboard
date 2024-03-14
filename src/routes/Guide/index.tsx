@@ -24,7 +24,6 @@ const GuidePage = () => {
         setStep(userStep);
         setIsLoading(false);
       } else {
-        console.log("Acá va a ir un toast");
         setStep(0);
       }
       setIsLoading(false);
