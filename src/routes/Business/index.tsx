@@ -12,10 +12,11 @@ const Business = () => {
   const submitForm = (formData: any) => {
     console.log(formData);
   };
+
   return (
     <section className={styles.container}>
       <div className={styles.breadcrumb_container}>
-        <Breadcrumb title={dict("breadcrumb_title")} route={"playground"} />
+        <Breadcrumb title={dict("breadcrumb_title")} />
       </div>
       <div className={styles.inner_container}>
         <Form submitForm={submitForm} />
