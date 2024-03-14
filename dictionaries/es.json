@@ -88,12 +88,12 @@
         "name": "Nombre",
         "placeholder_name": "Ingrese el nombre",
         "website": "Sitio web",
-        "placeholder_website": "Ingrese el sitio web",
+        "placeholder_website": "Ingrese su sitio web",
         "description": "Descripción",
         "placeholder_description": "Ingrese la descripción",
-        "placeholder_instagram": "Ingrese el instagram",
+        "placeholder_instagram": "Ingrese su instagram",
         "phone": "Teléfono",
-        "placeholder_phone": "Ingrese el teléfono",
+        "placeholder_phone": "Ingrese su teléfono",
         "button": "Guardar"
       }
     }
