@@ -23,10 +23,10 @@ const EmptyFormData = {
 };
 
 const Form = () => {
-  const { flakes, selectedFlakeId, loading, setHotlinkData } = useFlakesContext();
+  const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
-  const { setTime, setShowPreview, fetchOpenGraphData } = useFlakesContext();
+  const { setTime, setShowPreview, setPaUrl } = useFlakesContext();
 
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
@@ -59,9 +59,8 @@ const Form = () => {
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     if (response?.status === 200) {
       const { hotlink, message } = response.data.data.result;
-      setHotlinkData({ hotlink });
+      setPaUrl(`https://power-app-engine.vercel.app/${hotlink.power_app_hash}`);
       setTime();
-      fetchOpenGraphData();
       setShowPreview(true);
     } else {
       console.log(response);
