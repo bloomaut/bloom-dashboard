@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 //Componentes
-import SectionTitle from "@/components/SectionTitle";
 import Input from "@/components/Input";
+import Subtitle from "../Subtitle";
 
 interface PropsForm {
   submitForm: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -31,7 +31,7 @@ const Form = ({ submitForm }: PropsForm) => {
 
   return (
     <div className={styles.container}>
-      <SectionTitle text={dict("title")} />
+      <Subtitle text={dict("title")} />
       <h4>*{dict("subtitle")}</h4>
       <form className={styles.form} onSubmit={submitForm}>
         <Input

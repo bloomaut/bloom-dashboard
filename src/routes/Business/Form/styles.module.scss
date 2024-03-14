@@ -2,7 +2,7 @@
 
 .container {
   height: inherit;
-  @include flex(column, center, flex-start, 5px);
+  @include flex(column, flex-start, flex-start, 10px);
   h4 {
     color: $lighterGrey;
     @include fontSize-fontWeight(14px, 400);
