@@ -1,5 +1,10 @@
 {
   "dict": {
+    "error": {
+      "message": "Somethings went wrong!",
+      "btn": "Reset",
+      "btn2": "Go back"
+    },
     "sidebar": {
       "home": "Home",
       "guide": "Guide",
