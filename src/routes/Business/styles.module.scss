@@ -1,15 +1,20 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, 100%);
+  @include width-height(100%, calc(100vh - 90px));
   max-width: 1200px;
   @include flex(column, center, center, 20px);
+
+  .breadcrumb_container {
+    @include width-height(100%, 10%);
+    @include flex(row, flex-start, flex-start);
+  }
   .inner_container {
     @include width-height(100%, 100%);
     display: grid;
     grid-template-columns: 33% 33% 33%;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
   }
 }
