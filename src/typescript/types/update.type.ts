@@ -1,1 +1,1 @@
-export type UPDATE = null;
+export type UPDATE = { logo: string } | null;

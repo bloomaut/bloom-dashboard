@@ -1,13 +1,17 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import trashIcon from "/public/icons/trash.svg";
+import LoadingSpinner from "@/components/Loading";
 
 interface FileLogoProps {
-  file: File;
+  file?: File;
+  onDelete: () => void;
+  logoUrl?: string;
+  loading: boolean;
 }
 
-const FileLogo = ({ file }: FileLogoProps) => {
+const FileLogo = ({ file, onDelete, logoUrl, loading }: FileLogoProps) => {
   const [image, setImage] = useState<string | undefined>("");
 
   useEffect(() => {
@@ -19,9 +23,25 @@ const FileLogo = ({ file }: FileLogoProps) => {
 
   return (
     <div className={styles.card}>
-      {/* <Image src={image} alt='logo' width={100} height={100} /> */}
-      <img src={image} className={styles.logo} />
-      <p>Logo</p>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {file ? (
+            <>
+              <img src={image} className={styles.logoFile} />
+              <p>{file?.name}</p>
+              <button className={styles.btn} onClick={onDelete}>
+                <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
+              </button>
+            </>
+          ) : (
+            logoUrl && (
+              <Image src={logoUrl} width={100} height={100} priority className={styles.logoUrl} alt='Logo URL' />
+            )
+          )}
+        </>
+      )}
     </div>
   );
 };

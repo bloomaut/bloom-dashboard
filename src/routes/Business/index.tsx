@@ -7,33 +7,34 @@ import styles from "./styles.module.scss";
 import { get } from "@/services/fetch";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
+import { ENV } from "@/typescript/types/environment.enum";
 
 const Business = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const business = useAppSelector(data => data.business);
 
-  useEffect(() => {
-    const handleFetch = async () => {
-      try {
-        const response = await get("small-business/me", "NEXT_PUBLIC_API_DASH");
-        if (response?.statusCode === 200) {
-          dispatch(setBusinessData(response.data.result.data.smallBusiness));
-          setLoading(false);
-        }
-      } catch (error) {
-        console.log(error);
+  const handleFetch = async () => {
+    try {
+      const response = await get("small-business/me", ENV.DASH);
+      if (response?.data.statusCode === 200) {
+        dispatch(setBusinessData(response.data.result.data.smallBusiness));
+        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
     handleFetch();
-  }, [business]);
+  }, [dispatch]);
 
   return (
     <section className={styles.container}>
       <div className={styles.inner_container}>
         <Form />
-        <Files />
+        <Files handleFetch={handleFetch} loading={loading} />
         <Sequence />
       </div>
     </section>

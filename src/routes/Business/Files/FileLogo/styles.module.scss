@@ -6,8 +6,32 @@
   border-radius: 8px;
   border: 1px solid $lightGrey;
   padding: 20px 10px;
-  .logo {
-    @include width-height(80px, auto);
+  .logoFile {
+    @include width-height(100px, auto);
     object-fit: contain;
+  }
+  .logoUrl {
+    @include width-height(150px, auto);
+    object-fit: contain;
+  }
+  p {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .btn {
+    @include flex(row, center, center);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+    &:hover {
+      transform: scale(1.2);
+    }
+    .controls_icons {
+      @include width-height(25px, auto);
+      object-fit: contain;
+    }
   }
 }
