@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
+import { useMessageToast } from "@/hooks/useMessageToast";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -23,7 +24,8 @@ const EmptyFormData = {
 };
 
 const Form = () => {
-  const { flakes, selectedFlakeId, loading } = useFlakesContext();
+  const { notify, notifyError } = useMessageToast();
+  const { flakes, selectedFlakeId, loading, setHotlinkData } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
 
@@ -56,9 +58,15 @@ const Form = () => {
     e.preventDefault();
 
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
-    console.log(formDataPost);
-    console.log(response);
-    // setFormDataPost(EmptyFormData);
+    if (response?.status === 200) {
+      const { hotlink, message } = response.data.data.result;
+      setHotlinkData({ hotlink });
+      notify(message);
+    } else {
+      console.log(response);
+    }
+
+    setFormDataPost(EmptyFormData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {

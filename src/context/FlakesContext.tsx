@@ -1,5 +1,6 @@
 import { get } from "@/services/fetch";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
+import { HotlinkData } from "@/typescript/interfaces/hotlink.interface";
 import { ENV } from "@/typescript/types/environment.enum";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -7,21 +8,34 @@ interface Context {
   flakes: Powerapp[];
   loading: boolean;
   selectedFlakeId: string;
+  hotlinkData: HotlinkData;
   setSelectedFlakeId: (id: string) => void;
+  setHotlinkData: React.Dispatch<React.SetStateAction<HotlinkData>>;
 }
+
+const EmptyHotlinkData: HotlinkData = {
+  hotlink: {
+    id: null,
+    power_app_hash: "",
+  },
+};
 
 const FlakesContext = createContext<Context>({
   flakes: [],
   loading: true,
   selectedFlakeId: "",
+  hotlinkData: EmptyHotlinkData,
   // eslint-disable-next-line no-empty-function
   setSelectedFlakeId: () => {},
+  // eslint-disable-next-line no-empty-function
+  setHotlinkData: () => {},
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const [flakes, setFlakes] = useState<Powerapp[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedFlakeId, setSelectedFlakeId] = useState("");
+  const [hotlinkData, setHotlinkData] = useState(EmptyHotlinkData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +54,9 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   }, []);
 
   return (
-    <FlakesContext.Provider value={{ flakes, loading, selectedFlakeId, setSelectedFlakeId }}>
+    <FlakesContext.Provider
+      value={{ flakes, loading, selectedFlakeId, setSelectedFlakeId, hotlinkData, setHotlinkData }}
+    >
       {children}
     </FlakesContext.Provider>
   );

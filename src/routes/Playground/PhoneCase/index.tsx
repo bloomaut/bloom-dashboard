@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import caseImage from "@/../public/assets/mobileCase.png";
 import whatsappImage from "@/../public/assets/wa.png";
 import OpenGraph from "./OpenGraph";
+import { useFlakesContext } from "@/context/FlakesContext";
 
 interface PropsPhoneCase {
   previewData: any;
@@ -13,6 +14,9 @@ interface PropsPhoneCase {
 }
 
 const PhoneCase = ({ previewData, showPreview, url, setShowPreview, captureTime }: PropsPhoneCase) => {
+  const { hotlinkData } = useFlakesContext();
+  console.log(hotlinkData);
+
   return (
     <div className={styles.container}>
       <div className={styles.phone_container}>
