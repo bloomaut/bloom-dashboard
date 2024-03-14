@@ -17,23 +17,18 @@ const GuidePage = () => {
   useEffect(() => {
     const fetchUserStep = async () => {
       setIsLoading(true);
-      try {
-        const userData = await get("small-business/me", "NEXT_PUBLIC_API_DASH");
-        if (userData.statusCode === 200) {
-          const userStep = userData.result.data.smallBusiness.step;
-          setStep(userStep);
-          setIsLoggedIn(true);
-        } else {
-          console.log("Acá va a ir un toast");
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        console.error("Error al obtener datos del usuario:", error);
+      const userData = await get("small-business/me", "NEXT_PUBLIC_API_DASH");
+      if (userData.statusCode === 200) {
+        const userStep = userData.result.data.smallBusiness.step;
+        setStep(userStep);
+        setIsLoading(false);
+        setIsLoggedIn(true);
+      } else {
+        console.log("Acá va a ir un toast");
         setIsLoggedIn(false);
       }
       setIsLoading(false);
     };
-
     fetchUserStep();
   }, []);
 
