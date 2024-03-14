@@ -8,7 +8,6 @@
   text-decoration: none;
 }
 
-
 /* Toast */
 
 .toastUpdateBody {
@@ -16,7 +15,7 @@
 }
 
 .toastOk {
-  background-color: $blue;
+  background-color: $orange;
   color: white;
   font-size: 16px;
 }
@@ -24,4 +23,5 @@
 .toastBad {
   background-color: $error;
   color: white;
+  font-size: 16px;
 }
