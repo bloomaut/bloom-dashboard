@@ -6,6 +6,7 @@ import TemplatesSelector from "./TemplatesSelector";
 import styles from "./styles.module.scss";
 import Breadcrumb from "@/components/Breadcrumb";
 import axios from "axios";
+import { FlakesProvider } from "@/context/FlakesContext";
 
 const Playground = () => {
   const [url, setUrl] = useState("https://power-app-engine.vercel.app/4b04b0dcd2ade339a3d7ce13252a29d4");
@@ -35,34 +36,25 @@ const Playground = () => {
     }
   };
 
-  /* const getData = async (event: any) => {
-    event.preventDefault();
-    try {
-      const response = await fetch("/api/opengraph");
-      const data = await response.json();
-      console.log("si", data);
-    } catch (error) {
-      console.log("Error fetching Open Graph data:", error);
-    }
-  }; */
-
   return (
-    <section className={styles.container}>
-      <div className={styles.breadcrumb_container}>
-        <Breadcrumb title={"Simulador"} route={"introduction"} />
-      </div>
-      <div className={styles.inner_container}>
-        <TemplatesSelector />
-        <Form setUrl={setUrl} url={url} submitForm={submitForm} />
-        <PhoneCase
-          previewData={previewData}
-          showPreview={showPreview}
-          url={url}
-          setShowPreview={setShowPreview}
-          captureTime={captureTime}
-        />
-      </div>
-    </section>
+    <FlakesProvider>
+      <section className={styles.container}>
+        <div className={styles.breadcrumb_container}>
+          <Breadcrumb title={"Simulador"} route={"introduction"} />
+        </div>
+        <div className={styles.inner_container}>
+          <TemplatesSelector />
+          <Form setUrl={setUrl} url={url} submitForm={submitForm} />
+          <PhoneCase
+            previewData={previewData}
+            showPreview={showPreview}
+            url={url}
+            setShowPreview={setShowPreview}
+            captureTime={captureTime}
+          />
+        </div>
+      </section>
+    </FlakesProvider>
   );
 };
 

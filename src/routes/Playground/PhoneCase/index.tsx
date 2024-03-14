@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import caseImage from "@/../public/assets/mobileCase.png";
@@ -31,6 +30,16 @@ const PhoneCase = ({ previewData, showPreview, url, setShowPreview, captureTime 
           {/* IFRAME */}
           {!showPreview && <iframe src={url} title='Power App'></iframe>}
         </div>
+      </div>
+      <div className={styles.dot_container}>
+        <span
+          onClick={() => setShowPreview(true)}
+          className={`${styles.dot} ${showPreview ? styles.dot_active : styles.dot_inactive}`}
+        ></span>
+        <span
+          onClick={() => setShowPreview(false)}
+          className={`${styles.dot} ${!showPreview ? styles.dot_active : styles.dot_inactive}`}
+        ></span>
       </div>
     </div>
   );

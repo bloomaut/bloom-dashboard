@@ -1,11 +1,11 @@
 import Image from "next/image";
-// import Button from "@/components/Button";
 import styles from "./styles.module.scss";
 import banner_home from "/public/assets/home_banner.png";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import LinkComponent from "@/components/LinkComponent";
 
 const Banner = () => {
+  const locale = useLocale();
   const dict = useTranslations("dict.home.banner");
 
   return (
@@ -15,7 +15,7 @@ const Banner = () => {
         <div className={styles.banner_text}>
           <h4 className={styles.title}>{dict("title")}</h4>
           <p className={styles.paragraph}>{dict("paragraph")}</p>
-          <LinkComponent href='/' title={dict("btn")} />
+          <LinkComponent href={`${locale}/playground`} title={dict("btn")} />
         </div>
         <div className={styles.banner_img}>
           <Image src={banner_home} alt='Banner' />
