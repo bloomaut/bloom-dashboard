@@ -6,7 +6,7 @@ interface Props {
   type: string;
   name: string;
   value: string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>, index?: number) => void;
 }
 
 const Input = ({ textLabel, textHolder, type, name, value, handleChange }: Props) => {

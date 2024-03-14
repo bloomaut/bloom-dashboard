@@ -5,27 +5,66 @@ import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
 import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
+import { post } from "@/services/fetch";
+import { ENV } from "@/typescript/types/environment.enum";
 
-interface PropsForm {
-  setUrl: (url: string) => void;
-  url: string;
-  submitForm: (e: React.FormEvent<HTMLFormElement>) => void;
-}
+const EmptyFormData = {
+  typeFlake: "",
+  flakeId: "",
+  variables: [
+    {
+      key: "",
+      target: "",
+      name: "",
+      value: "",
+      description: "",
+    },
+  ],
+};
 
-const Form = ({ setUrl, url, submitForm }: PropsForm) => {
+const Form = () => {
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
+  const [formDataPost, setFormDataPost] = useState(EmptyFormData);
 
-  const formVariables = flakes.find(item => item._id === selectedFlakeId);
+  const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
   useEffect(() => {
-    if (formVariables) {
-      setFormInfo(formVariables.variables_in_use);
-    }
-  }, [formVariables]);
+    if (formVariableData) {
+      const { _id, variables_in_use } = formVariableData;
 
-  const handleSetUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUrl(e.target.value);
+      const variablesData = variables_in_use.map(({ key, name, description, target, value }: Variablesinuse) => ({
+        key,
+        target,
+        name,
+        value: value || "",
+        description,
+      }));
+
+      setFormDataPost({
+        ...formDataPost,
+        flakeId: _id,
+        typeFlake: "flake_power_apps",
+        variables: variablesData,
+      });
+
+      setFormInfo(variablesData);
+    }
+  }, [formVariableData]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
+    console.log(formDataPost);
+    console.log(response);
+    // setFormDataPost(EmptyFormData);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const updatedFormInfo = [...formInfo];
+    updatedFormInfo[index].value = e.target.value;
+    setFormInfo(updatedFormInfo);
   };
 
   return (
@@ -34,15 +73,15 @@ const Form = ({ setUrl, url, submitForm }: PropsForm) => {
       {loading ? (
         <Loading />
       ) : (
-        <form className={styles.form} onSubmit={submitForm}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {formInfo &&
-            formInfo.map(info => (
+            formInfo.map((info, index) => (
               <Input
                 key={info.key}
                 type={info.target}
                 textLabel={info.description}
-                value={url}
-                handleChange={handleSetUrl}
+                value={info.value!}
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
                 textHolder={info.placeholder}
                 name={info.name}
               />

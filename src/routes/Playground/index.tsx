@@ -44,7 +44,7 @@ const Playground = () => {
         </div>
         <div className={styles.inner_container}>
           <TemplatesSelector />
-          <Form setUrl={setUrl} url={url} submitForm={submitForm} />
+          <Form />
           <PhoneCase
             previewData={previewData}
             showPreview={showPreview}
