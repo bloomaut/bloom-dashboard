@@ -5,7 +5,8 @@
   @include flex(column, space-evenly, flex-start);
   .cards_container {
     @include width-height(100%, 100%);
-    @include flex(column, space-evenly, flex-start);
+    margin-top: 15px;
+    @include flex(column, flex-start, flex-start, 15px);
   }
   .btn_container {
     @include width-height(95%, auto);

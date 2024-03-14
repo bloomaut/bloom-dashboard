@@ -17,4 +17,8 @@
     border-radius: 4px;
     background-color: transparent;
   }
+  .description_input {
+    @include width-height(100%, 90px);
+    padding-bottom: 60px;
+  }
 }
