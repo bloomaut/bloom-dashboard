@@ -4,28 +4,25 @@ import fileImage from "/public/icons/cloud.svg";
 import { Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { useAppSelector } from "@/store/hooks";
 
 interface FileDragDropProps {
   files: File[];
   setFiles: Dispatch<SetStateAction<File[]>>;
   logo?: File | null;
-  setLogo?: Dispatch<SetStateAction<File | null>>;
+  setLogo: Dispatch<SetStateAction<File | null>>;
 }
 
 const FileDragDrop = ({ files, setFiles, logo, setLogo }: FileDragDropProps) => {
+  const business = useAppSelector(data => data.business);
   const { notify, notifyError } = useMessageToast();
 
   const onDrop = (acceptedFiles: File[]) => {
-    if (!logo) {
-      if (acceptedFiles.length > 0 && !acceptedFiles[0].type.startsWith("image/")) {
-        notifyError("Debes subir primero el Logo en formato PNG, JPEG, JPG, WEBP ");
-        return;
-      }
-      if (setLogo) {
-        setLogo(acceptedFiles[0]);
-      }
-    } else {
+    if (!logo && business.logo && !acceptedFiles[0].type.startsWith("image/")) {
       setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
+    }
+    if (!logo && acceptedFiles.length > 0 && acceptedFiles[0].type.startsWith("image/")) {
+      setLogo(acceptedFiles[0]);
     }
   };
 
