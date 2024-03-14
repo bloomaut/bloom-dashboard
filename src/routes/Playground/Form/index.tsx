@@ -28,6 +28,7 @@ const Form = () => {
   const { flakes, selectedFlakeId, loading, setHotlinkData } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
+  const { setTime, setShowPreview, fetchOpenGraphData } = useFlakesContext();
 
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
@@ -62,6 +63,9 @@ const Form = () => {
       const { hotlink, message } = response.data.data.result;
       setHotlinkData({ hotlink });
       notify(message);
+      setTime();
+      fetchOpenGraphData();
+      setShowPreview(true);
     } else {
       console.log(response);
     }

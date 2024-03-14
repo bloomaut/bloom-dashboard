@@ -5,17 +5,8 @@ import whatsappImage from "@/../public/assets/wa.png";
 import OpenGraph from "./OpenGraph";
 import { useFlakesContext } from "@/context/FlakesContext";
 
-interface PropsPhoneCase {
-  previewData: any;
-  showPreview: boolean;
-  url: string;
-  setShowPreview: (showPreview: boolean) => void;
-  captureTime: string;
-}
-
-const PhoneCase = ({ previewData, showPreview, url, setShowPreview, captureTime }: PropsPhoneCase) => {
-  const { hotlinkData } = useFlakesContext();
-  console.log(hotlinkData);
+const PhoneCase = () => {
+  const { captureTime, showPreview, setShowPreview, previewData, paUrl } = useFlakesContext();
 
   return (
     <div className={styles.container}>
@@ -32,7 +23,7 @@ const PhoneCase = ({ previewData, showPreview, url, setShowPreview, captureTime 
             />
           )}
           {/* IFRAME */}
-          {!showPreview && <iframe src={url} title='Power App'></iframe>}
+          {!showPreview && <iframe src={paUrl} title='Power App'></iframe>}
         </div>
       </div>
       <div className={styles.dot_container}>
