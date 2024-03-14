@@ -1,8 +1,4 @@
-interface RootObject {
-  powerapps: Powerapp[];
-}
-
-interface Powerapp {
+export interface Powerapp {
   _id: string;
   title: string;
   thumbnail: string;
@@ -16,8 +12,9 @@ export interface Variablesinuse {
   name: string;
   target: string;
   description: string;
-  placeholder: string;
-  tableColumns: any[];
+  placeholder?: string;
+  tableColumns?: any[];
+  value?: string;
 }
 
 interface Hogrelated {

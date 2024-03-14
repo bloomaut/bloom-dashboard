@@ -7,7 +7,7 @@ interface Props {
   name: string;
   value: string;
   isDescription?: boolean;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>, index?: number) => void;
 }
 
 const Input = ({ textLabel, textHolder, type, name, value, handleChange, isDescription }: Props) => {

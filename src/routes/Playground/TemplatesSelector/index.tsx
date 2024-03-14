@@ -3,6 +3,7 @@ import Image from "next/image";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useFlakesContext } from "@/context/FlakesContext";
+import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 
 interface Context {
   flakes: Powerapp[];

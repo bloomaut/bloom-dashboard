@@ -23,10 +23,6 @@ export const get = async (url: string, api: EnvironmentApi) => {
 
 export const post = async (url: string, data: POST, api: EnvironmentApi) => {
   try {
-    const baseURL = process.env[api];
-    if (!baseURL) {
-      throw new Error(`Invalid API: ${api}`);
-    }
     const response = await axios.post(`${API}/${url}`, data, {
       headers: {
         "X-API": api,

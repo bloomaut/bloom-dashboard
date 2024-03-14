@@ -6,7 +6,7 @@
   border-left: 1px solid $lightGrey;
   .phone_container {
     @include flex(column, flex-start, center);
-    @include width-height(255px, 430px);
+    @include width-height(230px, 440px);
     position: relative;
     margin-left: 20px;
     .phone {
@@ -18,7 +18,7 @@
       position: absolute;
     }
     .phone_inner_container {
-      @include width-height(100%, 100%);
+      @include width-height(215px, 420px);
       position: absolute;
       top: 10px;
       border: none;
