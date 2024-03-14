@@ -37,10 +37,33 @@
       }
     },
     "guide": {
-      "stepper_title1": "Sección 1",
-      "stepper_subtitle1": "Conocer, Jugar y Cargar",
-      "stepper_title2": "Sección 2",
-      "stepper_subtitle2": "Compartir y Utilizar"
+      "header": {
+        "stepper_title1": "Sección 1",
+        "stepper_subtitle1": "Conocer, Jugar y Cargar",
+        "stepper_title2": "Sección 2",
+        "stepper_subtitle2": "Compartir y Utilizar"
+      },
+      "stepper_one": {
+        "title": "Pasos",
+        "title_one": "Introducción",
+        "subtitle_one": "Introducción y entendimiento de la plataforma. Video explicativo",
+        "title_two": "Jugar",
+        "subtitle_two": "Juga en el playground, personaliza apps y genera tu primer hotlink",
+        "title_three": "Carga",
+        "subtitle_three": "Carga de datos de tu empresa y archivos de marca para tus diseños",
+        "title_four": "Diseño",
+        "subtitle_four": "Nos encargamos del diseño con nuestra herramienta UiTool"
+      },
+      "stepper_two": {
+        "title": "Pasos",
+        "title_one": "Distribuir",
+        "subtitle_one": "Genera los links para tus clientes y distribuí tus apps personalizadas",
+        "title_two": "Gestionar",
+        "subtitle_two": "Gestiona los mensjaes que lleganen tu Inbox y chatea con tus clientes",
+        "title_three": "Campañas",
+        "subtitle_three": "Envía campañas y visualiza los resultados de las interacciones",
+        "button": "Terminé de realizar los pasos"
+      }
     },
     "business": {
       "sequence": {

@@ -5,7 +5,6 @@ import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "@/components/Sidebar";
-
 import Navbar from "@/components/Navbar";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {

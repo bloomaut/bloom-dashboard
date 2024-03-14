@@ -12,6 +12,7 @@
   .list_container {
     list-style: none;
     position: absolute;
+    z-index: 1;
     cursor: pointer;
     top: 35px;
     transition: all 0.3s ease;
