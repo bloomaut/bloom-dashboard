@@ -3,6 +3,15 @@
 .btn {
   @include main-btn;
 }
+.btn:disabled {
+  background: $white;
+  border: 1px solid $lighterGrey;
+  color: $lighterGrey;
+  &:hover {
+    background-color: $white;
+    cursor: default;
+  }
+}
 
 .btn_disabled {
   background: $lightGrey;
