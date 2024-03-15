@@ -30,6 +30,13 @@
       }
     },
     "playground": {
+      "breadcrumb_title": "Simulator",
+      "template_title": "Templates",
+      "form": {
+        "title": "Fields",
+        "button_hotlink": "Generate Hotlink",
+        "button_share": "Share Hotlink"
+      },
       "phoneCase": {
         "today": "Today"
       },

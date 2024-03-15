@@ -35,7 +35,11 @@
     "playground": {
       "breadcrumb_title": "Simulador",
       "template_title": "Plantillas",
-      "form": {},
+      "form": {
+        "title": "Campos",
+        "button_hotlink": "Generar Hotlink",
+        "button_share": "Compartir Hotlink"
+      },
       "phoneCase": {
         "today": "Hoy"
       },

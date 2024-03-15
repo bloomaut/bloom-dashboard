@@ -9,6 +9,7 @@ import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
+import { useTranslations } from "next-intl";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -25,6 +26,8 @@ const EmptyFormData = {
 };
 
 const Form = () => {
+  const dict = useTranslations("dict.playground.form");
+
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
@@ -81,7 +84,7 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <SectionTitle text='Campos' />
+      <SectionTitle text={dict("title")} />
       {loading ? (
         <Loading />
       ) : (
@@ -98,10 +101,10 @@ const Form = () => {
                 name={info.name}
               />
             ))}
-          <Button title='Generar Hotlink' styleName='btn_playground_outline' type='submit' />
+          <Button title={dict("button_hotlink")} styleName='btn_playground_outline' type='submit' />
           {showButton && (
             <Button
-              title='Compartir Hotlink'
+              title={dict("button_share")}
               styleName='btn2_playground_outline'
               onclick={() => setShowPopup(!showPopup)}
             />
