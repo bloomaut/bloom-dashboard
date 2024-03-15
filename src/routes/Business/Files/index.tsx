@@ -1,12 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./styles.module.scss";
 import FileDragDrop from "./FileDragDrop";
 import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
 import Button from "@/components/Button";
-import { get, postFile, update } from "@/services/fetch";
+import { postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
@@ -60,14 +60,6 @@ const Files = ({ handleFetch, loading }: FilesProps) => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (file) {
-      handleUploadFile(file);
-    } else {
-      notifyError("Debes subir un archivo");
-    }
-  };
-
   return (
     <div className={styles.container}>
       <Subtitle text={!companyLogo ? "Subí tu logo para iniciar" : "Arrojá tus archivos aquí"} />
@@ -79,7 +71,7 @@ const Files = ({ handleFetch, loading }: FilesProps) => {
       ) : null}
       {file && (
         <div className={styles.btn_container}>
-          <Button title='Subir' onclick={handleSubmit} />
+          <Button title='Subir' onclick={() => handleUploadFile(file)} />
         </div>
       )}
       <div className={styles.files}>
