@@ -27,8 +27,7 @@ const EmptyFormData = {
 };
 
 const Form = () => {
-  const dict = useTranslations("dict.playground.form");
-  const dictToast = useTranslations("dict.toast");
+  const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
@@ -66,7 +65,7 @@ const Form = () => {
     e.preventDefault();
     const anyEmpty = formInfo.some(info => info.value?.trim() === "");
     if (anyEmpty) {
-      notifyError(`${dictToast("empty_fields")}`);
+      notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
@@ -91,7 +90,7 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <SectionTitle text={dict("title")} />
+      <SectionTitle text={dict("playground.form.title")} />
       {loading ? (
         <Loading />
       ) : (
@@ -108,10 +107,10 @@ const Form = () => {
                 name={info.name}
               />
             ))}
-          <Button title={dict("button_hotlink")} styleName='btn_playground_outline' type='submit' />
+          <Button title={dict("playground.form.button_hotlink")} styleName='btn_playground_outline' type='submit' />
           {showButton && (
             <Button
-              title={dict("button_share")}
+              title={dict("playground.form.button_share")}
               styleName='btn2_playground_outline'
               onclick={() => setShowPopup(!showPopup)}
             />
