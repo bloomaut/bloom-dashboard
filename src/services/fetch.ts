@@ -16,10 +16,21 @@ export const get = async (url: string, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLI
   }
 };
 
-export const postFile = async (url: string, file: File, api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL") => {
+export const postFile = async (
+  url: string,
+  file: File | File[],
+  api: "NEXT_PUBLIC_API_DASH" | "NEXT_PUBLIC_API_UITOOL",
+) => {
   try {
     const formData = new FormData();
-    formData.append("file", file);
+    if (file instanceof File) {
+      formData.append("file", file);
+    } else {
+      console.log(file);
+      file.forEach((file, index) => {
+        formData.append(`file${index}`, file);
+      });
+    }
 
     const response = await fetch(`${API}/${url}`, {
       method: "POST",

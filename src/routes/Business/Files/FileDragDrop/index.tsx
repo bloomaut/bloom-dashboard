@@ -9,20 +9,21 @@ import { useAppSelector } from "@/store/hooks";
 interface FileDragDropProps {
   files: File[];
   setFiles: Dispatch<SetStateAction<File[]>>;
-  logo?: File | null;
-  setLogo: Dispatch<SetStateAction<File | null>>;
+  previewLogo?: File | null;
+  companyLogo?: string | null;
+  setPreviewLogo: Dispatch<SetStateAction<File | null>>;
 }
 
-const FileDragDrop = ({ files, setFiles, logo, setLogo }: FileDragDropProps) => {
-  const business = useAppSelector(data => data.business);
+const FileDragDrop = ({ files, setFiles, previewLogo, setPreviewLogo, companyLogo }: FileDragDropProps) => {
   const { notify, notifyError } = useMessageToast();
 
   const onDrop = (acceptedFiles: File[]) => {
-    if (!logo && business.logo && !acceptedFiles[0].type.startsWith("image/")) {
+    if (!previewLogo && companyLogo && acceptedFiles.length > 0 && !acceptedFiles[0].type.startsWith("image/")) {
       setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
-    }
-    if (!logo && acceptedFiles.length > 0 && acceptedFiles[0].type.startsWith("image/")) {
-      setLogo(acceptedFiles[0]);
+    } else if (!previewLogo && companyLogo && acceptedFiles.length > 0 && acceptedFiles[0].type.startsWith("image/")) {
+      setPreviewLogo(acceptedFiles[0]);
+    } else {
+      notifyError("Debes subir una imágen JPG, JPEG, PNG, GIF o WEBP");
     }
   };
 
@@ -30,14 +31,14 @@ const FileDragDrop = ({ files, setFiles, logo, setLogo }: FileDragDropProps) => 
   const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
     onDrop,
     accept: {
-      "application/vnd.ms-excel": [".xls"],
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
       "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp"],
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
-      "application/msword": [".doc"],
-      "text/plain": [".txt"],
       "application/pdf": [".pdf"],
-      "application/json": [".json"],
+      // "application/vnd.ms-excel": [".xls"],
+      // "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      // "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+      // "application/msword": [".doc"],
+      // "text/plain": [".txt"],
+      // "application/json": [".json"],
     },
   });
 

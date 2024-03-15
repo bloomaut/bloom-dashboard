@@ -12,7 +12,6 @@ import { ENV } from "@/typescript/types/environment.enum";
 const Business = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const business = useAppSelector(data => data.business);
 
   const handleFetch = async () => {
     try {
