@@ -16,7 +16,6 @@ const FileDragDrop = ({ file, setFile }: FileDragDropProps) => {
   const companyLogo = useAppSelector(data => data.business.logo);
 
   const onDrop = (acceptedFiles: File[], fileRejections: any) => {
-    console.log(acceptedFiles[0]);
     // Si hay errores, manejarlos acá
     if (fileRejections.length) {
       const errorCode = fileRejections[0].errors[0].code;
@@ -28,7 +27,7 @@ const FileDragDrop = ({ file, setFile }: FileDragDropProps) => {
     } else {
       // Si no hay logo, la primera carga debe ser una imagen
       if (!companyLogo && acceptedFiles[0].type.includes("pdf")) {
-        notifyError("La primera carga debe ser una imagen");
+        notifyError("La primera carga debe ser una imágen");
       } else {
         setFile(acceptedFiles[0]);
       }
@@ -48,7 +47,7 @@ const FileDragDrop = ({ file, setFile }: FileDragDropProps) => {
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
-      <Image className={styles.icon} src={fileImage} alt='cloud-icon' />
+      {file ? <Image src={fileImage} alt='cloud-icon' /> : <Image src={fileImage} alt='cloud-icon' />}
     </div>
   );
 };

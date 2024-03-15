@@ -2,12 +2,16 @@
 
 .card {
   @include width-height(100%, auto);
-  @include flex(row, space-between, center, 20px);
+  @include flex(row, center, center, 20px);
   border-radius: 8px;
   border: 1px solid $lightGrey;
-  padding: 10px 10px;
+  padding: 10px;
   .logoUrl {
-    @include width-height(auto, 70px);
+    @include width-height(150px, auto);
+    object-fit: contain;
+  }
+  .logoFile {
+    @include width-height(50px, auto);
     object-fit: contain;
   }
   p {

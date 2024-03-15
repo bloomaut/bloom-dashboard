@@ -1,24 +1,27 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, auto);
+  @include width-height(100%, 140px);
   @include flex(row, center, center);
   background: $greyBackground;
   border-radius: 8px;
   border: 2px dashed $lightGrey;
   cursor: pointer;
   transition: all 100ms ease-in-out;
-  padding: 10px 0;
   &:hover {
     border-color: $orange;
   }
-  .icon {
-    @include width-height(50px, auto);
-    object-fit: contain;
-    transition: all 0.3s;
-  }
-  &:hover > .icon {
-    transform: scale(1.05);
+  .content {
+    @include width-height(100%, auto);
+    @include flex(row, center, center, 20px);
+    transition: all 100ms ease-in-out;
+    img {
+      @include width-height(80px, auto);
+      object-fit: contain;
+    }
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
 .isActive {

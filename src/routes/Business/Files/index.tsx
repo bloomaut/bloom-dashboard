@@ -8,26 +8,18 @@ import FileLogo from "./FileLogo";
 import Button from "@/components/Button";
 import { postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
-import LoadingSpinner from "@/components/Loading";
+import { updateLogo } from "@/store/features/businessSlice";
 
-interface FilesProps {
-  handleFetch: () => void;
-  loading: boolean;
-}
-
-const Files = ({ handleFetch, loading }: FilesProps) => {
+const Files = () => {
   const companyLogo = useAppSelector(data => data.business.logo);
-  const files = useAppSelector(data => data.files.media);
+  const reduxFiles = useAppSelector(data => data.files.media);
   const [file, setFile] = useState<File | null>(null);
   const { notify, notifyError } = useMessageToast();
+  const dispatch = useAppDispatch();
 
   console.log(file);
-
-  const handleDeletePreview = () => {
-    setFile(null);
-  };
 
   const handleUpdateLogo = async (logoUrl: string) => {
     try {
@@ -36,57 +28,75 @@ const Files = ({ handleFetch, loading }: FilesProps) => {
       };
       await update("small-business", dataToSend, ENV.DASH);
       notify("Imagen subida correctamente");
-      setFile(null);
-      handleFetch();
+      dispatch(updateLogo(logoUrl));
     } catch (error) {
-      console.error("Error al enviar los datos:", error);
+      notifyError("Hubo un error al cargar la imagen");
     }
   };
 
   const handleUploadFile = async (file: File) => {
-    try {
-      const response = await postFile("small-files/media", file, ENV.DASH);
+    const response = await postFile("small-files/media", file, ENV.DASH);
 
-      if (response.data.statusCode === 201) {
-        if (response.data.result.media.filetype.startsWith("image/")) {
-          const logoUrl = response.data.result.media.url;
-          await handleUpdateLogo(logoUrl);
-        } else {
-          notify("Archivo subido correctamente");
-          setFile(null);
-          handleFetch();
-        }
+    if (response.data.statusCode === 201) {
+      if (response.data.result.media.filetype.startsWith("image/")) {
+        const logoUrl = response.data.result.media.url;
+        await handleUpdateLogo(logoUrl);
+      } else {
+        notify("Archivo subido correctamente");
       }
-    } catch (error) {
-      console.error("Error al enviar el archivo:", error);
+    } else {
+      notifyError("Hubo un error al cargar la imagen");
+    }
+  };
+
+  const removeFile = () => {
+    setFile(null);
+  };
+
+  const deleteFile = () => {
+    //borrar archivo con API
+  };
+
+  const deleteLogo = () => {
+    if (file) {
+      setFile(null);
+    } else {
+      //borrar logo con API
     }
   };
 
   return (
     <div className={styles.container}>
       <Subtitle text={!companyLogo ? "Subí tu logo para iniciar" : "Arrojá tus archivos aquí"} />
-      <FileDragDrop file={file} setFile={setFile} />
-      {companyLogo && !file ? (
-        <FileLogo logoUrl={companyLogo} onDelete={handleDeletePreview} loading={loading} />
-      ) : file ? (
-        <FileLogo file={file} onDelete={handleDeletePreview} loading={loading} />
-      ) : null}
+      <FileDragDrop setFile={setFile} />
+
+      {/* Muestra siempre el logo*/}
+      <FileLogo file={file} onDelete={deleteLogo} />
+      {/* Muestra otros tipos de archivos cuando se cargan */}
+      {file && file.type.includes("pdf") && (
+        <FileCard title={file.name} created_at={new Date().toString()} docType={file.type} onDelete={removeFile} />
+      )}
+      {/* EL botón aparece cuando se carga una imagen */}
       {file && (
         <div className={styles.btn_container}>
           <Button title='Subir' onclick={() => handleUploadFile(file)} />
         </div>
       )}
+
+      <Subtitle text={"Mis archivos"} />
       <div className={styles.files}>
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          files &&
-          files
-            .filter(file => file.filetype === "application/pdf") // Filtrar solo los archivos PDF
-            .map(file => (
-              <FileCard key={file._id} title={file.filename} created_at={file.created_at} docType={file.filetype} />
-            ))
-        )}
+        {/* Muestra todos los archivos PDF */}
+        {reduxFiles
+          ?.filter(i => i.filetype.includes("pdf"))
+          .map(file => (
+            <FileCard
+              key={file._id}
+              title={file.filename}
+              created_at={file.created_at}
+              docType={file.filetype}
+              onDelete={deleteFile}
+            />
+          ))}
       </div>
     </div>
   );

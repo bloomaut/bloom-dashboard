@@ -1,9 +1,9 @@
 "use client";
-import Business2 from "@/routes/Business2";
+import BusinessOld from "@/routes/BusinessOld";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 
 function Page() {
-  return <Business2 />;
+  return <BusinessOld />;
 }
 
 export default withPageAuthRequired(Page);

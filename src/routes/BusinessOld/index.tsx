@@ -11,13 +11,16 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
 import { setFilesData } from "@/store/features/filesSlice";
 import { ENV } from "@/typescript/types/environment.enum";
-import LoadingSpinner from "@/components/Loading";
 
-const Business2 = () => {
+const BusinessOld = () => {
   const business = useAppSelector(state => state.business);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict.business");
+
+  const submitForm = (formData: any) => {
+    console.log(formData);
+  };
 
   const fetchData = async () => {
     try {
@@ -25,7 +28,7 @@ const Business2 = () => {
       if (userData?.data.statusCode === 200) {
         dispatch(setBusinessData(userData.data.result.data.smallBusiness));
       }
-      console.log(userData.data.result.data.smallBusiness);
+
       const userFiles = await get("small-files/media", ENV.DASH);
       if (userFiles?.data.statusCode === 200) {
         dispatch(setFilesData(userFiles.data.result.folder));
@@ -37,8 +40,13 @@ const Business2 = () => {
     }
   };
 
+  const handleFetch = async () => {
+    setLoading(true);
+    await fetchData();
+  };
+
   useEffect(() => {
-    fetchData();
+    handleFetch();
   }, [dispatch]);
 
   return (
@@ -46,17 +54,13 @@ const Business2 = () => {
       <div className={styles.breadcrumb_container}>
         <Breadcrumb title={dict("breadcrumb_title")} />
       </div>
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <div className={styles.inner_container}>
-          <Form />
-          <Files />
-          <Sequence />
-        </div>
-      )}
+      <div className={styles.inner_container}>
+        <Form submitForm={submitForm} />
+        <Files handleFetch={handleFetch} loading={loading} />
+        <Sequence />
+      </div>
     </section>
   );
 };
 
-export default Business2;
+export default BusinessOld;

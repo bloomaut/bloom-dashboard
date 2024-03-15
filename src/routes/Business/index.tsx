@@ -7,20 +7,16 @@ import Sequence from "./Sequence";
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { get } from "@/services/fetch";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
 import { setFilesData } from "@/store/features/filesSlice";
 import { ENV } from "@/typescript/types/environment.enum";
+import LoadingSpinner from "@/components/Loading";
 
 const Business = () => {
-  const business = useAppSelector(state => state.business);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict.business");
-
-  const submitForm = (formData: any) => {
-    console.log(formData);
-  };
 
   const fetchData = async () => {
     try {
@@ -28,7 +24,6 @@ const Business = () => {
       if (userData?.data.statusCode === 200) {
         dispatch(setBusinessData(userData.data.result.data.smallBusiness));
       }
-
       const userFiles = await get("small-files/media", ENV.DASH);
       if (userFiles?.data.statusCode === 200) {
         dispatch(setFilesData(userFiles.data.result.folder));
@@ -40,13 +35,8 @@ const Business = () => {
     }
   };
 
-  const handleFetch = async () => {
-    setLoading(true);
-    await fetchData();
-  };
-
   useEffect(() => {
-    handleFetch();
+    fetchData();
   }, [dispatch]);
 
   return (
@@ -54,11 +44,15 @@ const Business = () => {
       <div className={styles.breadcrumb_container}>
         <Breadcrumb title={dict("breadcrumb_title")} />
       </div>
-      <div className={styles.inner_container}>
-        <Form submitForm={submitForm} />
-        <Files handleFetch={handleFetch} loading={loading} />
-        <Sequence />
-      </div>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className={styles.inner_container}>
+          <Form />
+          <Files />
+          <Sequence />
+        </div>
+      )}
     </section>
   );
 };
