@@ -32,6 +32,9 @@
         "btn": "Creá tu propio diseño"
       }
     },
+    "introduction": {
+      "title": "Introducción"
+    },
     "playground": {
       "breadcrumb_title": "Simulador",
       "template_title": "Plantillas",

@@ -29,6 +29,9 @@
         "btn": "Create your own design"
       }
     },
+    "introduction": {
+      "title": "Introduction"
+    },
     "playground": {
       "breadcrumb_title": "Simulator",
       "template_title": "Templates",

@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import Breadcrumb from "@/components/Breadcrumb";
 import IntroVideo from "@/components/IntroVideo";
 import Checkbox from "./Checkbox";
+import { useTranslations } from "next-intl";
 
 interface Content {
   title: string;
@@ -10,6 +11,8 @@ interface Content {
 }
 
 const IntroductionPage = () => {
+  const dict = useTranslations("dict.introduction");
+
   const content: Content[] = [
     {
       title: "H2 sub",
@@ -61,7 +64,7 @@ const IntroductionPage = () => {
   return (
     <section className={styles.container}>
       <div className={styles.breadcrumb_container}>
-        <Breadcrumb title={"Introducción"} />
+        <Breadcrumb title={dict("title")} />
       </div>
       <div className={styles.inner_container}>
         <div className={styles.content}>
