@@ -1,5 +1,10 @@
 {
   "dict": {
+    "error": {
+      "message": "Somethings went wrong!",
+      "btn": "Reset",
+      "btn2": "Go back"
+    },
     "sidebar": {
       "home": "Home",
       "guide": "Guide",
@@ -36,13 +41,41 @@
         "today": "Today"
       }
     },
+    "breadcrumb": {
+      "breadcrumb_link": "Go back"
+    },
+
     "guide": {
-      "stepper_title1": "Section 1",
-      "stepper_subtitle1": "Know, Play, and Load",
-      "stepper_title2": "Section 2",
-      "stepper_subtitle2": "Share and Use"
+      "header": {
+        "stepper_title1": "Section 1",
+        "stepper_subtitle1": "Know, Play, and Load",
+        "stepper_title2": "Section 2",
+        "stepper_subtitle2": "Share and Use"
+      },
+      "stepper_one": {
+        "title": "Steps",
+        "title_one": "Introduction",
+        "subtitle_one": "Introduction and Understanding of the Platform. Explanatory Video",
+        "title_two": "Play",
+        "subtitle_two": "Play in the playground, customize apps, and generate your first hotlink",
+        "title_three": "Upload",
+        "subtitle_three": "Upload data from your company and brand files for your designs",
+        "title_four": "Design",
+        "subtitle_four": "Take care of the design with our UiTool tool"
+      },
+      "stepper_two": {
+        "title": "Steps",
+        "title_one": "Distribute",
+        "subtitle_one": "Generate links for your clients and distribute your customized apps",
+        "title_two": "Manage",
+        "subtitle_two": "Manage the messages that arrive in your Inbox and chat with your clients",
+        "title_three": "Campaigns",
+        "subtitle_three": "Send campaigns and visualize the results of the interactions",
+        "button": "I have completed the steps"
+      }
     },
     "business": {
+      "breadcrumb_title": "Data Upload",
       "sequence": {
         "title": "Sequence",
         "card_title_01": "Upload commercial information",
@@ -54,6 +87,20 @@
         "card_description_03": "You can attach the amount of information you consider necessary for your business",
         "card_description_04": "I uploaded files related to your business to extract information",
         "button": "I finished loading the data"
+      },
+      "form": {
+        "title": "Business Information",
+        "subtitle": "The more fields you complete, the better the result will be",
+        "name": "Name",
+        "placeholder_name": "Enter the name",
+        "website": "Website",
+        "placeholder_website": "Enter the website",
+        "description": "Description",
+        "placeholder_description": "Enter the description",
+        "placeholder_instagram": "Enter Instagram",
+        "phone": "Phone",
+        "placeholder_phone": "Enter the phone number",
+        "button": "Save"
       }
     }
   }

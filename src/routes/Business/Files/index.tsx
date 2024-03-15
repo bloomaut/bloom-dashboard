@@ -37,7 +37,7 @@ const Files = ({ handleFetch, loading }: FilesProps) => {
       const dataToSend = {
         logo: logoUrl,
       };
-      await update("small-business", ENV.DASH, dataToSend);
+      await update("small-business", dataToSend, ENV.DASH);
       notify("Imagen subida correctamente");
       setPreviewLogo(null);
       handleFetch();

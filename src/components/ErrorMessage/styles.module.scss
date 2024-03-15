@@ -5,7 +5,7 @@
   @include flex(column, center, center, 20px);
   p {
     @include fontSize-fontWeight(20px, 400);
-    color: grey;
+    color: $lightGrey;
   }
   button {
     @include fontSize-fontWeight(14px, 400);
@@ -13,13 +13,13 @@
     padding: 12px 22px;
     border: none;
     border-radius: 4px;
-    background: $blue;
+    background: $orange;
     color: $white;
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     transition: background 200ms ease-in;
     &:hover {
-      background: #5c5eca;
+      background: $darkOrange;
     }
   }
 }

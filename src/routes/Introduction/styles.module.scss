@@ -16,7 +16,7 @@
     align-items: center;
     gap: 20px;
     .content {
-       @include width-height(100%, 100%); 
+      @include width-height(100%, 100%);
       @include flex(column, flex-start, flex-start, 20px);
       overflow-y: auto;
       color: $lightGrey;
@@ -37,14 +37,13 @@
 }
 
 .content::-webkit-scrollbar {
-  width: 7px;
-  height: 10px;
+  width: 5px;
   background-color: $greyBackground;
 }
 
 .content::-webkit-scrollbar-thumb {
-  background-color: $lightGrey;
-  border-radius: 7px;
+  background-color: $orange;
+  border-radius: 10px;
 }
 
 @media (min-width: $queryXl) {

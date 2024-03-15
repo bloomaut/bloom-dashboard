@@ -1,1 +1,24 @@
 @import "@/styles/theme";
+
+.container {
+  @include width-height(100%, 90vh);
+  @include flex(column, center, center, 30px);
+  h1 {
+    @include fontSize-fontWeight(24px, 400);
+    color: $lightGrey;
+  }
+  .btn {
+    @include fontSize-fontWeight(20px, 400);
+    padding: 10px 20px;
+    color: $white;
+    background-color: $orange;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-decoration: none;
+    &:hover {
+      background-color: $darkOrange;
+    }
+  }
+}

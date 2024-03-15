@@ -3,6 +3,15 @@
 .btn {
   @include main-btn;
 }
+.btn:disabled {
+  background: $white;
+  border: 1px solid $lighterGrey;
+  color: $lighterGrey;
+  &:hover {
+    background-color: $white;
+    cursor: default;
+  }
+}
 
 .btn_disabled {
   background: $lightGrey;
@@ -32,6 +41,20 @@
   &:hover {
     color: white;
   }
+}
+
+.btn_playground_outline {
+  @extend .btn_outline;
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+}
+
+.btn2_playground_outline {
+  @extend .btn;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .btn_copy {

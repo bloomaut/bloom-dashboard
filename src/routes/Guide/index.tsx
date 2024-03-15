@@ -1,18 +1,47 @@
 "use client";
-import { useState } from "react";
 import styles from "./styles.module.scss";
+import { useState, useEffect } from "react";
+import { get } from "@/services/fetch";
+import { ENV } from "@/typescript/types/environment.enum";
+
+// Componentes
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Header from "./Header";
+import LoadingSpinner from "@/components/Loading";
 
 const GuidePage = () => {
   const [activeStep, setActiveStep] = useState(1);
+  const [step, setStep] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserStep = async () => {
+      setIsLoading(true);
+      const userData = await get("small-business/me", ENV.DASH);
+      if (userData.statusCode === 200) {
+        const userStep = userData.result.data.smallBusiness.step;
+        setStep(userStep);
+        setIsLoading(false);
+      } else {
+        setStep(0);
+      }
+      setIsLoading(false);
+    };
+    fetchUserStep();
+  }, []);
 
   return (
     <section className={styles.container}>
-      <Header handleStepChange={setActiveStep} activeStep={activeStep}></Header>
-      {activeStep === 1 && <Step1 />}
-      {activeStep === 2 && <Step2 />}
+      <Header handleStepChange={setActiveStep} activeStep={activeStep} />
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {activeStep === 1 && <Step1 userStep={step} />}
+          {activeStep === 2 && <Step2 userStep={step} />}
+        </>
+      )}
     </section>
   );
 };

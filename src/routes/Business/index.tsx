@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
+import Breadcrumb from "@/components/Breadcrumb";
 import Files from "./Files";
 import Form from "./Form";
 import Sequence from "./Sequence";
 import styles from "./styles.module.scss";
+import { useTranslations } from "next-intl";
 import { get } from "@/services/fetch";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
@@ -13,6 +15,11 @@ const Business = () => {
   const business = useAppSelector(state => state.business);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
+  const dict = useTranslations("dict.business");
+
+  const submitForm = (formData: any) => {
+    console.log(formData);
+  };
 
   const handleFetch = async () => {
     const response = await get("small-business/me", ENV.DASH);
@@ -30,8 +37,11 @@ const Business = () => {
 
   return (
     <section className={styles.container}>
+      <div className={styles.breadcrumb_container}>
+        <Breadcrumb title={dict("breadcrumb_title")} />
+      </div>
       <div className={styles.inner_container}>
-        <Form />
+        <Form submitForm={submitForm} />
         <Files handleFetch={handleFetch} loading={loading} />
         <Sequence />
       </div>

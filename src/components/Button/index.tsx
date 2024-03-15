@@ -2,14 +2,15 @@ import Image from "next/image";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
-  onclick: () => void;
+  onclick?: () => void;
   title: string;
   icon?: string;
   styleName?: string;
   isDisabled?: boolean;
+  type?: string;
 }
 
-const Button = ({ title, icon, styleName, onclick, isDisabled }: ButtonProps) => {
+const Button = ({ title, icon, styleName, onclick, isDisabled, type }: ButtonProps) => {
   return (
     <button
       className={`${styles.btn} ${styleName ? styles[styleName] : styles.btn}`}

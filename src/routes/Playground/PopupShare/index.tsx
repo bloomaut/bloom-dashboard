@@ -6,25 +6,26 @@ import sharedIcon from "/public/icons/share.svg";
 import whatsappIcon from "/public/icons/whatsapp.svg";
 import copyIcon from "/public/icons/copy.svg";
 import closeIcon from "/public/icons/close.svg";
-import Button from "../Button";
+import Button from "../../../components/Button";
 import { useTranslations } from "next-intl";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useState } from "react";
+import { useFlakesContext } from "@/context/FlakesContext";
 
 interface PopupShareProps {
   setShowPopup: (value: boolean) => void;
 }
 
 const PopupShare = ({ setShowPopup }: PopupShareProps) => {
-  const [value, setValue] = useState<string>("https://uitrade.com/jz345asdashhf");
   const { notify, notifyError } = useMessageToast();
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const dict = useTranslations("dict.home.popup");
+  const { paUrl } = useFlakesContext();
 
   const handleCopyClick = () => {
-    if (value)
-      navigator.clipboard.writeText(value).then(
+    if (paUrl)
+      navigator.clipboard.writeText(paUrl).then(
         function () {
           notify(`${dict("copy_success")}`);
         },
@@ -54,8 +55,8 @@ const PopupShare = ({ setShowPopup }: PopupShareProps) => {
               <p className={styles.title}>Hotlink</p>
             </div>
             <div className={styles.link_container}>
-              <Link className={styles.link} href={"/"} target='_blank'>
-                {value}
+              <Link className={styles.link} href={paUrl} target='_blank'>
+                {paUrl}
               </Link>
               <Button onclick={handleCopyClick} title={dict("copy")} icon={copyIcon} styleName='btn_copy' />
             </div>
