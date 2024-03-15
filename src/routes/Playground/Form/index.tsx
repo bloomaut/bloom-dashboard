@@ -9,6 +9,7 @@ import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
+import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 
 const EmptyFormData = {
@@ -27,7 +28,8 @@ const EmptyFormData = {
 
 const Form = () => {
   const dict = useTranslations("dict.playground.form");
-
+  const dictToast = useTranslations("dict.toast");
+  const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
@@ -62,6 +64,11 @@ const Form = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const anyEmpty = formInfo.some(info => info.value?.trim() === "");
+    if (anyEmpty) {
+      notifyError(`${dictToast("empty_fields")}`);
+      return;
+    }
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     if (response?.status === 200) {
       const { hotlink, message } = response.data.data.result;

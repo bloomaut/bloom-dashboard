@@ -19,7 +19,7 @@
       "ejemplo": "borrar"
     },
     "toast": {
-      "ejemplo": "borrar"
+      "empty_fields": "Todos los campos son requeridos"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
