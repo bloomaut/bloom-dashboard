@@ -79,6 +79,10 @@ const Form = () => {
     setFormInfo(updatedFormInfo);
   };
 
+  useEffect(() => {
+    setShowButton(false);
+  }, [selectedFlakeId]);
+
   return (
     <div className={styles.container}>
       <SectionTitle text='Campos' />

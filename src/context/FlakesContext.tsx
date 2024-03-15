@@ -82,6 +82,13 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setShowPreview(true);
+    setPreviewData(null);
+    setPaUrl("");
+    setCaptureTime("");
+  }, [selectedFlakeId]);
+
   return (
     <FlakesContext.Provider
       value={{
