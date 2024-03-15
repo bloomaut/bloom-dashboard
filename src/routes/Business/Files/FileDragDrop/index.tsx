@@ -23,7 +23,7 @@ const FileDragDrop = ({ files, setFiles, previewLogo, setPreviewLogo, companyLog
     } else if (!previewLogo && companyLogo && acceptedFiles.length > 0 && acceptedFiles[0].type.startsWith("image/")) {
       setPreviewLogo(acceptedFiles[0]);
     } else {
-      notifyError("Debes subir una imágen JPG, JPEG, PNG, GIF o WEBP");
+      notifyError("Debes subir una imágen como logo o un PDF para archivos");
     }
   };
 
