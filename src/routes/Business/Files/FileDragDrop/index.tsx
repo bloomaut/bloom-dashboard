@@ -13,9 +13,12 @@ interface FileDragDropProps {
 
 const FileDragDrop = ({ file, setFile }: FileDragDropProps) => {
   const { notify, notifyError } = useMessageToast();
+  const companyLogo = useAppSelector(data => data.business.logo);
 
   const onDrop = (acceptedFiles: File[]) => {
-    if (
+    if (!companyLogo && acceptedFiles.length === 1 && acceptedFiles[0].type.startsWith("image")) {
+      setFile(acceptedFiles[0]);
+    } else if (
       acceptedFiles.length === 1 &&
       !acceptedFiles[0].type.includes("pdf") &&
       !acceptedFiles[0].type.startsWith("image")
