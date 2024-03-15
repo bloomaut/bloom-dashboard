@@ -16,23 +16,30 @@ const FileDragDrop = ({ file, setFile }: FileDragDropProps) => {
   const companyLogo = useAppSelector(data => data.business.logo);
 
   const onDrop = (acceptedFiles: File[]) => {
-    if (!companyLogo && acceptedFiles.length === 1 && acceptedFiles[0].type.startsWith("image")) {
-      setFile(acceptedFiles[0]);
-    } else if (
-      acceptedFiles.length === 1 &&
-      !acceptedFiles[0].type.includes("pdf") &&
-      !acceptedFiles[0].type.startsWith("image")
-    ) {
-      notifyError("Solo se permiten imágenes o documentos PDF");
-    } else if (
-      acceptedFiles.length === 1 &&
-      (acceptedFiles[0].type === "application/pdf" || acceptedFiles[0].type.startsWith("image"))
-    ) {
-      setFile(acceptedFiles[0]);
-    } else if (acceptedFiles.length === 0) {
-      notifyError("Solo se permite subir un archivo");
-    } else {
-      notifyError("Debes subir una imagen como logo o un PDF para archivos");
+    if (!companyLogo) {
+      if (acceptedFiles.length === 1 && acceptedFiles[0].type.startsWith("image")) {
+        setFile(acceptedFiles[0]);
+      } else {
+        notifyError("La primera carga debe ser una imágen");
+      }
+    }
+
+    if (companyLogo) {
+      if (
+        acceptedFiles.length === 1 &&
+        (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.startsWith("image"))
+      ) {
+        setFile(acceptedFiles[0]);
+      } else if (
+        acceptedFiles.length === 1 &&
+        (!acceptedFiles[0].type.includes("pdf") || !acceptedFiles[0].type.startsWith("image"))
+      ) {
+        notifyError("Solo se permiten imágenes o documentos PDF");
+      } else if (acceptedFiles.length === 0) {
+        notifyError("Solo se permite subir un archivo");
+      } else {
+        notifyError("Debes subir una imagen como logo o un PDF para archivos");
+      }
     }
   };
 
