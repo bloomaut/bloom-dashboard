@@ -5,8 +5,10 @@ import TemplatesSelector from "./TemplatesSelector";
 import styles from "./styles.module.scss";
 import Breadcrumb from "@/components/Breadcrumb";
 import { FlakesProvider } from "@/context/FlakesContext";
+import { useState } from "react";
 
 const Playground = () => {
+  const [loading, setLoading] = useState(false);
   return (
     <FlakesProvider>
       <section className={styles.container}>
@@ -15,8 +17,8 @@ const Playground = () => {
         </div>
         <div className={styles.inner_container}>
           <TemplatesSelector />
-          <Form />
-          <PhoneCase />
+          <Form setLoading={setLoading} />
+          <PhoneCase loading={loading} />
         </div>
       </section>
     </FlakesProvider>

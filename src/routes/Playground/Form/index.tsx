@@ -23,8 +23,11 @@ const EmptyFormData = {
     },
   ],
 };
+interface FormProps {
+  setLoading: (loading: boolean) => void;
+}
 
-const Form = () => {
+const Form = ({ setLoading }: FormProps) => {
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
@@ -59,6 +62,7 @@ const Form = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     if (response?.status === 200) {
       const { hotlink, message } = response.data.data.result;
@@ -66,6 +70,7 @@ const Form = () => {
       setTime();
       setShowPreview(true);
       setShowButton(true);
+      setLoading(false);
     } else {
       console.log(response);
     }

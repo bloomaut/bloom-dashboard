@@ -4,8 +4,13 @@ import caseImage from "@/../public/assets/mobileCase.png";
 import whatsappImage from "@/../public/assets/wa.png";
 import OpenGraph from "./OpenGraph";
 import { useFlakesContext } from "@/context/FlakesContext";
+import LoadingDots from "./OpenGraph/LoadingDots";
 
-const PhoneCase = () => {
+interface PhoneCaseProps {
+  loading: boolean;
+}
+
+const PhoneCase = ({ loading }: PhoneCaseProps) => {
   const { captureTime, showPreview, setShowPreview, previewData, paUrl } = useFlakesContext();
 
   return (
@@ -14,16 +19,20 @@ const PhoneCase = () => {
         <Image src={caseImage} width={550} height={500} alt='Phone case' className={styles.phone} />
         <Image src={whatsappImage} width={250} height={500} alt='Whatsapp' className={styles.wa} />
         <div className={styles.phone_inner_container}>
-          {/* OG */}
-          {showPreview && previewData && (
-            <OpenGraph
-              handlePreviewClick={() => setShowPreview(false)}
-              previewData={previewData}
-              captureTime={captureTime}
-            />
+          {loading ? (
+            <LoadingDots />
+          ) : (
+            <>
+              {showPreview && previewData && (
+                <OpenGraph
+                  handlePreviewClick={() => setShowPreview(false)}
+                  previewData={previewData}
+                  captureTime={captureTime}
+                />
+              )}
+              {!showPreview && <iframe src={paUrl} title='Power App'></iframe>}
+            </>
           )}
-          {/* IFRAME */}
-          {!showPreview && <iframe src={paUrl} title='Power App'></iframe>}
         </div>
       </div>
       <div className={styles.dot_container}>
