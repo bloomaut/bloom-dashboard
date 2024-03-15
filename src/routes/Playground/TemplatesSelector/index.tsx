@@ -4,6 +4,7 @@ import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
+import { useTranslations } from "next-intl";
 
 interface Context {
   flakes: Powerapp[];
@@ -13,6 +14,7 @@ interface Context {
 }
 
 const TemplatesSelector = () => {
+  const dict = useTranslations("dict.playground");
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext() as Context;
 
   const changeFlakeId = (id: string) => {
@@ -21,7 +23,7 @@ const TemplatesSelector = () => {
 
   return (
     <section className={styles.container}>
-      <SectionTitle text='Plantillas' />
+      <SectionTitle text={dict("template_title")} />
       <div className={styles.flakes}>
         {!loading ? (
           flakes.map((app: Powerapp) => (
