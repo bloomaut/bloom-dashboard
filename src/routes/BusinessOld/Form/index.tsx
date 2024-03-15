@@ -7,7 +7,11 @@ import { useTranslations } from "next-intl";
 import Input from "@/components/Input";
 import Subtitle from "../Subtitle";
 
-const Form = () => {
+interface PropsForm {
+  submitForm: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const Form = ({ submitForm }: PropsForm) => {
   const dict = useTranslations("dict.business.form");
   const [formData, setFormData] = useState({
     name: "",
@@ -23,10 +27,6 @@ const Form = () => {
       ...prevState,
       [name]: value,
     }));
-  };
-
-  const submitForm = (formData: any) => {
-    console.log(formData);
   };
 
   return (

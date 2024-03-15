@@ -1,0 +1,30 @@
+@import "@/styles/theme.scss";
+
+.container {
+  height: inherit;
+  @include flex(column, flex-start, flex-start, 10px);
+  h4 {
+    color: $lighterGrey;
+    @include fontSize-fontWeight(14px, 400);
+    white-space: nowrap;
+  }
+  .form {
+    @include width-height(100%, 100%);
+    .btn_container {
+      @include flex(column, flex-end, flex-end);
+      .btn {
+        margin-top: 10px;
+        background-color: $orange;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 15px;
+        color: $white;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        &:hover {
+          background-color: $darkOrange;
+        }
+      }
+    }
+  }
+}
