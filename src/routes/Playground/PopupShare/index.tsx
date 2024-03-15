@@ -20,7 +20,7 @@ interface PopupShareProps {
 const PopupShare = ({ setShowPopup }: PopupShareProps) => {
   const { notify, notifyError } = useMessageToast();
   const { dropdownRef } = useCloseDropdown(setShowPopup);
-  const dict = useTranslations("dict.home.popup");
+  const dict = useTranslations("dict.playground.popup");
   const { paUrl } = useFlakesContext();
 
   const handleCopyClick = () => {
