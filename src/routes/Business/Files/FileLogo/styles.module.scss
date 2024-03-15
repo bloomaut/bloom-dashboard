@@ -5,13 +5,13 @@
   @include flex(row, center, center, 20px);
   border-radius: 8px;
   border: 1px solid $lightGrey;
-  padding: 20px 10px;
-  .logoFile {
-    @include width-height(100px, auto);
-    object-fit: contain;
-  }
+  padding: 10px;
   .logoUrl {
     @include width-height(150px, auto);
+    object-fit: contain;
+  }
+  .logoFile {
+    @include width-height(50px, auto);
     object-fit: contain;
   }
   p {

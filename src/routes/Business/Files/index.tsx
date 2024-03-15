@@ -6,7 +6,7 @@ import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
 import Button from "@/components/Button";
-import { postFile, update } from "@/services/fetch";
+import { get, postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
@@ -19,104 +19,78 @@ interface FilesProps {
 
 const Files = ({ handleFetch, loading }: FilesProps) => {
   const companyLogo = useAppSelector(data => data.business.logo);
-  const [previewLogo, setPreviewLogo] = useState<File | null>(null);
-  const [files, setFiles] = useState<File[]>([]);
+  const files = useAppSelector(data => data.files.media);
+  const [file, setFile] = useState<File | null>(null);
   const { notify, notifyError } = useMessageToast();
 
-  const handleDeleteFile = (fileNameToDelete: string) => {
-    const updatedFiles = files?.filter(file => file.name !== fileNameToDelete);
-    setFiles(updatedFiles);
+  const handleDeletePreview = () => {
+    setFile(null);
   };
 
-  const handleDeleteLogo = () => {
-    setPreviewLogo(null);
-  };
-
-  const handleUploadLogo = async (logoUrl: string) => {
+  const handleUpdateLogo = async (logoUrl: string) => {
     try {
       const dataToSend = {
         logo: logoUrl,
       };
       await update("small-business", dataToSend, ENV.DASH);
       notify("Imagen subida correctamente");
-      setPreviewLogo(null);
+      setFile(null);
       handleFetch();
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }
   };
 
-  // const handleUploadFiles = async () => {
-  //   try {
-  //     const response = await postFile("small-files/media", files, ENV.DASH);
-  //     console.log(response);
-  //     if (response.data.statusCode === 201) {
-  //       notify("Archivos subidos correctamente");
-  //     } else {
-  //       notifyError("Error al subir los archivos");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error al enviar los archivos:", error);
-  //   }
-  // };
+  const handleUploadFile = async (file: File) => {
+    try {
+      const response = await postFile("small-files/media", file, ENV.DASH);
+
+      if (response.data.statusCode === 201) {
+        if (response.data.result.media.filetype.startsWith("image/")) {
+          const logoUrl = response.data.result.media.url;
+          await handleUpdateLogo(logoUrl);
+        } else {
+          notify("Archivo subido correctamente");
+          setFile(null);
+          handleFetch();
+        }
+      }
+    } catch (error) {
+      console.error("Error al enviar el archivo:", error);
+    }
+  };
 
   const handleSubmit = async () => {
-    if (previewLogo) {
-      try {
-        const response = await postFile("small-files/media", previewLogo, ENV.DASH);
-        if (response.data.statusCode === 201) {
-          const logoUrl = response.data.result.media.url;
-          await handleUploadLogo(logoUrl);
-        } else {
-          notifyError("Error al subir la imagen");
-        }
-      } catch (error) {
-        console.error("Error al enviar la imagen:", error);
-      }
+    if (file) {
+      handleUploadFile(file);
     } else {
-      // handleUploadFiles();
+      notifyError("Debes subir un archivo");
     }
   };
 
   return (
     <div className={styles.container}>
-      <Subtitle
-        text={previewLogo || companyLogo ? "Actualizá tu Logo o arrojá tus PDF aquí" : "Subí tu logo para iniciar"}
-      />
-      <FileDragDrop
-        files={files}
-        setFiles={setFiles}
-        previewLogo={previewLogo}
-        setPreviewLogo={setPreviewLogo}
-        companyLogo={companyLogo}
-      />
+      <Subtitle text={!companyLogo ? "Subí tu logo para iniciar" : "Arrojá tus archivos aquí"} />
+      <FileDragDrop file={file} setFile={setFile} />
+      {companyLogo && !file ? (
+        <FileLogo logoUrl={companyLogo} onDelete={handleDeletePreview} loading={loading} />
+      ) : file ? (
+        <FileLogo file={file} onDelete={handleDeletePreview} loading={loading} />
+      ) : null}
+      {file && (
+        <div className={styles.btn_container}>
+          <Button title='Subir' onclick={handleSubmit} />
+        </div>
+      )}
       <div className={styles.files}>
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <>
-            {companyLogo && !previewLogo ? (
-              <FileLogo logoUrl={companyLogo} onDelete={handleDeleteLogo} loading={loading} />
-            ) : previewLogo ? (
-              <FileLogo file={previewLogo} onDelete={handleDeleteLogo} loading={loading} />
-            ) : null}
-          </>
-        )}
-        {files &&
+          files &&
           files.map(file => (
-            <FileCard
-              key={file.name}
-              title={file.name}
-              updated={file.lastModified}
-              docType={file.type}
-              onDelete={() => handleDeleteFile(file.name)}
-            />
-          ))}
-        {files.length > 0 || previewLogo ? (
-          <div className={styles.btn_container}>
-            <Button title='Enviar' onclick={handleSubmit} />
-          </div>
-        ) : null}
+            <FileCard key={file._id} title={file.filename} created_at={file.created_at} docType={file.filetype} />
+          ))
+        )}
       </div>
     </div>
   );

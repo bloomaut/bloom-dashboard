@@ -7,23 +7,29 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppSelector } from "@/store/hooks";
 
 interface FileDragDropProps {
-  files: File[];
-  setFiles: Dispatch<SetStateAction<File[]>>;
-  previewLogo?: File | null;
-  companyLogo?: string | null;
-  setPreviewLogo: Dispatch<SetStateAction<File | null>>;
+  file: File | null;
+  setFile: Dispatch<SetStateAction<File | null>>;
 }
 
-const FileDragDrop = ({ files, setFiles, previewLogo, setPreviewLogo, companyLogo }: FileDragDropProps) => {
+const FileDragDrop = ({ file, setFile }: FileDragDropProps) => {
   const { notify, notifyError } = useMessageToast();
 
   const onDrop = (acceptedFiles: File[]) => {
-    if (!previewLogo && companyLogo && acceptedFiles.length > 0 && !acceptedFiles[0].type.startsWith("image/")) {
-      setFiles(prevFiles => [...prevFiles, ...acceptedFiles]);
-    } else if (!previewLogo && companyLogo && acceptedFiles.length > 0 && acceptedFiles[0].type.startsWith("image/")) {
-      setPreviewLogo(acceptedFiles[0]);
+    if (
+      acceptedFiles.length === 1 &&
+      !acceptedFiles[0].type.includes("pdf") &&
+      !acceptedFiles[0].type.startsWith("image")
+    ) {
+      notifyError("Solo se permiten imágenes o documentos PDF");
+    } else if (
+      acceptedFiles.length === 1 &&
+      (acceptedFiles[0].type === "application/pdf" || acceptedFiles[0].type.startsWith("image"))
+    ) {
+      setFile(acceptedFiles[0]);
+    } else if (acceptedFiles.length === 0) {
+      notifyError("Solo se permite subir un archivo");
     } else {
-      notifyError("Debes subir una imágen como logo o un PDF para archivos");
+      notifyError("Debes subir una imagen como logo o un PDF para archivos");
     }
   };
 
@@ -33,19 +39,20 @@ const FileDragDrop = ({ files, setFiles, previewLogo, setPreviewLogo, companyLog
     accept: {
       "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp"],
       "application/pdf": [".pdf"],
-      // "application/vnd.ms-excel": [".xls"],
-      // "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-      // "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
-      // "application/msword": [".doc"],
-      // "text/plain": [".txt"],
-      // "application/json": [".json"],
+      "application/vnd.ms-excel": [".xls"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+      "application/msword": [".doc"],
+      "text/plain": [".txt"],
+      "application/json": [".json"],
     },
+    maxFiles: 1,
   });
 
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
-      {files && files.length > 0 ? (
+      {file ? (
         fileRejections[0]?.errors ? (
           <p className={styles.name}>Error</p>
         ) : (

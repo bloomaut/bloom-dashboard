@@ -13,12 +13,13 @@ import useFormattedDate from "@/hooks/useFormattedDate";
 interface FileCardProps {
   docType: string;
   title: string;
-  updated: number;
-  onDelete: () => void;
+  created_at: string;
+  onDelete?: () => void;
 }
 
-const FileCard = ({ title, docType, updated, onDelete }: FileCardProps) => {
-  const formattedDate = useFormattedDate(updated);
+const FileCard = ({ title, docType, created_at, onDelete }: FileCardProps) => {
+  const date = Date.parse(created_at);
+  const formattedDate = useFormattedDate(date);
 
   return (
     <div className={styles.card}>

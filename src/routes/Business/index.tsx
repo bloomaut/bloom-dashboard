@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { get } from "@/services/fetch";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
+import { setFilesData } from "@/store/features/filesSlice";
 import { ENV } from "@/typescript/types/environment.enum";
 
 const Business = () => {
@@ -21,19 +22,32 @@ const Business = () => {
     console.log(formData);
   };
 
-  const handleFetch = async () => {
-    const response = await get("small-business/me", ENV.DASH);
-    if (response?.data.statusCode === 200) {
-      dispatch(setBusinessData(response.data.result.data.smallBusiness));
+  const fetchData = async () => {
+    try {
+      const userData = await get("small-business/me", ENV.DASH);
+      if (userData?.data.statusCode === 200) {
+        dispatch(setBusinessData(userData.data.result.data.smallBusiness));
+      }
+
+      const userFiles = await get("small-files/media", ENV.DASH);
+      if (userFiles?.data.statusCode === 200) {
+        dispatch(setFilesData(userFiles.data.result.folder));
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
       setLoading(false);
     }
+  };
+
+  const handleFetch = async () => {
+    setLoading(true);
+    await fetchData();
   };
 
   useEffect(() => {
     handleFetch();
   }, [dispatch]);
-
-  console.log(business);
 
   return (
     <section className={styles.container}>

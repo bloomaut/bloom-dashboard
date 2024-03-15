@@ -11,11 +11,14 @@
   &:hover {
     border-color: $orange;
   }
-  img {
-    @include width-height(100%, 80px);
-    @include flex(row, center, center, 10px);
+  .content {
+    @include width-height(100%, auto);
+    @include flex(row, center, center, 20px);
     transition: all 100ms ease-in-out;
-    object-fit: contain;
+    img {
+      @include width-height(80px, auto);
+      object-fit: contain;
+    }
     &:hover {
       transform: scale(1.2);
     }

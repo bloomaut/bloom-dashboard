@@ -33,17 +33,10 @@ export const post = async (url: string, data: POST, api: EnvironmentApi) => {
   }
 };
 
-export const postFile = async (url: string, file: File | File[], api: EnvironmentApi) => {
+export const postFile = async (url: string, file: File, api: EnvironmentApi) => {
   try {
     const formData = new FormData();
-    if (file instanceof File) {
-      formData.append("file", file);
-    } else {
-      console.log(file);
-      file.forEach((file, index) => {
-        formData.append(`file${index}`, file);
-      });
-    }
+    formData.append("file", file);
 
     const response = await fetch(`${API}/${url}`, {
       method: "POST",
