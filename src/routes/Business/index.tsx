@@ -10,24 +10,23 @@ import { setBusinessData } from "@/store/features/businessSlice";
 import { ENV } from "@/typescript/types/environment.enum";
 
 const Business = () => {
+  const business = useAppSelector(state => state.business);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
 
   const handleFetch = async () => {
-    try {
-      const response = await get("small-business/me", ENV.DASH);
-      if (response?.data.statusCode === 200) {
-        dispatch(setBusinessData(response.data.result.data.smallBusiness));
-        setLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await get("small-business/me", ENV.DASH);
+    if (response?.data.statusCode === 200) {
+      dispatch(setBusinessData(response.data.result.data.smallBusiness));
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     handleFetch();
   }, [dispatch]);
+
+  console.log(business);
 
   return (
     <section className={styles.container}>
