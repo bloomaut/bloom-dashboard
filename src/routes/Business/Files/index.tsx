@@ -80,9 +80,12 @@ const Files = ({ handleFetch, loading }: FilesProps) => {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          files?.map(file => (
-            <FileCard key={file._id} title={file.filename} created_at={file.created_at} docType={file.filetype} />
-          ))
+          files &&
+          files
+            .filter(file => file.filetype === "application/pdf") // Filtrar solo los archivos PDF
+            .map(file => (
+              <FileCard key={file._id} title={file.filename} created_at={file.created_at} docType={file.filetype} />
+            ))
         )}
       </div>
     </div>
