@@ -23,6 +23,8 @@ const Files = ({ handleFetch, loading }: FilesProps) => {
   const [file, setFile] = useState<File | null>(null);
   const { notify, notifyError } = useMessageToast();
 
+  console.log(file);
+
   const handleDeletePreview = () => {
     setFile(null);
   };
@@ -78,8 +80,7 @@ const Files = ({ handleFetch, loading }: FilesProps) => {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          files &&
-          files.map(file => (
+          files?.map(file => (
             <FileCard key={file._id} title={file.filename} created_at={file.created_at} docType={file.filetype} />
           ))
         )}

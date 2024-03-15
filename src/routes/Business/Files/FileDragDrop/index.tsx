@@ -16,6 +16,14 @@ const FileDragDrop = ({ file, setFile }: FileDragDropProps) => {
   const companyLogo = useAppSelector(data => data.business.logo);
 
   const onDrop = (acceptedFiles: File[]) => {
+    console.log(fileRejections);
+
+    if (fileRejections.length) {
+    } else {
+      // El archivo no tiene errores
+      setFile(acceptedFiles[0]);
+    }
+
     if (!companyLogo && acceptedFiles.length === 1 && acceptedFiles[0].type.startsWith("image")) {
       setFile(acceptedFiles[0]);
     } else if (
@@ -42,12 +50,12 @@ const FileDragDrop = ({ file, setFile }: FileDragDropProps) => {
     accept: {
       "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp"],
       "application/pdf": [".pdf"],
-      "application/vnd.ms-excel": [".xls"],
+      /* "application/vnd.ms-excel": [".xls"],
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
       "application/msword": [".doc"],
       "text/plain": [".txt"],
-      "application/json": [".json"],
+      "application/json": [".json"], */
     },
     maxFiles: 1,
   });
