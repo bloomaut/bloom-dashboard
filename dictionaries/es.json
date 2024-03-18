@@ -24,6 +24,7 @@
       "success_edit": "Información actualizada correctamente",
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen"
+      "empty_fields": "Todos los campos son requeridos"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -34,6 +35,21 @@
         "title": "Aprendé con Playground",
         "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
         "btn": "Creá tu propio diseño"
+      }
+    },
+    "introduction": {
+      "title": "Introducción"
+    },
+    "playground": {
+      "breadcrumb_title": "Simulador",
+      "template_title": "Plantillas",
+      "form": {
+        "title": "Campos",
+        "button_hotlink": "Generar Hotlink",
+        "button_share": "Compartir Hotlink"
+      },
+      "phoneCase": {
+        "today": "Hoy"
       },
       "popup": {
         "title": "Compartir y probar en Whatsapp",
@@ -41,11 +57,6 @@
         "btn": "Compartir en Whatsapp",
         "copy_success": "URL copiada al porpapapeles",
         "copy_error": "Error al copiar URL"
-      }
-    },
-    "playground": {
-      "phoneCase": {
-        "today": "Hoy"
       }
     },
     "guide": {

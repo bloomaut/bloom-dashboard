@@ -24,6 +24,7 @@
       "success_edit": "Information updated successfully",
       "error_edit": "Error updating information",
       "error_img": "Error uploading image"
+      "empty_fields": "All fields are required"
     },
     "home": {
       "banner": {
@@ -31,6 +32,21 @@
         "title": "Learn with Playground",
         "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
         "btn": "Create your own design"
+      }
+    },
+    "introduction": {
+      "title": "Introduction"
+    },
+    "playground": {
+      "breadcrumb_title": "Simulator",
+      "template_title": "Templates",
+      "form": {
+        "title": "Fields",
+        "button_hotlink": "Generate Hotlink",
+        "button_share": "Share Hotlink"
+      },
+      "phoneCase": {
+        "today": "Today"
       },
       "popup": {
         "title": "Share and test on Whatsapp",
@@ -38,11 +54,6 @@
         "btn": "Share on Whatsapp",
         "copy_succes": "URL copied to clipboard",
         "copy_error": "Error copying URL"
-      }
-    },
-    "playground": {
-      "phoneCase": {
-        "today": "Today"
       }
     },
     "breadcrumb": {
