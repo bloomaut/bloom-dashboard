@@ -24,7 +24,7 @@
       "success_edit": "Information updated successfully",
       "error_name": "Name is required",
       "error_edit": "Error updating information",
-      "error_img": "Error uploading image"
+      "error_img": "Error uploading image",
       "empty_fields": "All fields are required"
     },
     "home": {

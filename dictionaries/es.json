@@ -24,7 +24,7 @@
       "success_edit": "Información actualizada correctamente",
       "error_name": "El nombre es obligatorio",
       "error_edit": "Error al actualizar información",
-      "error_img": "Error al subir la imágen"
+      "error_img": "Error al subir la imágen",
       "empty_fields": "Todos los campos son requeridos"
     },
     "breadcrumb": {
