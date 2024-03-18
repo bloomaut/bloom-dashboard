@@ -11,7 +11,6 @@ export interface ContentProps {
   step: number;
   title: string;
   description: string;
-  disabled: boolean;
 }
 
 const Sequence = () => {
@@ -43,25 +42,21 @@ const Sequence = () => {
       step: 1,
       title: `${dict("card_title_01")}`,
       description: `${dict("card_description_01")}`,
-      disabled: currentStep !== 1,
     },
     {
       step: 2,
       title: `${dict("card_title_02")}`,
       description: `${dict("card_description_02")}`,
-      disabled: currentStep !== 2,
     },
     {
       step: 3,
       title: `${dict("card_title_03")}`,
       description: `${dict("card_description_03")}`,
-      disabled: currentStep !== 3,
     },
     {
       step: 4,
       title: `${dict("card_title_04")}`,
       description: `${dict("card_description_04")}`,
-      disabled: currentStep !== 4,
     },
   ];
 
@@ -75,7 +70,7 @@ const Sequence = () => {
       <Subtitle text={dict("title")} />
       <div className={styles.cards_container}>
         {content.map((data, index) => (
-          <Card key={index} data={data} />
+          <Card key={index} data={data} disabled={currentStep !== data.step} />
         ))}
       </div>
       <div className={styles.btn_container}>
