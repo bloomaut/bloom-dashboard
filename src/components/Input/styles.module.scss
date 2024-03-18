@@ -16,6 +16,9 @@
     border: 1px solid $lighterGrey;
     border-radius: 4px;
     background-color: transparent;
+    &::placeholder {
+      color: $lighterGrey;
+    }
   }
   .description_input {
     @include width-height(100%, 90px);

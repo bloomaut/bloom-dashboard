@@ -23,7 +23,7 @@
       "success_file": "File uploaded successfully",
       "success_edit": "Information updated successfully",
       "error_edit": "Error updating information",
-      "error_img": "Error uploading image"
+      "error_img": "Error uploading image",
       "empty_fields": "All fields are required"
     },
     "home": {

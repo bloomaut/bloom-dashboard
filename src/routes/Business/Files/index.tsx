@@ -71,7 +71,7 @@ const Files = () => {
       <FileDragDrop setFile={setFile} />
 
       {/* Muestra siempre el logo*/}
-      <FileLogo file={file} onDelete={deleteLogo} />
+      {(companyLogo || file) && <FileLogo file={file} onDelete={deleteLogo} />}
       {/* Muestra otros tipos de archivos cuando se cargan */}
       {file && file.type.includes("pdf") && (
         <FileCard title={file.name} created_at={new Date().toString()} docType={file.type} onDelete={removeFile} />
