@@ -84,21 +84,6 @@ const Form = () => {
     setFormDataPost(EmptyFormData);
   };
 
-  const postForm = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Lo que envio", formDataPost);
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_DASH}/hotlinks/playground`, {
-        method: "POST",
-        body: JSON.stringify(formDataPost),
-      });
-      console.log(response);
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-      throw error;
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const updatedFormInfo = [...formInfo];
     updatedFormInfo[index].value = e.target.value;
@@ -111,7 +96,7 @@ const Form = () => {
       {loading ? (
         <Loading />
       ) : (
-        <form className={styles.form} onSubmit={postForm}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {formInfo &&
             formInfo.map((info, index) => (
               <Input

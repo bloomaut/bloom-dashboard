@@ -1,7 +1,7 @@
 import { get } from "@/services/fetch";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { ENV } from "@/typescript/types/environment.enum";
-import axios, { all } from "axios";
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface Context {
@@ -50,7 +50,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     const fetchOpenGraphData = async () => {
-      console.log(paUrl);
       const newUrl = encodeURIComponent(paUrl);
       try {
         const response = await axios.get(
@@ -66,10 +65,27 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     }
   }, [paUrl]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       const allFlakes = await get("small/flakes/playground", ENV.UITOOL);
-      console.log(allFlakes);
+      if (allFlakes.statusCode === 200) {
+        setFlakes(allFlakes.result.powerapps);
+        setSelectedFlakeId(allFlakes.result.powerapps[0]._id);
+        setLoading(false);
+      } else {
+        console.error("Error fetching Flakes:", allFlakes);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); */
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchData = async () => {
+      const allFlakes = await get("small/flakes/playground", ENV.UITOOL);
       if (allFlakes.data.statusCode === 200) {
         setFlakes(allFlakes.data.result.powerapps);
         setSelectedFlakeId(allFlakes.data.result.powerapps[0]._id);
@@ -82,6 +98,13 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    setShowPreview(true);
+    setPreviewData(null);
+    setPaUrl("");
+    setCaptureTime("");
+  }, [selectedFlakeId]);
 
   return (
     <FlakesContext.Provider
