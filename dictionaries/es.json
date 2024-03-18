@@ -30,6 +30,11 @@
     "breadcrumb": {
       "breadcrumb_link": "Volver"
     },
+    "popupLogin": {
+      "login": "Iniciar sesión",
+      "title": "Para ingresar debes iniciar sesión",
+      "link": "Volver"
+    },
     "home": {
       "banner": {
         "welcome": "Te damos la bienvenida a Small",
