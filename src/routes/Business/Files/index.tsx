@@ -6,12 +6,13 @@ import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
 import Button from "@/components/Button";
-import { postFile, update } from "@/services/fetch";
+import { get, postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
 import { updateLogo } from "@/store/features/businessSlice";
 import { useTranslations } from "next-intl";
+import { setFilesData } from "@/store/features/filesSlice";
 
 const Files = () => {
   const companyLogo = useAppSelector(data => data.business.logo);
@@ -43,6 +44,8 @@ const Files = () => {
         await handleUpdateLogo(logoUrl);
       } else {
         notify(`${dict("toast.success_file")}`);
+        const userFiles = await get("small-files/media", ENV.DASH);
+        dispatch(setFilesData(userFiles.data.result.folder));
       }
     } else {
       notifyError(`${dict("toast.error_img")}`);
