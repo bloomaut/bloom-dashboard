@@ -1,6 +1,35 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, 100%);
-      background-color: red;
+  @include width-height(100%, calc(100vh - 90px));
+  @include flex(column, flex-start, flex-start, 20px);
+  .files {
+    @include width-height(100%, 100%);
+    @include flex(column, flex-start, flex-start, 20px);
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  .btn_container {
+    @include width-height(100%, auto);
+    @include flex(row, flex-end, center);
+  }
+}
+
+.files::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+  background-color: $greyBackground;
+}
+
+.files::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 7px;
+}
+
+@media (min-width: $queryXl) {
+  .container {
+    .files {
+      max-height: 420px;
+    }
+  }
 }

@@ -1,0 +1,65 @@
+@import "@/styles/theme.scss";
+
+.card {
+  @include width-height(100%, auto);
+  @include flex(row, space-between, center);
+  border-radius: 8px;
+  border: 1px solid $lightGrey;
+  padding: 10px 10px;
+  .header {
+    @include flex(row, center, center, 10px);
+    .icon {
+      @include width-height(40px, auto);
+      object-fit: contain;
+    }
+    .content {
+      @include flex(column, center, flex-start, 10px);
+      color: $lightGrey;
+      .title,
+      .updated {
+        @include fontSize-fontWeight(14px, 600);
+        @include flex(row, center, center, 5px);
+        span {
+          @include fontSize-fontWeight(14px, 400);
+          display: inline-block;
+          max-width: 150px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-align: center;
+        }
+      }
+    }
+  }
+  .icons {
+    @include flex(row, center, center, 5px);
+    .btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 100ms ease-in-out;
+      &:hover {
+        transform: scale(1.2);
+      }
+      .controls_icons {
+        @include width-height(25px, auto);
+        object-fit: contain;
+      }
+    }
+  }
+}
+
+@media (min-width: $queryXl) {
+  .card {
+    .header {
+      .content {
+        .title,
+        .updated {
+          span {
+            max-width: 200px;
+          }
+        }
+      }
+    }
+  }
+}
