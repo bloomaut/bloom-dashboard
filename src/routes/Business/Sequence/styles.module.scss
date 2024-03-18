@@ -16,6 +16,9 @@
 
 @media (min-width: $queryXl) {
   .container {
+    .cards_container {
+      gap: 70px;
+    }
     .btn_container {
       width: 100%;
     }
