@@ -52,6 +52,11 @@ const Form = () => {
   };
 
   const handleUpdate = async () => {
+    if (formData.name.trim() === "") {
+      notifyError(`${dict("toast.error_name")}`);
+      return;
+    }
+
     const response = await update("small-business", formData, ENV.DASH);
     if (response.data.statusCode === 200) {
       dispatch(setBusinessData(response.data.result.data));
