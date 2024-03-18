@@ -69,6 +69,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     setLoading(true);
     const fetchData = async () => {
       const allFlakes = await get("small/flakes/playground", ENV.UITOOL);
+      console.log(allFlakes);
       if (allFlakes.data.statusCode === 200) {
         setFlakes(allFlakes.data.result.powerapps);
         setSelectedFlakeId(allFlakes.data.result.powerapps[0]._id);
