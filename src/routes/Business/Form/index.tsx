@@ -1,14 +1,22 @@
 "use client";
 import styles from "./styles.module.scss";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useEffect, useState } from "react";
+import { ENV } from "@/typescript/types/environment.enum";
 import { useTranslations } from "next-intl";
+import { useMessageToast } from "@/hooks/useMessageToast";
 
 //Componentes
 import Input from "@/components/Input";
 import Subtitle from "../Subtitle";
+import { update } from "@/services/fetch";
+import { setBusinessData } from "@/store/features/businessSlice";
 
 const Form = () => {
   const dict = useTranslations("dict.business.form");
+  const business = useAppSelector(data => data.business);
+  const dispatch = useAppDispatch();
+  const { notify, notifyError } = useMessageToast();
   const [formData, setFormData] = useState({
     name: "",
     website: "",
@@ -16,6 +24,16 @@ const Form = () => {
     instagram: "",
     phone: "",
   });
+
+  useEffect(() => {
+    setFormData({
+      name: business.name || "",
+      website: business.website || "",
+      description: business.description || "",
+      instagram: business.instagram || "",
+      phone: business.phone || "",
+    });
+  }, [business]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,8 +43,21 @@ const Form = () => {
     }));
   };
 
-  const submitForm = (formData: any) => {
-    console.log(formData);
+  const handleUpdate = async () => {
+    try {
+      const response = await update("small-business", formData, ENV.DASH);
+      if (response.data.statusCode === 200) {
+        dispatch(setBusinessData(response.data.result.data));
+        notify("Información actualizada correctamente");
+      }
+    } catch (error) {
+      notifyError("Hubo un error al actualizar la información");
+    }
+  };
+
+  const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleUpdate();
   };
 
   return (

@@ -19,8 +19,6 @@ const Files = () => {
   const { notify, notifyError } = useMessageToast();
   const dispatch = useAppDispatch();
 
-  console.log(file);
-
   const handleUpdateLogo = async (logoUrl: string) => {
     try {
       const dataToSend = {

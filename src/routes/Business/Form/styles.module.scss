@@ -10,6 +10,7 @@
   }
   .form {
     @include width-height(100%, 100%);
+    @include flex(column, flex-start, flex-start);
     .btn_container {
       @include flex(column, flex-end, flex-end);
       .btn {
@@ -25,6 +26,14 @@
           background-color: $darkOrange;
         }
       }
+    }
+  }
+}
+
+@media (min-width: $queryXl) {
+  .container {
+    .form {
+      gap: 20px;
     }
   }
 }
