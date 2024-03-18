@@ -19,7 +19,11 @@
       "ejemplo": "borrar"
     },
     "toast": {
-      "ejemplo": "borrar"
+      "success_img": "Imágen subida correctamente",
+      "success_file": "Archivo subido correctamente",
+      "success_edit": "Información actualizada correctamente",
+      "error_edit": "Error al actualizar información",
+      "error_img": "Error al subir la imágen"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -100,6 +104,11 @@
         "phone": "Teléfono",
         "placeholder_phone": "Ingrese su teléfono",
         "button": "Guardar"
+      },
+      "file": {
+        "title01": "Subí tu logo para iniciar",
+        "title02": "Arrojá tus archivos aquí",
+        "subtitle": "Mis archivos"
       }
     }
   }

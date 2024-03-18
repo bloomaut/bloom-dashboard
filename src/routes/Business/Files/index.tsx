@@ -11,12 +11,14 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
 import { updateLogo } from "@/store/features/businessSlice";
+import { useTranslations } from "next-intl";
 
 const Files = () => {
   const companyLogo = useAppSelector(data => data.business.logo);
   const reduxFiles = useAppSelector(data => data.files.media);
   const [file, setFile] = useState<File | null>(null);
   const { notify, notifyError } = useMessageToast();
+  const dict = useTranslations("dict");
   const dispatch = useAppDispatch();
 
   const handleUpdateLogo = async (logoUrl: string) => {
@@ -25,10 +27,10 @@ const Files = () => {
         logo: logoUrl,
       };
       await update("small-business", dataToSend, ENV.DASH);
-      notify("Imagen subida correctamente");
+      notify(`${dict("toast.success_img")}`);
       dispatch(updateLogo(logoUrl));
     } catch (error) {
-      notifyError("Hubo un error al cargar la imagen");
+      notifyError(`${dict("toast.error_img")}`);
     }
   };
 
@@ -40,10 +42,10 @@ const Files = () => {
         const logoUrl = response.data.result.media.url;
         await handleUpdateLogo(logoUrl);
       } else {
-        notify("Archivo subido correctamente");
+        notify(`${dict("toast.success_file")}`);
       }
     } else {
-      notifyError("Hubo un error al cargar la imagen");
+      notifyError(`${dict("toast.error_img")}`);
     }
   };
 
@@ -65,7 +67,7 @@ const Files = () => {
 
   return (
     <div className={styles.container}>
-      <Subtitle text={!companyLogo ? "Subí tu logo para iniciar" : "Arrojá tus archivos aquí"} />
+      <Subtitle text={!companyLogo ? `${dict("business.file.title01")}` : `${dict("business.file.title02")}`} />
       <FileDragDrop setFile={setFile} />
 
       {/* Muestra siempre el logo*/}
@@ -81,7 +83,7 @@ const Files = () => {
         </div>
       )}
 
-      <Subtitle text={"Mis archivos"} />
+      <Subtitle text={`${dict("business.file.subtitle")}`} />
       <div className={styles.files}>
         {/* Muestra todos los archivos PDF */}
         {reduxFiles

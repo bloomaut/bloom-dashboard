@@ -19,7 +19,11 @@
       "ejemplo": "borrar"
     },
     "toast": {
-      "ejemplo": "borrar"
+      "success_img": "Image uploaded successfully",
+      "success_file": "File uploaded successfully",
+      "success_edit": "Information updated successfully",
+      "error_edit": "Error updating information",
+      "error_img": "Error uploading image"
     },
     "home": {
       "banner": {
@@ -101,6 +105,11 @@
         "phone": "Phone",
         "placeholder_phone": "Enter the phone number",
         "button": "Save"
+      },
+      "file": {
+        "title01": "Upload your logo to start",
+        "title02": "Drop your files here",
+        "subtitle": "My files"
       }
     }
   }
