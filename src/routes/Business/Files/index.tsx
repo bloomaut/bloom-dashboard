@@ -27,17 +27,17 @@ const Files = () => {
       const dataToSend = {
         logo: logoUrl,
       };
-      await update("small-business", dataToSend, ENV.DASH);
+      await update("small-business", ENV.DASH, dataToSend);
       notify(`${dict("toast.success_img")}`);
       dispatch(updateLogo(logoUrl));
     } catch (error) {
+      console.log(error);
       notifyError(`${dict("toast.error_img")}`);
     }
   };
 
   const handleUploadFile = async (file: File) => {
     const response = await postFile("small-files/media", file, ENV.DASH);
-
     if (response.data.statusCode === 201) {
       if (response.data.result.media.filetype.startsWith("image/")) {
         const logoUrl = response.data.result.media.url;
@@ -45,7 +45,7 @@ const Files = () => {
       } else {
         notify(`${dict("toast.success_file")}`);
         const userFiles = await get("small-files/media", ENV.DASH);
-        dispatch(setFilesData(userFiles.data.result.folder));
+        dispatch(setFilesData(userFiles.result.folder));
       }
     } else {
       notifyError(`${dict("toast.error_img")}`);

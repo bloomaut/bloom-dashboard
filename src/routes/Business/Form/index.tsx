@@ -57,9 +57,9 @@ const Form = () => {
       return;
     }
 
-    const response = await update("small-business", formData, ENV.DASH);
-    if (response.data.statusCode === 200) {
-      dispatch(setBusinessData(response.data.result.data));
+    const response = await update("small-business", ENV.DASH, formData);
+    if (response.statusCode === 200) {
+      dispatch(setBusinessData(response.result.data));
       notify(`${dict("toast.success_edit")}`);
     } else {
       notifyError(`${dict("toast.error_edit")}`);

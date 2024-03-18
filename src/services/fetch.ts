@@ -58,17 +58,19 @@ export const postFile = async (url: string, file: File, api: EnvironmentApi) => 
   }
 };
 
-export const update = async (url: string, id: string, api: EnvironmentApi, data?: UPDATE) => {
+export const update = async (url: string, api: EnvironmentApi, data?: any, id?: string) => {
   try {
-    const baseURL = process.env[api];
-    if (!baseURL) {
-      throw new Error(`Invalid API: ${api}`);
+    let endpoint = `${API}/${url}`;
+    if (id) {
+      endpoint += `/${id}`;
     }
-    const response = await axios.put(`${API}/${url}/${id}`, data, {
+
+    const response = await axios.put(endpoint, data, {
       headers: {
         "X-API": api,
       },
     });
+
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -81,10 +83,6 @@ export const update = async (url: string, id: string, api: EnvironmentApi, data?
 
 export const remove = async (url: string, id: string, api: EnvironmentApi) => {
   try {
-    const baseURL = process.env[api];
-    if (!baseURL) {
-      throw new Error(`Invalid API: ${api}`);
-    }
     const response = await axios.delete(`${API}/${url}/${id}`, {
       headers: {
         "X-API": api,
