@@ -8,23 +8,13 @@ import Link from "next/link";
 import ArrowIcon from "/public/icons/arrow_left.svg";
 import { useRouter } from "next/navigation";
 
-interface PopupLoginProps {
-  setShowPopup: (value: boolean) => void;
-}
-
-const PopupLogin = ({ setShowPopup }: PopupLoginProps) => {
-  const { notify, notifyError } = useMessageToast();
-  const { dropdownRef } = useCloseDropdown(setShowPopup);
+const PopupLogin = () => {
   const dict = useTranslations("dict.popupLogin");
   const router = useRouter();
 
-  const handleCancel = () => {
-    setShowPopup(false);
-  };
-
   return (
     <section className={styles.container}>
-      <div className={styles.inner_container} ref={dropdownRef}>
+      <div className={styles.inner_container}>
         <button className={styles.btn_back} onClick={() => router.back()}>
           <Image src={ArrowIcon} alt='arrow' className={styles.arrow} width={15} height={20} />
           <p className={styles.text}>{dict("link")}</p>
