@@ -10,7 +10,7 @@ import { useState } from "react";
 
 const Playground = () => {
   const dict = useTranslations("dict.playground");
-  const [loading, setLoading] = useState(false);
+  const [loadingDots, setLoadingDots] = useState(false);
   return (
     <FlakesProvider>
       <section className={styles.container}>
@@ -19,8 +19,8 @@ const Playground = () => {
         </div>
         <div className={styles.inner_container}>
           <TemplatesSelector />
-          <Form setLoading={setLoading} />
-          <PhoneCase loading={loading} />
+          <Form setLoadingDots={setLoadingDots} />
+          <PhoneCase loadingDots={loadingDots} />
         </div>
       </section>
     </FlakesProvider>

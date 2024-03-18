@@ -26,10 +26,10 @@ const EmptyFormData = {
   ],
 };
 interface FormProps {
-  setLoading: (loading: boolean) => void;
+  setLoadingDots: (loading: boolean) => void;
 }
 
-const Form = ({ setLoading }: FormProps) => {
+const Form = ({ setLoadingDots }: FormProps) => {
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
@@ -71,7 +71,7 @@ const Form = ({ setLoading }: FormProps) => {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
-    setLoading(true);
+    setLoadingDots(true);
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     if (response?.status === 200) {
       const { hotlink, message } = response.data.data.result;
@@ -79,7 +79,7 @@ const Form = ({ setLoading }: FormProps) => {
       setTime();
       setShowPreview(true);
       setShowButton(true);
-      setLoading(false);
+      setLoadingDots(false);
     } else {
       console.log(response);
     }

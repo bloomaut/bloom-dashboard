@@ -67,6 +67,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   }, [paUrl]);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       const allFlakes = await get("small/flakes/playground", ENV.UITOOL);
       if (allFlakes.statusCode === 200) {

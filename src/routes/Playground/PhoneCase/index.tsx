@@ -5,21 +5,31 @@ import whatsappImage from "@/../public/assets/wa.png";
 import OpenGraph from "./OpenGraph";
 import { useFlakesContext } from "@/context/FlakesContext";
 import LoadingDots from "./OpenGraph/LoadingDots";
+import LoadingSpinner from "@/components/Loading";
+import { useEffect, useState } from "react";
 
 interface PhoneCaseProps {
-  loading: boolean;
+  loadingDots: boolean;
 }
 
-const PhoneCase = ({ loading }: PhoneCaseProps) => {
-  const { captureTime, showPreview, setShowPreview, previewData, paUrl } = useFlakesContext();
+const PhoneCase = ({ loadingDots }: PhoneCaseProps) => {
+  const { captureTime, showPreview, setShowPreview, previewData, paUrl, loading } = useFlakesContext();
+  const [iframeLoading, setIframeLoading] = useState(true);
 
+  useEffect(() => {
+    if (!loading && paUrl && !showPreview) {
+      setIframeLoading(false);
+    } else {
+      setIframeLoading(true);
+    }
+  }, [paUrl, showPreview, loading]);
   return (
     <div className={styles.container}>
       <div className={styles.phone_container}>
         <Image src={caseImage} width={550} height={500} alt='Phone case' className={styles.phone} />
         <Image src={whatsappImage} width={250} height={500} alt='Whatsapp' className={styles.wa} />
         <div className={styles.phone_inner_container}>
-          {loading ? (
+          {loadingDots ? (
             <LoadingDots />
           ) : (
             <>
@@ -30,7 +40,9 @@ const PhoneCase = ({ loading }: PhoneCaseProps) => {
                   captureTime={captureTime}
                 />
               )}
-              {!showPreview && <iframe src={paUrl} title='Power App'></iframe>}
+
+              {!showPreview && iframeLoading && <LoadingSpinner />}
+              {!showPreview && !iframeLoading && <iframe src={paUrl} title='Power App'></iframe>}
             </>
           )}
         </div>
