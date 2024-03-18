@@ -7,7 +7,7 @@ interface CardProps {
 
 const Card = ({ data }: CardProps) => {
   return (
-    <div className={styles.container}>
+    <div className={data.disabled ? styles.container_disabled : styles.container}>
       <div className={styles.header}>
         <p className={styles.step}>{data.step}.</p>
         <h3 className={styles.title}>{data.title}</h3>

@@ -18,11 +18,11 @@
   .description {
     @include fontSize-fontWeight(16px, 400);
   }
-  &:nth-child(2),
-  &:nth-child(3),
-  &:nth-child(4) {
-    border-color: $lighterGrey;
-    color: $lighterGrey;
-    background: $greyBackground;
-  }
+}
+
+.container_disabled {
+  @extend .container;
+  border-color: $lighterGrey;
+  color: $lighterGrey;
+  background: $greyBackground;
 }
