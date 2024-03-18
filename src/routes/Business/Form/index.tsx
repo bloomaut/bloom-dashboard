@@ -53,13 +53,18 @@ const Form = () => {
 
   const handleUpdate = async () => {
     try {
+      if (formData.name.trim() === "") {
+        notifyError(`${dict("toast.error_name")}`);
+        return;
+      }
+
       const response = await update("small-business", formData, ENV.DASH);
       if (response.data.statusCode === 200) {
         dispatch(setBusinessData(response.data.result.data));
-        notify(`${dict("dict.success_edit")}`);
+        notify(`${dict("toast.success_edit")}`);
       }
     } catch (error) {
-      notifyError(`${dict("dict.error_edit")}`);
+      notifyError(`${dict("toast.error_edit")}`);
     }
   };
 
@@ -115,7 +120,7 @@ const Form = () => {
           handleChange={handleChange}
         />
         <div className={styles.btn_container}>
-          <button className={styles.btn}>{dict("button")}</button>
+          <button className={styles.btn}>{dict("business.form.button")}</button>
         </div>
       </form>
     </div>

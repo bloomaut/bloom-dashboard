@@ -22,6 +22,7 @@
       "success_img": "Image uploaded successfully",
       "success_file": "File uploaded successfully",
       "success_edit": "Information updated successfully",
+      "error_name": "Name is required",
       "error_edit": "Error updating information",
       "error_img": "Error uploading image"
     },
