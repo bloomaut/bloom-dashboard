@@ -22,25 +22,19 @@ const Sequence = () => {
   const dict = useTranslations("dict.business.sequence");
 
   useEffect(() => {
-    switch (currentStep) {
-      case 1:
-        if (business?.name) {
-          setCurrentStep(2);
-        }
-        break;
-      case 2:
-        if (business?.logo) {
-          setCurrentStep(3);
-        }
-        break;
-      case 3:
-        if (files?.length >= 2) {
-          const hasPDF = files.some(file => file.filetype === "application/pdf");
-          if (hasPDF) setCurrentStep(4);
-        }
-        break;
-      default:
-        break;
+    if (currentStep === 1) {
+      if (business?.name) {
+        setCurrentStep(2);
+      }
+    } else if (currentStep === 2) {
+      if (business?.logo) {
+        setCurrentStep(3);
+      }
+    } else if (currentStep === 3) {
+      if (files?.length >= 2) {
+        const hasPDF = files.some(file => file.filetype === "application/pdf");
+        if (hasPDF) setCurrentStep(4);
+      }
     }
   }, [business, files, currentStep]);
 
