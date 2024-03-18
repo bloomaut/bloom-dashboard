@@ -65,23 +65,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     }
   }, [paUrl]);
 
-  /*   useEffect(() => {
-    setLoading(true);
-    const fetchData = async () => {
-      const allFlakes = await get("small/flakes/playground", ENV.UITOOL);
-      if (allFlakes.statusCode === 200) {
-        setFlakes(allFlakes.result.powerapps);
-        setSelectedFlakeId(allFlakes.result.powerapps[0]._id);
-        setLoading(false);
-      } else {
-        console.error("Error fetching Flakes:", allFlakes);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []); */
-
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
