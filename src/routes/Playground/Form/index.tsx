@@ -9,6 +9,8 @@ import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { useTranslations } from "next-intl";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -28,6 +30,8 @@ interface FormProps {
 }
 
 const Form = ({ setLoading }: FormProps) => {
+  const dict = useTranslations("dict");
+  const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
@@ -62,6 +66,11 @@ const Form = ({ setLoading }: FormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const anyEmpty = formInfo.some(info => info.value?.trim() === "");
+    if (anyEmpty) {
+      notifyError(`${dict("toast.empty_fields")}`);
+      return;
+    }
     setLoading(true);
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     if (response?.status === 200) {
@@ -90,7 +99,7 @@ const Form = ({ setLoading }: FormProps) => {
 
   return (
     <div className={styles.container}>
-      <SectionTitle text='Campos' />
+      <SectionTitle text={dict("playground.form.title")} />
       {loading ? (
         <Loading />
       ) : (
@@ -107,10 +116,10 @@ const Form = ({ setLoading }: FormProps) => {
                 name={info.name}
               />
             ))}
-          <Button title='Generar Hotlink' styleName='btn_playground_outline' type='submit' />
+          <Button title={dict("playground.form.button_hotlink")} styleName='btn_playground_outline' type='submit' />
           {showButton && (
             <Button
-              title='Compartir Hotlink'
+              title={dict("playground.form.button_share")}
               styleName='btn2_playground_outline'
               onclick={() => setShowPopup(!showPopup)}
             />

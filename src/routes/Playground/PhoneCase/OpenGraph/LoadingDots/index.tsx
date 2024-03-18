@@ -2,8 +2,10 @@
 import styles from "./styles.module.scss";
 import "@/styles/theme.scss";
 import { ThreeDots } from "react-loader-spinner";
+import { useTranslations } from "next-intl";
 
 const LoadingDots = () => {
+  const dict = useTranslations("dict.playground");
   return (
     <div className={styles.container}>
       <div className={styles.loadingWrapper}>
@@ -17,7 +19,7 @@ const LoadingDots = () => {
           wrapperStyle={{}}
           wrapperClass=''
         />
-        <p>Escribiendo...</p>
+        <p>{dict("loading_dots")}...</p>
       </div>
     </div>
   );
