@@ -68,8 +68,10 @@ const Form = () => {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
+    console.log("Lo que envio", formDataPost);
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
-    if (response?.status === 200) {
+    console.log(response);
+    /* if (response?.status === 200) {
       const { hotlink, message } = response.data.data.result;
       setPaUrl(`https://power-app-engine.vercel.app/${hotlink.power_app_hash}`);
       setTime();
@@ -77,7 +79,7 @@ const Form = () => {
       setShowButton(true);
     } else {
       console.log(response);
-    }
+    } */
 
     setFormDataPost(EmptyFormData);
   };
