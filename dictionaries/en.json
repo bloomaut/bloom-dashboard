@@ -28,6 +28,11 @@
       "empty_fields": "All fields are required",
       "error_tryagain": "There was a problem, try again later"
     },
+    "popupLogin": {
+      "login": "Log in",
+      "title": "To continue, we will ask you to log in",
+      "link": "Go back"
+    },
     "home": {
       "banner": {
         "welcome": "We welcome you to Small",

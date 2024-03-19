@@ -1,9 +1,15 @@
 "use client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Business from "@/routes/Business";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import PopupLogin from "@/components/PopupLogin";
+import LoadingSpinner from "@/components/Loading";
+import { usePathname } from "next/navigation";
 
 function Page() {
-  return <Business />;
+  const pathname = usePathname();
+  const { user, isLoading } = useUser();
+
+  return <>{!isLoading ? user ? <Business /> : <PopupLogin currentPage={pathname} /> : <LoadingSpinner />}</>;
 }
 
-export default withPageAuthRequired(Page);
+export default Page;
