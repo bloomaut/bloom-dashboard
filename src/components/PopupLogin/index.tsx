@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import ArrowIcon from "/public/icons/arrow_left.svg";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 interface PopupLoginProps {
   currentPage: string;
@@ -12,13 +13,14 @@ interface PopupLoginProps {
 const PopupLogin = ({ currentPage }: PopupLoginProps) => {
   const dict = useTranslations("dict.popupLogin");
   const router = useRouter();
+  const locale = useLocale();
 
   let returnUrl = "";
 
   if (currentPage === "business") {
-    returnUrl = encodeURIComponent("/es/my-business");
+    returnUrl = locale === "es" ? encodeURIComponent("/es/my-business") : encodeURIComponent("/en/my-business");
   } else if (currentPage === "design") {
-    returnUrl = encodeURIComponent("/es/design");
+    returnUrl = locale === "es" ? encodeURIComponent("/es/design") : encodeURIComponent("/en/design");
   }
 
   return (
