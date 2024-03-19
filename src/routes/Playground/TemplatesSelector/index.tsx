@@ -1,10 +1,11 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import SectionTitle from "@/components/SectionTitle";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
+//Componentes
+import SectionTitle from "@/components/SectionTitle";
+import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 interface Context {
   flakes: Powerapp[];

@@ -4,7 +4,7 @@ import green_check from "@/../public/icons/green_check.png";
 import gray_check from "@/../public/icons/gray_check.png";
 import Link from "next/link";
 
-interface StepsProps {
+interface CardStepsProps {
   step_number: number;
   title: string;
   subtitle: string;
@@ -12,7 +12,7 @@ interface StepsProps {
   linkTo: string;
 }
 
-const CardSteps = ({ step_number, title, subtitle, isActive, linkTo }: StepsProps) => {
+const CardSteps = ({ step_number, title, subtitle, isActive, linkTo }: CardStepsProps) => {
   return (
     <Link href={linkTo} className={`${styles.main_container} ${isActive ? styles.active : styles.inactive}`}>
       <div className={styles.container}>

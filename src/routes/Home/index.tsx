@@ -1,5 +1,6 @@
-import Banner from "./Banner";
 import styles from "./styles.module.scss";
+//Componentes
+import Banner from "./Banner";
 
 const HomePage = () => {
   return (

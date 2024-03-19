@@ -1,12 +1,13 @@
-import Image from "next/image";
 import styles from "./styles.module.scss";
+import Image from "next/image";
 import caseImage from "@/../public/assets/mobileCase.png";
 import whatsappImage from "@/../public/assets/wa.png";
-import OpenGraph from "./OpenGraph";
 import { useFlakesContext } from "@/context/FlakesContext";
-import LoadingDots from "./OpenGraph/LoadingDots";
-import LoadingSpinner from "@/components/Loading";
 import { useEffect, useState } from "react";
+//Componentes
+import LoadingDots from "./LoadingDots";
+import LoadingSpinner from "@/components/Loading";
+import OpenGraph from "./OpenGraph";
 
 interface PhoneCaseProps {
   loadingDots: boolean;
@@ -41,8 +42,12 @@ const PhoneCase = ({ loadingDots }: PhoneCaseProps) => {
                 />
               )}
 
-              {!showPreview && iframeLoading && <LoadingSpinner />}
-              {!showPreview && !iframeLoading && <iframe src={paUrl} title='Power App'></iframe>}
+              {!showPreview && (
+                <>{iframeLoading ? <LoadingSpinner /> : <iframe src={paUrl} title='Power App'></iframe>}</>
+              )}
+
+              {/*  {!showPreview && iframeLoading && <LoadingSpinner />}
+              {!showPreview && !iframeLoading && <iframe src={paUrl} title='Power App'></iframe>} */}
             </>
           )}
         </div>

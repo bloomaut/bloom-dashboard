@@ -6,7 +6,7 @@ import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
-/* Componentes */
+//Componentes
 import Input from "@/components/Input";
 import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
@@ -32,14 +32,13 @@ interface FormProps {
 
 const Form = ({ setLoadingDots }: FormProps) => {
   const dict = useTranslations("dict");
-  const { notify, notifyError } = useMessageToast();
+  const { notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
   const { setTime, setShowPreview, setPaUrl } = useFlakesContext();
-
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
   useEffect(() => {

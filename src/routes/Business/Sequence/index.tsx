@@ -1,11 +1,12 @@
 "use client";
-import Button from "@/components/Button";
-import Subtitle from "../Subtitle";
-import Card from "./Card";
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useAppSelector } from "@/store/hooks";
+//Componentes
+import Button from "@/components/Button";
+import Subtitle from "../Subtitle";
+import Card from "./Card";
 
 export interface ContentProps {
   step: number;

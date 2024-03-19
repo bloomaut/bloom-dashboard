@@ -6,12 +6,12 @@ import sharedIcon from "/public/icons/share.svg";
 import whatsappIcon from "/public/icons/whatsapp.svg";
 import copyIcon from "/public/icons/copy.svg";
 import closeIcon from "/public/icons/close.svg";
-import Button from "../../../components/Button";
 import { useTranslations } from "next-intl";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { useState } from "react";
 import { useFlakesContext } from "@/context/FlakesContext";
+//Componentes
+import Button from "@/components/Button";
 
 interface PopupShareProps {
   setShowPopup: (value: boolean) => void;

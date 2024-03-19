@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
-
+import { update } from "@/services/fetch";
+import { setBusinessData } from "@/store/features/businessSlice";
 //Componentes
 import Input from "@/components/Input";
 import Subtitle from "../Subtitle";
-import { update } from "@/services/fetch";
-import { setBusinessData } from "@/store/features/businessSlice";
 
 interface FormDataProps {
   name: string;

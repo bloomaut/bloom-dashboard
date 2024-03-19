@@ -1,11 +1,6 @@
 "use client";
-import { useState } from "react";
 import styles from "./styles.module.scss";
-import FileDragDrop from "./FileDragDrop";
-import Subtitle from "../Subtitle";
-import FileCard from "./FileCard";
-import FileLogo from "./FileLogo";
-import Button from "@/components/Button";
+import { useState } from "react";
 import { get, postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -13,6 +8,12 @@ import { ENV } from "@/typescript/types/environment.enum";
 import { updateLogo } from "@/store/features/businessSlice";
 import { useTranslations } from "next-intl";
 import { setFilesData } from "@/store/features/filesSlice";
+//Componentes
+import FileDragDrop from "./FileDragDrop";
+import Subtitle from "../Subtitle";
+import FileCard from "./FileCard";
+import FileLogo from "./FileLogo";
+import Button from "@/components/Button";
 
 const Files = () => {
   const companyLogo = useAppSelector(data => data.business.logo);

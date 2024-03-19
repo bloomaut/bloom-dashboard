@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 
 const LoadingDots = () => {
   const dict = useTranslations("dict.playground");
+
   return (
     <div className={styles.container}>
       <div className={styles.loadingWrapper}>
