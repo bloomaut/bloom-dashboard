@@ -1,4 +1,4 @@
-import { get } from "@/services/fetch";
+import { get, getNoLogin } from "@/services/fetch";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { ENV } from "@/typescript/types/environment.enum";
 import axios from "axios";

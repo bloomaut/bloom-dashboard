@@ -21,6 +21,19 @@ export const get = async (url: string, api: EnvironmentApi) => {
   }
 };
 
+export const getNoLogin = async (url: string, api: EnvironmentApi) => {
+  try {
+    const response = await axios.get(`/api/small/${url}`);
+    return response.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
 export const post = async (url: string, data: POST, api: EnvironmentApi) => {
   try {
     const response = await axios.post(`${API}/${url}`, data, {
