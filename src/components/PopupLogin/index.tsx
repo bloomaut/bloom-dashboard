@@ -1,16 +1,25 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import closeIcon from "/public/icons/close.svg";
 import { useTranslations } from "next-intl";
-import { useCloseDropdown } from "@/hooks/useCloseDropdown";
-import { useMessageToast } from "@/hooks/useMessageToast";
 import Link from "next/link";
 import ArrowIcon from "/public/icons/arrow_left.svg";
 import { useRouter } from "next/navigation";
 
-const PopupLogin = () => {
+interface PopupLoginProps {
+  currentPage: string;
+}
+
+const PopupLogin = ({ currentPage }: PopupLoginProps) => {
   const dict = useTranslations("dict.popupLogin");
   const router = useRouter();
+
+  let returnUrl = "";
+
+  if (currentPage === "business") {
+    returnUrl = encodeURIComponent("/es/my-business");
+  } else if (currentPage === "design") {
+    returnUrl = encodeURIComponent("/es/design");
+  }
 
   return (
     <section className={styles.container}>
@@ -21,7 +30,7 @@ const PopupLogin = () => {
         </button>
         <div className={styles.content}>
           <h2 className={styles.title}>{dict("title")}</h2>
-          <Link href='/api/auth/login' className={styles.btn}>
+          <Link href={"/api/auth/login?returnTo=" + returnUrl} className={styles.btn}>
             <p>{dict("login")}</p>
           </Link>
         </div>

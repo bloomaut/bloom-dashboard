@@ -5,7 +5,7 @@ import LoadingSpinner from "@/components/Loading";
 
 function Page() {
   const { user, isLoading } = useUser();
-  return <>{!isLoading ? user ? <h1>Design Page</h1> : <PopupLogin /> : <LoadingSpinner />}</>;
+  return <>{!isLoading ? user ? <h1>Design Page</h1> : <PopupLogin currentPage='design' /> : <LoadingSpinner />}</>;
 }
 
 export default Page;
