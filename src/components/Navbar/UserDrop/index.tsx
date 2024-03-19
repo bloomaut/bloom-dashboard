@@ -6,7 +6,7 @@ import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-import userLogo from "@/../public/icons/userLogo.png";
+import userLogo from "@/../public/icons/UserLogo.png";
 import iconArrow from "@/../public/icons/IconArrowBottom.png";
 
 const UserDrop = () => {
