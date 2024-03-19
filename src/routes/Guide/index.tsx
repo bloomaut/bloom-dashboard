@@ -19,7 +19,6 @@ const GuidePage = () => {
     const fetchUserStep = async () => {
       setIsLoading(true);
       const userData = await get("small-business/me", ENV.DASH);
-      console.log(userData);
       if (userData.statusCode === 200) {
         const userStep = userData.result.data.smallBusiness.step;
         setStep(userStep);
