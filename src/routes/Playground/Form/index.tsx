@@ -6,7 +6,7 @@ import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
-/* Componentes */
+//Componentes
 import Input from "@/components/Input";
 import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
@@ -26,17 +26,19 @@ const EmptyFormData = {
     },
   ],
 };
+interface FormProps {
+  setLoadingDots: (loading: boolean) => void;
+}
 
-const Form = () => {
+const Form = ({ setLoadingDots }: FormProps) => {
   const dict = useTranslations("dict");
-  const { notify, notifyError } = useMessageToast();
+  const { notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
   const { setTime, setShowPreview, setPaUrl } = useFlakesContext();
-
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
   useEffect(() => {
@@ -69,6 +71,7 @@ const Form = () => {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
+    setLoadingDots(true);
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     if (response?.status === 200) {
       const { hotlink } = response.data.data.result;
@@ -76,6 +79,7 @@ const Form = () => {
       setTime();
       setShowPreview(true);
       setShowButton(true);
+      setLoadingDots(false);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
     }
@@ -88,6 +92,10 @@ const Form = () => {
     updatedFormInfo[index].value = e.target.value;
     setFormInfo(updatedFormInfo);
   };
+
+  useEffect(() => {
+    setShowButton(false);
+  }, [selectedFlakeId]);
 
   return (
     <div className={styles.container}>

@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
 import styles from "./styles.module.scss";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 interface OpenGraphProps {

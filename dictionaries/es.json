@@ -59,7 +59,8 @@
         "btn": "Compartir en Whatsapp",
         "copy_success": "URL copiada al porpapapeles",
         "copy_error": "Error al copiar URL"
-      }
+      },
+      "loading_dots": "Escribiendo"
     },
     "guide": {
       "header": {

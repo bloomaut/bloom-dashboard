@@ -1,17 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
-import Breadcrumb from "@/components/Breadcrumb";
-import Files from "./Files";
-import Form from "./Form";
-import Sequence from "./Sequence";
 import styles from "./styles.module.scss";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { get } from "@/services/fetch";
 import { useAppDispatch } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
 import { setFilesData } from "@/store/features/filesSlice";
 import { ENV } from "@/typescript/types/environment.enum";
+//Componentes
 import LoadingSpinner from "@/components/Loading";
+import Breadcrumb from "@/components/Breadcrumb";
+import Files from "./Files";
+import Form from "./Form";
+import Sequence from "./Sequence";
 
 const Business = () => {
   const [loading, setLoading] = useState<boolean>(true);

@@ -8,6 +8,7 @@ interface HeaderProps {
 
 const Header = ({ activeStep, handleStepChange }: HeaderProps) => {
   const dict = useTranslations("dict.guide.header");
+
   return (
     <div className={styles.main_container}>
       <div

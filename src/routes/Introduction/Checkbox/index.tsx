@@ -1,9 +1,10 @@
 import styles from "./styles.module.scss";
-import arrowRigth from "/public/icons/arrow_rigth.svg";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button";
 import { useLocale } from "next-intl";
+import arrowRigth from "/public/icons/arrow_rigth.svg";
+//Componentes
+import Button from "@/components/Button";
 
 const Checkbox = () => {
   const [isChecked, setIsChecked] = useState(false);
