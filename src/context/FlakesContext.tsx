@@ -16,6 +16,8 @@ interface Context {
   previewData: any;
   paUrl: string;
   setPaUrl: (url: string) => void;
+  setLoadingDots: (i: boolean) => void;
+  loadingDots: boolean;
 }
 
 const FlakesContext = createContext<Context>({
@@ -32,6 +34,8 @@ const FlakesContext = createContext<Context>({
   previewData: null,
   paUrl: "",
   setPaUrl: () => "",
+  setLoadingDots: () => false,
+  loadingDots: false,
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -42,6 +46,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const [showPreview, setShowPreview] = useState(true);
   const [previewData, setPreviewData] = useState<any | null>(null);
   const [paUrl, setPaUrl] = useState("");
+  const [loadingDots, setLoadingDots] = useState(false);
 
   const setTime = () => {
     const currentTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -104,6 +109,8 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         previewData,
         paUrl,
         setPaUrl,
+        setLoadingDots,
+        loadingDots,
       }}
     >
       {children}

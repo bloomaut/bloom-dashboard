@@ -26,19 +26,15 @@ const EmptyFormData = {
     },
   ],
 };
-interface FormProps {
-  setLoadingDots: (loading: boolean) => void;
-}
 
-const Form = ({ setLoadingDots }: FormProps) => {
+const Form = () => {
   const dict = useTranslations("dict");
   const { notifyError } = useMessageToast();
-  const { flakes, selectedFlakeId, loading } = useFlakesContext();
+  const { flakes, selectedFlakeId, loading, setTime, setShowPreview, setPaUrl, setLoadingDots } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
-  const { setTime, setShowPreview, setPaUrl } = useFlakesContext();
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
   useEffect(() => {

@@ -3,8 +3,8 @@
 .container {
   @include flex(column, center, center, 0px);
   position: absolute;
-  top: 60px;
-  left: 12px;
+  bottom: 60px;
+  left: 8px;
   border: none;
   background-color: transparent;
   .date {
