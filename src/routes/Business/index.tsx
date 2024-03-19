@@ -21,12 +21,12 @@ const Business = () => {
   const fetchData = async () => {
     try {
       const userData = await get("small-business/me", ENV.DASH);
-      if (userData?.data.statusCode === 200) {
-        dispatch(setBusinessData(userData.data.result.data.smallBusiness));
+      if (userData?.statusCode === 200) {
+        dispatch(setBusinessData(userData.result.data.smallBusiness));
       }
       const userFiles = await get("small-files/media", ENV.DASH);
-      if (userFiles?.data.statusCode === 200) {
-        dispatch(setFilesData(userFiles.data.result.folder));
+      if (userFiles?.statusCode === 200) {
+        dispatch(setFilesData(userFiles.result.folder));
       }
     } catch (error) {
       console.error("Error fetching data:", error);

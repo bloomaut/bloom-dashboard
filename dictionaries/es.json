@@ -25,7 +25,8 @@
       "error_name": "El nombre es obligatorio",
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
-      "empty_fields": "Todos los campos son requeridos"
+      "empty_fields": "Todos los campos son requeridos",
+      "error_tryagain": "Hubo un problema, intente más tarde"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"

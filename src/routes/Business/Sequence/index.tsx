@@ -3,8 +3,9 @@ import Button from "@/components/Button";
 import Subtitle from "../Subtitle";
 import Card from "./Card";
 import styles from "./styles.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useAppSelector } from "@/store/hooks";
 
 export interface ContentProps {
   step: number;
@@ -13,8 +14,28 @@ export interface ContentProps {
 }
 
 const Sequence = () => {
+  const business = useAppSelector(data => data.business);
+  const files = useAppSelector(data => data.files.media);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [currentStep, setCurrentStep] = useState(1);
   const dict = useTranslations("dict.business.sequence");
+
+  useEffect(() => {
+    if (currentStep === 1) {
+      if (business?.name) {
+        setCurrentStep(2);
+      }
+    } else if (currentStep === 2) {
+      if (business?.logo) {
+        setCurrentStep(3);
+      }
+    } else if (currentStep === 3) {
+      if (files?.length >= 2) {
+        const hasPDF = files.some(file => file.filetype === "application/pdf");
+        if (hasPDF) setCurrentStep(4);
+      }
+    }
+  }, [business, files, currentStep]);
 
   const content: ContentProps[] = [
     {
@@ -49,7 +70,7 @@ const Sequence = () => {
       <Subtitle text={dict("title")} />
       <div className={styles.cards_container}>
         {content.map((data, index) => (
-          <Card key={index} data={data} />
+          <Card key={index} data={data} disabled={currentStep !== data.step} />
         ))}
       </div>
       <div className={styles.btn_container}>

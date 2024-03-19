@@ -50,7 +50,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     const fetchOpenGraphData = async () => {
-      console.log(paUrl);
       const newUrl = encodeURIComponent(paUrl);
       try {
         const response = await axios.get(
@@ -70,6 +69,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     setLoading(true);
     const fetchData = async () => {
       const allFlakes = await get("small/flakes/playground", ENV.UITOOL);
+      console.log(allFlakes);
       if (allFlakes.statusCode === 200) {
         setFlakes(allFlakes.result.powerapps);
         setSelectedFlakeId(allFlakes.result.powerapps[0]._id);
