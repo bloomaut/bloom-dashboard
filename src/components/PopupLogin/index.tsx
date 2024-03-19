@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import ArrowIcon from "/public/icons/arrow_left.svg";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
 
 interface PopupLoginProps {
   currentPage: string;
@@ -13,15 +12,6 @@ interface PopupLoginProps {
 const PopupLogin = ({ currentPage }: PopupLoginProps) => {
   const dict = useTranslations("dict.popupLogin");
   const router = useRouter();
-  const locale = useLocale();
-
-  let returnUrl = "";
-
-  if (currentPage === "business") {
-    returnUrl = locale === "es" ? encodeURIComponent("/es/my-business") : encodeURIComponent("/en/my-business");
-  } else if (currentPage === "design") {
-    returnUrl = locale === "es" ? encodeURIComponent("/es/design") : encodeURIComponent("/en/design");
-  }
 
   return (
     <section className={styles.container}>
@@ -32,7 +22,7 @@ const PopupLogin = ({ currentPage }: PopupLoginProps) => {
         </button>
         <div className={styles.content}>
           <h2 className={styles.title}>{dict("title")}</h2>
-          <Link href={"/api/auth/login?returnTo=" + returnUrl} className={styles.btn}>
+          <Link href={"/api/auth/login?returnTo=" + currentPage} replace className={styles.btn}>
             <p>{dict("login")}</p>
           </Link>
         </div>
