@@ -22,7 +22,7 @@ const PopupLogin = ({ currentPage }: PopupLoginProps) => {
         </button>
         <div className={styles.content}>
           <h2 className={styles.title}>{dict("title")}</h2>
-          <Link href={"/api/auth/login?returnTo=" + currentPage} replace className={styles.btn}>
+          <Link href={"/api/auth/login?returnTo=" + currentPage} className={styles.btn}>
             <p>{dict("login")}</p>
           </Link>
         </div>
