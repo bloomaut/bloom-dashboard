@@ -1,8 +1,8 @@
-import Image from "next/image";
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
-import trashIcon from "/public/icons/trash.svg";
 import { useAppSelector } from "@/store/hooks";
+import Image from "next/image";
+import trashIcon from "/public/icons/trash.svg";
 
 interface FileLogoProps {
   file?: File | null;

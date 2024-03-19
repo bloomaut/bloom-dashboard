@@ -1,17 +1,19 @@
 "use client";
-import { useState } from "react";
 import styles from "./styles.module.scss";
-import FileDragDrop from "./FileDragDrop";
-import Subtitle from "../Subtitle";
-import FileCard from "./FileCard";
-import FileLogo from "./FileLogo";
-import Button from "@/components/Button";
-import { postFile, update } from "@/services/fetch";
+import { useState } from "react";
+import { get, postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
 import { updateLogo } from "@/store/features/businessSlice";
 import { useTranslations } from "next-intl";
+import { setFilesData } from "@/store/features/filesSlice";
+//Componentes
+import FileDragDrop from "./FileDragDrop";
+import Subtitle from "../Subtitle";
+import FileCard from "./FileCard";
+import FileLogo from "./FileLogo";
+import Button from "@/components/Button";
 
 const Files = () => {
   const companyLogo = useAppSelector(data => data.business.logo);
@@ -26,23 +28,25 @@ const Files = () => {
       const dataToSend = {
         logo: logoUrl,
       };
-      await update("small-business", dataToSend, ENV.DASH);
+      await update("small-business", ENV.DASH, dataToSend);
       notify(`${dict("toast.success_img")}`);
       dispatch(updateLogo(logoUrl));
     } catch (error) {
+      console.log(error);
       notifyError(`${dict("toast.error_img")}`);
     }
   };
 
   const handleUploadFile = async (file: File) => {
     const response = await postFile("small-files/media", file, ENV.DASH);
-
     if (response.data.statusCode === 201) {
       if (response.data.result.media.filetype.startsWith("image/")) {
         const logoUrl = response.data.result.media.url;
         await handleUpdateLogo(logoUrl);
       } else {
         notify(`${dict("toast.success_file")}`);
+        const userFiles = await get("small-files/media", ENV.DASH);
+        dispatch(setFilesData(userFiles.result.folder));
       }
     } else {
       notifyError(`${dict("toast.error_img")}`);

@@ -1,4 +1,4 @@
-interface MediaDataProps {
+export interface MediaDataProps {
   created_at: string;
   filename: string;
   filetype: string;

@@ -1,10 +1,10 @@
-import Image from "next/image";
 import styles from "./styles.module.scss";
-import fileImage from "/public/icons/cloud.svg";
 import { Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppSelector } from "@/store/hooks";
+import Image from "next/image";
+import fileImage from "/public/icons/cloud.svg";
 
 interface FileDragDropProps {
   setFile: Dispatch<SetStateAction<File | null>>;

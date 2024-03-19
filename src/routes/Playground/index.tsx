@@ -1,14 +1,16 @@
 "use client";
+import styles from "./styles.module.scss";
+import { FlakesProvider } from "@/context/FlakesContext";
+import { useTranslations } from "next-intl";
+//Componentes
+import Breadcrumb from "@/components/Breadcrumb";
 import Form from "./Form";
 import PhoneCase from "./PhoneCase";
 import TemplatesSelector from "./TemplatesSelector";
-import styles from "./styles.module.scss";
-import Breadcrumb from "@/components/Breadcrumb";
-import { FlakesProvider } from "@/context/FlakesContext";
-import { useTranslations } from "next-intl";
 
 const Playground = () => {
   const dict = useTranslations("dict.playground");
+
   return (
     <FlakesProvider>
       <section className={styles.container}>

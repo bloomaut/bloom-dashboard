@@ -8,6 +8,7 @@
   background: $white;
   padding: 5px 10px;
   color: $lightGrey;
+  transition: all 200ms ease-in-out;
   .header {
     @include flex(row, flex-start, center, 10px);
     .step,
@@ -18,11 +19,11 @@
   .description {
     @include fontSize-fontWeight(16px, 400);
   }
-  &:nth-child(2),
-  &:nth-child(3),
-  &:nth-child(4) {
-    border-color: $lighterGrey;
-    color: $lighterGrey;
-    background: $greyBackground;
-  }
+}
+
+.container_disabled {
+  @extend .container;
+  border-color: $lighterGrey;
+  color: $lighterGrey;
+  background: $greyBackground;
 }

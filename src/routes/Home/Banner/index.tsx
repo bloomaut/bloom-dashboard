@@ -1,7 +1,8 @@
-import Image from "next/image";
 import styles from "./styles.module.scss";
-import banner_home from "/public/assets/home_banner.png";
 import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
+import banner_home from "/public/assets/home_banner.png";
+//Componentes
 import LinkComponent from "@/components/LinkComponent";
 
 const Banner = () => {

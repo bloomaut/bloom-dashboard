@@ -1,16 +1,17 @@
-import Input from "@/components/Input";
 import styles from "./styles.module.scss";
-import SectionTitle from "@/components/SectionTitle";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
 import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
-import PopupShare from "@/routes/Playground/PopupShare";
-import Button from "@/components/Button";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
+//Componentes
+import Input from "@/components/Input";
+import PopupShare from "@/routes/Playground/PopupShare";
+import Button from "@/components/Button";
+import SectionTitle from "@/components/SectionTitle";
+import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -28,14 +29,12 @@ const EmptyFormData = {
 
 const Form = () => {
   const dict = useTranslations("dict");
-  const { notify, notifyError } = useMessageToast();
-  const { flakes, selectedFlakeId, loading } = useFlakesContext();
+  const { notifyError } = useMessageToast();
+  const { flakes, selectedFlakeId, loading, setTime, setShowPreview, setPaUrl, setLoadingDots } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [formDataPost, setFormDataPost] = useState(EmptyFormData);
-  const { setTime, setShowPreview, setPaUrl } = useFlakesContext();
-
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
   useEffect(() => {
@@ -68,15 +67,17 @@ const Form = () => {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
+    setLoadingDots(true);
     const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
     if (response?.status === 200) {
-      const { hotlink, message } = response.data.data.result;
+      const { hotlink } = response.data.data.result;
       setPaUrl(`https://power-app-engine.vercel.app/${hotlink.power_app_hash}`);
       setTime();
       setShowPreview(true);
       setShowButton(true);
+      setLoadingDots(false);
     } else {
-      console.log(response);
+      notifyError(`${dict("toast.error_tryagain")}`);
     }
 
     setFormDataPost(EmptyFormData);
@@ -87,6 +88,10 @@ const Form = () => {
     updatedFormInfo[index].value = e.target.value;
     setFormInfo(updatedFormInfo);
   };
+
+  useEffect(() => {
+    setShowButton(false);
+  }, [selectedFlakeId]);
 
   return (
     <div className={styles.container}>

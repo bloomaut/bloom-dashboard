@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
-
+import { update } from "@/services/fetch";
+import { setBusinessData } from "@/store/features/businessSlice";
 //Componentes
 import Input from "@/components/Input";
 import Subtitle from "../Subtitle";
-import { update } from "@/services/fetch";
-import { setBusinessData } from "@/store/features/businessSlice";
 
 interface FormDataProps {
   name: string;
@@ -57,9 +56,9 @@ const Form = () => {
       return;
     }
 
-    const response = await update("small-business", formData, ENV.DASH);
-    if (response.data.statusCode === 200) {
-      dispatch(setBusinessData(response.data.result.data));
+    const response = await update("small-business", ENV.DASH, formData);
+    if (response.statusCode === 200) {
+      dispatch(setBusinessData(response.result.data));
       notify(`${dict("toast.success_edit")}`);
     } else {
       notifyError(`${dict("toast.error_edit")}`);
