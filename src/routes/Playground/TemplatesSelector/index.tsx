@@ -11,10 +11,6 @@ const TemplatesSelector = () => {
   const dict = useTranslations("dict.playground");
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
 
-  const changeFlakeId = (id: string) => {
-    setSelectedFlakeId(id);
-  };
-
   return (
     <section className={styles.container}>
       <SectionTitle text={dict("template_title")} />
@@ -25,7 +21,7 @@ const TemplatesSelector = () => {
               <h4 className={styles.title}>{app.skinx.title}</h4>
               <div
                 className={`${styles.template} ${selectedFlakeId === app._id ? styles.selected_template : ""}`}
-                onClick={() => changeFlakeId(app._id)}
+                onClick={() => setSelectedFlakeId(app._id)}
               >
                 <div className={styles.sm_card}>
                   <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />

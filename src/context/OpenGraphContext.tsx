@@ -57,11 +57,16 @@ export const OpenGraphProvider = ({ children }: { children: JSX.Element }) => {
     }
   }, [paUrl]);
 
-  useEffect(() => {
+  // Si se selecciona otro template, se reinicia todo
+  const resetForm = () => {
     setShowPreview(true);
     setPreviewData(null);
     setPaUrl("");
     setCaptureTime("");
+  };
+
+  useEffect(() => {
+    resetForm();
   }, [selectedFlakeId]);
 
   return (
