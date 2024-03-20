@@ -45,7 +45,7 @@ export const OpenGraphProvider = ({ children }: { children: JSX.Element }) => {
       const newUrl = encodeURIComponent(paUrl);
       try {
         const response = await axios.get(
-          `https://opengraph.io/api/1.1/site/${newUrl}?app_id=5bc87279-0550-4e7b-bc9b-1f17fb2becb1`,
+          `https://opengraph.io/api/1.1/site/${newUrl}?app_id=8d7e1216-c72f-45af-bc0e-f53540b96aa2`,
         );
         setPreviewData(response.data);
       } catch (error) {
