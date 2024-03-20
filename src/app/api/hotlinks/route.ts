@@ -3,19 +3,9 @@ import axios, { AxiosRequestConfig } from "axios";
 
 const handleRequest = async function handleFetch(req: NextRequest) {
   try {
-    const res = new NextResponse();
-
-    const path = req.nextUrl.pathname.substring(req.nextUrl.pathname.indexOf("/api"));
-    const apiName = req.headers.get("X-API") || "";
-    const EXTERNAL_API_URL = process.env[apiName];
-
-    if (!EXTERNAL_API_URL) {
-      throw new Error(`Invalid API: ${apiName}`);
-    }
-
     const fetchOptions: AxiosRequestConfig = {
       method: req.method.toLowerCase(),
-      url: `${EXTERNAL_API_URL}${path}${req.nextUrl.search}`,
+      url: `${process.env.NEXT_PUBLIC_API_DASH}/api/hotlinks/playground`,
     };
 
     if (["POST", "PUT", "PATCH"].includes(req.method) && req?.body) {
@@ -47,8 +37,4 @@ const handleRequest = async function handleFetch(req: NextRequest) {
   }
 };
 
-export const GET = handleRequest;
-export const PUT = handleRequest;
 export const POST = handleRequest;
-export const PATCH = handleRequest;
-export const DELETE = handleRequest;

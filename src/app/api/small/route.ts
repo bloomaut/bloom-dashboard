@@ -5,10 +5,8 @@ const handleRequest = async function handleFetch(req: NextRequest) {
   try {
     const fetchOptions: AxiosRequestConfig = {
       method: req.method.toLowerCase(),
-      url: `${process.env.NEXT_PUBLIC_API_UITOOL}/api/small/${req.nextUrl.search}`,
+      url: `${process.env.NEXT_PUBLIC_API_UITOOL}/api/small/flakes/playground`,
     };
-
-    console.log(fetchOptions);
 
     const { data } = await axios(fetchOptions);
     return NextResponse.json({ data });

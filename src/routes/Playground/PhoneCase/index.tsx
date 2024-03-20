@@ -2,15 +2,15 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import caseImage from "@/../public/assets/mobileCase.png";
 import whatsappImage from "@/../public/assets/wa.png";
-import { useFlakesContext } from "@/context/FlakesContext";
 import { useState } from "react";
 //Componentes
 import LoadingDots from "./LoadingDots";
 import LoadingSpinner from "@/components/Loading";
 import OpenGraph from "./OpenGraph";
+import { useOpenGraphContext } from "@/context/OpenGraphContext";
 
 const PhoneCase = () => {
-  const { captureTime, showPreview, setShowPreview, previewData, paUrl, loadingDots } = useFlakesContext();
+  const { captureTime, showPreview, setShowPreview, previewData, paUrl, loadingDots } = useOpenGraphContext();
   const [iframeLoading, setIframeLoading] = useState(true);
 
   return (

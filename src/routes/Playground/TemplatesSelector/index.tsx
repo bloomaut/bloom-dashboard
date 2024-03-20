@@ -7,16 +7,9 @@ import { useTranslations } from "next-intl";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
-interface Context {
-  flakes: Powerapp[];
-  loading: boolean;
-  selectedFlakeId: string;
-  setSelectedFlakeId: (id: string) => void;
-}
-
 const TemplatesSelector = () => {
   const dict = useTranslations("dict.playground");
-  const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext() as Context;
+  const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
 
   const changeFlakeId = (id: string) => {
     setSelectedFlakeId(id);
