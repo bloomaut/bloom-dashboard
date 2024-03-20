@@ -9,9 +9,9 @@ import closeIcon from "/public/icons/close.svg";
 import { useTranslations } from "next-intl";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { useFlakesContext } from "@/context/FlakesContext";
 //Componentes
 import Button from "@/components/Button";
+import { useOpenGraphContext } from "@/context/OpenGraphContext";
 
 interface PopupShareProps {
   setShowPopup: (value: boolean) => void;
@@ -21,7 +21,7 @@ const PopupShare = ({ setShowPopup }: PopupShareProps) => {
   const { notify, notifyError } = useMessageToast();
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const dict = useTranslations("dict.playground.popup");
-  const { paUrl } = useFlakesContext();
+  const { paUrl } = useOpenGraphContext();
 
   const handleCopyClick = () => {
     if (paUrl)

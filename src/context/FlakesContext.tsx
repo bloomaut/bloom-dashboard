@@ -1,7 +1,7 @@
-import { get } from "@/services/fetch";
-import { Powerapp } from "@/typescript/interfaces/flakes.interface";
-import { ENV } from "@/typescript/types/environment.enum";
 import axios from "axios";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { Powerapp } from "@/typescript/interfaces/flakes.interface";
+import { useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface Context {
@@ -9,91 +9,40 @@ interface Context {
   loading: boolean;
   selectedFlakeId: string;
   setSelectedFlakeId: (id: string) => void;
-  setTime: () => void;
-  captureTime: string;
-  setShowPreview: (i: boolean) => void;
-  showPreview: boolean;
-  previewData: any;
-  paUrl: string;
-  setPaUrl: (url: string) => void;
-  setLoadingDots: (i: boolean) => void;
-  loadingDots: boolean;
 }
 
 const FlakesContext = createContext<Context>({
   flakes: [],
   loading: true,
   selectedFlakeId: "",
-  // eslint-disable-next-line no-empty-function
-  setSelectedFlakeId: () => {},
-  // eslint-disable-next-line no-empty-function
-  setTime: () => {},
-  captureTime: "",
-  setShowPreview: () => true,
-  showPreview: true,
-  previewData: null,
-  paUrl: "",
-  setPaUrl: () => "",
-  setLoadingDots: () => false,
-  loadingDots: false,
+  setSelectedFlakeId: () => "",
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const [flakes, setFlakes] = useState<Powerapp[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedFlakeId, setSelectedFlakeId] = useState("");
-  const [captureTime, setCaptureTime] = useState<string>("");
-  const [showPreview, setShowPreview] = useState(true);
-  const [previewData, setPreviewData] = useState<any | null>(null);
-  const [paUrl, setPaUrl] = useState("");
-  const [loadingDots, setLoadingDots] = useState(false);
 
-  const setTime = () => {
-    const currentTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    setCaptureTime(currentTime);
-  };
+  const { notifyError } = useMessageToast();
+  const dict = useTranslations("dict");
 
   useEffect(() => {
-    const fetchOpenGraphData = async () => {
-      const newUrl = encodeURIComponent(paUrl);
-      try {
-        const response = await axios.get(
-          `https://opengraph.io/api/1.1/site/${newUrl}?app_id=5bc87279-0550-4e7b-bc9b-1f17fb2becb1`,
-        );
-        setPreviewData(response.data);
-      } catch (error) {
-        console.error("Error fetching Open Graph data:", error);
-      }
-    };
-    if (paUrl !== "") {
-      fetchOpenGraphData();
-    }
-  }, [paUrl]);
-
-  useEffect(() => {
-    setLoading(true);
+    //Fetch sin necesidad de estar logueado
     const fetchData = async () => {
-      const allFlakes = await get("small/flakes/playground", ENV.UITOOL);
-      console.log(allFlakes);
+      const response = await axios.get("/api/small");
+      const allFlakes = response.data.data;
       if (allFlakes.statusCode === 200) {
         setFlakes(allFlakes.result.powerapps);
         setSelectedFlakeId(allFlakes.result.powerapps[0]._id);
         setLoading(false);
       } else {
-        console.error("Error fetching Flakes:", allFlakes);
+        notifyError(dict("toast.error_tryagain"));
         setLoading(false);
       }
     };
 
     fetchData();
   }, []);
-
-  useEffect(() => {
-    setShowPreview(true);
-    setPreviewData(null);
-    setPaUrl("");
-    setCaptureTime("");
-  }, [selectedFlakeId]);
 
   return (
     <FlakesContext.Provider
@@ -102,15 +51,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         loading,
         selectedFlakeId,
         setSelectedFlakeId,
-        setTime,
-        captureTime,
-        setShowPreview,
-        showPreview,
-        previewData,
-        paUrl,
-        setPaUrl,
-        setLoadingDots,
-        loadingDots,
       }}
     >
       {children}

@@ -7,20 +7,9 @@ import { useTranslations } from "next-intl";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
-interface Context {
-  flakes: Powerapp[];
-  loading: boolean;
-  selectedFlakeId: string;
-  setSelectedFlakeId: (id: string) => void;
-}
-
 const TemplatesSelector = () => {
   const dict = useTranslations("dict.playground");
-  const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext() as Context;
-
-  const changeFlakeId = (id: string) => {
-    setSelectedFlakeId(id);
-  };
+  const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
 
   return (
     <section className={styles.container}>
@@ -32,7 +21,7 @@ const TemplatesSelector = () => {
               <h4 className={styles.title}>{app.skinx.title}</h4>
               <div
                 className={`${styles.template} ${selectedFlakeId === app._id ? styles.selected_template : ""}`}
-                onClick={() => changeFlakeId(app._id)}
+                onClick={() => setSelectedFlakeId(app._id)}
               >
                 <div className={styles.sm_card}>
                   <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />

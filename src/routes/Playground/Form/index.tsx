@@ -2,8 +2,6 @@ import styles from "./styles.module.scss";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
 import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
-import { post } from "@/services/fetch";
-import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 //Componentes
@@ -12,6 +10,8 @@ import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import axios from "axios";
+import { useOpenGraphContext } from "@/context/OpenGraphContext";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -30,7 +30,8 @@ const EmptyFormData = {
 const Form = () => {
   const dict = useTranslations("dict");
   const { notifyError } = useMessageToast();
-  const { flakes, selectedFlakeId, loading, setTime, setShowPreview, setPaUrl, setLoadingDots } = useFlakesContext();
+  const { setTime, setShowPreview, setPaUrl, setLoadingDots } = useOpenGraphContext();
+  const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -68,7 +69,13 @@ const Form = () => {
       return;
     }
     setLoadingDots(true);
-    const response = await post("hotlinks/playground", formDataPost, ENV.DASH);
+
+    // Postear el formulario al backend salteandote la autorización de auth0
+    const response = await axios.post("/api/hotlinks", formDataPost, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (response?.status === 200) {
       const { hotlink } = response.data.data.result;
       setPaUrl(`https://power-app-engine.vercel.app/${hotlink.power_app_hash}`);
