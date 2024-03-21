@@ -32,9 +32,9 @@ const Sidebar = () => {
       path: "/my-business",
     },
     {
-      title: `${dict("design")}`,
+      title: `${dict("gallery")}`,
       icon: <DesignIcon />,
-      path: "/design",
+      path: "/gallery",
     },
   ];
 

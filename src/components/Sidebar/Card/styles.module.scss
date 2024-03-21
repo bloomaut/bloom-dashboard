@@ -2,26 +2,24 @@
 
 .container,
 .container_noselected {
-  display: grid;
-  grid-template-columns: 30% 70%;
-  align-items: center;
+  @include flex(row, flex-start, center, 10px);
   @include width-height(200px, 50px);
   background-color: $white;
   padding: 10px;
   flex-wrap: nowrap;
   transition: all 100ms ease-in;
   .text {
-    @include fontSize-fontWeight(14px, 600);
-    color: $opacityGrey;
+    @include fontSize-fontWeight(14px, 500);
+    color: $darkGrey;
     text-align: start;
     line-height: 12px;
   }
   svg {
     path[stroke="#FF5722"] {
-      stroke: $opacityGrey;
+      stroke: $darkGrey;
     }
     path[fill="#FF5722"] {
-      fill: $opacityGrey;
+      fill: $darkGrey;
     }
   }
   &:hover {
@@ -47,14 +45,17 @@
   border-left: 2px solid $orange;
   border-radius: 0 4px 4px 0;
   .text {
-    color: $darkGrey;
+    @include fontSize-fontWeight(14px, 600);
+    color: $black;
+    text-align: start;
+    line-height: 12px;
   }
   svg {
     path[stroke="#FF5722"] {
-      stroke: $darkGrey;
+      stroke: $black;
     }
     path[fill="#FF5722"] {
-      fill: $darkGrey;
+      fill: $black;
     }
   }
 }

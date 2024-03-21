@@ -8,7 +8,7 @@ function Page() {
   const pathname = usePathname();
   const { user, isLoading } = useUser();
 
-  return <>{!isLoading ? user ? <h1>Design Page</h1> : <PopupLogin currentPage={pathname} /> : <LoadingSpinner />}</>;
+  return <>{!isLoading ? user ? <h1>Gallery Page</h1> : <PopupLogin currentPage={pathname} /> : <LoadingSpinner />}</>;
 }
 
 export default Page;
