@@ -3,7 +3,7 @@
 .container {
   @include width-height(100%, auto);
   @include flex(row, center, center);
-  background: $greyBackground;
+  background: $secondary;
   border-radius: 8px;
   border: 2px dashed $lightGrey;
   cursor: pointer;
