@@ -17,29 +17,18 @@ const LangDrop = () => {
 
   return (
     <div className={styles.container} ref={dropdownRef}>
-      <Image
-        src={langIcon}
-        alt='Lang Icon'
-        className={styles.logo}
-        width={20}
-        height={20}
-        priority
-        onClick={() => setOpen(!open)}
-      />
+      <button onClick={() => setOpen(!open)} className={styles.lang_button}>
+        <Image src={langIcon} alt='Lang Icon' className={styles.logo} width={20} height={20} priority />
+        <span>|</span>
+        <h1> {locale}</h1>
+      </button>
+
       <li className={`${styles.list_container} ${!open && styles.list_hidden}`}>
         {locales
           .filter(loc => loc !== locale)
           .map(loc => {
             return (
               <div key={loc}>
-                <button
-                  className={open ? `${styles.list_text}` : `${styles.list_text} ${styles.list_text_hidden}`}
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-                >
-                  {locale}
-                </button>
                 <button
                   className={open ? `${styles.list_text}` : `${styles.list_text} ${styles.list_text_hidden}`}
                   onClick={() => router.replace(pathname, { locale: loc })}
