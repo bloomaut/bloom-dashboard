@@ -14,6 +14,7 @@
       padding-top: 8px;
       @include width-height(70px, 70px);
       text-align: center;
+      background-color: white;
     }
     .text_container {
       @include flex(column, space-evenly, flex-start, 10px);
@@ -32,6 +33,7 @@
 
   &.active {
     .step_number {
+      color: $black;
       border: $lightGrey 6px solid;
     }
   }
@@ -39,7 +41,8 @@
   &.inactive {
     color: $lighterGrey;
     .step_number {
-      border: $lighterGrey 6px solid;
+      color: $veryLightGrey;
+      border: $veryLightGrey 6px solid;
     }
   }
 }

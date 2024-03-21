@@ -12,6 +12,19 @@
   .step_container {
     @include flex(column, flex-start, flex-start, 30px);
     @include width-height(100%, 100%);
+    position: relative;
+    z-index: 0;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 30px;
+      top: 0;
+      bottom: 0;
+      @include width-height(8px, 250px);
+      background-color: $veryLightGrey;
+      z-index: -1;
+    }
     .btn_container {
       @include width-height(100%, auto);
       @include flex(row, flex-end, center);
