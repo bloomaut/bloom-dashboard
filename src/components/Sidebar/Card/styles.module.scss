@@ -5,10 +5,8 @@
   display: grid;
   grid-template-columns: 30% 70%;
   align-items: center;
-  @include width-height(150px, 50px);
+  @include width-height(200px, 50px);
   background-color: $white;
-  border: 2px solid $opacityGrey;
-  border-radius: 4px;
   padding: 10px;
   flex-wrap: nowrap;
   transition: all 100ms ease-in;
@@ -27,7 +25,8 @@
     }
   }
   &:hover {
-    border: 2px solid $darkGrey;
+    border-left: 2px solid $orange;
+    border-radius: 0 4px 4px 0;
     .text {
       color: $darkGrey;
     }
@@ -43,9 +42,10 @@
 }
 
 .container_selected {
-  border-width: 2px;
-  border-color: $darkGrey;
   transition: all 100ms ease-in;
+  background-color: $secondary;
+  border-left: 2px solid $orange;
+  border-radius: 0 4px 4px 0;
   .text {
     color: $darkGrey;
   }
