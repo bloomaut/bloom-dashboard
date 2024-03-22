@@ -1,11 +1,10 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import ArrowIcon from "/public/icons/arrow_left.svg";
+import ArrowIcon from "/public/icons/arrow_left_black.svg";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 
 interface BreadcrumbProps {
   title: string;
