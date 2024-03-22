@@ -9,7 +9,7 @@
     border-radius: 4.775px;
     overflow-y: auto;
     row-gap: 20px;
-    padding-right: 10px;
+    padding-right: 5px;
     .template_container {
       .title {
         @include fontSize-fontWeight(14px, 400);
@@ -58,12 +58,12 @@
   }
 }
 
-.container::-webkit-scrollbar {
+.flakes::-webkit-scrollbar {
   width: 5px;
   background-color: $greyBackground;
 }
 
-.container::-webkit-scrollbar-thumb {
+.flakes::-webkit-scrollbar-thumb {
   background-color: $orange;
   border-radius: 10px;
 }

@@ -2,6 +2,6 @@
 
 .section_title {
   @include fontSize-fontWeight(24px, 400);
-  color: $lightGrey;
+  color: $text;
   margin-bottom: 15px;
 }

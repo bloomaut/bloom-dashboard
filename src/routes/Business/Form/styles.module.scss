@@ -4,7 +4,7 @@
   height: inherit;
   @include flex(column, flex-start, flex-start, 10px);
   h4 {
-    color: $lighterGrey;
+    color: $lightGrey;
     @include fontSize-fontWeight(14px, 400);
     white-space: nowrap;
   }

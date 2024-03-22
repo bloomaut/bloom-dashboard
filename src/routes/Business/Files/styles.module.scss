@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, calc(100vh - 90px));
+  @include width-height(100%, inherit);
   @include flex(column, flex-start, flex-start, 20px);
   .files {
     @include width-height(100%, 100%);

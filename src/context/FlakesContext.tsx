@@ -31,6 +31,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     const fetchData = async () => {
       const response = await axios.get("/api/small");
       const allFlakes = response.data.data;
+      console.log(allFlakes);
       if (allFlakes.statusCode === 200) {
         setFlakes(allFlakes.result.powerapps);
         setSelectedFlakeId(allFlakes.result.powerapps[0]._id);

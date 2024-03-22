@@ -1,26 +1,34 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, 100%);
-  @include flex(column, space-evenly, flex-start);
+  @include width-height(100%, inherit);
+  @include flex(column, space-between, flex-start, 20px);
   .cards_container {
-    @include width-height(100%, 100%);
-    margin-top: 15px;
-    @include flex(column, flex-start, flex-start, 15px);
+    @include width-height(100%, 90%);
+    @include flex(column, flex-start, flex-start, 20px);
+    overflow-y: auto;
   }
   .btn_container {
-    @include width-height(95%, auto);
+    @include width-height(95%, 10%);
     @include flex(row, flex-end, center);
   }
 }
 
 @media (min-width: $queryXl) {
   .container {
-    .cards_container {
-      gap: 70px;
-    }
     .btn_container {
       width: 100%;
     }
   }
+}
+
+.cards_container::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+  background-color: $greyBackground;
+}
+
+.cards_container::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 7px;
 }

@@ -7,7 +7,7 @@
   .label,
   .input {
     @include fontSize-fontWeight(14px, 400);
-    color: $lightGrey;
+    color: $text;
   }
   .input {
     @include width-height(100%, 30px);

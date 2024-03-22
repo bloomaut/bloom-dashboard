@@ -40,7 +40,7 @@ export const OpenGraphProvider = ({ children }: { children: JSX.Element }) => {
     setCaptureTime(currentTime);
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const fetchOpenGraphData = async () => {
       const newUrl = encodeURIComponent(paUrl);
       try {
@@ -55,7 +55,7 @@ export const OpenGraphProvider = ({ children }: { children: JSX.Element }) => {
     if (paUrl !== "") {
       fetchOpenGraphData();
     }
-  }, [paUrl]);
+  }, [paUrl]); */
 
   // Si se selecciona otro template, se reinicia todo
   const resetForm = () => {
