@@ -9,7 +9,11 @@
       "home": "Home",
       "guide": "Guide",
       "my_business": "My Business",
-      "gallery": "Gallery"
+      "gallery": "Gallery",
+      "hotlink": "Hotlink",
+      "inbox": "Inbox",
+      "collections": "Collections",
+      "clients": "Clients"
     },
     "navbar": {
       "login": "Login",
