@@ -25,7 +25,7 @@ const TemplatesSelector = () => {
                 onClick={() => setSelectedFlakeId(app._id)}
               >
                 <div className={styles.sm_card}>
-                  {!app.hog_related.thumbnail ? (
+                  {app.hog_related.thumbnail ? (
                     <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
                   ) : (
                     <HogIcon />
