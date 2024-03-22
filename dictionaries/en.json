@@ -9,7 +9,7 @@
       "home": "Home",
       "guide": "Guide",
       "my_business": "My Business",
-      "design": "Design"
+      "gallery": "Gallery"
     },
     "navbar": {
       "login": "Login",
@@ -83,7 +83,7 @@
         "subtitle_two": "Play in the playground, customize apps, and generate your first hotlink",
         "title_three": "Upload",
         "subtitle_three": "Upload data from your company and brand files for your designs",
-        "title_four": "Design",
+        "title_four": "Gallery",
         "subtitle_four": "Take care of the design with our UiTool tool"
       },
       "stepper_two": {

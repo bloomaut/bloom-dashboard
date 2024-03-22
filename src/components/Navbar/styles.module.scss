@@ -5,7 +5,7 @@
   @include flex(row, space-between, center);
   flex-wrap: nowrap;
   padding: 20px;
-  border-bottom: 1px solid $lightGrey;
+  border-bottom: 1px solid $lighterGrey;
 
   .logo {
     @include width-height(103px, 47px);

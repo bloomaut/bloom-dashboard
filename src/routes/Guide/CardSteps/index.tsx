@@ -14,7 +14,7 @@ interface CardStepsProps {
 
 const CardSteps = ({ step_number, title, subtitle, isActive, linkTo }: CardStepsProps) => {
   return (
-    <Link href={linkTo} className={`${styles.main_container} ${isActive ? styles.active : styles.inactive}`}>
+    <Link href={linkTo} className={`${styles.main_container} ${!isActive && styles.inactive}`}>
       <div className={styles.container}>
         <span className={styles.step_number}>{step_number}</span>
         <div className={styles.text_container}>

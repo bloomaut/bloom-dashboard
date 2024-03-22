@@ -41,7 +41,7 @@ const Step1 = ({ userStep }: Steps1Props) => {
           title={dict("title_four")}
           subtitle={dict("subtitle_four")}
           isActive={userStep >= 4}
-          linkTo={`/${locale}/design`}
+          linkTo={`/${locale}/gallery`}
         />
       </div>
     </div>
