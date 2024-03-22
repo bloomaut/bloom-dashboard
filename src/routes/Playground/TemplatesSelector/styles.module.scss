@@ -30,8 +30,19 @@
           border: 0.298px solid $lightGrey;
           border-radius: 2.495px;
           background-color: $greyBackground;
+          @include flex(row, center, center);
           img {
             @include width-height(100%, 100%);
+          }
+          svg {
+            @include width-height(40px, 40px);
+            object-fit: contain;
+            path {
+              stroke: $lighterGrey;
+            }
+            path {
+              fill: $lighterGrey;
+            }
           }
         }
         .sm_card {
