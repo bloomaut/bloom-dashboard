@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
-import fileImage from "/public/icons/cloud.svg";
+import fileImage from "/public/icons/cloud_black.svg";
 
 interface FileDragDropProps {
   setFile: Dispatch<SetStateAction<File | null>>;
