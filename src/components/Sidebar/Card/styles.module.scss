@@ -10,52 +10,27 @@
   transition: all 100ms ease-in;
   .text {
     @include fontSize-fontWeight(14px, 500);
-    color: $darkGrey;
+    color: $text;
     text-align: start;
     line-height: 12px;
   }
   svg {
     path[stroke="#FF5722"] {
-      stroke: $darkGrey;
+      stroke: $text;
     }
     path[fill="#FF5722"] {
-      fill: $darkGrey;
+      fill: $text;
     }
   }
   &:hover {
     border-left: 2px solid $orange;
     border-radius: 0 4px 4px 0;
-    .text {
-      color: $darkGrey;
-    }
-    svg {
-      path[stroke="#FF5722"] {
-        stroke: $darkGrey;
-      }
-      path[fill="#FF5722"] {
-        fill: $darkGrey;
-      }
-    }
   }
 }
 
 .container_selected {
   transition: all 100ms ease-in;
-  background-color: $secondary;
+  background-color: $blueishBackground;
   border-left: 2px solid $orange;
   border-radius: 0 4px 4px 0;
-  .text {
-    @include fontSize-fontWeight(14px, 600);
-    color: $black;
-    text-align: start;
-    line-height: 12px;
-  }
-  svg {
-    path[stroke="#FF5722"] {
-      stroke: $black;
-    }
-    path[fill="#FF5722"] {
-      fill: $black;
-    }
-  }
 }

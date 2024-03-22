@@ -5,14 +5,14 @@
   max-width: 950px;
   .welcome {
     @include fontSize-fontWeight(24px, 500);
-    color: $black;
+    color: $text;
     margin-bottom: 15px;
   }
   .banner {
     @include flex(row, space-between, flex-start);
     padding: 20px;
     border-radius: 8px;
-    background-color: $secondary;
+    background-color: $blueishBackground;
     .banner_text {
       @include flex(column, space-between, flex-start, 30px);
       .title {

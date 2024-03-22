@@ -13,7 +13,7 @@
     .template_container {
       .title {
         @include fontSize-fontWeight(14px, 400);
-        color: $darkGrey;
+        color: $text;
         margin-bottom: 10px;
         text-align: center;
       }

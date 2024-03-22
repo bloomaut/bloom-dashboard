@@ -5,9 +5,9 @@
   @include width-height(100%, 100%);
   max-width: 800px;
   h1 {
-    @include fontSize-fontWeight(24px, 400);
+    @include fontSize-fontWeight(24px, 500);
     align-self: flex-start;
-    color: $darkGrey;
+    color: $text;
   }
   .step_container {
     @include flex(column, flex-start, flex-start, 30px);
@@ -18,11 +18,11 @@
     &:before {
       content: "";
       position: absolute;
-      left: 30px;
+      left: 34px;
       top: 0;
       bottom: 0;
-      @include width-height(8px, 250px);
-      background-color: $veryLightGrey;
+      @include width-height(6px, 250px);
+      background-color: $lighterGrey;
       z-index: -1;
     }
     .btn_container {

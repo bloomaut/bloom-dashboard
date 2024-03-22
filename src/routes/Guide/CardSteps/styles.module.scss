@@ -11,18 +11,22 @@
     .step_number {
       @include fontSize-fontWeight(30px, 400);
       border-radius: 50%;
-      padding-top: 8px;
+      padding-top: 11px;
       @include width-height(70px, 70px);
       text-align: center;
       background-color: white;
+      color: $text;
+      border: $text 5px solid;
     }
     .text_container {
       @include flex(column, space-evenly, flex-start, 10px);
       h2 {
-        @include fontSize-fontWeight(20px, 400);
+        @include fontSize-fontWeight(20px, 500);
+        color: $text;
       }
       p {
         @include fontSize-fontWeight(18px, 400);
+        color: $text;
       }
     }
   }
@@ -31,18 +35,19 @@
     max-width: 100%;
   }
 
-  &.active {
-    .step_number {
-      color: $black;
-      border: $lightGrey 6px solid;
-    }
-  }
-
   &.inactive {
     color: $lighterGrey;
     .step_number {
-      color: $veryLightGrey;
-      border: $veryLightGrey 6px solid;
+      color: $lighterGrey;
+      border: $lighterGrey 5px solid;
+    }
+    .text_container {
+      h2 {
+        color: $lighterGrey;
+      }
+      p {
+        color: $lighterGrey;
+      }
     }
   }
 }
