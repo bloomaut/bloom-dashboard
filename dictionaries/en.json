@@ -134,6 +134,10 @@
         "title02": "Drop your files here",
         "subtitle": "My files"
       }
+    },
+    "inbox": {
+      "title": "Inbox",
+      "subtitle": "Download the app"
     }
   }
 }
