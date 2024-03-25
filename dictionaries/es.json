@@ -133,6 +133,12 @@
         "title02": "Arrojá tus archivos aquí",
         "subtitle": "Mis archivos"
       }
+    },
+    "collections": {
+      "title": "Colecciones de Hotlinks",
+      "search": "Buscar Colecciones...",
+      "period_btn": "Periodo",
+      "new_btn": "Nueva Colección"
     }
   }
 }

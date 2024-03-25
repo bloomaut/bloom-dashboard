@@ -134,6 +134,12 @@
         "title02": "Drop your files here",
         "subtitle": "My files"
       }
+    },
+    "collections": {
+      "title": "Hotlinks Collections",
+      "search": "Search Collections...",
+      "period_btn": "Period",
+      "new_btn": "New Collection"
     }
   }
 }
