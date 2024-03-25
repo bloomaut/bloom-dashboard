@@ -7,8 +7,8 @@ import { useTranslations } from "next-intl";
 import Title from "@/components/Title";
 import QrModal from "./Qr";
 //Imagenes
-import miniQr from "@/../public/assets/miniQr.png";
-import play from "@/../public/assets/play.png";
+import miniQr from "@/../public/assets/inbox_mini_qr.png";
+import play from "@/../public/assets/inbox_play_icon.png";
 
 const InboxPage = () => {
   const [showPopup, setShowPopup] = useState(false);
