@@ -2,7 +2,7 @@
 
 .container {
   @include width-height(100vw, calc(100vh - 61px));
-  background-color: $white;
+  background-color: $blueBackground;
   .children_container {
     @include flex(row, center, center);
     @include width-height(100wv, calc(100vh - 50px));
