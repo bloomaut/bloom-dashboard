@@ -1,20 +1,25 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+//Componentes
 import Title from "@/components/Title";
+import QrModal from "./Qr";
+//Imagenes
 import miniQr from "@/../public/assets/miniQr.png";
 import play from "@/../public/assets/play.png";
-import Link from "next/link";
-import QrModal from "./Qr";
 
 const InboxPage = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const dict = useTranslations("dict.inbox");
+
   return (
     <section className={styles.container}>
       <div className={styles.title_container}>
-        <Title text='Bandeja de Entrada' />
+        <Title text={dict("title")} />
         <div className={styles.inner_container}>
-          <h5>Descarga la app</h5>
+          <h5>{dict("subtitle")}</h5>
           <div className={styles.box}>
             <Link href='https://play.google.com/store/apps/details?id=com.notimation.agentcaller' target='_blank'>
               <Image src={play} alt='Google Play Logo' width={25} height={25} />

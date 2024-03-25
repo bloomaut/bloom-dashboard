@@ -133,6 +133,10 @@
         "title02": "Arrojá tus archivos aquí",
         "subtitle": "Mis archivos"
       }
+    },
+    "inbox": {
+      "title": "Bandeja de entrada",
+      "subtitle": "Descarga la app"
     }
   }
 }
