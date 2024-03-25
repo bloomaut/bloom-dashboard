@@ -31,8 +31,13 @@
   }
   .search_container {
     position: absolute;
-    bottom: 12px;
+    bottom: 10px;
     right: 15px;
     cursor: pointer;
+  }
+  .textarea {
+    @include width-height(100%, 90px);
+    font-family: inherit;
+    resize: none;
   }
 }

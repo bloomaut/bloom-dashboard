@@ -1,19 +1,26 @@
+"use client";
 import styles from "./styles.module.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import Title from "@/components/Title";
 import Input from "@/components/Input";
+import Button from "@/components/Button";
+import Row from "./Row";
+import LoadingSpinner from "@/components/Loading";
 import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setClientsData } from "@/store/features/clients";
+import addIcon from "../../../public/icons/add.svg";
+import FormCreate from "./FormCreate";
 
 const ClientsPage = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
   const clients = useAppSelector(state => state.clients);
   const dispatch = useAppDispatch();
 
-  const fetchData = async () => {
+  const getClients = async () => {
     try {
       const data = await get("client-customer", ENV.DASH);
       dispatch(setClientsData(data.result.data));
@@ -25,11 +32,15 @@ const ClientsPage = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [dispatch]);
+    getClients();
+  }, [dispatch, clients]);
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     setSearchValue(e.target.value);
+  };
+
+  const handleCancel = () => {
+    setShowPopup(false);
   };
 
   return (
@@ -44,16 +55,29 @@ const ClientsPage = () => {
         className='search'
         iconSearch
       />
+
       {loading ? (
-        <p>Cargando clientes...</p>
+        <LoadingSpinner />
       ) : clients.length > 0 ? (
-        <ul>
+        <div className={styles.clients}>
           {clients.map(client => (
-            <li key={client._id}>{client.ClientFirstname}</li>
+            <Row key={client._id} {...client} />
           ))}
-        </ul>
+        </div>
       ) : (
         <p>No hay clientes disponibles</p>
+      )}
+
+      <div className={styles.btn_container}>
+        <Button title='Agregar cliente' styleName='btn_outline' onclick={() => setShowPopup(true)} icon={addIcon} />
+      </div>
+      {showPopup && (
+        <FormCreate
+          title='Información del cliente'
+          buttonText='Confirmar'
+          setShowPopup={setShowPopup}
+          onCancel={handleCancel}
+        />
       )}
     </section>
   );

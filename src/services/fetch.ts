@@ -23,12 +23,13 @@ export const get = async (url: string, api: EnvironmentApi) => {
 
 export const post = async (url: string, data: POST, api: EnvironmentApi) => {
   try {
+    console.log(data);
     const response = await axios.post(`${API}/${url}`, data, {
       headers: {
         "X-API": api,
       },
     });
-    return response;
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return error.response;

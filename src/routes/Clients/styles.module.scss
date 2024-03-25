@@ -4,4 +4,12 @@
   @include width-height(100%, auto);
   max-width: 600px;
   @include flex(column, center, flex-start, 20px);
+  .clients {
+    @include width-height(100%, auto);
+    @include flex(column, center, flex-start);
+  }
+  .btn_container {
+    @include width-height(100%, auto);
+    @include flex(row, flex-end, center);
+  }
 }

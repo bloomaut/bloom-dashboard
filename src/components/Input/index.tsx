@@ -11,7 +11,7 @@ interface Props {
   isDescription?: boolean;
   className?: string;
   iconSearch?: boolean;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>, index?: number) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => void;
 }
 
 const Input = ({
@@ -25,22 +25,26 @@ const Input = ({
   isDescription,
   iconSearch = false,
 }: Props) => {
+  const inputType = type === "textarea" ? `${styles.input} ${styles.textarea}` : styles.input;
+
   return (
     <div className={styles.input_container}>
-      <label className={styles.label}>{textLabel}</label>
-      <input
-        className={`${styles.input} ${isDescription ? styles.description_input : ""} ${className ? styles.search : ""}`}
-        type={type}
-        name={name}
-        placeholder={textHolder}
-        value={value}
-        onChange={handleChange}
-      />
-      {iconSearch && (
-        <div className={styles.search_container} onClick={() => alert("Clicked me")}>
-          <Image src={searchIcon} alt='Search Icon' className={styles.search_icon} />
-        </div>
+      {textLabel && <label className={styles.label}>{textLabel}</label>}
+      {type === "textarea" ? (
+        <textarea className={inputType} placeholder={textHolder} name={name} value={value} onChange={handleChange} />
+      ) : (
+        <input
+          className={`${styles.input} ${isDescription ? styles.description_input : ""} ${className ? styles.search : ""}`}
+          type={type}
+          placeholder={textHolder}
+          name={name}
+          value={value}
+          onChange={handleChange}
+        />
       )}
+      <div className={styles.search_container}>
+        {iconSearch && <Image src={searchIcon} alt='Search Icon' className={styles.search_icon} />}
+      </div>
     </div>
   );
 };
