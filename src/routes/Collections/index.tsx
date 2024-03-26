@@ -133,7 +133,7 @@ const CollectionsPage = () => {
       </div>
       <button className={styles.btn}>
         <Image src={skin} alt='' />
-        Ver Colección
+        {dict("btn")}
       </button>
     </section>
   );

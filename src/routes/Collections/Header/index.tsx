@@ -11,7 +11,7 @@ import plus from "@/../public/icons/plus.svg";
 
 const Header = () => {
   const locale = useLocale();
-  const dict = useTranslations("dict.collections");
+  const dict = useTranslations("dict.collections.header");
   return (
     <div className={styles.container}>
       <Title text={dict("title")} />
