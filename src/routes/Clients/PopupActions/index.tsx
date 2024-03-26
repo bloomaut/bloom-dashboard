@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { ChangeEvent, SetStateAction, useState } from "react";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Input from "@/components/Input";
 import closeIcon from "../../../../public/icons/close.svg";
@@ -7,19 +7,32 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { post } from "@/services/fetch";
+import { post, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
+import { useAppSelector } from "@/store/hooks";
 
-interface PopupCreateProps {
+interface PopupActionsProps {
   onCancel: () => void;
+  onSubmit: () => void;
   setShowPopup: (value: SetStateAction<boolean>) => void;
   title: string;
   buttonText: string;
+  requestType: "POST" | "PUT";
+  clientId?: string;
 }
 
-const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreateProps) => {
+const PopupActions = ({
+  onCancel,
+  setShowPopup,
+  title,
+  buttonText,
+  onSubmit,
+  requestType,
+  clientId,
+}: PopupActionsProps) => {
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
+  const clients = useAppSelector(state => state.clients);
   const [formData, setFormData] = useState<ClientsProps>({
     ClientFirstname: "",
     ClientLastname: "",
@@ -28,6 +41,19 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
     ClientLocation: "",
     // note: "",
   });
+
+  useEffect(() => {
+    if (requestType === "PUT") {
+      const foundClient = clients.filter(client => client._id === clientId)[0];
+      setFormData({
+        ClientFirstname: foundClient.ClientFirstname,
+        ClientLastname: foundClient.ClientLastname,
+        ClientEmail: foundClient.ClientEmail,
+        ClientPhone: foundClient.ClientPhone,
+        ClientLocation: foundClient.ClientLocation,
+      });
+    }
+  }, [clients, requestType, clientId]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const fieldName = e.target.name as keyof FormData;
@@ -39,7 +65,11 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    postClient();
+    if (requestType === "POST") {
+      postClient();
+    } else {
+      editClient();
+    }
   };
 
   const postClient = async () => {
@@ -59,6 +89,27 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
           ClientPhone: "",
           ClientLocation: "",
         });
+        onSubmit();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const editClient = async () => {
+    try {
+      const data = await update("client-customer", ENV.DASH, formData, clientId);
+      if (data.statusCode === 200) {
+        notify("Cliente actualizado correctamente");
+        setShowPopup(false);
+        setFormData({
+          ClientFirstname: "",
+          ClientLastname: "",
+          ClientEmail: "",
+          ClientPhone: "",
+          ClientLocation: "",
+        });
+        onSubmit();
       }
     } catch (e) {
       console.log(e);
@@ -100,7 +151,7 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
             handleChange={handleInputChange}
           />
           <Input
-            textLabel='Teléfono'
+            textLabel='Ubicación'
             textHolder='Ubicación'
             type='text'
             name='ClientLocation'
@@ -108,7 +159,7 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
             handleChange={handleInputChange}
           />
           <Input
-            textLabel='Ubicación'
+            textLabel='Teléfono'
             textHolder='Teléfono'
             type='tel'
             name='ClientPhone'
@@ -132,4 +183,4 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
   );
 };
 
-export default FormCreate;
+export default PopupActions;

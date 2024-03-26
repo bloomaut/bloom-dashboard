@@ -13,18 +13,20 @@ import { setClientsData } from "@/store/features/clients";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import addIcon from "../../../public/icons/add.svg";
-import FormCreate from "./FormCreate";
+import PopupActions from "./PopupActions";
 import Detail from "./Detail";
 import PopupConfirm from "@/components/PopupConfirm";
 import Search from "./Search";
 
 const ClientsPage = () => {
-  const [clients, setClients] = useState<ClientsProps[]>([]);
+  const clients = useAppSelector(state => state.clients);
+  const [showPopupCreate, setShowPopupCreate] = useState(false);
+  const [showPopupEdit, setShowPopupEdit] = useState(false);
+  const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [clientId, setClientId] = useState<string | undefined>(undefined);
   const [clientSelected, setClientSelected] = useState<ClientsProps | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [filteredClients, setFilteredClients] = useState<ClientsProps[]>(clients);
   const dispatch = useAppDispatch();
   const { notify, notifyError } = useMessageToast();
 
@@ -46,6 +48,7 @@ const ClientsPage = () => {
         const data = await remove("client-customer", clientId, ENV.DASH);
         if (data.statusCode === 200) {
           setShowPopupDelete(false);
+          setClientSelected(null);
           notify("Cliente eliminado correctamente");
           getClients();
         }
@@ -58,24 +61,28 @@ const ClientsPage = () => {
   const handleClose = () => {
     setShowPopupCreate(false);
     setShowPopupDelete(false);
+    setShowPopupEdit(false);
   };
 
   return (
     <section className={styles.container}>
       <div className={styles.inner_container}>
         <Title text='Cartera de Clientes' />
-        <Search setClients={setClients} />
+        <Search data={clients} setFilteredClients={setFilteredClients} />
         {loading ? (
           <LoadingSpinner />
-        ) : clients.length > 0 ? (
+        ) : filteredClients.length > 0 ? (
           <div className={styles.clients}>
-            {clients.map((client: ClientsProps) => (
+            {filteredClients.map((client: ClientsProps) => (
               <Row
                 key={client._id}
                 client={client}
                 onSelectClient={setClientSelected}
                 onDelete={() => {
                   setShowPopupDelete(true), setClientId(client._id);
+                }}
+                onEdit={() => {
+                  setShowPopupEdit(true), setClientId(client._id);
                 }}
               />
             ))}
@@ -92,11 +99,24 @@ const ClientsPage = () => {
           />
         </div>
         {showPopupCreate && (
-          <FormCreate
+          <PopupActions
+            requestType='POST'
             title='Información del cliente'
             buttonText='Confirmar'
             setShowPopup={setShowPopupCreate}
             onCancel={handleClose}
+            onSubmit={getClients}
+          />
+        )}
+        {showPopupEdit && (
+          <PopupActions
+            requestType='PUT'
+            clientId={clientId}
+            title='Editar Cliente'
+            buttonText='Confirmar'
+            setShowPopup={setShowPopupEdit}
+            onCancel={handleClose}
+            onSubmit={getClients}
           />
         )}
         {showPopupDelete && (

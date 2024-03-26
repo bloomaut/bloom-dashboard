@@ -8,9 +8,10 @@ interface RowProps {
   client: ClientsProps;
   onSelectClient: (client: ClientsProps) => void;
   onDelete: () => void;
+  onEdit: () => void;
 }
 
-const Row = ({ client, onSelectClient, onDelete }: RowProps) => {
+const Row = ({ client, onSelectClient, onDelete, onEdit }: RowProps) => {
   const handleClick = () => {
     onSelectClient(client);
   };
@@ -23,7 +24,7 @@ const Row = ({ client, onSelectClient, onDelete }: RowProps) => {
         <p className={styles.email}>({client.ClientEmail})</p>
       </div>
       <div className={styles.controls}>
-        <button className={styles.btn}>
+        <button className={styles.btn} onClick={onEdit}>
           <Image src={iconEdit} className={styles.icon} alt='Icon Edit' />
         </button>
         <button className={styles.btn} onClick={onDelete}>
