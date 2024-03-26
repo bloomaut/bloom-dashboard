@@ -155,7 +155,7 @@ const PopupActions = ({
           <Input
             textLabel={dict("clients.form_label_03")}
             textHolder={dict("clients.form_label_03")}
-            type='ClientEmail'
+            type='email'
             name='ClientEmail'
             value={formData.ClientEmail}
             handleChange={handleInputChange}
@@ -171,7 +171,7 @@ const PopupActions = ({
           <Input
             textLabel={dict("clients.form_label_05")}
             textHolder={dict("clients.form_label_05")}
-            type='tel'
+            type='text'
             name='ClientPhone'
             value={formData.ClientPhone}
             handleChange={handleInputChange}

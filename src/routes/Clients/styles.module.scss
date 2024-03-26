@@ -13,13 +13,3 @@
     }
   }
 }
-
-.clients::-webkit-scrollbar {
-  width: 5px;
-  background-color: $greyBackground;
-}
-
-.clients::-webkit-scrollbar-thumb {
-  background-color: $orange;
-  border-radius: 10px;
-}
