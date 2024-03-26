@@ -1,11 +1,8 @@
 "use client";
 import styles from "./styles.module.scss";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "@/components/Title";
-import Input from "@/components/Input";
 import Button from "@/components/Button";
-import Row from "./Row";
-import LoadingSpinner from "@/components/Loading";
 import { get, remove } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -17,6 +14,7 @@ import PopupActions from "./PopupActions";
 import Detail from "./Detail";
 import PopupConfirm from "@/components/PopupConfirm";
 import Search from "./Search";
+import List from "./List";
 
 const ClientsPage = () => {
   const clients = useAppSelector(state => state.clients);
@@ -69,27 +67,14 @@ const ClientsPage = () => {
       <div className={styles.inner_container}>
         <Title text='Cartera de Clientes' />
         <Search data={clients} setFilteredClients={setFilteredClients} />
-        {loading ? (
-          <LoadingSpinner />
-        ) : filteredClients.length > 0 ? (
-          <div className={styles.clients}>
-            {filteredClients.map((client: ClientsProps) => (
-              <Row
-                key={client._id}
-                client={client}
-                onSelectClient={setClientSelected}
-                onDelete={() => {
-                  setShowPopupDelete(true), setClientId(client._id);
-                }}
-                onEdit={() => {
-                  setShowPopupEdit(true), setClientId(client._id);
-                }}
-              />
-            ))}
-          </div>
-        ) : (
-          <p className={styles.empty}>No hay clientes disponibles</p>
-        )}
+        <List
+          data={filteredClients}
+          loading={loading}
+          setClientSelected={setClientSelected}
+          setShowPopupDelete={setShowPopupDelete}
+          setShowPopupEdit={setShowPopupEdit}
+          setClientId={setClientId}
+        />
         <div className={styles.btn_container}>
           <Button
             title='Agregar cliente'
