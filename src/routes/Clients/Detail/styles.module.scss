@@ -1,9 +1,8 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(500px, 500px);
+  @include width-height(500px, auto);
   @include flex(column, flex-start, flex-start, 20px);
-  transition: all 300ms ease-in-out;
   .detail_names {
     @include fontSize-fontWeight(30px, 500);
   }

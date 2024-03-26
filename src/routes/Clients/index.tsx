@@ -36,6 +36,12 @@ const ClientsPage = () => {
     getClients();
   }, [dispatch]);
 
+  useEffect(() => {
+    if (clients.length > 0) {
+      setClientSelected(clients[0]);
+    }
+  }, [clients]);
+
   return (
     <section className={styles.container}>
       <div className={styles.inner_container}>
