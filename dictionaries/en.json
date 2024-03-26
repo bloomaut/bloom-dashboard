@@ -157,6 +157,10 @@
       "form_label_05": "Phone",
       "form_label_06": "Personal notes",
       "search_holder": "Search customer ...."
+    },
+    "inbox": {
+      "title": "Inbox",
+      "subtitle": "Download the app"
     }
   }
 }

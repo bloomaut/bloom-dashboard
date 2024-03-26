@@ -156,6 +156,10 @@
       "form_label_05": "Teléfono",
       "form_label_06": "Notas personales",
       "search_holder": "Buscar cliente ..."
+    },
+    "inbox": {
+      "title": "Bandeja de entrada",
+      "subtitle": "Descarga la app"
     }
   }
 }

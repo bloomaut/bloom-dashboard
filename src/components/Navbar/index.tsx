@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
 
 //Icons
-import small from "@/../public/assets/Small.png";
+import small from "@/../public/assets/logo_small.png";
 import logo_knowledge from "@/../public/icons/KnowledgeIcon.png";
 
 //Components

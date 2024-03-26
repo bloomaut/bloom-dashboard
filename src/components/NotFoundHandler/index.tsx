@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import Link from "next/link";
-import smallLogo from "@/../public/assets/Small.png";
+import smallLogo from "@/../public/assets/logo_small.png";
 import Image from "next/image";
 import { Barlow } from "next/font/google";
 import "@/styles/globals.scss";
