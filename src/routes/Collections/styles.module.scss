@@ -69,11 +69,11 @@
     @include width-height(100%, auto);
     .header {
       .title {
-        @include flex(row, flex-start, flex-start, 200px);
+        @include flex(row, flex-start, flex-start);
         width: 900px;
-
         border-bottom: 1px solid $lightGrey;
         h2 {
+          flex: 1;
           @include fontSize-fontWeight(20px, 500);
           white-space: nowrap;
           padding: 10px 10px;
@@ -81,6 +81,32 @@
         .border {
           border-left: 1px solid $lightGrey;
           padding: 10px 10px;
+        }
+      }
+      .subtitle {
+        @include flex(row, flex-start, flex-start);
+        width: 900px;
+        white-space: nowrap;
+        border-bottom: 1px solid $lightGrey;
+        @include fontSize-fontWeight(14px, 400);
+
+        .subtitle_one {
+          flex: 1;
+          padding: 8px;
+          text-align: end;
+        }
+        .subtitle_two {
+          flex: 1;
+          padding: 8px;
+          @include flex(row, flex-start, flex-start, 60px);
+          border-left: 1px solid $lightGrey;
+        }
+
+        .subtitle_three {
+          flex: 1;
+          padding: 8px;
+          @include flex(row, space-between, flex-start);
+          border-left: 1px solid $lightGrey;
         }
       }
     }
