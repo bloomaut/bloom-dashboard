@@ -6,6 +6,7 @@
   white-space: nowrap;
   padding: 5px;
   @include fontSize-fontWeight(14px, 400);
+  cursor: pointer;
   &:hover {
     background-color: $secondaryBlue;
     border-radius: 10px;
