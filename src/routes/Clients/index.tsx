@@ -89,6 +89,7 @@ const ClientsPage = () => {
             title='Información del cliente'
             buttonText='Confirmar'
             setShowPopup={setShowPopupCreate}
+            setClientSelected={setClientSelected}
             onCancel={handleClose}
             onSubmit={getClients}
           />
@@ -100,6 +101,7 @@ const ClientsPage = () => {
             title='Editar Cliente'
             buttonText='Confirmar'
             setShowPopup={setShowPopupEdit}
+            setClientSelected={setClientSelected}
             onCancel={handleClose}
             onSubmit={getClients}
           />

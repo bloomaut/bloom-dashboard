@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Input from "@/components/Input";
 import closeIcon from "../../../../public/icons/close.svg";
@@ -15,6 +15,7 @@ interface PopupActionsProps {
   onCancel: () => void;
   onSubmit: () => void;
   setShowPopup: (value: SetStateAction<boolean>) => void;
+  setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
   title: string;
   buttonText: string;
   requestType: "POST" | "PUT";
@@ -24,6 +25,7 @@ interface PopupActionsProps {
 const PopupActions = ({
   onCancel,
   setShowPopup,
+  setClientSelected,
   title,
   buttonText,
   onSubmit,
@@ -90,6 +92,7 @@ const PopupActions = ({
           ClientLocation: "",
         });
         onSubmit();
+        setClientSelected(null);
       }
     } catch (e) {
       console.log(e);
@@ -110,6 +113,7 @@ const PopupActions = ({
           ClientLocation: "",
         });
         onSubmit();
+        setClientSelected(null);
       }
     } catch (e) {
       console.log(e);
