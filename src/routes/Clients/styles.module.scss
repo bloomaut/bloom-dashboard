@@ -1,15 +1,33 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, auto);
-  max-width: 600px;
-  @include flex(column, center, flex-start, 20px);
-  .clients {
-    @include width-height(100%, auto);
-    @include flex(column, center, flex-start);
+  @include width-height(100%, 100%);
+  @include flex(row, center, flex-start, 50px);
+  .inner_container {
+    @include width-height(100%, 100%);
+    max-width: 600px;
+    @include flex(column, center, flex-start, 20px);
+    .clients {
+      @include width-height(100%, 100%);
+      @include flex(column, flex-start, center);
+      overflow-y: auto;
+    }
+    .empty {
+      color: $text;
+    }
+    .btn_container {
+      @include width-height(100%, auto);
+      @include flex(row, flex-end, center);
+    }
   }
-  .btn_container {
-    @include width-height(100%, auto);
-    @include flex(row, flex-end, center);
-  }
+}
+
+.clients::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.clients::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
 }

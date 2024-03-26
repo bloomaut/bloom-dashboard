@@ -44,16 +44,12 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
 
   const postClient = async () => {
     try {
-      const dataToSend = { ...formData };
-
+      // const dataToSend = { ...formData };
       // if (!formData.note) {
       //   delete dataToSend.note;
       // }
-
-      const data = await post("client-customer", dataToSend, ENV.DASH);
-      console.log(data);
+      const data = await post("client-customer", formData, ENV.DASH);
       if (data.data.statusCode === 201) {
-        console.log(data.message);
         notify("Cliente creado correctamente");
         setShowPopup(false);
         setFormData({
