@@ -36,7 +36,22 @@ const CollectionsPage = () => {
           {dict("new_btn")}
         </Link>
       </div>
-      <div>tabla</div>
+      <div className={styles.table}>
+        <div className={styles.header}>
+          <h2>Nombre</h2>
+          <h2>Diseño Utilizado</h2>
+          <h2>Receptor</h2>
+        </div>
+        {/*
+        <div className={styles.row}>
+          <h5>Fecha</h5>
+          <h5>Nombre del Skin</h5>
+          <h5>Plantilla</h5>
+          <h5>Total</h5>
+          <h5>Abiertos</h5>
+        </div>
+         */}
+      </div>
     </section>
   );
 };

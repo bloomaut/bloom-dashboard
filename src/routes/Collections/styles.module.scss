@@ -64,4 +64,24 @@
       }
     }
   }
+
+  .table {
+    @include width-height(100%, auto);
+    border-bottom: 1px solid red;
+    .header {
+      padding: 10px 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+
+      h2 {
+        @include fontSize-fontWeight(20px, 500);
+      }
+    }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+  }
 }
