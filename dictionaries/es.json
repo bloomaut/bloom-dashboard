@@ -20,7 +20,9 @@
       "logout": "Cerrar Sesión"
     },
     "popup": {
-      "ejemplo": "borrar"
+      "delete_title": "¿Seguro que deseas eliminar este cliente?",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
@@ -30,7 +32,13 @@
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
       "empty_fields": "Todos los campos son requeridos",
-      "error_tryagain": "Hubo un problema, intente más tarde"
+      "error_tryagain": "Hubo un problema, intente más tarde",
+      "client_post": "Cliente creado correctamente",
+      "client_edit": "Cliente actualizado correctamente",
+      "client_delete": "Cliente eliminado correctamente",
+      "client_post_error": "Error al crear cliente",
+      "client_edit_error": "Error al actualizar cliente",
+      "client_delete_error": "Error al eliminar cliente"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -133,6 +141,21 @@
         "title02": "Arrojá tus archivos aquí",
         "subtitle": "Mis archivos"
       }
+    },
+    "clients": {
+      "title": "Cartera de Clientes",
+      "empty": "No hay clientes disponibles",
+      "button": "Agregar cliente",
+      "popup_create_title": "Información del cliente",
+      "popup_edit_title": "Editar información del cliente",
+      "popup_button": "Confirmar",
+      "form_label_01": "Nombre",
+      "form_label_02": "Apellido",
+      "form_label_03": "Email",
+      "form_label_04": "Ubicación",
+      "form_label_05": "Teléfono",
+      "form_label_06": "Notas personales",
+      "search_holder": "Buscar cliente ..."
     }
   }
 }

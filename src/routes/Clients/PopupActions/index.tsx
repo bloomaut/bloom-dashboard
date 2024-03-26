@@ -10,6 +10,7 @@ import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { post, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 interface PopupActionsProps {
   onCancel: () => void;
@@ -43,6 +44,7 @@ const PopupActions = ({
     ClientLocation: "",
     // note: "",
   });
+  const dict = useTranslations("dict");
 
   useEffect(() => {
     if (requestType === "PUT") {
@@ -82,7 +84,7 @@ const PopupActions = ({
       // }
       const data = await post("client-customer", formData, ENV.DASH);
       if (data.data.statusCode === 201) {
-        notify("Cliente creado correctamente");
+        notify(dict("toast.client_post"));
         setShowPopup(false);
         setFormData({
           ClientFirstname: "",
@@ -93,6 +95,8 @@ const PopupActions = ({
         });
         onSubmit();
         setClientSelected(null);
+      } else {
+        notifyError(dict("toast.client_post_error"));
       }
     } catch (e) {
       console.log(e);
@@ -103,7 +107,7 @@ const PopupActions = ({
     try {
       const data = await update("client-customer", ENV.DASH, formData, clientId);
       if (data.statusCode === 200) {
-        notify("Cliente actualizado correctamente");
+        notify(dict("toast.client_edit"));
         setShowPopup(false);
         setFormData({
           ClientFirstname: "",
@@ -114,6 +118,8 @@ const PopupActions = ({
         });
         onSubmit();
         setClientSelected(null);
+      } else {
+        notifyError(dict("toast.client_edit_error"));
       }
     } catch (e) {
       console.log(e);
@@ -130,16 +136,16 @@ const PopupActions = ({
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.names}>
             <Input
-              textLabel='Nombre'
-              textHolder='Nombre'
+              textLabel={dict("clients.form_label_01")}
+              textHolder={dict("clients.form_label_01")}
               type='text'
               name='ClientFirstname'
               value={formData.ClientFirstname}
               handleChange={handleInputChange}
             />
             <Input
-              textLabel='Apellido'
-              textHolder='Apellido'
+              textLabel={dict("clients.form_label_02")}
+              textHolder={dict("clients.form_label_02")}
               type='text'
               name='ClientLastname'
               value={formData.ClientLastname}
@@ -147,32 +153,32 @@ const PopupActions = ({
             />
           </div>
           <Input
-            textLabel='Email'
-            textHolder='Email'
+            textLabel={dict("clients.form_label_03")}
+            textHolder={dict("clients.form_label_03")}
             type='ClientEmail'
             name='ClientEmail'
             value={formData.ClientEmail}
             handleChange={handleInputChange}
           />
           <Input
-            textLabel='Ubicación'
-            textHolder='Ubicación'
+            textLabel={dict("clients.form_label_04")}
+            textHolder={dict("clients.form_label_04")}
             type='text'
             name='ClientLocation'
             value={formData.ClientLocation}
             handleChange={handleInputChange}
           />
           <Input
-            textLabel='Teléfono'
-            textHolder='Teléfono'
+            textLabel={dict("clients.form_label_05")}
+            textHolder={dict("clients.form_label_05")}
             type='tel'
             name='ClientPhone'
             value={formData.ClientPhone}
             handleChange={handleInputChange}
           />
           {/* <Input
-            textLabel='Notas personales'
-            textHolder='Ingrese una descripción...'
+            textLabel={dict("clients.form_label_06")}
+            textHolder={dict("clients.form_label_06")}
             type='textarea'
             name='note'
             value={formData.note || ""}

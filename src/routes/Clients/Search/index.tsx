@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Input from "@/components/Input";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
+import { useTranslations } from "next-intl";
 
 interface SearchInputProps {
   data: ClientsProps[];
@@ -9,6 +10,7 @@ interface SearchInputProps {
 
 const Search = ({ data, setFilteredClients }: SearchInputProps) => {
   const [searchValue, setSearchValue] = useState("");
+  const dict = useTranslations("dict.clients");
 
   useEffect(() => {
     const filteredClients = data.filter(
@@ -25,7 +27,7 @@ const Search = ({ data, setFilteredClients }: SearchInputProps) => {
 
   return (
     <Input
-      textHolder='Buscar cliente'
+      textHolder={dict("search_holder")}
       type='text'
       name='search'
       value={searchValue}
