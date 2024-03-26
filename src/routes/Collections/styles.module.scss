@@ -50,5 +50,19 @@
         border-left: 1px solid $lightGrey;
       }
     }
+    .content_container {
+      max-height: 360px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 20px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: $lighterGrey;
+        border-radius: 20px;
+        height: 1px;
+      }
+    }
   }
 }

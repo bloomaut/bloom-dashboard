@@ -1,10 +1,118 @@
-import Header from "./Header";
 import styles from "./styles.module.scss";
 import { useLocale, useTranslations } from "next-intl";
+import Header from "./Header";
+import Content from "./Content";
 
 const CollectionsPage = () => {
   const locale = useLocale();
   const dict = useTranslations("dict.collections");
+
+  const contentData = [
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+    {
+      name: "Colección name",
+      date: "##-##-##",
+      name_skin: "Nombre del skin",
+      template: "Plantilla",
+      total: 0,
+      open: 0,
+    },
+  ];
 
   return (
     <section className={styles.container}>
@@ -27,6 +135,12 @@ const CollectionsPage = () => {
             <p>Total</p>
             <p>Abiertos</p>
           </div>
+        </div>
+        {/* CONTENIDO */}
+        <div className={styles.content_container}>
+          {contentData.map((content, index) => {
+            return <Content key={index} content={content} />;
+          })}
         </div>
       </div>
     </section>

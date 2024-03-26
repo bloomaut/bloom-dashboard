@@ -1,0 +1,31 @@
+@import "@/styles/theme.scss";
+
+.content {
+  @include flex(row, flex-start, flex-start);
+  width: calc(900px - 8px);
+  white-space: nowrap;
+  padding: 5px;
+  @include fontSize-fontWeight(14px, 400);
+  &:hover {
+    background-color: $secondaryBlue;
+    border-radius: 10px;
+  }
+  .subtitle_one {
+    flex: 1;
+    padding: 10px 14px;
+    @include flex(row, space-between, flex-start);
+  }
+  .subtitle_two {
+    flex: 1;
+    padding: 10px 15px;
+    @include flex(row, flex-start, flex-start, 60px);
+    border-left: 1px solid $lightGrey;
+  }
+
+  .subtitle_three {
+    flex: 1;
+    padding: 10px;
+    @include flex(row, space-between, flex-start);
+    border-left: 1px solid $lightGrey;
+  }
+}
