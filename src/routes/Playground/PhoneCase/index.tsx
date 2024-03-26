@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import caseImage from "@/../public/assets/mobileCase.png";
-import whatsappImage from "@/../public/assets/wa.png";
+import caseImage from "@/../public/assets/playground_phonecase.png";
+import whatsappImage from "@/../public/assets/playground_wa.png";
 import { useState } from "react";
 //Componentes
 import LoadingDots from "./LoadingDots";

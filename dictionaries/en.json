@@ -140,6 +140,10 @@
       "search": "Search Collections...",
       "period_btn": "Period",
       "new_btn": "New Collection"
+    },
+    "inbox": {
+      "title": "Inbox",
+      "subtitle": "Download the app"
     }
   }
 }

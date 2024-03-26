@@ -139,6 +139,10 @@
       "search": "Buscar Colecciones...",
       "period_btn": "Periodo",
       "new_btn": "Nueva Colección"
+    },
+    "inbox": {
+      "title": "Bandeja de entrada",
+      "subtitle": "Descarga la app"
     }
   }
 }
