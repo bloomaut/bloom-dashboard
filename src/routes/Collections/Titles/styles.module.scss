@@ -22,22 +22,21 @@
   border-bottom: 1px solid $lightGrey;
   @include fontSize-fontWeight(14px, 400);
 
-  .subtitle_one {
-    flex: 1;
-    padding: 8px;
+  .column {
+    @include width-height(100%, auto);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+  }
+  .column_one {
     text-align: end;
   }
-  .subtitle_two {
-    flex: 1;
-    padding: 8px;
-    @include flex(row, flex-start, flex-start, 60px);
+  .column_two {
+    border-right: 1px solid $lightGrey;
     border-left: 1px solid $lightGrey;
   }
 
-  .subtitle_three {
-    flex: 1;
-    padding: 8px;
-    @include flex(row, space-between, flex-start);
-    border-left: 1px solid $lightGrey;
+  .column_three p:last-child {
+    text-align: end;
   }
 }

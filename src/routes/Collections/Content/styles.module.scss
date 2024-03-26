@@ -2,7 +2,7 @@
 
 .content {
   @include flex(row, flex-start, flex-start);
-  width: calc(900px - 8px);
+  width: 900px;
   white-space: nowrap;
   padding: 5px;
   @include fontSize-fontWeight(14px, 400);
@@ -11,22 +11,29 @@
     background-color: $secondaryBlue;
     border-radius: 10px;
   }
-  .subtitle_one {
-    flex: 1;
-    padding: 10px 14px;
-    @include flex(row, space-between, flex-start);
+  .column {
+    @include width-height(100%, auto);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+    cursor: pointer;
+    p {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
+      height: 1.2em;
+      white-space: nowrap;
+    }
   }
-  .subtitle_two {
-    flex: 1;
-    padding: 10px 15px;
-    @include flex(row, flex-start, flex-start, 60px);
+  .column_one p:last-child {
+    text-align: end;
+  }
+  .column_two {
+    border-right: 1px solid $lightGrey;
     border-left: 1px solid $lightGrey;
   }
 
-  .subtitle_three {
-    flex: 1;
-    padding: 10px;
-    @include flex(row, space-between, flex-start);
-    border-left: 1px solid $lightGrey;
+  .column_three p:last-child {
+    text-align: end;
   }
 }

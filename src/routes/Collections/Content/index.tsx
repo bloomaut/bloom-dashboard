@@ -15,15 +15,15 @@ interface ContentProps {
 const Content = ({ content }: ContentProps) => {
   return (
     <div className={styles.content}>
-      <div className={styles.subtitle_one}>
+      <div className={`${styles.column} ${styles.column_one}`}>
         <p>{content.name}</p>
         <p>{content.date}</p>
       </div>
-      <div className={styles.subtitle_two}>
+      <div className={`${styles.column} ${styles.column_two}`}>
         <p>{content.name_skin}</p>
         <p>{content.template}</p>
       </div>
-      <div className={styles.subtitle_three}>
+      <div className={`${styles.column} ${styles.column_three}`}>
         <p>{content.total}</p>
         <p>{content.open}</p>
       </div>

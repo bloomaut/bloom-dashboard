@@ -11,14 +11,15 @@ const Titles = () => {
         <h2 className={styles.border}>Receptor</h2>
       </div>
       <div className={styles.subtitle}>
-        <div className={styles.subtitle_one}>
+        <div className={`${styles.column} ${styles.column_one}`}>
+          <p></p>
           <p>Fecha</p>
         </div>
-        <div className={styles.subtitle_two}>
+        <div className={`${styles.column} ${styles.column_two}`}>
           <p>Nombre del Skin</p>
           <p>Plantilla</p>
         </div>
-        <div className={styles.subtitle_three}>
+        <div className={`${styles.column} ${styles.column_three}`}>
           <p>Total</p>
           <p>Abiertos</p>
         </div>
