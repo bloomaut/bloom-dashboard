@@ -3,14 +3,14 @@ import Title from "@/components/Title";
 import Image from "next/image";
 import Link from "next/link";
 import GalleryComponent from "./GalleryComponent";
-import { GalleryProvider } from "@/context/GalleryContext";
+import { FlakesUserProvider } from "@/context/FlakesUserContext";
 import { useTranslations } from "next-intl";
 
 const GalleryPage = () => {
   const dict = useTranslations("dict.gallery");
 
   return (
-    <GalleryProvider>
+    <FlakesUserProvider>
       <section className={styles.gallery}>
         <div className={styles.head}>
           <Title text={dict("title")} />
@@ -25,7 +25,7 @@ const GalleryPage = () => {
           <GalleryComponent />
         </div>
       </section>
-    </GalleryProvider>
+    </FlakesUserProvider>
   );
 };
 

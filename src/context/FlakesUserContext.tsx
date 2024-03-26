@@ -10,12 +10,12 @@ interface Context {
   loading: boolean;
 }
 
-const GalleryContext = createContext<Context>({
+const FlakesUserContext = createContext<Context>({
   flakes: [],
   loading: true,
 });
 
-export const GalleryProvider = ({ children }: { children: JSX.Element }) => {
+export const FlakesUserProvider = ({ children }: { children: JSX.Element }) => {
   const [flakes, setFlakes] = useState<Powerapp[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +38,7 @@ export const GalleryProvider = ({ children }: { children: JSX.Element }) => {
     fetchData();
   }, []);
 
-  return <GalleryContext.Provider value={{ flakes, loading }}>{children}</GalleryContext.Provider>;
+  return <FlakesUserContext.Provider value={{ flakes, loading }}>{children}</FlakesUserContext.Provider>;
 };
 
-export const useGalleryContext = () => useContext(GalleryContext);
+export const useFlakesUserContext = () => useContext(FlakesUserContext);

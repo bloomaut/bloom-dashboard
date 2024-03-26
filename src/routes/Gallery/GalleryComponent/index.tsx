@@ -1,13 +1,13 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
+import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 //Componentes
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import { useGalleryContext } from "@/context/GalleryContext";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
-import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
+import { useFlakesUserContext } from "@/context/FlakesUserContext";
 
 const GalleryComponent = () => {
-  const { flakes, loading } = useGalleryContext();
+  const { flakes, loading } = useFlakesUserContext();
 
   return (
     <section className={styles.container}>
