@@ -18,10 +18,10 @@ const OpenGraph = ({ handlePreviewClick, previewData, captureTime }: OpenGraphPr
         <p>{dict("today")}</p>
       </div>
       <div className={styles.message}>
-        <Image src={previewData.openGraph.image.url} width={180} height={120} alt='Preview' />
+        <Image src={previewData.image} width={180} height={120} alt='Preview' />
         <div className={styles.og_styles}>
-          <h2>{previewData.openGraph.title}</h2>
-          <p>{previewData.openGraph.description}</p>
+          <h2>{previewData.title}</h2>
+          <p>{previewData.description}</p>
         </div>
         <p className={styles.message_date}>{captureTime}</p>
       </div>
