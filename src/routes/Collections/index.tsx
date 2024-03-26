@@ -1,8 +1,13 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+
+//Componentes
 import Header from "./Header";
-import Content from "./Content";
 import Titles from "./Titles";
+import Content from "./Content";
+
+import skin from "@/../../public/icons/skin.svg";
 
 const CollectionsPage = () => {
   const dict = useTranslations("dict.collections");
@@ -126,6 +131,10 @@ const CollectionsPage = () => {
           })}
         </div>
       </div>
+      <button className={styles.btn}>
+        <Image src={skin} alt='' />
+        Ver Colección
+      </button>
     </section>
   );
 };

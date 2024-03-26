@@ -8,7 +8,6 @@
 
   .table {
     @include width-height(100%, auto);
-
     .content_container {
       max-height: 360px;
       overflow-y: auto;
@@ -22,5 +21,17 @@
       background-color: $lighterGrey;
       border-radius: 10px;
     }
+  }
+
+  .btn {
+    @include flex(row, center, center, 15px);
+    background-color: $blueBackground;
+    border: 2px solid $orange;
+    border-radius: 2px;
+    @include fontSize-fontWeight(12px, 400);
+    color: $lightGrey;
+    margin: 10px 0;
+    padding: 5px 15px;
+    align-self: flex-end;
   }
 }
