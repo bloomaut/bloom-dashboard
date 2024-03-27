@@ -1,8 +1,31 @@
 @import "@/styles/theme";
 
 .container {
-  @include flex(column, flex-start, flex-start, 20px);
   @include width-height(100%, 100%);
-  max-width: 900px;
   background-color: $blueBackground;
+  position: relative;
+  .form_container {
+    @include flex(column, flex-start, flex-start, 10px);
+    .form {
+      overflow-y: auto;
+      @include width-height(100%, auto);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 20px;
+    }
+    .btn {
+      position: absolute;
+      bottom: 0;
+      background-color: $orange;
+      color: $white;
+      border-radius: 4px;
+      border: none;
+      @include width-height(160px, 38px);
+      @include flex(row, center, center, 10px);
+    }
+    .checkbox_container {
+      @include width-height(100%, auto);
+      @include flex(row, space-between, center);
+    }
+  }
 }

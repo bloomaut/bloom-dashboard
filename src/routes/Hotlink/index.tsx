@@ -1,3 +1,4 @@
+import Form from "./Form";
 import Select from "./Select";
 import styles from "./styles.module.scss";
 import Title from "@/components/Title";
@@ -10,6 +11,7 @@ const HotlinksPage = () => {
         <Title text='Generación Hotlink' />
         <div className={styles.inner_container}>
           <Select />
+          <Form />
         </div>
       </section>
     </FlakesProvider>

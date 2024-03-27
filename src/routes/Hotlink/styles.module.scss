@@ -5,4 +5,7 @@
   @include width-height(100%, 100%);
   max-width: 900px;
   background-color: $blueBackground;
+  .inner_container {
+    @include flex(row, flex-start, flex-start, 30px);
+  }
 }

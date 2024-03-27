@@ -19,23 +19,20 @@ const Select = () => {
   return (
     <div className={styles.container}>
       <div className={styles.select}>
-        <div className={styles.column}>
-          <label>Diseño</label>
-          <select name='design' id='design' onChange={handleDesignChange}>
-            {flakes.map((flake, index) => (
-              <option key={index} value={flake.skinx.title} selected={index === 0}>
-                {flake.skinx.title}
-              </option>
-            ))}
-          </select>
-        </div>
+        <label>Diseño</label>
+        <select name='design' id='design' onChange={handleDesignChange}>
+          {flakes.map((flake, index) => (
+            <option key={index} value={flake.skinx.title} defaultValue={index === 0 ? "true" : undefined}>
+              {flake.skinx.title}
+            </option>
+          ))}
+        </select>
       </div>
       <div className={styles.flakes}>
         {!loading ? (
           <div className={styles.template_container} key={selectedFlake?._id}>
             {selectedFlake && (
               <>
-                <h4 className={styles.title}>{selectedFlake.skinx.title}</h4>
                 <div
                   className={`${styles.template} ${selectedFlakeId === selectedFlake._id ? styles.selected_template : ""}`}
                   onClick={() => setSelectedFlakeId(selectedFlake._id)}
