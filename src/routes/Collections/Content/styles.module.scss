@@ -8,7 +8,7 @@
   @include fontSize-fontWeight(14px, 400);
   cursor: pointer;
   &:hover {
-    background-color: $secondaryBlue;
+    background-color: $blueishBackground;
     border-radius: 10px;
   }
   .column {
