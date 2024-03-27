@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 import addIcon from "../../../public/icons/add.svg";
 import PopupActions from "./PopupActions";
 import Detail from "./Detail";
-import Search from "./Search";
+import Search from "../../components/Search";
 import List from "./List";
 import { ClientsProvider, useClients } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
@@ -34,7 +34,7 @@ const ClientsPage = () => {
       <section className={styles.container}>
         <div className={styles.inner_container}>
           <Title text={dict("title")} />
-          <Search setFilteredClients={setFilteredClients} />
+          <Search setClients={setFilteredClients} placeholder={dict("search_holder")} />
           <List data={filteredClients} setClientSelected={setClientSelected} />
           <div className={styles.btn_container}>
             <Button
