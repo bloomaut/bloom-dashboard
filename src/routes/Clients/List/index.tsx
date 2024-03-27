@@ -11,12 +11,8 @@ import { useTranslations } from "next-intl";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useClientsContext } from "@/context/ClientsContext";
 
-interface ListProps {
-  data: ClientsProps[];
-}
-
-const List = ({ data }: ListProps) => {
-  const { loading, fetchClients, setClientSelected } = useClientsContext();
+const List = () => {
+  const { loading, fetchClients, setClientSelected, filteredClients } = useClientsContext();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [clientId, setClientId] = useState<string | undefined>(undefined);
@@ -46,8 +42,8 @@ const List = ({ data }: ListProps) => {
     <div className={styles.clients}>
       {loading ? (
         <LoadingSpinner />
-      ) : data.length ? (
-        data.map((client: ClientsProps) => (
+      ) : filteredClients.length ? (
+        filteredClients.map((client: ClientsProps) => (
           <Row
             key={client._id}
             client={client}

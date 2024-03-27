@@ -11,6 +11,9 @@ interface ClientsContextType {
   fetchClients: () => void;
   clientSelected: ClientsProps | null;
   setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
+  searchValue: string;
+  setSearchValue: (i: string) => void;
+  filteredClients: ClientsProps[];
 }
 
 const ClientsContext = createContext<ClientsContextType>({
@@ -19,6 +22,9 @@ const ClientsContext = createContext<ClientsContextType>({
   fetchClients: () => Promise<void>,
   clientSelected: null,
   setClientSelected: () => null,
+  searchValue: "",
+  setSearchValue: () => "",
+  filteredClients: [],
 });
 
 export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
@@ -26,23 +32,51 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [clientSelected, setClientSelected] = useState<ClientsProps | null>(null);
   const dispatch = useAppDispatch();
+  /* Para buscador */
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [filteredClients, setFilteredClients] = useState<ClientsProps[]>(clients);
 
   const fetchClients = async () => {
     const data = await get("client-customer", ENV.DASH);
     if (data.statusCode === 200) {
       dispatch(setClientsData(data.result.data));
       setClients(data.result.data);
-      setClientSelected(data.result.data[0]);
     }
     setLoading(false);
   };
 
   useEffect(() => {
+    const filteredData = clients.filter(
+      client =>
+        client.ClientFirstname.toLowerCase().includes(searchValue.toLowerCase()) ||
+        client.ClientEmail.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    setFilteredClients(filteredData);
+  }, [searchValue, clients, setClients]);
+
+  useEffect(() => {
     fetchClients();
   }, [dispatch]);
 
+  useEffect(() => {
+    if (filteredClients.length > 0) {
+      setClientSelected(filteredClients[0]);
+    }
+  }, [filteredClients]);
+
   return (
-    <ClientsContext.Provider value={{ clients, loading, fetchClients, clientSelected, setClientSelected }}>
+    <ClientsContext.Provider
+      value={{
+        clients,
+        loading,
+        fetchClients,
+        clientSelected,
+        setClientSelected,
+        searchValue,
+        setSearchValue,
+        filteredClients,
+      }}
+    >
       {children}
     </ClientsContext.Provider>
   );
