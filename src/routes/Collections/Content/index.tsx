@@ -1,0 +1,26 @@
+import styles from "./styles.module.scss";
+
+interface ContentProps {
+  content: { name: string; date: string; name_skin: string; template: string; total: number; open: number };
+}
+
+const Content = ({ content }: ContentProps) => {
+  return (
+    <div className={styles.content}>
+      <div className={`${styles.column} ${styles.column_one}`}>
+        <p>{content.name}</p>
+        <p>{content.date}</p>
+      </div>
+      <div className={`${styles.column} ${styles.column_two}`}>
+        <p>{content.name_skin}</p>
+        <p>{content.template}</p>
+      </div>
+      <div className={`${styles.column} ${styles.column_three}`}>
+        <p>{content.total}</p>
+        <p>{content.open}</p>
+      </div>
+    </div>
+  );
+};
+
+export default Content;

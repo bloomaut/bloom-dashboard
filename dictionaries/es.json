@@ -134,6 +134,25 @@
         "subtitle": "Mis archivos"
       }
     },
+    "collections": {
+      "header": {
+        "title": "Colecciones de Hotlinks",
+        "search": "Buscar Colecciones...",
+        "period_btn": "Periodo",
+        "new_btn": "Nueva Colección"
+      },
+      "titles": {
+        "title_one": "Nombre",
+        "title_two": "Diseño utilizado",
+        "title_three": "Receptor",
+        "column_one": "Fecha",
+        "column_two": "Nombre del Skin",
+        "column_three": "Plantilla",
+        "column_four": "Total",
+        "column_five": "Abiertos"
+      },
+      "btn": "Ver Colección"
+    },
     "inbox": {
       "title": "Bandeja de entrada",
       "subtitle": "Descarga la app"

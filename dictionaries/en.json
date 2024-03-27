@@ -134,6 +134,25 @@
         "subtitle": "My files"
       }
     },
+    "collections": {
+      "header": {
+        "title": "Hotlinks Collections",
+        "search": "Search Collections...",
+        "period_btn": "Period",
+        "new_btn": "New Collection"
+      },
+      "titles": {
+        "title_one": "Name",
+        "title_two": "Design Used",
+        "title_three": "Receiver",
+        "column_one": "Date",
+        "column_two": "Skin Name",
+        "column_three": "Template",
+        "column_four": "Total",
+        "column_five": "Open"
+      },
+      "btn": "View Collection"
+    },
     "inbox": {
       "title": "Inbox",
       "subtitle": "Download the app"
