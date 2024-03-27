@@ -9,7 +9,7 @@
     @include width-height(100%, 80%);
     overflow: hidden;
     .content_container {
-      @include width-height(100%, 100%);
+      @include width-height(100%, inherit);
       overflow-y: auto;
       overflow-x: hidden;
     }
