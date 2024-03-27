@@ -2,8 +2,7 @@
 
 .container {
   @include flex(column, center, flex-start, 20px);
-  @include width-height(400px, 400px);
-  overflow: hidden;
+  //@include width-height(400px, 390px);
   .select {
     @include flex(row, center, center, 20px);
     .column {
@@ -12,11 +11,8 @@
   }
   .flakes {
     @include width-height(100%, 100%);
-    @include flex(row, space-evenly, flex-start, 10px);
-    flex-wrap: wrap;
     border-radius: 4.775px;
-    overflow-y: auto;
-    row-gap: 20px;
+    overflow: hidden;
     padding-right: 5px;
     max-height: 400px;
     .template_container {
