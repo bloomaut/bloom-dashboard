@@ -30,7 +30,7 @@ const EmptyFormData = {
 const Form = () => {
   const dict = useTranslations("dict");
   const { notifyError } = useMessageToast();
-  const { setTime, setShowPreview, setPaUrl, setLoadingDots } = useOpenGraphContext();
+  const { setTime, setShowPreview, setPaUrl, setLoadingDots, setPreviewData } = useOpenGraphContext();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
@@ -77,12 +77,14 @@ const Form = () => {
       },
     });
     if (response?.status === 200) {
-      const { hotlink } = response.data.data.result;
-      setPaUrl(`https://power-app-engine.vercel.app/${hotlink.power_app_hash}`);
+      const { hotlink, opengraph } = response.data.data.result;
+      setPaUrl(hotlink.url);
+      setPreviewData(opengraph);
       setTime();
       setShowPreview(true);
       setShowButton(true);
       setLoadingDots(false);
+      console.log(response.data.data);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
     }

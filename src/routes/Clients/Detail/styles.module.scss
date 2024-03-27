@@ -1,0 +1,22 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(500px, auto);
+  @include flex(column, flex-start, flex-start, 20px);
+  .detail_names {
+    @include fontSize-fontWeight(30px, 500);
+  }
+  .info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    .label {
+      @include fontSize-fontWeight(15px, 600);
+      span {
+        @include fontSize-fontWeight(14px, 400);
+      }
+    }
+  }
+}

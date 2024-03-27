@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { ChangeEvent, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Input from "@/components/Input";
 import closeIcon from "../../../../public/icons/close.svg";
@@ -7,19 +7,35 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { post } from "@/services/fetch";
+import { post, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
+import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
-interface PopupCreateProps {
+interface PopupActionsProps {
   onCancel: () => void;
+  onSubmit: () => void;
   setShowPopup: (value: SetStateAction<boolean>) => void;
+  setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
   title: string;
   buttonText: string;
+  requestType: "POST" | "PUT";
+  clientId?: string;
 }
 
-const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreateProps) => {
+const PopupActions = ({
+  onCancel,
+  setShowPopup,
+  setClientSelected,
+  title,
+  buttonText,
+  onSubmit,
+  requestType,
+  clientId,
+}: PopupActionsProps) => {
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
+  const clients = useAppSelector(state => state.clients);
   const [formData, setFormData] = useState<ClientsProps>({
     ClientFirstname: "",
     ClientLastname: "",
@@ -28,6 +44,20 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
     ClientLocation: "",
     // note: "",
   });
+  const dict = useTranslations("dict");
+
+  useEffect(() => {
+    if (requestType === "PUT") {
+      const foundClient = clients.filter(client => client._id === clientId)[0];
+      setFormData({
+        ClientFirstname: foundClient.ClientFirstname,
+        ClientLastname: foundClient.ClientLastname,
+        ClientEmail: foundClient.ClientEmail,
+        ClientPhone: foundClient.ClientPhone,
+        ClientLocation: foundClient.ClientLocation,
+      });
+    }
+  }, [clients, requestType, clientId]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const fieldName = e.target.name as keyof FormData;
@@ -39,22 +69,22 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    postClient();
+    if (requestType === "POST") {
+      postClient();
+    } else {
+      editClient();
+    }
   };
 
   const postClient = async () => {
     try {
-      const dataToSend = { ...formData };
-
+      // const dataToSend = { ...formData };
       // if (!formData.note) {
       //   delete dataToSend.note;
       // }
-
-      const data = await post("client-customer", dataToSend, ENV.DASH);
-      console.log(data);
+      const data = await post("client-customer", formData, ENV.DASH);
       if (data.data.statusCode === 201) {
-        console.log(data.message);
-        notify("Cliente creado correctamente");
+        notify(dict("toast.client_post"));
         setShowPopup(false);
         setFormData({
           ClientFirstname: "",
@@ -63,6 +93,33 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
           ClientPhone: "",
           ClientLocation: "",
         });
+        onSubmit();
+        setClientSelected(null);
+      } else {
+        notifyError(dict("toast.client_post_error"));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const editClient = async () => {
+    try {
+      const data = await update("client-customer", ENV.DASH, formData, clientId);
+      if (data.statusCode === 200) {
+        notify(dict("toast.client_edit"));
+        setShowPopup(false);
+        setFormData({
+          ClientFirstname: "",
+          ClientLastname: "",
+          ClientEmail: "",
+          ClientPhone: "",
+          ClientLocation: "",
+        });
+        onSubmit();
+        setClientSelected(null);
+      } else {
+        notifyError(dict("toast.client_edit_error"));
       }
     } catch (e) {
       console.log(e);
@@ -79,16 +136,16 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.names}>
             <Input
-              textLabel='Nombre'
-              textHolder='Nombre'
+              textLabel={dict("clients.form_label_01")}
+              textHolder={dict("clients.form_label_01")}
               type='text'
               name='ClientFirstname'
               value={formData.ClientFirstname}
               handleChange={handleInputChange}
             />
             <Input
-              textLabel='Apellido'
-              textHolder='Apellido'
+              textLabel={dict("clients.form_label_02")}
+              textHolder={dict("clients.form_label_02")}
               type='text'
               name='ClientLastname'
               value={formData.ClientLastname}
@@ -96,32 +153,32 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
             />
           </div>
           <Input
-            textLabel='Email'
-            textHolder='Email'
-            type='ClientEmail'
+            textLabel={dict("clients.form_label_03")}
+            textHolder={dict("clients.form_label_03")}
+            type='email'
             name='ClientEmail'
             value={formData.ClientEmail}
             handleChange={handleInputChange}
           />
           <Input
-            textLabel='Teléfono'
-            textHolder='Ubicación'
+            textLabel={dict("clients.form_label_04")}
+            textHolder={dict("clients.form_label_04")}
             type='text'
             name='ClientLocation'
             value={formData.ClientLocation}
             handleChange={handleInputChange}
           />
           <Input
-            textLabel='Ubicación'
-            textHolder='Teléfono'
-            type='tel'
+            textLabel={dict("clients.form_label_05")}
+            textHolder={dict("clients.form_label_05")}
+            type='text'
             name='ClientPhone'
             value={formData.ClientPhone}
             handleChange={handleInputChange}
           />
           {/* <Input
-            textLabel='Notas personales'
-            textHolder='Ingrese una descripción...'
+            textLabel={dict("clients.form_label_06")}
+            textHolder={dict("clients.form_label_06")}
             type='textarea'
             name='note'
             value={formData.note || ""}
@@ -136,4 +193,4 @@ const FormCreate = ({ onCancel, setShowPopup, title, buttonText }: PopupCreatePr
   );
 };
 
-export default FormCreate;
+export default PopupActions;

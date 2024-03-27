@@ -1,15 +1,16 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, auto);
-  max-width: 600px;
-  @include flex(column, center, flex-start, 20px);
-  .clients {
-    @include width-height(100%, auto);
-    @include flex(column, center, flex-start);
-  }
-  .btn_container {
-    @include width-height(100%, auto);
-    @include flex(row, flex-end, center);
+  @include width-height(100%, 100%);
+  @include flex(row, center, flex-start, 50px);
+  margin: 60px 0;
+  .inner_container {
+    @include width-height(100%, 100%);
+    max-width: 600px;
+    @include flex(column, center, flex-start, 20px);
+    .btn_container {
+      @include width-height(100%, auto);
+      @include flex(row, flex-end, center);
+    }
   }
 }

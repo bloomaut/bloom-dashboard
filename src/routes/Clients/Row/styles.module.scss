@@ -28,8 +28,9 @@
       outline: none;
       background: none;
       cursor: pointer;
+      z-index: 100;
       .icon {
-        @include width-height(25px, auto);
+        @include width-height(22px, auto);
         object-fit: cover;
         transition: all 200ms ease-in-out;
         &:hover {
