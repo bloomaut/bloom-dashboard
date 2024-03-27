@@ -3,7 +3,7 @@
 .container {
   @include width-height(210px, 100%);
   @include flex(column, space-between, center, 20px);
-  background-color: $white;
+  background-color: $blueBackground;
   border-right: 1px solid $lighterGrey;
   padding: 30px 0;
   overflow-y: auto;
