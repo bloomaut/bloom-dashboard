@@ -2,7 +2,6 @@
 
 .container {
   @include width-height(auto, 100%);
-  max-width: 950px;
   .welcome {
     @include fontSize-fontWeight(20px, 400);
     color: $text;
@@ -24,11 +23,5 @@
         color: $text;
       }
     }
-  }
-}
-
-@media (min-width: $queryXl) {
-  .container {
-    max-width: 1400px;
   }
 }

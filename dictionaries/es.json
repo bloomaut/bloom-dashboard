@@ -156,6 +156,10 @@
     "inbox": {
       "title": "Bandeja de entrada",
       "subtitle": "Descarga la app"
+    },
+    "gallery": {
+      "title": "Galería",
+      "more_designs": "Encontrar más diseños en"
     }
   }
 }

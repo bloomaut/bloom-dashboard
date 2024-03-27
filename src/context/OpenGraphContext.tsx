@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useFlakesContext } from "./FlakesContext";
 
@@ -12,6 +11,7 @@ interface Context {
   setPaUrl: (url: string) => void;
   setLoadingDots: (i: boolean) => void;
   loadingDots: boolean;
+  setPreviewData: (i: string) => void;
 }
 
 const OpenGraphContext = createContext<Context>({
@@ -25,6 +25,7 @@ const OpenGraphContext = createContext<Context>({
   setPaUrl: () => "",
   setLoadingDots: () => false,
   loadingDots: false,
+  setPreviewData: () => null,
 });
 
 export const OpenGraphProvider = ({ children }: { children: JSX.Element }) => {
@@ -39,23 +40,6 @@ export const OpenGraphProvider = ({ children }: { children: JSX.Element }) => {
     const currentTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     setCaptureTime(currentTime);
   };
-
-  /*   useEffect(() => {
-    const fetchOpenGraphData = async () => {
-      const newUrl = encodeURIComponent(paUrl);
-      try {
-        const response = await axios.get(
-          `https://opengraph.io/api/1.1/site/${newUrl}?app_id=8d7e1216-c72f-45af-bc0e-f53540b96aa2`,
-        );
-        setPreviewData(response.data);
-      } catch (error) {
-        console.error("Error fetching Open Graph data:", error);
-      }
-    };
-    if (paUrl !== "") {
-      fetchOpenGraphData();
-    }
-  }, [paUrl]); */
 
   // Si se selecciona otro template, se reinicia todo
   const resetForm = () => {
@@ -81,6 +65,7 @@ export const OpenGraphProvider = ({ children }: { children: JSX.Element }) => {
         setPaUrl,
         setLoadingDots,
         loadingDots,
+        setPreviewData,
       }}
     >
       {children}

@@ -1,31 +1,26 @@
 @import "@/styles/theme.scss";
 
 .container {
-  height: inherit;
+  max-height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 10px;
   .flakes {
     @include width-height(100%, 100%);
-    @include flex(row, space-evenly, flex-start, 10px);
+    @include flex(row, space-between, flex-start, 20px);
     flex-wrap: wrap;
-    border-radius: 4.775px;
-    overflow-y: auto;
-    row-gap: 20px;
-    padding-right: 5px;
-    max-height: 400px;
     .template_container {
       .title {
-        @include fontSize-fontWeight(14px, 400);
+        @include fontSize-fontWeight(16px, 500);
         color: $text;
         margin-bottom: 10px;
-        text-align: center;
       }
       .template {
-        @include width-height(320px, 300px);
+        @include width-height(300px, 300px);
         @include flex(row, space-between, flex-start);
         border: 0.298px solid transparent;
         border-radius: 4.775px;
-        padding: 10px;
         cursor: pointer;
-        transition: border 0.3s ease;
         .sm_card,
         .lg_card {
           border: 0.298px solid $lightGrey;
@@ -36,25 +31,12 @@
             @include width-height(100%, 100%);
             object-fit: fill;
           }
-          svg {
-            @include width-height(40px, 40px);
-            object-fit: contain;
-            path {
-              stroke: $lighterGrey;
-            }
-            path {
-              fill: $lighterGrey;
-            }
-          }
         }
         .sm_card {
           @include width-height(160px, 110px);
         }
         .lg_card {
           @include width-height(130px, 100%);
-        }
-        &:hover {
-          border: 0.298px solid $lightGrey;
         }
       }
       .selected_template {
@@ -71,20 +53,12 @@
   }
 }
 
-.flakes::-webkit-scrollbar {
+.container::-webkit-scrollbar {
   width: 5px;
   background-color: $greyBackground;
 }
 
-.flakes::-webkit-scrollbar-thumb {
+.container::-webkit-scrollbar-thumb {
   background-color: $orange;
   border-radius: 10px;
-}
-
-@media (min-width: $queryLg) {
-  .container {
-    .flakes {
-      max-height: 600px;
-    }
-  }
 }

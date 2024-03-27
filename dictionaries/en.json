@@ -71,7 +71,6 @@
     "breadcrumb": {
       "breadcrumb_link": "Go back"
     },
-
     "guide": {
       "header": {
         "stepper_title1": "Section 1",
@@ -157,6 +156,10 @@
     "inbox": {
       "title": "Inbox",
       "subtitle": "Download the app"
+    },
+    "gallery": {
+      "title": "Gallery",
+      "more_designs": "Find more designs at"
     }
   }
 }
