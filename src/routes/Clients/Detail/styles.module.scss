@@ -1,8 +1,9 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(500px, auto);
+  @include width-height(40%, auto);
   @include flex(column, flex-start, flex-start, 20px);
+  margin-top: 75px;
   .detail_names {
     @include fontSize-fontWeight(30px, 500);
   }
