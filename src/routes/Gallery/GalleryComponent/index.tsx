@@ -1,13 +1,36 @@
+"use clients";
 import styles from "./styles.module.scss";
+import { Powerapp } from "@/typescript/interfaces/flakes.interface";
+import { useEffect, useState } from "react";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { useTranslations } from "next-intl";
+import { ENV } from "@/typescript/types/environment.enum";
+import { get } from "@/services/fetch";
 import Image from "next/image";
 import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 //Componentes
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import { Powerapp } from "@/typescript/interfaces/flakes.interface";
-import { useFlakesUserContext } from "@/context/FlakesUserContext";
 
 const GalleryComponent = () => {
-  const { flakes, loading } = useFlakesUserContext();
+  const [flakes, setFlakes] = useState<Powerapp[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { notifyError } = useMessageToast();
+  const dict = useTranslations("dict.toast");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await get("small/flakes/user", ENV.UITOOL);
+      if (response.statusCode === 200) {
+        setFlakes(response.result.powerapps);
+        setLoading(false);
+      } else {
+        notifyError(dict("error_tryagain"));
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <section className={styles.container}>

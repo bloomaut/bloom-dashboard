@@ -4,9 +4,10 @@
   max-height: 100%;
   overflow: hidden;
   overflow-y: auto;
+  padding-right: 10px;
   .flakes {
     @include width-height(100%, 100%);
-    @include flex(row, space-between, flex-start, 10px);
+    @include flex(row, space-between, flex-start, 20px);
     flex-wrap: wrap;
     .template_container {
       .title {
