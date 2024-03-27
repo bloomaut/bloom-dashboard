@@ -6,7 +6,7 @@ interface FormDataProps {
   ClientEmail: string;
   ClientLocation: string;
   ClientPhone: string;
-  note?: string;
+  personalNote: string;
 }
 
 interface FormErrorsProps {
@@ -15,7 +15,7 @@ interface FormErrorsProps {
   ClientEmail?: string;
   ClientLocation?: string;
   ClientPhone?: string;
-  note?: string;
+  personalNote?: string;
 }
 
 const useFormValidator = (formData: FormDataProps) => {
@@ -48,6 +48,10 @@ const useFormValidator = (formData: FormDataProps) => {
 
       if (!formData.ClientPhone.trim()) {
         errors.ClientPhone = "Teléfono es requerido";
+      }
+
+      if (formData.personalNote.trim().length > 200) {
+        errors.personalNote = "Las notas personales no puede tener más de 200 caracteres";
       }
 
       setErrors(errors);

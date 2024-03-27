@@ -38,7 +38,7 @@ const PopupActions = ({
     ClientEmail: "",
     ClientPhone: "",
     ClientLocation: "",
-    // note: "",
+    personalNote: "",
   });
   const [checkValidation, setCheckValidation] = useState(false);
   const { dropdownRef } = useCloseDropdown(setShowPopup);
@@ -56,6 +56,7 @@ const PopupActions = ({
         ClientEmail: foundClient.ClientEmail,
         ClientPhone: foundClient.ClientPhone,
         ClientLocation: foundClient.ClientLocation,
+        personalNote: foundClient.personalNote,
       });
     }
   }, [clients, requestType, clientId]);
@@ -96,6 +97,7 @@ const PopupActions = ({
           ClientEmail: "",
           ClientPhone: "",
           ClientLocation: "",
+          personalNote: "",
         });
         fetchClients();
         setClientSelected(null);
@@ -119,6 +121,7 @@ const PopupActions = ({
           ClientEmail: "",
           ClientPhone: "",
           ClientLocation: "",
+          personalNote: "",
         });
         fetchClients();
         setClientSelected(null);
@@ -205,14 +208,19 @@ const PopupActions = ({
               <p className={errors.ClientPhone ? styles.error : styles.error_hidden}>{errors.ClientPhone}</p>
             )}
           </div>
-          {/* <Input
-            textLabel={dict("clients.form_label_06")}
-            textHolder={dict("clients.form_label_06")}
-            type='textarea'
-            name='note'
-            value={formData.note || ""}
-            handleChange={handleInputChange}
-          /> */}
+          <div className={styles.form_control}>
+            <Input
+              textLabel={dict("clients.form_label_06")}
+              textHolder={dict("clients.form_label_06")}
+              type='textarea'
+              name='personalNote'
+              value={formData.personalNote || ""}
+              handleChange={handleInputChange}
+            />
+          </div>
+          {checkValidation && (
+            <p className={errors.personalNote ? styles.error : styles.error_hidden}>{errors.personalNote}</p>
+          )}
           <div className={styles.btn_container}>
             <Button title={buttonText} type='submit' styleName='btn' />
           </div>

@@ -39,6 +39,14 @@
         @include width-height(100%, auto);
         @include flex(row, center, center, 20px);
       }
+      .error {
+        opacity: 1;
+        @include fontSize-fontWeight(12px, 400);
+        color: $error;
+      }
+      .error_hidden {
+        height: 14px;
+      }
       .form_control {
         @include width-height(100%, auto);
         @include flex(column, center, flex-start);

@@ -24,9 +24,9 @@ const Detail = ({ client }: DetailProps) => {
         <p className={styles.label}>
           {dict("form_label_05")}: <span>{client.ClientPhone}</span>
         </p>
-        {client.note && (
+        {client.personalNote && (
           <p className={styles.label}>
-            {dict("form_label_06")}: <span>{client.note}</span>
+            {dict("form_label_06")}: <span>{client.personalNote}</span>
           </p>
         )}
       </div>

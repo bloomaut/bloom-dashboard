@@ -5,5 +5,5 @@ export interface ClientsProps {
   ClientEmail: string;
   ClientLocation: string;
   ClientPhone: string;
-  note?: string;
+  personalNote: string;
 }
