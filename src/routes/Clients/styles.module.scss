@@ -1,0 +1,15 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, 100%);
+  @include flex(row, center, flex-start, 20px);
+  padding: 0px 40px;
+  .inner_container {
+    @include width-height(60%, 100%);
+    @include flex(column, flex-start, flex-start, 20px);
+    .btn_container {
+      @include width-height(100%, auto);
+      @include flex(row, flex-end, center);
+    }
+  }
+}

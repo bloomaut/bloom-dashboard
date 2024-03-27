@@ -3,22 +3,33 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import Title from "@/components/Title";
+import Search from "@/components/Search";
 //Iconos
 import down from "@/../public/icons/IconDown.svg";
 import bar from "@/../public/icons/bar.svg";
 import period from "@/../public/icons/period.svg";
 import plus from "@/../public/icons/plus.svg";
+import { useState } from "react";
+import { CollectionProps } from "@/typescript/interfaces/collection.interface";
 
 const Header = () => {
+  const [filteredCollections, setFilteredCollections] = useState<CollectionProps[]>([]);
   const locale = useLocale();
   const dict = useTranslations("dict.collections.header");
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  /* Falta  función de filtrar */
+
   return (
     <div className={styles.container}>
       <Title text={dict("title")} />
       <div className={styles.inputs_container}>
         <div className={styles.search_container}>
-          <input type='search' placeholder={dict("search")} className={styles.search} />
-          <div className={styles.search_icon} />
+          <Search
+            searchValue={searchValue}
+            handleSearchChange={e => setSearchValue(e.target.value)}
+            placeholder={dict("search")}
+          />
         </div>
         <div className={styles.period_container}>
           <button className={styles.period}>

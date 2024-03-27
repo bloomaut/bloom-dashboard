@@ -28,7 +28,7 @@ export const post = async (url: string, data: POST, api: EnvironmentApi) => {
         "X-API": api,
       },
     });
-    return response;
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return error.response;
