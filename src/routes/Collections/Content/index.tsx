@@ -1,15 +1,7 @@
 import styles from "./styles.module.scss";
 
-interface Content {
-  name: string;
-  date: string;
-  name_skin: string;
-  template: string;
-  total: number;
-  open: number;
-}
 interface ContentProps {
-  content: Content;
+  content: { name: string; date: string; name_skin: string; template: string; total: number; open: number };
 }
 
 const Content = ({ content }: ContentProps) => {

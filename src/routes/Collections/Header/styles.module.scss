@@ -2,10 +2,10 @@
 
 .container {
   @include flex(column, center, flex-start, 15px);
-  max-width: 900px;
+  @include width-height(100%, 20%);
   .inputs_container {
     @include flex(row, space-between, center, 20px);
-    width: 100%;
+    @include width-height(100%, auto);
     .search_container {
       @include width-height(550px, 40px);
       position: relative;

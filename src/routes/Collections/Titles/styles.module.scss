@@ -2,7 +2,6 @@
 
 .title {
   @include flex(row, flex-start, flex-start);
-  width: 900px;
   border-bottom: 1px solid $lightGrey;
   h2 {
     flex: 1;
@@ -17,7 +16,6 @@
 }
 .subtitle {
   @include flex(row, flex-start, flex-start);
-  width: 900px;
   white-space: nowrap;
   border-bottom: 1px solid $lightGrey;
   @include fontSize-fontWeight(14px, 400);
