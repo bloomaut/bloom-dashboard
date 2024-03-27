@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Input from "@/components/Input";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { CollectionProps } from "@/typescript/interfaces/collection.interface";
-import { useClients } from "@/context/ClientsContext";
+import { useClientsContext } from "@/context/ClientsContext";
 import { usePathname } from "next/navigation";
 
 interface SearchProps {
@@ -12,7 +12,7 @@ interface SearchProps {
 }
 
 const Search = ({ setClients, setCollections, placeholder }: SearchProps) => {
-  const { clients } = useClients();
+  const { clients } = useClientsContext();
   // const { collections } = useCollections();
   const [searchValue, setSearchValue] = useState("");
   const pathname = usePathname();

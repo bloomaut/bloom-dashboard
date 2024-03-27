@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import styles from "./styles.module.scss";
 import LoadingSpinner from "@/components/Loading";
@@ -9,15 +9,14 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { remove } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { ENV } from "@/typescript/types/environment.enum";
-import { useClients } from "@/context/ClientsContext";
+import { useClientsContext } from "@/context/ClientsContext";
 
 interface ListProps {
   data: ClientsProps[];
-  setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
 }
 
-const List = ({ data, setClientSelected }: ListProps) => {
-  const { loading, fetchClients } = useClients();
+const List = ({ data }: ListProps) => {
+  const { loading, fetchClients, setClientSelected } = useClientsContext();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [clientId, setClientId] = useState<string | undefined>(undefined);
@@ -25,20 +24,16 @@ const List = ({ data, setClientSelected }: ListProps) => {
   const dict = useTranslations("dict");
 
   const handleDelete = async () => {
-    try {
-      if (clientId) {
-        const data = await remove("client-customer", clientId, ENV.DASH);
-        if (data.statusCode === 200) {
-          setShowPopupDelete(false);
-          setClientSelected(null);
-          notify(dict("toast.client_delete"));
-          fetchClients();
-        } else {
-          notifyError(dict("toast.client_delete_error"));
-        }
+    if (clientId) {
+      const data = await remove("client-customer", clientId, ENV.DASH);
+      if (data.statusCode === 200) {
+        setShowPopupDelete(false);
+        setClientSelected(null);
+        notify(dict("toast.client_delete"));
+        fetchClients();
+      } else {
+        notifyError(dict("toast.client_delete_error"));
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -51,12 +46,11 @@ const List = ({ data, setClientSelected }: ListProps) => {
     <div className={styles.clients}>
       {loading ? (
         <LoadingSpinner />
-      ) : data.length > 0 ? (
+      ) : data.length ? (
         data.map((client: ClientsProps) => (
           <Row
             key={client._id}
             client={client}
-            onSelectClient={setClientSelected}
             onDelete={() => {
               setShowPopupDelete(true), setClientId(client._id);
             }}
@@ -75,7 +69,6 @@ const List = ({ data, setClientSelected }: ListProps) => {
           title={dict("clients.popup_edit_title")}
           buttonText={dict("clients.popup_button")}
           setShowPopup={setShowPopupEdit}
-          setClientSelected={setClientSelected}
           onCancel={handleClose}
         />
       )}

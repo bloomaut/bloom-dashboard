@@ -10,28 +10,19 @@ import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { post, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useTranslations } from "next-intl";
-import { useClients } from "@/context/ClientsContext";
+import { useClientsContext } from "@/context/ClientsContext";
 import useFormValidator from "@/hooks/useFormValidator";
 
 interface PopupActionsProps {
   onCancel: () => void;
   setShowPopup: (value: SetStateAction<boolean>) => void;
-  setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
   title: string;
   buttonText: string;
   requestType: "POST" | "PUT";
   clientId?: string;
 }
 
-const PopupActions = ({
-  onCancel,
-  setShowPopup,
-  setClientSelected,
-  title,
-  buttonText,
-  requestType,
-  clientId,
-}: PopupActionsProps) => {
+const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, clientId }: PopupActionsProps) => {
   const [formData, setFormData] = useState<ClientsProps>({
     ClientFirstname: "",
     ClientLastname: "",
@@ -42,7 +33,7 @@ const PopupActions = ({
   });
   const [checkValidation, setCheckValidation] = useState(false);
   const { dropdownRef } = useCloseDropdown(setShowPopup);
-  const { clients, fetchClients } = useClients();
+  const { clients, fetchClients, setClientSelected } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
   const errors = useFormValidator(formData);
   const dict = useTranslations("dict");

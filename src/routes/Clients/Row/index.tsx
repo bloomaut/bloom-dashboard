@@ -3,22 +3,20 @@ import Image from "next/image";
 import iconEdit from "../../../../public/icons/edit.svg";
 import iconDelete from "../../../../public/icons/delete.svg";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
+import { useClientsContext } from "@/context/ClientsContext";
 
 interface RowProps {
   client: ClientsProps;
-  onSelectClient: (client: ClientsProps) => void;
   onDelete: () => void;
   onEdit: () => void;
 }
 
-const Row = ({ client, onSelectClient, onDelete, onEdit }: RowProps) => {
-  const handleClick = () => {
-    onSelectClient(client);
-  };
+const Row = ({ client, onDelete, onEdit }: RowProps) => {
+  const { setClientSelected } = useClientsContext();
 
   return (
     <div className={styles.row}>
-      <div className={styles.names} onClick={handleClick}>
+      <div className={styles.names} onClick={() => setClientSelected(client)}>
         <p className={styles.last_name}>{client.ClientFirstname}</p>
         <p className={styles.first_name}>{client.ClientLastname}</p>
         <p className={styles.email}>({client.ClientEmail})</p>

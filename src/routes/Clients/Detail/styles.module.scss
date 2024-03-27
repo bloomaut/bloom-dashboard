@@ -6,6 +6,7 @@
   margin-top: 75px;
   .detail_names {
     @include fontSize-fontWeight(30px, 500);
+    color: $text;
   }
   .info {
     display: grid;
@@ -13,8 +14,10 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
+    color: $text;
     .label {
       @include fontSize-fontWeight(15px, 600);
+      color: $text;
       span {
         @include fontSize-fontWeight(14px, 400);
       }
