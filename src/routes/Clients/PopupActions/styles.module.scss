@@ -21,6 +21,7 @@
     padding: 30px 15px;
     .title {
       @include fontSize-fontWeight(24px, 400);
+      color: $text;
     }
     .close {
       position: absolute;
@@ -33,10 +34,22 @@
     }
     .form {
       @include width-height(100%, auto);
-      @include flex(column, center, flex-start, 15px);
+      @include flex(column, center, flex-start, 5px);
       .names {
         @include width-height(100%, auto);
         @include flex(row, center, center, 20px);
+      }
+      .form_control {
+        @include width-height(100%, auto);
+        @include flex(column, center, flex-start);
+        .error {
+          opacity: 1;
+          @include fontSize-fontWeight(12px, 400);
+          color: $error;
+        }
+        .error_hidden {
+          height: 14px;
+        }
       }
       .btn_container {
         @include width-height(100%, auto);

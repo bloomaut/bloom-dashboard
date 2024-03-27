@@ -9,12 +9,12 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { post, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
-import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
+import { useClients } from "@/context/ClientsContext";
+import useFormValidator from "@/hooks/useFormValidator";
 
 interface PopupActionsProps {
   onCancel: () => void;
-  onSubmit: () => void;
   setShowPopup: (value: SetStateAction<boolean>) => void;
   setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
   title: string;
@@ -29,13 +29,9 @@ const PopupActions = ({
   setClientSelected,
   title,
   buttonText,
-  onSubmit,
   requestType,
   clientId,
 }: PopupActionsProps) => {
-  const { dropdownRef } = useCloseDropdown(setShowPopup);
-  const { notify, notifyError } = useMessageToast();
-  const clients = useAppSelector(state => state.clients);
   const [formData, setFormData] = useState<ClientsProps>({
     ClientFirstname: "",
     ClientLastname: "",
@@ -44,6 +40,11 @@ const PopupActions = ({
     ClientLocation: "",
     // note: "",
   });
+  const [checkValidation, setCheckValidation] = useState(false);
+  const { dropdownRef } = useCloseDropdown(setShowPopup);
+  const { clients, fetchClients } = useClients();
+  const { notify, notifyError } = useMessageToast();
+  const errors = useFormValidator(formData);
   const dict = useTranslations("dict");
 
   useEffect(() => {
@@ -69,10 +70,13 @@ const PopupActions = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    if (requestType === "POST") {
-      postClient();
-    } else {
-      editClient();
+    setCheckValidation(true);
+    if (Object.keys(errors).length === 0) {
+      if (requestType === "POST") {
+        postClient();
+      } else {
+        editClient();
+      }
     }
   };
 
@@ -93,7 +97,7 @@ const PopupActions = ({
           ClientPhone: "",
           ClientLocation: "",
         });
-        onSubmit();
+        fetchClients();
         setClientSelected(null);
       } else {
         notifyError(dict("toast.client_post_error"));
@@ -116,7 +120,7 @@ const PopupActions = ({
           ClientPhone: "",
           ClientLocation: "",
         });
-        onSubmit();
+        fetchClients();
         setClientSelected(null);
       } else {
         notifyError(dict("toast.client_edit_error"));
@@ -135,47 +139,72 @@ const PopupActions = ({
         <p className={styles.title}>{title}</p>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.names}>
-            <Input
-              textLabel={dict("clients.form_label_01")}
-              textHolder={dict("clients.form_label_01")}
-              type='text'
-              name='ClientFirstname'
-              value={formData.ClientFirstname}
-              handleChange={handleInputChange}
-            />
-            <Input
-              textLabel={dict("clients.form_label_02")}
-              textHolder={dict("clients.form_label_02")}
-              type='text'
-              name='ClientLastname'
-              value={formData.ClientLastname}
-              handleChange={handleInputChange}
-            />
+            <div className={styles.form_control}>
+              <Input
+                textLabel={dict("clients.form_label_01")}
+                textHolder={dict("clients.form_label_01")}
+                type='text'
+                name='ClientFirstname'
+                value={formData.ClientFirstname}
+                handleChange={handleInputChange}
+              />
+              {checkValidation && (
+                <p className={errors.ClientFirstname ? styles.error : styles.error_hidden}>{errors.ClientFirstname}</p>
+              )}
+            </div>
+            <div className={styles.form_control}>
+              <Input
+                textLabel={dict("clients.form_label_02")}
+                textHolder={dict("clients.form_label_02")}
+                type='text'
+                name='ClientLastname'
+                value={formData.ClientLastname}
+                handleChange={handleInputChange}
+              />
+              {checkValidation && (
+                <p className={errors.ClientLastname ? styles.error : styles.error_hidden}>{errors.ClientLastname}</p>
+              )}
+            </div>
           </div>
-          <Input
-            textLabel={dict("clients.form_label_03")}
-            textHolder={dict("clients.form_label_03")}
-            type='email'
-            name='ClientEmail'
-            value={formData.ClientEmail}
-            handleChange={handleInputChange}
-          />
-          <Input
-            textLabel={dict("clients.form_label_04")}
-            textHolder={dict("clients.form_label_04")}
-            type='text'
-            name='ClientLocation'
-            value={formData.ClientLocation}
-            handleChange={handleInputChange}
-          />
-          <Input
-            textLabel={dict("clients.form_label_05")}
-            textHolder={dict("clients.form_label_05")}
-            type='text'
-            name='ClientPhone'
-            value={formData.ClientPhone}
-            handleChange={handleInputChange}
-          />
+          <div className={styles.form_control}>
+            <Input
+              textLabel={dict("clients.form_label_03")}
+              textHolder={dict("clients.form_label_03")}
+              type='text'
+              name='ClientEmail'
+              value={formData.ClientEmail}
+              handleChange={handleInputChange}
+            />
+            {checkValidation && (
+              <p className={errors.ClientEmail ? styles.error : styles.error_hidden}>{errors.ClientEmail}</p>
+            )}
+          </div>
+          <div className={styles.form_control}>
+            <Input
+              textLabel={dict("clients.form_label_04")}
+              textHolder={dict("clients.form_label_04")}
+              type='text'
+              name='ClientLocation'
+              value={formData.ClientLocation}
+              handleChange={handleInputChange}
+            />
+            {checkValidation && (
+              <p className={errors.ClientLocation ? styles.error : styles.error_hidden}>{errors.ClientLocation}</p>
+            )}
+          </div>
+          <div className={styles.form_control}>
+            <Input
+              textLabel={dict("clients.form_label_05")}
+              textHolder={dict("clients.form_label_05")}
+              type='text'
+              name='ClientPhone'
+              value={formData.ClientPhone}
+              handleChange={handleInputChange}
+            />
+            {checkValidation && (
+              <p className={errors.ClientPhone ? styles.error : styles.error_hidden}>{errors.ClientPhone}</p>
+            )}
+          </div>
           {/* <Input
             textLabel={dict("clients.form_label_06")}
             textHolder={dict("clients.form_label_06")}

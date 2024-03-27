@@ -16,9 +16,11 @@
     .first_name,
     .last_name {
       @include fontSize-fontWeight(18px, 600);
+      color: $text;
     }
     .email {
       @include fontSize-fontWeight(14px, 400);
+      color: $text;
     }
   }
   .controls {

@@ -9,15 +9,15 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { remove } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { ENV } from "@/typescript/types/environment.enum";
+import { useClients } from "@/context/ClientsContext";
 
 interface ListProps {
   data: ClientsProps[];
-  loading: boolean;
-  fetch: () => void;
   setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
 }
 
-const List = ({ data, loading, setClientSelected, fetch }: ListProps) => {
+const List = ({ data, setClientSelected }: ListProps) => {
+  const { loading, fetchClients } = useClients();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [clientId, setClientId] = useState<string | undefined>(undefined);
@@ -32,7 +32,7 @@ const List = ({ data, loading, setClientSelected, fetch }: ListProps) => {
           setShowPopupDelete(false);
           setClientSelected(null);
           notify(dict("toast.client_delete"));
-          fetch();
+          fetchClients();
         } else {
           notifyError(dict("toast.client_delete_error"));
         }
@@ -77,7 +77,6 @@ const List = ({ data, loading, setClientSelected, fetch }: ListProps) => {
           setShowPopup={setShowPopupEdit}
           setClientSelected={setClientSelected}
           onCancel={handleClose}
-          onSubmit={fetch}
         />
       )}
       {showPopupDelete && (

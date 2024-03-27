@@ -2,24 +2,25 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Input from "@/components/Input";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { useTranslations } from "next-intl";
+import { useClients } from "@/context/ClientsContext";
 
 interface SearchInputProps {
-  data: ClientsProps[];
   setFilteredClients: (data: ClientsProps[]) => void;
 }
 
-const Search = ({ data, setFilteredClients }: SearchInputProps) => {
+const Search = ({ setFilteredClients }: SearchInputProps) => {
+  const { clients } = useClients();
   const [searchValue, setSearchValue] = useState("");
   const dict = useTranslations("dict.clients");
 
   useEffect(() => {
-    const filteredClients = data.filter(
+    const filteredClients = clients.filter(
       client =>
         client.ClientFirstname.toLowerCase().includes(searchValue.toLowerCase()) ||
         client.ClientEmail.toLowerCase().includes(searchValue.toLowerCase()),
     );
     setFilteredClients(filteredClients);
-  }, [searchValue, data, setFilteredClients]);
+  }, [searchValue, clients, setFilteredClients]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     setSearchValue(e.target.value);
