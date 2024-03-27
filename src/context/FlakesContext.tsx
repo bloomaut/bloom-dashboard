@@ -24,20 +24,20 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const [selectedFlakeId, setSelectedFlakeId] = useState("");
 
   const { notifyError } = useMessageToast();
-  const dict = useTranslations("dict");
+  const dict = useTranslations("dict.toast");
 
   useEffect(() => {
     //Fetch sin necesidad de estar logueado
     const fetchData = async () => {
       const response = await axios.get("/api/small");
       const allFlakes = response.data.data;
-      console.log(allFlakes);
+
       if (allFlakes.statusCode === 200) {
         setFlakes(allFlakes.result.powerapps);
         setSelectedFlakeId(allFlakes.result.powerapps[0]._id);
         setLoading(false);
       } else {
-        notifyError(dict("toast.error_tryagain"));
+        notifyError(dict("error_tryagain"));
         setLoading(false);
       }
     };
