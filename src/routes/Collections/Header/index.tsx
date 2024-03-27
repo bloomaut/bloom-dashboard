@@ -16,12 +16,21 @@ const Header = () => {
   const [filteredCollections, setFilteredCollections] = useState<CollectionProps[]>([]);
   const locale = useLocale();
   const dict = useTranslations("dict.collections.header");
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  /* Falta  función de filtrar */
 
   return (
     <div className={styles.container}>
       <Title text={dict("title")} />
       <div className={styles.inputs_container}>
-        <Search setCollections={setFilteredCollections} placeholder={dict("search")} />
+        <div className={styles.search_container}>
+          <Search
+            searchValue={searchValue}
+            handleSearchChange={e => setSearchValue(e.target.value)}
+            placeholder={dict("search")}
+          />
+        </div>
         <div className={styles.period_container}>
           <button className={styles.period}>
             {dict("period_btn")}
