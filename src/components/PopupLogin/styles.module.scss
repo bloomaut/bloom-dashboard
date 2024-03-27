@@ -1,0 +1,59 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include flex(row, center, center);
+  @include width-height(100vw, 100vh);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.5);
+  .inner_container {
+    @include width-height(450px, 200px);
+    background-color: $white;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    position: relative;
+    .btn_back {
+      @include flex(row, center, center);
+      position: absolute;
+      left: 12px;
+      top: 10px;
+      margin: 0;
+      padding: 5px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      .text {
+        @include fontSize-fontWeight(15px, 400);
+        color: $lightGrey;
+        text-decoration-line: underline;
+      }
+    }
+    .content {
+      @include width-height(100%, 100%);
+      @include flex(column, center, center, 30px);
+      padding: 20px;
+      .title {
+        @include width-height(100%, auto);
+        @include fontSize-fontWeight(20px, 400);
+        color: $lightGrey;
+        padding-top: 20px;
+      }
+      .btn {
+        @include fontSize-fontWeight(15px, 500);
+        padding: 12px 14px;
+        color: $white;
+        background-color: $orange;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        &:hover {
+          background-color: $darkOrange;
+        }
+      }
+    }
+  }
+}

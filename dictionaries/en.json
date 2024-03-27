@@ -1,13 +1,165 @@
 {
   "dict": {
+    "error": {
+      "message": "Somethings went wrong!",
+      "btn": "Reset",
+      "btn2": "Go back"
+    },
+    "sidebar": {
+      "home": "Home",
+      "guide": "Guide",
+      "my_business": "My Business",
+      "gallery": "Gallery",
+      "hotlink": "Hotlink",
+      "inbox": "Inbox",
+      "collections": "Collections",
+      "clients": "Clients"
+    },
     "navbar": {
-      "ejemplo": "borrar"
+      "login": "Login",
+      "logout": "Log Out"
     },
     "popup": {
       "ejemplo": "borrar"
     },
     "toast": {
-      "ejemplo": "borrar"
+      "success_img": "Image uploaded successfully",
+      "success_file": "File uploaded successfully",
+      "success_edit": "Information updated successfully",
+      "error_name": "Name is required",
+      "error_edit": "Error updating information",
+      "error_img": "Error uploading image",
+      "empty_fields": "All fields are required",
+      "error_tryagain": "There was a problem, try again later"
+    },
+    "popupLogin": {
+      "login": "Log in",
+      "title": "To continue, we will ask you to log in",
+      "link": "Go back"
+    },
+    "home": {
+      "banner": {
+        "welcome": "We welcome you to Small",
+        "title": "Learn with Playground",
+        "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
+        "btn": "Create your own design"
+      }
+    },
+    "introduction": {
+      "title": "Introduction"
+    },
+    "playground": {
+      "breadcrumb_title": "Simulator",
+      "template_title": "Templates",
+      "form": {
+        "title": "Fields",
+        "button_hotlink": "Generate Hotlink",
+        "button_share": "Share Hotlink"
+      },
+      "phoneCase": {
+        "today": "Today"
+      },
+      "popup": {
+        "title": "Share and test on Whatsapp",
+        "copy": "Copy",
+        "btn": "Share on Whatsapp",
+        "copy_succes": "URL copied to clipboard",
+        "copy_error": "Error copying URL"
+      },
+      "loading_dots": "Writing"
+    },
+    "breadcrumb": {
+      "breadcrumb_link": "Go back"
+    },
+    "guide": {
+      "header": {
+        "stepper_title1": "Section 1",
+        "stepper_subtitle1": "Know, Play, and Load",
+        "stepper_title2": "Section 2",
+        "stepper_subtitle2": "Share and Use"
+      },
+      "stepper_one": {
+        "title": "Steps",
+        "title_one": "Introduction",
+        "subtitle_one": "Introduction and Understanding of the Platform. Explanatory Video",
+        "title_two": "Play",
+        "subtitle_two": "Play in the playground, customize apps, and generate your first hotlink",
+        "title_three": "Upload",
+        "subtitle_three": "Upload data from your company and brand files for your designs",
+        "title_four": "Gallery",
+        "subtitle_four": "Take care of the design with our UiTool tool"
+      },
+      "stepper_two": {
+        "title": "Steps",
+        "title_one": "Distribute",
+        "subtitle_one": "Generate links for your clients and distribute your customized apps",
+        "title_two": "Manage",
+        "subtitle_two": "Manage the messages that arrive in your Inbox and chat with your clients",
+        "title_three": "Campaigns",
+        "subtitle_three": "Send campaigns and visualize the results of the interactions",
+        "button": "I have completed the steps"
+      }
+    },
+    "business": {
+      "breadcrumb_title": "Data Upload",
+      "sequence": {
+        "title": "Sequence",
+        "card_title_01": "Upload commercial information",
+        "card_title_02": "I uploaded your company logo",
+        "card_title_03": "Descriptive documents",
+        "card_title_04": "Flyer, brochure, brandin or advertising",
+        "card_description_01": "With this context information we design the content and conversation of the chatbots. Your website helps",
+        "card_description_02": "From the logo we automatically take the color palette that you can then edit",
+        "card_description_03": "You can attach the amount of information you consider necessary for your business",
+        "card_description_04": "I uploaded files related to your business to extract information",
+        "button": "I finished loading the data"
+      },
+      "form": {
+        "title": "Business Information",
+        "subtitle": "The more fields you complete, the better the result will be",
+        "name": "Name",
+        "placeholder_name": "Enter the name",
+        "website": "Website",
+        "placeholder_website": "Enter the website",
+        "description": "Description",
+        "placeholder_description": "Enter the description",
+        "placeholder_instagram": "Enter Instagram",
+        "phone": "Phone",
+        "placeholder_phone": "Enter the phone number",
+        "button": "Save"
+      },
+      "file": {
+        "title01": "Upload your logo to start",
+        "title02": "Drop your files here",
+        "subtitle": "My files"
+      }
+    },
+    "collections": {
+      "header": {
+        "title": "Hotlinks Collections",
+        "search": "Search Collections...",
+        "period_btn": "Period",
+        "new_btn": "New Collection"
+      },
+      "titles": {
+        "title_one": "Name",
+        "title_two": "Design Used",
+        "title_three": "Receiver",
+        "column_one": "Date",
+        "column_two": "Skin Name",
+        "column_three": "Template",
+        "column_four": "Total",
+        "column_five": "Open"
+      },
+      "btn": "View Collection"
+    },
+    "inbox": {
+      "title": "Inbox",
+      "subtitle": "Download the app"
+    },
+    "gallery": {
+      "title": "Gallery",
+      "more_designs": "Find more designs at"
     }
   }
 }

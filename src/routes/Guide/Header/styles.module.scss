@@ -1,0 +1,79 @@
+@import "@/styles/theme.scss";
+
+.main_container {
+  @include flex(row, flex-start, flex-start, 20px);
+  @include width-height(100%, auto);
+  .container {
+    @include flex(column, flex-start, flex-start);
+    @include width-height(100%, auto);
+    padding: 0 10px;
+    color: $lighterGrey;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .active {
+    border: $lighterGrey 1px solid;
+    border-radius: 8px;
+    min-width: 70%;
+    h1 {
+      @include fontSize-fontWeight(20px, 500);
+      line-height: 36px;
+      color: $text;
+    }
+    p {
+      @include fontSize-fontWeight(16px, 400);
+      line-height: 28.8px;
+      color: $text;
+    }
+  }
+
+  .inactive {
+    position: relative;
+    color: $lighterGrey;
+    min-width: 30%;
+    background-color: $blueishBackground;
+    overflow: hidden;
+    &.left {
+      border-radius: 10px;
+      border: 1px solid;
+      mask: linear-gradient(to left, white 10%, white 90%, transparent 100%);
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 99%;
+        background: linear-gradient(to left, rgba(89, 89, 89, 0) 0%, rgb(255, 254, 254) 100%);
+        z-index: -1;
+      }
+    }
+
+    &.right {
+      border-radius: 10px;
+      border: 1px solid;
+      mask: linear-gradient(to right, white 10%, white 90%, transparent 100%);
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 80%;
+        background: linear-gradient(to right, rgba(89, 89, 89, 0) 0%, rgb(255, 254, 254) 100%);
+        z-index: -1;
+      }
+    }
+
+    h1 {
+      @include fontSize-fontWeight(20px, 400);
+      line-height: 36px;
+    }
+    p {
+      @include fontSize-fontWeight(16px, 400);
+      line-height: 28.8px;
+    }
+  }
+}

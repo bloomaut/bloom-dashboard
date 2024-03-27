@@ -1,0 +1,11 @@
+@import "@/styles/theme.scss";
+
+.loadingWrapper {
+  @include width-height(100%, 100%);
+  @include flex(column, center, center);
+  padding: 15px 0;
+}
+
+.loadingHome {
+  @include width-height(100vw, 100vh);
+}

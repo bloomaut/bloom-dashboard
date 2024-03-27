@@ -1,0 +1,36 @@
+@import "@/styles/theme.scss";
+
+.container,
+.container_noselected {
+  @include flex(row, flex-start, center, 10px);
+  @include width-height(200px, 50px);
+  background-color: $blueBackground;
+  padding: 10px;
+  flex-wrap: nowrap;
+  transition: all 100ms ease-in;
+  .text {
+    @include fontSize-fontWeight(14px, 500);
+    color: $text;
+    text-align: start;
+    line-height: 12px;
+  }
+  svg {
+    path[stroke="#FF5722"] {
+      stroke: $text;
+    }
+    path[fill="#FF5722"] {
+      fill: $text;
+    }
+  }
+  &:hover {
+    border-left: 2px solid $orange;
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+.container_selected {
+  transition: all 100ms ease-in;
+  background-color: $blueishBackground;
+  border-left: 2px solid $orange;
+  border-radius: 0 4px 4px 0;
+}

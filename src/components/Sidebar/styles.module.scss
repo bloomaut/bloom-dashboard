@@ -1,0 +1,24 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(210px, 100%);
+  @include flex(column, space-between, center, 20px);
+  background-color: $blueBackground;
+  border-right: 1px solid $lighterGrey;
+  padding: 30px 0;
+  overflow-y: auto;
+  .cards_container {
+    @include flex(column, center, center, 10px);
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

@@ -1,13 +1,165 @@
 {
   "dict": {
+    "error": {
+      "message": "¡Hubo un problema!",
+      "btn": "Recargar sitio",
+      "btn2": "Volver"
+    },
+    "sidebar": {
+      "home": "Inicio",
+      "guide": "Guía",
+      "my_business": "Mi negocio",
+      "gallery": "Galería",
+      "hotlink": "Hotlink",
+      "inbox": "Bandeja de Entrada",
+      "collections": "Colecciones",
+      "clients": "Clients"
+    },
     "navbar": {
-      "ejemplo": "borrar"
+      "login": "Iniciar Sesión",
+      "logout": "Cerrar Sesión"
     },
     "popup": {
       "ejemplo": "borrar"
     },
     "toast": {
-      "ejemplo": "borrar"
+      "success_img": "Imágen subida correctamente",
+      "success_file": "Archivo subido correctamente",
+      "success_edit": "Información actualizada correctamente",
+      "error_name": "El nombre es obligatorio",
+      "error_edit": "Error al actualizar información",
+      "error_img": "Error al subir la imágen",
+      "empty_fields": "Todos los campos son requeridos",
+      "error_tryagain": "Hubo un problema, intente más tarde"
+    },
+    "breadcrumb": {
+      "breadcrumb_link": "Volver"
+    },
+    "popupLogin": {
+      "login": "Iniciar sesión",
+      "title": "Para ingresar debes iniciar sesión",
+      "link": "Volver"
+    },
+    "home": {
+      "banner": {
+        "welcome": "Te damos la bienvenida a Small",
+        "title": "Aprendé con Playground",
+        "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
+        "btn": "Creá tu propio diseño"
+      }
+    },
+    "introduction": {
+      "title": "Introducción"
+    },
+    "playground": {
+      "breadcrumb_title": "Simulador",
+      "template_title": "Plantillas",
+      "form": {
+        "title": "Campos",
+        "button_hotlink": "Generar Hotlink",
+        "button_share": "Compartir Hotlink"
+      },
+      "phoneCase": {
+        "today": "Hoy"
+      },
+      "popup": {
+        "title": "Compartir y probar en Whatsapp",
+        "copy": "Copiar",
+        "btn": "Compartir en Whatsapp",
+        "copy_success": "URL copiada al porpapapeles",
+        "copy_error": "Error al copiar URL"
+      },
+      "loading_dots": "Escribiendo"
+    },
+    "guide": {
+      "header": {
+        "stepper_title1": "Sección 1",
+        "stepper_subtitle1": "Conocer, Jugar y Cargar",
+        "stepper_title2": "Sección 2",
+        "stepper_subtitle2": "Compartir y Utilizar"
+      },
+      "stepper_one": {
+        "title": "Pasos",
+        "title_one": "Introducción",
+        "subtitle_one": "Introducción y entendimiento de la plataforma. Video explicativo",
+        "title_two": "Jugar",
+        "subtitle_two": "Juga en el playground, personaliza apps y genera tu primer hotlink",
+        "title_three": "Carga",
+        "subtitle_three": "Carga de datos de tu empresa y archivos de marca para tus diseños",
+        "title_four": "Galería",
+        "subtitle_four": "Nos encargamos del diseño con nuestra herramienta UiTool"
+      },
+      "stepper_two": {
+        "title": "Pasos",
+        "title_one": "Distribuir",
+        "subtitle_one": "Genera los links para tus clientes y distribuí tus apps personalizadas",
+        "title_two": "Gestionar",
+        "subtitle_two": "Gestiona los mensjaes que lleganen tu Inbox y chatea con tus clientes",
+        "title_three": "Campañas",
+        "subtitle_three": "Envía campañas y visualiza los resultados de las interacciones",
+        "button": "Terminé de realizar los pasos"
+      }
+    },
+    "business": {
+      "breadcrumb_title": "Carga de Datos",
+      "sequence": {
+        "title": "Secuencia",
+        "card_title_01": "Cargar información del negocio",
+        "card_title_02": "Subí el logo de tu empresa",
+        "card_title_03": "Documentos descriptivos",
+        "card_title_04": "Flyer, brochure, brandin o publicidad",
+        "card_description_01": "Con esta información de contexto diseñamos el contenido y la conversación de los chatbots. Tu sitio web ayuda",
+        "card_description_02": "Del logo tomamos automáticamente la paleta de color que luego podrás editar",
+        "card_description_03": "Podes adjuntar la cantidad de información que consideres necesaria para tu negocio",
+        "card_description_04": "Subí archivos referentes a tu negocio para extraer informacion",
+        "button": "Terminé de cargar los datos"
+      },
+      "form": {
+        "title": "Información del negocio",
+        "subtitle": "Mientras más campos se completen mejor será el resultado",
+        "name": "Nombre",
+        "placeholder_name": "Ingrese el nombre",
+        "website": "Sitio web",
+        "placeholder_website": "Ingrese su sitio web",
+        "description": "Descripción",
+        "placeholder_description": "Ingrese la descripción",
+        "placeholder_instagram": "Ingrese su instagram",
+        "phone": "Teléfono",
+        "placeholder_phone": "Ingrese su teléfono",
+        "button": "Guardar"
+      },
+      "file": {
+        "title01": "Subí tu logo para iniciar",
+        "title02": "Arrojá tus archivos aquí",
+        "subtitle": "Mis archivos"
+      }
+    },
+    "collections": {
+      "header": {
+        "title": "Colecciones de Hotlinks",
+        "search": "Buscar Colecciones...",
+        "period_btn": "Periodo",
+        "new_btn": "Nueva Colección"
+      },
+      "titles": {
+        "title_one": "Nombre",
+        "title_two": "Diseño utilizado",
+        "title_three": "Receptor",
+        "column_one": "Fecha",
+        "column_two": "Nombre del Skin",
+        "column_three": "Plantilla",
+        "column_four": "Total",
+        "column_five": "Abiertos"
+      },
+      "btn": "Ver Colección"
+    },
+    "inbox": {
+      "title": "Bandeja de entrada",
+      "subtitle": "Descarga la app"
+    },
+    "gallery": {
+      "title": "Galería",
+      "more_designs": "Encontrar más diseños en"
     }
   }
 }

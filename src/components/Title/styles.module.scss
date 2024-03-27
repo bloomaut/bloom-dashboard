@@ -1,0 +1,7 @@
+@import "@/styles/theme.scss";
+
+.title {
+  @include fontSize-fontWeight(32px, 700);
+  line-height: 48px;
+  color: $text;
+}

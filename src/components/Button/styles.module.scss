@@ -1,0 +1,75 @@
+@import "@/styles/theme.scss";
+
+.btn {
+  @include main-btn;
+}
+.btn:disabled {
+  background: $white;
+  border: 1px solid $lighterGrey;
+  color: $lighterGrey;
+  &:hover {
+    background-color: $white;
+    cursor: default;
+  }
+}
+
+.btn_disabled {
+  background: $lightGrey;
+  &:hover {
+    background-color: $lightGrey;
+    cursor: default;
+  }
+}
+
+.btn_disabled_sequence {
+  background: $white;
+  border: 1px solid $lighterGrey;
+  color: $lighterGrey;
+  &:hover {
+    background-color: $white;
+    cursor: default;
+  }
+}
+
+.btn_outline {
+  @extend .btn;
+  background: transparent;
+  color: $orange;
+  font-weight: 700;
+  padding: 10px;
+  border: 1px solid $orange;
+  &:hover {
+    color: white;
+  }
+}
+
+.btn_playground_outline {
+  @extend .btn_outline;
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+}
+
+.btn2_playground_outline {
+  @extend .btn;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.btn_copy {
+  flex-direction: row;
+  background: $greyBackground;
+  color: $lightGrey;
+  &:hover {
+    color: $white;
+    background: $lighterGrey;
+  }
+}
+
+@media (min-width: $queryLg) {
+  .btn {
+    @include fontSize-fontWeight(15px, 500);
+    padding: 10px;
+  }
+}

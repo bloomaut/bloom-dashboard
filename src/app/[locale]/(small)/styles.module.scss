@@ -1,0 +1,28 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, 100vh);
+  min-height: 100vh;
+  background-color: $blueBackground;
+  .inner_container {
+    @include width-height(100%, calc(100% - 50px));
+    @include flex(row, space-between, flex-start);
+    flex-wrap: nowrap;
+    .children_container {
+      @include width-height(calc(100vw - 210px), calc(100vh - 50px));
+      @include flex(column, flex-start, center);
+      overflow-y: auto;
+      padding: 20px;
+    }
+  }
+}
+
+.children_container::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.children_container::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
+}
