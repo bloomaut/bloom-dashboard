@@ -75,12 +75,7 @@ const Sequence = () => {
         ))}
       </div>
       <div className={styles.btn_container}>
-        <Button
-          title={dict("button")}
-          onclick={handleButtonClick}
-          isDisabled={isButtonDisabled}
-          styleName={isButtonDisabled ? "btn_disabled_sequence" : "btn"}
-        />
+        <Button title={dict("button")} onclick={handleButtonClick} isDisabled={isButtonDisabled} />
       </div>
     </div>
   );

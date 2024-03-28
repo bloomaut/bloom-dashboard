@@ -174,7 +174,23 @@
         "column_four": "Total",
         "column_five": "Abiertos"
       },
-      "btn": "Ver Colección"
+      "btn": "Ver Colección",
+      "new_collection": {
+        "title": "Crear colección",
+        "input": "Nombre",
+        "select": "Diseño",
+        "cancel": "Cancelar",
+        "generate_btn": "Generar Colección"
+      }
+    },
+    "my-collection": {
+      "breadcrumb": "Lista Hotlinks",
+      "search_holder": "Buscar por cliente",
+      "btn": "Generar Hotlink",
+      "share": "Compartir",
+      "clients": "Clientes",
+      "btn2": "Importar desde Excel",
+      "btn3": "Ejemplo de carga desde Excel"
     },
     "inbox": {
       "title": "Bandeja de entrada",

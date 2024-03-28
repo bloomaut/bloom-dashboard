@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 
-const Titles = () => {
+const TableHead = () => {
   const dict = useTranslations("dict.collections.titles");
   return (
     <div>
@@ -28,4 +28,4 @@ const Titles = () => {
   );
 };
 
-export default Titles;
+export default TableHead;
