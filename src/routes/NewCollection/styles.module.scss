@@ -1,0 +1,47 @@
+@import "@/styles/theme";
+
+.new_collection {
+  @include width-height(100%, auto);
+  .container {
+    display: grid;
+    grid-template-columns: repeat(2, 68% 30%);
+    gap: 15px;
+    margin-top: 30px;
+    .template {
+      @include width-height(100%, 78vh);
+      @include flex(row, space-between, flex-start, 10px);
+      border: 1px solid $lighterGrey;
+      border-radius: 4px;
+      padding: 10px;
+      .sm_img,
+      .lg_img {
+        @include width-height(100%, 100%);
+        border: 1px solid $lighterGrey;
+        border-radius: 4px;
+      }
+      .sm_img {
+        max-height: 35%;
+      }
+    }
+    .form {
+      @include width-height(100%, 100%);
+      @include flex(column, flex-start, flex-start, 15px);
+      padding: 10px;
+      label {
+        @include fontSize-fontWeight(16px, 500);
+      }
+      .select {
+        @include width-height(100%, 100%);
+        @include flex(column, flex-start, flex-start, 10px);
+        select {
+          @include width-height(100%, 30px);
+          padding: 5px 10px;
+          outline: none;
+          border: 1px solid #bebebe;
+          border-radius: 4px;
+          color: $lightGrey;
+        }
+      }
+    }
+  }
+}
