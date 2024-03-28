@@ -1,12 +1,18 @@
+import { useCollectionsContext } from "@/context/CollectionsContext";
 import styles from "./styles.module.scss";
 
 interface ContentProps {
-  content: { name: string; date: string; name_skin: string; template: string; total: number; open: number };
+  content: { id: string; name: string; date: string; name_skin: string; template: string; total: number; open: number };
 }
 
-const Content = ({ content }: ContentProps) => {
+const TableRow = ({ content }: ContentProps) => {
+  const { id, setId } = useCollectionsContext();
+
   return (
-    <div className={styles.content}>
+    <div
+      className={`${styles.content} ${id === content.id && styles.content_selected}`}
+      onClick={() => setId(content.id)}
+    >
       <div className={`${styles.column} ${styles.column_one}`}>
         <p>{content.name}</p>
         <p>{content.date}</p>
@@ -23,4 +29,4 @@ const Content = ({ content }: ContentProps) => {
   );
 };
 
-export default Content;
+export default TableRow;

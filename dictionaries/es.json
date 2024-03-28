@@ -183,6 +183,15 @@
         "generate_btn": "Generar Colección"
       }
     },
+    "my-collection": {
+      "breadcrumb": "Lista Hotlinks",
+      "search_holder": "Buscar por cliente",
+      "btn": "Generar Hotlink",
+      "share": "Compartir",
+      "clients": "Clientes",
+      "btn2": "Importar desde Excel",
+      "btn3": "Ejemplo de carga desde Excel"
+    },
     "inbox": {
       "title": "Bandeja de entrada",
       "subtitle": "Descarga la app"

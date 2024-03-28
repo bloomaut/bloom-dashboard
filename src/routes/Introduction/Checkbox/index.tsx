@@ -27,13 +27,7 @@ const Checkbox = () => {
         <input type='checkbox' id='checkbox' checked={isChecked} onChange={handleCheckboxChange} />
         <label htmlFor='checkbox'>Ya vi el video y deseo continuar</label>
       </div>
-      <Button
-        title='Continuar'
-        icon={arrowRigth}
-        onclick={handleButtonClick}
-        isDisabled={isButtonDisabled}
-        styleName={isButtonDisabled ? "btn_disabled" : "btn"}
-      />
+      <Button title='Continuar' icon={arrowRigth} onclick={handleButtonClick} isDisabled={isButtonDisabled} />
     </div>
   );
 };

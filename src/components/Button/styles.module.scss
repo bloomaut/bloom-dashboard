@@ -3,32 +3,12 @@
 .btn {
   @include main-btn;
 }
+
 .btn:disabled {
   background: $white;
   border: 1px solid $lighterGrey;
   color: $lighterGrey;
-  &:hover {
-    background-color: $white;
-    cursor: default;
-  }
-}
-
-.btn_disabled {
-  background: $lightGrey;
-  &:hover {
-    background-color: $lightGrey;
-    cursor: default;
-  }
-}
-
-.btn_disabled_sequence {
-  background: $white;
-  border: 1px solid $lighterGrey;
-  color: $lighterGrey;
-  &:hover {
-    background-color: $white;
-    cursor: default;
-  }
+  cursor: default;
 }
 
 .btn_outline {
@@ -41,6 +21,17 @@
   border: 1px solid $orange;
   &:hover {
     color: white;
+    img {
+      filter: brightness(10);
+    }
+  }
+  &:disabled {
+    &:hover {
+      color: $lighterGrey;
+      img {
+        filter: none;
+      }
+    }
   }
 }
 
@@ -52,7 +43,6 @@
 }
 
 .btn2_playground_outline {
-  @extend .btn;
   position: absolute;
   right: 0;
   bottom: 0;
@@ -65,6 +55,32 @@
   &:hover {
     color: $white;
     background: $lighterGrey;
+  }
+  img {
+    filter: grayscale(1);
+  }
+}
+
+.btn_excel {
+  background-color: #386d4799;
+  &:hover {
+    background-color: #224d2e99;
+  }
+}
+
+.btn_my_collection {
+  img {
+    filter: brightness(10);
+  }
+}
+
+.btn_collections {
+  @extend .btn_outline;
+  align-self: flex-end;
+  &:hover {
+    img {
+      filter: brightness(10);
+    }
   }
 }
 

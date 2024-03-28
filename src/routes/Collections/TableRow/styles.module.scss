@@ -8,7 +8,6 @@
   cursor: pointer;
   &:hover {
     background-color: $blueishBackground;
-    border-radius: 10px;
   }
   .column {
     @include width-height(100%, auto);
@@ -35,4 +34,8 @@
   .column_three p:last-child {
     text-align: end;
   }
+}
+
+.content_selected {
+  background-color: $blueishBackground;
 }
