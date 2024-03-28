@@ -1,12 +1,15 @@
 @import "@/styles/theme";
 
 .new_collection {
-  @include width-height(100%, auto);
+  @include width-height(100%, 100%);
+  background-color: $blueBackground;
+  @include flex(column, flex-start, flex-start, 20px);
+  padding: 0px 40px;
   .container {
+    @include width-height(100%, auto);
     display: grid;
     grid-template-columns: repeat(2, 68% 30%);
     gap: 15px;
-    margin-top: 30px;
     .template {
       @include width-height(100%, 75vh);
       @include flex(row, space-between, flex-start, 10px);
@@ -49,7 +52,7 @@
       }
       .buttons {
         @include width-height(100%, auto);
-        @include flex(row, center, center, 10px);
+        @include flex(row, flex-end, center, 10px);
         .cancel {
           @include fontSize-fontWeight(15px, 400);
           height: -moz-fit-content;

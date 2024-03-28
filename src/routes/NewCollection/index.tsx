@@ -1,13 +1,14 @@
-import { useTranslations } from "next-intl";
 import styles from "./styles.module.scss";
-import Breadcrumb from "@/components/Breadcrumb";
-import Input from "@/components/Input";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useFlakeData } from "@/hooks/useFlakesUser";
+import { useRouter } from "next/navigation";
+// Components
+import Breadcrumb from "@/components/Breadcrumb";
+import Input from "@/components/Input";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import Image from "next/image";
 import Button from "@/components/Button";
-import { redirect, useRouter } from "next/navigation";
 
 const InitialEmptyImages = {
   sm_img: "",
@@ -81,7 +82,7 @@ const NewCollectionPage = () => {
               <Image src={images.lg_img} alt={form.name} width={100} height={100} />
             </div>
           </div>
-          <div className={styles.form}>
+          <form className={styles.form}>
             <Input
               type='text'
               textLabel={dict("input")}
@@ -106,7 +107,7 @@ const NewCollectionPage = () => {
               </button>
               <Button title={dict("generate_btn")} type='submit' />
             </div>
-          </div>
+          </form>
         </div>
       ) : (
         <div className={styles.loader}>
