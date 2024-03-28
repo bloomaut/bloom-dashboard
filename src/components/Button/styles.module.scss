@@ -68,6 +68,12 @@
   }
 }
 
+.btn_my_collection {
+  img {
+    filter: brightness(10);
+  }
+}
+
 @media (min-width: $queryLg) {
   .btn {
     @include fontSize-fontWeight(15px, 500);

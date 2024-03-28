@@ -1,0 +1,14 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, 20%);
+  @include flex(row, space-between, center);
+  .column {
+    @include width-height(40%, auto);
+    @include flex(column, flex-start, flex-start, 20px);
+  }
+  .column_two {
+    @include width-height(40%, auto);
+    @include flex(column, flex-start, flex-end, 20px);
+  }
+}

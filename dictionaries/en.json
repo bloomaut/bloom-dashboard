@@ -176,6 +176,13 @@
       },
       "btn": "View Collection"
     },
+    "my-collection": {
+      "breadcrumb": "Hotlinks List",
+      "search_holder": "Search for client",
+      "btn": "Get Hotlink",
+      "share": "Share",
+      "clients": "Clients"
+    },
     "inbox": {
       "title": "Inbox",
       "subtitle": "Download the app"

@@ -7,6 +7,7 @@ import { CollectionProps } from "@/typescript/interfaces/collection.interface";
 import Header from "./Header";
 import Titles from "./Titles";
 import Content from "./Content";
+import { Link } from "@/navigation";
 
 const CollectionsPage = () => {
   const dict = useTranslations("dict.collections");
@@ -130,10 +131,10 @@ const CollectionsPage = () => {
           })}
         </div>
       </div>
-      <button className={styles.btn}>
+      <Link href='/my-collection' className={styles.btn}>
         <Image src={skin} alt='' />
         {dict("btn")}
-      </button>
+      </Link>
     </section>
   );
 };
