@@ -51,7 +51,8 @@
           @include flex(row, center, center);
           img {
             @include width-height(100%, 100%);
-            object-fit: fill;
+            object-fit: cover;
+            object-position: top;
           }
           svg {
             @include width-height(40px, 40px);
