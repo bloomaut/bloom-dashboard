@@ -174,7 +174,14 @@
         "column_four": "Total",
         "column_five": "Open"
       },
-      "btn": "View Collection"
+      "btn": "View Collection",
+      "new_collection": {
+        "title": "Create collection",
+        "input": "Name",
+        "select": "Design",
+        "cancel": "Cancel",
+        "generate_btn": "Generate Collection"
+      }
     },
     "inbox": {
       "title": "Inbox",

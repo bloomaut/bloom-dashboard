@@ -42,7 +42,7 @@ const Header = () => {
             <Image src={period} alt='' />
           </div>
         </div>
-        <Link href={`/${locale}/`} className={styles.new_btn}>
+        <Link href={`/${locale}/collections/new-collection`} className={styles.new_btn}>
           <Image src={plus} alt='' width={15} height={15} />
           {dict("new_btn")}
         </Link>

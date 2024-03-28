@@ -174,7 +174,14 @@
         "column_four": "Total",
         "column_five": "Abiertos"
       },
-      "btn": "Ver Colección"
+      "btn": "Ver Colección",
+      "new_collection": {
+        "title": "Crear colección",
+        "input": "Nombre",
+        "select": "Diseño",
+        "cancel": "Cancelar",
+        "generate_btn": "Generar Colección"
+      }
     },
     "inbox": {
       "title": "Bandeja de entrada",
