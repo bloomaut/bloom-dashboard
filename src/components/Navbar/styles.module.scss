@@ -5,7 +5,8 @@
   @include flex(row, space-between, center);
   flex-wrap: nowrap;
   padding: 20px;
-  border-bottom: 1px solid $lighterGrey;
+  background: $gradient;
+  border-bottom: 1px solid $lightGrey;
 
   .logo {
     @include width-height(103px, 47px);
@@ -29,7 +30,7 @@
         @include fontSize-fontWeight(14px, 400);
         line-height: 24px;
         text-decoration: underline;
-        color: $lightGrey;
+        color: $white;
         transition: color 0.7s;
         &:hover {
           color: $orange;
