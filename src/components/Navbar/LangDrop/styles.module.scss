@@ -12,14 +12,14 @@
       object-fit: contain;
     }
     span {
-      color: $lightGrey;
+      color: $white;
       @include fontSize-fontWeight(20px, 300);
     }
     h1 {
       text-transform: uppercase;
       @include fontSize-fontWeight(15px, 500);
       line-height: 24px;
-      color: $lightGrey;
+      color: $white;
       padding-top: 2px;
     }
   }
