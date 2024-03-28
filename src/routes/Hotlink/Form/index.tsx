@@ -5,6 +5,8 @@ import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import axios from "axios";
+import { useClientsContext } from "@/context/ClientsContext";
+import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 
 //Componentes
 import Input from "@/components/Input";
@@ -30,6 +32,7 @@ const EmptyFormData = {
 };
 
 const Form = () => {
+  const { clientSelected } = useClientsContext();
   const dict = useTranslations("dict");
   const { notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
@@ -60,6 +63,16 @@ const Form = () => {
       setFormInfo(variablesData);
     }
   }, [formVariableData]);
+
+  useEffect(() => {
+    if (clientSelected && formInfo.length > 0) {
+      const updatedFormInfo = formInfo.map(info => {
+        const clientValue = clientSelected[info.name as keyof ClientsProps];
+        return { ...info, value: clientValue };
+      });
+      setFormInfo(updatedFormInfo);
+    }
+  }, [clientSelected]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

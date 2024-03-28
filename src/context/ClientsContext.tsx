@@ -60,10 +60,10 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (filteredClients.length > 0) {
+    if (!clientSelected && filteredClients.length > 0) {
       setClientSelected(filteredClients[0]);
     }
-  }, [filteredClients]);
+  }, [clientSelected, filteredClients]);
 
   return (
     <ClientsContext.Provider
