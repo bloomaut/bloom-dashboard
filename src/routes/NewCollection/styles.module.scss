@@ -18,6 +18,9 @@
         @include width-height(100%, 100%);
         border: 1px solid $lighterGrey;
         border-radius: 4px;
+        img {
+          @include width-height(100%, 100%);
+        }
       }
       .sm_img {
         max-height: 35%;
@@ -43,5 +46,9 @@
         }
       }
     }
+  }
+  .loader {
+    @include width-height(100%, 60vh);
+    @include flex(row, center, center);
   }
 }
