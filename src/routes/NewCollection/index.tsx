@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { useFlakeData } from "@/hooks/useFlakesUser";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Image from "next/image";
-import { Powerapp } from "@/typescript/interfaces/flakes.interface";
+import Button from "@/components/Button";
+import { redirect, useRouter } from "next/navigation";
 
 const InitialEmptyImages = {
   sm_img: "",
@@ -20,10 +21,10 @@ const InitialEmptyForm = {
 
 const NewCollectionPage = () => {
   const dict = useTranslations("dict.collections.new_collection");
+  const router = useRouter();
   const { flakes, loading } = useFlakeData();
   const [images, setImages] = useState(InitialEmptyImages);
   const [form, setForm] = useState(InitialEmptyForm);
-  const [flakeSelected, setFlakeSelected] = useState<Powerapp>();
 
   useEffect(() => {
     if (flakes.length > 0) {
@@ -33,11 +34,9 @@ const NewCollectionPage = () => {
       });
 
       setForm({
-        ...form,
+        name: flakes[0].skinx.title,
         design: flakes[0].skinx.title,
       });
-
-      setFlakeSelected(flakes[0]);
     }
   }, [flakes]);
 
@@ -50,7 +49,6 @@ const NewCollectionPage = () => {
 
     // Buscar el objeto correspondiente al diseño seleccionado
     const selectedFlake = flakes.find(flake => flake.skinx.title === value);
-    setFlakeSelected(selectedFlake);
 
     // Actualizar las imágenes con el diseño seleccionado
     if (selectedFlake) {
@@ -58,7 +56,16 @@ const NewCollectionPage = () => {
         sm_img: selectedFlake.hog_related.thumbnail,
         lg_img: selectedFlake.thumbnail,
       });
+
+      setForm({
+        name: selectedFlake.skinx.title,
+        design: selectedFlake.skinx.title,
+      });
     }
+  };
+
+  const handleBack = () => {
+    router.back();
   };
 
   return (
@@ -92,6 +99,12 @@ const NewCollectionPage = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className={styles.buttons}>
+              <button className={styles.cancel} onClick={handleBack}>
+                {dict("cancel")}
+              </button>
+              <Button title={dict("generate_btn")} type='submit' />
             </div>
           </div>
         </div>
