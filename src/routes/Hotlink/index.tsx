@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 import Title from "@/components/Title";
 import { useEffect } from "react";
 import { FlakesProvider } from "@/context/FlakesContext";
+import ListHotlinks from "./ListHotlinks";
 
 const HotlinksPage = () => {
   const { fetchClients } = useClientsContext();
@@ -22,6 +23,7 @@ const HotlinksPage = () => {
             <Select />
             <Form />
           </div>
+          <ListHotlinks />
         </section>
       </ClientsProvider>
     </FlakesProvider>
