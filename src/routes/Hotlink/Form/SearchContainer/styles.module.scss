@@ -1,0 +1,19 @@
+@import "@/styles/theme";
+
+.search_container {
+  @include width-height(100%, auto);
+
+  .clients_container {
+    padding: 5px;
+    @include fontSize-fontWeight(14px, 400);
+
+    .row {
+      padding: 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: $blueishBackground;
+        border-radius: 10px;
+      }
+    }
+  }
+}
