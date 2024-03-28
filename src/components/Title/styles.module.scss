@@ -5,3 +5,7 @@
   line-height: 48px;
   color: $text;
 }
+
+.banner {
+  @include fontSize-fontWeight(20px, 400);
+}
