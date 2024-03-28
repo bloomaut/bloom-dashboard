@@ -5,7 +5,6 @@ import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import axios from "axios";
-import { useOpenGraphContext } from "@/context/OpenGraphContext";
 
 //Componentes
 import Input from "@/components/Input";
@@ -13,8 +12,8 @@ import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Image from "next/image";
 import HotlinkIcon from "@/../../public/icons/hotlink_icon_white.svg";
-import SearchContainer from "./SearchContainer";
-import List from "@/routes/Clients/List";
+
+import Checkbox from "./Checkbox";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -33,7 +32,6 @@ const EmptyFormData = {
 const Form = () => {
   const dict = useTranslations("dict");
   const { notifyError } = useMessageToast();
-  const { setPaUrl } = useOpenGraphContext();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
 
@@ -71,13 +69,13 @@ const Form = () => {
       return;
     }
 
-    const response = await axios.post("/api/hotlinks", formDataPost, {
+    const response = await axios.post("/api/hotlinks/user", formDataPost, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     if (response?.status === 200) {
-      const { hotlink, opengraph } = response.data.data.result;
+      const { hotlink } = response.data.data.result;
       setPaUrl(hotlink.url);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
@@ -90,14 +88,6 @@ const Form = () => {
     const updatedFormInfo = [...formInfo];
     updatedFormInfo[index].value = e.target.value;
     setFormInfo(updatedFormInfo);
-  };
-
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-
-    console.log(isChecked);
   };
 
   return (
@@ -122,19 +112,11 @@ const Form = () => {
                   />
                 ))}
             </div>
-            <div className={styles.checkbox_container}>
-              <label>
-                <input type='checkbox' checked={isChecked} onChange={handleCheckboxChange} />
-                Llenar variables con cliente
-              </label>
-              <p>*Campos que se puedan completar con cliente</p>
-            </div>
-            {isChecked && <SearchContainer />}
-            {/*             <button type='submit' className={styles.btn}>
+            <Checkbox />
+            <button type='submit' className={styles.btn}>
               <Image src={HotlinkIcon} alt='' />
               Generar Hotlink
             </button>
-            */}
           </form>
         )}
       </div>

@@ -1,0 +1,19 @@
+@import "@/styles/theme.scss";
+
+.checkbox_container {
+  @include width-height(100%, auto);
+  @include flex(row, space-between, center);
+
+  label {
+    @include fontSize-fontWeight(16px, 500);
+    color: $text;
+    white-space: nowrap;
+    padding: 5px;
+  }
+  p {
+    @include fontSize-fontWeight(12px, 400);
+    color: $lighterGrey;
+    white-space: nowrap;
+    padding: 5px;
+  }
+}

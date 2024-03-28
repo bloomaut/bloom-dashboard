@@ -1,13 +1,12 @@
 @import "@/styles/theme";
 
 .container {
-  @include width-height(100%, 100%);
+  @include width-height(100%, 390px);
   background-color: $blueBackground;
   position: relative;
   .form_container {
     @include flex(column, flex-start, flex-start, 10px);
     .form {
-      overflow-y: auto;
       @include width-height(100%, auto);
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -16,16 +15,13 @@
     .btn {
       position: absolute;
       bottom: 0;
+      right: 0;
       background-color: $orange;
       color: $white;
       border-radius: 4px;
       border: none;
       @include width-height(160px, 38px);
       @include flex(row, center, center, 10px);
-    }
-    .checkbox_container {
-      @include width-height(100%, auto);
-      @include flex(row, space-between, center);
     }
   }
 }
