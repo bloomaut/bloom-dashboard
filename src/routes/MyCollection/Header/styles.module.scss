@@ -8,7 +8,10 @@
     @include flex(column, flex-start, flex-start, 20px);
   }
   .column_two {
-    @include width-height(40%, auto);
+    @include width-height(50%, auto);
     @include flex(column, flex-start, flex-end, 20px);
+    .btn_container {
+      @include flex(row, flex-end, center, 20px);
+    }
   }
 }

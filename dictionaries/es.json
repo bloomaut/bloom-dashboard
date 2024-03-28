@@ -181,7 +181,9 @@
       "search_holder": "Buscar por cliente",
       "btn": "Generar Hotlink",
       "share": "Compartir",
-      "clients": "Clientes"
+      "clients": "Clientes",
+      "btn2": "Importar desde Excel",
+      "btn3": "Ejemplo de carga desde Excel"
     },
     "inbox": {
       "title": "Bandeja de entrada",

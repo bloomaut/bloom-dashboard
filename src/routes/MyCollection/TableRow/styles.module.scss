@@ -23,8 +23,11 @@
       }
     }
     &:last-child {
-      p {
-        text-align: end;
+      @include flex(row, flex-end, center, 5px);
+      img {
+        filter: grayscale(1);
+        transform: scale(0.9, 0.9);
+        cursor: pointer;
       }
     }
   }

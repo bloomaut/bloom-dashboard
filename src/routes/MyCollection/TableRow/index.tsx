@@ -1,5 +1,8 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
+import copyIcon from "/public/icons/copy.svg";
+import wpIcon from "/public/icons/whatsapp.svg";
+import Image from "next/image";
 
 interface TableRowProps {
   data: {
@@ -20,7 +23,8 @@ const TableRow = ({ data }: TableRowProps) => {
         <p>{data.link}</p>
       </div>
       <div className={styles.column}>
-        <p></p>
+        <Image src={copyIcon} width={30} height={30} alt='icon' />
+        <Image src={wpIcon} width={30} height={30} alt='icon' />
       </div>
     </div>
   );

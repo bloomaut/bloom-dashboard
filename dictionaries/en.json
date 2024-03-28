@@ -181,7 +181,9 @@
       "search_holder": "Search for client",
       "btn": "Get Hotlink",
       "share": "Share",
-      "clients": "Clients"
+      "clients": "Clients",
+      "btn2": "Import from Excel",
+      "btn3": "Excel import example"
     },
     "inbox": {
       "title": "Inbox",

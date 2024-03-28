@@ -2,6 +2,8 @@ import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import hotlink from "@/../public/icons/hotlink_icon.svg";
+import excel from "@/../public/icons/excel_logo.svg";
+import table from "@/../public/icons/excel.svg";
 // Components
 import Title from "@/components/Title";
 import Search from "@/components/Search";
@@ -22,7 +24,10 @@ const Header = () => {
         />
       </div>
       <div className={styles.column_two}>
-        <button>Importar desde Excel</button>
+        <div className={styles.btn_container}>
+          <Button title={dict("btn3")} icon={table} styleName='btn_copy' />
+          <Button title={dict("btn2")} icon={excel} styleName='btn_excel' />
+        </div>
         <Button title={dict("btn")} icon={hotlink} styleName='btn_my_collection' />
       </div>
     </div>
