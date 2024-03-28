@@ -8,10 +8,7 @@
   background: $white;
   border: 1px solid $lighterGrey;
   color: $lighterGrey;
-  &:hover {
-    background-color: $white;
-    cursor: default;
-  }
+  cursor: default;
 }
 
 .btn_outline {
@@ -24,6 +21,17 @@
   border: 1px solid $orange;
   &:hover {
     color: white;
+    img {
+      filter: brightness(10);
+    }
+  }
+  &:disabled {
+    &:hover {
+      color: $lighterGrey;
+      img {
+        filter: none;
+      }
+    }
   }
 }
 
@@ -63,6 +71,16 @@
 .btn_my_collection {
   img {
     filter: brightness(10);
+  }
+}
+
+.btn_collections {
+  @extend .btn_outline;
+  align-self: flex-end;
+  &:hover {
+    img {
+      filter: brightness(10);
+    }
   }
 }
 

@@ -1,0 +1,19 @@
+@import "@/styles/theme.scss";
+
+.table {
+  @include width-height(100%, 80%);
+  overflow: hidden;
+  .content_container {
+    @include width-height(100%, inherit);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .content_container::-webkit-scrollbar {
+    width: 5px;
+    background-color: $greyBackground;
+  }
+  .content_container::-webkit-scrollbar-thumb {
+    background-color: $orange;
+    border-radius: 10px;
+  }
+}

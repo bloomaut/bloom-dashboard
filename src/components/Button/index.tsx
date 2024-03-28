@@ -17,7 +17,7 @@ const Button = ({ title, icon, styleName, onclick, isDisabled, type }: ButtonPro
       onClick={onclick}
       disabled={isDisabled}
     >
-      {icon && <Image src={icon} width={30} height={30} alt='icon' />}
+      {icon && <Image src={icon} width={30} height={25} alt='icon' />}
       {title}
     </button>
   );

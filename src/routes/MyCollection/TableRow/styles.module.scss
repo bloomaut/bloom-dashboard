@@ -4,12 +4,12 @@
   @include width-height(100%, auto);
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-
+  align-items: center;
   &:hover {
     background-color: $blueishBackground;
   }
   .column {
-    padding: 10px;
+    padding: 5px 10px;
     margin: 5px 0;
     p {
       @include fontSize-fontWeight(14px, 400);
@@ -26,7 +26,7 @@
       @include flex(row, flex-end, center, 5px);
       img {
         filter: grayscale(1);
-        transform: scale(0.9, 0.9);
+        transform: scale(0.8, 0.8);
         cursor: pointer;
       }
     }
