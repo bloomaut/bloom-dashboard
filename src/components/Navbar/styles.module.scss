@@ -6,7 +6,7 @@
   flex-wrap: nowrap;
   padding: 20px;
   background: $gradient;
-  border-bottom: 2px solid $lightGrey;
+  border-bottom: 1px solid $lightGrey;
 
   .logo {
     @include width-height(103px, 47px);
