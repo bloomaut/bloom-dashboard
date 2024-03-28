@@ -1,0 +1,68 @@
+@import "@/styles/theme.scss";
+@import "@/styles/theme";
+
+.popup_container {
+  @include flex(row, center, center);
+  @include width-height(100vw, 100vh);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.5);
+  .container {
+    @include flex(column, space-evenly, flex-start, 20px);
+    @include width-height(500px, auto);
+    @include fontSize-fontWeight(18px, 400);
+    background-color: $white;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    position: relative;
+    padding: 30px 15px;
+    .title {
+      @include fontSize-fontWeight(24px, 400);
+      color: $text;
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      border: none;
+      background: none;
+      outline: none;
+      cursor: pointer;
+    }
+    .form {
+      @include width-height(100%, auto);
+      @include flex(column, center, flex-start, 5px);
+      .names {
+        @include width-height(100%, auto);
+        @include flex(row, center, center, 20px);
+      }
+      .error {
+        opacity: 1;
+        @include fontSize-fontWeight(12px, 400);
+        color: $error;
+      }
+      .error_hidden {
+        height: 14px;
+      }
+      .form_control {
+        @include width-height(100%, auto);
+        @include flex(column, center, flex-start);
+        .error {
+          opacity: 1;
+          @include fontSize-fontWeight(12px, 400);
+          color: $error;
+        }
+        .error_hidden {
+          height: 14px;
+        }
+      }
+      .btn_container {
+        @include width-height(100%, auto);
+        @include flex(column, center, flex-end);
+      }
+    }
+  }
+}

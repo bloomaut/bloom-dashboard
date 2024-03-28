@@ -41,7 +41,7 @@ const NewCollectionPage = () => {
     }
   }, [flakes]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm({
       ...form,

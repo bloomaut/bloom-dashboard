@@ -32,9 +32,10 @@
 }
 
 .btn_outline {
+  flex-direction: row;
   @extend .btn;
   background: transparent;
-  color: $orange;
+  color: $text;
   font-weight: 700;
   padding: 10px;
   border: 1px solid $orange;
