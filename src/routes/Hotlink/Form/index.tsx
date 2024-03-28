@@ -104,35 +104,33 @@ const Form = () => {
   };
 
   return (
-    <div>
-      <div className={styles.container}>
-        <SectionTitle text='Campos' />
-        {loading ? (
-          <Loading />
-        ) : (
-          <form className={styles.form_container} onSubmit={handleSubmit}>
-            <div className={styles.form}>
-              {formInfo &&
-                formInfo.map((info, index) => (
-                  <Input
-                    key={info.key}
-                    type={info.target}
-                    textLabel={info.description}
-                    value={info.value!}
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
-                    textHolder={info.placeholder!}
-                    name={info.name}
-                  />
-                ))}
-            </div>
-            <Checkbox />
-            <button type='submit' className={styles.btn}>
-              <Image src={HotlinkIcon} alt='' />
-              Generar Hotlink
-            </button>
-          </form>
-        )}
-      </div>
+    <div className={styles.container}>
+      <SectionTitle text='Campos' />
+      {loading ? (
+        <Loading />
+      ) : (
+        <form className={styles.form_container} onSubmit={handleSubmit}>
+          <div className={styles.form}>
+            {formInfo &&
+              formInfo.map((info, index) => (
+                <Input
+                  key={info.key}
+                  type={info.target}
+                  textLabel={info.description}
+                  value={info.value!}
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
+                  textHolder={info.placeholder!}
+                  name={info.name}
+                />
+              ))}
+          </div>
+          <Checkbox />
+          <button type='submit' className={styles.btn}>
+            <Image src={HotlinkIcon} alt='' />
+            Generar Hotlink
+          </button>
+        </form>
+      )}
     </div>
   );
 };

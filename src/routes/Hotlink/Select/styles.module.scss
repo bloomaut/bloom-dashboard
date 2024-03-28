@@ -2,7 +2,7 @@
 
 .container {
   @include flex(column, center, flex-start, 20px);
-  //@include width-height(400px, 390px);
+  @include width-height(50%, 390px);
   .select {
     @include flex(column, center, flex-start, 5px);
     label {
@@ -13,11 +13,8 @@
       @include width-height(350px, 30px);
       border-radius: 4px;
       padding: 0 10px;
-      //position: relative;
       option {
         @include fontSize-fontWeight(12px, 400);
-        //position: absolute;
-        //@include width-height(350px, 30px);
       }
     }
   }

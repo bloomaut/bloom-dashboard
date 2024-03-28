@@ -2,8 +2,7 @@
 
 .checkbox_container {
   @include width-height(100%, auto);
-  @include flex(row, space-between, center);
-
+  @include flex(row, flex-start, center);
   label {
     @include fontSize-fontWeight(16px, 500);
     color: $text;
