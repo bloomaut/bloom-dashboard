@@ -38,6 +38,7 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
 
   const fetchClients = async () => {
     const data = await get("client-customer", ENV.DASH);
+    console.log(data);
     if (data.statusCode === 200) {
       dispatch(setClientsData(data.result.data));
       setClients(data.result.data);

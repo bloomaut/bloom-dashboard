@@ -1,5 +1,4 @@
 import styles from "./styles.module.scss";
-import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 import Image from "next/image";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
