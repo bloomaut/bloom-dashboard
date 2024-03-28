@@ -11,10 +11,7 @@ interface Props {
   isDescription?: boolean;
   className?: string;
   iconSearch?: boolean;
-  handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-    index?: number | undefined,
-  ) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => void;
 }
 
 const Input = ({
