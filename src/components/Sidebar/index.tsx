@@ -37,13 +37,13 @@ const Sidebar = () => {
       icon: <MyBusinessIcon />,
       path: "/my-business",
     },
-    {
-      title: `${dict("gallery")}`,
-      icon: <DesignIcon />,
-      path: "/gallery",
-    },
     ...(user
       ? [
+          {
+            title: `${dict("gallery")}`,
+            icon: <DesignIcon />,
+            path: "/gallery",
+          },
           {
             title: `${dict("hotlink")}`,
             icon: <HotlinkIcon />,

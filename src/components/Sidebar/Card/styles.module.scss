@@ -9,10 +9,11 @@
   flex-wrap: nowrap;
   transition: all 100ms ease-in;
   .text {
-    @include fontSize-fontWeight(14px, 500);
+    @include fontSize-fontWeight(18px, 500);
     color: $text;
     text-align: start;
-    line-height: 12px;
+    line-height: 18px;
+    margin-bottom: 7px;
   }
   svg {
     path[stroke="#FF5722"] {
