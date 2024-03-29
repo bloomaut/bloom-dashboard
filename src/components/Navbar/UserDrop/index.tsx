@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 import userLogo from "@/../public/icons/UserLogo.png";
 import iconArrow from "@/../public/icons/IconArrowBottom.png";
@@ -13,12 +14,13 @@ const UserDrop = () => {
   const [open, setOpen] = useState<boolean>(false);
   const { dropdownRef } = useCloseDropdown(setOpen);
   const dict = useTranslations("dict.navbar");
+  const { user } = useUser();
 
   return (
     <div className={styles.container} ref={dropdownRef}>
       <Image src={userLogo} alt='User Logo' priority width={25} height={25} className={styles.logo} />
       <p className={styles.user_name} onClick={() => setOpen(!open)}>
-        User
+        {user?.nickname}
         <Image
           src={iconArrow}
           alt='Arrow'

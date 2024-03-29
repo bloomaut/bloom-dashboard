@@ -11,14 +11,8 @@
     object-fit: contain;
   }
   .user_name {
-    @include fontSize-fontWeight(14px, 400);
+    @include fontSize-fontWeight(16px, 400);
     color: $white;
-    text-decoration: underline;
-    transition: color 0.7s;
-
-    &:hover {
-      color: $orange;
-    }
 
     .arrow {
       transition: all 0.3s;

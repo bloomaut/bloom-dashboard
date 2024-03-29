@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, 50px);
+  @include width-height(100%, 65px);
   @include flex(row, space-between, center);
   flex-wrap: nowrap;
   padding: 20px;
