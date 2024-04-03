@@ -8,8 +8,12 @@ import HotlinkIcon from "./Icons/Hotlink";
 import InboxIcon from "./Icons/Inbox";
 import CollectionsIcon from "./Icons/Collections";
 import ClientsIcon from "./Icons/Clients";
+import ArrowLeft from "../../../public/icons/double_arrow_left.svg";
+import ArrowRigth from "../../../public/icons/double_arrow_rigth.svg";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Image from "next/image";
+import { useState } from "react";
 
 interface SidebarCard {
   title: string;
@@ -19,7 +23,12 @@ interface SidebarCard {
 
 const Sidebar = () => {
   const dict = useTranslations("dict.sidebar");
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const { user } = useUser();
+
+  const handleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   const sidebar: Array<SidebarCard> = [
     {
@@ -69,8 +78,13 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className={styles.container}>
-      <div className={styles.cards_container}>
+    <div className={isOpen ? `${styles.container}` : `${styles.container} ${styles.container_closed}`}>
+      <button className={styles.btn} onClick={handleMenu}>
+        <Image src={isOpen ? ArrowLeft : ArrowRigth} alt='arrow open' />
+      </button>
+      <div
+        className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
+      >
         {sidebar.map(card => (
           <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
         ))}

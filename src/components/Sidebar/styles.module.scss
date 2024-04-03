@@ -1,15 +1,53 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(210px, 100%);
-  @include flex(column, space-between, center, 20px);
+  @include width-height(210px, 100vh);
+  @include flex(column, space-between, center, 10px);
   background-color: $blueBackground;
-  border-right: 1px solid $lighterGrey;
-  padding: 30px 0;
+  border-right: 1px solid $text;
   overflow-y: auto;
-  .cards_container {
-    @include flex(column, center, center, 10px);
+  position: relative;
+  z-index: 99;
+  transition: all 0.7s;
+  padding-top: 30px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
+  .btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    img {
+      @include width-height(13px, auto);
+      object-fit: contain;
+    }
+  }
+  .cards_container {
+    @include width-height(100%, 100vh);
+    @include flex(column, flex-start, flex-start, 10px);
+    position: relative;
+    padding-left: 3px;
+    z-index: 99;
+    transition: all 0.7s;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .cards_container_closed {
+    @include width-height(48px, 100vh);
+  }
+}
+.container_closed {
+  @include width-height(60px, 100vh);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
