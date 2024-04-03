@@ -30,9 +30,13 @@ export const BusinessSlice = createSlice({
       state.logo = action.payload;
       return state;
     },
+    updatePallete: (state, action: PayloadAction<string[]>) => {
+      state.palette = action.payload;
+      return state;
+    },
   },
 });
 
-export const { setBusinessData, updateLogo } = BusinessSlice.actions;
+export const { setBusinessData, updateLogo, updatePallete } = BusinessSlice.actions;
 export const userState = (state: RootState) => state.business;
 export default BusinessSlice.reducer;

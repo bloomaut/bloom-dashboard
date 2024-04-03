@@ -85,8 +85,12 @@ const Files = ({ fetchData }: FilesProps) => {
     if (file) {
       setFile(null);
     } else {
-      deleteFile();
+      console.log(companyLogo);
     }
+  };
+
+  const editLogo = () => {
+    console.log(companyLogo);
   };
 
   return (
@@ -95,7 +99,7 @@ const Files = ({ fetchData }: FilesProps) => {
       <FileDragDrop setFile={setFile} />
 
       {/* Muestra siempre el logo*/}
-      {(companyLogo || file) && <FileLogo file={file} onDelete={deleteLogo} />}
+      {(companyLogo || file) && <FileLogo file={file} onEdit={editLogo} onDelete={deleteLogo} />}
       {/* Muestra otros tipos de archivos cuando se cargan */}
       {file && file.type.includes("pdf") && (
         <FileCard

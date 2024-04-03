@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { get } from "@/services/fetch";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
 import { setFilesData } from "@/store/features/filesSlice";
 import { ENV } from "@/typescript/types/environment.enum";
@@ -15,6 +15,7 @@ import Form from "./Form";
 import Sequence from "./Sequence";
 
 const Business = () => {
+  // const pallete = useAppSelector(data => data.business.palette);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict.business");
@@ -39,6 +40,8 @@ const Business = () => {
   useEffect(() => {
     fetchData();
   }, [dispatch]);
+
+  // console.log(pallete);
 
   return (
     <section className={styles.container}>
