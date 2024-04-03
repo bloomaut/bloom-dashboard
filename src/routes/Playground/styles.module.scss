@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, calc(100vh - 90px));
+  @include width-height(100%, 100%);
   @include flex(column, center, center, 30px);
   max-width: 1200px;
   .breadcrumb_container {
