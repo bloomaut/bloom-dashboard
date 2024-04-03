@@ -180,7 +180,9 @@
         "input": "Nombre",
         "select": "Diseño",
         "cancel": "Cancelar",
-        "generate_btn": "Generar Colección"
+        "generate_btn": "Generar Colección",
+        "colection_created": "Colección creada correctamente",
+        "colection_error": "Error al crear colección"
       }
     },
     "my-collection": {
