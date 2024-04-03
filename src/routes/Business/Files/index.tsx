@@ -1,7 +1,7 @@
 "use client";
 import styles from "./styles.module.scss";
 import { useState } from "react";
-import { get, postFile, update } from "@/services/fetch";
+import { get, postFile, update, remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
@@ -14,11 +14,18 @@ import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
 import Button from "@/components/Button";
+import PopupConfirm from "@/components/PopupConfirm";
 
-const Files = () => {
+interface FilesProps {
+  fetchData: () => void;
+}
+
+const Files = ({ fetchData }: FilesProps) => {
   const companyLogo = useAppSelector(data => data.business.logo);
   const reduxFiles = useAppSelector(data => data.files.media);
   const [file, setFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<null | string>(null);
+  const [showPopupDelete, setShowPopupDelete] = useState(false);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
   const dispatch = useAppDispatch();
@@ -38,34 +45,47 @@ const Files = () => {
   };
 
   const handleUploadFile = async (file: File) => {
-    const response = await postFile("small-files/media", file, ENV.DASH);
-    if (response.data.statusCode === 201) {
-      if (response.data.result.media.filetype.startsWith("image/")) {
-        const logoUrl = response.data.result.media.url;
-        await handleUpdateLogo(logoUrl);
+    try {
+      const response = await postFile("small-files/media", file, ENV.DASH);
+      if (response.data.statusCode === 201) {
+        setFile(null);
+        if (response.data.result.media.filetype.startsWith("image/")) {
+          const logoUrl = response.data.result.media.url;
+          await handleUpdateLogo(logoUrl);
+        } else {
+          notify(`${dict("toast.success_file")}`);
+          const userFiles = await get("small-files/media", ENV.DASH);
+          dispatch(setFilesData(userFiles.result.folder));
+        }
       } else {
-        notify(`${dict("toast.success_file")}`);
-        const userFiles = await get("small-files/media", ENV.DASH);
-        dispatch(setFilesData(userFiles.result.folder));
+        notifyError(`${dict("toast.error_img")}`);
       }
-    } else {
-      notifyError(`${dict("toast.error_img")}`);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const removeFile = () => {
-    setFile(null);
-  };
-
-  const deleteFile = () => {
-    //borrar archivo con API
+  const deleteFile = async () => {
+    if (selectedFile) {
+      try {
+        const response = await remove("small-files/media", selectedFile, ENV.DASH);
+        if (response.statusCode === 200) {
+          setShowPopupDelete(false);
+          notify(`${dict("toast.success_delete")}`);
+          fetchData();
+        }
+      } catch (e) {
+        notifyError(`${dict("toast.error_file")}`);
+        console.log(e);
+      }
+    }
   };
 
   const deleteLogo = () => {
     if (file) {
       setFile(null);
     } else {
-      //borrar logo con API
+      deleteFile();
     }
   };
 
@@ -78,7 +98,12 @@ const Files = () => {
       {(companyLogo || file) && <FileLogo file={file} onDelete={deleteLogo} />}
       {/* Muestra otros tipos de archivos cuando se cargan */}
       {file && file.type.includes("pdf") && (
-        <FileCard title={file.name} created_at={new Date().toString()} docType={file.type} onDelete={removeFile} />
+        <FileCard
+          title={file.name}
+          created_at={new Date().toString()}
+          docType={file.type}
+          onDelete={() => setFile(null)}
+        />
       )}
       {/* EL botón aparece cuando se carga una imagen */}
       {file && (
@@ -98,9 +123,21 @@ const Files = () => {
               title={file.filename}
               created_at={file.created_at}
               docType={file.filetype}
-              onDelete={deleteFile}
+              onDelete={() => {
+                setSelectedFile(file._id), setShowPopupDelete(true);
+              }}
             />
           ))}
+        {showPopupDelete && (
+          <PopupConfirm
+            onConfirm={deleteFile}
+            onCancel={() => setShowPopupDelete(false)}
+            setShowConfirmation={setShowPopupDelete}
+            title={dict("popup.delete_title")}
+            textCancel={dict("popup.cancel")}
+            textAccept={dict("popup.confirm")}
+          />
+        )}
       </div>
     </div>
   );
