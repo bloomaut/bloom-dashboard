@@ -89,7 +89,8 @@ const Form = () => {
     });
     if (response?.status === 200) {
       const { hotlink } = response.data.data.result;
-      setPaUrl(hotlink.url);
+      // setPaUrl(hotlink.url);
+      console.log(hotlink.url);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
     }
@@ -97,7 +98,7 @@ const Form = () => {
     setFormDataPost(EmptyFormData);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
     const updatedFormInfo = [...formInfo];
     updatedFormInfo[index].value = e.target.value;
     setFormInfo(updatedFormInfo);
@@ -118,7 +119,9 @@ const Form = () => {
                   type={info.target}
                   textLabel={info.description}
                   value={info.value!}
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                    handleChange(e, index)
+                  }
                   textHolder={info.placeholder!}
                   name={info.name}
                 />
