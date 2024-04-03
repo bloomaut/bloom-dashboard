@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { BusinessDataProps } from "@/typescript/interfaces/business.interface";
+import { PaletteItem } from "@/typescript/interfaces/business.interface";
 
 export const businessInitialData: BusinessDataProps = {
   client_id: null,
@@ -30,7 +31,7 @@ export const BusinessSlice = createSlice({
       state.logo = action.payload;
       return state;
     },
-    updatePallete: (state, action: PayloadAction<string[]>) => {
+    updatePallete: (state, action: PayloadAction<PaletteItem[]>) => {
       state.palette = action.payload;
       return state;
     },

@@ -2,11 +2,14 @@ import { useState } from "react";
 import { colorPalleteGenerator } from "@/utils/colorPalleteGenerator";
 import { useAppDispatch } from "@/store/hooks";
 import { updatePallete } from "@/store/features/businessSlice";
+import { ENV } from "@/typescript/types/environment.enum";
+import { update } from "@/services/fetch";
 import styles from "./styles.module.scss";
+import { PaletteItem } from "@/typescript/interfaces/business.interface";
 
 const PalleteGenerator = () => {
   const [colorBase, setColorBase] = useState("#FFFFFF");
-  const [palette, setPalette] = useState<string[]>([]);
+  const [palette, setPalette] = useState<PaletteItem[]>([]);
   const dispatch = useAppDispatch();
 
   const selectedColor = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,12 +21,20 @@ const PalleteGenerator = () => {
     e.preventDefault();
     const newPallete = colorPalleteGenerator(colorBase);
     setPalette(newPallete);
-    // dispatch(updatePallete(newPallete));
   };
 
-  const handleSubmitPallete = (e: React.MouseEvent<HTMLFormElement>) => {
+  const handleSubmitPallete = async (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(palette);
+    dispatch(updatePallete(palette));
+    try {
+      const dataToSend = {
+        palette: palette,
+      };
+      const response = await update("small-business", ENV.DASH, dataToSend);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -33,12 +44,12 @@ const PalleteGenerator = () => {
         <input className={styles.color_base} type='color' value={colorBase} onChange={selectedColor} />
       </div>
       <div className={styles.box_container}>
-        {palette.map((color, index) => (
+        {palette.map((colorObj, index) => (
           <div
             key={index}
             className={styles.box}
             style={{
-              backgroundColor: color,
+              backgroundColor: colorObj.color1 || colorObj.color2 || colorObj.color3 || colorObj.color4,
             }}
           />
         ))}

@@ -1,3 +1,5 @@
+import { PaletteItem } from "@/typescript/interfaces/business.interface";
+
 const hexToRgb = (hex: string): number[] => {
   const bigint = parseInt(hex.slice(1), 16);
   const r = (bigint >> 16) & 255;
@@ -31,7 +33,7 @@ const baseRGBToHue = (baseRGB: number[]): number => {
   return hue;
 };
 
-export const colorPalleteGenerator = (colorBase: string): string[] => {
+export const colorPalleteGenerator = (colorBase: string): PaletteItem[] => {
   const baseRGB = hexToRgb(colorBase);
 
   // Generar el primer color a partir del color base seleccionado por el usuario
@@ -51,5 +53,18 @@ export const colorPalleteGenerator = (colorBase: string): string[] => {
   const color3 = `hsl(${hue2},${saturation}%,60%)`;
   const color4 = `hsl(${hue3},${saturation}%,10%)`;
 
-  return [color1, color2, color3, color4];
+  return [
+    {
+      color1,
+    },
+    {
+      color2,
+    },
+    {
+      color3,
+    },
+    {
+      color4,
+    },
+  ];
 };
