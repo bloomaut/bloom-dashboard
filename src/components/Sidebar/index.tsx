@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import Card from "./Card";
 import styles from "./styles.module.scss";
 import HomeIcon from "./Icons/Home";
@@ -13,7 +14,6 @@ import ArrowRigth from "../../../public/icons/double_arrow_rigth.svg";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
-import { useState } from "react";
 
 interface SidebarCard {
   title: string;
@@ -21,9 +21,13 @@ interface SidebarCard {
   path: string;
 }
 
-const Sidebar = () => {
+interface SidebarProps {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const dict = useTranslations("dict.sidebar");
-  const [isOpen, setIsOpen] = useState<boolean>(true);
   const { user } = useUser();
 
   const handleMenu = () => {
