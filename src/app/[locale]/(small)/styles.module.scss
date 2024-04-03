@@ -13,6 +13,10 @@
       @include flex(column, flex-start, center);
       overflow-y: auto;
       padding: 20px;
+      transition: all 0.7s;
+    }
+    .children_container_closed {
+      width: calc(100vw - 60px);
     }
   }
 }
