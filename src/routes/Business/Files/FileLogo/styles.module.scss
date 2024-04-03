@@ -1,8 +1,7 @@
 @import "@/styles/theme.scss";
 
 .card {
-  @include width-height(100%, 175px);
-  // @include flex(row, space-between, center, 20px);
+  @include width-height(100%, auto);
   display: grid;
   grid-template-columns: 30% 70%;
   border-radius: 8px;

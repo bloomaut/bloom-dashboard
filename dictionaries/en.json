@@ -29,6 +29,7 @@
       "success_file": "File uploaded successfully",
       "success_edit": "Information updated successfully",
       "success_delete": "File deleted successfully",
+      "success_palette": "Palette updated successfully",
       "error_name": "Name is required",
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",

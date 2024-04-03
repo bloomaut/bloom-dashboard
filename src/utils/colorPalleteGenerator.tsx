@@ -53,18 +53,5 @@ export const colorPalleteGenerator = (colorBase: string): PaletteItem[] => {
   const color3 = `hsl(${hue2},${saturation}%,60%)`;
   const color4 = `hsl(${hue3},${saturation}%,10%)`;
 
-  return [
-    {
-      color1,
-    },
-    {
-      color2,
-    },
-    {
-      color3,
-    },
-    {
-      color4,
-    },
-  ];
+  return [{ color: color1 }, { color: color2 }, { color: color3 }, { color: color4 }];
 };
