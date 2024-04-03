@@ -40,7 +40,7 @@
       }
       .select {
         @include width-height(100%, 100%);
-        @include flex(column, flex-start, flex-start, 10px);
+        @include flex(column, flex-start, flex-start, 5px);
         select {
           @include width-height(100%, 30px);
           padding: 5px 10px;
