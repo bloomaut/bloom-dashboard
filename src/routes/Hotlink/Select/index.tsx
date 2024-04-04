@@ -3,10 +3,12 @@ import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 import Image from "next/image";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useFlakesContext } from "@/context/FlakesContext";
+import { useTranslations } from "next-intl";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
   const selectedFlake = flakes.find(flake => flake._id === selectedFlakeId);
+  const dict = useTranslations("dict.hotlinks");
 
   const handleDesignChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFlake = flakes.find(flake => flake.skinx.title === event.target.value);
@@ -18,7 +20,7 @@ const Select = () => {
   return (
     <div className={styles.container}>
       <div className={styles.select}>
-        <label>Diseño</label>
+        <label>{dict("select")}</label>
         <select name='design' id='design' onChange={handleDesignChange}>
           {flakes.map((flake, index) => (
             <option key={index} value={flake.skinx.title} selected={index === 0}>
