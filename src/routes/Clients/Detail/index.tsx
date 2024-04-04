@@ -9,9 +9,10 @@ const Detail = () => {
   return (
     <section className={styles.container}>
       <p className={styles.detail_names}>
-        {clientSelected?.clientCode} {clientSelected?.ClientFirstname}
+        {clientSelected?.clientCode} {clientSelected?.ClientFirstname} {""}
         {clientSelected?.ClientLastname && clientSelected.ClientLastname}
       </p>
+
       <div className={styles.info_container}>
         <div className={styles.info}>
           {clientSelected?.ClientEmail && (
