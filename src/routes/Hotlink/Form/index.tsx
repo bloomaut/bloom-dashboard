@@ -100,6 +100,10 @@ const Form = () => {
       const response = await post("hotlinks/user", formDataPost, ENV.DASH);
       console.log("Datos enviados:", formDataPost);
       console.log("Respuesta del servidor:", response);
+      if (response.data.statusCode === 200) {
+        setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
+        setFormDataPost(EmptyFormData);
+      }
     } catch (error) {
       console.error("Error al enviar los datos al servidor:", error);
     }
