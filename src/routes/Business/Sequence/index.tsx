@@ -19,24 +19,30 @@ const Sequence = () => {
   const files = useAppSelector(data => data.files.media);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
+  const [completedSteps, setCompletedSteps] = useState([1, 2, 3, 4]);
   const dict = useTranslations("dict.business.sequence");
 
   useEffect(() => {
     if (currentStep === 1) {
       if (business?.name) {
         setCurrentStep(2);
+        setCompletedSteps(completedSteps.filter(step => step !== 1));
       }
     } else if (currentStep === 2) {
       if (business?.logo) {
         setCurrentStep(3);
+        setCompletedSteps(completedSteps.filter(step => step !== 2));
       }
     } else if (currentStep === 3) {
       if (files?.length >= 2) {
         const hasPDF = files.some(file => file.filetype === "application/pdf");
-        if (hasPDF) setCurrentStep(4);
+        if (hasPDF) {
+          setCurrentStep(4);
+          setCompletedSteps(completedSteps.filter(step => step !== 3 && step !== 4));
+        }
       }
     }
-  }, [business, files, currentStep]);
+  }, [business, files, currentStep, completedSteps]);
 
   const content: ContentProps[] = [
     {
@@ -71,7 +77,7 @@ const Sequence = () => {
       <Subtitle text={dict("title")} />
       <div className={styles.cards_container}>
         {content.map((data, index) => (
-          <Card key={index} data={data} disabled={currentStep !== data.step} />
+          <Card key={index} data={data} disabled={completedSteps.indexOf(data.step) === -1} />
         ))}
       </div>
       <div className={styles.btn_container}>

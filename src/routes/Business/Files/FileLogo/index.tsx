@@ -31,12 +31,13 @@ const FileLogo = ({ file, onEdit, onDelete }: FileLogoProps) => {
         <div className={styles.logo_container}>
           <Image src={image} width={100} height={100} priority className={styles.logo} alt='Logo' />
           <div className={styles.btn_container}>
-            <button className={styles.btn} onClick={onDelete}>
-              <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
-            </button>
-            {companyLogo && (
+            {companyLogo ? (
               <button className={styles.btn} onClick={onEdit}>
                 <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
+              </button>
+            ) : (
+              <button className={styles.btn} onClick={onDelete}>
+                <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
               </button>
             )}
           </div>

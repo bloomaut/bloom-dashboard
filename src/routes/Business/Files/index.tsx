@@ -71,6 +71,7 @@ const Files = ({ fetchData }: FilesProps) => {
         const response = await remove("small-files/media", selectedFile, ENV.DASH);
         if (response.statusCode === 200) {
           setShowPopupDelete(false);
+          setSelectedFile(null);
           notify(`${dict("toast.success_delete")}`);
           fetchData();
         }
@@ -92,8 +93,6 @@ const Files = ({ fetchData }: FilesProps) => {
   const editLogo = () => {
     console.log(companyLogo);
   };
-
-  console.log(reduxFiles);
 
   return (
     <div className={styles.container}>
@@ -119,7 +118,7 @@ const Files = ({ fetchData }: FilesProps) => {
       )}
 
       <div className={styles.files}>
-        {reduxFiles.length >= 2 && <Subtitle text={`${dict("business.file.subtitle")}`} />}
+        {reduxFiles && reduxFiles.length >= 2 && <Subtitle text={`${dict("business.file.subtitle")}`} />}
         {/* Muestra todos los archivos PDF */}
         {reduxFiles
           ?.filter(i => i.filetype.includes("pdf"))
