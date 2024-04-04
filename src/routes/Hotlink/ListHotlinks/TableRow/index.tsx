@@ -1,11 +1,11 @@
 import styles from "./styles.module.scss";
-import { useTranslations } from "next-intl";
 import copyIcon from "/public/icons/copy.svg";
 import wpIcon from "/public/icons/whatsapp.svg";
 import Image from "next/image";
 
 interface TableRowProps {
   data: {
+    id: number;
     nameHotlink: string;
     name: string;
     link: string;
@@ -13,8 +13,6 @@ interface TableRowProps {
 }
 
 const TableRow = ({ data }: TableRowProps) => {
-  const dict = useTranslations("dict.my-collection");
-
   return (
     <div className={styles.container}>
       <div className={styles.column}>
