@@ -16,6 +16,8 @@
       color: $text;
     }
     &:last-child {
+      justify-self: end;
+      padding-right: 20px;
       img {
         filter: grayscale(1);
         transform: scale(0.8, 0.8);

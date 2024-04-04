@@ -22,6 +22,10 @@
     h4 {
       color: $text;
       @include fontSize-fontWeight(18px, 400);
+      &:last-child {
+        justify-self: end;
+        padding: 0 20px;
+      }
     }
   }
   .rows_container {
