@@ -8,14 +8,24 @@
     @include fontSize-fontWeight(30px, 500);
     color: $text;
   }
-  .info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    color: $text;
-    .label {
+  .info_container {
+    @include flex(column, center, flex-start, 15px);
+    .info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      color: $text;
+      .label {
+        @include fontSize-fontWeight(15px, 600);
+        color: $text;
+        span {
+          @include fontSize-fontWeight(14px, 400);
+        }
+      }
+    }
+    .personal_note {
       @include fontSize-fontWeight(15px, 600);
       color: $text;
       span {
