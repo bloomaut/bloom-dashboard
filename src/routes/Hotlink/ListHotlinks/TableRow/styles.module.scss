@@ -1,0 +1,26 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, auto);
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
+  align-items: center;
+  &:hover {
+    background-color: $blueishBackground;
+  }
+  .column {
+    padding: 5px;
+    margin: 5px 0;
+    p {
+      @include fontSize-fontWeight(14px, 400);
+      color: $text;
+    }
+    &:last-child {
+      img {
+        filter: grayscale(1);
+        transform: scale(0.8, 0.8);
+        cursor: pointer;
+      }
+    }
+  }
+}
