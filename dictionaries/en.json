@@ -34,6 +34,7 @@
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
       "error_file": "Error deleting file",
+      "error_palette": "Error updating palette",
       "empty_fields": "All fields are required",
       "error_tryagain": "There was a problem, try again later",
       "client_post": "Client created successfully",

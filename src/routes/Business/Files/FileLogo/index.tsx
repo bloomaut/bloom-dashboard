@@ -4,7 +4,7 @@ import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import trashIcon from "/public/icons/trash.svg";
 import pencilIcon from "/public/icons/edit.svg";
-import PalleteGenerator from "../PalleteGenerator";
+import PalleteGenerator from "./PalleteGenerator";
 
 interface FileLogoProps {
   file?: File | null;
@@ -26,7 +26,7 @@ const FileLogo = ({ file, onEdit, onDelete }: FileLogoProps) => {
   }, [file]);
 
   return (
-    <div className={styles.card}>
+    <div className={companyLogo ? `${styles.card_flex} ${styles.card_grid}` : `${styles.card_flex}`}>
       {image && (
         <div className={styles.logo_container}>
           <Image src={image} width={100} height={100} priority className={styles.logo} alt='Logo' />
@@ -34,13 +34,15 @@ const FileLogo = ({ file, onEdit, onDelete }: FileLogoProps) => {
             <button className={styles.btn} onClick={onDelete}>
               <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
             </button>
-            <button className={styles.btn} onClick={onEdit}>
-              <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
-            </button>
+            {companyLogo && (
+              <button className={styles.btn} onClick={onEdit}>
+                <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
+              </button>
+            )}
           </div>
         </div>
       )}
-      <PalleteGenerator />
+      {companyLogo && <PalleteGenerator />}
     </div>
   );
 };

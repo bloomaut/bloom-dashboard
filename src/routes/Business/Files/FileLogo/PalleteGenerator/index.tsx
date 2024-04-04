@@ -45,6 +45,7 @@ const PalleteGenerator = () => {
         notify(`${dict("toast.success_palette")}`);
       }
     } catch (error) {
+      notifyError(`${dict("toast.error_palette")}`);
       console.log(error);
     }
   };
@@ -57,50 +58,20 @@ const PalleteGenerator = () => {
   return (
     <form className={styles.container} onSubmit={handleSubmitPallete}>
       <div className={styles.header}>
-        <p>{palette && !edit ? "Paleta de colores" : "Seleccione el color base 👉"}</p>
-        {(!palette || edit) && (
-          <input className={styles.color_base} type='color' value={colorBase} onChange={selectedColor} />
+        {(palette.length || palettePreview.length) && !edit ? (
+          <p>Paleta de Colores</p>
+        ) : (
+          <>
+            <p>Seleccione el color base 👉</p>
+            <input className={styles.color_base} type='color' value={colorBase} onChange={selectedColor} />
+          </>
         )}
       </div>
-      {palette.length >= 1 ? (
-        <div className={styles.content}>
-          <div className={styles.box_container}>
-            {edit ? (
-              <div className={styles.inner_container}>
-                <div className={styles.edit_container}>
-                  {palettePreview.length > 0
-                    ? palettePreview.map((colorObj, index) => (
-                        <div
-                          key={index}
-                          className={styles.box}
-                          style={{
-                            backgroundColor: colorObj.color,
-                          }}
-                        ></div>
-                      ))
-                    : palette.map((colorObj, index) => (
-                        <div
-                          key={index}
-                          className={styles.box}
-                          style={{
-                            backgroundColor: colorObj.color,
-                          }}
-                        ></div>
-                      ))}
-                </div>
-                <div className={styles.btn_container}>
-                  <button className={styles.btn} onClick={handleSetPallete}>
-                    Generar
-                  </button>
-                  {palettePreview.length > 0 && (
-                    <button className={styles.btn_submit} type='submit'>
-                      Enviar
-                    </button>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <>
+      <div className={styles.content}>
+        <div className={styles.inner_content}>
+          {palette.length && palettePreview.length === 0 && !edit ? (
+            <>
+              <div className={styles.box_container}>
                 {palette.map((colorObj, index) => (
                   <div
                     key={index}
@@ -110,16 +81,38 @@ const PalleteGenerator = () => {
                     }}
                   ></div>
                 ))}
-                <button className={styles.btn_edit} onClick={handleEdit}>
-                  <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
+              </div>
+              <button className={styles.btn_edit} onClick={handleEdit}>
+                <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
+              </button>
+            </>
+          ) : (
+            <>
+              <div className={styles.box_container}>
+                {palettePreview.map((colorObj, index) => (
+                  <div
+                    key={index}
+                    className={styles.box}
+                    style={{
+                      backgroundColor: colorObj.color,
+                    }}
+                  ></div>
+                ))}
+              </div>
+              <div className={styles.btn_container}>
+                <button className={styles.btn} onClick={handleSetPallete}>
+                  Generar
                 </button>
-              </>
-            )}
-          </div>
+                {palettePreview.length > 0 && (
+                  <button className={styles.btn_submit} type='submit'>
+                    Guardar
+                  </button>
+                )}
+              </div>
+            </>
+          )}
         </div>
-      ) : (
-        ""
-      )}
+      </div>
     </form>
   );
 };
