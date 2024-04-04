@@ -10,7 +10,6 @@
     overflow-y: auto;
     row-gap: 20px;
     padding-right: 5px;
-    max-height: 400px;
     .template_container {
       .title {
         @include fontSize-fontWeight(14px, 400);

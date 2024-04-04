@@ -54,3 +54,12 @@
     max-height: 630px;
   }
 }
+
+@media (min-width: 1600px) {
+  .container {
+    margin-left: 20px;
+    .phone_container {
+      @include width-height(270px, 515px);
+    }
+  }
+}
