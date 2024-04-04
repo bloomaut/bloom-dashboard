@@ -93,6 +93,8 @@ const Files = ({ fetchData }: FilesProps) => {
     console.log(companyLogo);
   };
 
+  console.log(reduxFiles);
+
   return (
     <div className={styles.container}>
       <Subtitle text={!companyLogo ? `${dict("business.file.title01")}` : `${dict("business.file.title02")}`} />
@@ -116,8 +118,8 @@ const Files = ({ fetchData }: FilesProps) => {
         </div>
       )}
 
-      <Subtitle text={`${dict("business.file.subtitle")}`} />
       <div className={styles.files}>
+        {reduxFiles.length >= 2 && <Subtitle text={`${dict("business.file.subtitle")}`} />}
         {/* Muestra todos los archivos PDF */}
         {reduxFiles
           ?.filter(i => i.filetype.includes("pdf"))
@@ -130,6 +132,7 @@ const Files = ({ fetchData }: FilesProps) => {
               onDelete={() => {
                 setSelectedFile(file._id), setShowPopupDelete(true);
               }}
+              url={file.url}
             />
           ))}
         {showPopupDelete && (

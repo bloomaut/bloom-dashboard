@@ -9,15 +9,17 @@ import pdf from "@/../public/icons/pdf.svg";
 import excel from "@/../public/icons/excel.svg";
 import file from "@/../public/icons/file.svg";
 import useFormattedDate from "@/hooks/useFormattedDate";
+import Link from "next/link";
 
 interface FileCardProps {
   docType: string;
   title: string;
   created_at: string;
   onDelete?: () => void;
+  url?: string;
 }
 
-const FileCard = ({ title, docType, created_at, onDelete }: FileCardProps) => {
+const FileCard = ({ title, docType, created_at, onDelete, url }: FileCardProps) => {
   const date = Date.parse(created_at);
   const formattedDate = useFormattedDate(date);
 
@@ -40,9 +42,11 @@ const FileCard = ({ title, docType, created_at, onDelete }: FileCardProps) => {
         </div>
       </div>
       <div className={styles.icons}>
-        <button className={styles.btn}>
-          <Image className={styles.controls_icons} src={folderIcon} alt='folder-icon' />
-        </button>
+        {url && (
+          <Link href={url} target='_blank' className={styles.btn}>
+            <Image className={styles.controls_icons} src={folderIcon} alt='folder-icon' />
+          </Link>
+        )}
         <button className={styles.btn} onClick={onDelete}>
           <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
         </button>
