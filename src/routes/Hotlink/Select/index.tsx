@@ -1,16 +1,17 @@
 import styles from "./styles.module.scss";
+import { useState } from "react";
 import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 import Image from "next/image";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useFlakesContext } from "@/context/FlakesContext";
-import { useTranslations } from "next-intl";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
+  const [selectedDesign, setSelectedDesign] = useState(flakes[0]?.skinx.title);
   const selectedFlake = flakes.find(flake => flake._id === selectedFlakeId);
-  const dict = useTranslations("dict.hotlinks");
 
   const handleDesignChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDesign(event.target.value);
     const selectedFlake = flakes.find(flake => flake.skinx.title === event.target.value);
     if (selectedFlake) {
       setSelectedFlakeId(selectedFlake._id);
@@ -20,10 +21,10 @@ const Select = () => {
   return (
     <div className={styles.container}>
       <div className={styles.select}>
-        <label>{dict("select")}</label>
-        <select name='design' id='design' onChange={handleDesignChange}>
+        <label>Diseño</label>
+        <select name='design' id='design' value={selectedDesign} onChange={handleDesignChange}>
           {flakes.map((flake, index) => (
-            <option key={index} value={flake.skinx.title} selected={index === 0}>
+            <option key={index} value={flake.skinx.title}>
               {flake.skinx.title}
             </option>
           ))}
