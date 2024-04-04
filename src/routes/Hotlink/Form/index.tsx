@@ -7,6 +7,8 @@ import { useTranslations } from "next-intl";
 import axios from "axios";
 import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
+import { ENV } from "@/typescript/types/environment.enum";
+import { post } from "@/services/fetch";
 
 //Componentes
 import Input from "@/components/Input";
@@ -20,6 +22,8 @@ import Checkbox from "./Checkbox";
 const EmptyFormData = {
   typeFlake: "",
   flakeId: "",
+  collection_id: "",
+  customer_id: "",
   variables: [
     {
       key: "",
@@ -68,9 +72,21 @@ const Form = () => {
     if (clientSelected && formInfo.length > 0) {
       const updatedFormInfo = formInfo.map(info => {
         const clientValue = clientSelected[info.name as keyof ClientsProps];
-        return { ...info, value: clientValue };
+        return { ...info, value: clientValue || "" };
       });
       setFormInfo(updatedFormInfo);
+
+      const updatedFormDataPost = {
+        ...formDataPost,
+        variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
+          key,
+          target,
+          name,
+          value: value || "",
+          description,
+        })),
+      };
+      setFormDataPost(updatedFormDataPost);
     }
   }, [clientSelected]);
 
@@ -81,27 +97,31 @@ const Form = () => {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
-
-    const response = await axios.post("/api/hotlinks/user", formDataPost, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response?.status === 200) {
-      const { hotlink } = response.data.data.result;
-      // setPaUrl(hotlink.url);
-      console.log(hotlink.url);
-    } else {
-      notifyError(`${dict("toast.error_tryagain")}`);
+    try {
+      const response = await post("hotlinks/user", formDataPost, ENV.DASH);
+      console.log("Datos enviados:", formDataPost);
+      console.log("Respuesta del servidor:", response);
+    } catch (error) {
+      console.error("Error al enviar los datos al servidor:", error);
     }
-
-    setFormDataPost(EmptyFormData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
     const updatedFormInfo = [...formInfo];
     updatedFormInfo[index].value = e.target.value;
     setFormInfo(updatedFormInfo);
+
+    const updatedFormDataPost = {
+      ...formDataPost,
+      variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
+        key,
+        target,
+        name,
+        value: value || "",
+        description,
+      })),
+    };
+    setFormDataPost(updatedFormDataPost);
   };
 
   return (
