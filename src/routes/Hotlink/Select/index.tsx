@@ -22,7 +22,7 @@ const Select = () => {
     <div className={styles.container}>
       <div className={styles.select}>
         <label>Diseño</label>
-        <select name='design' id='design' value={selectedDesign} onChange={handleDesignChange}>
+        <select name='design' id='design' onChange={handleDesignChange} defaultValue={flakes[0]?.skinx.title}>
           {flakes.map((flake, index) => (
             <option key={index} value={flake.skinx.title}>
               {flake.skinx.title}
