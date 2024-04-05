@@ -29,29 +29,11 @@ const useFormValidator = (formData: FormDataProps) => {
         errors.ClientFirstname = "Nombre es requerido";
       }
 
-      if (!formData.ClientLastname.trim()) {
-        errors.ClientLastname = "Apellido es requerido";
-      }
-
-      if (!formData.ClientEmail.trim()) {
-        errors.ClientEmail = "Email es requerido";
-      } else {
+      if (formData.ClientEmail.trim()) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.ClientEmail)) {
           errors.ClientEmail = "Formato de email inválido";
         }
-      }
-
-      if (!formData.ClientLocation.trim()) {
-        errors.ClientLocation = "Ubicación es requerida";
-      }
-
-      if (!formData.ClientPhone.trim()) {
-        errors.ClientPhone = "Teléfono es requerido";
-      }
-
-      if (formData.personalNote.trim().length > 200) {
-        errors.personalNote = "Las notas personales no puede tener más de 200 caracteres";
       }
 
       setErrors(errors);

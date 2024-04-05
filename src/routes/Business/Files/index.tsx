@@ -1,11 +1,10 @@
 "use client";
 import styles from "./styles.module.scss";
-import { useState } from "react";
-import { get, postFile, update } from "@/services/fetch";
+import { useEffect, useState } from "react";
+import { get, postFile, update, remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
-import { updateLogo } from "@/store/features/businessSlice";
 import { useTranslations } from "next-intl";
 import { setFilesData } from "@/store/features/filesSlice";
 //Componentes
@@ -14,25 +13,33 @@ import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
 import Button from "@/components/Button";
+import PopupConfirm from "@/components/PopupConfirm";
 
-const Files = () => {
+interface FilesProps {
+  fetchData: () => void;
+}
+
+const Files = ({ fetchData }: FilesProps) => {
   const companyLogo = useAppSelector(data => data.business.logo);
   const reduxFiles = useAppSelector(data => data.files.media);
   const [file, setFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<null | string>(null);
+  const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [showPopupEdit, setShowPopupEdit] = useState(false);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
   const dispatch = useAppDispatch();
 
   const handleUpdateLogo = async (logoUrl: string) => {
-    try {
-      const dataToSend = {
-        logo: logoUrl,
-      };
-      await update("small-business", ENV.DASH, dataToSend);
+    const dataToSend = {
+      logo: logoUrl,
+    };
+    const res = await update("small-business", ENV.DASH, dataToSend);
+    if (res.statusCode === 200) {
       notify(`${dict("toast.success_img")}`);
-      dispatch(updateLogo(logoUrl));
-    } catch (error) {
-      console.log(error);
+      setShowPopupEdit(false);
+      fetchData();
+    } else {
       notifyError(`${dict("toast.error_img")}`);
     }
   };
@@ -40,6 +47,7 @@ const Files = () => {
   const handleUploadFile = async (file: File) => {
     const response = await postFile("small-files/media", file, ENV.DASH);
     if (response.data.statusCode === 201) {
+      setFile(null);
       if (response.data.result.media.filetype.startsWith("image/")) {
         const logoUrl = response.data.result.media.url;
         await handleUpdateLogo(logoUrl);
@@ -53,21 +61,33 @@ const Files = () => {
     }
   };
 
-  const removeFile = () => {
-    setFile(null);
-  };
-
-  const deleteFile = () => {
-    //borrar archivo con API
+  const deleteFile = async () => {
+    if (selectedFile) {
+      const response = await remove("small-files/media", selectedFile, ENV.DASH);
+      if (response.statusCode === 200) {
+        setShowPopupDelete(false);
+        setSelectedFile(null);
+        notify(`${dict("toast.success_delete")}`);
+        fetchData();
+      } else {
+        notifyError(`${dict("toast.error_file")}`);
+      }
+    }
   };
 
   const deleteLogo = () => {
     if (file) {
       setFile(null);
     } else {
-      //borrar logo con API
+      console.log(companyLogo);
     }
   };
+
+  useEffect(() => {
+    if (file) {
+      setShowPopupEdit(false);
+    }
+  }, [file]);
 
   return (
     <div className={styles.container}>
@@ -75,10 +95,15 @@ const Files = () => {
       <FileDragDrop setFile={setFile} />
 
       {/* Muestra siempre el logo*/}
-      {(companyLogo || file) && <FileLogo file={file} onDelete={deleteLogo} />}
+      {(companyLogo || file) && <FileLogo file={file} onEdit={() => setShowPopupEdit(true)} onDelete={deleteLogo} />}
       {/* Muestra otros tipos de archivos cuando se cargan */}
       {file && file.type.includes("pdf") && (
-        <FileCard title={file.name} created_at={new Date().toString()} docType={file.type} onDelete={removeFile} />
+        <FileCard
+          title={file.name}
+          created_at={new Date().toString()}
+          docType={file.type}
+          onDelete={() => setFile(null)}
+        />
       )}
       {/* EL botón aparece cuando se carga una imagen */}
       {file && (
@@ -87,8 +112,8 @@ const Files = () => {
         </div>
       )}
 
-      <Subtitle text={`${dict("business.file.subtitle")}`} />
       <div className={styles.files}>
+        {reduxFiles && reduxFiles.length >= 2 && <Subtitle text={`${dict("business.file.subtitle")}`} />}
         {/* Muestra todos los archivos PDF */}
         {reduxFiles
           ?.filter(i => i.filetype.includes("pdf"))
@@ -98,9 +123,30 @@ const Files = () => {
               title={file.filename}
               created_at={file.created_at}
               docType={file.filetype}
-              onDelete={deleteFile}
+              onDelete={() => {
+                setSelectedFile(file._id), setShowPopupDelete(true);
+              }}
+              url={file.url}
             />
           ))}
+        {showPopupDelete && (
+          <PopupConfirm
+            onConfirm={deleteFile}
+            onCancel={() => setShowPopupDelete(false)}
+            setShowConfirmation={setShowPopupDelete}
+            title={dict("popup.delete_title")}
+            textCancel={dict("popup.cancel")}
+            textAccept={dict("popup.confirm")}
+          />
+        )}
+        {showPopupEdit && (
+          <PopupConfirm
+            title={dict("business.file.title03")}
+            dragAndDrop={true}
+            setFile={setFile}
+            setShowConfirmation={setShowPopupEdit}
+          />
+        )}
       </div>
     </div>
   );

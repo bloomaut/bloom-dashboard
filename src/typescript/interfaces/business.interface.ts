@@ -1,3 +1,7 @@
+export interface PaletteItem {
+  color: string;
+}
+
 export interface BusinessDataProps {
   client_id: number | null;
   createdAt: string;
@@ -6,7 +10,7 @@ export interface BusinessDataProps {
   instagram: string;
   logo: string;
   name: string;
-  palette: string[];
+  palette: PaletteItem[];
   phone: string;
   step: number | null;
   updatedAt: string;

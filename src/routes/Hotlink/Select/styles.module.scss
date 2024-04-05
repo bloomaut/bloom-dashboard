@@ -2,7 +2,8 @@
 
 .container {
   @include flex(column, center, flex-start, 20px);
-  @include width-height(50%, 390px);
+  @include width-height(50%, auto);
+  max-width: 390px;
   .select {
     @include flex(column, center, flex-start, 5px);
     label {

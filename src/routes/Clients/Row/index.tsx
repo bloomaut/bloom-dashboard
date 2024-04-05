@@ -17,9 +17,11 @@ const Row = ({ client, onDelete, onEdit }: RowProps) => {
   return (
     <div className={styles.row}>
       <div className={styles.names} onClick={() => setClientSelected(client)}>
-        <p className={styles.last_name}>{client.ClientFirstname}</p>
-        <p className={styles.first_name}>{client.ClientLastname}</p>
-        <p className={styles.email}>({client.ClientEmail})</p>
+        <p className={styles.last_name}>
+          {client.clientCode} {client.ClientFirstname}
+        </p>
+        {client.ClientLastname && <p className={styles.first_name}>{client.ClientLastname}</p>}
+        {client.ClientEmail && <p className={styles.email}>({client.ClientEmail})</p>}
       </div>
       <div className={styles.controls}>
         <button className={styles.btn} onClick={onEdit}>

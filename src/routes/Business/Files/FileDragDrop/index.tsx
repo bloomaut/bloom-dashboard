@@ -15,7 +15,6 @@ const FileDragDrop = ({ setFile }: FileDragDropProps) => {
   const companyLogo = useAppSelector(data => data.business.logo);
 
   const onDrop = (acceptedFiles: File[], fileRejections: any) => {
-    console.log(acceptedFiles[0]);
     // Si hay errores, manejarlos acá
     if (fileRejections.length) {
       const errorCode = fileRejections[0].errors[0].code;

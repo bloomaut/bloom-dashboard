@@ -28,10 +28,15 @@
       "success_img": "Image uploaded successfully",
       "success_file": "File uploaded successfully",
       "success_edit": "Information updated successfully",
+      "success_delete": "File deleted successfully",
+      "success_palette": "Palette updated successfully",
       "error_name": "Name is required",
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
+      "error_file": "Error deleting file",
+      "error_palette": "Error updating palette",
       "empty_fields": "All fields are required",
+      "success_hotlink": "Hotlink created successfully",
       "error_tryagain": "There was a problem, try again later",
       "client_post": "Client created successfully",
       "client_edit": "Client updated successfully",
@@ -139,6 +144,7 @@
       "file": {
         "title01": "Upload your logo to start",
         "title02": "Drop your files here",
+        "title03": "Arrastrá o seleccioná el logo acá",
         "subtitle": "My files"
       }
     },
@@ -201,6 +207,24 @@
     "gallery": {
       "title": "Gallery",
       "more_designs": "Find more designs at"
+    },
+    "hotlinks": {
+      "title": "Hotlink Generation",
+      "select": "Design",
+      "form_title": "Fields",
+      "form_btn": "Generate Hotlink",
+      "title_checkbox": "Fill variables with client",
+      "subtitle_checkbox": "Fields that can be completed with client",
+      "search_clients": "Search clients",
+      "empty_clients": "No clients available",
+      "list": {
+        "title": "Hotlink List",
+        "search": "Search",
+        "title_one": "Design/Template",
+        "title_two": "Client",
+        "title_three": "Hotlink URL",
+        "title_four": "Share"
+      }
     }
   }
 }

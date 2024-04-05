@@ -155,9 +155,6 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 value={formData.ClientLastname}
                 handleChange={handleInputChange}
               />
-              {checkValidation && (
-                <p className={errors.ClientLastname ? styles.error : styles.error_hidden}>{errors.ClientLastname}</p>
-              )}
             </div>
           </div>
           <div className={styles.form_control}>
@@ -182,9 +179,6 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               value={formData.ClientLocation}
               handleChange={handleInputChange}
             />
-            {checkValidation && (
-              <p className={errors.ClientLocation ? styles.error : styles.error_hidden}>{errors.ClientLocation}</p>
-            )}
           </div>
           <div className={styles.form_control}>
             <Input
@@ -195,9 +189,6 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               value={formData.ClientPhone}
               handleChange={handleInputChange}
             />
-            {checkValidation && (
-              <p className={errors.ClientPhone ? styles.error : styles.error_hidden}>{errors.ClientPhone}</p>
-            )}
           </div>
           <div className={styles.form_control}>
             <Input
@@ -209,9 +200,6 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               handleChange={handleInputChange}
             />
           </div>
-          {checkValidation && (
-            <p className={errors.personalNote ? styles.error : styles.error_hidden}>{errors.personalNote}</p>
-          )}
           <div className={styles.btn_container}>
             <Button title={buttonText} type='submit' styleName='btn' />
           </div>

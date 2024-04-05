@@ -6,4 +6,5 @@ export interface ClientsProps {
   ClientLocation: string;
   ClientPhone: string;
   personalNote: string;
+  clientCode?: string;
 }

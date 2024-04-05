@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, calc(100vh - 90px));
+  @include width-height(100%, calc(100vh - 110px));
   max-width: 1200px;
   @include flex(column, center, center, 20px);
   background-color: $blueBackground;

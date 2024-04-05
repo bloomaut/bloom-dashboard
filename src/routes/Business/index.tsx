@@ -50,7 +50,7 @@ const Business = () => {
       ) : (
         <div className={styles.inner_container}>
           <Form />
-          <Files />
+          <Files fetchData={fetchData} />
           <Sequence />
         </div>
       )}

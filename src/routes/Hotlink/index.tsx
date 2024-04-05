@@ -1,14 +1,17 @@
-import { ClientsProvider, useClientsContext } from "@/context/ClientsContext";
-import Form from "./Form";
-import Select from "./Select";
 import styles from "./styles.module.scss";
-import Title from "@/components/Title";
+import { ClientsProvider, useClientsContext } from "@/context/ClientsContext";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { FlakesProvider } from "@/context/FlakesContext";
+//Componentes
+import Title from "@/components/Title";
+import Select from "./Select";
+import Form from "./Form";
 import ListHotlinks from "./ListHotlinks";
 
 const HotlinksPage = () => {
   const { fetchClients } = useClientsContext();
+  const dict = useTranslations("dict.hotlinks");
 
   useEffect(() => {
     fetchClients();
@@ -18,7 +21,7 @@ const HotlinksPage = () => {
     <FlakesProvider>
       <ClientsProvider>
         <section className={styles.container}>
-          <Title text='Generación Hotlink' />
+          <Title text={dict("title")} />
           <div className={styles.inner_container}>
             <Select />
             <Form />
