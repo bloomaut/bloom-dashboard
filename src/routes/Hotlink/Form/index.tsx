@@ -36,8 +36,8 @@ const EmptyFormData = {
 
 const Form = () => {
   const { clientSelected } = useClientsContext();
-  const dict = useTranslations("dict.hotlinks");
-  const { notifyError } = useMessageToast();
+  const dict = useTranslations("dict");
+  const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
 
@@ -96,16 +96,15 @@ const Form = () => {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
-    try {
-      const response = await post("hotlinks/user", formDataPost, ENV.DASH);
-      console.log("Datos enviados:", formDataPost);
-      console.log("Respuesta del servidor:", response);
-      if (response.data.statusCode === 200) {
-        setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
-        setFormDataPost(EmptyFormData);
-      }
-    } catch (error) {
-      console.error("Error al enviar los datos al servidor:", error);
+    const response = await post("hotlinks/user", formDataPost, ENV.DASH);
+    console.log("Datos enviados:", formDataPost);
+    console.log("Respuesta del servidor:", response);
+    if (response.data.statusCode === 200) {
+      setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
+      setFormDataPost(EmptyFormData);
+      notify(`${dict("toast.success_hotlink")}`);
+    } else {
+      notifyError(`${dict("toast.error_tryagain")}`);
     }
   };
 
@@ -129,7 +128,7 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <SectionTitle text={dict("form_title")} />
+      <SectionTitle text={dict("hotlinks.form_title")} />
       {loading ? (
         <Loading />
       ) : (
@@ -153,7 +152,7 @@ const Form = () => {
           <Checkbox />
           <button type='submit' className={styles.btn}>
             <Image src={HotlinkIcon} alt='' />
-            {dict("form_btn")}
+            {dict("hotlinks.form_btn")}
           </button>
         </form>
       )}
