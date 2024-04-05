@@ -27,10 +27,6 @@ export const BusinessSlice = createSlice({
       state = action.payload;
       return state;
     },
-    updateLogo: (state, action: PayloadAction<string>) => {
-      state.logo = action.payload;
-      return state;
-    },
     updatePallete: (state, action: PayloadAction<PaletteItem[]>) => {
       state.palette = action.payload;
       return state;
@@ -38,6 +34,6 @@ export const BusinessSlice = createSlice({
   },
 });
 
-export const { setBusinessData, updateLogo, updatePallete } = BusinessSlice.actions;
+export const { setBusinessData, updatePallete } = BusinessSlice.actions;
 export const userState = (state: RootState) => state.business;
 export default BusinessSlice.reducer;

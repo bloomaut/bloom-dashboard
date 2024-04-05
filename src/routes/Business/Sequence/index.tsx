@@ -46,8 +46,6 @@ const Sequence = () => {
     }
   }, [business, files, currentStep, missingSteps]);
 
-  console.log(currentStep);
-
   const content: ContentProps[] = [
     {
       step: 1,

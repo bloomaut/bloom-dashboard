@@ -1,11 +1,10 @@
 "use client";
 import styles from "./styles.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { get, postFile, update, remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ENV } from "@/typescript/types/environment.enum";
-import { updateLogo } from "@/store/features/businessSlice";
 import { useTranslations } from "next-intl";
 import { setFilesData } from "@/store/features/filesSlice";
 //Componentes
@@ -26,6 +25,7 @@ const Files = ({ fetchData }: FilesProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [selectedFile, setSelectedFile] = useState<null | string>(null);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [showPopupEdit, setShowPopupEdit] = useState(false);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
   const dispatch = useAppDispatch();
@@ -35,9 +35,12 @@ const Files = ({ fetchData }: FilesProps) => {
       const dataToSend = {
         logo: logoUrl,
       };
-      await update("small-business", ENV.DASH, dataToSend);
-      notify(`${dict("toast.success_img")}`);
-      dispatch(updateLogo(logoUrl));
+      const res = await update("small-business", ENV.DASH, dataToSend);
+      if (res.statusCode === 200) {
+        notify(`${dict("toast.success_img")}`);
+        setShowPopupEdit(false);
+        fetchData();
+      }
     } catch (error) {
       console.log(error);
       notifyError(`${dict("toast.error_img")}`);
@@ -90,9 +93,11 @@ const Files = ({ fetchData }: FilesProps) => {
     }
   };
 
-  const editLogo = () => {
-    console.log(companyLogo);
-  };
+  useEffect(() => {
+    if (file) {
+      setShowPopupEdit(false);
+    }
+  }, [file]);
 
   return (
     <div className={styles.container}>
@@ -100,7 +105,7 @@ const Files = ({ fetchData }: FilesProps) => {
       <FileDragDrop setFile={setFile} />
 
       {/* Muestra siempre el logo*/}
-      {(companyLogo || file) && <FileLogo file={file} onEdit={editLogo} onDelete={deleteLogo} />}
+      {(companyLogo || file) && <FileLogo file={file} onEdit={() => setShowPopupEdit(true)} onDelete={deleteLogo} />}
       {/* Muestra otros tipos de archivos cuando se cargan */}
       {file && file.type.includes("pdf") && (
         <FileCard
@@ -142,6 +147,14 @@ const Files = ({ fetchData }: FilesProps) => {
             title={dict("popup.delete_title")}
             textCancel={dict("popup.cancel")}
             textAccept={dict("popup.confirm")}
+          />
+        )}
+        {showPopupEdit && (
+          <PopupConfirm
+            title={dict("business.file.title03")}
+            dragAndDrop={true}
+            setFile={setFile}
+            setShowConfirmation={setShowPopupEdit}
           />
         )}
       </div>

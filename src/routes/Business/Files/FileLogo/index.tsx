@@ -23,7 +23,7 @@ const FileLogo = ({ file, onEdit, onDelete }: FileLogoProps) => {
     } else {
       setImage(companyLogo);
     }
-  }, [file]);
+  }, [file, companyLogo]);
 
   return (
     <div className={companyLogo ? `${styles.card_flex} ${styles.card_grid}` : `${styles.card_flex}`}>
