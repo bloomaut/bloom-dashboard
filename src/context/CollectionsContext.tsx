@@ -10,6 +10,7 @@ interface Context {
   setCollectionsList: React.Dispatch<React.SetStateAction<CollectionList[]>>;
   filteredCollections: CollectionList | null;
   setFilteredCollections: React.Dispatch<React.SetStateAction<CollectionList | null>>;
+  loading: boolean;
 }
 
 const CollectionsContext = createContext<Context>({
@@ -19,10 +20,12 @@ const CollectionsContext = createContext<Context>({
   setCollectionsList: () => [],
   filteredCollections: null,
   setFilteredCollections: () => null,
+  loading: true,
 });
 
 export const CollectionsProvider = ({ children }: { children: JSX.Element }) => {
   const [id, setId] = useState<string>("");
+  const [loading, setLoading] = useState(true);
   const [collectionsList, setCollectionsList] = useState<CollectionList[]>([]);
   const [filteredCollections, setFilteredCollections] = useState<CollectionList | null>(null);
 
@@ -32,6 +35,9 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
 
       if (response.statusCode === 200) {
         setCollectionsList(response.result.hotlinkCollections);
+        setLoading(false);
+      } else {
+        setLoading(false);
       }
     };
 
@@ -47,6 +53,7 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
         setCollectionsList,
         filteredCollections,
         setFilteredCollections,
+        loading,
       }}
     >
       {children}

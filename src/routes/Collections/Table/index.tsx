@@ -8,9 +8,10 @@ import Button from "@/components/Button";
 import TableHead from "../TableHead";
 import TableRows from "../TableRow";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 const Table = () => {
-  const { id, collectionsList, filteredCollections } = useCollectionsContext();
+  const { id, collectionsList, filteredCollections, loading } = useCollectionsContext();
   const dict = useTranslations("dict.collections");
   const router = useRouter();
   const locale = useLocale();
@@ -25,7 +26,9 @@ const Table = () => {
         <TableHead />
         {/* CONTENIDO */}
         <div className={styles.content_container}>
-          {filteredCollections ? (
+          {loading ? (
+            <Loading />
+          ) : filteredCollections ? (
             <TableRows key={filteredCollections._id} collection={filteredCollections} />
           ) : (
             collectionsList.map(collection => {
