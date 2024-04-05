@@ -32,6 +32,7 @@
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
       "empty_fields": "All fields are required",
+      "success_hotlink": "Hotlink created successfully",
       "error_tryagain": "There was a problem, try again later",
       "client_post": "Client created successfully",
       "client_edit": "Client updated successfully",
