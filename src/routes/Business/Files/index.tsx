@@ -31,56 +31,46 @@ const Files = ({ fetchData }: FilesProps) => {
   const dispatch = useAppDispatch();
 
   const handleUpdateLogo = async (logoUrl: string) => {
-    try {
-      const dataToSend = {
-        logo: logoUrl,
-      };
-      const res = await update("small-business", ENV.DASH, dataToSend);
-      if (res.statusCode === 200) {
-        notify(`${dict("toast.success_img")}`);
-        setShowPopupEdit(false);
-        fetchData();
-      }
-    } catch (error) {
-      console.log(error);
+    const dataToSend = {
+      logo: logoUrl,
+    };
+    const res = await update("small-business", ENV.DASH, dataToSend);
+    if (res.statusCode === 200) {
+      notify(`${dict("toast.success_img")}`);
+      setShowPopupEdit(false);
+      fetchData();
+    } else {
       notifyError(`${dict("toast.error_img")}`);
     }
   };
 
   const handleUploadFile = async (file: File) => {
-    try {
-      const response = await postFile("small-files/media", file, ENV.DASH);
-      if (response.data.statusCode === 201) {
-        setFile(null);
-        if (response.data.result.media.filetype.startsWith("image/")) {
-          const logoUrl = response.data.result.media.url;
-          await handleUpdateLogo(logoUrl);
-        } else {
-          notify(`${dict("toast.success_file")}`);
-          const userFiles = await get("small-files/media", ENV.DASH);
-          dispatch(setFilesData(userFiles.result.folder));
-        }
+    const response = await postFile("small-files/media", file, ENV.DASH);
+    if (response.data.statusCode === 201) {
+      setFile(null);
+      if (response.data.result.media.filetype.startsWith("image/")) {
+        const logoUrl = response.data.result.media.url;
+        await handleUpdateLogo(logoUrl);
       } else {
-        notifyError(`${dict("toast.error_img")}`);
+        notify(`${dict("toast.success_file")}`);
+        const userFiles = await get("small-files/media", ENV.DASH);
+        dispatch(setFilesData(userFiles.result.folder));
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      notifyError(`${dict("toast.error_img")}`);
     }
   };
 
   const deleteFile = async () => {
     if (selectedFile) {
-      try {
-        const response = await remove("small-files/media", selectedFile, ENV.DASH);
-        if (response.statusCode === 200) {
-          setShowPopupDelete(false);
-          setSelectedFile(null);
-          notify(`${dict("toast.success_delete")}`);
-          fetchData();
-        }
-      } catch (e) {
+      const response = await remove("small-files/media", selectedFile, ENV.DASH);
+      if (response.statusCode === 200) {
+        setShowPopupDelete(false);
+        setSelectedFile(null);
+        notify(`${dict("toast.success_delete")}`);
+        fetchData();
+      } else {
         notifyError(`${dict("toast.error_file")}`);
-        console.log(e);
       }
     }
   };
