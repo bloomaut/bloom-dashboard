@@ -28,9 +28,13 @@
       "success_img": "Imágen subida correctamente",
       "success_file": "Archivo subido correctamente",
       "success_edit": "Información actualizada correctamente",
+      "success_delete": "Achivo eliminado correctamente",
+      "success_palette": "Paleta actualizada correctamente",
       "error_name": "El nombre es obligatorio",
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
+      "error_file": "Error al eliminar el archivo",
+      "error_palette": "Error al subir la paleta",
       "empty_fields": "Todos los campos son requeridos",
       "success_hotlink": "Hotlink creado correctamente",
       "error_tryagain": "Hubo un problema, intente más tarde",
@@ -140,6 +144,7 @@
       "file": {
         "title01": "Subí tu logo para iniciar",
         "title02": "Arrojá tus archivos aquí",
+        "title03": "Arrastrá o seleccioná el logo acá",
         "subtitle": "Mis archivos"
       }
     },

@@ -28,9 +28,13 @@
       "success_img": "Image uploaded successfully",
       "success_file": "File uploaded successfully",
       "success_edit": "Information updated successfully",
+      "success_delete": "File deleted successfully",
+      "success_palette": "Palette updated successfully",
       "error_name": "Name is required",
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
+      "error_file": "Error deleting file",
+      "error_palette": "Error updating palette",
       "empty_fields": "All fields are required",
       "success_hotlink": "Hotlink created successfully",
       "error_tryagain": "There was a problem, try again later",
@@ -140,6 +144,7 @@
       "file": {
         "title01": "Upload your logo to start",
         "title02": "Drop your files here",
+        "title03": "Arrastrá o seleccioná el logo acá",
         "subtitle": "My files"
       }
     },

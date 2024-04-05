@@ -1,33 +1,44 @@
 @import "@/styles/theme.scss";
 
-.card {
+.card_flex {
   @include width-height(100%, auto);
+  max-height: 360px;
   @include flex(row, space-between, center, 20px);
   border-radius: 8px;
   border: 1px solid $lightGrey;
-  padding: 10px 10px;
-  .logoUrl {
-    @include width-height(auto, 70px);
-    object-fit: contain;
-  }
-  p {
-    max-width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .btn {
-    @include flex(row, center, center);
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: all 100ms ease-in-out;
-    &:hover {
-      transform: scale(1.2);
-    }
-    .controls_icons {
-      @include width-height(25px, auto);
+  padding: 10px;
+  .logo_container {
+    @include width-height(100%, auto);
+    @include flex(column, center, center, 20px);
+    .logo {
+      @include width-height(150px, 100px);
       object-fit: contain;
     }
+    .btn_container {
+      @include flex(row, center, center, 10px);
+      .btn {
+        @include flex(row, center, center);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all 100ms ease-in-out;
+        &:hover {
+          transform: scale(1.2);
+        }
+        .controls_icons {
+          @include width-height(23px, auto);
+          object-fit: contain;
+        }
+      }
+    }
   }
+}
+.card_grid {
+  @include width-height(100%, auto);
+  max-height: 360px;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  border-radius: 8px;
+  border: 1px solid $lightGrey;
+  padding: 10px 20px;
 }
