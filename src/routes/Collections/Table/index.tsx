@@ -10,25 +10,28 @@ import TableRows from "../TableRow";
 import { useRouter } from "next/navigation";
 
 const Table = () => {
-  const { id, collectionsList } = useCollectionsContext();
+  const { id, collectionsList, filteredCollections } = useCollectionsContext();
   const dict = useTranslations("dict.collections");
   const router = useRouter();
   const locale = useLocale();
 
-  console.log(collectionsList);
-
   const handleButton = () => {
     router.push(`/${locale}/my-collection/${id}`);
   };
+
   return (
     <>
       <div className={styles.table}>
         <TableHead />
         {/* CONTENIDO */}
         <div className={styles.content_container}>
-          {collectionsList.map(collection => {
-            return <TableRows key={collection._id} collection={collection} />;
-          })}
+          {filteredCollections ? (
+            <TableRows key={filteredCollections._id} collection={filteredCollections} />
+          ) : (
+            collectionsList.map(collection => {
+              return <TableRows key={collection._id} collection={collection} />;
+            })
+          )}
         </div>
       </div>
       <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />

@@ -1,4 +1,4 @@
-interface CollectionList {
+export interface CollectionList {
   _id: string;
   name: string;
   description: string;
@@ -9,7 +9,7 @@ interface CollectionList {
   flake: Flake;
 }
 
-interface Flake {
+export interface Flake {
   _id: string;
   title: string;
   thumbnail: string;
