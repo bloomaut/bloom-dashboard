@@ -32,6 +32,7 @@
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
       "empty_fields": "All fields are required",
+      "success_hotlink": "Hotlink created successfully",
       "error_tryagain": "There was a problem, try again later",
       "client_post": "Client created successfully",
       "client_edit": "Client updated successfully",
@@ -199,6 +200,24 @@
     "gallery": {
       "title": "Gallery",
       "more_designs": "Find more designs at"
+    },
+    "hotlinks": {
+      "title": "Hotlink Generation",
+      "select": "Design",
+      "form_title": "Fields",
+      "form_btn": "Generate Hotlink",
+      "title_checkbox": "Fill variables with client",
+      "subtitle_checkbox": "Fields that can be completed with client",
+      "search_clients": "Search clients",
+      "empty_clients": "No clients available",
+      "list": {
+        "title": "Hotlink List",
+        "search": "Search",
+        "title_one": "Design/Template",
+        "title_two": "Client",
+        "title_three": "Hotlink URL",
+        "title_four": "Share"
+      }
     }
   }
 }

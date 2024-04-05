@@ -32,6 +32,7 @@
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
       "empty_fields": "Todos los campos son requeridos",
+      "success_hotlink": "Hotlink creado correctamente",
       "error_tryagain": "Hubo un problema, intente más tarde",
       "client_post": "Cliente creado correctamente",
       "client_edit": "Cliente actualizado correctamente",
@@ -199,6 +200,24 @@
     "gallery": {
       "title": "Galería",
       "more_designs": "Encontrar más diseños en"
+    },
+    "hotlinks": {
+      "title": "Generación Hotlink",
+      "select": "Diseño",
+      "form_title": "Campos",
+      "form_btn": "Generar Hotlink",
+      "title_checkbox": "Llenar variables con cliente",
+      "subtitle_checkbox": "Campos que se puedan completar con cliente",
+      "search_clients": "Buscar clientes",
+      "empty_clients": "No hay clientes",
+      "list": {
+        "title": "Hotlink List",
+        "search": "Buscar",
+        "title_one": "Diseño/Template",
+        "title_two": "Cliente",
+        "title_three": "Hotlink URL",
+        "title_four": "Compartir"
+      }
     }
   }
 }

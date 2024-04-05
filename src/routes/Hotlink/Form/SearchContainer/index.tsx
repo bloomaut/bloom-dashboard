@@ -1,19 +1,22 @@
 import styles from "./styles.module.scss";
-import Search from "@/components/Search";
-import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
+import { useClientsContext } from "@/context/ClientsContext";
+import { useTranslations } from "next-intl";
+
+import Search from "@/components/Search";
 import LoadingSpinner from "@/components/Loading";
 
 const SearchContainer = () => {
   const { searchValue, setSearchValue } = useClientsContext();
   const { loading, setClientSelected, filteredClients } = useClientsContext();
+  const dict = useTranslations("dict.hotlinks");
 
   return (
     <div className={styles.search_container}>
       <Search
         searchValue={searchValue}
         handleSearchChange={e => setSearchValue(e.target.value)}
-        placeholder='Buscar Clientes'
+        placeholder={dict("search_clients")}
       />
       <div className={styles.clients_container}>
         {loading ? (
@@ -27,7 +30,7 @@ const SearchContainer = () => {
             </div>
           ))
         ) : (
-          <p className={styles.empty}>No hay clientes</p>
+          <p className={styles.empty}>{dict("empty_clients")}</p>
         )}
       </div>
     </div>

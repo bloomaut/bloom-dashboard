@@ -4,22 +4,25 @@ import { useEffect, useState } from "react";
 import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
-import axios from "axios";
 import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
+import { ENV } from "@/typescript/types/environment.enum";
+import { post } from "@/services/fetch";
+import Image from "next/image";
 
 //Componentes
 import Input from "@/components/Input";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import Image from "next/image";
-import HotlinkIcon from "@/../../public/icons/hotlink_icon_white.svg";
-
 import Checkbox from "./Checkbox";
+
+import HotlinkIcon from "@/../../public/icons/hotlink_icon_white.svg";
 
 const EmptyFormData = {
   typeFlake: "",
   flakeId: "",
+  collection_id: "",
+  customer_id: "",
   variables: [
     {
       key: "",
@@ -34,7 +37,7 @@ const EmptyFormData = {
 const Form = () => {
   const { clientSelected } = useClientsContext();
   const dict = useTranslations("dict");
-  const { notifyError } = useMessageToast();
+  const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
 
@@ -68,9 +71,21 @@ const Form = () => {
     if (clientSelected && formInfo.length > 0) {
       const updatedFormInfo = formInfo.map(info => {
         const clientValue = clientSelected[info.name as keyof ClientsProps];
-        return { ...info, value: clientValue };
+        return { ...info, value: clientValue || "" };
       });
       setFormInfo(updatedFormInfo);
+
+      const updatedFormDataPost = {
+        ...formDataPost,
+        variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
+          key,
+          target,
+          name,
+          value: value || "",
+          description,
+        })),
+      };
+      setFormDataPost(updatedFormDataPost);
     }
   }, [clientSelected]);
 
@@ -81,32 +96,39 @@ const Form = () => {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
-
-    const response = await axios.post("/api/hotlinks/user", formDataPost, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response?.status === 200) {
-      const { hotlink } = response.data.data.result;
-      // setPaUrl(hotlink.url);
-      console.log(hotlink.url);
+    const response = await post("hotlinks/user", formDataPost, ENV.DASH);
+    console.log("Datos enviados:", formDataPost);
+    console.log("Respuesta del servidor:", response);
+    if (response.data.statusCode === 200) {
+      setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
+      setFormDataPost(EmptyFormData);
+      notify(`${dict("toast.success_hotlink")}`);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
     }
-
-    setFormDataPost(EmptyFormData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
     const updatedFormInfo = [...formInfo];
     updatedFormInfo[index].value = e.target.value;
     setFormInfo(updatedFormInfo);
+
+    const updatedFormDataPost = {
+      ...formDataPost,
+      variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
+        key,
+        target,
+        name,
+        value: value || "",
+        description,
+      })),
+    };
+    setFormDataPost(updatedFormDataPost);
   };
 
   return (
     <div className={styles.container}>
-      <SectionTitle text='Campos' />
+      <SectionTitle text={dict("hotlinks.form_title")} />
       {loading ? (
         <Loading />
       ) : (
@@ -130,7 +152,7 @@ const Form = () => {
           <Checkbox />
           <button type='submit' className={styles.btn}>
             <Image src={HotlinkIcon} alt='' />
-            Generar Hotlink
+            {dict("hotlinks.form_btn")}
           </button>
         </form>
       )}

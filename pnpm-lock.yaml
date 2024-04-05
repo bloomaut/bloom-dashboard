@@ -38,9 +38,6 @@ dependencies:
   open-graph-scraper-lite:
     specifier: ^2.0.0
     version: 2.0.0
-  puppeteer:
-    specifier: ^22.4.1
-    version: 22.6.1(typescript@5.4.3)
   react:
     specifier: ^18.2.0
     version: 18.2.0
