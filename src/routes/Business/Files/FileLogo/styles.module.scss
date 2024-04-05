@@ -1,12 +1,12 @@
 @import "@/styles/theme.scss";
 
 .card_flex {
-  @include width-height(100%, 360px);
+  @include width-height(100%, auto);
+  max-height: 360px;
   @include flex(row, space-between, center, 20px);
   border-radius: 8px;
   border: 1px solid $lightGrey;
   padding: 10px;
-
   .logo_container {
     @include width-height(100%, auto);
     @include flex(column, center, center, 20px);
@@ -34,7 +34,8 @@
   }
 }
 .card_grid {
-  @include width-height(100%, 360px);
+  @include width-height(100%, auto);
+  max-height: 360px;
   display: grid;
   grid-template-columns: 30% 70%;
   border-radius: 8px;
