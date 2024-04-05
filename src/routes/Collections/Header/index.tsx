@@ -9,16 +9,27 @@ import down from "@/../public/icons/IconDown.svg";
 import bar from "@/../public/icons/bar.svg";
 import period from "@/../public/icons/period.svg";
 import plus from "@/../public/icons/plus.svg";
-import { useState } from "react";
-import { CollectionProps } from "@/typescript/interfaces/collection.interface";
+import { useEffect, useState } from "react";
+import { useCollectionsContext } from "@/context/CollectionsContext";
 
 const Header = () => {
-  const [filteredCollections, setFilteredCollections] = useState<CollectionProps[]>([]);
   const locale = useLocale();
   const dict = useTranslations("dict.collections.header");
+  const { collectionsList, setFilteredCollections } = useCollectionsContext();
   const [searchValue, setSearchValue] = useState<string>("");
 
-  /* Falta  función de filtrar */
+  useEffect(() => {
+    if (searchValue) {
+      collectionsList.map(collection => {
+        if (collection.name.toLowerCase().includes(searchValue.toLowerCase())) {
+          setFilteredCollections(collection);
+        }
+      });
+    } else {
+      setSearchValue("");
+      setFilteredCollections(null);
+    }
+  }, [searchValue]);
 
   return (
     <div className={styles.container}>

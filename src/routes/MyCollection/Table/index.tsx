@@ -1,32 +1,17 @@
+import { useParams } from "next/navigation";
 import TableRow from "../TableRow";
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
-
-const data = [
-  { name: "Cliente 1", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente", link: "power-app-engine.vercel.app/.....2a29d4" },
-  { name: "Cliente ultimo", link: "power-app-engine.vercel.app/.....2a29d4" },
-];
+import { useCollectionsContext } from "@/context/CollectionsContext";
 
 const Table = () => {
   const dict = useTranslations("dict.my-collection");
+  const { id } = useParams();
+  const { collectionsList } = useCollectionsContext();
+
+  const data = collectionsList.filter(collection => collection._id === id);
+
+  console.log(data);
 
   return (
     <div className={styles.container}>
@@ -43,7 +28,7 @@ const Table = () => {
       </div>
       <div className={styles.rows_container}>
         {data.map(client => {
-          return <TableRow data={client} />;
+          return <TableRow key={client._id} data={client} />;
         })}
       </div>
     </div>
