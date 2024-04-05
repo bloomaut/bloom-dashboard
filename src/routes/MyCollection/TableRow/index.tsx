@@ -3,24 +3,20 @@ import { useTranslations } from "next-intl";
 import copyIcon from "/public/icons/copy.svg";
 import wpIcon from "/public/icons/whatsapp.svg";
 import Image from "next/image";
+import { CollectionList } from "@/typescript/interfaces/hotlinkCollections.interface";
 
 interface TableRowProps {
-  data: {
-    name: string;
-    link: string;
-  };
+  data: CollectionList;
 }
 
 const TableRow = ({ data }: TableRowProps) => {
-  const dict = useTranslations("dict.my-collection");
-
   return (
     <div className={styles.container}>
       <div className={styles.column}>
         <p>{data.name}</p>
       </div>
       <div className={styles.column}>
-        <p>{data.link}</p>
+        <p>-</p>
       </div>
       <div className={styles.column}>
         <Image src={copyIcon} width={30} height={30} alt='icon' />
