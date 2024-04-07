@@ -8,15 +8,22 @@ import table from "@/../public/icons/excel.svg";
 import Title from "@/components/Title";
 import Search from "@/components/Search";
 import Button from "@/components/Button";
+import { useCollectionsContext } from "@/context/CollectionsContext";
+import { useParams } from "next/navigation";
 
 const Header = () => {
-  const [searchValue, setSearchValue] = useState("");
   const dict = useTranslations("dict.my-collection");
+  const { id } = useParams();
+  const { collectionsList } = useCollectionsContext();
+  const [searchValue, setSearchValue] = useState("");
+
+  const data = collectionsList.filter(collection => collection._id === id);
+  console.log(data);
 
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        <Title text='Nombre de la colección' />
+        <Title text={data[0]?.name} />
         <Search
           searchValue={searchValue}
           handleSearchChange={e => setSearchValue(e.target.value)}
