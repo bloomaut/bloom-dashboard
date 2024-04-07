@@ -1,4 +1,5 @@
 import { useCollectionsContext } from "@/context/CollectionsContext";
+import { CollectionList } from "@/typescript/interfaces/hotlinkCollections.interface";
 import styles from "./styles.module.scss";
 
 interface ContentProps {
