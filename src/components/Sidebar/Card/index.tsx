@@ -22,6 +22,7 @@ const Card = ({ text, path, icon }: CardProps) => {
           : `${styles.container} ${styles.container_noselected}`
       }
       href={path}
+      title={text}
     >
       {icon}
       <p className={styles.text}>{text}</p>

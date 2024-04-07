@@ -113,7 +113,7 @@ const NewCollectionPage = () => {
               textLabel={dict("input")}
               textHolder={dict("input")}
               name='name'
-              value={form.name}
+              value=''
               handleChange={handleChange}
             />
             <div className={styles.select}>
