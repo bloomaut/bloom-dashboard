@@ -68,7 +68,6 @@ const NewCollectionPage = () => {
 
       setForm({
         ...form,
-        name: selectedFlake.skinx.title,
         description: selectedFlake.skinx.title,
         flake_id: selectedFlake._id,
       });
@@ -114,7 +113,7 @@ const NewCollectionPage = () => {
               textLabel={dict("input")}
               textHolder={dict("input")}
               name='name'
-              value=''
+              value={form.name}
               handleChange={handleChange}
             />
             <div className={styles.select}>
