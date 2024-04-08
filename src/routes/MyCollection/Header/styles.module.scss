@@ -6,6 +6,10 @@
   .column {
     @include width-height(40%, auto);
     @include flex(column, flex-start, flex-start, 20px);
+    .subtitle {
+      @include fontSize-fontWeight(20px, 500);
+      margin-top: -10px;
+    }
   }
   .column_two {
     @include width-height(50%, auto);

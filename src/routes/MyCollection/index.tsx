@@ -5,13 +5,13 @@ import { useTranslations } from "next-intl";
 import Breadcrumb from "@/components/Breadcrumb";
 import Header from "./Header";
 import Table from "./Table";
-import { CollectionsProvider } from "@/context/CollectionsContext";
+import { HotlinkListProvider } from "@/context/HotlinksListContext";
 
 const MyCollectionPage = () => {
   const dict = useTranslations("dict.my-collection");
 
   return (
-    <CollectionsProvider>
+    <HotlinkListProvider>
       <section className={styles.container}>
         <div className={styles.breadcrumb_container}>
           <Breadcrumb title={dict("breadcrumb")} />
@@ -21,7 +21,7 @@ const MyCollectionPage = () => {
           <Table />
         </div>
       </section>
-    </CollectionsProvider>
+    </HotlinkListProvider>
   );
 };
 
