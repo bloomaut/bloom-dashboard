@@ -14,8 +14,8 @@ const GalleryPage = () => {
         <Title text={dict("title")} />
         <div className={styles.logo}>
           <p className={styles.logo_text}>{dict("more_designs")}</p>
-          <Link href=''>
-            <Image src='/assets/logo_uitrade.png' alt='logo' width={130} height={40} priority />
+          <Link href='https://uitrade.com/'>
+            <Image src='/assets/logo_uitrade.png' alt='logo UiTrade' width={130} height={40} priority />
           </Link>
         </div>
       </div>

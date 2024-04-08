@@ -2,7 +2,7 @@
 
 .container {
   @include width-height(100%, auto);
-  @include flex(row, center, center);
+  @include flex(row, center, center, 20px);
   background: $blueishBackground;
   border-radius: 8px;
   border: 2px dashed $lightGrey;
@@ -19,6 +19,9 @@
   }
   &:hover > .icon {
     transform: scale(1.05);
+  }
+  .text {
+    @include fontSize-fontWeight(15px, 400);
   }
 }
 .isActive {

@@ -5,6 +5,9 @@
       "btn": "Recargar sitio",
       "btn2": "Volver"
     },
+    "drag": {
+      "title": "Arrastrá o soltá tus archivos aquí"
+    },
     "sidebar": {
       "home": "Inicio",
       "guide": "Guía",
@@ -144,7 +147,6 @@
       "file": {
         "title01": "Subí tu logo para iniciar",
         "title02": "Arrojá tus archivos aquí",
-        "title03": "Arrastrá o seleccioná el logo acá",
         "subtitle": "Mis archivos"
       }
     },

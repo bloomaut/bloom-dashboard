@@ -31,13 +31,13 @@ const Detail = () => {
               {dict("form_label_05")}: <span>{clientSelected?.ClientPhone}</span>
             </p>
           )}
-        </div>
 
-        {clientSelected?.personalNote && (
-          <p className={styles.personal_note}>
-            {dict("form_label_06")}: <span>{clientSelected?.personalNote}</span>
-          </p>
-        )}
+          {clientSelected?.personalNote && (
+            <p className={styles.personal_note}>
+              {dict("form_label_06")}: <span>{clientSelected?.personalNote}</span>
+            </p>
+          )}
+        </div>
       </div>
     </section>
   );
