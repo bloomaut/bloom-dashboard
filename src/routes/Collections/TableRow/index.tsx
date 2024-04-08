@@ -1,5 +1,6 @@
 import { useCollectionsContext } from "@/context/CollectionsContext";
 import { CollectionList } from "@/typescript/interfaces/hotlinkCollections.interface";
+import { useState } from "react";
 import styles from "./styles.module.scss";
 
 interface ContentProps {
@@ -8,14 +9,17 @@ interface ContentProps {
 
 const TableRow = ({ collection }: ContentProps) => {
   const { id, setId } = useCollectionsContext();
+  const [selected, setSelected] = useState(false);
 
   const formattDate = collection.created_at.slice(0, 10);
 
+  const handleClick = () => {
+    setId(collection._id);
+    setSelected(true);
+  };
+
   return (
-    <div
-      className={`${styles.content} ${id === collection._id && styles.collection_selected}`}
-      onClick={() => setId(collection._id)}
-    >
+    <div className={`${styles.content} ${id === collection._id && styles.collection_selected}`} onClick={handleClick}>
       <div className={`${styles.column} ${styles.column_one}`}>
         <p>{collection.name}</p>
         <p>{formattDate}</p>
