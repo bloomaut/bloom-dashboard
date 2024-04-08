@@ -75,7 +75,8 @@ const NewCollectionPage = () => {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     router.back();
   };
 
