@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import { useFlakeData } from "@/hooks/useFlakesUser";
 import { useRouter } from "next/navigation";
@@ -32,6 +32,7 @@ const NewCollectionPage = () => {
   const { notify, notifyError } = useMessageToast();
   const [images, setImages] = useState(InitialEmptyImages);
   const [form, setForm] = useState(InitialEmptyForm);
+  const locale = useLocale();
 
   useEffect(() => {
     if (flakes.length > 0) {
@@ -42,7 +43,7 @@ const NewCollectionPage = () => {
 
       setForm({
         ...form,
-        name: flakes[0]?.skinx?.title || "",
+        name: "",
         description: flakes[0]?.skinx?.title || "",
         flake_id: flakes[0]?._id || "",
       });
@@ -51,6 +52,7 @@ const NewCollectionPage = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+
     setForm({
       ...form,
       [name]: value,
@@ -85,6 +87,7 @@ const NewCollectionPage = () => {
     const response = await post("hotlink-collections", form, ENV.DASH);
     if (response.data.statusCode === 201) {
       notify(dict("colection_created"));
+      router.replace(`/${locale}/collections`);
     } else {
       notifyError(dict("colection_error"));
     }
