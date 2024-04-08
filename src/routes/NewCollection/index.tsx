@@ -12,7 +12,7 @@ import Button from "@/components/Button";
 import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
-
+import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
 const InitialEmptyImages = {
   sm_img: "",
   lg_img: "",
@@ -98,18 +98,15 @@ const NewCollectionPage = () => {
       <Breadcrumb title={dict("title")} />
       {!loading ? (
         <div className={styles.container}>
-          {images.sm_img && images.lg_img ? (
-            <div className={styles.template}>
-              <div className={styles.sm_img}>
-                <Image src={images.sm_img} alt={form.name} width={100} height={100} />
-              </div>
-              <div className={styles.lg_img}>
-                <Image src={images.lg_img} alt={form.name} width={100} height={100} />
-              </div>
+          <div className={styles.template}>
+            <div className={styles.sm_img}>
+              {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={100} height={100} /> : <HogIcon />}
             </div>
-          ) : (
-            <div>Cargando imágenes...</div>
-          )}
+            <div className={styles.lg_img}>
+              {images.lg_img && <Image src={images.lg_img} alt={form.name} width={100} height={100} />}
+            </div>
+          </div>
+
           <form className={styles.form} onSubmit={sendFlakeForm}>
             <Input
               type='text'
