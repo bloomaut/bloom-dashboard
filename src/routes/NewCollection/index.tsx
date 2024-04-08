@@ -4,6 +4,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import { useFlakeData } from "@/hooks/useFlakesUser";
 import { useRouter } from "next/navigation";
+import useFormValidator from "@/hooks/useFormValidator";
+
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Input from "@/components/Input";
@@ -13,6 +15,7 @@ import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
+
 const InitialEmptyImages = {
   sm_img: "",
   lg_img: "",
@@ -33,7 +36,7 @@ const NewCollectionPage = () => {
   const [images, setImages] = useState(InitialEmptyImages);
   const [form, setForm] = useState(InitialEmptyForm);
   const locale = useLocale();
-
+  const [errors, setErrors] = useState<{ name?: string }>({});
   useEffect(() => {
     if (flakes.length > 0) {
       setImages({
@@ -83,6 +86,10 @@ const NewCollectionPage = () => {
 
   const sendFlakeForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!form.name.trim()) {
+      setErrors({ name: "El nombre es obligatorio" });
+      return;
+    }
 
     const response = await post("hotlink-collections", form, ENV.DASH);
     if (response.data.statusCode === 201) {
@@ -116,6 +123,7 @@ const NewCollectionPage = () => {
               value={form.name}
               handleChange={handleChange}
             />
+            <p className={errors.name ? styles.error : styles.error_hidden}>{errors.name}</p>
             <div className={styles.select}>
               <label>{dict("select")}</label>
               <select name='description' value={form.description} onChange={handleChange}>
