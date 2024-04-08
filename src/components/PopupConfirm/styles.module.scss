@@ -41,11 +41,30 @@
           background: $orange;
           color: $white;
         }
+        &:disabled {
+          border: none;
+          &:hover {
+            background: inherit;
+            color: lightGrey;
+            cursor: not-allowed;
+          }
+        }
       }
     }
   }
   .drag_container {
-    height: 200px;
-    padding: 0 20px;
+    height: auto;
+    padding: 20px;
+    position: relative;
+    gap: 20px;
+    .btn_close_icon {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
   }
 }

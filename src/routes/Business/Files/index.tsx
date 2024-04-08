@@ -8,7 +8,7 @@ import { ENV } from "@/typescript/types/environment.enum";
 import { useTranslations } from "next-intl";
 import { setFilesData } from "@/store/features/filesSlice";
 //Componentes
-import FileDragDrop from "./FileDragDrop";
+import DragAndAdrop from "../../../components/DragAndDrop";
 import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
@@ -92,7 +92,7 @@ const Files = ({ fetchData }: FilesProps) => {
   return (
     <div className={styles.container}>
       <Subtitle text={!companyLogo ? `${dict("business.file.title01")}` : `${dict("business.file.title02")}`} />
-      <FileDragDrop setFile={setFile} />
+      <DragAndAdrop setFile={setFile} />
 
       {/* Muestra siempre el logo*/}
       {(companyLogo || file) && <FileLogo file={file} onEdit={() => setShowPopupEdit(true)} onDelete={deleteLogo} />}
@@ -141,10 +141,10 @@ const Files = ({ fetchData }: FilesProps) => {
         )}
         {showPopupEdit && (
           <PopupConfirm
-            title={dict("business.file.title03")}
             dragAndDrop={true}
             setFile={setFile}
             setShowConfirmation={setShowPopupEdit}
+            onCancel={() => setShowPopupEdit(false)}
           />
         )}
       </div>
