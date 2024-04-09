@@ -1,7 +1,8 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(column, center, center, 20px);
+  @include width-height(100%, 100%);
+  @include flex(column, space-between, center);
   .header {
     @include flex(row, flex-start, flex-start, 10px);
     .color_base {
@@ -16,15 +17,15 @@
     }
   }
   .content {
-    @include width-height(100%, auto);
-    @include flex(column, space-evenly, center, 20px);
+    @include width-height(100%, 75%);
+    @include flex(column, space-between, center);
     .inner_content {
-      @include width-height(100%, auto);
-      @include flex(column, center, center, 25px);
+      @include width-height(100%, 100%);
+      @include flex(column, space-between, center);
       .box_container {
         @include flex(row, center, center, 10px);
         .box {
-          @include width-height(30px, 55px);
+          @include width-height(30px, 90px);
           transition: all 150ms ease-in-out;
         }
       }
@@ -59,13 +60,6 @@
           @include fontSize-fontWeight(14px, 400);
         }
       }
-      // .inner_container {
-      //   @include width-height(100%, auto);
-      //   @include flex(column, center, center, 10px);
-      //   .edit_container {
-      //     @include flex(row, space-evenly, center, 10px);
-      //   }
-      // }
     }
   }
 }

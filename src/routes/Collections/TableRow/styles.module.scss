@@ -36,6 +36,7 @@
   }
 }
 
-.content_selected {
+.content:hover,
+.content.collection_selected {
   background-color: $blueishBackground;
 }

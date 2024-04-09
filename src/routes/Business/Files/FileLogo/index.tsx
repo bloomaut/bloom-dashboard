@@ -4,7 +4,7 @@ import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import trashIcon from "/public/icons/trash.svg";
 import pencilIcon from "/public/icons/edit.svg";
-import PalleteGenerator from "./PalleteGenerator";
+import PaletteGenerator from "./PaletteGenerator";
 
 interface FileLogoProps {
   file?: File | null;
@@ -29,6 +29,7 @@ const FileLogo = ({ file, onEdit, onDelete }: FileLogoProps) => {
     <div className={companyLogo ? `${styles.card_flex} ${styles.card_grid}` : `${styles.card_flex}`}>
       {image && (
         <div className={styles.logo_container}>
+          <p>Company Logo</p>
           <Image src={image} width={100} height={100} priority className={styles.logo} alt='Logo' />
           <div className={styles.btn_container}>
             {companyLogo ? (
@@ -43,7 +44,7 @@ const FileLogo = ({ file, onEdit, onDelete }: FileLogoProps) => {
           </div>
         </div>
       )}
-      {companyLogo && <PalleteGenerator />}
+      {companyLogo && <PaletteGenerator />}
     </div>
   );
 };
