@@ -7,8 +7,8 @@ import Search from "@/components/Search";
 import LoadingSpinner from "@/components/Loading";
 
 const SearchContainer = () => {
-  const { searchValue, setSearchValue } = useClientsContext();
-  const { loading, setClientSelected, filteredClients } = useClientsContext();
+  const { searchValue, setSearchValue, loading, clientSelected, setClientSelected, filteredClients } =
+    useClientsContext();
   const dict = useTranslations("dict.hotlinks");
 
   return (
@@ -23,7 +23,10 @@ const SearchContainer = () => {
           <LoadingSpinner />
         ) : filteredClients.length ? (
           filteredClients.map((client: ClientsProps) => (
-            <div className={styles.row} key={client._id}>
+            <div
+              className={`${styles.row} ${clientSelected && clientSelected._id === client._id ? styles.selected : ""}`}
+              key={client._id}
+            >
               <div onClick={() => setClientSelected(client)}>
                 <p>
                   {client.ClientFirstname} {client.ClientLastname}
