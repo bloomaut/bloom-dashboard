@@ -21,6 +21,8 @@
         @include width-height(100%, 100%);
         border: 1px solid $lighterGrey;
         border-radius: 4px;
+        background-color: $greyBackground;
+        @include flex(row, center, center);
         img {
           @include width-height(100%, 100%);
           object-fit: cover;
@@ -33,10 +35,18 @@
     }
     .form {
       @include width-height(100%, 100%);
-      @include flex(column, flex-start, flex-start, 15px);
+      @include flex(column, flex-start, flex-start, 5px);
       padding: 10px;
       label {
         @include fontSize-fontWeight(16px, 500);
+      }
+      .error {
+        opacity: 1;
+        @include fontSize-fontWeight(12px, 400);
+        color: $error;
+      }
+      .error_hidden {
+        height: 1px;
       }
       .select {
         @include width-height(100%, 100%);

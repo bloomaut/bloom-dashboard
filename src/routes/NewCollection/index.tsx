@@ -1,9 +1,11 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import { useFlakeData } from "@/hooks/useFlakesUser";
 import { useRouter } from "next/navigation";
+import useFormValidator from "@/hooks/useFormValidator";
+
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Input from "@/components/Input";
@@ -12,6 +14,7 @@ import Button from "@/components/Button";
 import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
 
 const InitialEmptyImages = {
   sm_img: "",
@@ -32,7 +35,8 @@ const NewCollectionPage = () => {
   const { notify, notifyError } = useMessageToast();
   const [images, setImages] = useState(InitialEmptyImages);
   const [form, setForm] = useState(InitialEmptyForm);
-
+  const locale = useLocale();
+  const [errors, setErrors] = useState<{ name?: string }>({});
   useEffect(() => {
     if (flakes.length > 0) {
       setImages({
@@ -42,7 +46,7 @@ const NewCollectionPage = () => {
 
       setForm({
         ...form,
-        name: flakes[0]?.skinx?.title || "",
+        name: "",
         description: flakes[0]?.skinx?.title || "",
         flake_id: flakes[0]?._id || "",
       });
@@ -51,6 +55,7 @@ const NewCollectionPage = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+
     setForm({
       ...form,
       [name]: value,
@@ -68,23 +73,28 @@ const NewCollectionPage = () => {
 
       setForm({
         ...form,
-        name: selectedFlake.skinx.title,
         description: selectedFlake.skinx.title,
         flake_id: selectedFlake._id,
       });
     }
   };
 
-  const handleBack = () => {
+  const handleBack = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     router.back();
   };
 
   const sendFlakeForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!form.name.trim()) {
+      setErrors({ name: "El nombre es obligatorio" });
+      return;
+    }
 
     const response = await post("hotlink-collections", form, ENV.DASH);
     if (response.data.statusCode === 201) {
       notify(dict("colection_created"));
+      router.replace(`/${locale}/collections`);
     } else {
       notifyError(dict("colection_error"));
     }
@@ -95,27 +105,25 @@ const NewCollectionPage = () => {
       <Breadcrumb title={dict("title")} />
       {!loading ? (
         <div className={styles.container}>
-          {images.sm_img && images.lg_img ? (
-            <div className={styles.template}>
-              <div className={styles.sm_img}>
-                <Image src={images.sm_img} alt={form.name} width={100} height={100} />
-              </div>
-              <div className={styles.lg_img}>
-                <Image src={images.lg_img} alt={form.name} width={100} height={100} />
-              </div>
+          <div className={styles.template}>
+            <div className={styles.sm_img}>
+              {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={100} height={100} /> : <HogIcon />}
             </div>
-          ) : (
-            <div>Cargando imágenes...</div>
-          )}
+            <div className={styles.lg_img}>
+              {images.lg_img && <Image src={images.lg_img} alt={form.name} width={100} height={100} />}
+            </div>
+          </div>
+
           <form className={styles.form} onSubmit={sendFlakeForm}>
             <Input
               type='text'
               textLabel={dict("input")}
               textHolder={dict("input")}
               name='name'
-              value=''
+              value={form.name}
               handleChange={handleChange}
             />
+            <p className={errors.name ? styles.error : styles.error_hidden}>{errors.name}</p>
             <div className={styles.select}>
               <label>{dict("select")}</label>
               <select name='description' value={form.description} onChange={handleChange}>
