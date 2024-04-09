@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
+import PwaIcon from "./Icon/Pwa";
 import Image from "next/image";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useFlakesContext } from "@/context/FlakesContext";
@@ -52,8 +53,10 @@ const Select = () => {
                     )}
                   </div>
                   <div className={styles.lg_card}>
-                    {selectedFlake.thumbnail && (
+                    {selectedFlake.thumbnail ? (
                       <Image src={selectedFlake.thumbnail} alt={selectedFlake.skinx.title} width={137} height={100} />
+                    ) : (
+                      <PwaIcon />
                     )}
                   </div>
                 </div>
