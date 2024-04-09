@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import pencilIcon from "/public/icons/edit.svg";
 
-const PalleteGenerator = () => {
+const PaletteGenerator = () => {
   const [colorBase, setColorBase] = useState("#FFFFFF");
   const [palettePreview, setPalettePreview] = useState<PaletteItem[]>([]);
   const palette = useAppSelector(state => state.business.palette);
@@ -48,6 +48,12 @@ const PalleteGenerator = () => {
       notifyError(`${dict("toast.error_palette")}`);
       console.log(error);
     }
+  };
+
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setEdit(false);
+    if (palettePreview) setPalettePreview([]);
   };
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -100,6 +106,9 @@ const PalleteGenerator = () => {
                 ))}
               </div>
               <div className={styles.btn_container}>
+                <button className={styles.btn} onClick={handleCancel}>
+                  Cancelar
+                </button>
                 <button className={styles.btn} onClick={handleSetPallete}>
                   Generar
                 </button>
@@ -117,4 +126,4 @@ const PalleteGenerator = () => {
   );
 };
 
-export default PalleteGenerator;
+export default PaletteGenerator;

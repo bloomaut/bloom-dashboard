@@ -9,18 +9,16 @@ import Title from "@/components/Title";
 import Search from "@/components/Search";
 import Button from "@/components/Button";
 import PopupConfirm from "@/components/PopupConfirm";
-import { useCollectionsContext } from "@/context/CollectionsContext";
-import { useParams } from "next/navigation";
+import { useHotlinkListContext } from "@/context/HotlinksListContext";
+import { get } from "@/services/fetch";
+import { ENV } from "@/typescript/types/environment.enum";
 
 const Header = () => {
   const dict = useTranslations("dict.my-collection");
-  const { id } = useParams();
-  const { collectionsList } = useCollectionsContext();
+  const { loading, hotlinkCollection } = useHotlinkListContext();
   const [searchValue, setSearchValue] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [showPopupExcel, setShowPopupExcel] = useState(false);
-
-  const data = collectionsList.filter(collection => collection._id === id);
 
   // CARGA MASIVA DE HOTLINKS A TRAVES DE EXCEL
   const handleConfirm = () => {
@@ -28,10 +26,22 @@ const Header = () => {
     console.log("Sending request ...");
   };
 
+  const handleClick = async () => {
+    const API = `client-customer/flakes/powerapp/${hotlinkCollection?.flake._id}`;
+    const response = await get(API, ENV.DASH);
+    // Manejar el Binario que devuelve la API
+    console.log(response);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        <Title text={data[0]?.name} />
+        <Title text={`${loading ? dict("loading") : hotlinkCollection?.name}`} />
+        <h4 className={styles.subtitle}>
+          {loading
+            ? dict("loading")
+            : `${hotlinkCollection?.flake.skinx.title || "Skinx Title"} / ${hotlinkCollection?.flake.title || "Flake Title"}`}
+        </h4>
         <Search
           searchValue={searchValue}
           handleSearchChange={e => setSearchValue(e.target.value)}
@@ -40,10 +50,10 @@ const Header = () => {
       </div>
       <div className={styles.column_two}>
         <div className={styles.btn_container}>
-          <Button title={dict("btn3")} icon={table} styleName='btn_copy' />
+          <Button title={dict("btn3")} icon={table} styleName='btn_copy' onclick={handleClick} />
           <Button title={dict("btn2")} icon={excel} styleName='btn_excel' onclick={() => setShowPopupExcel(true)} />
         </div>
-        <Button title={dict("btn")} icon={hotlink} styleName='btn_my_collection' />
+        {/* <Button title={dict("btn")} icon={hotlink} styleName='btn_my_collection' /> */}
       </div>
       {showPopupExcel && (
         <PopupConfirm

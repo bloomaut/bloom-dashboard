@@ -1,7 +1,8 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(column, center, center, 20px);
+  @include width-height(100%, 100%);
+  @include flex(column, space-between, center);
   .header {
     @include flex(row, flex-start, flex-start, 10px);
     .color_base {
@@ -16,15 +17,15 @@
     }
   }
   .content {
-    @include width-height(100%, auto);
-    @include flex(column, space-evenly, center, 20px);
+    @include width-height(100%, 75%);
+    @include flex(column, space-between, center);
     .inner_content {
-      @include width-height(100%, auto);
-      @include flex(column, center, center, 25px);
+      @include width-height(100%, 100%);
+      @include flex(column, space-between, center);
       .box_container {
         @include flex(row, center, center, 10px);
         .box {
-          @include width-height(30px, 55px);
+          @include width-height(30px, 90px);
           transition: all 150ms ease-in-out;
         }
       }
@@ -33,21 +34,37 @@
         border: none;
         outline: none;
         cursor: pointer;
+        transition: all 100ms ease-in-out;
+        &:hover {
+          transform: scale(1.2);
+        }
       }
       .btn_container {
-        @include width-height(60%, auto);
+        @include width-height(100%, auto);
         @include flex(row, space-between, center, 20px);
         .btn {
           @include width-height(100%, auto);
           padding: 8px;
           border: none;
           border-radius: 5px;
-          background: $gradient;
-          color: $white;
+          border: 1px solid $error;
+          background: $white;
+          color: $error;
           outline: none;
           cursor: pointer;
           transition: all 300ms ease-in-out;
           @include fontSize-fontWeight(14px, 400);
+          &:hover {
+            background: $error;
+            color: $white;
+            box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.25);
+          }
+        }
+
+        .btn:nth-child(2n) {
+          background: $gradient;
+          color: $white;
+          border: none;
           &:hover {
             box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.25);
           }
@@ -59,13 +76,6 @@
           @include fontSize-fontWeight(14px, 400);
         }
       }
-      // .inner_container {
-      //   @include width-height(100%, auto);
-      //   @include flex(column, center, center, 10px);
-      //   .edit_container {
-      //     @include flex(row, space-evenly, center, 10px);
-      //   }
-      // }
     }
   }
 }

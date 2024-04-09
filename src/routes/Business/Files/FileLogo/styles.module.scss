@@ -17,17 +17,17 @@
     .btn_container {
       @include flex(row, center, center, 10px);
       .btn {
-        @include flex(row, center, center);
+        @include flex(row, center, center, 20px);
         background: none;
         border: none;
         cursor: pointer;
-        transition: all 100ms ease-in-out;
-        &:hover {
-          transform: scale(1.2);
-        }
         .controls_icons {
           @include width-height(23px, auto);
           object-fit: contain;
+          transition: all 100ms ease-in-out;
+          &:hover {
+            transform: scale(1.2);
+          }
         }
       }
     }
@@ -37,7 +37,9 @@
   @include width-height(100%, auto);
   max-height: 360px;
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 40% 60%;
+  justify-content: center;
+  align-items: center;
   border-radius: 8px;
   border: 1px solid $lightGrey;
   padding: 10px 20px;

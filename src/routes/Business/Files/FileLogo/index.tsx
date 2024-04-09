@@ -4,15 +4,17 @@ import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import trashIcon from "/public/icons/trash.svg";
 import pencilIcon from "/public/icons/edit.svg";
-import PalleteGenerator from "./PalleteGenerator";
+import PaletteGenerator from "./PaletteGenerator";
+import Button from "@/components/Button";
 
 interface FileLogoProps {
   file?: File | null;
   onDelete: () => void;
   onEdit: () => void;
+  onUpdate: (file: File) => void;
 }
 
-const FileLogo = ({ file, onEdit, onDelete }: FileLogoProps) => {
+const FileLogo = ({ file, onEdit, onUpdate, onDelete }: FileLogoProps) => {
   const companyLogo = useAppSelector(data => data.business.logo);
   const [image, setImage] = useState<string | undefined>("");
 
@@ -29,21 +31,25 @@ const FileLogo = ({ file, onEdit, onDelete }: FileLogoProps) => {
     <div className={companyLogo ? `${styles.card_flex} ${styles.card_grid}` : `${styles.card_flex}`}>
       {image && (
         <div className={styles.logo_container}>
+          <p>Company Logo</p>
           <Image src={image} width={100} height={100} priority className={styles.logo} alt='Logo' />
           <div className={styles.btn_container}>
-            {companyLogo ? (
+            {companyLogo && !file ? (
               <button className={styles.btn} onClick={onEdit}>
                 <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
               </button>
             ) : (
-              <button className={styles.btn} onClick={onDelete}>
-                <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
-              </button>
+              file && (
+                <button className={styles.btn} onClick={onDelete}>
+                  <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
+                  <Button title='Subir' onclick={() => onUpdate(file)} />
+                </button>
+              )
             )}
           </div>
         </div>
       )}
-      {companyLogo && <PalleteGenerator />}
+      {companyLogo && <PaletteGenerator />}
     </div>
   );
 };

@@ -200,7 +200,9 @@
       "share": "Share",
       "clients": "Clients",
       "btn2": "Import from Excel",
-      "btn3": "Excel import example"
+      "btn3": "Excel import example",
+      "empty_list": "Empty Hotlink list",
+      "loading": "Loading"
     },
     "inbox": {
       "title": "Inbox",

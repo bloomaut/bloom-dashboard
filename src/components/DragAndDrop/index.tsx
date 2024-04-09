@@ -26,7 +26,7 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
     if (fileRejections.length) {
       const errorCode = fileRejections[0].errors[0].code;
       if (errorCode === "file-invalid-type") {
-        notifyError("Solo se permiten imágenes o documentos PDF");
+        notifyError("El tipo de archivo que estas seleccionando no está permitido");
       } else if (errorCode === "too-many-files") {
         notifyError("Solo se permite subir un archivo");
       }
