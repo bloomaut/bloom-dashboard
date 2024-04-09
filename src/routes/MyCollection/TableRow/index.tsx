@@ -1,12 +1,10 @@
 import styles from "./styles.module.scss";
-import { useTranslations } from "next-intl";
 import copyIcon from "/public/icons/copy.svg";
 import wpIcon from "/public/icons/whatsapp.svg";
 import Image from "next/image";
-import { CollectionList } from "@/typescript/interfaces/hotlinkCollections.interface";
 
 interface TableRowProps {
-  data: CollectionList;
+  data: [];
 }
 
 const TableRow = ({ data }: TableRowProps) => {

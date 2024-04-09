@@ -2,9 +2,9 @@
 
 .content {
   @include flex(row, flex-start, flex-start);
-  white-space: nowrap;
-  padding: 5px 0px;
   @include fontSize-fontWeight(14px, 400);
+  white-space: nowrap;
+  margin: 7px 0px;
   cursor: pointer;
   &:hover {
     background-color: $blueishBackground;

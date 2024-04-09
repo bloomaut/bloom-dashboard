@@ -1,17 +1,12 @@
-import { useParams } from "next/navigation";
-import TableRow from "../TableRow";
 import styles from "./styles.module.scss";
+import TableRow from "../TableRow";
+import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import { useHotlinkListContext } from "@/context/HotlinksListContext";
 import { useTranslations } from "next-intl";
-import { useCollectionsContext } from "@/context/CollectionsContext";
 
 const Table = () => {
   const dict = useTranslations("dict.my-collection");
-  const { id } = useParams();
-  const { collectionsList } = useCollectionsContext();
-
-  const data = collectionsList.filter(collection => collection._id === id);
-
-  console.log(data);
+  const { loading, hotlinkList } = useHotlinkListContext();
 
   return (
     <div className={styles.container}>
@@ -27,9 +22,13 @@ const Table = () => {
         </div>
       </div>
       <div className={styles.rows_container}>
-        {data.map(client => {
-          return <TableRow key={client._id} data={client} />;
-        })}
+        {loading ? (
+          <Loading />
+        ) : hotlinkList.length < 1 ? (
+          <p className={styles.empty_list}>{dict("empty_list")}</p>
+        ) : (
+          hotlinkList.map((hotlink, index) => <TableRow key={index} data={hotlink} />)
+        )}
       </div>
     </div>
   );

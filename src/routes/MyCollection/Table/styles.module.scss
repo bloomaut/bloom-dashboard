@@ -28,6 +28,10 @@
   .rows_container {
     @include width-height(100%, 88%);
     overflow-y: auto;
+    .empty_list {
+      @include fontSize-fontWeight(14px, 400);
+      padding: 10px;
+    }
   }
 }
 

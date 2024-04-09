@@ -200,7 +200,9 @@
       "share": "Compartir",
       "clients": "Clientes",
       "btn2": "Importar desde Excel",
-      "btn3": "Ejemplo de carga desde Excel"
+      "btn3": "Ejemplo de carga desde Excel",
+      "empty_list": "Lista de Hotlinks vacía",
+      "loading": "Cargando..."
     },
     "inbox": {
       "title": "Bandeja de entrada",
