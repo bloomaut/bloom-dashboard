@@ -56,6 +56,12 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
+  //Función para intentar acceder a hotlinks
+  const fetchHotlinkList = async () => {
+    const response = await get("hotlinks", ENV.DASH);
+    console.log("Respuesta", response);
+  };
+
   useEffect(() => {
     // Para no tener que volver a copiar un Context igual
     // en la página de hotlink, vamos a reusar este.
@@ -63,6 +69,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     // si venis de Playground sin usuario logueado
     if (path.includes("hotlink")) {
       fetchDataHotlink();
+      fetchHotlinkList();
     } else {
       fetchData();
     }
