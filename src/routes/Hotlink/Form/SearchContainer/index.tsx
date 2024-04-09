@@ -23,9 +23,11 @@ const SearchContainer = () => {
           <LoadingSpinner />
         ) : filteredClients.length ? (
           filteredClients.map((client: ClientsProps) => (
-            <div className={styles.row}>
+            <div className={styles.row} key={client._id}>
               <div onClick={() => setClientSelected(client)}>
-                <p>{client.ClientFirstname}</p>
+                <p>
+                  {client.ClientFirstname} {client.ClientLastname}
+                </p>
               </div>
             </div>
           ))
