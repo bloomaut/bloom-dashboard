@@ -10,10 +10,12 @@ import Search from "@/components/Search";
 import Button from "@/components/Button";
 import PopupConfirm from "@/components/PopupConfirm";
 import { useHotlinkListContext } from "@/context/HotlinksListContext";
+import { get } from "@/services/fetch";
+import { ENV } from "@/typescript/types/environment.enum";
 
 const Header = () => {
   const dict = useTranslations("dict.my-collection");
-  const { hotlinkCollection } = useHotlinkListContext();
+  const { loading, hotlinkCollection } = useHotlinkListContext();
   const [searchValue, setSearchValue] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [showPopupExcel, setShowPopupExcel] = useState(false);
@@ -26,13 +28,22 @@ const Header = () => {
     console.log("Sending request ...");
   };
 
+  const handleClick = async () => {
+    const API = `client-customer/flakes/powerapp/${hotlinkCollection?.flake._id}`;
+    const response = await get(API, ENV.DASH);
+    // Manejar el Binario que devuelve la API
+    console.log(response);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        <Title text={`${hotlinkCollection?.name}`} />
-        <h4
-          className={styles.subtitle}
-        >{`${hotlinkCollection?.flake.skinx.title} / ${hotlinkCollection?.flake.title}`}</h4>
+        <Title text={`${loading ? dict("loading") : hotlinkCollection?.name}`} />
+        <h4 className={styles.subtitle}>
+          {loading
+            ? dict("loading")
+            : `${hotlinkCollection?.flake.skinx.title || "Skinx Title"} / ${hotlinkCollection?.flake.title || "Flake Title"}`}
+        </h4>
         <Search
           searchValue={searchValue}
           handleSearchChange={e => setSearchValue(e.target.value)}
@@ -41,7 +52,7 @@ const Header = () => {
       </div>
       <div className={styles.column_two}>
         <div className={styles.btn_container}>
-          <Button title={dict("btn3")} icon={table} styleName='btn_copy' />
+          <Button title={dict("btn3")} icon={table} styleName='btn_copy' onclick={handleClick} />
           <Button title={dict("btn2")} icon={excel} styleName='btn_excel' onclick={() => setShowPopupExcel(true)} />
         </div>
         {/* <Button title={dict("btn")} icon={hotlink} styleName='btn_my_collection' /> */}
