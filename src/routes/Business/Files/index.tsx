@@ -12,7 +12,6 @@ import DragAndAdrop from "../../../components/DragAndDrop";
 import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
-import Button from "@/components/Button";
 import PopupConfirm from "@/components/PopupConfirm";
 
 interface FilesProps {
@@ -95,7 +94,9 @@ const Files = ({ fetchData }: FilesProps) => {
       <DragAndAdrop setFile={setFile} />
 
       {/* Muestra siempre el logo*/}
-      {(companyLogo || file) && <FileLogo file={file} onEdit={() => setShowPopupEdit(true)} onDelete={deleteLogo} />}
+      {(companyLogo || file) && (
+        <FileLogo file={file} onEdit={() => setShowPopupEdit(true)} onDelete={deleteLogo} onUpdate={handleUploadFile} />
+      )}
       {/* Muestra otros tipos de archivos cuando se cargan */}
       {file && file.type.includes("pdf") && (
         <FileCard
@@ -105,13 +106,6 @@ const Files = ({ fetchData }: FilesProps) => {
           onDelete={() => setFile(null)}
         />
       )}
-      {/* EL botón aparece cuando se carga una imagen */}
-      {file && (
-        <div className={styles.btn_container}>
-          <Button title='Subir' onclick={() => handleUploadFile(file)} />
-        </div>
-      )}
-
       <div className={styles.files}>
         {reduxFiles && reduxFiles.length >= 2 && <Subtitle text={`${dict("business.file.subtitle")}`} />}
         {/* Muestra todos los archivos PDF */}
