@@ -15,6 +15,7 @@ import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
+import PwaIcon from "../Hotlink/Select/Icon/Pwa";
 
 const InitialEmptyImages = {
   sm_img: "",
@@ -110,7 +111,7 @@ const NewCollectionPage = () => {
               {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={100} height={100} /> : <HogIcon />}
             </div>
             <div className={styles.lg_img}>
-              {images.lg_img && <Image src={images.lg_img} alt={form.name} width={100} height={100} />}
+              {images.lg_img ? <Image src={images.lg_img} alt={form.name} width={100} height={100} /> : <PwaIcon />}
             </div>
           </div>
 
