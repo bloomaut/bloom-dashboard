@@ -77,6 +77,7 @@ const Form = () => {
 
       const updatedFormDataPost = {
         ...formDataPost,
+        customer_id: clientSelected._id ?? "",
         variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
           key,
           target,
