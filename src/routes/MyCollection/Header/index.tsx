@@ -20,8 +20,6 @@ const Header = () => {
   const [file, setFile] = useState<File | null>(null);
   const [showPopupExcel, setShowPopupExcel] = useState(false);
 
-  console.log(hotlinkCollection);
-
   // CARGA MASIVA DE HOTLINKS A TRAVES DE EXCEL
   const handleConfirm = () => {
     setShowPopupExcel(false);
