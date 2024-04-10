@@ -6,6 +6,7 @@ import { useFlakesContext } from "@/context/FlakesContext";
 import Search from "@/components/Search";
 import TableRow from "./TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import { useEffect, useState } from "react";
 
 const data = [
   {
@@ -131,9 +132,23 @@ const data = [
 ];
 
 const ListHotlinks = () => {
-  const { searchValue, setSearchValue } = useClientsContext();
+  const [searchValue, setSearchValue] = useState<string>("");
   const dict = useTranslations("dict.hotlinks.list");
-  const { hotlinksList, filteredHotlinks, loading } = useFlakesContext();
+  const { hotlinksList, filteredHotlinks, setFilteredHotlinks, loading } = useFlakesContext();
+
+  useEffect(() => {
+    if (searchValue) {
+      hotlinksList.map(hotlink => {
+        if (hotlink.customer?.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase())) {
+          setFilteredHotlinks(hotlink);
+        }
+      });
+    } else {
+      setSearchValue("");
+      setFilteredHotlinks(null);
+    }
+  }, [searchValue]);
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>

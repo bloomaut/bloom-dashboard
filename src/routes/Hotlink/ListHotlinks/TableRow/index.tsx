@@ -4,6 +4,8 @@ import wpIcon from "/public/icons/whatsapp.svg";
 import Image from "next/image";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
+import Link from "next/link";
+import { useState } from "react";
 
 interface TableRowProps {
   hotlink: HotlinkList;
@@ -11,9 +13,15 @@ interface TableRowProps {
 
 const TableRow = ({ hotlink }: TableRowProps) => {
   const { id, setId } = useFlakesContext();
+  const [selected, setSelected] = useState(false);
+
+  const handleClick = () => {
+    setId(hotlink.id);
+    setSelected(true);
+  };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${id === hotlink.id && styles.hotlink_selected}`} onClick={handleClick}>
       <div className={styles.column}>
         <p>{hotlink.power_app.flake.title}</p>
       </div>
@@ -27,7 +35,9 @@ const TableRow = ({ hotlink }: TableRowProps) => {
         )}
       </div>
       <div className={styles.column}>
-        <p>{hotlink.url}</p>
+        <Link href={hotlink.url} target='_blank' className={styles.hotlink_url}>
+          {hotlink.url}
+        </Link>
       </div>
       <div className={styles.column}>
         <Image src={copyIcon} width={30} height={30} alt='icon' />
