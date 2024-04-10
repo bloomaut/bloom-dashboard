@@ -6,6 +6,8 @@ import { useFlakesContext } from "@/context/FlakesContext";
 import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 import Link from "next/link";
 import { useState } from "react";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { useTranslations } from "next-intl";
 
 interface TableRowProps {
   hotlink: HotlinkList;
@@ -14,10 +16,25 @@ interface TableRowProps {
 const TableRow = ({ hotlink }: TableRowProps) => {
   const { id, setId } = useFlakesContext();
   const [selected, setSelected] = useState(false);
+  const { notify, notifyError } = useMessageToast();
+  const dict = useTranslations("dict.playground.popup");
 
   const handleClick = () => {
     setId(hotlink.id);
     setSelected(true);
+  };
+
+  const handleCopyClick = () => {
+    if (hotlink.url)
+      navigator.clipboard.writeText(hotlink.url).then(
+        function () {
+          notify(`${dict("copy_success")}`);
+        },
+        function (err) {
+          notifyError(`${dict("copy_error")}`);
+          console.error("Error al copiar al portapapeles", err);
+        },
+      );
   };
 
   return (
@@ -40,7 +57,9 @@ const TableRow = ({ hotlink }: TableRowProps) => {
         </Link>
       </div>
       <div className={styles.column}>
-        <Image src={copyIcon} width={30} height={30} alt='icon' />
+        <button onClick={handleCopyClick}>
+          <Image src={copyIcon} width={30} height={30} alt='icon' />
+        </button>
         <Image src={wpIcon} width={30} height={30} alt='icon' />
       </div>
     </div>
