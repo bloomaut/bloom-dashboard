@@ -1,9 +1,11 @@
 import styles from "./styles.module.scss";
 import { useClientsContext } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
+import { useFlakesContext } from "@/context/FlakesContext";
 
 import Search from "@/components/Search";
 import TableRow from "./TableRow";
+import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 const data = [
   {
@@ -131,7 +133,7 @@ const data = [
 const ListHotlinks = () => {
   const { searchValue, setSearchValue } = useClientsContext();
   const dict = useTranslations("dict.hotlinks.list");
-
+  const { hotlinksList, filteredHotlinks, loading } = useFlakesContext();
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -150,9 +152,15 @@ const ListHotlinks = () => {
         <h4>{dict("title_four")}</h4>
       </div>
       <div className={styles.rows_container}>
-        {data.map(client => {
-          return <TableRow key={client.id} data={client} />;
-        })}
+        {loading ? (
+          <Loading />
+        ) : filteredHotlinks ? (
+          <TableRow key={filteredHotlinks.id} hotlink={filteredHotlinks} />
+        ) : (
+          hotlinksList.map(hotlink => {
+            return <TableRow key={hotlink.id} hotlink={hotlink} />;
+          })
+        )}
       </div>
     </div>
   );

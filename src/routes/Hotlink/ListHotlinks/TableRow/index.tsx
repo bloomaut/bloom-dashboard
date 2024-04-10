@@ -2,27 +2,32 @@ import styles from "./styles.module.scss";
 import copyIcon from "/public/icons/copy.svg";
 import wpIcon from "/public/icons/whatsapp.svg";
 import Image from "next/image";
+import { useFlakesContext } from "@/context/FlakesContext";
+import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 
 interface TableRowProps {
-  data: {
-    id: number;
-    nameHotlink: string;
-    name: string;
-    link: string;
-  };
+  hotlink: HotlinkList;
 }
 
-const TableRow = ({ data }: TableRowProps) => {
+const TableRow = ({ hotlink }: TableRowProps) => {
+  const { id, setId } = useFlakesContext();
+
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        <p>{data.nameHotlink}</p>
+        <p>{hotlink.power_app.flake.title}</p>
       </div>
       <div className={styles.column}>
-        <p>{data.name}</p>
+        {hotlink.customer ? (
+          <>
+            {hotlink.customer.clientCode} {hotlink.customer.ClientFirstname} {hotlink.customer.ClientLastname}
+          </>
+        ) : (
+          <em>-</em>
+        )}
       </div>
       <div className={styles.column}>
-        <p>{data.link}</p>
+        <p>{hotlink.url}</p>
       </div>
       <div className={styles.column}>
         <Image src={copyIcon} width={30} height={30} alt='icon' />
