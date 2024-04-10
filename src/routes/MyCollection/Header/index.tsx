@@ -38,12 +38,15 @@ const Header = () => {
       const response = await axios.get(`/api/${API}`, {
         headers: {
           "X-API": ENV.DASH,
-          "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "Content-Type": "application/octet-stream",
         },
+        responseType: "arraybuffer",
       });
+
       console.log(response);
+
       if (response.status === 200) {
-        downloadExcel(response.data.data);
+        downloadExcel(response.data);
       }
     } catch (error) {
       console.error("Error al descargar el archivo:", error);
