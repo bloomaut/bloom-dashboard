@@ -50,6 +50,12 @@ const PaletteGenerator = () => {
     }
   };
 
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setEdit(false);
+    if (palettePreview) setPalettePreview([]);
+  };
+
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setEdit(true);
@@ -100,6 +106,9 @@ const PaletteGenerator = () => {
                 ))}
               </div>
               <div className={styles.btn_container}>
+                <button className={styles.btn} onClick={handleCancel}>
+                  Cancelar
+                </button>
                 <button className={styles.btn} onClick={handleSetPallete}>
                   Generar
                 </button>
