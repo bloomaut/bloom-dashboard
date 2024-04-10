@@ -14,11 +14,12 @@ import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { downloadExcel } from "@/utils/downloadExcel";
+import axios from "axios";
 
 const Header = () => {
   const dict = useTranslations("dict.my-collection");
   const { loading, hotlinkCollection } = useHotlinkListContext();
-  const { notify, notifyError } = useMessageToast();
+  const { notifyError } = useMessageToast();
   const [searchValue, setSearchValue] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [showPopupExcel, setShowPopupExcel] = useState(false);
@@ -31,14 +32,32 @@ const Header = () => {
 
   const handleClick = async () => {
     const API = `client-customer/flakes/powerapp/${hotlinkCollection?.flake._id}`;
-    const response = await get(API, ENV.DASH);
+    // const response = await get(API, ENV.DASH);
 
-    if (response) {
-      downloadExcel(response);
-    } else {
-      console.error("Error al descargar el archivo:", response);
+    try {
+      const response = await axios.get(`/api/${API}`, {
+        headers: {
+          "X-API": ENV.DASH,
+          "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        },
+      });
+      console.log(response);
+      if (response.status === 200) {
+        downloadExcel(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error al descargar el archivo:", error);
       notifyError("Error al descargar el archivo");
     }
+
+    // console.log(response);
+
+    // if (response) {
+    //   downloadExcel(response);
+    // } else {
+    //   console.error("Error al descargar el archivo:", response);
+    //   notifyError("Error al descargar el archivo");
+    // }
   };
 
   return (
