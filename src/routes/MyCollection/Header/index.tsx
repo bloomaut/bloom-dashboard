@@ -12,10 +12,13 @@ import PopupConfirm from "@/components/PopupConfirm";
 import { useHotlinkListContext } from "@/context/HotlinksListContext";
 import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { downloadExcel } from "@/utils/downloadExcel";
 
 const Header = () => {
   const dict = useTranslations("dict.my-collection");
   const { loading, hotlinkCollection } = useHotlinkListContext();
+  const { notify, notifyError } = useMessageToast();
   const [searchValue, setSearchValue] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [showPopupExcel, setShowPopupExcel] = useState(false);
@@ -29,8 +32,13 @@ const Header = () => {
   const handleClick = async () => {
     const API = `client-customer/flakes/powerapp/${hotlinkCollection?.flake._id}`;
     const response = await get(API, ENV.DASH);
-    // Manejar el Binario que devuelve la API
-    console.log(response);
+
+    if (response) {
+      downloadExcel(response);
+    } else {
+      console.error("Error al descargar el archivo:", response);
+      notifyError("Error al descargar el archivo");
+    }
   };
 
   return (
