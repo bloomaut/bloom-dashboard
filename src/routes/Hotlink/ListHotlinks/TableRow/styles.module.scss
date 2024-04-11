@@ -5,15 +5,20 @@
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr;
   align-items: center;
-  &:hover {
-    background-color: $blueishBackground;
-  }
   .column {
     padding: 5px;
     margin: 5px 0;
     p {
       @include fontSize-fontWeight(14px, 400);
       color: $text;
+    }
+    .hotlink_url {
+      @include fontSize-fontWeight(14px, 400);
+      color: $text;
+    }
+    button {
+      border: none;
+      background-color: transparent;
     }
     &:last-child {
       justify-self: end;
@@ -25,4 +30,10 @@
       }
     }
   }
+}
+
+.container:hover,
+.container.hotlink_selected {
+  background-color: $blueishBackground;
+  cursor: pointer;
 }

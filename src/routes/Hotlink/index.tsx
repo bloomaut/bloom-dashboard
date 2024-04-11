@@ -1,6 +1,5 @@
 import styles from "./styles.module.scss";
-import { ClientsProvider, useClientsContext } from "@/context/ClientsContext";
-import { useEffect } from "react";
+import { ClientsProvider } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
 import { FlakesProvider } from "@/context/FlakesContext";
 //Componentes
@@ -10,12 +9,7 @@ import Form from "./Form";
 import ListHotlinks from "./ListHotlinks";
 
 const HotlinksPage = () => {
-  const { fetchClients } = useClientsContext();
   const dict = useTranslations("dict.hotlinks");
-
-  useEffect(() => {
-    fetchClients();
-  }, []);
 
   return (
     <FlakesProvider>
