@@ -38,8 +38,21 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
       }
     }
 
-    const { data } = await axios(fetchOptions);
-    return NextResponse.json({ data });
+    // TODO: mejorar, quedó horrible esta validación para diferenciar el tipo (kev)
+    if (path.includes("client-customer/flakes")) {
+      // XLXS requests
+      const res = await fetch(`${EXTERNAL_API_URL}${path}${req.nextUrl.search}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      const blob = await res.blob();
+      const headers = new Headers();
+      headers.set("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+      return new NextResponse(blob, { status: 200, statusText: "OK", headers });
+    } else {
+      // JSON requests
+      const { data } = await axios(fetchOptions);
+      return NextResponse.json({ data });
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error("----------Axios Error----------", error.response?.data);

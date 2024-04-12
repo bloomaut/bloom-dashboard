@@ -10,7 +10,7 @@ import Search from "@/components/Search";
 import Button from "@/components/Button";
 import PopupConfirm from "@/components/PopupConfirm";
 import { useHotlinkListContext } from "@/context/HotlinksListContext";
-import { get } from "@/services/fetch";
+import { get, getExcel } from "@/services/fetch";
 import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { downloadExcel } from "@/utils/downloadExcel";
@@ -32,35 +32,12 @@ const Header = () => {
 
   const handleClick = async () => {
     const API = `client-customer/flakes/powerapp/${hotlinkCollection?.flake._id}`;
-    // const response = await get(API, ENV.DASH);
-
     try {
-      const response = await axios.get(`/api/${API}`, {
-        headers: {
-          "X-API": ENV.DASH,
-          "Content-Type": "application/octet-stream",
-        },
-        responseType: "arraybuffer",
-      });
-
-      console.log(response);
-
-      if (response.status === 200) {
-        downloadExcel(response.data);
-      }
+      await getExcel(`${API}`, ENV.DASH);
     } catch (error) {
       console.error("Error al descargar el archivo:", error);
       notifyError("Error al descargar el archivo");
     }
-
-    // console.log(response);
-
-    // if (response) {
-    //   downloadExcel(response);
-    // } else {
-    //   console.error("Error al descargar el archivo:", response);
-    //   notifyError("Error al descargar el archivo");
-    // }
   };
 
   return (
