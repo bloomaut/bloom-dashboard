@@ -21,6 +21,26 @@ export const get = async (url: string, api: EnvironmentApi) => {
   }
 };
 
+export const getExcel = async (url: string, api: EnvironmentApi) => {
+  try {
+    const response = await fetch(`${API}/${url}`, {
+      headers: {
+        "X-API": api,
+      },
+    });
+    const pdfBlob = await response?.blob();
+    const tempURL = URL.createObjectURL(pdfBlob as Blob);
+    window.open(tempURL, "_blank");
+    URL.revokeObjectURL(tempURL);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
 export const post = async (url: string, data: POST, api: EnvironmentApi) => {
   try {
     const response = await axios.post(`${API}/${url}`, data, {
