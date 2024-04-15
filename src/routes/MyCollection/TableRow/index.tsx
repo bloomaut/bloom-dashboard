@@ -10,7 +10,6 @@ import { useTranslations } from "next-intl";
 const TableRow = ({ hotlink }: { hotlink: HotlinkList }) => {
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.playground.popup");
-  console.log(hotlink);
 
   const handleCopyClick = () => {
     if (hotlink.url)
