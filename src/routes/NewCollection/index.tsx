@@ -107,11 +107,11 @@ const NewCollectionPage = () => {
       {!loading ? (
         <div className={styles.container}>
           <div className={styles.template}>
-            <div className={styles.sm_img}>
-              {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={100} height={100} /> : <HogIcon />}
+            <div className={images.sm_img ? styles.sm_img : `${styles.sm_img} ${styles.sm_not_img}`}>
+              {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={500} height={500} /> : <HogIcon />}
             </div>
             <div className={styles.lg_img}>
-              {images.lg_img ? <Image src={images.lg_img} alt={form.name} width={100} height={100} /> : <PwaIcon />}
+              {images.lg_img ? <Image src={images.lg_img} alt={form.name} width={800} height={800} /> : <PwaIcon />}
             </div>
           </div>
 
