@@ -9,11 +9,11 @@ export interface Hotlink {
 
 export interface HotlinkList {
   id: string;
-  hash?: string;
+  hash: string;
   url: string;
   created_at: string;
   updated_at: string;
-  customer_id?: string;
+  customer_id: string;
   power_app: Powerapp;
   customer?: Customer;
 }

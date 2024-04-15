@@ -26,6 +26,7 @@ export const HotlinkListProvider = ({ children }: { children: JSX.Element }) => 
     const getCollections = async () => {
       const response = await get(`hotlink-collections/${id}`, ENV.DASH);
       if (response.statusCode === 200) {
+        console.log(response);
         setHotlinkCollection(response.result.hotlinkCollection);
         setHotlinkList(response.result.hotlinks.list);
         setLoading(false);

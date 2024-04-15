@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import { useState } from "react";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
     <div className={styles.container}>
