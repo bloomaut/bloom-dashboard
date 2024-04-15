@@ -1,20 +1,16 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import hotlink from "@/../public/icons/hotlink_icon.svg";
 import excel from "@/../public/icons/excel_logo.svg";
 import table from "@/../public/icons/excel.svg";
+import { useHotlinkListContext } from "@/context/HotlinksListContext";
+import { getExcel } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
 // Components
 import Title from "@/components/Title";
 import Search from "@/components/Search";
 import Button from "@/components/Button";
 import PopupConfirm from "@/components/PopupConfirm";
-import { useHotlinkListContext } from "@/context/HotlinksListContext";
-import { get, getExcel } from "@/services/fetch";
-import { ENV } from "@/typescript/types/environment.enum";
-import { useMessageToast } from "@/hooks/useMessageToast";
-import { downloadExcel } from "@/utils/downloadExcel";
-import axios from "axios";
 
 const Header = () => {
   const dict = useTranslations("dict.my-collection");
@@ -31,9 +27,8 @@ const Header = () => {
   };
 
   const handleClick = async () => {
-    const API = `client-customer/flakes/powerapp/${hotlinkCollection?.flake._id}`;
     try {
-      await getExcel(`${API}`, ENV.DASH);
+      await getExcel(`${hotlinkCollection?.flake._id}`);
     } catch (error) {
       console.error("Error al descargar el archivo:", error);
       notifyError("Error al descargar el archivo");
