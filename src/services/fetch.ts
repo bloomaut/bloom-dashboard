@@ -21,11 +21,11 @@ export const get = async (url: string, api: EnvironmentApi) => {
   }
 };
 
-export const getExcel = async (url: string, api: EnvironmentApi) => {
+export const getExcel = async (id: string) => {
   try {
-    const response = await fetch(`${API}/${url}`, {
+    const response = await fetch(`/api/getExcel`, {
       headers: {
-        "X-API": api,
+        "X-ID": id,
       },
     });
     const pdfBlob = await response?.blob();
