@@ -62,7 +62,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   const fetchDataHotlink = async () => {
-    const response = await get("small/flakes/user", ENV.UITOOL);
+    const response = await get("small/flakes/user", ENV.DASH);
     if (response.statusCode === 200) {
       setFlakes(response.result.powerapps);
       setSelectedFlakeId(response.result.powerapps[0]._id);
