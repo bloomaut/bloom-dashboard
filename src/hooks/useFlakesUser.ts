@@ -13,7 +13,7 @@ export const useFlakeData = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await get("small/flakes/user", ENV.UITOOL);
+      const response = await get("small/flakes/user", ENV.DASH);
       if (response.statusCode === 200) {
         setFlakes(response.result.powerapps);
         setLoading(false);
