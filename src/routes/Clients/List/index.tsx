@@ -8,7 +8,6 @@ import PopupConfirm from "@/components/PopupConfirm";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { remove } from "@/services/fetch";
 import { useTranslations } from "next-intl";
-import { ENV } from "@/typescript/types/environment.enum";
 import { useClientsContext } from "@/context/ClientsContext";
 
 const List = () => {
@@ -21,7 +20,7 @@ const List = () => {
 
   const handleDelete = async () => {
     if (clientId) {
-      const data = await remove("client-customer", clientId, ENV.DASH);
+      const data = await remove("client-customer", clientId);
       if (data.statusCode === 200) {
         setShowPopupDelete(false);
         setClientSelected(null);

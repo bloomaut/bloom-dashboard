@@ -10,11 +10,10 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     console.log("My Access Token:", accessToken);
 
     const path = req.nextUrl.pathname.substring(req.nextUrl.pathname.indexOf("/api"));
-    const apiName = req.headers.get("X-API") || "";
-    const EXTERNAL_API_URL = process.env[apiName];
+    const EXTERNAL_API_URL = process.env.NEXT_PUBLIC_API_DASH;
 
     if (!EXTERNAL_API_URL) {
-      throw new Error(`Invalid API: ${apiName}`);
+      throw new Error(`Invalid API: DASH`);
     }
 
     const fetchOptions: AxiosRequestConfig = {

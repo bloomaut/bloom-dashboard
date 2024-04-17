@@ -5,7 +5,6 @@ import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 import { useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ENV } from "@/typescript/types/environment.enum";
 import { get } from "@/services/fetch";
 
 interface Context {
@@ -62,7 +61,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   const fetchDataHotlink = async () => {
-    const response = await get("small/flakes/user", ENV.DASH);
+    const response = await get("small/flakes/user");
     if (response.statusCode === 200) {
       setFlakes(response.result.powerapps);
       setSelectedFlakeId(response.result.powerapps[0]._id);
@@ -76,7 +75,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   //Función para acceder a la lista de hotlinks sin colección
   useEffect(() => {
     const getList = async () => {
-      const response = await get("hotlinks/no-collection", ENV.DASH);
+      const response = await get("hotlinks/no-collection");
       if (response.statusCode === 200) {
         setHotlinksList(response.result.hotlinks.hotlinks);
         setLoading(false);

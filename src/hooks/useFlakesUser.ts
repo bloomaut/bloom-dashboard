@@ -3,7 +3,6 @@ import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useEffect, useState } from "react";
 import { useMessageToast } from "./useMessageToast";
 import { useTranslations } from "next-intl";
-import { ENV } from "@/typescript/types/environment.enum";
 
 export const useFlakeData = () => {
   const [flakes, setFlakes] = useState<Powerapp[]>([]);
@@ -13,7 +12,7 @@ export const useFlakeData = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await get("small/flakes/user", ENV.DASH);
+      const response = await get("small/flakes/user");
       if (response.statusCode === 200) {
         setFlakes(response.result.powerapps);
         setLoading(false);

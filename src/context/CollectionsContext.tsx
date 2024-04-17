@@ -1,6 +1,5 @@
 import { get } from "@/services/fetch";
 import { CollectionList } from "@/typescript/interfaces/hotlinkCollections.interface";
-import { ENV } from "@/typescript/types/environment.enum";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface Context {
@@ -31,7 +30,7 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
 
   useEffect(() => {
     const getCollections = async () => {
-      const response = await get("hotlink-collections/client/list", ENV.DASH);
+      const response = await get("hotlink-collections/client/list");
 
       if (response.statusCode === 200) {
         setCollectionsList(response.result.hotlinkCollections);
