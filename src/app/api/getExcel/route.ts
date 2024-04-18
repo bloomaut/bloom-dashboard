@@ -1,7 +1,6 @@
 import { getAccessToken, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { ENV } from "@/typescript/types/environment.enum";
 
 const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRequest) {
   try {
@@ -10,7 +9,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     const apiId = req.headers.get("X-ID") || "";
 
     // XLXS requests
-    const resp = await fetch(`${process.env[ENV.DASH]}/api/client-customer/flakes/powerapp/${apiId}`, {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_API_DASH}/api/client-customer/flakes/powerapp/${apiId}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
     const blob = await resp.blob();
