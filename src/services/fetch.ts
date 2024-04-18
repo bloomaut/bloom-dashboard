@@ -1,16 +1,11 @@
-import { EnvironmentApi } from "@/typescript/types/environment.enum";
 import { POST } from "@/typescript/types/post.type";
 import { UPDATE } from "@/typescript/types/update.type";
 import axios from "axios";
 const API = "/api";
 
-export const get = async (url: string, api: EnvironmentApi) => {
+export const get = async (url: string) => {
   try {
-    const response = await axios.get(`${API}/${url}`, {
-      headers: {
-        "X-API": api,
-      },
-    });
+    const response = await axios.get(`${API}/${url}`);
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -41,13 +36,9 @@ export const getExcel = async (id: string) => {
   }
 };
 
-export const post = async (url: string, data: POST, api: EnvironmentApi) => {
+export const post = async (url: string, data: POST) => {
   try {
-    const response = await axios.post(`${API}/${url}`, data, {
-      headers: {
-        "X-API": api,
-      },
-    });
+    const response = await axios.post(`${API}/${url}`, data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -58,7 +49,7 @@ export const post = async (url: string, data: POST, api: EnvironmentApi) => {
   }
 };
 
-export const postFile = async (url: string, file: File, api: EnvironmentApi) => {
+export const postFile = async (url: string, file: File) => {
   try {
     const formData = new FormData();
     formData.append("file", file);
@@ -66,9 +57,6 @@ export const postFile = async (url: string, file: File, api: EnvironmentApi) => 
     const response = await fetch(`${API}/${url}`, {
       method: "POST",
       body: formData,
-      headers: {
-        "X-API": api,
-      },
     });
     const data = await response.json();
     return data;
@@ -78,18 +66,14 @@ export const postFile = async (url: string, file: File, api: EnvironmentApi) => 
   }
 };
 
-export const update = async (url: string, api: EnvironmentApi, data?: any, id?: string) => {
+export const update = async (url: string, data?: any, id?: string) => {
   try {
     let endpoint = `${API}/${url}`;
     if (id) {
       endpoint += `/${id}`;
     }
 
-    const response = await axios.put(endpoint, data, {
-      headers: {
-        "X-API": api,
-      },
-    });
+    const response = await axios.put(endpoint, data);
 
     return response.data.data;
   } catch (error) {
@@ -101,13 +85,9 @@ export const update = async (url: string, api: EnvironmentApi, data?: any, id?: 
   }
 };
 
-export const remove = async (url: string, id: string, api: EnvironmentApi) => {
+export const remove = async (url: string, id: string) => {
   try {
-    const response = await axios.delete(`${API}/${url}/${id}`, {
-      headers: {
-        "X-API": api,
-      },
-    });
+    const response = await axios.delete(`${API}/${url}/${id}`);
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { get, postFile, update, remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { ENV } from "@/typescript/types/environment.enum";
 import { useTranslations } from "next-intl";
 import { setFilesData } from "@/store/features/filesSlice";
 //Componentes
@@ -33,7 +32,7 @@ const Files = ({ fetchData }: FilesProps) => {
     const dataToSend = {
       logo: logoUrl,
     };
-    const res = await update("small-business", ENV.DASH, dataToSend);
+    const res = await update("small-business", dataToSend);
     if (res.statusCode === 200) {
       notify(`${dict("toast.success_img")}`);
       setShowPopupEdit(false);
@@ -44,7 +43,7 @@ const Files = ({ fetchData }: FilesProps) => {
   };
 
   const handleUploadFile = async (file: File) => {
-    const response = await postFile("small-files/media", file, ENV.DASH);
+    const response = await postFile("small-files/media", file);
     if (response.data.statusCode === 201) {
       setFile(null);
       if (response.data.result.media.filetype.startsWith("image/")) {
@@ -52,7 +51,7 @@ const Files = ({ fetchData }: FilesProps) => {
         await handleUpdateLogo(logoUrl);
       } else {
         notify(`${dict("toast.success_file")}`);
-        const userFiles = await get("small-files/media", ENV.DASH);
+        const userFiles = await get("small-files/media");
         dispatch(setFilesData(userFiles.result.folder));
       }
     } else {
@@ -62,7 +61,7 @@ const Files = ({ fetchData }: FilesProps) => {
 
   const deleteFile = async () => {
     if (selectedFile) {
-      const response = await remove("small-files/media", selectedFile, ENV.DASH);
+      const response = await remove("small-files/media", selectedFile);
       if (response.statusCode === 200) {
         setShowPopupDelete(false);
         setSelectedFile(null);

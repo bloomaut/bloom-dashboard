@@ -12,7 +12,6 @@ import Input from "@/components/Input";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Button from "@/components/Button";
 import { post } from "@/services/fetch";
-import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
 import PwaIcon from "../Hotlink/Select/Icon/Pwa";
@@ -92,7 +91,7 @@ const NewCollectionPage = () => {
       return;
     }
 
-    const response = await post("hotlink-collections", form, ENV.DASH);
+    const response = await post("hotlink-collections", form);
     if (response.data.statusCode === 201) {
       notify(dict("colection_created"));
       router.replace(`/${locale}/collections`);
