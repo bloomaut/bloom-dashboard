@@ -8,14 +8,6 @@ const hexToRgb = (hex: string): number[] => {
   return [r, g, b];
 };
 
-const generateAnalogColor = (baseRGB: number[]): string => {
-  const hue = baseRGBToHue(baseRGB);
-  const newHue = (hue + Math.random() * 30 - 15 + 360) % 360;
-  const lightness = 50 + Math.random() * 20 - 10;
-  const saturation = 50 + Math.random() * 20 - 10;
-  return `hsl(${newHue},${saturation}%,${lightness}%)`;
-};
-
 const baseRGBToHue = (baseRGB: number[]): number => {
   const [r, g, b]: number[] = baseRGB;
   const max: number = Math.max(r, g, b);

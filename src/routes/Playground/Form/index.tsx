@@ -84,7 +84,6 @@ const Form = () => {
       setShowPreview(true);
       setShowButton(true);
       setLoadingDots(false);
-      console.log(response.data.data);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
     }

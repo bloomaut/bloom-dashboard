@@ -27,7 +27,6 @@ const Header = () => {
   // CARGA MASIVA DE HOTLINKS A TRAVES DE EXCEL
   const handleConfirm = () => {
     setShowPopupExcel(false);
-    console.log("Sending request ...");
   };
 
   const handleClick = async () => {
@@ -40,27 +39,15 @@ const Header = () => {
           "X-API": ENV.DASH,
           "Content-Type": "application/octet-stream",
         },
-        responseType: "arraybuffer",
       });
 
-      console.log(response);
-
       if (response.status === 200) {
-        downloadExcel(response.data);
+        downloadExcel(response.data.data);
       }
     } catch (error) {
       console.error("Error al descargar el archivo:", error);
       notifyError("Error al descargar el archivo");
     }
-
-    // console.log(response);
-
-    // if (response) {
-    //   downloadExcel(response);
-    // } else {
-    //   console.error("Error al descargar el archivo:", response);
-    //   notifyError("Error al descargar el archivo");
-    // }
   };
 
   return (

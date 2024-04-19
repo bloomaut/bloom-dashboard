@@ -3,7 +3,7 @@
 .container {
   @include width-height(100%, 100vh);
   min-height: 100vh;
-  background-color: $blueBackground;
+  background-color: $blueishBackground;
   .inner_container {
     @include width-height(100%, calc(100% - 65px));
     @include flex(row, space-between, flex-start);

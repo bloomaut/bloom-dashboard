@@ -46,7 +46,6 @@ const PaletteGenerator = () => {
       }
     } catch (error) {
       notifyError(`${dict("toast.error_palette")}`);
-      console.log(error);
     }
   };
 

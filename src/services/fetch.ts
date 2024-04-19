@@ -53,8 +53,11 @@ export const postFile = async (url: string, file: File, api: EnvironmentApi) => 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error en la solicitud:", error);
-    throw error;
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
   }
 };
 
