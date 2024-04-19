@@ -2,7 +2,6 @@
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import { get } from "@/services/fetch";
-import { ENV } from "@/typescript/types/environment.enum";
 
 // Componentes
 import Step1 from "./Step1";
@@ -18,7 +17,7 @@ const GuidePage = () => {
   useEffect(() => {
     const fetchUserStep = async () => {
       setIsLoading(true);
-      const userData = await get("small-business/me", ENV.DASH);
+      const userData = await get("small-business/me");
       if (userData.statusCode === 200) {
         const userStep = userData.result.data.smallBusiness.step;
         setStep(userStep);

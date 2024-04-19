@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { ENV } from "@/typescript/types/environment.enum";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { setClientsData } from "@/store/features/clients";
 import { useAppDispatch } from "@/store/hooks";
@@ -37,8 +36,7 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const [filteredClients, setFilteredClients] = useState<ClientsProps[]>(clients);
 
   const fetchClients = async () => {
-    const data = await get("client-customer", ENV.DASH);
-    console.log(data);
+    const data = await get("client-customer");
     if (data.statusCode === 200) {
       dispatch(setClientsData(data.result.data));
       setClients(data.result.data);

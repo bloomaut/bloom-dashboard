@@ -12,7 +12,7 @@ const Table = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.column}>
-          <p>{dict("clients")}</p>
+          <p>{dict("client")}</p>
         </div>
         <div className={styles.column}>
           <p>Link</p>
@@ -27,7 +27,7 @@ const Table = () => {
         ) : hotlinkList.length < 1 ? (
           <p className={styles.empty_list}>{dict("empty_list")}</p>
         ) : (
-          hotlinkList.map((hotlink, index) => <TableRow key={index} data={hotlink} />)
+          hotlinkList.map((hotlink, index) => <TableRow key={index} hotlink={hotlink} />)
         )}
       </div>
     </div>

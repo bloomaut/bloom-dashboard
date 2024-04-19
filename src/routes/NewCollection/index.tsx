@@ -12,9 +12,9 @@ import Input from "@/components/Input";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Button from "@/components/Button";
 import { post } from "@/services/fetch";
-import { ENV } from "@/typescript/types/environment.enum";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
+import PwaIcon from "../Hotlink/Select/Icon/Pwa";
 
 const InitialEmptyImages = {
   sm_img: "",
@@ -91,7 +91,7 @@ const NewCollectionPage = () => {
       return;
     }
 
-    const response = await post("hotlink-collections", form, ENV.DASH);
+    const response = await post("hotlink-collections", form);
     if (response.data.statusCode === 201) {
       notify(dict("colection_created"));
       router.replace(`/${locale}/collections`);
@@ -106,11 +106,11 @@ const NewCollectionPage = () => {
       {!loading ? (
         <div className={styles.container}>
           <div className={styles.template}>
-            <div className={styles.sm_img}>
-              {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={100} height={100} /> : <HogIcon />}
+            <div className={images.sm_img ? styles.sm_img : `${styles.sm_img} ${styles.sm_not_img}`}>
+              {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={500} height={500} /> : <HogIcon />}
             </div>
             <div className={styles.lg_img}>
-              {images.lg_img && <Image src={images.lg_img} alt={form.name} width={100} height={100} />}
+              {images.lg_img ? <Image src={images.lg_img} alt={form.name} width={800} height={800} /> : <PwaIcon />}
             </div>
           </div>
 

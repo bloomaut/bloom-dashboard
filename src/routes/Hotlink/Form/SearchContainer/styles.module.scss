@@ -9,9 +9,6 @@
     .row {
       padding: 10px;
       cursor: pointer;
-      &:hover {
-        background-color: $blueishBackground;
-      }
     }
   }
 }
@@ -24,4 +21,9 @@
 .clients_container::-webkit-scrollbar-thumb {
   background-color: $orange;
   border-radius: 10px;
+}
+
+.row:hover,
+.row.selected {
+  background-color: $blueishBackground;
 }

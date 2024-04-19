@@ -6,7 +6,6 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { ENV } from "@/typescript/types/environment.enum";
 import { post } from "@/services/fetch";
 import Image from "next/image";
 
@@ -77,6 +76,7 @@ const Form = () => {
 
       const updatedFormDataPost = {
         ...formDataPost,
+        customer_id: clientSelected._id ?? "",
         variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
           key,
           target,
@@ -96,7 +96,7 @@ const Form = () => {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
-    const response = await post("hotlinks/user", formDataPost, ENV.DASH);
+    const response = await post("hotlinks/user", formDataPost);
     console.log("Datos enviados:", formDataPost);
     console.log("Respuesta del servidor:", response);
     if (response.data.statusCode === 200) {
