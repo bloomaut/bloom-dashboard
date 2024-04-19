@@ -1,8 +1,9 @@
 import styles from "./styles.module.scss";
-import TableRow from "../TableRow";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useHotlinkListContext } from "@/context/HotlinksListContext";
 import { useTranslations } from "next-intl";
+// Components
+import TableRow from "../TableRow";
+import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 const Table = () => {
   const dict = useTranslations("dict.my-collection");

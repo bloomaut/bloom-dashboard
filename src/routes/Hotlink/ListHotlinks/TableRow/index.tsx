@@ -1,10 +1,10 @@
 import styles from "./styles.module.scss";
+import Image from "next/image";
+import Link from "next/link";
 import copyIcon from "/public/icons/copy.svg";
 import wpIcon from "/public/icons/whatsapp.svg";
-import Image from "next/image";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
-import Link from "next/link";
 import { useState } from "react";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";

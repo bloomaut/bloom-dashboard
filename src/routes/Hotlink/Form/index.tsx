@@ -1,21 +1,20 @@
 import styles from "./styles.module.scss";
+import Image from "next/image";
+import HotlinkIcon from "@/../../public/icons/hotlink_icon_white.svg";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
-import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
+import { Flake, Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { post } from "@/services/fetch";
-import Image from "next/image";
 
 //Componentes
 import Input from "@/components/Input";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Checkbox from "./Checkbox";
-
-import HotlinkIcon from "@/../../public/icons/hotlink_icon_white.svg";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -34,13 +33,13 @@ const EmptyFormData = {
 };
 
 const Form = () => {
-  const { clientSelected } = useClientsContext();
   const dict = useTranslations("dict");
+  const { clientSelected } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
 
-  const [formDataPost, setFormDataPost] = useState(EmptyFormData);
+  const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
   useEffect(() => {
@@ -97,8 +96,6 @@ const Form = () => {
       return;
     }
     const response = await post("hotlinks/user", formDataPost);
-    console.log("Datos enviados:", formDataPost);
-    console.log("Respuesta del servidor:", response);
     if (response.data.statusCode === 200) {
       setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
       setFormDataPost(EmptyFormData);

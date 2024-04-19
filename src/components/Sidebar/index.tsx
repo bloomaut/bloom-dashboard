@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-import Card from "./Card";
 import styles from "./styles.module.scss";
+import Image from "next/image";
+import Card from "./Card";
 import HomeIcon from "./Icons/Home";
 import DesignIcon from "./Icons/Design";
 import GuideIcon from "./Icons/Guide";
@@ -11,9 +11,9 @@ import CollectionsIcon from "./Icons/Collections";
 import ClientsIcon from "./Icons/Clients";
 import ArrowLeft from "../../../public/icons/double_arrow_left.svg";
 import ArrowRigth from "../../../public/icons/double_arrow_rigth.svg";
+import { Dispatch, SetStateAction } from "react";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import Image from "next/image";
 
 interface SidebarCard {
   title: string;

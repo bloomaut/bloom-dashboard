@@ -1,12 +1,11 @@
 import styles from "./styles.module.scss";
-import { useClientsContext } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
 import { useFlakesContext } from "@/context/FlakesContext";
-
+import { useEffect, useState } from "react";
+// Components
 import Search from "@/components/Search";
 import TableRow from "./TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import { useEffect, useState } from "react";
 
 const data = [
   {

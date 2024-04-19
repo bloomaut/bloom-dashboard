@@ -1,14 +1,14 @@
+import styles from "./styles.module.scss";
+import Image from "next/image";
+import pencilIcon from "/public/icons/edit.svg";
 import { useState } from "react";
 import { colorPalleteGenerator } from "@/utils/colorPalleteGenerator";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { updatePallete } from "@/store/features/businessSlice";
 import { update } from "@/services/fetch";
-import styles from "./styles.module.scss";
 import { PaletteItem } from "@/typescript/interfaces/business.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
-import pencilIcon from "/public/icons/edit.svg";
 
 const PaletteGenerator = () => {
   const [colorBase, setColorBase] = useState("#FFFFFF");
@@ -45,7 +45,6 @@ const PaletteGenerator = () => {
       }
     } catch (error) {
       notifyError(`${dict("toast.error_palette")}`);
-      console.log(error);
     }
   };
 

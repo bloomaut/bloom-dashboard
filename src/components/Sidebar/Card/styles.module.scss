@@ -4,7 +4,6 @@
 .container_noselected {
   @include flex(row, flex-start, center, 10px);
   @include width-height(200px, 50px);
-  background-color: $blueBackground;
   padding: 10px;
   flex-wrap: nowrap;
   transition: all 100ms ease-in;
@@ -26,6 +25,7 @@
   &:hover {
     border-left: 2px solid $orange;
     border-radius: 0 4px 4px 0;
+    background-color: $blueishBackground;
   }
 }
 

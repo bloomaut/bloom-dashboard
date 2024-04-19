@@ -1,10 +1,11 @@
 import styles from "./styles.module.scss";
-import { useState } from "react";
+import Image from "next/image";
 import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 import PwaIcon from "./Icon/Pwa";
-import Image from "next/image";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import { useState } from "react";
 import { useFlakesContext } from "@/context/FlakesContext";
+// Components
+import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();

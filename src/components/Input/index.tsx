@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
-import searchIcon from "../../../public/icons/search.svg";
 import Image from "next/image";
+import searchIcon from "../../../public/icons/search.svg";
 
 interface Props {
   textLabel?: string;

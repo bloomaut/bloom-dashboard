@@ -1,9 +1,9 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import addIcon from "../../../public/icons/add.svg";
 import { ClientsProvider, useClientsContext } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 // Components
 import Title from "@/components/Title";
 import Button from "@/components/Button";

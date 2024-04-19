@@ -1,7 +1,7 @@
+import styles from "./styles.module.scss";
 import { useCollectionsContext } from "@/context/CollectionsContext";
 import { CollectionList } from "@/typescript/interfaces/hotlinkCollections.interface";
 import { useState } from "react";
-import styles from "./styles.module.scss";
 
 interface ContentProps {
   collection: CollectionList;

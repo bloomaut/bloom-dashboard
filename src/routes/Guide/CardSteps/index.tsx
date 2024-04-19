@@ -1,8 +1,8 @@
-import Image from "next/image";
 import styles from "./styles.module.scss";
+import Image from "next/image";
+import Link from "next/link";
 import green_check from "@/../public/icons/green_check.png";
 import gray_check from "@/../public/icons/gray_check.png";
-import Link from "next/link";
 
 interface CardStepsProps {
   step_number: number;

@@ -9,9 +9,9 @@ import closeIcon from "/public/icons/close.svg";
 import { useTranslations } from "next-intl";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { useOpenGraphContext } from "@/context/OpenGraphContext";
 //Componentes
 import Button from "@/components/Button";
-import { useOpenGraphContext } from "@/context/OpenGraphContext";
 
 interface PopupShareProps {
   setShowPopup: (value: boolean) => void;

@@ -2,15 +2,16 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { useCollectionsContext } from "@/context/CollectionsContext";
+// Component
 import Title from "@/components/Title";
 import Search from "@/components/Search";
-//Iconos
+// Iconos
 import down from "@/../public/icons/IconDown.svg";
 import bar from "@/../public/icons/bar.svg";
 import period from "@/../public/icons/period.svg";
 import plus from "@/../public/icons/plus.svg";
-import { useEffect, useState } from "react";
-import { useCollectionsContext } from "@/context/CollectionsContext";
 
 const Header = () => {
   const locale = useLocale();

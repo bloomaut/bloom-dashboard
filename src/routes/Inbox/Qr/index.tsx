@@ -1,8 +1,8 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
-import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import qr from "@/../public/assets/inbox_big_qr.png";
 import closeIcon from "/public/icons/close.svg";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 
 interface QrModalProps {
   setShowPopup: (value: boolean) => void;

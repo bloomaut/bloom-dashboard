@@ -1,10 +1,11 @@
 import styles from "./styles.module.scss";
-import { useState, useEffect } from "react";
-import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import trashIcon from "/public/icons/trash.svg";
 import pencilIcon from "/public/icons/edit.svg";
 import PaletteGenerator from "./PaletteGenerator";
+import { useState, useEffect } from "react";
+import { useAppSelector } from "@/store/hooks";
+// Components
 import Button from "@/components/Button";
 
 interface FileLogoProps {

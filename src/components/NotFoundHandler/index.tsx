@@ -1,9 +1,9 @@
+import "@/styles/globals.scss";
 import styles from "./styles.module.scss";
+import Image from "next/image";
 import Link from "next/link";
 import smallLogo from "@/../public/assets/logo_small.png";
-import Image from "next/image";
 import { Barlow } from "next/font/google";
-import "@/styles/globals.scss";
 
 const barlow = Barlow({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
