@@ -10,15 +10,10 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     console.log("My Access Token:", accessToken);
 
     const path = req.nextUrl.pathname.substring(req.nextUrl.pathname.indexOf("/api"));
-    const EXTERNAL_API_URL = process.env.NEXT_PUBLIC_API_DASH;
-
-    if (!EXTERNAL_API_URL) {
-      throw new Error(`Invalid API: DASH`);
-    }
 
     const fetchOptions: AxiosRequestConfig = {
       method: req.method.toLowerCase(),
-      url: `${EXTERNAL_API_URL}${path}${req.nextUrl.search}`,
+      url: `${process.env.NEXT_PUBLIC_API_DASH}${path}${req.nextUrl.search}`,
       headers: { Authorization: `Bearer ${accessToken}` },
     };
 
