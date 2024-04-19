@@ -1,11 +1,12 @@
 "use clients";
 import styles from "./styles.module.scss";
-import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import Image from "next/image";
 import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
+import { Powerapp } from "@/typescript/interfaces/flakes.interface";
+import { useFlakeData } from "@/hooks/useFlakesUser";
 //Componentes
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import { useFlakeData } from "@/hooks/useFlakesUser";
+import PwaIcon from "@/routes/Hotlink/Select/Icon/Pwa";
 
 const GalleryComponent = () => {
   const { flakes, loading } = useFlakeData();
@@ -26,7 +27,11 @@ const GalleryComponent = () => {
                   )}
                 </div>
                 <div className={styles.lg_card}>
-                  {app.thumbnail && <Image src={app.thumbnail} alt={app.skinx.title} width={137} height={100} />}
+                  {app.thumbnail ? (
+                    <Image src={app.thumbnail} alt={app.skinx.title} width={137} height={100} />
+                  ) : (
+                    <PwaIcon />
+                  )}
                 </div>
               </div>
             </div>

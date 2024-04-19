@@ -1,7 +1,6 @@
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-
 //Componentes
 import SearchContainer from "../SearchContainer";
 

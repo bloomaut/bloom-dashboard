@@ -1,15 +1,14 @@
+import styles from "./styles.module.scss";
+import Image from "next/image";
+import pencilIcon from "/public/icons/edit.svg";
 import { useState } from "react";
 import { colorPalleteGenerator } from "@/utils/colorPalleteGenerator";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { updatePallete } from "@/store/features/businessSlice";
-import { ENV } from "@/typescript/types/environment.enum";
 import { update } from "@/services/fetch";
-import styles from "./styles.module.scss";
 import { PaletteItem } from "@/typescript/interfaces/business.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
-import pencilIcon from "/public/icons/edit.svg";
 
 const PaletteGenerator = () => {
   const [colorBase, setColorBase] = useState("#FFFFFF");
@@ -37,7 +36,7 @@ const PaletteGenerator = () => {
       const dataToSend = {
         palette: palettePreview,
       };
-      const response = await update("small-business", ENV.DASH, dataToSend);
+      const response = await update("small-business", dataToSend);
       if (response.statusCode === 200) {
         dispatch(updatePallete(palettePreview));
         setPalettePreview([]);

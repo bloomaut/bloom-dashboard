@@ -1,15 +1,15 @@
+import styles from "./styles.module.scss";
 import { useState } from "react";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import styles from "./styles.module.scss";
-import LoadingSpinner from "@/components/Loading";
-import Row from "../Row";
-import PopupActions from "../PopupActions";
-import PopupConfirm from "@/components/PopupConfirm";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { remove } from "@/services/fetch";
 import { useTranslations } from "next-intl";
-import { ENV } from "@/typescript/types/environment.enum";
 import { useClientsContext } from "@/context/ClientsContext";
+// Components
+import Row from "../Row";
+import PopupActions from "../PopupActions";
+import LoadingSpinner from "@/components/Loading";
+import PopupConfirm from "@/components/PopupConfirm";
 
 const List = () => {
   const { loading, fetchClients, setClientSelected, filteredClients } = useClientsContext();
@@ -21,7 +21,7 @@ const List = () => {
 
   const handleDelete = async () => {
     if (clientId) {
-      const data = await remove("client-customer", clientId, ENV.DASH);
+      const data = await remove("client-customer", clientId);
       if (data.statusCode === 200) {
         setShowPopupDelete(false);
         setClientSelected(null);

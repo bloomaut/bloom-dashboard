@@ -1,7 +1,8 @@
 "use client";
-import Search from "@/components/Search";
 import { useClientsContext } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
+// Components
+import Search from "@/components/Search";
 
 const SearchContainer = () => {
   const { searchValue, setSearchValue } = useClientsContext();

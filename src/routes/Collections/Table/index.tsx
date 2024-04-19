@@ -3,11 +3,11 @@ import styles from "./styles.module.scss";
 import skin from "@/../../public/icons/skin.svg";
 import { useLocale, useTranslations } from "next-intl";
 import { useCollectionsContext } from "@/context/CollectionsContext";
+import { useRouter } from "next/navigation";
 //Componentes
 import Button from "@/components/Button";
 import TableHead from "../TableHead";
 import TableRows from "../TableRow";
-import { useRouter } from "next/navigation";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 const Table = () => {

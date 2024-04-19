@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
+import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 import { useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ENV } from "@/typescript/types/environment.enum";
 import { get } from "@/services/fetch";
 
 interface Context {
@@ -12,6 +12,12 @@ interface Context {
   loading: boolean;
   selectedFlakeId: string;
   setSelectedFlakeId: (id: string) => void;
+  id: string;
+  setId: (i: string) => void;
+  hotlinksList: HotlinkList[];
+  setHotlinksList: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
+  filteredHotlinks: HotlinkList | null;
+  setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList | null>>;
 }
 
 const FlakesContext = createContext<Context>({
@@ -19,6 +25,12 @@ const FlakesContext = createContext<Context>({
   loading: true,
   selectedFlakeId: "",
   setSelectedFlakeId: () => "",
+  id: "",
+  setId: () => "",
+  hotlinksList: [],
+  setHotlinksList: () => [],
+  filteredHotlinks: null,
+  setFilteredHotlinks: () => null,
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -28,6 +40,10 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const { notifyError } = useMessageToast();
   const dict = useTranslations("dict.toast");
   const path = usePathname();
+
+  const [id, setId] = useState<string>("");
+  const [hotlinksList, setHotlinksList] = useState<HotlinkList[]>([]);
+  const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList | null>(null);
 
   //Fetch sin necesidad de estar logueado
   const fetchData = async () => {
@@ -45,7 +61,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   const fetchDataHotlink = async () => {
-    const response = await get("small/flakes/user", ENV.UITOOL);
+    const response = await get("small/flakes/user");
     if (response.statusCode === 200) {
       setFlakes(response.result.powerapps);
       setSelectedFlakeId(response.result.powerapps[0]._id);
@@ -55,6 +71,21 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
       setLoading(false);
     }
   };
+
+  //Función para acceder a la lista de hotlinks sin colección
+  useEffect(() => {
+    const getList = async () => {
+      const response = await get("hotlinks/no-collection");
+      if (response.statusCode === 200) {
+        setHotlinksList(response.result.hotlinks.hotlinks);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
+
+    getList();
+  }, []);
 
   useEffect(() => {
     // Para no tener que volver a copiar un Context igual
@@ -75,6 +106,12 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         loading,
         selectedFlakeId,
         setSelectedFlakeId,
+        id,
+        setId,
+        hotlinksList,
+        setHotlinksList,
+        filteredHotlinks,
+        setFilteredHotlinks,
       }}
     >
       {children}

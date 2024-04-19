@@ -2,13 +2,13 @@ import styles from "./styles.module.scss";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { useClientsContext } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
-
+// Components
 import Search from "@/components/Search";
 import LoadingSpinner from "@/components/Loading";
 
 const SearchContainer = () => {
-  const { searchValue, setSearchValue } = useClientsContext();
-  const { loading, setClientSelected, filteredClients } = useClientsContext();
+  const { searchValue, setSearchValue, loading, clientSelected, setClientSelected, filteredClients } =
+    useClientsContext();
   const dict = useTranslations("dict.hotlinks");
 
   return (
@@ -23,9 +23,14 @@ const SearchContainer = () => {
           <LoadingSpinner />
         ) : filteredClients.length ? (
           filteredClients.map((client: ClientsProps) => (
-            <div className={styles.row}>
+            <div
+              className={`${styles.row} ${clientSelected && clientSelected._id === client._id ? styles.selected : ""}`}
+              key={client._id}
+            >
               <div onClick={() => setClientSelected(client)}>
-                <p>{client.ClientFirstname}</p>
+                <p>
+                  {client.ClientFirstname} {client.ClientLastname}
+                </p>
               </div>
             </div>
           ))

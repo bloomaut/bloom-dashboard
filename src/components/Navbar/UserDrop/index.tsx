@@ -1,9 +1,8 @@
 "use client";
-
 import styles from "./styles.module.scss";
+import Image from "next/image";
 import { useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 

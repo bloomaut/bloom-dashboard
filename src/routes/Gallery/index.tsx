@@ -1,9 +1,10 @@
 import styles from "./styles.module.scss";
-import Title from "@/components/Title";
 import Image from "next/image";
 import Link from "next/link";
-import GalleryComponent from "./GalleryComponent";
 import { useTranslations } from "next-intl";
+// Components
+import Title from "@/components/Title";
+import GalleryComponent from "./GalleryComponent";
 
 const GalleryPage = () => {
   const dict = useTranslations("dict.gallery");

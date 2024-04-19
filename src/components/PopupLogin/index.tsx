@@ -1,8 +1,8 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import ArrowIcon from "/public/icons/arrow_left.svg";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 interface PopupLoginProps {

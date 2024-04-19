@@ -2,7 +2,6 @@
 
 .container {
   @include width-height(100%, 100%);
-  background-color: $blueBackground;
   @include flex(column, flex-start, flex-start, 20px);
   padding: 0px 40px;
   overflow-y: auto;

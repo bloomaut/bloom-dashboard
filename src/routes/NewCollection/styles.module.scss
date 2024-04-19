@@ -2,7 +2,6 @@
 
 .new_collection {
   @include width-height(100%, 100%);
-  background-color: $blueBackground;
   @include flex(column, flex-start, flex-start, 20px);
   padding: 0px 40px;
   .container {
@@ -16,7 +15,26 @@
       border: 1px solid $lighterGrey;
       border-radius: 4px;
       padding: 10px;
-      .sm_img,
+      .sm_img {
+        @include width-height(100%, 100%);
+        @include flex(row, center, center);
+        position: relative;
+        img {
+          @include width-height(100%, auto);
+          max-height: 450px;
+          object-fit: cover;
+          object-position: top;
+          position: absolute;
+          top: 0;
+        }
+      }
+      .sm_not_img {
+        @include width-height(100%, 100%);
+        @include flex(row, center, center);
+        border: 1px solid $lighterGrey;
+        border-radius: 4px;
+        background-color: $greyBackground;
+      }
       .lg_img {
         @include width-height(100%, 100%);
         border: 1px solid $lighterGrey;
@@ -28,9 +46,6 @@
           object-fit: cover;
           object-position: top;
         }
-      }
-      .sm_img {
-        max-height: 35%;
       }
     }
     .form {

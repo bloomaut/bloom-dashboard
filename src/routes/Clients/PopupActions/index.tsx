@@ -1,17 +1,17 @@
 import styles from "./styles.module.scss";
+import Image from "next/image";
+import useFormValidator from "@/hooks/useFormValidator";
+import closeIcon from "../../../../public/icons/close.svg";
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
-import Input from "@/components/Input";
-import closeIcon from "../../../../public/icons/close.svg";
-import Image from "next/image";
-import Button from "@/components/Button";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { post, update } from "@/services/fetch";
-import { ENV } from "@/typescript/types/environment.enum";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
-import useFormValidator from "@/hooks/useFormValidator";
+// Components
+import Input from "@/components/Input";
+import Button from "@/components/Button";
 
 interface PopupActionsProps {
   onCancel: () => void;
@@ -74,11 +74,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
 
   const postClient = async () => {
     try {
-      // const dataToSend = { ...formData };
-      // if (!formData.note) {
-      //   delete dataToSend.note;
-      // }
-      const data = await post("client-customer", formData, ENV.DASH);
+      const data = await post("client-customer", formData);
       if (data.data.statusCode === 201) {
         notify(dict("toast.client_post"));
         setShowPopup(false);
@@ -102,7 +98,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
 
   const editClient = async () => {
     try {
-      const data = await update("client-customer", ENV.DASH, formData, clientId);
+      const data = await update("client-customer", formData, clientId);
       if (data.statusCode === 200) {
         notify(dict("toast.client_edit"));
         setShowPopup(false);

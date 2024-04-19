@@ -4,7 +4,6 @@
   @include width-height(100%, calc(100vh - 110px));
   max-width: 1200px;
   @include flex(column, center, center, 20px);
-  background-color: $blueBackground;
   .breadcrumb_container {
     @include width-height(100%, 10%);
     @include flex(row, flex-start, flex-start);

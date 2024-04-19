@@ -2,7 +2,6 @@
 
 .container {
   @include width-height(100%, auto);
-  background-color: $blueBackground;
   position: relative;
   .form_container {
     @include flex(column, flex-start, flex-start, 10px);

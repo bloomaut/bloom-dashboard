@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
-import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import banner_home from "/public/assets/home_banner.png";
+import { useLocale, useTranslations } from "next-intl";
 //Componentes
 import LinkComponent from "@/components/LinkComponent";
 import Title from "@/components/Title";

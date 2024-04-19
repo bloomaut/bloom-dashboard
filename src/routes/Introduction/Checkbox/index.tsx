@@ -1,8 +1,8 @@
 import styles from "./styles.module.scss";
+import arrowRigth from "/public/icons/arrow_rigth.svg";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
-import arrowRigth from "/public/icons/arrow_rigth.svg";
 //Componentes
 import Button from "@/components/Button";
 

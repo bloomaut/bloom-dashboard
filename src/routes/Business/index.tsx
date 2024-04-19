@@ -6,7 +6,6 @@ import { get } from "@/services/fetch";
 import { useAppDispatch } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
 import { setFilesData } from "@/store/features/filesSlice";
-import { ENV } from "@/typescript/types/environment.enum";
 //Componentes
 import LoadingSpinner from "@/components/Loading";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -21,11 +20,11 @@ const Business = () => {
 
   const fetchData = async () => {
     try {
-      const userData = await get("small-business/me", ENV.DASH);
+      const userData = await get("small-business/me");
       if (userData?.statusCode === 200) {
         dispatch(setBusinessData(userData.result.data.smallBusiness));
       }
-      const userFiles = await get("small-files/media", ENV.DASH);
+      const userFiles = await get("small-files/media");
       if (userFiles?.statusCode === 200) {
         dispatch(setFilesData(userFiles.result.folder));
       }
