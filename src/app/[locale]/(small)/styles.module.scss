@@ -3,7 +3,7 @@
 .container {
   @include width-height(100%, 100vh);
   min-height: 100vh;
-  background-color: $blueishBackground;
+  background-color: $generalBackground;
   .inner_container {
     @include width-height(100%, calc(100% - 65px));
     @include flex(row, space-between, flex-start);
@@ -11,7 +11,7 @@
     .children_container {
       @include width-height(calc(100vw - 210px), calc(100vh - 65px));
       @include flex(column, flex-start, center);
-      background-color: $blueishBackground;
+      background-color: $generalBackground;
       overflow-y: auto;
       padding: 20px;
       transition: all 0.7s;
