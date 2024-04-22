@@ -18,7 +18,7 @@ const HotlinksPage = () => {
           <Title text={dict("title")} />
           <div className={styles.inner_container}>
             <Select />
-            <Form />
+            {/* <Form /> */}
           </div>
           <ListHotlinks />
         </section>

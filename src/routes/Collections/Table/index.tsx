@@ -28,6 +28,9 @@ const Table = () => {
         <div className={styles.content_container}>
           {loading ? (
             <Loading />
+          ) : (filteredCollections && filteredCollections.length === 0) ||
+            (collectionsList && collectionsList.length === 0) ? (
+            <p>{dict("empty_collections")}</p>
           ) : filteredCollections ? (
             <TableRows key={filteredCollections._id} collection={filteredCollections} />
           ) : (

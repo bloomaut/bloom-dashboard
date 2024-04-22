@@ -166,11 +166,13 @@
       "search_holder": "Search customer ...."
     },
     "collections": {
+      "template": "empty",
       "header": {
         "title": "Hotlinks Collections",
         "search": "Search Collections...",
         "period_btn": "Period",
-        "new_btn": "New Collection"
+        "new_btn": "New Collection",
+        "empty_collections": "You don't have collections yet"
       },
       "titles": {
         "title_one": "Name",
@@ -221,6 +223,7 @@
       "subtitle_checkbox": "Fields that can be completed with client",
       "search_clients": "Search clients",
       "empty_clients": "No clients available",
+      "empty_designs": "You don't have designs yet",
       "list": {
         "title": "Hotlink List",
         "search": "Search",

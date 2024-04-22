@@ -1,4 +1,5 @@
 export interface CollectionList {
+  [x: string]: number;
   _id: string;
   name: string;
   description: string;
