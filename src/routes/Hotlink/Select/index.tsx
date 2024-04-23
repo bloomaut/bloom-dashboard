@@ -6,10 +6,12 @@ import { useState } from "react";
 import { useFlakesContext } from "@/context/FlakesContext";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import { useTranslations } from "next-intl";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
   const [selectedDesign, setSelectedDesign] = useState(flakes[0]?.skinx._id);
+  const dict = useTranslations("dict.hotlinks");
   const selectedFlake = flakes.find(flake => flake._id === selectedFlakeId);
 
   const handleDesignChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -24,13 +26,17 @@ const Select = () => {
     <div className={styles.container}>
       <div className={styles.select}>
         <label>Diseño</label>
-        <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
-          {flakes.map(flake => (
-            <option key={flake._id} value={flake._id}>
-              {flake.skinx.title}
-            </option>
-          ))}
-        </select>
+        {flakes ? (
+          <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
+            {flakes.map(flake => (
+              <option key={flake._id} value={flake._id}>
+                {flake.skinx.title}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <p>{dict("empty_designs")}</p>
+        )}
       </div>
       <div className={styles.flakes}>
         {!loading ? (
