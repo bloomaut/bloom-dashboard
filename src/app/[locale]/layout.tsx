@@ -16,6 +16,11 @@ const barlow = Barlow({
 export const metadata: Metadata = {
   title: "Small",
   description: "Small",
+  // metadataBase: new URL(""),
+  openGraph: {
+    title: "Small",
+    description: "Small",
+  },
 };
 
 export default function RootLayout({
