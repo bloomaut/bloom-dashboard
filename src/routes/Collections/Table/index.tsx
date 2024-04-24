@@ -32,7 +32,9 @@ const Table = () => {
             (collectionsList && collectionsList.length === 0) ? (
             <p>{dict("empty_collections")}</p>
           ) : filteredCollections ? (
-            <TableRows key={filteredCollections._id} collection={filteredCollections} />
+            filteredCollections.map(collection => {
+              return <TableRows key={collection._id} collection={collection} />;
+            })
           ) : (
             collectionsList.map(collection => {
               return <TableRows key={collection._id} collection={collection} />;

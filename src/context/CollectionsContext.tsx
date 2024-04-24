@@ -7,8 +7,8 @@ interface Context {
   setId: (i: string) => void;
   collectionsList: CollectionList[];
   setCollectionsList: React.Dispatch<React.SetStateAction<CollectionList[]>>;
-  filteredCollections: CollectionList | null;
-  setFilteredCollections: React.Dispatch<React.SetStateAction<CollectionList | null>>;
+  filteredCollections: CollectionList[] | null;
+  setFilteredCollections: React.Dispatch<React.SetStateAction<CollectionList[] | null>>;
   loading: boolean;
 }
 
@@ -26,7 +26,7 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
   const [id, setId] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [collectionsList, setCollectionsList] = useState<CollectionList[]>([]);
-  const [filteredCollections, setFilteredCollections] = useState<CollectionList | null>(null);
+  const [filteredCollections, setFilteredCollections] = useState<CollectionList[] | null>(null);
 
   useEffect(() => {
     const getCollections = async () => {

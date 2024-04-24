@@ -16,14 +16,18 @@ import plus from "@/../public/icons/plus.svg";
 const Header = () => {
   const locale = useLocale();
   const dict = useTranslations("dict.collections.header");
-  const { collectionsList, setFilteredCollections } = useCollectionsContext();
+  const { collectionsList, setFilteredCollections, filteredCollections } = useCollectionsContext();
   const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
     if (searchValue) {
       collectionsList.map(collection => {
         if (collection.name.toLowerCase().includes(searchValue.toLowerCase())) {
-          setFilteredCollections(collection);
+          if (filteredCollections === null) {
+            setFilteredCollections([collection]);
+          } else {
+            setFilteredCollections([...filteredCollections, collection]);
+          }
         }
       });
     } else {
