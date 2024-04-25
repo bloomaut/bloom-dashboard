@@ -2,7 +2,6 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 import PwaIcon from "./Icon/Pwa";
-import { useState } from "react";
 import { useFlakesContext } from "@/context/FlakesContext";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
@@ -10,13 +9,11 @@ import { useTranslations } from "next-intl";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
-  const [selectedDesign, setSelectedDesign] = useState(flakes[0]?.skinx._id);
   const dict = useTranslations("dict.hotlinks");
   const selectedFlake = flakes.find(flake => flake._id === selectedFlakeId);
 
   const handleDesignChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDesign(event.target.value);
-    const selectedFlake = flakes.find(flake => flake._id === event.target.value);
+    const selectedFlake = flakes.find(flake => flake._id === event.target.value || flakes[0]?.skinx._id);
     if (selectedFlake) {
       setSelectedFlakeId(selectedFlake._id);
     }
