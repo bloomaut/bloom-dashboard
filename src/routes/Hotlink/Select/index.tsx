@@ -36,9 +36,9 @@ const Select = () => {
               </option>
             ))}
           </select>
-        ) : (
+        ) : !loading ? (
           <p>{dict("empty_designs")}</p>
-        )}
+        ) : null}
       </div>
       <div className={styles.flakes}>
         {!loading ? (

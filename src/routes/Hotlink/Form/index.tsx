@@ -128,7 +128,7 @@ const Form = () => {
       <SectionTitle text={dict("hotlinks.form_title")} />
       {loading ? (
         <Loading />
-      ) : (
+      ) : flakes.length ? (
         <form className={styles.form_container} onSubmit={handleSubmit}>
           <div className={styles.form}>
             {formInfo &&
@@ -152,7 +152,7 @@ const Form = () => {
             {dict("hotlinks.form_btn")}
           </button>
         </form>
-      )}
+      ) : null}
     </div>
   );
 };

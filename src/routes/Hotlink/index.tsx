@@ -10,7 +10,6 @@ import ListHotlinks from "./ListHotlinks";
 
 const HotlinksPage = () => {
   const dict = useTranslations("dict.hotlinks");
-  const { flakes } = useFlakesContext();
 
   return (
     <FlakesProvider>
@@ -19,7 +18,7 @@ const HotlinksPage = () => {
           <Title text={dict("title")} />
           <div className={styles.inner_container}>
             <Select />
-            {flakes && flakes.length > 0 ? <Form /> : null}
+            <Form />
           </div>
           <ListHotlinks />
         </section>
