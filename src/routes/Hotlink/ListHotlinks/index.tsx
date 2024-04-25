@@ -45,7 +45,7 @@ const ListHotlinks = () => {
       <div className={styles.rows_container}>
         {loading ? (
           <Loading />
-        ) : !filteredHotlinks || (hotlinksList && hotlinksList.length === 0) ? (
+        ) : !filteredHotlinks || (hotlinksList && hotlinksList.length === 0) || !hotlinksList ? (
           <p className={styles.text}>{dict("empty")}</p>
         ) : filteredHotlinks ? (
           <TableRow key={filteredHotlinks.id} hotlink={filteredHotlinks} />
