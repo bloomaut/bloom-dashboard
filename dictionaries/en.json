@@ -208,7 +208,8 @@
     },
     "gallery": {
       "title": "Gallery",
-      "more_designs": "Find more designs at"
+      "more_designs": "Find more designs at",
+      "empty_designs": "You don't have designs yet"
     },
     "hotlinks": {
       "title": "Hotlink Generation",
@@ -226,7 +227,8 @@
         "title_one": "Design/Template",
         "title_two": "Client",
         "title_three": "Hotlink URL",
-        "title_four": "Share"
+        "title_four": "Share",
+        "empty": "You don't have hotlinks yet"
       }
     }
   }

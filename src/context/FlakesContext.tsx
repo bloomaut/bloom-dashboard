@@ -86,6 +86,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         setHotlinksList(response.result.hotlinks.hotlinks);
         setLoading(false);
       } else {
+        notifyError(dict("error_tryagain"));
         setLoading(false);
       }
     };

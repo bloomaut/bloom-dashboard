@@ -22,11 +22,13 @@ const Select = () => {
     }
   };
 
+  console.log(flakes);
+
   return (
     <div className={styles.container}>
       <div className={styles.select}>
         <label>Diseño</label>
-        {flakes ? (
+        {flakes?.length ? (
           <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
             {flakes.map(flake => (
               <option key={flake._id} value={flake._id}>

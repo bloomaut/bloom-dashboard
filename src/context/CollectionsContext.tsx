@@ -1,5 +1,7 @@
+import { useMessageToast } from "@/hooks/useMessageToast";
 import { get } from "@/services/fetch";
 import { CollectionList } from "@/typescript/interfaces/hotlinkCollections.interface";
+import { useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface Context {
@@ -27,6 +29,8 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
   const [loading, setLoading] = useState(true);
   const [collectionsList, setCollectionsList] = useState<CollectionList[]>([]);
   const [filteredCollections, setFilteredCollections] = useState<CollectionList[] | null>(null);
+  const { notifyError } = useMessageToast();
+  const dict = useTranslations("dict.toast");
 
   useEffect(() => {
     const getCollections = async () => {
@@ -36,6 +40,7 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
         setCollectionsList(response.result.hotlinkCollections);
         setLoading(false);
       } else {
+        notifyError(dict("error_tryagain"));
         setLoading(false);
       }
     };
