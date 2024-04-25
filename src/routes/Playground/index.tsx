@@ -8,6 +8,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Form from "./Form";
 import PhoneCase from "./PhoneCase";
 import TemplatesSelector from "./TemplatesSelector";
+import { Fade } from "react-awesome-reveal";
 
 const Playground = () => {
   const dict = useTranslations("dict.playground");

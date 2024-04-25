@@ -14,6 +14,7 @@ import ArrowRigth from "../../../public/icons/double_arrow_rigth.svg";
 import { Dispatch, SetStateAction } from "react";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { Fade } from "react-awesome-reveal";
 
 interface SidebarCard {
   title: string;
@@ -86,12 +87,15 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       <button className={styles.btn} onClick={handleMenu}>
         <Image src={isOpen ? ArrowLeft : ArrowRigth} alt='arrow open' />
       </button>
+
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >
-        {sidebar.map(card => (
-          <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
-        ))}
+        <Fade cascade damping={0.1}>
+          {sidebar.map(card => (
+            <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
+          ))}
+        </Fade>
       </div>
     </div>
   );

@@ -25,6 +25,9 @@
       background-color: $lighterGrey;
       z-index: -1;
     }
+    .fade {
+      @include width-height(100%, auto);
+    }
   }
 }
 

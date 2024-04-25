@@ -7,6 +7,7 @@ import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Header from "./Header";
 import LoadingSpinner from "@/components/Loading";
+import { Fade } from "react-awesome-reveal";
 
 const GuidePage = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -31,7 +32,9 @@ const GuidePage = () => {
 
   return (
     <section className={styles.container}>
-      <Header handleStepChange={setActiveStep} activeStep={activeStep} />
+      <Fade className={styles.fade}>
+        <Header handleStepChange={setActiveStep} activeStep={activeStep} />
+      </Fade>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
