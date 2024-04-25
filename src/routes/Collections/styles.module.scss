@@ -2,7 +2,6 @@
 
 .container {
   @include width-height(100%, 100%);
-  background-color: $blueBackground;
   @include flex(column, flex-start, center, 20px);
   padding: 0px 40px;
   .table {
@@ -24,7 +23,6 @@
   }
   .btn {
     @include flex(row, center, center, 15px);
-    background-color: $blueBackground;
     border: 2px solid $orange;
     border-radius: 2px;
     @include fontSize-fontWeight(14px, 400);

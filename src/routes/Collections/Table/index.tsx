@@ -3,11 +3,11 @@ import styles from "./styles.module.scss";
 import skin from "@/../../public/icons/skin.svg";
 import { useLocale, useTranslations } from "next-intl";
 import { useCollectionsContext } from "@/context/CollectionsContext";
+import { useRouter } from "next/navigation";
 //Componentes
 import Button from "@/components/Button";
 import TableHead from "../TableHead";
 import TableRows from "../TableRow";
-import { useRouter } from "next/navigation";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 const Table = () => {
@@ -28,8 +28,13 @@ const Table = () => {
         <div className={styles.content_container}>
           {loading ? (
             <Loading />
+          ) : (filteredCollections && filteredCollections.length === 0) ||
+            (collectionsList && collectionsList.length === 0) ? (
+            <p className={styles.text}>{dict("header.empty_collections")}</p>
           ) : filteredCollections ? (
-            <TableRows key={filteredCollections._id} collection={filteredCollections} />
+            filteredCollections.map(collection => {
+              return <TableRows key={collection._id} collection={collection} />;
+            })
           ) : (
             collectionsList.map(collection => {
               return <TableRows key={collection._id} collection={collection} />;
@@ -37,7 +42,9 @@ const Table = () => {
           )}
         </div>
       </div>
-      <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
+      {filteredCollections?.length && (
+        <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
+      )}
     </>
   );
 };

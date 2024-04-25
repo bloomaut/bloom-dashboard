@@ -1,12 +1,13 @@
 import styles from "./styles.module.scss";
-import { Dispatch, SetStateAction } from "react";
-import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import Image from "next/image";
 import iconDelete from "../../../public/icons/delete.svg";
 import hotlink from "@/../public/icons/hotlink_icon_grey.svg";
 import closeIcon from "/public/icons/close.svg";
-import Image from "next/image";
-import DragAndDrop from "@/components/DragAndDrop";
+import { Dispatch, SetStateAction } from "react";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { usePathname } from "next/navigation";
+// Components
+import DragAndDrop from "@/components/DragAndDrop";
 
 interface PopupConfirmProps {
   onConfirm?: () => void;

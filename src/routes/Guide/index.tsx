@@ -2,7 +2,6 @@
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import { get } from "@/services/fetch";
-
 // Componentes
 import Step1 from "./Step1";
 import Step2 from "./Step2";

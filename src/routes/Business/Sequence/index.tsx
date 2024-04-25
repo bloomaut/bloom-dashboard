@@ -70,7 +70,6 @@ const Sequence = () => {
   ];
 
   const handleButtonClick = () => {
-    console.log("Clicked on me!");
     setIsButtonDisabled(false);
   };
 

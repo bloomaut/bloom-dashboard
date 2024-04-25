@@ -3,11 +3,11 @@ import Image from "next/image";
 import caseImage from "@/../public/assets/playground_phonecase.png";
 import whatsappImage from "@/../public/assets/playground_wa.png";
 import { useState } from "react";
+import { useOpenGraphContext } from "@/context/OpenGraphContext";
 //Componentes
 import LoadingDots from "./LoadingDots";
 import LoadingSpinner from "@/components/Loading";
 import OpenGraph from "./OpenGraph";
-import { useOpenGraphContext } from "@/context/OpenGraphContext";
 
 const PhoneCase = () => {
   const { captureTime, showPreview, setShowPreview, previewData, paUrl, loadingDots } = useOpenGraphContext();

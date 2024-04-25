@@ -1,12 +1,13 @@
 "use client";
 import "@/styles/globals.scss";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+// Components
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
-import { useState } from "react";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);

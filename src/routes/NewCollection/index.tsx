@@ -4,15 +4,13 @@ import { useTranslations, useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import { useFlakeData } from "@/hooks/useFlakesUser";
 import { useRouter } from "next/navigation";
-import useFormValidator from "@/hooks/useFormValidator";
-
+import { post } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Input from "@/components/Input";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Button from "@/components/Button";
-import { post } from "@/services/fetch";
-import { useMessageToast } from "@/hooks/useMessageToast";
 import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
 import PwaIcon from "../Hotlink/Select/Icon/Pwa";
 
@@ -20,6 +18,13 @@ const InitialEmptyImages = {
   sm_img: "",
   lg_img: "",
 };
+
+export interface Collection {
+  name: string;
+  description: string;
+  type_flake: string;
+  flake_id: string;
+}
 
 const InitialEmptyForm = {
   name: "",
@@ -34,7 +39,7 @@ const NewCollectionPage = () => {
   const { flakes, loading } = useFlakeData();
   const { notify, notifyError } = useMessageToast();
   const [images, setImages] = useState(InitialEmptyImages);
-  const [form, setForm] = useState(InitialEmptyForm);
+  const [form, setForm] = useState<Collection>(InitialEmptyForm);
   const locale = useLocale();
   const [errors, setErrors] = useState<{ name?: string }>({});
   useEffect(() => {

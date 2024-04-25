@@ -1,8 +1,8 @@
 import styles from "./styles.module.scss";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
 import excel from "@/../public/icons/excel_logo.svg";
 import table from "@/../public/icons/excel.svg";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { useHotlinkListContext } from "@/context/HotlinksListContext";
 import { getExcel } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -23,7 +23,6 @@ const Header = () => {
   // CARGA MASIVA DE HOTLINKS A TRAVES DE EXCEL
   const handleConfirm = () => {
     setShowPopupExcel(false);
-    console.log("Sending request ...");
   };
 
   const handleClick = async () => {

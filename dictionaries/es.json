@@ -166,11 +166,13 @@
       "search_holder": "Buscar cliente ..."
     },
     "collections": {
+      "template": "vacío",
       "header": {
         "title": "Colecciones de Hotlinks",
         "search": "Buscar Colecciones...",
         "period_btn": "Periodo",
-        "new_btn": "Nueva Colección"
+        "new_btn": "Nueva Colección",
+        "empty_collections": "Todavía no tenés colecciones"
       },
       "titles": {
         "title_one": "Nombre",
@@ -204,13 +206,10 @@
       "empty_list": "Lista de Hotlinks vacía",
       "loading": "Cargando..."
     },
-    "inbox": {
-      "title": "Bandeja de entrada",
-      "subtitle": "Descarga la app"
-    },
     "gallery": {
       "title": "Galería",
-      "more_designs": "Encontrar más diseños en"
+      "more_designs": "Encontrar más diseños en",
+      "empty_designs": "Aún no tenés diseños"
     },
     "hotlinks": {
       "title": "Generación Hotlink",
@@ -221,13 +220,15 @@
       "subtitle_checkbox": "Campos que se puedan completar con cliente",
       "search_clients": "Buscar clientes",
       "empty_clients": "No hay clientes",
+      "empty_designs": "Aún no tenés diseños",
       "list": {
         "title": "Hotlink List",
         "search": "Buscar",
         "title_one": "Diseño/Template",
         "title_two": "Cliente",
         "title_three": "Hotlink URL",
-        "title_four": "Compartir"
+        "title_four": "Compartir",
+        "empty": "Aún no tenés hotlinks"
       }
     }
   }

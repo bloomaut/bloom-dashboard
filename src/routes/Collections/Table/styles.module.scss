@@ -16,4 +16,11 @@
     background-color: $orange;
     border-radius: 10px;
   }
+  .text {
+    @include fontSize-fontWeight(14px, 400);
+    @include width-height(100%, auto);
+    padding: 20px 0;
+    text-align: center;
+    color: $text;
+  }
 }

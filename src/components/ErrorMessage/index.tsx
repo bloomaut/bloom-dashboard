@@ -1,7 +1,7 @@
 "use client";
+import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
-import styles from "./styles.module.scss";
 
 const ErrorMessage = ({ error, reset }: { error: Error; reset: () => void }) => {
   const dict = useTranslations("dict.error");

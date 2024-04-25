@@ -2,27 +2,32 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { useCollectionsContext } from "@/context/CollectionsContext";
+// Component
 import Title from "@/components/Title";
 import Search from "@/components/Search";
-//Iconos
+// Iconos
 import down from "@/../public/icons/IconDown.svg";
 import bar from "@/../public/icons/bar.svg";
 import period from "@/../public/icons/period.svg";
 import plus from "@/../public/icons/plus.svg";
-import { useEffect, useState } from "react";
-import { useCollectionsContext } from "@/context/CollectionsContext";
 
 const Header = () => {
   const locale = useLocale();
   const dict = useTranslations("dict.collections.header");
-  const { collectionsList, setFilteredCollections } = useCollectionsContext();
+  const { collectionsList, setFilteredCollections, filteredCollections } = useCollectionsContext();
   const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
     if (searchValue) {
       collectionsList.map(collection => {
         if (collection.name.toLowerCase().includes(searchValue.toLowerCase())) {
-          setFilteredCollections(collection);
+          if (filteredCollections === null) {
+            setFilteredCollections([collection]);
+          } else {
+            setFilteredCollections([...filteredCollections, collection]);
+          }
         }
       });
     } else {

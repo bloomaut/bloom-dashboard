@@ -1,9 +1,10 @@
 import styles from "./styles.module.scss";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
-import { Variablesinuse } from "@/typescript/interfaces/flakes.interface";
+import { Flake, Variablesinuse } from "@/typescript/interfaces/flakes.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
+import { useOpenGraphContext } from "@/context/OpenGraphContext";
 //Componentes
 import Input from "@/components/Input";
 import PopupShare from "@/routes/Playground/PopupShare";
@@ -11,7 +12,6 @@ import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import axios from "axios";
-import { useOpenGraphContext } from "@/context/OpenGraphContext";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -35,7 +35,7 @@ const Form = () => {
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [showButton, setShowButton] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [formDataPost, setFormDataPost] = useState(EmptyFormData);
+  const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
   useEffect(() => {
@@ -84,7 +84,6 @@ const Form = () => {
       setShowPreview(true);
       setShowButton(true);
       setLoadingDots(false);
-      console.log(response.data.data);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
     }

@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import suiteUitool from "../assets/dropdown_uitool.svg";
 import suiteUitrade from "../assets/dropdown_uitrade.svg";
 import suiteDashboard from "../assets/dropdown_dashboard.svg";
+import { useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { List } from "./list";
 

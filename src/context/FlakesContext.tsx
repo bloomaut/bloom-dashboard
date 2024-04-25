@@ -63,8 +63,14 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const fetchDataHotlink = async () => {
     const response = await get("small/flakes/user");
     if (response.statusCode === 200) {
+      console.log(response);
       setFlakes(response.result.powerapps);
-      setSelectedFlakeId(response.result.powerapps[0]._id);
+      if (response.result.powerapps.length) {
+        setSelectedFlakeId(response.result.powerapps[0]._id);
+      } else {
+        setSelectedFlakeId("");
+      }
+
       setLoading(false);
     } else {
       notifyError(dict("error_tryagain"));
@@ -80,6 +86,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         setHotlinksList(response.result.hotlinks.hotlinks);
         setLoading(false);
       } else {
+        notifyError(dict("error_tryagain"));
         setLoading(false);
       }
     };

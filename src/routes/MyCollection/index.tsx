@@ -1,11 +1,11 @@
 "use client";
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
+import { HotlinkListProvider } from "@/context/HotlinksListContext";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Header from "./Header";
 import Table from "./Table";
-import { HotlinkListProvider } from "@/context/HotlinksListContext";
 
 const MyCollectionPage = () => {
   const dict = useTranslations("dict.my-collection");

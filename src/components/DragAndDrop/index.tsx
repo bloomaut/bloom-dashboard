@@ -1,10 +1,10 @@
 import styles from "./styles.module.scss";
+import Image from "next/image";
+import fileImage from "/public/icons/cloud_black.svg";
 import { Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppSelector } from "@/store/hooks";
-import Image from "next/image";
-import fileImage from "/public/icons/cloud_black.svg";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 

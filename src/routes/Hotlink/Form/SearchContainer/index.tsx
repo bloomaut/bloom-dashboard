@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { useClientsContext } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
-
+// Components
 import Search from "@/components/Search";
 import LoadingSpinner from "@/components/Loading";
 

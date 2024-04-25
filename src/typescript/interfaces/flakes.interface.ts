@@ -30,3 +30,19 @@ interface Skinx {
   category?: any;
   thumbnail: string;
 }
+
+export interface Flake {
+  typeFlake: string;
+  flakeId: string;
+  collection_id?: string;
+  customer_id?: string;
+  variables: Variable[];
+}
+
+interface Variable {
+  key: string;
+  target: string;
+  name: string;
+  value: string;
+  description: string;
+}
