@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import { ClientsProvider } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
-import { FlakesProvider, useFlakesContext } from "@/context/FlakesContext";
+import { FlakesProvider } from "@/context/FlakesContext";
 //Componentes
 import Title from "@/components/Title";
 import Select from "./Select";
