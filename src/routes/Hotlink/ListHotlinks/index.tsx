@@ -48,13 +48,13 @@ const ListHotlinks = () => {
       </div>
       <div className={styles.rows_container}>
         {loading ? (
-          <Loading />
-          // COMENTO ESTO XQ NO FUNCIONA EN DEV !!!
-        ) /* : !filteredHotlinks || (hotlinksList && hotlinksList.length === 0) || !hotlinksList ? (
+          <Loading /> /* : !filteredHotlinks || (hotlinksList && hotlinksList.length === 0) || !hotlinksList ? (
           <p className={styles.text}>{dict("empty")}</p>
         ) : filteredHotlinks ? (
           <TableRow key={filteredHotlinks.id} hotlink={filteredHotlinks} />
-        ) */ : (
+        ) */
+        ) : (
+          // COMENTO ESTO XQ NO FUNCIONA EN DEV !!!
           hotlinksList.map(hotlink => {
             return <TableRow key={hotlink.id} hotlink={hotlink} />;
           })
