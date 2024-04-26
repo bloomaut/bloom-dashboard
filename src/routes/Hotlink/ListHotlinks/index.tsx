@@ -13,6 +13,10 @@ const ListHotlinks = () => {
   const { hotlinksList, filteredHotlinks, setFilteredHotlinks, loading } = useFlakesContext();
 
   useEffect(() => {
+    console.log("hotlinksList", hotlinksList);
+  }, [hotlinksList]);
+
+  useEffect(() => {
     if (searchValue) {
       hotlinksList.map(hotlink => {
         if (hotlink.customer?.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase())) {
@@ -45,10 +49,6 @@ const ListHotlinks = () => {
       <div className={styles.rows_container}>
         {loading ? (
           <Loading />
-        ) : !filteredHotlinks || (hotlinksList && hotlinksList.length === 0) || !hotlinksList ? (
-          <p className={styles.text}>{dict("empty")}</p>
-        ) : filteredHotlinks ? (
-          <TableRow key={filteredHotlinks.id} hotlink={filteredHotlinks} />
         ) : (
           hotlinksList.map(hotlink => {
             return <TableRow key={hotlink.id} hotlink={hotlink} />;
