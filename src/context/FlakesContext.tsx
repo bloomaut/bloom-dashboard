@@ -82,6 +82,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   useEffect(() => {
     const getList = async () => {
       const response = await get("hotlinks/no-collection");
+      console.log("no-collection", response.result);
       if (response.statusCode === 200) {
         setHotlinksList(response.result.hotlinks.hotlinks);
         setLoading(false);
