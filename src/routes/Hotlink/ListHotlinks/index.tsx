@@ -55,7 +55,7 @@ const ListHotlinks = () => {
         ) */
         ) : (
           // COMENTO ESTO XQ NO FUNCIONA EN DEV !!!
-          hotlinksList.map(hotlink => {
+          hotlinksList?.map(hotlink => {
             return <TableRow key={hotlink.id} hotlink={hotlink} />;
           })
         )}
