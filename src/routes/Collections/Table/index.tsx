@@ -42,9 +42,10 @@ const Table = () => {
           )}
         </div>
       </div>
-      {filteredCollections?.length && (
-        <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
-      )}
+      {filteredCollections?.length ||
+        (collectionsList && (
+          <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
+        ))}
     </>
   );
 };
