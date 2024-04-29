@@ -5,14 +5,14 @@ import { useLocale, useTranslations } from "next-intl";
 //Componentes
 import LinkComponent from "@/components/LinkComponent";
 import Title from "@/components/Title";
-import { Fade } from "react-awesome-reveal";
+import { Zoom } from "react-awesome-reveal";
 
 const Banner = () => {
   const locale = useLocale();
   const dict = useTranslations("dict.home.banner");
 
   return (
-    <Fade>
+    <Zoom>
       <div className={styles.container}>
         <h3 className={styles.welcome}>{dict("welcome")}</h3>
         <article className={styles.banner}>
@@ -26,7 +26,7 @@ const Banner = () => {
           </div>
         </article>
       </div>
-    </Fade>
+    </Zoom>
   );
 };
 
