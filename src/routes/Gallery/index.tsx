@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 // Components
 import Title from "@/components/Title";
 import GalleryComponent from "./GalleryComponent";
+import { Fade } from "react-awesome-reveal";
 
 const GalleryPage = () => {
   const dict = useTranslations("dict.gallery");
@@ -13,12 +14,14 @@ const GalleryPage = () => {
     <section className={styles.gallery}>
       <div className={styles.head}>
         <Title text={dict("title")} />
-        <div className={styles.logo}>
-          <p className={styles.logo_text}>{dict("more_designs")}</p>
-          <Link href='https://uitrade.com/'>
-            <Image src='/assets/logo_uitrade.png' alt='logo UiTrade' width={130} height={40} priority />
-          </Link>
-        </div>
+        <Fade delay={3800}>
+          <div className={styles.logo}>
+            <p className={styles.logo_text}>{dict("more_designs")}</p>
+            <Link href='https://uitrade.com/'>
+              <Image src='/assets/logo_uitrade.png' alt='logo UiTrade' width={130} height={40} priority />
+            </Link>
+          </div>
+        </Fade>
       </div>
       <div className={styles.inner_container}>
         <GalleryComponent />

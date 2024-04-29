@@ -7,6 +7,7 @@ import { useAppSelector } from "@/store/hooks";
 import Button from "@/components/Button";
 import Subtitle from "../Subtitle";
 import Card from "./Card";
+import { Fade } from "react-awesome-reveal";
 
 export interface ContentProps {
   step: number;
@@ -74,17 +75,19 @@ const Sequence = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Subtitle text={dict("title")} />
-      <div className={styles.cards_container}>
-        {content.map((data, index) => (
-          <Card key={index} data={data} disabled={missingSteps.indexOf(data.step) === -1} />
-        ))}
+    <Fade direction='right'>
+      <div className={styles.container}>
+        <Subtitle text={dict("title")} />
+        <div className={styles.cards_container}>
+          {content.map((data, index) => (
+            <Card key={index} data={data} disabled={missingSteps.indexOf(data.step) === -1} />
+          ))}
+        </div>
+        <div className={styles.btn_container}>
+          <Button title={dict("button")} onclick={handleButtonClick} isDisabled={isButtonDisabled} />
+        </div>
       </div>
-      <div className={styles.btn_container}>
-        <Button title={dict("button")} onclick={handleButtonClick} isDisabled={isButtonDisabled} />
-      </div>
-    </div>
+    </Fade>
   );
 };
 
