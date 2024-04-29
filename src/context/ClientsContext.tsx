@@ -45,18 +45,20 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   useEffect(() => {
-    const filteredData = clients.filter(
-      client =>
-        client.clientCode?.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.ClientFirstname.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.ClientEmail.toLowerCase().includes(searchValue.toLowerCase()),
-    );
-    setFilteredClients(filteredData);
-  }, [searchValue, clients, setClients]);
-
-  useEffect(() => {
     fetchClients();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (clients) {
+      const filteredData = clients.filter(
+        client =>
+          client.clientCode?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          client.ClientFirstname.toLowerCase().includes(searchValue.toLowerCase()) ||
+          client.ClientEmail.toLowerCase().includes(searchValue.toLowerCase()),
+      );
+      setFilteredClients(filteredData);
+    }
+  }, [searchValue, clients, setClients]);
 
   useEffect(() => {
     if (!clientSelected && filteredClients.length > 0) {

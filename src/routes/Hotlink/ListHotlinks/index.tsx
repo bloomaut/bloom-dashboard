@@ -13,10 +13,6 @@ const ListHotlinks = () => {
   const { hotlinksList, filteredHotlinks, setFilteredHotlinks, loading } = useFlakesContext();
 
   useEffect(() => {
-    console.log("hotlinksList", hotlinksList);
-  }, [hotlinksList]);
-
-  useEffect(() => {
     if (searchValue) {
       hotlinksList.map(hotlink => {
         if (hotlink.customer?.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase())) {
