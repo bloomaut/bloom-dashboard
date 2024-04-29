@@ -30,7 +30,7 @@ const Table = () => {
             <Loading />
           ) : (filteredCollections && filteredCollections.length === 0) ||
             (collectionsList && collectionsList.length === 0) ? (
-            <p>{dict("empty_collections")}</p>
+            <p className={styles.text}>{dict("header.empty_collections")}</p>
           ) : filteredCollections ? (
             filteredCollections.map(collection => {
               return <TableRows key={collection._id} collection={collection} />;
@@ -42,7 +42,10 @@ const Table = () => {
           )}
         </div>
       </div>
-      <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
+      {filteredCollections?.length ||
+        (collectionsList && (
+          <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
+        ))}
     </>
   );
 };

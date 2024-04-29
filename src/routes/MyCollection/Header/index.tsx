@@ -41,7 +41,7 @@ const Header = () => {
         <h4 className={styles.subtitle}>
           {loading
             ? dict("loading")
-            : `${hotlinkCollection?.flake.skinx.title || "Skinx Title"} / ${hotlinkCollection?.flake.title || "Flake Title"}`}
+            : `${hotlinkCollection?.flake?.skinx?.title || "Skinx Title"} / ${hotlinkCollection?.flake?.title || "Flake Title"}`}
         </h4>
         <Search
           searchValue={searchValue}
