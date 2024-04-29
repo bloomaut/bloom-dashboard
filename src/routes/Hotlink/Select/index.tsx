@@ -6,6 +6,7 @@ import { useFlakesContext } from "@/context/FlakesContext";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useTranslations } from "next-intl";
+import { Fade } from "react-awesome-reveal";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
@@ -26,13 +27,15 @@ const Select = () => {
       <div className={styles.select}>
         <label>Diseño</label>
         {flakes?.length ? (
-          <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
-            {flakes.map(flake => (
-              <option key={flake._id} value={flake._id}>
-                {flake.skinx.title}
-              </option>
-            ))}
-          </select>
+          <Fade>
+            <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
+              {flakes.map(flake => (
+                <option key={flake._id} value={flake._id}>
+                  {flake.skinx.title}
+                </option>
+              ))}
+            </select>
+          </Fade>
         ) : !loading ? (
           <p>{dict("empty_designs")}</p>
         ) : null}
@@ -41,7 +44,7 @@ const Select = () => {
         {!loading ? (
           <div className={styles.template_container} key={selectedFlake?._id}>
             {selectedFlake && (
-              <>
+              <Fade>
                 <div
                   className={`${styles.template} ${selectedFlakeId === selectedFlake._id ? styles.selected_template : ""}`}
                   onClick={() => setSelectedFlakeId(selectedFlake._id)}
@@ -66,7 +69,7 @@ const Select = () => {
                     )}
                   </div>
                 </div>
-              </>
+              </Fade>
             )}
           </div>
         ) : (

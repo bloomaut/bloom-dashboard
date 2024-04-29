@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Search from "@/components/Search";
 import TableRow from "./TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import { Fade } from "react-awesome-reveal";
 
 const ListHotlinks = () => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -55,9 +56,11 @@ const ListHotlinks = () => {
         ) */
         ) : (
           // COMENTO ESTO XQ NO FUNCIONA EN DEV !!!
-          hotlinksList?.map(hotlink => {
-            return <TableRow key={hotlink.id} hotlink={hotlink} />;
-          })
+          <Fade cascade damping={0.3}>
+            {hotlinksList?.map(hotlink => {
+              return <TableRow key={hotlink.id} hotlink={hotlink} />;
+            })}
+          </Fade>
         )}
       </div>
     </div>

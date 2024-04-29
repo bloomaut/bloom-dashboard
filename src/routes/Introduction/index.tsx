@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import Breadcrumb from "@/components/Breadcrumb";
 import IntroVideo from "@/components/IntroVideo";
 import Checkbox from "./Checkbox";
+import { Fade } from "react-awesome-reveal";
 
 interface Content {
   title: string;
@@ -69,19 +70,25 @@ const IntroductionPage = () => {
       </div>
       <div className={styles.inner_container}>
         <div className={styles.content}>
-          {content.map((noticia, index) => (
-            <div key={index}>
-              <h2 className={styles.title}>{noticia.title}</h2>
-              <p className={styles.description}>{noticia.description}</p>
-            </div>
-          ))}
+          <Fade cascade damping={0.3}>
+            {content.map((noticia, index) => (
+              <div key={index}>
+                <h2 className={styles.title}>{noticia.title}</h2>
+                <p className={styles.description}>{noticia.description}</p>
+              </div>
+            ))}
+          </Fade>
         </div>
-        <div className={styles.video}>
-          <IntroVideo />
-        </div>
+        <Fade>
+          <div className={styles.video}>
+            <IntroVideo />
+          </div>
+        </Fade>
       </div>
       <div className={styles.checkbox}>
-        <Checkbox />
+        <Fade>
+          <Checkbox />
+        </Fade>
       </div>
     </section>
   );
