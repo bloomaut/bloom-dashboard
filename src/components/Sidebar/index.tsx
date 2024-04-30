@@ -34,6 +34,8 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     setIsOpen(!isOpen);
   };
 
+  const inboxPath = process.env.NEXT_PUBLIC_INBOX_URL ?? "/";
+
   const sidebar: Array<SidebarCard> = [
     {
       title: `${dict("home")}`,
@@ -65,7 +67,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           {
             title: `${dict("inbox")}`,
             icon: <InboxIcon />,
-            path: "/inbox",
+            path: inboxPath,
           },
           {
             title: `${dict("collections")}`,
