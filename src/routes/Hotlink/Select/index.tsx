@@ -27,7 +27,7 @@ const Select = () => {
       <div className={styles.select}>
         <label>Diseño</label>
         {flakes?.length ? (
-          <Fade>
+          <Fade triggerOnce>
             <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
               {flakes.map(flake => (
                 <option key={flake._id} value={flake._id}>
@@ -44,7 +44,7 @@ const Select = () => {
         {!loading ? (
           <div className={styles.template_container} key={selectedFlake?._id}>
             {selectedFlake && (
-              <Fade>
+              <Fade triggerOnce>
                 <div
                   className={`${styles.template} ${selectedFlakeId === selectedFlake._id ? styles.selected_template : ""}`}
                   onClick={() => setSelectedFlakeId(selectedFlake._id)}

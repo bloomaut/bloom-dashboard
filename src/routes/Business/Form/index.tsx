@@ -71,7 +71,7 @@ const Form = () => {
   };
 
   return (
-    <Fade direction='left'>
+    <Fade direction='left' triggerOnce>
       <div className={styles.container}>
         <Subtitle text={dict("business.form.title")} />
         <h4>*{dict("business.form.subtitle")}</h4>

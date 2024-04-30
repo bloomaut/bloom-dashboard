@@ -14,17 +14,6 @@
     @include width-height(100%, 100%);
     position: relative;
     z-index: 0;
-
-    /*     &:before {
-      content: "";
-      position: absolute;
-      left: 34px;
-      top: 0;
-      bottom: 0;
-      @include width-height(6px, 300px);
-      background-color: $lighterGrey;
-      z-index: -1;
-    } */
     .fade {
       @include width-height(100%, auto);
     }

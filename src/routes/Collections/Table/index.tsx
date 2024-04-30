@@ -33,13 +33,13 @@ const Table = () => {
             (collectionsList && collectionsList.length === 0) ? (
             <p className={styles.text}>{dict("header.empty_collections")}</p>
           ) : filteredCollections ? (
-            <Fade cascade damping={0.3}>
+            <Fade cascade damping={0.3} triggerOnce>
               {filteredCollections.map(collection => {
                 return <TableRows key={collection._id} collection={collection} />;
               })}
             </Fade>
           ) : (
-            <Fade cascade damping={0.3}>
+            <Fade cascade damping={0.3} triggerOnce>
               {collectionsList.map(collection => {
                 return <TableRows key={collection._id} collection={collection} />;
               })}

@@ -56,7 +56,7 @@ const ListHotlinks = () => {
         ) */
         ) : (
           // COMENTO ESTO XQ NO FUNCIONA EN DEV !!!
-          <Fade cascade damping={0.3}>
+          <Fade cascade damping={0.3} triggerOnce>
             {hotlinksList?.map(hotlink => {
               return <TableRow key={hotlink.id} hotlink={hotlink} />;
             })}

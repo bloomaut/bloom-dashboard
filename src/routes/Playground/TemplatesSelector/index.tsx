@@ -19,7 +19,7 @@ const TemplatesSelector = () => {
       <div className={styles.flakes}>
         {!loading ? (
           flakes?.map((app: Powerapp) => (
-            <Fade>
+            <Fade triggerOnce>
               <div className={styles.template_container} key={app._id}>
                 <h4 className={styles.title}>{app.skinx.title}</h4>
                 <div

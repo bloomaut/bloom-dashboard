@@ -2,15 +2,16 @@
 
 .new_collection {
   @include width-height(100%, 100%);
-  @include flex(column, flex-start, flex-start, 20px);
+  @include flex(column, flex-start, flex-start);
   padding: 0px 40px;
   .container {
-    @include width-height(100%, auto);
+    @include width-height(100%, 100%);
     display: grid;
     grid-template-columns: repeat(2, 68% 30%);
     gap: 15px;
+    padding-top: 20px;
     .template {
-      @include width-height(100%, 75vh);
+      @include width-height(100%, 70vh);
       @include flex(row, space-between, flex-start, 10px);
       border: 1px solid $lighterGrey;
       border-radius: 4px;

@@ -75,7 +75,7 @@ const Sequence = () => {
   };
 
   return (
-    <Fade direction='right'>
+    <Fade direction='right' triggerOnce>
       <div className={styles.container}>
         <Subtitle text={dict("title")} />
         <div className={styles.cards_container}>

@@ -29,7 +29,7 @@ const Table = () => {
         ) : hotlinkList.length < 1 ? (
           <p className={styles.empty_list}>{dict("empty_list")}</p>
         ) : (
-          <Fade cascade damping={0.3}>
+          <Fade cascade damping={0.3} triggerOnce>
             {hotlinkList.map((hotlink, index) => (
               <TableRow key={index} hotlink={hotlink} />
             ))}

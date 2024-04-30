@@ -36,7 +36,7 @@ const Header = () => {
   };
 
   return (
-    <Fade className={styles.fade}>
+    <Fade className={styles.fade} triggerOnce>
       <div className={styles.container}>
         <div className={styles.column}>
           <Title text={`${loading ? dict("loading") : hotlinkCollection?.name}`} />

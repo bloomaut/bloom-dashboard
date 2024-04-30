@@ -14,7 +14,7 @@ const GalleryPage = () => {
     <section className={styles.gallery}>
       <div className={styles.head}>
         <Title text={dict("title")} />
-        <Fade delay={3800}>
+        <Fade delay={2000} triggerOnce>
           <div className={styles.logo}>
             <p className={styles.logo_text}>{dict("more_designs")}</p>
             <Link href='https://uitrade.com/'>

@@ -44,7 +44,7 @@ const List = () => {
       {loading ? (
         <LoadingSpinner />
       ) : filteredClients.length ? (
-        <Fade cascade damping={0.3} className={styles.fade}>
+        <Fade cascade damping={0.3} className={styles.fade} triggerOnce>
           {filteredClients.map((client: ClientsProps) => (
             <Row
               key={client._id}

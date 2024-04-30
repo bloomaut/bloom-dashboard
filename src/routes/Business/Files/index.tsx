@@ -89,7 +89,7 @@ const Files = ({ fetchData }: FilesProps) => {
   }, [file]);
 
   return (
-    <Fade delay={400}>
+    <Fade delay={400} triggerOnce>
       <div className={styles.container}>
         <Subtitle text={!companyLogo ? `${dict("business.file.title01")}` : `${dict("business.file.title02")}`} />
         <DragAndAdrop setFile={setFile} />

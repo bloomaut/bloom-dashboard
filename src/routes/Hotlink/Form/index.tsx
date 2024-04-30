@@ -130,7 +130,7 @@ const Form = () => {
       {loading ? (
         <Loading />
       ) : flakes.length ? (
-        <Fade>
+        <Fade triggerOnce>
           <form className={styles.form_container} onSubmit={handleSubmit}>
             <div className={styles.form}>
               {formInfo &&

@@ -16,7 +16,7 @@ const PhoneCase = () => {
 
   return (
     <div className={styles.container}>
-      <Fade direction='down'>
+      <Fade direction='down' triggerOnce>
         <div className={styles.phone_container}>
           <Image src={caseImage} width={550} height={500} alt='Phone case' className={styles.phone} />
           {showPreview && <Image src={whatsappImage} width={250} height={500} alt='Whatsapp' className={styles.wa} />}

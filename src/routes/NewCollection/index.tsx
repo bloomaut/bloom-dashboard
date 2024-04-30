@@ -111,7 +111,7 @@ const NewCollectionPage = () => {
       <Breadcrumb title={dict("title")} />
       {!loading ? (
         <div className={styles.container}>
-          <Fade>
+          <Fade triggerOnce>
             <div className={styles.template}>
               <div className={images.sm_img ? styles.sm_img : `${styles.sm_img} ${styles.sm_not_img}`}>
                 {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={500} height={500} /> : <HogIcon />}
@@ -120,9 +120,7 @@ const NewCollectionPage = () => {
                 {images.lg_img ? <Image src={images.lg_img} alt={form.name} width={800} height={800} /> : <PwaIcon />}
               </div>
             </div>
-          </Fade>
 
-          <Fade delay={1000}>
             <form className={styles.form} onSubmit={sendFlakeForm}>
               <Input
                 type='text'

@@ -70,7 +70,7 @@ const IntroductionPage = () => {
       </div>
       <div className={styles.inner_container}>
         <div className={styles.content}>
-          <Fade cascade damping={0.3}>
+          <Fade triggerOnce>
             {content.map((noticia, index) => (
               <div key={index}>
                 <h2 className={styles.title}>{noticia.title}</h2>
@@ -79,14 +79,14 @@ const IntroductionPage = () => {
             ))}
           </Fade>
         </div>
-        <Fade>
+        <Fade triggerOnce>
           <div className={styles.video}>
             <IntroVideo />
           </div>
         </Fade>
       </div>
       <div className={styles.checkbox}>
-        <Fade>
+        <Fade triggerOnce>
           <Checkbox />
         </Fade>
       </div>

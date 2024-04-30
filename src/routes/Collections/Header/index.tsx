@@ -40,7 +40,7 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <Title text={dict("title")} />
-      <Fade>
+      <Fade triggerOnce>
         <div className={styles.inputs_container}>
           <div className={styles.search_container}>
             <Search
