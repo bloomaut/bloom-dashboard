@@ -65,7 +65,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const fetchDataHotlink = async () => {
     const response = await get("small/flakes/user");
     if (response.statusCode === 200) {
-      console.log("flakes:", response);
       setFlakes(response.result.powerapps);
       if (response.result.powerapps.length) {
         setSelectedFlakeId(response.result.powerapps[0]._id);
@@ -82,7 +81,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   //Función para acceder a la lista de hotlinks sin colección
   const getList = async () => {
     const response = await get("hotlinks/no-collection");
-    console.log("no-collection", response.result);
     if (response.statusCode === 200) {
       setHotlinksList(response.result.hotlinks.hotlinks);
       setLoading(false);

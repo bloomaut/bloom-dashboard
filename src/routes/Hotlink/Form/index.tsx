@@ -90,15 +90,16 @@ const Form = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Si hay un campo vacio arrojar error y salir
     const anyEmpty = formInfo.some(info => info.value?.trim() === "");
     if (anyEmpty) {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
+
     const response = await post("hotlinks/user", formDataPost);
     if (response.data.statusCode === 200) {
       setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
-      setFormDataPost(EmptyFormData);
       getList();
       notify(`${dict("toast.success_hotlink")}`);
     } else {
