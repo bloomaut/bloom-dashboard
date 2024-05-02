@@ -18,6 +18,7 @@ interface Context {
   setHotlinksList: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
   filteredHotlinks: HotlinkList | null;
   setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList | null>>;
+  getList: () => Promise<void>;
 }
 
 const FlakesContext = createContext<Context>({
@@ -31,6 +32,7 @@ const FlakesContext = createContext<Context>({
   setHotlinksList: () => [],
   filteredHotlinks: null,
   setFilteredHotlinks: () => null,
+  getList: () => Promise.resolve(),
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -116,6 +118,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         setHotlinksList,
         filteredHotlinks,
         setFilteredHotlinks,
+        getList,
       }}
     >
       {children}
