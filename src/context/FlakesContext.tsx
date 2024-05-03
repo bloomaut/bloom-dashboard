@@ -18,6 +18,7 @@ interface Context {
   setHotlinksList: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
   filteredHotlinks: HotlinkList | null;
   setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList | null>>;
+  getList: () => Promise<void>;
 }
 
 const FlakesContext = createContext<Context>({
@@ -31,6 +32,7 @@ const FlakesContext = createContext<Context>({
   setHotlinksList: () => [],
   filteredHotlinks: null,
   setFilteredHotlinks: () => null,
+  getList: () => Promise.resolve(),
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -63,14 +65,12 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const fetchDataHotlink = async () => {
     const response = await get("small/flakes/user");
     if (response.statusCode === 200) {
-      console.log(response);
       setFlakes(response.result.powerapps);
       if (response.result.powerapps.length) {
         setSelectedFlakeId(response.result.powerapps[0]._id);
       } else {
         setSelectedFlakeId("");
       }
-
       setLoading(false);
     } else {
       notifyError(dict("error_tryagain"));
@@ -79,21 +79,16 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   //Función para acceder a la lista de hotlinks sin colección
-  useEffect(() => {
-    const getList = async () => {
-      const response = await get("hotlinks/no-collection");
-      console.log("no-collection", response.result);
-      if (response.statusCode === 200) {
-        setHotlinksList(response.result.hotlinks.hotlinks);
-        setLoading(false);
-      } else {
-        notifyError(dict("error_tryagain"));
-        setLoading(false);
-      }
-    };
-
-    getList();
-  }, []);
+  const getList = async () => {
+    const response = await get("hotlinks/no-collection");
+    if (response.statusCode === 200) {
+      setHotlinksList(response.result.hotlinks.hotlinks);
+      setLoading(false);
+    } else {
+      notifyError(dict("error_tryagain"));
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     // Para no tener que volver a copiar un Context igual
@@ -102,6 +97,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     // si venis de Playground sin usuario logueado
     if (path.includes("hotlink")) {
       fetchDataHotlink();
+      getList();
     } else {
       fetchData();
     }
@@ -120,6 +116,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         setHotlinksList,
         filteredHotlinks,
         setFilteredHotlinks,
+        getList,
       }}
     >
       {children}

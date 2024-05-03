@@ -7,20 +7,24 @@ import { useFlakesContext } from "@/context/FlakesContext";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useTranslations } from "next-intl";
 import { Fade } from "react-awesome-reveal";
+import { useEffect, useState } from "react";
+import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
   const dict = useTranslations("dict.hotlinks");
-  const selectedFlake = flakes.find(flake => flake._id === selectedFlakeId);
+  const [selectedFlake, setSelectedFlake] = useState<Powerapp | undefined>();
 
-  const handleDesignChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedFlake = flakes.find(flake => flake._id === event.target.value || flakes[0]?.skinx._id);
-    if (selectedFlake) {
-      setSelectedFlakeId(selectedFlake._id);
+  useEffect(() => {
+    if (flakes.length) {
+      const findFlake: Powerapp | undefined = flakes.find(flake => flake._id === selectedFlakeId);
+      setSelectedFlake(findFlake);
     }
-  };
+  }, [flakes, selectedFlakeId]);
 
-  console.log(flakes);
+  const handleDesignChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFlakeId(e.target.value);
+  };
 
   return (
     <div className={styles.container}>
