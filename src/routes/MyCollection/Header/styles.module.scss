@@ -1,25 +1,21 @@
 @import "@/styles/theme.scss";
 
-.fade {
-  @include width-height(100%, auto);
-  padding-top: 40px;
-  .container {
-    @include width-height(100%, 30%);
-    @include flex(row, space-between, center);
-    .column {
-      @include width-height(40%, auto);
-      @include flex(column, flex-start, flex-start, 20px);
-      .subtitle {
-        @include fontSize-fontWeight(20px, 500);
-        margin-top: -10px;
-      }
+.container {
+  @include width-height(100%, 30%);
+  @include flex(row, space-between, center);
+  .column {
+    @include width-height(40%, auto);
+    @include flex(column, flex-start, flex-start, 20px);
+    .subtitle {
+      @include fontSize-fontWeight(20px, 500);
+      margin-top: -10px;
     }
-    .column_two {
-      @include width-height(50%, auto);
-      @include flex(column, flex-start, flex-end, 20px);
-      .btn_container {
-        @include flex(row, flex-end, center, 20px);
-      }
+  }
+  .column_two {
+    @include width-height(50%, auto);
+    @include flex(column, flex-start, flex-end, 20px);
+    .btn_container {
+      @include flex(row, flex-end, center, 20px);
     }
   }
 }

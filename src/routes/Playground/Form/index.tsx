@@ -109,7 +109,7 @@ const Form = () => {
         <Loading />
       ) : (
         <form className={styles.form} onSubmit={handleSubmit}>
-          <Fade direction='up' triggerOnce>
+          <Fade triggerOnce>
             {formInfo &&
               formInfo.map((info, index) => (
                 <Input

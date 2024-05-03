@@ -18,7 +18,7 @@ const GalleryComponent = () => {
     <section className={styles.container}>
       <div className={styles.flakes}>
         {!loading ? (
-          <Fade cascade damping={0.3} triggerOnce>
+          <Fade cascade damping={0.1} triggerOnce>
             {flakes.length ? (
               flakes?.map((app: Powerapp) => (
                 <div className={styles.template_container} key={app._id}>

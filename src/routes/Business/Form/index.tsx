@@ -9,7 +9,6 @@ import { setBusinessData } from "@/store/features/businessSlice";
 //Componentes
 import Input from "@/components/Input";
 import Subtitle from "../Subtitle";
-import { Fade } from "react-awesome-reveal";
 
 interface FormDataProps {
   name: string;
@@ -71,58 +70,56 @@ const Form = () => {
   };
 
   return (
-    <Fade direction='left' triggerOnce>
-      <div className={styles.container}>
-        <Subtitle text={dict("business.form.title")} />
-        <h4>*{dict("business.form.subtitle")}</h4>
-        <form className={styles.form} onSubmit={submitForm}>
-          <Input
-            textLabel={dict("business.form.name")}
-            textHolder={dict("business.form.placeholder_name")}
-            type='text'
-            name='name'
-            value={formData.name}
-            handleChange={handleChange}
-          />
-          <Input
-            textLabel={dict("business.form.website")}
-            textHolder={dict("business.form.placeholder_website")}
-            type='text'
-            name='website'
-            value={formData.website}
-            handleChange={handleChange}
-          />
-          <Input
-            textLabel={dict("business.form.description")}
-            textHolder={dict("business.form.placeholder_description")}
-            type='text'
-            name='description'
-            value={formData.description}
-            handleChange={handleChange}
-            isDescription={true}
-          />
-          <Input
-            textLabel='Instagram'
-            textHolder={dict("business.form.placeholder_instagram")}
-            type='text'
-            name='instagram'
-            value={formData.instagram}
-            handleChange={handleChange}
-          />
-          <Input
-            textLabel={dict("business.form.phone")}
-            textHolder={dict("business.form.placeholder_phone")}
-            type='text'
-            name='phone'
-            value={formData.phone}
-            handleChange={handleChange}
-          />
-          <div className={styles.btn_container}>
-            <button className={styles.btn}>{dict("business.form.button")}</button>
-          </div>
-        </form>
-      </div>
-    </Fade>
+    <div className={styles.container}>
+      <Subtitle text={dict("business.form.title")} />
+      <h4>*{dict("business.form.subtitle")}</h4>
+      <form className={styles.form} onSubmit={submitForm}>
+        <Input
+          textLabel={dict("business.form.name")}
+          textHolder={dict("business.form.placeholder_name")}
+          type='text'
+          name='name'
+          value={formData.name}
+          handleChange={handleChange}
+        />
+        <Input
+          textLabel={dict("business.form.website")}
+          textHolder={dict("business.form.placeholder_website")}
+          type='text'
+          name='website'
+          value={formData.website}
+          handleChange={handleChange}
+        />
+        <Input
+          textLabel={dict("business.form.description")}
+          textHolder={dict("business.form.placeholder_description")}
+          type='text'
+          name='description'
+          value={formData.description}
+          handleChange={handleChange}
+          isDescription={true}
+        />
+        <Input
+          textLabel='Instagram'
+          textHolder={dict("business.form.placeholder_instagram")}
+          type='text'
+          name='instagram'
+          value={formData.instagram}
+          handleChange={handleChange}
+        />
+        <Input
+          textLabel={dict("business.form.phone")}
+          textHolder={dict("business.form.placeholder_phone")}
+          type='text'
+          name='phone'
+          value={formData.phone}
+          handleChange={handleChange}
+        />
+        <div className={styles.btn_container}>
+          <button className={styles.btn}>{dict("business.form.button")}</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

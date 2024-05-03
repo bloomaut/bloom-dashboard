@@ -2,20 +2,24 @@
 
 .container {
   @include width-height(100%, inherit);
-  @include flex(column, space-between, flex-start, 20px);
+  @include flex(column, space-between, flex-start, 10px);
   .cards_container {
     @include width-height(100%, 90%);
-    @include flex(column, flex-start, flex-start, 20px);
+    @include flex(column, flex-start, flex-start, 10px);
     overflow-y: auto;
   }
   .btn_container {
-    @include width-height(95%, 10%);
+    @include width-height(100%, 10%);
     @include flex(row, flex-end, center);
   }
 }
 
 @media (min-width: $queryXl) {
   .container {
+    gap: 20px;
+    .cards_container {
+      gap: 20px;
+    }
     .btn_container {
       width: 100%;
     }

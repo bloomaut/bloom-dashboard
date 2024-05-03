@@ -39,7 +39,7 @@ const Table = () => {
               })}
             </Fade>
           ) : (
-            <Fade cascade damping={0.3} triggerOnce>
+            <Fade cascade damping={0.1} triggerOnce>
               {collectionsList.map(collection => {
                 return <TableRows key={collection._id} collection={collection} />;
               })}

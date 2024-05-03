@@ -32,9 +32,8 @@ const GuidePage = () => {
 
   return (
     <section className={styles.container}>
-      <Fade className={styles.fade} triggerOnce>
-        <Header handleStepChange={setActiveStep} activeStep={activeStep} />
-      </Fade>
+      <Header handleStepChange={setActiveStep} activeStep={activeStep} />
+
       {isLoading ? (
         <LoadingSpinner />
       ) : (

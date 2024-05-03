@@ -2,7 +2,7 @@
 
 .container {
   @include width-height(100%, inherit);
-  @include flex(column, flex-start, flex-start, 20px);
+  @include flex(column, flex-start, flex-start, 10px);
   .files {
     @include width-height(100%, 100%);
     @include flex(column, flex-start, flex-start, 20px);
@@ -28,6 +28,7 @@
 
 @media (min-width: $queryXl) {
   .container {
+    gap: 20px;
     .files {
       max-height: 420px;
     }

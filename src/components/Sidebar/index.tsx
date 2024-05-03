@@ -93,11 +93,11 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >
-        <Fade cascade damping={0.3}>
-          {sidebar.map(card => (
-            <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
-          ))}
-        </Fade>
+        {/*  <Fade cascade damping={0.1}> */}
+        {sidebar.map(card => (
+          <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
+        ))}
+        {/*     </Fade> */}
       </div>
     </div>
   );

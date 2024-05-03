@@ -12,7 +12,6 @@ import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
 import PopupConfirm from "@/components/PopupConfirm";
-import { Fade } from "react-awesome-reveal";
 
 interface FilesProps {
   fetchData: () => void;
@@ -89,67 +88,60 @@ const Files = ({ fetchData }: FilesProps) => {
   }, [file]);
 
   return (
-    <Fade delay={400} triggerOnce>
-      <div className={styles.container}>
-        <Subtitle text={!companyLogo ? `${dict("business.file.title01")}` : `${dict("business.file.title02")}`} />
-        <DragAndAdrop setFile={setFile} />
+    <div className={styles.container}>
+      <Subtitle text={!companyLogo ? `${dict("business.file.title01")}` : `${dict("business.file.title02")}`} />
+      <DragAndAdrop setFile={setFile} />
 
-        {/* Muestra siempre el logo*/}
-        {(companyLogo || file) && (
-          <FileLogo
-            file={file}
-            onEdit={() => setShowPopupEdit(true)}
-            onDelete={deleteLogo}
-            onUpdate={handleUploadFile}
+      {/* Muestra siempre el logo*/}
+      {(companyLogo || file) && (
+        <FileLogo file={file} onEdit={() => setShowPopupEdit(true)} onDelete={deleteLogo} onUpdate={handleUploadFile} />
+      )}
+      {/* Muestra otros tipos de archivos cuando se cargan */}
+      {file && file.type.includes("pdf") && (
+        <FileCard
+          title={file.name}
+          created_at={new Date().toString()}
+          docType={file.type}
+          onDelete={() => setFile(null)}
+        />
+      )}
+      <div className={styles.files}>
+        {reduxFiles && reduxFiles.length >= 2 && <Subtitle text={`${dict("business.file.subtitle")}`} />}
+        {/* Muestra todos los archivos PDF */}
+        {reduxFiles
+          ?.filter(i => i.filetype.includes("pdf"))
+          .map(file => (
+            <FileCard
+              key={file._id}
+              title={file.filename}
+              created_at={file.created_at}
+              docType={file.filetype}
+              onDelete={() => {
+                setSelectedFile(file._id), setShowPopupDelete(true);
+              }}
+              url={file.url}
+            />
+          ))}
+        {showPopupDelete && (
+          <PopupConfirm
+            onConfirm={deleteFile}
+            onCancel={() => setShowPopupDelete(false)}
+            setShowConfirmation={setShowPopupDelete}
+            title={dict("popup.delete_title")}
+            textCancel={dict("popup.cancel")}
+            textAccept={dict("popup.confirm")}
           />
         )}
-        {/* Muestra otros tipos de archivos cuando se cargan */}
-        {file && file.type.includes("pdf") && (
-          <FileCard
-            title={file.name}
-            created_at={new Date().toString()}
-            docType={file.type}
-            onDelete={() => setFile(null)}
+        {showPopupEdit && (
+          <PopupConfirm
+            dragAndDrop={true}
+            setFile={setFile}
+            setShowConfirmation={setShowPopupEdit}
+            onCancel={() => setShowPopupEdit(false)}
           />
         )}
-        <div className={styles.files}>
-          {reduxFiles && reduxFiles.length >= 2 && <Subtitle text={`${dict("business.file.subtitle")}`} />}
-          {/* Muestra todos los archivos PDF */}
-          {reduxFiles
-            ?.filter(i => i.filetype.includes("pdf"))
-            .map(file => (
-              <FileCard
-                key={file._id}
-                title={file.filename}
-                created_at={file.created_at}
-                docType={file.filetype}
-                onDelete={() => {
-                  setSelectedFile(file._id), setShowPopupDelete(true);
-                }}
-                url={file.url}
-              />
-            ))}
-          {showPopupDelete && (
-            <PopupConfirm
-              onConfirm={deleteFile}
-              onCancel={() => setShowPopupDelete(false)}
-              setShowConfirmation={setShowPopupDelete}
-              title={dict("popup.delete_title")}
-              textCancel={dict("popup.cancel")}
-              textAccept={dict("popup.confirm")}
-            />
-          )}
-          {showPopupEdit && (
-            <PopupConfirm
-              dragAndDrop={true}
-              setFile={setFile}
-              setShowConfirmation={setShowPopupEdit}
-              onCancel={() => setShowPopupEdit(false)}
-            />
-          )}
-        </div>
       </div>
-    </Fade>
+    </div>
   );
 };
 

@@ -75,19 +75,17 @@ const Sequence = () => {
   };
 
   return (
-    <Fade direction='right' triggerOnce>
-      <div className={styles.container}>
-        <Subtitle text={dict("title")} />
-        <div className={styles.cards_container}>
-          {content.map((data, index) => (
-            <Card key={index} data={data} disabled={missingSteps.indexOf(data.step) === -1} />
-          ))}
-        </div>
-        <div className={styles.btn_container}>
-          <Button title={dict("button")} onclick={handleButtonClick} isDisabled={isButtonDisabled} />
-        </div>
+    <div className={styles.container}>
+      <Subtitle text={dict("title")} />
+      <div className={styles.cards_container}>
+        {content.map((data, index) => (
+          <Card key={index} data={data} disabled={missingSteps.indexOf(data.step) === -1} />
+        ))}
       </div>
-    </Fade>
+      <div className={styles.btn_container}>
+        <Button title={dict("button")} onclick={handleButtonClick} isDisabled={isButtonDisabled} />
+      </div>
+    </div>
   );
 };
 

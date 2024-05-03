@@ -12,7 +12,6 @@ import down from "@/../public/icons/IconDown.svg";
 import bar from "@/../public/icons/bar.svg";
 import period from "@/../public/icons/period.svg";
 import plus from "@/../public/icons/plus.svg";
-import { Fade } from "react-awesome-reveal";
 
 const Header = () => {
   const locale = useLocale();
@@ -40,32 +39,31 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <Title text={dict("title")} />
-      <Fade triggerOnce>
-        <div className={styles.inputs_container}>
-          <div className={styles.search_container}>
-            <Search
-              searchValue={searchValue}
-              handleSearchChange={e => setSearchValue(e.target.value)}
-              placeholder={dict("search")}
-            />
-          </div>
-          <div className={styles.period_container}>
-            <button className={styles.period}>
-              {dict("period_btn")}
-              <Image src={down} alt='' />
-            </button>
 
-            <div className={styles.period}>
-              <Image src={bar} alt='' />
-              <Image src={period} alt='' />
-            </div>
-          </div>
-          <Link href={`/${locale}/collections/new-collection`} className={styles.new_btn}>
-            <Image src={plus} alt='' width={15} height={15} />
-            {dict("new_btn")}
-          </Link>
+      <div className={styles.inputs_container}>
+        <div className={styles.search_container}>
+          <Search
+            searchValue={searchValue}
+            handleSearchChange={e => setSearchValue(e.target.value)}
+            placeholder={dict("search")}
+          />
         </div>
-      </Fade>
+        <div className={styles.period_container}>
+          <button className={styles.period}>
+            {dict("period_btn")}
+            <Image src={down} alt='' />
+          </button>
+
+          <div className={styles.period}>
+            <Image src={bar} alt='' />
+            <Image src={period} alt='' />
+          </div>
+        </div>
+        <Link href={`/${locale}/collections/new-collection`} className={styles.new_btn}>
+          <Image src={plus} alt='' width={15} height={15} />
+          {dict("new_btn")}
+        </Link>
+      </div>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import Search from "@/components/Search";
 import TableRow from "./TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import { Fade } from "react-awesome-reveal";
 
 const ListHotlinks = () => {
   const [searchValue, setSearchValue] = useState<string>("");

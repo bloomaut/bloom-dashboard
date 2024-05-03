@@ -2,7 +2,7 @@
 
 .container {
   height: inherit;
-  @include flex(column, flex-start, flex-start, 10px);
+  @include flex(column, flex-start, flex-start);
   h4 {
     color: $lightGrey;
     @include fontSize-fontWeight(14px, 400);
@@ -32,6 +32,7 @@
 
 @media (min-width: $queryXl) {
   .container {
+    gap: 20px;
     .form {
       gap: 20px;
     }

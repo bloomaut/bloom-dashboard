@@ -21,7 +21,7 @@ const Step2 = ({ userStep }: Steps2Props) => {
     <div className={styles.container}>
       <h1>{dict("title")}</h1>
       <div className={styles.step_container}>
-        <Fade cascade damping={0.3} className={styles.fade} triggerOnce>
+        <Fade cascade damping={0.1} className={styles.fade} triggerOnce>
           <CardSteps
             step_number={5}
             title={dict("title_one")}
