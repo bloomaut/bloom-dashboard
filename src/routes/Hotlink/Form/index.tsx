@@ -38,7 +38,6 @@ const Form = () => {
   const { notify, notifyError } = useMessageToast();
   const { flakes, selectedFlakeId, loading, getList } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
-
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
