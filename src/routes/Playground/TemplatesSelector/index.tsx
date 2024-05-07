@@ -38,9 +38,7 @@ const TemplatesSelector = () => {
             </div>
           ))
         ) : (
-          <div className={styles.loader}>
-            <Loading />
-          </div>
+          <Loading />
         )}
       </div>
     </section>

@@ -81,10 +81,6 @@
       }
     }
   }
-  .loader {
-    @include width-height(100%, 60vh);
-    @include flex(row, center, center);
-  }
 }
 
 @media (min-width: $queryLg) {
