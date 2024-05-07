@@ -36,9 +36,8 @@ const Form = () => {
   const dict = useTranslations("dict");
   const { clientSelected } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
-  const { flakes, selectedFlakeId, loading } = useFlakesContext();
+  const { flakes, selectedFlakeId, loading, getList } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
-
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
@@ -90,15 +89,17 @@ const Form = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Si hay un campo vacio arrojar error y salir
     const anyEmpty = formInfo.some(info => info.value?.trim() === "");
     if (anyEmpty) {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
+
     const response = await post("hotlinks/user", formDataPost);
     if (response.data.statusCode === 200) {
       setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
-      setFormDataPost(EmptyFormData);
+      getList();
       notify(`${dict("toast.success_hotlink")}`);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);

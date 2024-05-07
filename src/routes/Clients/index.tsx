@@ -1,9 +1,9 @@
 "use client";
 import styles from "./styles.module.scss";
 import addIcon from "../../../public/icons/add.svg";
-import { ClientsProvider, useClientsContext } from "@/context/ClientsContext";
+import { ClientsProvider } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // Components
 import Title from "@/components/Title";
 import Button from "@/components/Button";
@@ -13,13 +13,8 @@ import List from "./List";
 import SearchContainer from "./SearchContainer";
 
 const ClientsPage = () => {
-  const { fetchClients } = useClientsContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const dict = useTranslations("dict.clients");
-
-  useEffect(() => {
-    fetchClients();
-  }, []);
 
   return (
     <ClientsProvider>

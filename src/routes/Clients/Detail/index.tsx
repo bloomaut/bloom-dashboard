@@ -1,10 +1,17 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
+import { useEffect } from "react";
 
 const Detail = () => {
-  const { clientSelected } = useClientsContext();
+  const { clientSelected, setClientSelected, filteredClients } = useClientsContext();
   const dict = useTranslations("dict.clients");
+
+  useEffect(() => {
+    if (!clientSelected && filteredClients.length > 0) {
+      setClientSelected(filteredClients[0]);
+    }
+  }, [clientSelected, filteredClients]);
 
   return (
     <section className={styles.container}>

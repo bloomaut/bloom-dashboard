@@ -6,17 +6,23 @@ import { useFlakesContext } from "@/context/FlakesContext";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
   const dict = useTranslations("dict.hotlinks");
-  const selectedFlake = flakes.find(flake => flake._id === selectedFlakeId);
+  const [selectedFlake, setSelectedFlake] = useState<Powerapp | undefined>();
 
-  const handleDesignChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedFlake = flakes.find(flake => flake._id === event.target.value || flakes[0]?.skinx._id);
-    if (selectedFlake) {
-      setSelectedFlakeId(selectedFlake._id);
+  useEffect(() => {
+    if (flakes.length) {
+      const findFlake: Powerapp | undefined = flakes.find(flake => flake._id === selectedFlakeId);
+      setSelectedFlake(findFlake);
     }
+  }, [flakes, selectedFlakeId]);
+
+  const handleDesignChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFlakeId(e.target.value);
   };
 
   return (
@@ -39,32 +45,30 @@ const Select = () => {
         {!loading ? (
           <div className={styles.template_container} key={selectedFlake?._id}>
             {selectedFlake && (
-              <>
-                <div
-                  className={`${styles.template} ${selectedFlakeId === selectedFlake._id ? styles.selected_template : ""}`}
-                  onClick={() => setSelectedFlakeId(selectedFlake._id)}
-                >
-                  <div className={styles.sm_card}>
-                    {selectedFlake.hog_related.thumbnail ? (
-                      <Image
-                        src={selectedFlake.hog_related.thumbnail}
-                        alt={selectedFlake.skinx.title}
-                        width={167}
-                        height={120}
-                      />
-                    ) : (
-                      <HogIcon />
-                    )}
-                  </div>
-                  <div className={styles.lg_card}>
-                    {selectedFlake.thumbnail ? (
-                      <Image src={selectedFlake.thumbnail} alt={selectedFlake.skinx.title} width={137} height={100} />
-                    ) : (
-                      <PwaIcon />
-                    )}
-                  </div>
+              <div
+                className={`${styles.template} ${selectedFlakeId === selectedFlake._id ? styles.selected_template : ""}`}
+                onClick={() => setSelectedFlakeId(selectedFlake._id)}
+              >
+                <div className={styles.sm_card}>
+                  {selectedFlake.hog_related.thumbnail ? (
+                    <Image
+                      src={selectedFlake.hog_related.thumbnail}
+                      alt={selectedFlake.skinx.title}
+                      width={167}
+                      height={120}
+                    />
+                  ) : (
+                    <HogIcon />
+                  )}
                 </div>
-              </>
+                <div className={styles.lg_card}>
+                  {selectedFlake.thumbnail ? (
+                    <Image src={selectedFlake.thumbnail} alt={selectedFlake.skinx.title} width={137} height={100} />
+                  ) : (
+                    <PwaIcon />
+                  )}
+                </div>
+              </div>
             )}
           </div>
         ) : (

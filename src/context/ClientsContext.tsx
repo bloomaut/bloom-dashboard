@@ -60,12 +60,6 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
     }
   }, [searchValue, clients, setClients]);
 
-  useEffect(() => {
-    if (!clientSelected && filteredClients.length > 0) {
-      setClientSelected(filteredClients[0]);
-    }
-  }, [clientSelected, filteredClients]);
-
   return (
     <ClientsContext.Provider
       value={{
