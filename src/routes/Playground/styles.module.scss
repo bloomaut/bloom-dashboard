@@ -5,11 +5,11 @@
   @include flex(column, center, center, 30px);
   max-width: 1200px;
   .breadcrumb_container {
-    @include width-height(100%, 10%);
+    @include width-height(100%, auto);
     @include flex(row, flex-start, flex-start);
   }
   .inner_container {
-    @include width-height(100%, 90%);
+    @include width-height(100%, 100%);
     display: grid;
     grid-template-columns: 55% 19% 22%;
     justify-content: center;

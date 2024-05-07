@@ -68,9 +68,7 @@ const Select = () => {
             )}
           </div>
         ) : (
-          <div className={styles.loader}>
-            <Loading />
-          </div>
+          <Loading />
         )}
       </div>
     </div>
