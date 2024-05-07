@@ -38,6 +38,7 @@ const PhoneCase = () => {
           )}
         </div>
       </div>
+
       <div className={styles.dot_container}>
         <span
           onClick={() => setShowPreview(true)}

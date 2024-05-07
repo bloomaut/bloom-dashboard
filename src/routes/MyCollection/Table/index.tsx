@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 // Components
 import TableRow from "../TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import { Fade } from "react-awesome-reveal";
 
 const Table = () => {
   const dict = useTranslations("dict.my-collection");
@@ -28,7 +29,11 @@ const Table = () => {
         ) : hotlinkList.length < 1 ? (
           <p className={styles.empty_list}>{dict("empty_list")}</p>
         ) : (
-          hotlinkList.map((hotlink, index) => <TableRow key={index} hotlink={hotlink} />)
+          <Fade cascade damping={0.1} triggerOnce>
+            {hotlinkList.map((hotlink, index) => (
+              <TableRow key={index} hotlink={hotlink} />
+            ))}
+          </Fade>
         )}
       </div>
     </div>

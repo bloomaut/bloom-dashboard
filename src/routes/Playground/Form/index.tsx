@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import axios from "axios";
+import { Fade } from "react-awesome-reveal";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -108,18 +109,22 @@ const Form = () => {
         <Loading />
       ) : (
         <form className={styles.form} onSubmit={handleSubmit}>
-          {formInfo &&
-            formInfo.map((info, index) => (
-              <Input
-                key={info.key}
-                type={info.target}
-                textLabel={info.description}
-                value={info.value!}
-                handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => handleChange(e, index)}
-                textHolder={info.placeholder!}
-                name={info.name}
-              />
-            ))}
+          <Fade triggerOnce>
+            {formInfo &&
+              formInfo.map((info, index) => (
+                <Input
+                  key={info.key}
+                  type={info.target}
+                  textLabel={info.description}
+                  value={info.value!}
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                    handleChange(e, index)
+                  }
+                  textHolder={info.placeholder!}
+                  name={info.name}
+                />
+              ))}
+          </Fade>
           <Button title={dict("playground.form.button_hotlink")} styleName='btn_playground_outline' type='submit' />
           {showButton && (
             <Button

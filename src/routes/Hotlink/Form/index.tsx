@@ -15,6 +15,7 @@ import Input from "@/components/Input";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Checkbox from "./Checkbox";
+import { Fade } from "react-awesome-reveal";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -130,29 +131,31 @@ const Form = () => {
       {loading ? (
         <Loading />
       ) : flakes.length ? (
-        <form className={styles.form_container} onSubmit={handleSubmit}>
-          <div className={styles.form}>
-            {formInfo &&
-              formInfo.map((info, index) => (
-                <Input
-                  key={info.key}
-                  type={info.target}
-                  textLabel={info.description}
-                  value={info.value!}
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                    handleChange(e, index)
-                  }
-                  textHolder={info.placeholder!}
-                  name={info.name}
-                />
-              ))}
-          </div>
-          <Checkbox />
-          <button type='submit' className={styles.btn}>
-            <Image src={HotlinkIcon} alt='' />
-            {dict("hotlinks.form_btn")}
-          </button>
-        </form>
+        <Fade triggerOnce>
+          <form className={styles.form_container} onSubmit={handleSubmit}>
+            <div className={styles.form}>
+              {formInfo &&
+                formInfo.map((info, index) => (
+                  <Input
+                    key={info.key}
+                    type={info.target}
+                    textLabel={info.description}
+                    value={info.value!}
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                      handleChange(e, index)
+                    }
+                    textHolder={info.placeholder!}
+                    name={info.name}
+                  />
+                ))}
+            </div>
+            <Checkbox />
+            <button type='submit' className={styles.btn}>
+              <Image src={HotlinkIcon} alt='' />
+              {dict("hotlinks.form_btn")}
+            </button>
+          </form>
+        </Fade>
       ) : null}
     </div>
   );

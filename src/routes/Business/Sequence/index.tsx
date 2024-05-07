@@ -7,6 +7,7 @@ import { useAppSelector } from "@/store/hooks";
 import Button from "@/components/Button";
 import Subtitle from "../Subtitle";
 import Card from "./Card";
+import { Fade } from "react-awesome-reveal";
 
 export interface ContentProps {
   step: number;

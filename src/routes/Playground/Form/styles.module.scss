@@ -3,7 +3,7 @@
 .container {
   height: inherit;
   .form {
-    @include width-height(100%, 100%);
+    @include width-height(100%, 90%);
     position: relative;
     overflow-y: auto;
   }

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { setClientsData } from "@/store/features/clients";
+import { setClientsData } from "@/store/features/clientsSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 interface ClientsContextType {
