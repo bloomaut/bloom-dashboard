@@ -59,6 +59,7 @@ const GalleryComponent = () => {
                           className={styles.image}
                           width={137}
                           height={100}
+                          priority
                         />
                       ) : (
                         <PwaIcon />

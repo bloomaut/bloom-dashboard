@@ -26,7 +26,7 @@ const PopupImage = ({ image, onClose }: PopupImageProps) => {
             <Image src={closeIcon} alt='Close' />
           </button>
         </div>
-        <Image src={image.url} className={styles.image} alt='Image' width={800} height={800} />
+        <Image src={image.url} className={styles.image} priority alt='Image' width={800} height={800} />
       </div>
     </div>
   );
