@@ -65,9 +65,17 @@
         }
         .sm_card {
           @include width-height(160px, 110px);
+          .image {
+            @include width-height(100%, 100%);
+            object-fit: cover;
+          }
         }
         .lg_card {
           @include width-height(160px, 100%);
+          .image {
+            @include width-height(100%, 100%);
+            object-fit: cover;
+          }
         }
         &:hover {
           border: 0.298px solid $lightGrey;
