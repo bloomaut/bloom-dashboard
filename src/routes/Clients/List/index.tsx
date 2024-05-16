@@ -10,6 +10,7 @@ import Row from "../Row";
 import PopupActions from "../PopupActions";
 import LoadingSpinner from "@/components/Loading";
 import PopupConfirm from "@/components/PopupConfirm";
+import { Fade } from "react-awesome-reveal";
 
 const List = () => {
   const { loading, fetchClients, setClientSelected, filteredClients } = useClientsContext();
@@ -43,18 +44,20 @@ const List = () => {
       {loading ? (
         <LoadingSpinner />
       ) : filteredClients.length ? (
-        filteredClients.map((client: ClientsProps) => (
-          <Row
-            key={client._id}
-            client={client}
-            onDelete={() => {
-              setShowPopupDelete(true), setClientId(client._id);
-            }}
-            onEdit={() => {
-              setShowPopupEdit(true), setClientId(client._id);
-            }}
-          />
-        ))
+        <Fade cascade damping={0.1} className={styles.fade} triggerOnce>
+          {filteredClients.map((client: ClientsProps) => (
+            <Row
+              key={client._id}
+              client={client}
+              onDelete={() => {
+                setShowPopupDelete(true), setClientId(client._id);
+              }}
+              onEdit={() => {
+                setShowPopupEdit(true), setClientId(client._id);
+              }}
+            />
+          ))}
+        </Fade>
       ) : (
         <p className={styles.empty}>{dict("clients.empty")}</p>
       )}

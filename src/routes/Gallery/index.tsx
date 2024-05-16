@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 // Components
 import Title from "@/components/Title";
 import GalleryComponent from "./GalleryComponent";
+import { Fade } from "react-awesome-reveal";
 
 const GalleryPage = () => {
   const dict = useTranslations("dict.gallery");

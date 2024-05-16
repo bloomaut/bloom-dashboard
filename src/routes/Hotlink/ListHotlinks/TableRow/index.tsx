@@ -40,7 +40,7 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   return (
     <div className={`${styles.container} ${id === hotlink.id && styles.hotlink_selected}`} onClick={handleClick}>
       <div className={styles.column}>
-        <p>{hotlink.power_app.flake.title}</p>
+        <p>{hotlink.power_app?.flake?.title}</p>
       </div>
       <div className={styles.column}>
         {hotlink.customer ? (

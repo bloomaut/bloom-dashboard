@@ -6,33 +6,40 @@ import { useFlakesContext } from "@/context/FlakesContext";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useTranslations } from "next-intl";
+import { Fade } from "react-awesome-reveal";
+import { useEffect, useState } from "react";
+import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
   const dict = useTranslations("dict.hotlinks");
-  const selectedFlake = flakes.find(flake => flake._id === selectedFlakeId);
+  const [selectedFlake, setSelectedFlake] = useState<Powerapp | undefined>();
 
-  const handleDesignChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedFlake = flakes.find(flake => flake._id === event.target.value || flakes[0]?.skinx._id);
-    if (selectedFlake) {
-      setSelectedFlakeId(selectedFlake._id);
+  useEffect(() => {
+    if (flakes.length) {
+      const findFlake: Powerapp | undefined = flakes.find(flake => flake._id === selectedFlakeId);
+      setSelectedFlake(findFlake);
     }
-  };
+  }, [flakes, selectedFlakeId]);
 
-  console.log(flakes);
+  const handleDesignChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFlakeId(e.target.value);
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.select}>
         <label>Diseño</label>
         {flakes?.length ? (
-          <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
-            {flakes.map(flake => (
-              <option key={flake._id} value={flake._id}>
-                {flake.skinx.title}
-              </option>
-            ))}
-          </select>
+          <Fade triggerOnce>
+            <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
+              {flakes.map(flake => (
+                <option key={flake._id} value={flake._id}>
+                  {flake.skinx.title}
+                </option>
+              ))}
+            </select>
+          </Fade>
         ) : !loading ? (
           <p>{dict("empty_designs")}</p>
         ) : null}
@@ -41,7 +48,7 @@ const Select = () => {
         {!loading ? (
           <div className={styles.template_container} key={selectedFlake?._id}>
             {selectedFlake && (
-              <>
+              <Fade triggerOnce>
                 <div
                   className={`${styles.template} ${selectedFlakeId === selectedFlake._id ? styles.selected_template : ""}`}
                   onClick={() => setSelectedFlakeId(selectedFlake._id)}
@@ -66,13 +73,11 @@ const Select = () => {
                     )}
                   </div>
                 </div>
-              </>
+              </Fade>
             )}
           </div>
         ) : (
-          <div className={styles.loader}>
-            <Loading />
-          </div>
+          <Loading />
         )}
       </div>
     </div>

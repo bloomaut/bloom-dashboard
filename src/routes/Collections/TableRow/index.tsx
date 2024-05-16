@@ -15,8 +15,6 @@ const TableRow = ({ collection }: ContentProps) => {
 
   const formattDate = collection.created_at.slice(0, 10);
 
-  console.log(collection);
-
   const handleClick = () => {
     setId(collection._id);
     setSelected(true);

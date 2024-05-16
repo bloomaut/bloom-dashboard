@@ -9,6 +9,7 @@ import Button from "@/components/Button";
 import TableHead from "../TableHead";
 import TableRows from "../TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import { Fade } from "react-awesome-reveal";
 
 const Table = () => {
   const { id, collectionsList, filteredCollections, loading } = useCollectionsContext();
@@ -32,19 +33,24 @@ const Table = () => {
             (collectionsList && collectionsList.length === 0) ? (
             <p className={styles.text}>{dict("header.empty_collections")}</p>
           ) : filteredCollections ? (
-            filteredCollections.map(collection => {
-              return <TableRows key={collection._id} collection={collection} />;
-            })
+            <Fade cascade damping={0.3} triggerOnce>
+              {filteredCollections.map(collection => {
+                return <TableRows key={collection._id} collection={collection} />;
+              })}
+            </Fade>
           ) : (
-            collectionsList.map(collection => {
-              return <TableRows key={collection._id} collection={collection} />;
-            })
+            <Fade cascade damping={0.1} triggerOnce>
+              {collectionsList.map(collection => {
+                return <TableRows key={collection._id} collection={collection} />;
+              })}
+            </Fade>
           )}
         </div>
       </div>
-      {filteredCollections?.length && (
-        <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
-      )}
+      {filteredCollections?.length ||
+        (collectionsList && (
+          <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
+        ))}
     </>
   );
 };
