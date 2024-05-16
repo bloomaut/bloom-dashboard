@@ -9,17 +9,30 @@ import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import PwaIcon from "@/routes/Hotlink/Select/Icon/Pwa";
 import { useTranslations } from "next-intl";
 import { Fade } from "react-awesome-reveal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopupImage from "@/components/PopupImage";
+import { useMessageToast } from "@/hooks/useMessageToast";
 
 const GalleryComponent = () => {
   const { flakes, loading } = useFlakeData();
   const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
   const dict = useTranslations("dict.gallery");
+  const { notifyError } = useMessageToast();
 
   const handleClick = (url: string, type: string) => {
-    setSelectedImage({ url: url, type: type });
+    setSelectedImage(prevState => {
+      if (prevState?.url === url && prevState.type === type) {
+        return prevState;
+      }
+      return { url, type };
+    });
   };
+
+  useEffect(() => {
+    if (selectedImage && !selectedImage.url) {
+      notifyError("No hay imagen disponible");
+    }
+  }, [selectedImage]);
 
   return (
     <section className={styles.container}>
@@ -64,7 +77,9 @@ const GalleryComponent = () => {
           </div>
         )}
       </div>
-      {selectedImage && <PopupImage image={selectedImage} onClose={() => setSelectedImage(null)} />}
+      {selectedImage && selectedImage.url && (
+        <PopupImage image={selectedImage} onClose={() => setSelectedImage(null)} />
+      )}
     </section>
   );
 };
