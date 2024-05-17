@@ -58,6 +58,7 @@ const Select = () => {
                       <Image
                         src={selectedFlake.hog_related.thumbnail}
                         alt={selectedFlake.skinx.title}
+                        className={styles.image}
                         width={167}
                         height={120}
                       />
@@ -67,7 +68,13 @@ const Select = () => {
                   </div>
                   <div className={styles.lg_card}>
                     {selectedFlake.thumbnail ? (
-                      <Image src={selectedFlake.thumbnail} alt={selectedFlake.skinx.title} width={137} height={100} />
+                      <Image
+                        src={selectedFlake.thumbnail}
+                        alt={selectedFlake.skinx.title}
+                        className={styles.image}
+                        width={137}
+                        height={100}
+                      />
                     ) : (
                       <PwaIcon />
                     )}

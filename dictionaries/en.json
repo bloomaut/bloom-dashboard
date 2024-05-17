@@ -209,7 +209,8 @@
     "gallery": {
       "title": "Gallery",
       "more_designs": "Find more designs at",
-      "empty_designs": "You don't have designs yet"
+      "empty_designs": "You don't have designs yet",
+      "error": "No image available"
     },
     "hotlinks": {
       "title": "Hotlink Generation",
