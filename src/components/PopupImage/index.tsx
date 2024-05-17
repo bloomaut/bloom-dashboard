@@ -24,19 +24,21 @@ const PopupImage = ({ image, onClose }: PopupImageProps) => {
 
   return (
     <div className={`${styles.popup_container} ${closing && styles.closing}`}>
-      <div className={styles.container} ref={dropdownRef}>
+      <div className={styles.container}>
         <div className={styles.btn_container}>
           <button className={styles.btn} onClick={handleClose}>
-            <Image src={closeIcon} alt='Close' width={30} height={30} />
+            <Image src={closeIcon} alt='Close' width={40} height={40} />
           </button>
         </div>
-        {image.type === "powerapp" ? (
-          <Zoom classDialog='custom-zoom'>
+        <div className={styles.image_container}>
+          {image.type === "hog" ? (
             <Image src={image.url} className={styles.image} priority alt='Image' width={800} height={800} />
-          </Zoom>
-        ) : (
-          <Image src={image.url} className={styles.image} priority alt='Image' width={800} height={800} />
-        )}
+          ) : (
+            <Zoom classDialog='custom-zoom'>
+              <Image src={image.url} className={styles.image} priority alt='Image' width={800} height={800} />
+            </Zoom>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -12,43 +12,40 @@
   .container {
     @include flex(column, space-evenly, center);
     max-height: 80%;
-    overflow-y: auto;
+    overflow: hidden;
     @include fontSize-fontWeight(18px, 400);
-    border-radius: 15px;
+
     text-align: center;
-    box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
     animation: scaleIn 0.3s ease-in-out forwards;
+    .image_container {
+      @include width-height(100%, auto);
+      @include flex(row, center, center);
+      padding: 0 15px 15px 15px;
+    }
     .btn_container {
-      @include width-height(100%, 35px);
-      position: relative;
-      z-index: 1000;
+      @include width-height(95%, auto);
+      @include flex(row, flex-end, center);
       .btn {
         background: none;
         outline: none;
         border: none;
         cursor: pointer;
-        position: absolute;
-        top: 0;
-        right: 2px;
       }
     }
     .image {
       @include width-height(100%, 100%);
+      border-radius: 15px;
+      box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
     }
+  }
+  .container_lg {
+    @extend .container;
+    width: 400px;
+    max-height: 80%;
   }
 }
 .closing {
   animation: fadeOutPopup 0.3s ease-in-out forwards;
-}
-
-.container::-webkit-scrollbar {
-  width: 7px;
-  background-color: $greyBackground;
-}
-
-.container::-webkit-scrollbar-thumb {
-  background-color: $orange;
-  border-radius: 10px;
 }
 
 @keyframes fadeIn {
