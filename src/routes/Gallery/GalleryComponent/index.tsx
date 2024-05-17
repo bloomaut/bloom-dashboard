@@ -58,8 +58,8 @@ const GalleryComponent = () => {
                             src={app.thumbnail}
                             alt={app.skinx.title}
                             className={styles.image}
-                            width={137}
-                            height={100}
+                            width={800}
+                            height={800}
                             priority
                           />
                         </Zoom>
