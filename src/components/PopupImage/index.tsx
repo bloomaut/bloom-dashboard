@@ -25,7 +25,7 @@ const PopupImage = ({ image, onClose }: PopupImageProps) => {
       <div className={styles.container} ref={dropdownRef}>
         <div className={styles.btn_container}>
           <button className={styles.btn} onClick={handleClose}>
-            <Image src={closeIcon} alt='Close' width={40} height={40} />
+            <Image src={closeIcon} alt='Close' className={styles.icon} width={100} height={100} />
           </button>
         </div>
         <div className={styles.image_container}>

@@ -7,9 +7,12 @@
   padding-right: 10px;
   .flakes {
     @include width-height(100%, 100%);
-    @include flex(row, flex-start, flex-start, 20px);
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
     .template_container {
+      @include width-height(100%, 100%);
+      @include flex(column, center, flex-start);
       .title {
         @include fontSize-fontWeight(16px, 500);
         color: $text;
@@ -35,6 +38,7 @@
         .lg_card {
           @extend .sm_card;
           @include width-height(130px, 100%);
+          overflow: hidden;
         }
       }
       .selected_template {
@@ -59,4 +63,13 @@
 .container::-webkit-scrollbar-thumb {
   background-color: $orange;
   border-radius: 10px;
+}
+
+@media (width >= $queryXl) {
+  .container {
+    .flakes {
+      @include flex(row, flex-start, flex-start, 20px);
+      flex-wrap: wrap;
+    }
+  }
 }
