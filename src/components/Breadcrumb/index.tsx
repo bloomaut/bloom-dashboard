@@ -17,7 +17,7 @@ const Breadcrumb = ({ title }: BreadcrumbProps) => {
   const dict = useTranslations("dict.breadcrumb");
 
   const handleBack = () => {
-    if (user && (pathname.includes("my-business") || pathname.includes("design"))) {
+    if (user && (pathname.includes("my-business") || pathname.includes("playground"))) {
       router.push("/");
     } else {
       router.back();
