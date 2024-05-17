@@ -3,7 +3,7 @@
 .gallery {
   @include width-height(100%, 100%);
   @include flex(column, flex-start, center, 20px);
-  padding: 0px 40px;
+  padding: 0px 20px;
   .head {
     @include width-height(100%, 10%);
     @include flex(row, space-between, flex-start);

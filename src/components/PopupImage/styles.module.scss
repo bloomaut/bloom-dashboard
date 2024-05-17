@@ -20,7 +20,6 @@
       @include flex(row, center, center);
       .image {
         @include width-height(100%, 100%);
-        border-radius: 15px;
         box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
       }
     }

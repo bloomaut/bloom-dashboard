@@ -30,7 +30,7 @@ const GalleryComponent = () => {
         return { url, type };
       });
     else if (url === null) {
-      notifyError("No hay imagen");
+      notifyError(dict("error"));
     }
   };
 
