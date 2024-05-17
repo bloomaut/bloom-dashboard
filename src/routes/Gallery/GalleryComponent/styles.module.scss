@@ -20,7 +20,7 @@
       }
       .template {
         @include width-height(300px, 300px);
-        @include flex(row, space-between, flex-start);
+        @include flex(row, space-between, flex-start, 5px);
         border: 0.298px solid transparent;
         border-radius: 4.775px;
         cursor: pointer;
@@ -37,8 +37,12 @@
         }
         .lg_card {
           @extend .sm_card;
-          @include width-height(130px, 100%);
+          @include width-height(140px, 100%);
           overflow: hidden;
+          .image {
+            @include width-height(100%, 100%);
+            object-fit: cover;
+          }
         }
       }
       .selected_template {
