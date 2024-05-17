@@ -12,6 +12,8 @@ import { Fade } from "react-awesome-reveal";
 import { useEffect, useState } from "react";
 import PopupImage from "@/components/PopupImage";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 const GalleryComponent = () => {
   const { flakes, loading } = useFlakeData();
@@ -20,19 +22,17 @@ const GalleryComponent = () => {
   const { notifyError } = useMessageToast();
 
   const handleClick = (url: string, type: string) => {
-    setSelectedImage(prevState => {
-      if (prevState?.url === url && prevState.type === type) {
-        return prevState;
-      }
-      return { url, type };
-    });
-  };
-
-  useEffect(() => {
-    if (selectedImage && !selectedImage.url) {
-      notifyError("No hay imagen disponible");
+    if (url && type === "hog")
+      setSelectedImage(prevState => {
+        if (prevState?.url === url && prevState.type === type) {
+          return prevState;
+        }
+        return { url, type };
+      });
+    else if (url === null) {
+      notifyError("No hay imagen");
     }
-  }, [selectedImage]);
+  };
 
   return (
     <section className={styles.container}>
@@ -53,14 +53,16 @@ const GalleryComponent = () => {
                     </div>
                     <div className={styles.lg_card} onClick={() => handleClick(app.thumbnail, "powerapp")}>
                       {app.thumbnail ? (
-                        <Image
-                          src={app.thumbnail}
-                          alt={app.skinx.title}
-                          className={styles.image}
-                          width={137}
-                          height={100}
-                          priority
-                        />
+                        <Zoom classDialog='custom-zoom'>
+                          <Image
+                            src={app.thumbnail}
+                            alt={app.skinx.title}
+                            className={styles.image}
+                            width={137}
+                            height={100}
+                            priority
+                          />
+                        </Zoom>
                       ) : (
                         <PwaIcon />
                       )}

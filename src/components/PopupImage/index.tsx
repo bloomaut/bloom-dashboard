@@ -3,11 +3,9 @@ import styles from "./styles.module.scss";
 import closeIcon from "/public/icons/close-white.png";
 import { useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
-import Zoom from "react-medium-image-zoom";
-import "react-medium-image-zoom/dist/styles.css";
 
 interface PopupImageProps {
-  image: { url: string; type: string };
+  image: { url?: string; type: string };
   onClose: () => void;
 }
 
@@ -24,19 +22,15 @@ const PopupImage = ({ image, onClose }: PopupImageProps) => {
 
   return (
     <div className={`${styles.popup_container} ${closing && styles.closing}`}>
-      <div className={styles.container}>
+      <div className={styles.container} ref={dropdownRef}>
         <div className={styles.btn_container}>
           <button className={styles.btn} onClick={handleClose}>
             <Image src={closeIcon} alt='Close' width={40} height={40} />
           </button>
         </div>
         <div className={styles.image_container}>
-          {image.type === "hog" ? (
+          {image.url && (
             <Image src={image.url} className={styles.image} priority alt='Image' width={800} height={800} />
-          ) : (
-            <Zoom classDialog='custom-zoom'>
-              <Image src={image.url} className={styles.image} priority alt='Image' width={800} height={800} />
-            </Zoom>
           )}
         </div>
       </div>
