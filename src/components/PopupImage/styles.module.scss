@@ -10,38 +10,31 @@
   background-color: rgba(0, 0, 0, 0.5);
   animation: fadeIn 0.3s ease-in-out forwards;
   .container {
-    @include width-height(600px, auto);
     @include flex(column, space-evenly, center);
     max-height: 80%;
     overflow-y: auto;
     @include fontSize-fontWeight(18px, 400);
-    background-color: $blueishBackground;
-    padding: 50px 20px 20px 20px;
     border-radius: 15px;
     text-align: center;
     box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
     animation: scaleIn 0.3s ease-in-out forwards;
     .btn_container {
-      @include width-height(100%, auto);
+      @include width-height(100%, 35px);
       position: relative;
+      z-index: 1000;
       .btn {
-        position: absolute;
         background: none;
         outline: none;
         border: none;
         cursor: pointer;
-        top: -40px;
-        right: 0;
+        position: absolute;
+        top: 0;
+        right: 2px;
       }
     }
     .image {
       @include width-height(100%, 100%);
     }
-  }
-  .container_lg {
-    @extend .container;
-    width: 400px;
-    max-height: 80%;
   }
 }
 .closing {
