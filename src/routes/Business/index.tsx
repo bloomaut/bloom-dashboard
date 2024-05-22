@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
 import { setFilesData } from "@/store/features/filesSlice";
 import { Fade } from "react-awesome-reveal";
-//Componentes
+// Components
 import LoadingSpinner from "@/components/Loading";
 import Breadcrumb from "@/components/Breadcrumb";
 import Files from "./Files";

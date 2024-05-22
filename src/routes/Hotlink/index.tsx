@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { ClientsProvider } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
 import { FlakesProvider } from "@/context/FlakesContext";
-//Componentes
+// Components
 import Title from "@/components/Title";
 import Select from "./Select";
 import Form from "./Form";

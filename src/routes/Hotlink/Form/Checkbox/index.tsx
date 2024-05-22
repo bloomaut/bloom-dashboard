@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-//Componentes
+// Components
 import SearchContainer from "../SearchContainer";
 
 const Checkbox = () => {

@@ -1,7 +1,7 @@
 "use client";
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
-//Componentes
+// Components
 import Breadcrumb from "@/components/Breadcrumb";
 import IntroVideo from "@/components/IntroVideo";
 import Checkbox from "./Checkbox";

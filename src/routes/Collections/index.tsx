@@ -1,7 +1,7 @@
 "use client";
 import styles from "./styles.module.scss";
 import { CollectionsProvider } from "@/context/CollectionsContext";
-//Componentes
+// Components
 import Header from "./Header";
 import Table from "./Table";
 

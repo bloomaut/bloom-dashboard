@@ -5,12 +5,12 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { remove } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
+import { Fade } from "react-awesome-reveal";
 // Components
 import Row from "../Row";
 import PopupActions from "../PopupActions";
 import LoadingSpinner from "@/components/Loading";
 import PopupConfirm from "@/components/PopupConfirm";
-import { Fade } from "react-awesome-reveal";
 
 const List = () => {
   const { loading, fetchClients, setClientSelected, filteredClients } = useClientsContext();

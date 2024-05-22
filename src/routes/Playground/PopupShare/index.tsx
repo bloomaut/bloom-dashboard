@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useOpenGraphContext } from "@/context/OpenGraphContext";
-//Componentes
+// Components
 import Button from "@/components/Button";
 
 interface PopupShareProps {

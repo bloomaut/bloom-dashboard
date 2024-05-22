@@ -3,7 +3,7 @@ import arrowRigth from "/public/icons/arrow_rigth.svg";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
-//Componentes
+// Components
 import Button from "@/components/Button";
 
 const Checkbox = () => {

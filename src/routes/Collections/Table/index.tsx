@@ -4,12 +4,12 @@ import skin from "@/../../public/icons/skin.svg";
 import { useLocale, useTranslations } from "next-intl";
 import { useCollectionsContext } from "@/context/CollectionsContext";
 import { useRouter } from "next/navigation";
-//Componentes
+import { Fade } from "react-awesome-reveal";
+// Components
 import Button from "@/components/Button";
 import TableHead from "../TableHead";
 import TableRows from "../TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import { Fade } from "react-awesome-reveal";
 
 const Table = () => {
   const { id, collectionsList, filteredCollections, loading } = useCollectionsContext();

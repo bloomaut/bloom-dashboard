@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
-//Componentes
+// Components
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import HogIcon from "./Icons/Hog";

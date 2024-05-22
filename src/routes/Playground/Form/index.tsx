@@ -5,14 +5,14 @@ import { Flake, Variablesinuse } from "@/typescript/interfaces/flakes.interface"
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { useOpenGraphContext } from "@/context/OpenGraphContext";
-//Componentes
+import axios from "axios";
+import { Fade } from "react-awesome-reveal";
+// Components
 import Input from "@/components/Input";
 import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import axios from "axios";
-import { Fade } from "react-awesome-reveal";
 
 const EmptyFormData = {
   typeFlake: "",

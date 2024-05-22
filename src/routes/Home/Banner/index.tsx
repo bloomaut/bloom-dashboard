@@ -2,10 +2,10 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import banner_home from "/public/assets/home_banner.png";
 import { useLocale, useTranslations } from "next-intl";
-//Componentes
+import { Fade } from "react-awesome-reveal";
+// Components
 import LinkComponent from "@/components/LinkComponent";
 import Title from "@/components/Title";
-import { Fade } from "react-awesome-reveal";
 
 const Banner = () => {
   const locale = useLocale();

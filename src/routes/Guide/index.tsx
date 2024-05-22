@@ -2,12 +2,11 @@
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import { get } from "@/services/fetch";
-// Componentes
+// Components
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Header from "./Header";
 import LoadingSpinner from "@/components/Loading";
-import { Fade } from "react-awesome-reveal";
 
 const GuidePage = () => {
   const [activeStep, setActiveStep] = useState(1);

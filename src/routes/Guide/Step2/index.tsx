@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import { useTranslations, useLocale } from "next-intl";
-// Componentes
+// Components
 import CardSteps from "../CardSteps";
 import Button from "@/components/Button";
 import { Fade } from "react-awesome-reveal";

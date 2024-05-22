@@ -10,7 +10,7 @@ import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { post } from "@/services/fetch";
 
-//Componentes
+// Components
 import Input from "@/components/Input";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";

@@ -6,6 +6,7 @@ import { useFlakeData } from "@/hooks/useFlakesUser";
 import { useRouter } from "next/navigation";
 import { post } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { Fade } from "react-awesome-reveal";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Input from "@/components/Input";
@@ -13,7 +14,6 @@ import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Button from "@/components/Button";
 import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
 import PwaIcon from "../Hotlink/Select/Icon/Pwa";
-import { Fade } from "react-awesome-reveal";
 
 const InitialEmptyImages = {
   sm_img: "",

@@ -3,12 +3,12 @@ import Image from "next/image";
 import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 import PwaIcon from "./Icon/Pwa";
 import { useFlakesContext } from "@/context/FlakesContext";
-// Components
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { useTranslations } from "next-intl";
 import { Fade } from "react-awesome-reveal";
 import { useEffect, useState } from "react";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
+// Components
+import Loading from "@/app/[locale]/(playground)/introduction/loading";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useCollectionsContext } from "@/context/CollectionsContext";
-// Component
+// Components
 import Title from "@/components/Title";
 import Search from "@/components/Search";
 // Iconos

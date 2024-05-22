@@ -1,10 +1,10 @@
 import styles from "./styles.module.scss";
 import { useHotlinkListContext } from "@/context/HotlinksListContext";
 import { useTranslations } from "next-intl";
+import { Fade } from "react-awesome-reveal";
 // Components
 import TableRow from "../TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import { Fade } from "react-awesome-reveal";
 
 const Table = () => {
   const dict = useTranslations("dict.my-collection");

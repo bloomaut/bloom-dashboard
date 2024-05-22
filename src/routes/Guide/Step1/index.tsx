@@ -1,8 +1,8 @@
 import styles from "./styles.module.scss";
 import { useTranslations, useLocale } from "next-intl";
-// Componentes
-import CardSteps from "../CardSteps";
 import { Fade } from "react-awesome-reveal";
+// Components
+import CardSteps from "../CardSteps";
 
 interface Steps1Props {
   userStep: number;
