@@ -1,0 +1,43 @@
+@import "@/styles/theme";
+
+.input_container {
+  @include width-height(100%, auto);
+  @include flex(column, flex-start, flex-start, 5px);
+  padding: 5px 0;
+  position: relative;
+  .label,
+  .input {
+    @include fontSize-fontWeight(14px, 400);
+    color: $text;
+  }
+  .input {
+    @include width-height(100%, 30px);
+    padding: 5px 10px;
+    outline: none;
+    border: 1px solid $lighterGrey;
+    border-radius: 4px;
+    background-color: transparent;
+    &::placeholder {
+      color: $lighterGrey;
+    }
+  }
+  .description_input {
+    @include width-height(100%, 90px);
+    padding-bottom: 60px;
+  }
+  .search {
+    @extend .input;
+    padding: 20px;
+  }
+  .search_container {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    cursor: pointer;
+  }
+  .textarea {
+    @include width-height(100%, 90px);
+    font-family: inherit;
+    resize: none;
+  }
+}

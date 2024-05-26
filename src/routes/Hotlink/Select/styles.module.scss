@@ -1,0 +1,100 @@
+@import "@/styles/theme";
+
+.container {
+  @include flex(column, center, flex-start, 20px);
+  @include width-height(50%, auto);
+  max-width: 390px;
+  .select {
+    @include flex(column, center, flex-start, 5px);
+    label {
+      @include fontSize-fontWeight(20px, 400);
+      margin-bottom: 10px;
+    }
+    select {
+      @include width-height(350px, 30px);
+      border-radius: 4px;
+      padding: 0 10px;
+      option {
+        @include fontSize-fontWeight(12px, 400);
+      }
+    }
+  }
+
+  .flakes {
+    @include width-height(100%, 100%);
+    border-radius: 4.775px;
+    overflow: hidden;
+    padding-right: 5px;
+    max-height: 400px;
+    .template_container {
+      .title {
+        @include fontSize-fontWeight(14px, 400);
+        color: $text;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .template {
+        @include width-height(350px, 300px);
+        @include flex(row, space-between, flex-start);
+        border: 0.298px solid transparent;
+        border-radius: 4.775px;
+        padding: 10px;
+        cursor: pointer;
+        transition: border 0.3s ease;
+        .sm_card,
+        .lg_card {
+          border: 0.298px solid $lightGrey;
+          border-radius: 2.495px;
+          background-color: $greyBackground;
+          @include flex(row, center, center);
+          img {
+            @include width-height(100%, 100%);
+            object-fit: cover;
+            object-position: top;
+          }
+          svg {
+            @include width-height(40px, 40px);
+            object-fit: contain;
+            path {
+              stroke: $lighterGrey;
+            }
+            path {
+              fill: $lighterGrey;
+            }
+          }
+        }
+        .sm_card {
+          @include width-height(160px, 110px);
+          .image {
+            @include width-height(100%, 100%);
+            object-fit: cover;
+          }
+        }
+        .lg_card {
+          @include width-height(160px, 100%);
+          .image {
+            @include width-height(100%, 100%);
+            object-fit: cover;
+          }
+        }
+        &:hover {
+          border: 0.298px solid $lightGrey;
+        }
+      }
+      .selected_template {
+        border: 0.298px solid $orange;
+        &:hover {
+          border: 0.298px solid $orange;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $queryLg) {
+  .container {
+    .flakes {
+      max-height: 600px;
+    }
+  }
+}

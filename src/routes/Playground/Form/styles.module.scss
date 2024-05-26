@@ -1,0 +1,26 @@
+@import "@/styles/theme.scss";
+
+.container {
+  height: inherit;
+  .form {
+    @include width-height(100%, 90%);
+    position: relative;
+    overflow-y: auto;
+  }
+}
+
+.form::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.form::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
+}
+
+@media (min-width: $queryLg) {
+  .container {
+    max-height: 630px;
+  }
+}

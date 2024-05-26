@@ -1,0 +1,28 @@
+"use client";
+import styles from "./styles.module.scss";
+import { useTranslations } from "next-intl";
+import { HotlinkListProvider } from "@/context/HotlinksListContext";
+// Components
+import Breadcrumb from "@/components/Breadcrumb";
+import Header from "./Header";
+import Table from "./Table";
+
+const MyCollectionPage = () => {
+  const dict = useTranslations("dict.my-collection");
+
+  return (
+    <HotlinkListProvider>
+      <section className={styles.container}>
+        <div className={styles.breadcrumb_container}>
+          <Breadcrumb title={dict("breadcrumb")} />
+        </div>
+        <div className={styles.inner_container}>
+          <Header />
+          <Table />
+        </div>
+      </section>
+    </HotlinkListProvider>
+  );
+};
+
+export default MyCollectionPage;

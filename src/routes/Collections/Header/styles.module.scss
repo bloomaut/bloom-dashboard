@@ -1,0 +1,64 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include flex(column, center, flex-start, 15px);
+  @include width-height(100%, 20%);
+  .inputs_container {
+    @include flex(row, space-between, center, 20px);
+    @include width-height(100%, auto);
+    .search_container {
+      @include width-height(550px, 40px);
+      position: relative;
+    }
+
+    .search {
+      @include width-height(100%, 100%);
+      border-radius: 8px;
+      border: 1px solid $lightGrey;
+      padding: 10px 20px;
+      @include fontSize-fontWeight(14px, 400);
+      color: $lightGrey;
+    }
+
+    .search_icon {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      background-image: url(../../../../public/icons/search.svg);
+      background-size: contain;
+      background-repeat: no-repeat;
+      transform: translateY(-50%);
+    }
+    .period_container {
+      @include flex(row, center, center, 15px);
+      background-color: white;
+      @include width-height(180px, 40px);
+      border-radius: 8px;
+      .period {
+        @include flex(row, center, center, 10px);
+        @include fontSize-fontWeight(16px, 400);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+    }
+    .new_btn {
+      @include flex(row, center, center, 10px);
+      @include fontSize-fontWeight(16px, 300);
+      @include width-height(171px, 35px);
+      white-space: nowrap;
+      text-align: center;
+      color: $white;
+      background-color: $orange;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      &:hover {
+        background-color: $darkOrange;
+      }
+    }
+  }
+}

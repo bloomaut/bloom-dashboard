@@ -1,0 +1,24 @@
+@import "@/styles/theme.scss";
+
+.clients {
+  @include width-height(100%, 100%);
+  max-height: 500px;
+  @include flex(column, flex-start, center);
+  overflow-y: auto;
+  .fade {
+    @include width-height(100%, auto);
+  }
+  .empty {
+    color: $text;
+  }
+}
+
+.clients::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.clients::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
+}

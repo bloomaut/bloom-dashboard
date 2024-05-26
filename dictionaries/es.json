@@ -1,13 +1,236 @@
 {
   "dict": {
+    "error": {
+      "message": "¡Hubo un problema!",
+      "btn": "Recargar sitio",
+      "btn2": "Volver"
+    },
+    "drag": {
+      "title": "Arrastrá o soltá tus archivos aquí"
+    },
+    "sidebar": {
+      "home": "Inicio",
+      "guide": "Guía",
+      "my_business": "Mi negocio",
+      "gallery": "Galería",
+      "hotlink": "Hotlink",
+      "inbox": "Inbox",
+      "collections": "Colecciones",
+      "clients": "Clients"
+    },
     "navbar": {
-      "ejemplo": "borrar"
+      "login": "Iniciar Sesión",
+      "logout": "Cerrar Sesión"
     },
     "popup": {
-      "ejemplo": "borrar"
+      "delete_title": "¿Seguro que deseas eliminar este cliente?",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
     },
     "toast": {
-      "ejemplo": "borrar"
+      "success_img": "Imágen subida correctamente",
+      "success_file": "Archivo subido correctamente",
+      "success_edit": "Información actualizada correctamente",
+      "success_delete": "Achivo eliminado correctamente",
+      "success_palette": "Paleta actualizada correctamente",
+      "error_name": "El nombre es obligatorio",
+      "error_edit": "Error al actualizar información",
+      "error_img": "Error al subir la imágen",
+      "error_file": "Error al eliminar el archivo",
+      "error_palette": "Error al subir la paleta",
+      "empty_fields": "Todos los campos son requeridos",
+      "success_hotlink": "Hotlink creado correctamente",
+      "error_tryagain": "Hubo un problema, intente más tarde",
+      "client_post": "Cliente creado correctamente",
+      "client_edit": "Cliente actualizado correctamente",
+      "client_delete": "Cliente eliminado correctamente",
+      "client_post_error": "Error al crear cliente",
+      "client_edit_error": "Error al actualizar cliente",
+      "client_delete_error": "Error al eliminar cliente"
+    },
+    "breadcrumb": {
+      "breadcrumb_link": "Volver"
+    },
+    "popupLogin": {
+      "login": "Iniciar sesión",
+      "title": "Para ingresar debes iniciar sesión",
+      "link": "Volver"
+    },
+    "home": {
+      "banner": {
+        "welcome": "Te damos la bienvenida a Small",
+        "title": "Aprendé con Playground",
+        "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
+        "btn": "Creá tu propio diseño"
+      }
+    },
+    "introduction": {
+      "title": "Introducción"
+    },
+    "playground": {
+      "breadcrumb_title": "Simulador",
+      "template_title": "Plantillas",
+      "form": {
+        "title": "Campos",
+        "button_hotlink": "Generar Hotlink",
+        "button_share": "Compartir Hotlink"
+      },
+      "phoneCase": {
+        "today": "Hoy"
+      },
+      "popup": {
+        "title": "Compartir y probar en Whatsapp",
+        "copy": "Copiar",
+        "btn": "Compartir en Whatsapp",
+        "copy_success": "URL copiada al porpapapeles",
+        "copy_error": "Error al copiar URL"
+      },
+      "loading_dots": "Escribiendo"
+    },
+    "guide": {
+      "header": {
+        "stepper_title1": "Sección 1",
+        "stepper_subtitle1": "Conocer, Jugar y Cargar",
+        "stepper_title2": "Sección 2",
+        "stepper_subtitle2": "Compartir y Utilizar"
+      },
+      "stepper_one": {
+        "title": "Pasos",
+        "title_one": "Introducción",
+        "subtitle_one": "Introducción y entendimiento de la plataforma. Video explicativo",
+        "title_two": "Jugar",
+        "subtitle_two": "Juga en el playground, personaliza apps y genera tu primer hotlink",
+        "title_three": "Carga",
+        "subtitle_three": "Carga de datos de tu empresa y archivos de marca para tus diseños",
+        "title_four": "Galería",
+        "subtitle_four": "Nos encargamos del diseño con nuestra herramienta UiTool"
+      },
+      "stepper_two": {
+        "title": "Pasos",
+        "title_one": "Distribuir",
+        "subtitle_one": "Genera los links para tus clientes y distribuí tus apps personalizadas",
+        "title_two": "Gestionar",
+        "subtitle_two": "Gestiona los mensjaes que lleganen tu Inbox y chatea con tus clientes",
+        "title_three": "Campañas",
+        "subtitle_three": "Envía campañas y visualiza los resultados de las interacciones",
+        "button": "Terminé de realizar los pasos"
+      }
+    },
+    "business": {
+      "breadcrumb_title": "Carga de Datos",
+      "sequence": {
+        "title": "Secuencia",
+        "card_title_01": "Cargar información del negocio",
+        "card_title_02": "Subí el logo de tu empresa",
+        "card_title_03": "Documentos descriptivos",
+        "card_title_04": "Flyer, brochure, brandin o publicidad",
+        "card_description_01": "Con esta información de contexto diseñamos el contenido y la conversación de los chatbots. Tu sitio web ayuda",
+        "card_description_02": "Del logo tomamos automáticamente la paleta de color que luego podrás editar",
+        "card_description_03": "Podes adjuntar la cantidad de información que consideres necesaria para tu negocio",
+        "card_description_04": "Subí archivos referentes a tu negocio para extraer informacion",
+        "button": "Terminé de cargar los datos"
+      },
+      "form": {
+        "title": "Información del negocio",
+        "subtitle": "Mientras más campos se completen mejor será el resultado",
+        "name": "Nombre",
+        "placeholder_name": "Ingrese el nombre",
+        "website": "Sitio web",
+        "placeholder_website": "Ingrese su sitio web",
+        "description": "Descripción",
+        "placeholder_description": "Ingrese la descripción",
+        "placeholder_instagram": "Ingrese su instagram",
+        "phone": "Teléfono",
+        "placeholder_phone": "Ingrese su teléfono",
+        "button": "Guardar"
+      },
+      "file": {
+        "title01": "Subí tu logo para iniciar",
+        "title02": "Arrojá tus archivos aquí",
+        "subtitle": "Mis archivos"
+      }
+    },
+    "clients": {
+      "title": "Cartera de Clientes",
+      "empty": "No hay clientes disponibles",
+      "button": "Agregar cliente",
+      "popup_create_title": "Información del cliente",
+      "popup_edit_title": "Editar información del cliente",
+      "popup_button": "Confirmar",
+      "form_label_01": "Nombre",
+      "form_label_02": "Apellido",
+      "form_label_03": "Email",
+      "form_label_04": "Ubicación",
+      "form_label_05": "Teléfono",
+      "form_label_06": "Notas personales",
+      "search_holder": "Buscar cliente ..."
+    },
+    "collections": {
+      "template": "vacío",
+      "header": {
+        "title": "Colecciones de Hotlinks",
+        "search": "Buscar Colecciones...",
+        "period_btn": "Periodo",
+        "new_btn": "Nueva Colección",
+        "empty_collections": "Todavía no tenés colecciones"
+      },
+      "titles": {
+        "title_one": "Nombre",
+        "title_two": "Diseño utilizado",
+        "title_three": "Receptor",
+        "column_one": "Fecha",
+        "column_two": "Nombre del Skin",
+        "column_three": "Plantilla",
+        "column_four": "Total",
+        "column_five": "Abiertos"
+      },
+      "btn": "Ver Colección",
+      "new_collection": {
+        "title": "Crear colección",
+        "input": "Nombre",
+        "select": "Diseño",
+        "cancel": "Cancelar",
+        "generate_btn": "Generar Colección",
+        "colection_created": "Colección creada correctamente",
+        "colection_error": "Error al crear colección"
+      }
+    },
+    "my-collection": {
+      "breadcrumb": "Lista Hotlinks",
+      "search_holder": "Buscar por cliente",
+      "btn": "Generar Hotlink",
+      "share": "Compartir",
+      "client": "Cliente",
+      "btn2": "Importar desde Excel",
+      "btn3": "Ejemplo de carga desde Excel",
+      "empty_list": "Lista de Hotlinks vacía",
+      "loading": "Cargando..."
+    },
+    "gallery": {
+      "title": "Galería",
+      "more_designs": "Encontrar más diseños en",
+      "empty_designs": "Aún no tenés diseños",
+      "error": "La imagen no esta disponible"
+    },
+    "hotlinks": {
+      "title": "Generación Hotlink",
+      "select": "Diseño",
+      "form_title": "Campos",
+      "form_btn": "Generar Hotlink",
+      "title_checkbox": "Llenar variables con cliente",
+      "subtitle_checkbox": "Campos que se puedan completar con cliente",
+      "search_clients": "Buscar clientes",
+      "empty_clients": "No hay clientes",
+      "empty_designs": "Aún no tenés diseños",
+      "list": {
+        "title": "Hotlink List",
+        "search": "Buscar",
+        "title_one": "Diseño/Template",
+        "title_two": "Cliente",
+        "title_three": "Hotlink URL",
+        "title_four": "Compartir",
+        "empty": "Aún no tenés hotlinks"
+      }
     }
   }
 }

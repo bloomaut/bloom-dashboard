@@ -1,0 +1,39 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, auto);
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
+  align-items: center;
+  .column {
+    padding: 5px;
+    margin: 5px 0;
+    p {
+      @include fontSize-fontWeight(14px, 400);
+      color: $text;
+    }
+    .hotlink_url {
+      @include fontSize-fontWeight(14px, 400);
+      color: $text;
+    }
+    button {
+      border: none;
+      background-color: transparent;
+    }
+    &:last-child {
+      justify-self: end;
+      padding-right: 20px;
+      img {
+        filter: grayscale(1);
+        transform: scale(0.8, 0.8);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.container:hover,
+.container.hotlink_selected {
+  background-color: $blueishBackground;
+  cursor: pointer;
+}

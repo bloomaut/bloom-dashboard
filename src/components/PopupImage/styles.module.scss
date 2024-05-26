@@ -1,0 +1,88 @@
+@import "@/styles/theme.scss";
+
+.popup_container {
+  @include flex(row, center, center);
+  @include width-height(100vw, 100vh);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in-out forwards;
+  .container {
+    @include width-height(45%, auto);
+    @include flex(column, space-evenly, center);
+    @include fontSize-fontWeight(18px, 400);
+    text-align: center;
+    animation: scaleIn 0.3s ease-in-out forwards;
+    .image_container {
+      @include width-height(100%, 100%);
+      @include flex(row, center, center);
+      .image {
+        @include width-height(100%, 100%);
+        box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+      }
+    }
+    .btn_container {
+      @include width-height(100%, auto);
+      @include flex(row, flex-end, center);
+      position: relative;
+      .btn {
+        position: absolute;
+        top: -22px;
+        right: -55px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        .icon {
+          @include width-height(35%, auto);
+          object-fit: contain;
+        }
+      }
+    }
+  }
+  .container_lg {
+    @extend .container;
+    width: 400px;
+    max-height: 80%;
+  }
+}
+.closing {
+  animation: fadeOutPopup 0.3s ease-in-out forwards;
+}
+
+@media (width >= $queryXl) {
+  .popup_container {
+    .container {
+      width: auto;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutPopup {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

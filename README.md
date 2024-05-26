@@ -1,8 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SMALL
+
+Small, created by Notimation, combines all our marketing tools into one easy-to-use app. It simplifies campaign and service management, offering users a centralized platform for control and monitoring.
+
+**Nota:** This project is currently in development and may be subject to frequent changes. If you encounter any issues or have suggestions, please feel free to open an issue or submit a pull request.
 
 ## Getting Started
 
-First, run the development server:
+To build the project locally, follow these steps:
+
+1. Clone this repository to your local machine using Git
+
+```bash
+git clone https://github.com/notimation/small.git
+```
+
+2. Install project dependencies
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Start the development server
 
 ```bash
 npm run dev
@@ -10,27 +32,74 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project uses the following technologies and dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [Next.js](https://nextjs.org/) - v14.1.0
+- [Node.js](https://nodejs.org/) - v14.1.0
+- [@auth0/auth0-react](https://www.npmjs.com/package/@auth0/auth0-react) - v2.2.4
+- [@auth0/nextjs-auth0](https://www.npmjs.com/package/@auth0/nextjs-auth0) - v3.5.0
+- [@reduxjs/toolkit](https://redux-toolkit.js.org/) - v2.2.1
+- [@types/node](https://www.npmjs.com/package/@types/node) - v20.4.5
+- [@types/react](https://www.npmjs.com/package/@types/react) - v18.2.17
+- [@types/react-dom](https://www.npmjs.com/package/@types/react-dom) - v18.2.7
+- [axios](https://axios-http.com/) - v1.6.7
+- [ESLint](https://eslint.org/) - v8.57.0
+- [eslint-config-next](https://www.npmjs.com/package/eslint-config-next) - v14.1.0
+- [React](https://reactjs.org/) - v18.2.0
+- [react-dropzone](https://react-dropzone.js.org/) - v14.2.3
+- [react-error-boundary](https://www.npmjs.com/package/react-error-boundary) - v4.0.13
+- [react-loader-spinner](https://www.npmjs.com/package/react-loader-spinner) - v6.1.6
+- [react-redux](https://react-redux.js.org/) - v9.1.0
+- [react-toastify](https://www.npmjs.com/package/react-toastify) - v10.0.4
+- [Sass](https://sass-lang.com/) - v1.71.1
+- [TypeScript](https://www.typescriptlang.org/) - v5.1.6
+- [husky](https://typicode.github.io/husky/) - v9.0.11
+- [prettier](https://www.npmjs.com/package/prettier) - v3.2.5
 
-## Learn More
+## Internationalization (i18n) Configuration with Next.js
 
-To learn more about Next.js, take a look at the following resources:
+Internationalization (i18n) is a crucial process for adapting a web application to different languages and regions. In the context of a Next.js project, we can implement i18n using the next-intl library, which provides a set of utilities for efficiently managing translations and multilingual routes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Defining Translations in JSON Files
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+In the `dictionaries` folder, add within the JSON files for each language, the desired keys and values and define the corresponding translations for different parts of the application (for example, `es.json`, `en.json`, ` pt.json`).
 
-## Deploy on Vercel
+```bash
+"dict": {
+    "home": {
+      "banner": {
+        "welcome": "Te damos la bienvenida a Small",
+        "title": "Aprendé con Playground",
+      }
+    },
+    "playground": {
+      "breadcrumb_title": "Simulador",
+      "template_title": "Plantillas",
+      "popup": {
+        "title": "Compartir y probar en Whatsapp",
+        "copy_success": "URL copiada al porpapapeles",
+        "copy_error": "Error al copiar URL"
+      },
+    },
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Using Translations in Components
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Within the application components, import `useTranslations` from `next-intl` to access translations. Then, use the `useTranslations` function to obtain translations specific to the dictionary and display them in the components as needed.
+
+```bash
+import { useTranslations } from "next-intl";
+
+const Component = () => {
+  const dict = useTranslations("home.banner");
+
+  return <div>{dict("welcome")}</div>;
+}
+```
+
+By following these steps, we have configured international

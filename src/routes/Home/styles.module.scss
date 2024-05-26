@@ -1,0 +1,6 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include flex(column, flex-start, flex-start);
+  padding: 0px 40px;
+}

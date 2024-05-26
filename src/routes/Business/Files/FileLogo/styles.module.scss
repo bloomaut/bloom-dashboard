@@ -1,0 +1,46 @@
+@import "@/styles/theme.scss";
+
+.card_flex {
+  @include width-height(100%, auto);
+  max-height: 360px;
+  @include flex(row, space-between, center, 20px);
+  border-radius: 8px;
+  border: 1px solid $lightGrey;
+  padding: 10px;
+  .logo_container {
+    @include width-height(100%, auto);
+    @include flex(column, center, center, 20px);
+    .logo {
+      @include width-height(150px, 100px);
+      object-fit: contain;
+    }
+    .btn_container {
+      @include flex(row, center, center, 10px);
+      .btn {
+        @include flex(row, center, center, 20px);
+        background: none;
+        border: none;
+        cursor: pointer;
+        .controls_icons {
+          @include width-height(23px, auto);
+          object-fit: contain;
+          transition: all 100ms ease-in-out;
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+  }
+}
+.card_grid {
+  @include width-height(100%, auto);
+  max-height: 360px;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid $lightGrey;
+  padding: 10px 20px;
+}

@@ -15,7 +15,7 @@
 }
 
 .toastOk {
-  background-color: $blue;
+  background-color: $orange;
   color: white;
   font-size: 16px;
 }
@@ -23,4 +23,25 @@
 .toastBad {
   background-color: $error;
   color: white;
+  font-size: 16px;
+}
+
+.custom-zoom [data-rmiz-modal-overlay],
+.custom-zoom [data-rmiz-modal-img] {
+  transition-duration: 0.4s;
+  transition-timing-function: linear;
+}
+.custom-zoom [data-rmiz-modal-overlay="hidden"] {
+  background-color: rgb(56, 58, 89, 0);
+}
+.custom-zoom [data-rmiz-modal-overlay="visible"] {
+  background-color: rgba(47, 48, 56, 0.7);
+}
+.custom-zoom [data-rmiz-btn-unzoom] {
+  background-color: $orange;
+  color: #000;
+}
+.custom-zoom [data-rmiz-btn-unzoom]:focus-visible {
+  outline-offset: 0.4rem;
+  outline: 0.2rem solid #bd93f9;
 }

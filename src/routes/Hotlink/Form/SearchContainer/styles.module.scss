@@ -1,0 +1,29 @@
+@import "@/styles/theme";
+
+.search_container {
+  @include width-height(100%, auto);
+  .clients_container {
+    @include fontSize-fontWeight(14px, 400);
+    max-height: 200px;
+    overflow-y: auto;
+    .row {
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
+}
+
+.clients_container::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.clients_container::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
+}
+
+.row:hover,
+.row.selected {
+  background-color: $blueishBackground;
+}
