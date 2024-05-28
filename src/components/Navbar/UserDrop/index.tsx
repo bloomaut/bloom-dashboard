@@ -6,8 +6,8 @@ import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
-import userLogo from "@/../public/icons/UserLogo.png";
-import iconArrow from "@/../public/icons/IconArrowBottom.png";
+import userLogo from "@/../public/icons/UserLogo.svg";
+import iconArrow from "@/../public/icons/IconArrowBottom.svg";
 
 const UserDrop = () => {
   const [open, setOpen] = useState<boolean>(false);

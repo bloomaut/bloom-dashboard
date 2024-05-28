@@ -8,7 +8,7 @@ import { Oval } from "react-loader-spinner";
 
 //Icons
 import small from "@/../public/assets/logo_small.png";
-import logo_knowledge from "@/../public/icons/KnowledgeIcon.png";
+import logo_knowledge from "@/../public/icons/KnowledgeIcon.svg";
 
 //Components
 import LangDrop from "./LangDrop";

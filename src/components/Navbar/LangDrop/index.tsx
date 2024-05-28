@@ -6,7 +6,7 @@ import { usePathname, useRouter, locales } from "@/navigation";
 import { useLocale } from "next-intl";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 
-import langIcon from "@/../public/icons/LangIcon.png";
+import langIcon from "@/../public/icons/LangIcon.svg";
 
 const LangDrop = () => {
   const [open, setOpen] = useState<boolean>(false);
