@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
-import closeIcon from "/public/icons/close-white.png";
+import closeIcon from "/public/assets/close-white.png";
 import { useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 
