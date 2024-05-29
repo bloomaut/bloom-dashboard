@@ -9,9 +9,8 @@ const HomePage = () => {
       <Banner />
       <Icon
         name='clients'
-        width={40}
-        height={40}
-        viewBox='0 0 51 51'
+        width={25}
+        height={25}
         strokeColor='#381d2a'
         strokeWidth={1.8}
         fillColor='#fff'
