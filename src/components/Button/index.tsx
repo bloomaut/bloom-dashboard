@@ -1,10 +1,10 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
   onclick?: () => void;
   title: string;
-  icon?: string;
+  icon?: string | StaticImageData;
   styleName?: string;
   isDisabled?: boolean;
   type?: string;
@@ -17,7 +17,7 @@ const Button = ({ title, icon, styleName, onclick, isDisabled, type }: ButtonPro
       onClick={onclick}
       disabled={isDisabled}
     >
-      {icon && <Image src={icon} width={30} height={25} alt='icon' />}
+      {icon && <Image src={icon} width={28} height={25} alt='icon' />}
       {title}
     </button>
   );

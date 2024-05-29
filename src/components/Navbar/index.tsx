@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <nav className={styles.container}>
       <Link href='/'>
-        <Image src={small} alt='Small' className={styles.logo} width={103} height={47} priority />
+        <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
       </Link>
       <div className={styles.inner_container}>
         {/* Knowledge */}

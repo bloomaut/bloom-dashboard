@@ -1,0 +1,9 @@
+@import "@/styles/theme.scss";
+
+.mi_svg {
+  transition: all 200ms ease-in-out;
+  &:hover {
+    stroke: red;
+    fill: #208b00;
+  }
+}

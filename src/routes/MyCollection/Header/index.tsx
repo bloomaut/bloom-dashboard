@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import excel from "@/../public/icons/excel_logo.svg";
+import excel from "@/../public/assets/excel.png";
 import table from "@/../public/icons/excel.svg";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
