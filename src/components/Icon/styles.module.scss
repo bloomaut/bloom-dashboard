@@ -1,9 +1,30 @@
 @import "@/styles/theme.scss";
 
-.mi_svg {
-  transition: all 200ms ease-in-out;
-  &:hover {
-    stroke: red;
-    fill: #208b00;
+.hotlink {
+  path {
+    &:nth-of-type(2) {
+      fill: #381d2a;
+      stroke-width: 0.1px;
+    }
+    &:nth-of-type(1) {
+      fill: #381d2a;
+      stroke-width: 0.1px;
+    }
   }
+}
+
+.knowledge {
+  path {
+    &:nth-of-type(1) {
+      fill: #fff;
+      stroke-width: 0.1px;
+    }
+  }
+}
+
+.arrow {
+  transform: rotate(180deg);
+}
+.arrow_closed {
+  transform: rotate(0);
 }

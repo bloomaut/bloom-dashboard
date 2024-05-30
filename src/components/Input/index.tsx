@@ -1,6 +1,5 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import searchIcon from "../../../public/icons/search.svg";
+import Icon from "../Icon";
 
 interface Props {
   textLabel?: string;
@@ -43,7 +42,7 @@ const Input = ({
         />
       )}
       <div className={styles.search_container}>
-        {iconSearch && <Image src={searchIcon} alt='Search Icon' className={styles.search_icon} />}
+        {iconSearch && <Icon name='search' strokeWidth={0.1} fillColor='#381d2a' viewBox='0 0 25 20' />}
       </div>
     </div>
   );

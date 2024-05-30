@@ -8,9 +8,9 @@ import { Oval } from "react-loader-spinner";
 
 //Icons
 import small from "@/../public/assets/logo_small.png";
-import logo_knowledge from "@/../public/icons/KnowledgeIcon.svg";
 
 //Components
+import Icon from "../Icon";
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import { Dropdown } from "./Suite/dropdown";
@@ -29,7 +29,7 @@ const Navbar = () => {
         {/* Knowledge */}
         <Link href='https://noti-knowledge.vercel.app/es/' target='_blank'>
           <div className={styles.knowledge}>
-            <Image src={logo_knowledge} alt='Logo' className={styles.logo_knowledge} />
+            <Icon name='knowledge' className='knowledge' viewBox='0 0 31 24' />
             <p className={styles.text_knowledge}>Knowledge</p>
           </div>
         </Link>

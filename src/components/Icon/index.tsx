@@ -8,14 +8,14 @@ const Icon = ({ width, height, strokeColor, fillColor, strokeWidth, className, v
   return (
     <svg
       className={className ? styles[className] : ""}
-      width={width}
-      height={height}
+      width={width ?? 25}
+      height={height ?? 25}
       viewBox={viewBox ?? "0 0 30 30"}
-      fill={fillColor}
-      stroke={strokeColor}
+      fill={fillColor ?? "none"}
+      stroke={strokeColor ?? "#381d2a"}
       strokeLinecap='round'
       strokeLinejoin='round'
-      strokeWidth={strokeWidth ?? 1}
+      strokeWidth={strokeWidth ?? 2}
       fill-rule='evenodd'
       clip-rule='evenodd'
     >

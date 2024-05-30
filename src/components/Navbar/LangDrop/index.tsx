@@ -1,12 +1,10 @@
 "use client";
-import Image from "next/image";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import { usePathname, useRouter, locales } from "@/navigation";
 import { useLocale } from "next-intl";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
-
-import langIcon from "@/../public/icons/LangIcon.svg";
+import Icon from "@/components/Icon";
 
 const LangDrop = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -18,7 +16,7 @@ const LangDrop = () => {
   return (
     <div className={styles.container} ref={dropdownRef}>
       <button onClick={() => setOpen(!open)} className={styles.lang_button}>
-        <Image src={langIcon} alt='Lang Icon' className={styles.logo} width={20} height={20} priority />
+        <Icon name='language' strokeColor='#fff' viewBox='0 0 27 24' />
         <span>|</span>
         <h1> {locale}</h1>
       </button>

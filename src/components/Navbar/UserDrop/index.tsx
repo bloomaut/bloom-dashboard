@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
-
-import userLogo from "@/../public/icons/UserLogo.svg";
+import Icon from "@/components/Icon";
 import iconArrow from "@/../public/icons/IconArrowBottom.svg";
 
 const UserDrop = () => {
@@ -17,7 +16,7 @@ const UserDrop = () => {
 
   return (
     <div className={styles.container} ref={dropdownRef}>
-      <Image src={userLogo} alt='User Logo' priority width={25} height={25} className={styles.logo} />
+      <Icon name='user' strokeColor='#fff' strokeWidth={0.1} fillColor='#fff' viewBox='0 0 27 27' />
       <p className={styles.user_name} onClick={() => setOpen(!open)}>
         {user?.nickname}
         <Image
