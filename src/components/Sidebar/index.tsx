@@ -1,20 +1,9 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
 import Card from "./Card";
-import HomeIcon from "./Icons/Home";
-import DesignIcon from "./Icons/Design";
-import GuideIcon from "./Icons/Guide";
-import MyBusinessIcon from "./Icons/MyBusiness";
-import HotlinkIcon from "./Icons/Hotlink";
-import InboxIcon from "./Icons/Inbox";
-import CollectionsIcon from "./Icons/Collections";
-import ClientsIcon from "./Icons/Clients";
-import ArrowLeft from "../../../public/icons/double_arrow_left.svg";
-import ArrowRigth from "../../../public/icons/double_arrow_rigth.svg";
 import { Dispatch, SetStateAction } from "react";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { Fade } from "react-awesome-reveal";
+import Icon from "@/components/Icon";
 
 interface SidebarCard {
   title: string;
@@ -40,49 +29,49 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const sidebar: Array<SidebarCard> = [
     {
       title: `${dict("home")}`,
-      icon: <HomeIcon />,
+      icon: <Icon name='home' />,
       path: "/",
     },
     {
       title: `${dict("guide")}`,
-      icon: <GuideIcon />,
+      icon: <Icon name='guide' viewBox='0 0 50 50' />,
       path: "/guide",
     },
     {
       title: `${dict("my_business")}`,
-      icon: <MyBusinessIcon />,
+      icon: <Icon name='business' viewBox='0 0 32 32' />,
       path: "/my-business",
     },
     ...(user
       ? [
           {
             title: `${dict("gallery")}`,
-            icon: <DesignIcon />,
+            icon: <Icon name='design' viewBox='0 0 33 33' />,
             path: "/gallery",
           },
           {
             title: `${dict("hotlink")}`,
-            icon: <HotlinkIcon />,
+            icon: <Icon name='hotlink' className='hotlink_dark' viewBox='1 0 30 34' />,
             path: "/hotlink",
           },
           {
             title: `${dict("inbox")}`,
-            icon: <InboxIcon />,
+            icon: <Icon name='inbox' />,
             path: inboxPath,
           },
           {
             title: `${dict("catalog")}`,
-            icon: <CollectionsIcon />,
+            icon: <Icon name='catalog' width={25} height={30} viewBox='1 0 35 35' />,
             path: "/catalog",
           },
           {
             title: `${dict("collections")}`,
-            icon: <CollectionsIcon />,
+            icon: <Icon name='collection' />,
             path: "/collections",
           },
           {
             title: `${dict("clients")}`,
-            icon: <ClientsIcon />,
+            icon: <Icon name='clients' />,
             path: "/clients",
           },
         ]
@@ -92,17 +81,15 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   return (
     <div className={isOpen ? `${styles.container}` : `${styles.container} ${styles.container_closed}`}>
       <button className={styles.btn} onClick={handleMenu}>
-        <Image src={isOpen ? ArrowLeft : ArrowRigth} alt='arrow open' />
+        <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
 
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >
-        {/*  <Fade cascade damping={0.1}> */}
         {sidebar.map(card => (
           <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
         ))}
-        {/*     </Fade> */}
       </div>
     </div>
   );

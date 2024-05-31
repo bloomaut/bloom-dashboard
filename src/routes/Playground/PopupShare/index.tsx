@@ -1,11 +1,6 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
 import Link from "next/link";
-import hotlinkIcon from "/public/icons/hotlink_icon.svg";
-import sharedIcon from "/public/icons/share.svg";
-import whatsappIcon from "/public/icons/whatsapp.svg";
-import copyIcon from "/public/icons/copy.svg";
-import closeIcon from "/public/icons/close.svg";
+import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -48,22 +43,37 @@ const PopupShare = ({ setShowPopup }: PopupShareProps) => {
           <div className={styles.preview}></div>
           <div className={styles.content}>
             <button className={styles.btn_close} onClick={handleCancel}>
-              <Image src={closeIcon} className={styles.icon} alt='close-icon' />
+              <Icon name='close' width={30} height={30} />
             </button>
             <div className={styles.header}>
-              <Image src={hotlinkIcon} className={styles.icon} alt='Hotlink Icon' />
+              <Icon name='hotlink' width={75} height={75} className='hotlink_color' />
               <p className={styles.title}>Hotlink</p>
             </div>
             <div className={styles.link_container}>
               <Link className={styles.link} href={paUrl} target='_blank'>
                 {paUrl}
               </Link>
-              <Button onclick={handleCopyClick} title={dict("copy")} icon={copyIcon} styleName='btn_copy' />
+              <Button
+                onclick={handleCopyClick}
+                title={dict("copy")}
+                icon={
+                  <Icon name='copy' width={28} height={28} strokeColor='#7f7f7f' strokeWidth={4} viewBox='0 0 60 65' />
+                }
+                styleName='btn_copy'
+              />
             </div>
             <Link href={"/"} className={styles.shared_container} target='_blank'>
-              <Image src={sharedIcon} className={styles.icon} alt='Hotlink Icon' />
+              <Icon name='share' width={32} height={32} strokeColor='#7f7f7f' strokeWidth={4} viewBox='0 0 50 65' />
               <p className={styles.text}>{dict("btn")}</p>
-              <Image src={whatsappIcon} className={styles.icon} alt='Hotlink Icon' />
+              <Icon
+                name='whatsapp'
+                width={30}
+                height={30}
+                strokeWidth={1}
+                strokeColor='#25D366'
+                fillColor='#25D366'
+                viewBox='0 0 60 60'
+              />
             </Link>
           </div>
         </div>

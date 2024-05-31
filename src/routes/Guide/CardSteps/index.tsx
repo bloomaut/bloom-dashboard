@@ -1,8 +1,6 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
 import Link from "next/link";
-import green_check from "@/../public/icons/green_check.png";
-import gray_check from "@/../public/icons/gray_check.png";
+import Icon from "@/components/Icon";
 
 interface CardStepsProps {
   step_number: number;
@@ -23,11 +21,13 @@ const CardSteps = ({ step_number, title, subtitle, isActive, linkTo }: CardSteps
         </div>
       </div>
       <div className={styles.check_container}>
-        <Image
-          src={isActive ? green_check : gray_check}
-          alt={isActive ? "Green check" : "Gray check"}
-          width={39}
-          height={30}
+        <Icon
+          name='check'
+          width={45}
+          height={45}
+          viewBox='0 0 45 15'
+          strokeWidth={4}
+          strokeColor={isActive ? "#00BD35" : "#bebebe"}
         />
       </div>
     </Link>

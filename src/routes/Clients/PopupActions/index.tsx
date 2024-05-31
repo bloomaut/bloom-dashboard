@@ -1,8 +1,7 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
 import useFormValidator from "@/hooks/useFormValidator";
-import closeIcon from "../../../../public/icons/close.svg";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import Icon from "@/components/Icon";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
@@ -124,7 +123,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     <section className={styles.popup_container}>
       <div className={styles.container} ref={dropdownRef}>
         <button className={styles.close} onClick={onCancel}>
-          <Image src={closeIcon} alt='close' />
+          <Icon name='close' width={30} height={30} />
         </button>
         <p className={styles.title}>{title}</p>
         <form className={styles.form} onSubmit={handleSubmit}>

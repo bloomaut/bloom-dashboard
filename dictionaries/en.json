@@ -80,7 +80,7 @@
         "title": "Share and test on Whatsapp",
         "copy": "Copy",
         "btn": "Share on Whatsapp",
-        "copy_succes": "URL copied to clipboard",
+        "copy_success": "URL copied to clipboard",
         "copy_error": "Error copying URL"
       },
       "loading_dots": "Writing"

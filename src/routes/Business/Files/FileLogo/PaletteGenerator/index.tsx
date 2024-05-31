@@ -1,6 +1,5 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import pencilIcon from "/public/icons/edit.svg";
+import Icon from "@/components/Icon";
 import { useState } from "react";
 import { colorPalleteGenerator } from "@/utils/colorPalleteGenerator";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -87,7 +86,7 @@ const PaletteGenerator = () => {
                 ))}
               </div>
               <button className={styles.btn_edit} onClick={handleEdit}>
-                <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
+                <Icon name='edit' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />
               </button>
             </>
           ) : (

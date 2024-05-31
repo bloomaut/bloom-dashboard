@@ -19,18 +19,6 @@
       @include fontSize-fontWeight(14px, 400);
       color: $lightGrey;
     }
-
-    .search_icon {
-      width: 20px;
-      height: 20px;
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      background-image: url(../../../../public/icons/search.svg);
-      background-size: contain;
-      background-repeat: no-repeat;
-      transform: translateY(-50%);
-    }
     .period_container {
       @include flex(row, center, center, 15px);
       background-color: white;
