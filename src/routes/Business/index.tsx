@@ -6,7 +6,8 @@ import { get } from "@/services/fetch";
 import { useAppDispatch } from "@/store/hooks";
 import { setBusinessData } from "@/store/features/businessSlice";
 import { setFilesData } from "@/store/features/filesSlice";
-//Componentes
+import { Fade } from "react-awesome-reveal";
+// Components
 import LoadingSpinner from "@/components/Loading";
 import Breadcrumb from "@/components/Breadcrumb";
 import Files from "./Files";
@@ -48,9 +49,11 @@ const Business = () => {
         <LoadingSpinner />
       ) : (
         <div className={styles.inner_container}>
-          <Form />
-          <Files fetchData={fetchData} />
-          <Sequence />
+          <Fade triggerOnce>
+            <Form />
+            <Files fetchData={fetchData} />
+            <Sequence />
+          </Fade>
         </div>
       )}
     </section>

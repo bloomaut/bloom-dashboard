@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { setClientsData } from "@/store/features/clients";
+import { setClientsData } from "@/store/features/clientsSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 interface ClientsContextType {
@@ -45,24 +45,20 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   useEffect(() => {
-    const filteredData = clients.filter(
-      client =>
-        client.clientCode?.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.ClientFirstname.toLowerCase().includes(searchValue.toLowerCase()) ||
-        client.ClientEmail.toLowerCase().includes(searchValue.toLowerCase()),
-    );
-    setFilteredClients(filteredData);
-  }, [searchValue, clients, setClients]);
-
-  useEffect(() => {
     fetchClients();
   }, [dispatch]);
 
   useEffect(() => {
-    if (!clientSelected && filteredClients.length > 0) {
-      setClientSelected(filteredClients[0]);
+    if (clients) {
+      const filteredData = clients.filter(
+        client =>
+          client.clientCode?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          client.ClientFirstname.toLowerCase().includes(searchValue.toLowerCase()) ||
+          client.ClientEmail.toLowerCase().includes(searchValue.toLowerCase()),
+      );
+      setFilteredClients(filteredData);
     }
-  }, [clientSelected, filteredClients]);
+  }, [searchValue, clients, setClients]);
 
   return (
     <ClientsContext.Provider

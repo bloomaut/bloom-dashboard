@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { FlakesProvider } from "@/context/FlakesContext";
 import { useTranslations } from "next-intl";
 import { OpenGraphProvider } from "@/context/OpenGraphContext";
-//Componentes
+// Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Form from "./Form";
 import PhoneCase from "./PhoneCase";

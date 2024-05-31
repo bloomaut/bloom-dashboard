@@ -6,7 +6,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
 import { setFilesData } from "@/store/features/filesSlice";
-//Componentes
+// Components
 import DragAndAdrop from "../../../components/DragAndDrop";
 import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";

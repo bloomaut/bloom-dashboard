@@ -14,8 +14,9 @@
       "my_business": "Mi negocio",
       "gallery": "Galería",
       "hotlink": "Hotlink",
-      "inbox": "Bandeja de Entrada",
+      "inbox": "Inbox",
       "collections": "Colecciones",
+      "catalog": "Catálogo",
       "clients": "Clients"
     },
     "navbar": {
@@ -218,7 +219,9 @@
     },
     "gallery": {
       "title": "Galería",
-      "more_designs": "Encontrar más diseños en"
+      "more_designs": "Encontrar más diseños en",
+      "empty_designs": "Aún no tenés diseños",
+      "error": "La imagen no esta disponible"
     },
     "hotlinks": {
       "title": "Generación Hotlink",
@@ -236,7 +239,8 @@
         "title_one": "Diseño/Template",
         "title_two": "Cliente",
         "title_three": "Hotlink URL",
-        "title_four": "Compartir"
+        "title_four": "Compartir",
+        "empty": "Aún no tenés hotlinks"
       }
     }
   }

@@ -5,6 +5,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { remove } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
+import { Fade } from "react-awesome-reveal";
 // Components
 import Row from "../Row";
 import PopupActions from "../PopupActions";
@@ -43,18 +44,20 @@ const List = () => {
       {loading ? (
         <LoadingSpinner />
       ) : filteredClients.length ? (
-        filteredClients.map((client: ClientsProps) => (
-          <Row
-            key={client._id}
-            client={client}
-            onDelete={() => {
-              setShowPopupDelete(true), setClientId(client._id);
-            }}
-            onEdit={() => {
-              setShowPopupEdit(true), setClientId(client._id);
-            }}
-          />
-        ))
+        <Fade cascade damping={0.1} className={styles.fade} triggerOnce>
+          {filteredClients.map((client: ClientsProps) => (
+            <Row
+              key={client._id}
+              client={client}
+              onDelete={() => {
+                setShowPopupDelete(true), setClientId(client._id);
+              }}
+              onEdit={() => {
+                setShowPopupEdit(true), setClientId(client._id);
+              }}
+            />
+          ))}
+        </Fade>
       ) : (
         <p className={styles.empty}>{dict("clients.empty")}</p>
       )}

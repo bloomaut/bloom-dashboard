@@ -16,6 +16,7 @@
       "hotlink": "Hotlink",
       "inbox": "Inbox",
       "collections": "Collections",
+      "catalog": "Catalog",
       "clients": "Clients"
     },
     "navbar": {
@@ -80,7 +81,7 @@
         "title": "Share and test on Whatsapp",
         "copy": "Copy",
         "btn": "Share on Whatsapp",
-        "copy_succes": "URL copied to clipboard",
+        "copy_success": "URL copied to clipboard",
         "copy_error": "Error copying URL"
       },
       "loading_dots": "Writing"
@@ -218,7 +219,9 @@
     },
     "gallery": {
       "title": "Gallery",
-      "more_designs": "Find more designs at"
+      "more_designs": "Find more designs at",
+      "empty_designs": "You don't have designs yet",
+      "error": "No image available"
     },
     "hotlinks": {
       "title": "Hotlink Generation",
@@ -236,7 +239,8 @@
         "title_one": "Design/Template",
         "title_two": "Client",
         "title_three": "Hotlink URL",
-        "title_four": "Share"
+        "title_four": "Share",
+        "empty": "You don't have hotlinks yet"
       }
     }
   }

@@ -4,7 +4,7 @@ import caseImage from "@/../public/assets/playground_phonecase.png";
 import whatsappImage from "@/../public/assets/playground_wa.png";
 import { useState } from "react";
 import { useOpenGraphContext } from "@/context/OpenGraphContext";
-//Componentes
+// Components
 import LoadingDots from "./LoadingDots";
 import LoadingSpinner from "@/components/Loading";
 import OpenGraph from "./OpenGraph";
@@ -38,6 +38,7 @@ const PhoneCase = () => {
           )}
         </div>
       </div>
+
       <div className={styles.dot_container}>
         <span
           onClick={() => setShowPreview(true)}

@@ -1,6 +1,4 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import HotlinkIcon from "@/../../public/icons/hotlink_icon_white.svg";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
 import { Flake, Variablesinuse } from "@/typescript/interfaces/flakes.interface";
@@ -10,11 +8,13 @@ import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { post } from "@/services/fetch";
 
-//Componentes
+// Components
 import Input from "@/components/Input";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Checkbox from "./Checkbox";
+import { Fade } from "react-awesome-reveal";
+import Icon from "@/components/Icon";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -36,9 +36,8 @@ const Form = () => {
   const dict = useTranslations("dict");
   const { clientSelected } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
-  const { flakes, selectedFlakeId, loading } = useFlakesContext();
+  const { flakes, selectedFlakeId, loading, getList } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
-
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
@@ -90,15 +89,17 @@ const Form = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Si hay un campo vacio arrojar error y salir
     const anyEmpty = formInfo.some(info => info.value?.trim() === "");
     if (anyEmpty) {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
     }
+
     const response = await post("hotlinks/user", formDataPost);
     if (response.data.statusCode === 200) {
       setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
-      setFormDataPost(EmptyFormData);
+      getList();
       notify(`${dict("toast.success_hotlink")}`);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
@@ -128,31 +129,33 @@ const Form = () => {
       <SectionTitle text={dict("hotlinks.form_title")} />
       {loading ? (
         <Loading />
-      ) : (
-        <form className={styles.form_container} onSubmit={handleSubmit}>
-          <div className={styles.form}>
-            {formInfo &&
-              formInfo.map((info, index) => (
-                <Input
-                  key={info.key}
-                  type={info.target}
-                  textLabel={info.description}
-                  value={info.value!}
-                  handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                    handleChange(e, index)
-                  }
-                  textHolder={info.placeholder!}
-                  name={info.name}
-                />
-              ))}
-          </div>
-          <Checkbox />
-          <button type='submit' className={styles.btn}>
-            <Image src={HotlinkIcon} alt='' />
-            {dict("hotlinks.form_btn")}
-          </button>
-        </form>
-      )}
+      ) : flakes.length ? (
+        <Fade triggerOnce>
+          <form className={styles.form_container} onSubmit={handleSubmit}>
+            <div className={styles.form}>
+              {formInfo &&
+                formInfo.map((info, index) => (
+                  <Input
+                    key={info.key}
+                    type={info.target}
+                    textLabel={info.description}
+                    value={info.value!}
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                      handleChange(e, index)
+                    }
+                    textHolder={info.placeholder!}
+                    name={info.name}
+                  />
+                ))}
+            </div>
+            <Checkbox />
+            <button type='submit' className={styles.btn}>
+              <Icon name='hotlink' width={22} height={22} viewBox='0 0 30 34' className='hotlink_light' />
+              {dict("hotlinks.form_btn")}
+            </button>
+          </form>
+        </Fade>
+      ) : null}
     </div>
   );
 };

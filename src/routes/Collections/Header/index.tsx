@@ -4,26 +4,26 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useCollectionsContext } from "@/context/CollectionsContext";
-// Component
+// Components
 import Title from "@/components/Title";
 import Search from "@/components/Search";
-// Iconos
-import down from "@/../public/icons/IconDown.svg";
-import bar from "@/../public/icons/bar.svg";
-import period from "@/../public/icons/period.svg";
-import plus from "@/../public/icons/plus.svg";
+import Icon from "@/components/Icon";
 
 const Header = () => {
   const locale = useLocale();
   const dict = useTranslations("dict.collections.header");
-  const { collectionsList, setFilteredCollections } = useCollectionsContext();
+  const { collectionsList, setFilteredCollections, filteredCollections } = useCollectionsContext();
   const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
     if (searchValue) {
       collectionsList.map(collection => {
         if (collection.name.toLowerCase().includes(searchValue.toLowerCase())) {
-          setFilteredCollections(collection);
+          if (filteredCollections === null) {
+            setFilteredCollections([collection]);
+          } else {
+            setFilteredCollections([...filteredCollections, collection]);
+          }
         }
       });
     } else {
@@ -35,6 +35,7 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <Title text={dict("title")} />
+
       <div className={styles.inputs_container}>
         <div className={styles.search_container}>
           <Search
@@ -46,16 +47,16 @@ const Header = () => {
         <div className={styles.period_container}>
           <button className={styles.period}>
             {dict("period_btn")}
-            <Image src={down} alt='' />
+            <Icon name='arrow_down_chevron' strokeWidth={1.5} viewBox='0 0 18 8' />
           </button>
 
           <div className={styles.period}>
-            <Image src={bar} alt='' />
-            <Image src={period} alt='' />
+            <Icon name='bar' width={10} height={25} strokeWidth={2} strokeColor='#bebebe' viewBox='0 0 10 30' />
+            <Icon name='period' strokeWidth={2} viewBox='0 0 20 20' strokeColor='#ff5722' />
           </div>
         </div>
         <Link href={`/${locale}/collections/new-collection`} className={styles.new_btn}>
-          <Image src={plus} alt='' width={15} height={15} />
+          {<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
           {dict("new_btn")}
         </Link>
       </div>

@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-//Componentes
+// Components
 import Banner from "./Banner";
 
 const HomePage = () => {

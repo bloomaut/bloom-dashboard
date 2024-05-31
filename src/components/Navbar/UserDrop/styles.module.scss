@@ -11,25 +11,15 @@
     object-fit: contain;
   }
   .user_name {
+    @include flex(row, center, center, 5px);
     @include fontSize-fontWeight(16px, 400);
     color: $white;
-
-    .arrow {
-      transition: all 0.3s;
-      margin-left: 10px;
-    }
-    .arrow_open {
-      transform: rotate(180deg);
-    }
-    .arrow_closed {
-      transform: rotate(0deg);
-    }
   }
   .list_container {
     @include flex(column, center, center, 5px);
     position: absolute;
     cursor: pointer;
-    top: 35px;
+    top: 43px;
     transition: all 0.3s ease;
 
     li {

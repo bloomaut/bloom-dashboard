@@ -6,13 +6,13 @@ import { useFlakeData } from "@/hooks/useFlakesUser";
 import { useRouter } from "next/navigation";
 import { post } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { Fade } from "react-awesome-reveal";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Input from "@/components/Input";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Button from "@/components/Button";
-import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
-import PwaIcon from "../Hotlink/Select/Icon/Pwa";
+import Icon from "@/components/Icon";
 
 const InitialEmptyImages = {
   sm_img: "",
@@ -110,42 +110,60 @@ const NewCollectionPage = () => {
       <Breadcrumb title={dict("title")} />
       {!loading ? (
         <div className={styles.container}>
-          <div className={styles.template}>
-            <div className={images.sm_img ? styles.sm_img : `${styles.sm_img} ${styles.sm_not_img}`}>
-              {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={500} height={500} /> : <HogIcon />}
+          <Fade triggerOnce>
+            <div className={styles.template}>
+              <div className={images.sm_img ? styles.sm_img : `${styles.sm_img} ${styles.sm_not_img}`}>
+                {images.sm_img ? (
+                  <Image src={images.sm_img} alt={form.name} width={500} height={500} />
+                ) : (
+                  <Icon name='hog' width={40} height={40} fillColor='#7f7f7f' strokeColor='#7f7f7f' strokeWidth={1} />
+                )}
+              </div>
+              <div className={styles.lg_img}>
+                {images.lg_img ? (
+                  <Image src={images.lg_img} alt={form.name} width={800} height={800} />
+                ) : (
+                  <Icon
+                    name='pwa'
+                    width={80}
+                    height={80}
+                    fillColor='#7f7f7f'
+                    strokeColor='#7f7f7f'
+                    strokeWidth={0.1}
+                    viewBox='0 0 109 127'
+                  />
+                )}
+              </div>
             </div>
-            <div className={styles.lg_img}>
-              {images.lg_img ? <Image src={images.lg_img} alt={form.name} width={800} height={800} /> : <PwaIcon />}
-            </div>
-          </div>
 
-          <form className={styles.form} onSubmit={sendFlakeForm}>
-            <Input
-              type='text'
-              textLabel={dict("input")}
-              textHolder={dict("input")}
-              name='name'
-              value={form.name}
-              handleChange={handleChange}
-            />
-            <p className={errors.name ? styles.error : styles.error_hidden}>{errors.name}</p>
-            <div className={styles.select}>
-              <label>{dict("select")}</label>
-              <select name='description' value={form.description} onChange={handleChange}>
-                {flakes.map(flake => (
-                  <option key={flake._id} value={flake.skinx.title}>
-                    {flake.skinx.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={styles.buttons}>
-              <button className={styles.cancel} onClick={handleBack}>
-                {dict("cancel")}
-              </button>
-              <Button title={dict("generate_btn")} type='submit' />
-            </div>
-          </form>
+            <form className={styles.form} onSubmit={sendFlakeForm}>
+              <Input
+                type='text'
+                textLabel={dict("input")}
+                textHolder={dict("input")}
+                name='name'
+                value={form.name}
+                handleChange={handleChange}
+              />
+              <p className={errors.name ? styles.error : styles.error_hidden}>{errors.name}</p>
+              <div className={styles.select}>
+                <label>{dict("select")}</label>
+                <select name='description' value={form.description} onChange={handleChange}>
+                  {flakes.map(flake => (
+                    <option key={flake._id} value={flake.skinx.title}>
+                      {flake.skinx.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={styles.buttons}>
+                <button className={styles.cancel} onClick={handleBack}>
+                  {dict("cancel")}
+                </button>
+                <Button title={dict("generate_btn")} type='submit' />
+              </div>
+            </form>
+          </Fade>
         </div>
       ) : (
         <div className={styles.loader}>

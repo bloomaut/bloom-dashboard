@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useAppSelector } from "@/store/hooks";
-//Componentes
+// Components
 import Button from "@/components/Button";
 import Subtitle from "../Subtitle";
 import Card from "./Card";

@@ -1,7 +1,4 @@
 import styles from "./styles.module.scss";
-import copyIcon from "/public/icons/copy.svg";
-import wpIcon from "/public/icons/whatsapp.svg";
-import Image from "next/image";
 import Link from "next/link";
 import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -32,11 +29,9 @@ const TableRow = ({ hotlink }: { hotlink: HotlinkList }) => {
       </Link>
       <div className={styles.share_container}>
         <button className={styles.btn} onClick={handleCopyClick}>
-          <Image src={copyIcon} width={30} height={30} alt='icon' />
+          {/* <Image src={copyIcon} width={30} height={30} alt='icon' /> */}
         </button>
-        <button className={styles.btn}>
-          <Image src={wpIcon} width={30} height={30} alt='icon' />
-        </button>
+        <button className={styles.btn}>{/* <Image src={wpIcon} width={30} height={30} alt='icon' /> */}</button>
       </div>
     </div>
   );

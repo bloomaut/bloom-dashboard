@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { update } from "@/services/fetch";
 import { setBusinessData } from "@/store/features/businessSlice";
-//Componentes
+// Components
 import Input from "@/components/Input";
 import Subtitle from "../Subtitle";
 

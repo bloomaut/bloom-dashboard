@@ -20,12 +20,34 @@
   padding: 10px;
   border: 1px solid $orange;
   &:hover {
-    color: white;
+    color: #fff;
+    svg {
+      path {
+        stroke: #fff;
+        &:nth-of-type(2) {
+          fill: #fff;
+        }
+        &:nth-of-type(1) {
+          fill: #fff;
+        }
+      }
+    }
     img {
       filter: brightness(10);
     }
   }
   &:disabled {
+    svg {
+      path {
+        stroke: $lighterGrey;
+        &:nth-of-type(2) {
+          fill: $lighterGrey;
+        }
+        &:nth-of-type(1) {
+          fill: $lighterGrey;
+        }
+      }
+    }
     &:hover {
       color: $lighterGrey;
       img {
@@ -62,9 +84,11 @@
 }
 
 .btn_excel {
+  @extend .btn_copy;
+  color: #fff;
   background-color: #386d4799;
   &:hover {
-    background-color: #224d2e99;
+    background: #224d2e99;
   }
 }
 

@@ -40,13 +40,24 @@
         &:hover {
           background: $orange;
           color: $white;
+          transition: all 200ms ease-in;
+          svg {
+            path {
+              fill: #fff;
+              stroke: #fff;
+            }
+          }
         }
         &:disabled {
           border: none;
-          &:hover {
-            background: inherit;
-            color: lightGrey;
-            cursor: not-allowed;
+          background: inherit;
+          color: lightGrey;
+          cursor: not-allowed;
+          svg {
+            path {
+              fill: $lighterGrey;
+              stroke: $lighterGrey;
+            }
           }
         }
       }

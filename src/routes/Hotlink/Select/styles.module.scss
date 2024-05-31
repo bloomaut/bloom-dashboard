@@ -52,22 +52,20 @@
             object-fit: cover;
             object-position: top;
           }
-          svg {
-            @include width-height(40px, 40px);
-            object-fit: contain;
-            path {
-              stroke: $lighterGrey;
-            }
-            path {
-              fill: $lighterGrey;
-            }
-          }
         }
         .sm_card {
           @include width-height(160px, 110px);
+          .image {
+            @include width-height(100%, 100%);
+            object-fit: cover;
+          }
         }
         .lg_card {
           @include width-height(160px, 100%);
+          .image {
+            @include width-height(100%, 100%);
+            object-fit: cover;
+          }
         }
         &:hover {
           border: 0.298px solid $lightGrey;
@@ -80,10 +78,6 @@
         }
       }
     }
-  }
-  .loader {
-    @include width-height(100%, 60vh);
-    @include flex(row, center, center);
   }
 }
 

@@ -1,13 +1,11 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
 import Link from "next/link";
-import copyIcon from "/public/icons/copy.svg";
-import wpIcon from "/public/icons/whatsapp.svg";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 import { useState } from "react";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
+import Icon from "@/components/Icon";
 
 interface TableRowProps {
   hotlink: HotlinkList;
@@ -40,7 +38,7 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   return (
     <div className={`${styles.container} ${id === hotlink.id && styles.hotlink_selected}`} onClick={handleClick}>
       <div className={styles.column}>
-        <p>{hotlink.power_app.flake.title}</p>
+        <p>{hotlink.power_app?.flake?.title}</p>
       </div>
       <div className={styles.column}>
         {hotlink.customer ? (
@@ -58,9 +56,17 @@ const TableRow = ({ hotlink }: TableRowProps) => {
       </div>
       <div className={styles.column}>
         <button onClick={handleCopyClick}>
-          <Image src={copyIcon} width={30} height={30} alt='icon' />
+          <Icon name='copy' width={28} height={28} strokeColor='#7f7f7f' strokeWidth={4} viewBox='0 0 60 65' />
         </button>
-        <Image src={wpIcon} width={30} height={30} alt='icon' />
+        <Icon
+          name='whatsapp'
+          width={28}
+          height={28}
+          strokeWidth={1}
+          strokeColor='#7f7f7f'
+          fillColor='#7f7f7f'
+          viewBox='0 0 60 65'
+        />
       </div>
     </div>
   );

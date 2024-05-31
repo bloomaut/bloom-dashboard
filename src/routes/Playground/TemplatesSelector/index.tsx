@@ -3,10 +3,11 @@ import Image from "next/image";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
-//Componentes
+// Components
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import HogIcon from "./Icons/Hog";
+import { Fade } from "react-awesome-reveal";
+import Icon from "@/components/Icon";
 
 const TemplatesSelector = () => {
   const dict = useTranslations("dict.playground");
@@ -18,29 +19,36 @@ const TemplatesSelector = () => {
       <div className={styles.flakes}>
         {!loading ? (
           flakes?.map((app: Powerapp) => (
-            <div className={styles.template_container} key={app._id}>
-              <h4 className={styles.title}>{app.skinx.title}</h4>
-              <div
-                className={`${styles.template} ${selectedFlakeId === app._id ? styles.selected_template : ""}`}
-                onClick={() => setSelectedFlakeId(app._id)}
-              >
-                <div className={styles.sm_card}>
-                  {app.hog_related.thumbnail ? (
-                    <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
-                  ) : (
-                    <HogIcon />
-                  )}
-                </div>
-                <div className={styles.lg_card}>
-                  {app.thumbnail && <Image src={app.thumbnail} alt={app.skinx.title} width={137} height={100} />}
+            <Fade triggerOnce key={app._id}>
+              <div className={styles.template_container}>
+                <h4 className={styles.title}>{app.skinx.title}</h4>
+                <div
+                  className={`${styles.template} ${selectedFlakeId === app._id ? styles.selected_template : ""}`}
+                  onClick={() => setSelectedFlakeId(app._id)}
+                >
+                  <div className={styles.sm_card}>
+                    {app.hog_related.thumbnail ? (
+                      <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
+                    ) : (
+                      <Icon
+                        name='hog'
+                        width={40}
+                        height={40}
+                        fillColor='#7f7f7f'
+                        strokeColor='#7f7f7f'
+                        strokeWidth={0.5}
+                      />
+                    )}
+                  </div>
+                  <div className={styles.lg_card}>
+                    {app.thumbnail && <Image src={app.thumbnail} alt={app.skinx.title} width={137} height={100} />}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Fade>
           ))
         ) : (
-          <div className={styles.loader}>
-            <Loading />
-          </div>
+          <Loading />
         )}
       </div>
     </section>

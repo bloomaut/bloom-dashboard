@@ -26,8 +26,11 @@ const SearchContainer = () => {
             <div
               className={`${styles.row} ${clientSelected && clientSelected._id === client._id ? styles.selected : ""}`}
               key={client._id}
+              onClick={() => {
+                setClientSelected(client);
+              }}
             >
-              <div onClick={() => setClientSelected(client)}>
+              <div>
                 <p>
                   {client.ClientFirstname} {client.ClientLastname}
                 </p>

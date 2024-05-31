@@ -1,12 +1,11 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import trashIcon from "/public/icons/trash.svg";
-import pencilIcon from "/public/icons/edit.svg";
 import PaletteGenerator from "./PaletteGenerator";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "@/store/hooks";
 // Components
 import Button from "@/components/Button";
+import Icon from "@/components/Icon";
 
 interface FileLogoProps {
   file?: File | null;
@@ -37,14 +36,16 @@ const FileLogo = ({ file, onEdit, onUpdate, onDelete }: FileLogoProps) => {
           <div className={styles.btn_container}>
             {companyLogo && !file ? (
               <button className={styles.btn} onClick={onEdit}>
-                <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
+                <Icon name='edit' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />
               </button>
             ) : (
               file && (
-                <button className={styles.btn} onClick={onDelete}>
-                  <Image className={styles.controls_icons} src={trashIcon} alt='trash-icon' />
+                <>
+                  <button className={styles.btn} onClick={onDelete}>
+                    <Icon name='delete' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 23' />
+                  </button>
                   <Button title='Subir' onclick={() => onUpdate(file)} />
-                </button>
+                </>
               )
             )}
           </div>

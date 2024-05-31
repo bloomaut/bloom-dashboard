@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { useHotlinkListContext } from "@/context/HotlinksListContext";
 import { useTranslations } from "next-intl";
+import { Fade } from "react-awesome-reveal";
 // Components
 import TableRow from "../TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
@@ -28,7 +29,11 @@ const Table = () => {
         ) : hotlinkList.length < 1 ? (
           <p className={styles.empty_list}>{dict("empty_list")}</p>
         ) : (
-          hotlinkList.map((hotlink, index) => <TableRow key={index} hotlink={hotlink} />)
+          <Fade cascade damping={0.1} triggerOnce>
+            {hotlinkList.map((hotlink, index) => (
+              <TableRow key={index} hotlink={hotlink} />
+            ))}
+          </Fade>
         )}
       </div>
     </div>
