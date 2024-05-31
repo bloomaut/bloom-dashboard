@@ -6,8 +6,8 @@ import { useTranslations } from "next-intl";
 // Components
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import HogIcon from "./Icons/Hog";
 import { Fade } from "react-awesome-reveal";
+import Icon from "@/components/Icon";
 
 const TemplatesSelector = () => {
   const dict = useTranslations("dict.playground");
@@ -30,7 +30,14 @@ const TemplatesSelector = () => {
                     {app.hog_related.thumbnail ? (
                       <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
                     ) : (
-                      <HogIcon />
+                      <Icon
+                        name='hog'
+                        width={45}
+                        height={45}
+                        fillColor='#7f7f7f'
+                        strokeColor='#7f7f7f'
+                        strokeWidth={1}
+                      />
                     )}
                   </div>
                   <div className={styles.lg_card}>

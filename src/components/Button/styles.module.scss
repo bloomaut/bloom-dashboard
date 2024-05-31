@@ -20,7 +20,10 @@
   padding: 10px;
   border: 1px solid $orange;
   &:hover {
-    color: white;
+    color: #fff;
+    svg {
+      stroke: #fff;
+    }
     img {
       filter: brightness(10);
     }

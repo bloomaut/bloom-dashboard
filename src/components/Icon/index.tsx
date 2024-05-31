@@ -7,7 +7,7 @@ const Icon = ({ width, height, strokeColor, fillColor, strokeWidth, className, v
 
   return (
     <svg
-      className={className ? styles[className] : ""}
+      className={className ? `${styles[name]} ${styles[className]}` : `${styles[name]}`}
       width={width ?? 25}
       height={height ?? 25}
       viewBox={viewBox ?? "0 0 30 30"}
@@ -16,8 +16,8 @@ const Icon = ({ width, height, strokeColor, fillColor, strokeWidth, className, v
       strokeLinecap='round'
       strokeLinejoin='round'
       strokeWidth={strokeWidth ?? 2}
-      fill-rule='evenodd'
-      clip-rule='evenodd'
+      fillRule='evenodd'
+      clipRule='evenodd'
     >
       {paths.map((d, index) => (
         <path key={index} d={d} />

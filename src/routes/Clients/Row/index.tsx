@@ -1,9 +1,7 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import iconEdit from "../../../../public/icons/edit.svg";
-import iconDelete from "../../../../public/icons/delete.svg";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { useClientsContext } from "@/context/ClientsContext";
+import Icon from "@/components/Icon";
 
 interface RowProps {
   client: ClientsProps;
@@ -25,10 +23,10 @@ const Row = ({ client, onDelete, onEdit }: RowProps) => {
       </div>
       <div className={styles.controls}>
         <button className={styles.btn} onClick={onEdit}>
-          <Image src={iconEdit} className={styles.icon} alt='Icon Edit' />
+          <Icon name='edit' viewBox='0 0 25 20' />
         </button>
         <button className={styles.btn} onClick={onDelete}>
-          <Image src={iconDelete} className={styles.icon} alt='Icon Delete' />
+          <Icon name='trash' viewBox='0 0 25 25' />
         </button>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 import styles from "./styles.module.scss";
-import addIcon from "../../../public/icons/add.svg";
+import Icon from "@/components/Icon";
 import { ClientsProvider } from "@/context/ClientsContext";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -28,7 +28,7 @@ const ClientsPage = () => {
               title={dict("button")}
               styleName='btn_outline'
               onclick={() => setShowPopupCreate(true)}
-              icon={addIcon}
+              icon={<Icon name='plus' viewBox='0 0 25 20' strokeColor='#7f7f7f' />}
             />
           </div>
           {showPopupCreate && (

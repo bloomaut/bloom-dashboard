@@ -1,6 +1,6 @@
 @import "@/styles/theme.scss";
 
-.hotlink {
+.hotlink_dark {
   path {
     &:nth-of-type(2) {
       fill: #381d2a;
@@ -8,6 +8,20 @@
     }
     &:nth-of-type(1) {
       fill: #381d2a;
+      stroke-width: 0.1px;
+    }
+  }
+}
+
+.hotlink_white {
+  path {
+    stroke: #fff;
+    &:nth-of-type(2) {
+      fill: #fff;
+      stroke-width: 0.1px;
+    }
+    &:nth-of-type(1) {
+      fill: #fff;
       stroke-width: 0.1px;
     }
   }
@@ -22,9 +36,63 @@
   }
 }
 
-.arrow {
-  transform: rotate(180deg);
+.excel {
+  @include width-height(35px, 35px);
+  path {
+    stroke-width: 0.1px;
+    stroke: #000;
+    fill: #fff;
+    &:nth-of-type(1) {
+      fill: #20744a;
+    }
+    &:nth-of-type(2) {
+      fill: #20744a;
+    }
+  }
 }
-.arrow_closed {
-  transform: rotate(0);
+
+.pdf {
+  @include width-height(45px, 45px);
+  stroke-width: 0.1px;
+  fill: red;
+  stroke: red;
+}
+
+.doc {
+  @extend .pdf;
+  fill: #29b2ff;
+  stroke: #29b2ff;
+}
+
+.image {
+  @extend .pdf;
+  fill: #ff5722;
+  stroke: #ff5722;
+}
+
+.file {
+  @extend .pdf;
+  fill: $opacityGrey;
+  stroke: $opacityGrey;
+}
+
+.folder {
+  stroke-width: 1.5px;
+  stroke: $lightGrey;
+}
+
+.edit,
+.trash {
+  stroke: $lightGrey;
+}
+
+.copy {
+  stroke-width: 4px;
+  stroke: $lightGrey;
+}
+
+.whatsapp {
+  stroke-width: 1px;
+  stroke: $lightGrey;
+  fill: $lightGrey;
 }

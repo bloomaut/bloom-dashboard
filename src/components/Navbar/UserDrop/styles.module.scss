@@ -11,6 +11,7 @@
     object-fit: contain;
   }
   .user_name {
+    @include flex(row, center, center, 5px);
     @include fontSize-fontWeight(16px, 400);
     color: $white;
   }

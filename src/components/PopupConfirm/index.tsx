@@ -1,13 +1,10 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import iconDelete from "../../../public/icons/delete.svg";
-import hotlink from "@/../public/icons/hotlink_icon_grey.svg";
-import closeIcon from "/public/icons/close.svg";
 import { Dispatch, SetStateAction } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { usePathname } from "next/navigation";
 // Components
 import DragAndDrop from "@/components/DragAndDrop";
+import Icon from "../Icon";
 
 interface PopupConfirmProps {
   onConfirm?: () => void;
@@ -47,7 +44,7 @@ const PopupConfirm = ({
         {dragAndDrop && setFile && (
           <>
             <button onClick={onCancel} className={styles.btn_close_icon}>
-              <Image src={closeIcon} className={styles.close_icon} alt='close-icon' />
+              <Icon name='close' width={30} height={30} />
             </button>
             <DragAndDrop file={file} setFile={setFile} />
             {pathname.includes("my-collection") && (
@@ -58,7 +55,14 @@ const PopupConfirm = ({
                   </button>
                 )}
                 <button className={styles.yes} disabled={file === null} onClick={onConfirm}>
-                  <Image src={hotlink} alt='hotlink-icon' />
+                  <Icon
+                    name='hotlink'
+                    strokeWidth={1}
+                    className='hotlink_dark'
+                    width={25}
+                    height={30}
+                    viewBox='0 0 30 34'
+                  />
                   Generar Hotlink
                 </button>
               </div>
@@ -68,7 +72,7 @@ const PopupConfirm = ({
         {textCancel && textAccept && (
           <div className={styles.button_container}>
             <button className={styles.no} onClick={onConfirm}>
-              {!dragAndDrop && <Image src={iconDelete} alt='delete' className={styles.icon} />}
+              {!dragAndDrop && <Icon name='trash' />}
               {textAccept}
             </button>
             <button className={styles.yes} onClick={onCancel}>

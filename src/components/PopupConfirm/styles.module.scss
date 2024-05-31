@@ -40,6 +40,13 @@
         &:hover {
           background: $orange;
           color: $white;
+          transition: all 200ms ease-in;
+          svg {
+            path {
+              fill: #fff;
+              stroke: #fff;
+            }
+          }
         }
         &:disabled {
           border: none;

@@ -1,6 +1,4 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import HotlinkIcon from "@/../../public/icons/hotlink_icon_white.svg";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
 import { Flake, Variablesinuse } from "@/typescript/interfaces/flakes.interface";
@@ -16,6 +14,7 @@ import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Checkbox from "./Checkbox";
 import { Fade } from "react-awesome-reveal";
+import Icon from "@/components/Icon";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -151,7 +150,7 @@ const Form = () => {
             </div>
             <Checkbox />
             <button type='submit' className={styles.btn}>
-              <Image src={HotlinkIcon} alt='' />
+              <Icon name='hotlink' width={22} height={22} viewBox='0 0 30 34' className='hotlink_white' />
               {dict("hotlinks.form_btn")}
             </button>
           </form>

@@ -52,7 +52,14 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           {
             title: `${dict("hotlink")}`,
             icon: (
-              <Icon name='hotlink' strokeWidth={1} className='hotlink' width={25} height={30} viewBox='0 0 30 34' />
+              <Icon
+                name='hotlink'
+                strokeWidth={1}
+                className='hotlink_dark'
+                width={25}
+                height={30}
+                viewBox='0 0 30 34'
+              />
             ),
             path: "/hotlink",
           },

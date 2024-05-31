@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 interface ButtonProps {
   onclick?: () => void;
   title: string;
-  icon?: string | StaticImageData;
+  icon?: JSX.Element;
   styleName?: string;
   isDisabled?: boolean;
   type?: string;
@@ -17,7 +17,7 @@ const Button = ({ title, icon, styleName, onclick, isDisabled, type }: ButtonPro
       onClick={onclick}
       disabled={isDisabled}
     >
-      {icon && <Image src={icon} width={28} height={25} alt='icon' />}
+      {icon}
       {title}
     </button>
   );

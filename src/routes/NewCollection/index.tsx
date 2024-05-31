@@ -12,8 +12,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Input from "@/components/Input";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Button from "@/components/Button";
-import HogIcon from "../Playground/TemplatesSelector/Icons/Hog";
-import PwaIcon from "../Hotlink/Select/Icon/Pwa";
+import Icon from "@/components/Icon";
 
 const InitialEmptyImages = {
   sm_img: "",
@@ -114,10 +113,26 @@ const NewCollectionPage = () => {
           <Fade triggerOnce>
             <div className={styles.template}>
               <div className={images.sm_img ? styles.sm_img : `${styles.sm_img} ${styles.sm_not_img}`}>
-                {images.sm_img ? <Image src={images.sm_img} alt={form.name} width={500} height={500} /> : <HogIcon />}
+                {images.sm_img ? (
+                  <Image src={images.sm_img} alt={form.name} width={500} height={500} />
+                ) : (
+                  <Icon name='hog' width={40} height={40} fillColor='#7f7f7f' strokeColor='#7f7f7f' strokeWidth={1} />
+                )}
               </div>
               <div className={styles.lg_img}>
-                {images.lg_img ? <Image src={images.lg_img} alt={form.name} width={800} height={800} /> : <PwaIcon />}
+                {images.lg_img ? (
+                  <Image src={images.lg_img} alt={form.name} width={800} height={800} />
+                ) : (
+                  <Icon
+                    name='pwa'
+                    width={80}
+                    height={80}
+                    fillColor='#7f7f7f'
+                    strokeColor='#7f7f7f'
+                    strokeWidth={1}
+                    viewBox='0 0 109 127'
+                  />
+                )}
               </div>
             </div>
 
