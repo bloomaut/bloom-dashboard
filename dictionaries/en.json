@@ -219,6 +219,7 @@
       "select": "Design",
       "form_title": "Fields",
       "form_btn": "Generate Hotlink",
+      "diffusion_link": "Get difussion link",
       "title_checkbox": "Fill variables with client",
       "subtitle_checkbox": "Fields that can be completed with client",
       "search_clients": "Search clients",

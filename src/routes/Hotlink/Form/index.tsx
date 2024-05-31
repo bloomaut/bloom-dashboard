@@ -174,7 +174,7 @@ const Form = () => {
                 type='submit'
               />
               <Button
-                title={"Get Diffusion link"}
+                title={dict("hotlinks.diffusion_link")}
                 styleName='btn_outline'
                 icon={<Icon name='hotlink' width={22} height={22} viewBox='0 0 30 34' className='hotlink_grey' />}
                 loading={loadingButton}
