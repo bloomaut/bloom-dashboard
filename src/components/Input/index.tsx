@@ -42,7 +42,9 @@ const Input = ({
         />
       )}
       <div className={styles.search_container}>
-        {iconSearch && <Icon name='search' strokeWidth={0.1} fillColor='#381d2a' viewBox='0 0 25 20' />}
+        {iconSearch && (
+          <Icon name='search' width={23} height={23} strokeWidth={0.1} fillColor='#7f7f7f' viewBox='0 0 25 25' />
+        )}
       </div>
     </div>
   );

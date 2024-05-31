@@ -40,7 +40,7 @@ const FileCard = ({ title, docType, created_at, onDelete, url }: FileCardProps) 
           </Link>
         )}
         <button className={styles.btn} onClick={onDelete}>
-          <Icon name='trash' viewBox='0 0 25 25' />
+          <Icon name='trash' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 23' />
         </button>
       </div>
     </div>

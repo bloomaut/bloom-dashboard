@@ -58,7 +58,7 @@ const PopupConfirm = ({
                   <Icon
                     name='hotlink'
                     strokeWidth={1}
-                    className='hotlink_dark'
+                    className={file ? "hotlink_dark" : "hotlink_grey"}
                     width={25}
                     height={30}
                     viewBox='0 0 30 34'
@@ -72,7 +72,7 @@ const PopupConfirm = ({
         {textCancel && textAccept && (
           <div className={styles.button_container}>
             <button className={styles.no} onClick={onConfirm}>
-              {!dragAndDrop && <Icon name='trash' />}
+              {!dragAndDrop && <Icon name='trash' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 23' />}
               {textAccept}
             </button>
             <button className={styles.yes} onClick={onCancel}>

@@ -53,7 +53,7 @@ const GalleryComponent = () => {
                           height={40}
                           fillColor='#7f7f7f'
                           strokeColor='#7f7f7f'
-                          strokeWidth={1}
+                          strokeWidth={0.5}
                         />
                       )}
                     </div>
@@ -76,7 +76,7 @@ const GalleryComponent = () => {
                           height={80}
                           fillColor='#7f7f7f'
                           strokeColor='#7f7f7f'
-                          strokeWidth={1}
+                          strokeWidth={0.1}
                           viewBox='0 0 109 127'
                         />
                       )}

@@ -14,7 +14,15 @@ const UserDrop = () => {
 
   return (
     <div className={styles.container} ref={dropdownRef}>
-      <Icon name='user' strokeColor='#fff' strokeWidth={0.1} fillColor='#fff' viewBox='0 0 27 27' />
+      <Icon
+        name='user'
+        strokeColor='#fff'
+        width={25}
+        height={25}
+        strokeWidth={0.1}
+        fillColor='#fff'
+        viewBox='0 0 27 25'
+      />
       <p className={styles.user_name} onClick={() => setOpen(!open)}>
         {user?.nickname}
         <Icon name={open ? "arrow_up" : "arrow_down"} fillColor='#fff' strokeColor='#fff' viewBox='0 0 25 23' />

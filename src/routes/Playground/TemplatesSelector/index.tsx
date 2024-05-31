@@ -19,8 +19,8 @@ const TemplatesSelector = () => {
       <div className={styles.flakes}>
         {!loading ? (
           flakes?.map((app: Powerapp) => (
-            <Fade triggerOnce>
-              <div className={styles.template_container} key={app._id}>
+            <Fade triggerOnce key={app._id}>
+              <div className={styles.template_container}>
                 <h4 className={styles.title}>{app.skinx.title}</h4>
                 <div
                   className={`${styles.template} ${selectedFlakeId === app._id ? styles.selected_template : ""}`}
@@ -32,11 +32,11 @@ const TemplatesSelector = () => {
                     ) : (
                       <Icon
                         name='hog'
-                        width={45}
-                        height={45}
+                        width={40}
+                        height={40}
                         fillColor='#7f7f7f'
                         strokeColor='#7f7f7f'
-                        strokeWidth={1}
+                        strokeWidth={0.5}
                       />
                     )}
                   </div>

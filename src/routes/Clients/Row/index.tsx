@@ -23,10 +23,10 @@ const Row = ({ client, onDelete, onEdit }: RowProps) => {
       </div>
       <div className={styles.controls}>
         <button className={styles.btn} onClick={onEdit}>
-          <Icon name='edit' viewBox='0 0 25 20' />
+          <Icon name='edit' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />
         </button>
         <button className={styles.btn} onClick={onDelete}>
-          <Icon name='trash' viewBox='0 0 25 25' />
+          <Icon name='trash' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 23' />
         </button>
       </div>
     </div>

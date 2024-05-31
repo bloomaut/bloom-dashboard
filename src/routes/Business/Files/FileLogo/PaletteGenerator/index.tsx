@@ -86,7 +86,7 @@ const PaletteGenerator = () => {
                 ))}
               </div>
               <button className={styles.btn_edit} onClick={handleEdit}>
-                <Icon name='edit' viewBox='0 0 25 20' />
+                <Icon name='edit' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />
               </button>
             </>
           ) : (

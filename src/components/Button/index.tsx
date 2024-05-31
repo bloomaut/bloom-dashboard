@@ -1,4 +1,3 @@
-import Image, { StaticImageData } from "next/image";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {

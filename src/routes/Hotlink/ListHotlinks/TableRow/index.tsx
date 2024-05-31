@@ -56,9 +56,17 @@ const TableRow = ({ hotlink }: TableRowProps) => {
       </div>
       <div className={styles.column}>
         <button onClick={handleCopyClick}>
-          <Icon name='copy' width={28} height={28} viewBox='0 0 60 65' />
+          <Icon name='copy' width={28} height={28} strokeColor='#7f7f7f' strokeWidth={4} viewBox='0 0 60 65' />
         </button>
-        <Icon name='whatsapp' width={28} height={28} viewBox='0 0 60 65' />
+        <Icon
+          name='whatsapp'
+          width={28}
+          height={28}
+          strokeWidth={1}
+          strokeColor='#7f7f7f'
+          fillColor='#7f7f7f'
+          viewBox='0 0 60 65'
+        />
       </div>
     </div>
   );

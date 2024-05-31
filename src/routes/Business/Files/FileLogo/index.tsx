@@ -36,13 +36,13 @@ const FileLogo = ({ file, onEdit, onUpdate, onDelete }: FileLogoProps) => {
           <div className={styles.btn_container}>
             {companyLogo && !file ? (
               <button className={styles.btn} onClick={onEdit}>
-                <Icon name='edit' viewBox='0 0 25 20' />
+                <Icon name='edit' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />
               </button>
             ) : (
               file && (
                 <>
                   <button className={styles.btn} onClick={onDelete}>
-                    <Icon name='trash' viewBox='0 0 25 25' />
+                    <Icon name='trash' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 23' />
                   </button>
                   <Button title='Subir' onclick={() => onUpdate(file)} />
                 </>

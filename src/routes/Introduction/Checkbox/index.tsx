@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import arrowRigth from "/public/icons/arrow_rigth.svg";
+import Icon from "@/components/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
@@ -27,7 +27,12 @@ const Checkbox = () => {
         <input type='checkbox' id='checkbox' checked={isChecked} onChange={handleCheckboxChange} />
         <label htmlFor='checkbox'>Ya vi el video y deseo continuar</label>
       </div>
-      <Button title='Continuar' icon={arrowRigth} onclick={handleButtonClick} isDisabled={isButtonDisabled} />
+      <Button
+        title='Continuar'
+        icon={<Icon name='arrow_right' viewBox='0 0 25 25' strokeColor={isChecked ? "#fff" : "#bebebe"} />}
+        onclick={handleButtonClick}
+        isDisabled={isButtonDisabled}
+      />
     </div>
   );
 };
