@@ -84,7 +84,8 @@
         "copy": "Copiar",
         "btn": "Compartir en Whatsapp",
         "copy_success": "URL copiada al porpapapeles",
-        "copy_error": "Error al copiar URL"
+        "copy_error": "Error al copiar URL",
+        "no_diffusion_link": "Esta PowerApp no dispone de un link de difusión."
       },
       "loading_dots": "Escribiendo"
     },

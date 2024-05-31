@@ -81,7 +81,8 @@
         "copy": "Copy",
         "btn": "Share on Whatsapp",
         "copy_success": "URL copied to clipboard",
-        "copy_error": "Error copying URL"
+        "copy_error": "Error copying URL",
+        "no_diffusion_link": "This PowerApp does not have a diffusion link"
       },
       "loading_dots": "Writing"
     },
