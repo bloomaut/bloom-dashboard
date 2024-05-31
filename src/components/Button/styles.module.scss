@@ -4,6 +4,11 @@
   @include main-btn;
 }
 
+.btn_reverse {
+  @include main-btn;
+  flex-direction: row;
+}
+
 .btn:disabled {
   background: $white;
   border: 1px solid $lighterGrey;

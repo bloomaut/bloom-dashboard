@@ -1,1 +1,7 @@
 @import "@/styles/theme.scss";
+
+.catalog_container {
+  @include width-height(100%, 100%);
+  @include flex(row, space-between, flex-start);
+  padding: 10px 40px;
+}

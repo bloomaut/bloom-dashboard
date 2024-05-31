@@ -1,9 +1,10 @@
 import styles from "./styles.module.scss";
+import Header from "./Header";
 
 const CatalogPage = () => {
   return (
-    <div>
-      <h1>Catalog</h1>
+    <div className={styles.catalog_container}>
+      <Header />
     </div>
   );
 };
