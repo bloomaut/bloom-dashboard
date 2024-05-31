@@ -118,7 +118,6 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
       console.log(e);
     }
   };
-
   return (
     <section className={styles.popup_container}>
       <div className={styles.container} ref={dropdownRef}>
@@ -147,7 +146,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 textHolder={dict("clients.form_label_02")}
                 type='text'
                 name='ClientLastname'
-                value={formData.ClientLastname}
+                value={formData.ClientLastname || ""}
                 handleChange={handleInputChange}
               />
             </div>
@@ -158,7 +157,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_03")}
               type='text'
               name='ClientEmail'
-              value={formData.ClientEmail}
+              value={formData.ClientEmail || ""}
               handleChange={handleInputChange}
             />
             {checkValidation && (
@@ -171,7 +170,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_04")}
               type='text'
               name='ClientLocation'
-              value={formData.ClientLocation}
+              value={formData.ClientLocation || ""}
               handleChange={handleInputChange}
             />
           </div>
@@ -181,7 +180,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_05")}
               type='text'
               name='ClientPhone'
-              value={formData.ClientPhone}
+              value={formData.ClientPhone || ""}
               handleChange={handleInputChange}
             />
           </div>
