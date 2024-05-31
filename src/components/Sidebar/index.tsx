@@ -60,6 +60,11 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             path: inboxPath,
           },
           {
+            title: `${dict("catalog")}`,
+            icon: <CollectionsIcon />,
+            path: "/catalog",
+          },
+          {
             title: `${dict("collections")}`,
             icon: <Icon name='collection' />,
             path: "/collections",
