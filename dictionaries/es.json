@@ -232,6 +232,10 @@
         "title_four": "Compartir",
         "empty": "Aún no tenés hotlinks"
       }
+    },
+    "catalog": {
+      "ia": "Subir con IA",
+      "new": "Nuevo catálogo"
     }
   }
 }
