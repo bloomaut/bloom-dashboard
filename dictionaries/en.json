@@ -62,7 +62,8 @@
       }
     },
     "introduction": {
-      "title": "Introduction"
+      "title": "Introduction",
+      "checkbox": "I already watched the video and I want to continue"
     },
     "playground": {
       "breadcrumb_title": "Simulator",
@@ -147,7 +148,16 @@
       "file": {
         "title01": "Upload your logo to start",
         "title02": "Drop your files here",
-        "subtitle": "My files"
+        "subtitle": "My files",
+        "file_name": "File name",
+        "last_updated": "Last Updated",
+        "palette": {
+          "palette_color": "Color palette",
+          "select_color": "Select color",
+          "cancel": "Cancel",
+          "generate": "Generate",
+          "save": "Save"
+        }
       }
     },
     "clients": {

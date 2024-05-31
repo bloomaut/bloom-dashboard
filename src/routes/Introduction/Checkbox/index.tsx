@@ -2,11 +2,12 @@ import styles from "./styles.module.scss";
 import arrowRigth from "/public/icons/arrow_rigth.svg";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 //Componentes
 import Button from "@/components/Button";
 
 const Checkbox = () => {
+  const dict = useTranslations("dict.introduction");
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const router = useRouter();
@@ -25,7 +26,7 @@ const Checkbox = () => {
     <div className={styles.container}>
       <div className={styles.checkbox}>
         <input type='checkbox' id='checkbox' checked={isChecked} onChange={handleCheckboxChange} />
-        <label htmlFor='checkbox'>Ya vi el video y deseo continuar</label>
+        <label htmlFor='checkbox'>{dict("checkbox")}</label>
       </div>
       <Button title='Continuar' icon={arrowRigth} onclick={handleButtonClick} isDisabled={isButtonDisabled} />
     </div>

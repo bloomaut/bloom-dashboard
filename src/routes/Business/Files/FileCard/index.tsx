@@ -10,6 +10,7 @@ import excel from "@/../public/icons/excel.svg";
 import file from "@/../public/icons/file.svg";
 import useFormattedDate from "@/hooks/useFormattedDate";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface FileCardProps {
   docType: string;
@@ -20,6 +21,7 @@ interface FileCardProps {
 }
 
 const FileCard = ({ title, docType, created_at, onDelete, url }: FileCardProps) => {
+  const dict = useTranslations("dict.business.file");
   const date = Date.parse(created_at);
   const formattedDate = useFormattedDate(date);
 
@@ -34,10 +36,10 @@ const FileCard = ({ title, docType, created_at, onDelete, url }: FileCardProps) 
         {docType === "else" && <Image className={styles.icon} alt='file-icon' src={file} />}
         <div className={styles.content}>
           <p className={styles.title}>
-            File Name: <span>{title}</span>
+            {dict("file_name")}: <span>{title}</span>
           </p>
           <p className={styles.updated}>
-            Last Updated: <span>{formattedDate}</span>
+            {dict("last_updated")}: <span>{formattedDate}</span>
           </p>
         </div>
       </div>

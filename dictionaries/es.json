@@ -65,7 +65,8 @@
       }
     },
     "introduction": {
-      "title": "Introducción"
+      "title": "Introducción",
+      "checkbox": "Ya vi el video y deseo continuar"
     },
     "playground": {
       "breadcrumb_title": "Simulador",
@@ -147,7 +148,16 @@
       "file": {
         "title01": "Subí tu logo para iniciar",
         "title02": "Arrojá tus archivos aquí",
-        "subtitle": "Mis archivos"
+        "subtitle": "Mis archivos",
+        "file_name": "Nombre de archivo",
+        "last_updated": "Última actualización",
+        "palette": {
+          "palette_color": "Paleta de colores",
+          "select_color": "Selecione color base",
+          "cancel": "Cancelar",
+          "generate": "Generar",
+          "save": "Guardar"
+        }
       }
     },
     "clients": {

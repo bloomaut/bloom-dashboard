@@ -25,7 +25,7 @@ const Select = () => {
   return (
     <div className={styles.container}>
       <div className={styles.select}>
-        <label>Diseño</label>
+        <label>{dict("select")}</label>
         {flakes ? (
           <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
             {flakes.map(flake => (
