@@ -1,11 +1,21 @@
 import { POST } from "@/typescript/types/post.type";
 import { UPDATE } from "@/typescript/types/update.type";
+import { EnvironmentApi } from "@/typescript/types/api";
 import axios from "axios";
 const API = "/api";
 
-export const get = async (url: string) => {
+export const get = async (url: string, api?: EnvironmentApi) => {
   try {
-    const response = await axios.get(`${API}/${url}`);
+    const headers: { [key: string]: string | undefined } = {};
+
+    if (api) {
+      headers["X-API"] = api;
+    }
+
+    const response = await axios.get(`${API}/${url}`, {
+      headers: headers,
+    });
+
     return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

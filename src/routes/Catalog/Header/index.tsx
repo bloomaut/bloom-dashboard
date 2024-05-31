@@ -5,7 +5,7 @@ import Icon from "@/components/Icon";
 
 const Header = () => {
   return (
-    <>
+    <div className={styles.header}>
       <Title text='Catalog' />
       <div className={styles.btn_container}>
         <Button
@@ -19,7 +19,7 @@ const Header = () => {
           styleName='btn_reverse'
         />
       </div>
-    </>
+    </div>
   );
 };
 

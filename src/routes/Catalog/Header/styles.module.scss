@@ -1,5 +1,9 @@
 @import "@/styles/theme.scss";
 
-.btn_container {
+.header {
+  @include width-height(100%, auto);
   @include flex(row, space-between, center, 40px);
+  .btn_container {
+    @include flex(row, center, center, 40px);
+  }
 }

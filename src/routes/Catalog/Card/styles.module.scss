@@ -1,0 +1,25 @@
+@import "@/styles/theme.scss";
+
+.card {
+  @include width-height(300px, auto);
+  @include flex(row, space-between, center);
+  background: $blueishBackground;
+  border-radius: 10px;
+  border: 2px solid black;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  .name {
+    color: $text;
+    @include fontSize-fontWeight(24px, 400);
+    padding-left: 15px;
+  }
+  .btn_container {
+    @include flex(column, center, center);
+    overflow: hidden;
+    :nth-child(1) {
+      border-top-right-radius: 8px;
+    }
+    :nth-child(2) {
+      border-bottom-right-radius: 8px;
+    }
+  }
+}

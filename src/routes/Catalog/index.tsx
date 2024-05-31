@@ -1,11 +1,11 @@
-import styles from "./styles.module.scss";
-import Header from "./Header";
+import { CatalogProvider } from "@/context/CatalogContext";
+import Catalog from "./Catalog";
 
 const CatalogPage = () => {
   return (
-    <div className={styles.catalog_container}>
-      <Header />
-    </div>
+    <CatalogProvider>
+      <Catalog />
+    </CatalogProvider>
   );
 };
 

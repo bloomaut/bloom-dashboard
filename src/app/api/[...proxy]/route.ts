@@ -11,9 +11,24 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
 
     const path = req.nextUrl.pathname.substring(req.nextUrl.pathname.indexOf("/api"));
 
+    const defaultApiBase = process.env.NEXT_PUBLIC_API_DASH;
+    const apiName = req.headers.get("X-API") || "";
+    let EXTERNAL_API_URL = defaultApiBase;
+
+    if (apiName) {
+      const customApiUrl = process.env[apiName];
+      if (customApiUrl) {
+        EXTERNAL_API_URL = customApiUrl;
+      }
+    }
+
+    if (!EXTERNAL_API_URL) {
+      throw new Error("No API base found");
+    }
+
     const fetchOptions: AxiosRequestConfig = {
       method: req.method.toLowerCase(),
-      url: `${process.env.NEXT_PUBLIC_API_DASH}${path}${req.nextUrl.search}`,
+      url: `${EXTERNAL_API_URL}${path}${req.nextUrl.search}`,
       headers: { Authorization: `Bearer ${accessToken}` },
     };
 
