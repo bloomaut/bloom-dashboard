@@ -69,7 +69,7 @@ export const postFile = async (url: string, file: File) => {
   }
 };
 
-export const update = async (url: string, data?: any, id?: string) => {
+export const update = async (url: string, data?: UPDATE, id?: string) => {
   try {
     let endpoint = `${API}/${url}`;
     if (id) {
