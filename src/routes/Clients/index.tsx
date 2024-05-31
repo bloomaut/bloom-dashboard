@@ -28,7 +28,7 @@ const ClientsPage = () => {
               title={dict("button")}
               styleName='btn_outline'
               onclick={() => setShowPopupCreate(true)}
-              icon={<Icon name='plus' viewBox='0 0 25 20' strokeColor='#7f7f7f' />}
+              icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#7f7f7f' />}
             />
           </div>
           {showPopupCreate && (

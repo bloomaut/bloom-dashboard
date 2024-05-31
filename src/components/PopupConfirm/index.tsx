@@ -72,7 +72,7 @@ const PopupConfirm = ({
         {textCancel && textAccept && (
           <div className={styles.button_container}>
             <button className={styles.no} onClick={onConfirm}>
-              {!dragAndDrop && <Icon name='trash' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 23' />}
+              {!dragAndDrop && <Icon name='delete' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 23' />}
               {textAccept}
             </button>
             <button className={styles.yes} onClick={onCancel}>

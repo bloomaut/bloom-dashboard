@@ -50,10 +50,14 @@
         }
         &:disabled {
           border: none;
-          &:hover {
-            background: inherit;
-            color: lightGrey;
-            cursor: not-allowed;
+          background: inherit;
+          color: lightGrey;
+          cursor: not-allowed;
+          svg {
+            path {
+              fill: $lighterGrey;
+              stroke: $lighterGrey;
+            }
           }
         }
       }

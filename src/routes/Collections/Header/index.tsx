@@ -56,7 +56,7 @@ const Header = () => {
           </div>
         </div>
         <Link href={`/${locale}/collections/new-collection`} className={styles.new_btn}>
-          {<Icon name='plus' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
+          {<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
           {dict("new_btn")}
         </Link>
       </div>
