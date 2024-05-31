@@ -150,7 +150,7 @@ const Form = () => {
             </div>
             <Checkbox />
             <button type='submit' className={styles.btn}>
-              <Icon name='hotlink' width={22} height={22} viewBox='0 0 30 34' className='hotlink_white' />
+              <Icon name='hotlink' width={22} height={22} viewBox='0 0 30 34' className='hotlink_light' />
               {dict("hotlinks.form_btn")}
             </button>
           </form>

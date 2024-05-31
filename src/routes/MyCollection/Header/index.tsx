@@ -68,7 +68,7 @@ const Header = () => {
         </div>
         <Button
           title={dict("btn")}
-          icon={<Icon name='hotlink' className='hotlink_white' viewBox='0 0 35 35' />}
+          icon={<Icon name='hotlink' className='hotlink_light' viewBox='0 0 35 35' />}
           styleName='btn_my_collection'
         />
       </div>

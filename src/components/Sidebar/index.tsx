@@ -51,7 +51,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           },
           {
             title: `${dict("hotlink")}`,
-            icon: <Icon name='hotlink' className='hotlink_dark' viewBox='0 0 30 34' />,
+            icon: <Icon name='hotlink' className='hotlink_dark' viewBox='1 0 30 34' />,
             path: "/hotlink",
           },
           {
@@ -61,7 +61,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           },
           {
             title: `${dict("catalog")}`,
-            icon: <CollectionsIcon />,
+            icon: <Icon name='catalog' width={25} height={30} viewBox='1 0 35 35' />,
             path: "/catalog",
           },
           {
