@@ -29,7 +29,7 @@ const useFormValidator = (formData: FormDataProps) => {
         errors.ClientFirstname = "Nombre es requerido";
       }
 
-      if (formData.ClientEmail.trim()) {
+      if (formData.ClientEmail && formData.ClientEmail.trim()) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.ClientEmail)) {
           errors.ClientEmail = "Formato de email inválido";
