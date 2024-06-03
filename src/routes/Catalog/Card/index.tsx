@@ -11,12 +11,12 @@ const Card = ({ name }: DatasetProps) => {
         <Button
           title=''
           styleName='btn_square'
-          icon={<Icon name='edit' width={25} height={25} strokeColor='#fff' viewBox='0 0 20 23' />}
+          icon={<Icon name='edit' width={20} height={20} strokeColor='#fff' viewBox='0 0 20 23' />}
         />
         <Button
           title=''
           styleName='btn_square'
-          icon={<Icon name='delete' width={25} height={25} strokeColor='#fff' viewBox='0 0 23 22' />}
+          icon={<Icon name='delete' width={20} height={20} strokeColor='#fff' viewBox='0 0 23 22' />}
         />
       </div>
     </div>

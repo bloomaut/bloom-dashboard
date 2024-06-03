@@ -11,16 +11,8 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
 
     const path = req.nextUrl.pathname.substring(req.nextUrl.pathname.indexOf("/api"));
 
-    const defaultApiBase = process.env.NEXT_PUBLIC_API_DASH;
     const apiName = req.headers.get("X-API") || "";
-    let EXTERNAL_API_URL = defaultApiBase;
-
-    if (apiName) {
-      const customApiUrl = process.env[apiName];
-      if (customApiUrl) {
-        EXTERNAL_API_URL = customApiUrl;
-      }
-    }
+    const EXTERNAL_API_URL = apiName ? process.env[apiName] : process.env.NEXT_PUBLIC_API_DASH;
 
     if (!EXTERNAL_API_URL) {
       throw new Error("No API base found");
