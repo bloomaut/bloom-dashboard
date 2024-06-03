@@ -244,6 +244,11 @@
         "title_four": "Share",
         "empty": "You don't have hotlinks yet"
       }
+    },
+    "catalog": {
+      "title": "Catalog",
+      "ia": "Upload with AI",
+      "new": "New catalog"
     }
   }
 }

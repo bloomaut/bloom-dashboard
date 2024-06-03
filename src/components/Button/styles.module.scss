@@ -9,6 +9,11 @@
   flex-direction: row;
 }
 
+.btn_square {
+  @include main-btn;
+  border-radius: 0;
+}
+
 .btn:disabled {
   background: $white;
   border: 1px solid $lighterGrey;

@@ -1,10 +1,11 @@
-import styles from "./styles.module.scss";
+import { CatalogProvider } from "@/context/CatalogContext";
+import Catalog from "./Catalog";
 
 const CatalogPage = () => {
   return (
-    <div>
-      <h1>Catalog</h1>
-    </div>
+    <CatalogProvider>
+      <Catalog />
+    </CatalogProvider>
   );
 };
 
