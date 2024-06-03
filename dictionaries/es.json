@@ -85,7 +85,8 @@
         "copy": "Copiar",
         "btn": "Compartir en Whatsapp",
         "copy_success": "URL copiada al porpapapeles",
-        "copy_error": "Error al copiar URL"
+        "copy_error": "Error al copiar URL",
+        "no_diffusion_link": "Esta PowerApp no dispone de un link de difusión."
       },
       "loading_dots": "Escribiendo"
     },
@@ -228,6 +229,7 @@
       "select": "Diseño",
       "form_title": "Campos",
       "form_btn": "Generar Hotlink",
+      "diffusion_link": "Copiar link difusión",
       "title_checkbox": "Llenar variables con cliente",
       "subtitle_checkbox": "Campos que se puedan completar con cliente",
       "search_clients": "Buscar clientes",

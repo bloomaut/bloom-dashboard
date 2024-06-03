@@ -82,7 +82,8 @@
         "copy": "Copy",
         "btn": "Share on Whatsapp",
         "copy_success": "URL copied to clipboard",
-        "copy_error": "Error copying URL"
+        "copy_error": "Error copying URL",
+        "no_diffusion_link": "This PowerApp does not have a diffusion link"
       },
       "loading_dots": "Writing"
     },
@@ -228,6 +229,7 @@
       "select": "Design",
       "form_title": "Fields",
       "form_btn": "Generate Hotlink",
+      "diffusion_link": "Get difussion link",
       "title_checkbox": "Fill variables with client",
       "subtitle_checkbox": "Fields that can be completed with client",
       "search_clients": "Search clients",
