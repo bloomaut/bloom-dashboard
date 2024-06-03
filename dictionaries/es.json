@@ -246,6 +246,7 @@
       }
     },
     "catalog": {
+      "title": "Catálogo",
       "ia": "Subir con IA",
       "new": "Nuevo catálogo"
     }
