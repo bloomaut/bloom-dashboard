@@ -6,9 +6,10 @@ import { useTranslations } from "next-intl";
 
 const Header = () => {
   const dict = useTranslations("dict.catalog");
+
   return (
     <div className={styles.header}>
-      <Title text='Catalog' />
+      <Title text={dict("title")} />
       <div className={styles.btn_container}>
         <Button
           title={dict("ia")}

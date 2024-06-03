@@ -234,6 +234,7 @@
       }
     },
     "catalog": {
+      "title": "Catalog",
       "ia": "Upload with AI",
       "new": "New catalog"
     }
