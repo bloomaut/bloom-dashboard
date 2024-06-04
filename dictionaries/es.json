@@ -232,6 +232,16 @@
         "title_four": "Compartir",
         "empty": "Aún no tenés hotlinks"
       }
+    },
+
+    "catalog": {
+      "title": "Catálogo",
+      "add_product": "Agregar Producto",
+      "name": "Nombre",
+      "description": "Descripción",
+      "price": "Precio",
+      "clean_bot": "Reiniciar Bot",
+      "train_bot": "Entrenar Bot"
     }
   }
 }

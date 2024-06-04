@@ -113,3 +113,6 @@
   stroke-width: 1.5px;
   stroke: $lightGrey;
 }
+.dataset {
+  @include width-height(15%, 55px);
+}
