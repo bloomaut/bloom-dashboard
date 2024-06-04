@@ -2,7 +2,7 @@
 
 .container {
   @include width-height(100%, 100%);
-  @include flex(column, center, center, 30px);
+  @include flex(column, center, center, 20px);
   max-width: 1200px;
   .breadcrumb_container {
     @include width-height(100%, auto);
