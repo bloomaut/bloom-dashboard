@@ -29,7 +29,7 @@ const CatalogDetail = () => {
         <div className={styles.header}>
           <div className={styles.title_container}>
             <Title text={`${dict("title")}:`} />
-            <p>Catalog X</p>
+            <p>Nombre de catálogo acá</p>
           </div>
           <Button
             title={dict("add_product")}
@@ -54,18 +54,18 @@ const CatalogDetail = () => {
             })}
           </Fade>
         </div>
-        <div className={styles.buttons}>
-          <Button
-            title={dict("clean_bot")}
-            styleName='btn_clean'
-            icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
-          />
-          <Button
-            title={dict("train_bot")}
-            styleName='btn_dataset'
-            icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
-          />
-        </div>
+      </div>
+      <div className={styles.buttons}>
+        <Button
+          title={dict("clean_bot")}
+          styleName='btn_clean'
+          icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
+        />
+        <Button
+          title={dict("train_bot")}
+          styleName='btn_dataset'
+          icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
+        />
       </div>
     </section>
   );

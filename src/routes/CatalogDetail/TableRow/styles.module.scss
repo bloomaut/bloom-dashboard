@@ -6,19 +6,18 @@
   grid-template-rows: auto;
   width: 100%;
   padding: 10px;
-
   .box {
     display: flex;
     align-items: center;
     border-left: 2px solid $lighterGrey;
     padding-left: 10px;
   }
-
   .imagen {
     @include width-height(100%, 55px);
   }
-
   .icons {
     @include flex(row, center, center, 5px);
+    border-left: none;
+    padding-left: 0px;
   }
 }

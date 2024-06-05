@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 .catalog_detail_container {
-  @include flex(column, flex-start, flex-start, 100px);
+  @include flex(column, flex-start, flex-start, 20px);
   @include width-height(100%, auto);
   color: $text;
   padding: 0 40px;
@@ -22,7 +22,7 @@
   .table_container {
     @include width-height(100%, auto);
     .content_container {
-      @include width-height(100%, 200px);
+      @include width-height(100%, 270px);
       overflow-y: auto;
     }
     .content_container::-webkit-scrollbar {
@@ -34,11 +34,10 @@
       background-color: $orange;
       border-radius: 10px;
     }
-
-    .buttons {
-      @include flex(row, flex-end, center, 30px);
-      @include width-height(100%, auto);
-      margin-top: 50px;
-    }
+  }
+  .buttons {
+    @include flex(row, flex-end, center, 30px);
+    @include width-height(100%, auto);
+    margin-top: 50px;
   }
 }

@@ -27,9 +27,9 @@ const TableRow = ({ name, description, price, image }: Props) => {
           className='dataset_default'
         />
       )}
-      <p className={`${styles.name} ${styles.box}`}>{name}</p>
-      <p className={`${styles.description} ${styles.box}`}>{description}</p>
-      <div className={`${styles.price_container} ${styles.box}`}>
+      <p className={styles.box}>{name}</p>
+      <p className={styles.box}>{description}</p>
+      <div className={styles.box}>
         <p>{`${dict("price")}-$- ${price}`}</p>
       </div>
       <div className={`${styles.icons} ${styles.box}`}>
