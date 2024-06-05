@@ -25,8 +25,11 @@
     },
     "popup": {
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
+      "name": "Nombre",
       "confirm": "Eliminar",
-      "cancel": "Cancelar"
+      "create": "Crear",
+      "cancel": "Cancelar",
+      "edit": "Editar"
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
