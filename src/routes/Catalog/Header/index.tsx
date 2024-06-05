@@ -3,10 +3,20 @@ import styles from "./styles.module.scss";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import PopupChildren from "@/components/PopupChildren";
+import Input from "@/components/Input";
 
 const Header = () => {
+  const [showPopupCreate, setShowPopupCreate] = useState(false);
+  const [inputValue, setInputValue] = useState("");
   const dict = useTranslations("dict.catalog");
+  const dictpopup = useTranslations("dict.popup");
 
+  const onChangeInput = (e: any) => {
+    setInputValue(e.target.value);
+    console.log(e.target.value);
+  };
   return (
     <div className={styles.header}>
       <Title text={dict("title")} />
@@ -20,7 +30,27 @@ const Header = () => {
           title={dict("new")}
           icon={<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
           styleName='btn_reverse'
+          onclick={() => setShowPopupCreate(true)}
         />
+        {showPopupCreate && (
+          <PopupChildren
+            title={dict("new")}
+            textAccept={dictpopup("create")}
+            textCancel={dictpopup("cancel")}
+            onCancel={() => setShowPopupCreate(false)}
+            onConfirm={() => setShowPopupCreate(false)}
+            setShowConfirmation={() => setShowPopupCreate(false)}
+            children={
+              <Input
+                type='text'
+                name='Nombre'
+                textHolder={dictpopup("name")}
+                value={inputValue}
+                handleChange={onChangeInput}
+              />
+            }
+          />
+        )}
       </div>
     </div>
   );
