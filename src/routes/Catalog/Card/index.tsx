@@ -6,11 +6,13 @@ import PopupChildren from "@/components/PopupChildren";
 import { useState } from "react";
 import Input from "@/components/Input";
 import { useCatalogContext } from "@/context/CatalogContext";
+import { useTranslations } from "next-intl";
 
 const Card = ({ name, _id }: DatasetProps) => {
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [catalogName, setCatalogName] = useState(name);
   const { updateDataset } = useCatalogContext();
+  const dict = useTranslations("dict");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,13 +46,13 @@ const Card = ({ name, _id }: DatasetProps) => {
           onConfirm={handleSubmit}
           onCancel={() => setShowPopupEdit(false)}
           setShowConfirmation={setShowPopupEdit}
-          textCancel={"Cancelar"}
-          textAccept={"Crear"}
+          textCancel={dict("popup.cancel")}
+          textAccept={dict("popup.create")}
         >
           <Input
             type='text'
-            textHolder={"Nombre"}
-            name={"Name"}
+            textHolder={dict("popup.name")}
+            name={dict("popup.name")}
             value={catalogName}
             handleChange={e => setCatalogName(e.target.value)}
           />

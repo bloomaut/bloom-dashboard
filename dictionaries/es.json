@@ -25,7 +25,9 @@
     },
     "popup": {
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
+      "name": "Nombre",
       "confirm": "Eliminar",
+      "create": "Crear",
       "cancel": "Cancelar"
     },
     "toast": {
