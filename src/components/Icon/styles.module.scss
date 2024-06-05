@@ -113,6 +113,9 @@
   stroke-width: 1.5px;
   stroke: $lightGrey;
 }
-.dataset {
-  @include width-height(15%, 55px);
+.dataset_default {
+  @include width-height(100%, 55px);
+}
+.cursor_pointer {
+  cursor: pointer;
 }

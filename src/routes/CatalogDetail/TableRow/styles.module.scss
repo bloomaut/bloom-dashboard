@@ -1,30 +1,24 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(row, flex-start, flex-start);
-  @include width-height(100%, auto);
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
+  grid-template-rows: auto;
+  width: 100%;
   padding: 10px;
+
   .box {
-    @include flex(row, flex-start, center);
+    display: flex;
+    align-items: center;
     border-left: 2px solid $lighterGrey;
     padding-left: 10px;
   }
+
   .imagen {
-    @include width-height(15%, auto);
+    @include width-height(100%, 55px);
   }
-  .name {
-    @include width-height(25%, 50px);
-  }
-  .description {
-    @include width-height(40%, 50px);
-  }
-  .price_container {
-    @include flex(row, space-between, center);
-    @include width-height(20%, 50px);
-  }
+
   .icons {
-    @include flex(row, space-between, center, 5px);
-    margin-top: 8px;
-    cursor: pointer;
+    @include flex(row, center, center, 5px);
   }
 }

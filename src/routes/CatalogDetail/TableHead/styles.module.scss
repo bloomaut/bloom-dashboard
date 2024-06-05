@@ -1,27 +1,17 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(row, flex-start, center);
-  @include width-height(100%, auto);
-  margin-top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
+  align-items: center;
+  width: 100%;
   padding: 10px;
   border-bottom: 1px solid $lighterGrey;
-  .image {
-    @include width-height(15%, auto);
-  }
-  .name {
-    @include width-height(25%, auto);
-    border-left: 2px solid $lighterGrey;
-    padding: 5px;
-  }
-  .description {
-    @include width-height(40%, auto);
-    border-left: 2px solid $lighterGrey;
-    padding: 5px;
-  }
+
+  .name,
+  .description,
   .price {
-    @include width-height(20%, auto);
-    border-left: 2px solid $lighterGrey;
     padding: 5px;
+    border-left: 2px solid $lighterGrey;
   }
 }
