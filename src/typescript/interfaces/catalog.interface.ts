@@ -6,6 +6,6 @@ export interface DatasetProps {
   updatedAt: string;
 }
 
-export interface DatasetUpdateProps {
+export interface UpdateDataset {
   name: string;
 }

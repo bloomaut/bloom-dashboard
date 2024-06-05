@@ -26,7 +26,7 @@ export interface UpdateBusiness {
   phone: string;
 }
 
-export interface BusinessLogo {
+export interface UpdateBusinessLogo {
   logo: string;
 }
 

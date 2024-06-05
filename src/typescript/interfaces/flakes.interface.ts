@@ -3,7 +3,7 @@ export interface Powerapp {
   title: string;
   thumbnail: string;
   skinx: Skinx;
-  hog_related: Hogrelated;
+  hog_related: HogRelated;
   variables_in_use: Variablesinuse[];
 }
 
@@ -17,7 +17,7 @@ export interface Variablesinuse {
   value?: string;
 }
 
-interface Hogrelated {
+interface HogRelated {
   _id: string;
   title: string;
   thumbnail: string;

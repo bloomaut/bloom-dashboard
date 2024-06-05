@@ -13,18 +13,12 @@ import Input from "@/components/Input";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
+import { Collection } from "@/typescript/interfaces/collection.interface";
 
 const InitialEmptyImages = {
   sm_img: "",
   lg_img: "",
 };
-
-export interface Collection {
-  name: string;
-  description: string;
-  type_flake: string;
-  flake_id: string;
-}
 
 const InitialEmptyForm = {
   name: "",
