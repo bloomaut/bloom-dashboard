@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import Icon from "../Icon";
 
 interface BreadcrumbProps {
-  title: string;
+  title?: string;
 }
 
 const Breadcrumb = ({ title }: BreadcrumbProps) => {
