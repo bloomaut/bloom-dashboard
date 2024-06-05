@@ -251,7 +251,13 @@
     "catalog": {
       "title": "Catalog",
       "ia": "Upload with AI",
-      "new": "New catalog"
+      "new": "New catalog",
+      "add_product": "Add Product",
+      "name": "Name",
+      "description": "Description",
+      "price": "Price",
+      "clean_bot": "Clean Bot",
+      "train_bot": "Train Bot"
     }
   }
 }
