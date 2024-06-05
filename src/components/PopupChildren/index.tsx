@@ -6,7 +6,7 @@ interface PopupChildrenProps {
   onConfirm: (e: FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
   setShowConfirmation: (value: SetStateAction<boolean>) => void;
-  title: string;
+  title?: string;
   textCancel: string;
   textAccept: string;
   children: React.ReactNode;

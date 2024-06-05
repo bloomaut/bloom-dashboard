@@ -5,3 +5,7 @@ export interface DatasetProps {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface DatasetUpdateProps {
+  name: string;
+}
