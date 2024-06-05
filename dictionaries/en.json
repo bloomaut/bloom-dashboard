@@ -28,7 +28,8 @@
       "name": "Name",
       "confirm": "Delete",
       "create": "Create",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "edit": "Edit"
     },
     "toast": {
       "success_img": "Image uploaded successfully",

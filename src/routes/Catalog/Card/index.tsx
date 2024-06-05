@@ -14,7 +14,7 @@ const Card = ({ name, _id }: DatasetProps) => {
   const { updateDataset } = useCatalogContext();
   const dict = useTranslations("dict");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await updateDataset(_id, catalogName);
@@ -43,11 +43,11 @@ const Card = ({ name, _id }: DatasetProps) => {
       </div>
       {showPopupEdit && (
         <PopupChildren
-          onConfirm={handleSubmit}
+          onConfirm={submitEdit}
           onCancel={() => setShowPopupEdit(false)}
           setShowConfirmation={setShowPopupEdit}
           textCancel={dict("popup.cancel")}
-          textAccept={dict("popup.create")}
+          textAccept={dict("popup.edit")}
         >
           <Input
             type='text'
