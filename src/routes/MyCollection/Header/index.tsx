@@ -1,6 +1,4 @@
 import styles from "./styles.module.scss";
-import excel from "@/../public/icons/excel_logo.svg";
-import table from "@/../public/icons/excel.svg";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useHotlinkListContext } from "@/context/HotlinksListContext";
@@ -11,6 +9,7 @@ import Title from "@/components/Title";
 import Search from "@/components/Search";
 import Button from "@/components/Button";
 import PopupConfirm from "@/components/PopupConfirm";
+import Icon from "@/components/Icon";
 
 const Header = () => {
   const dict = useTranslations("dict.my-collection");
@@ -51,10 +50,27 @@ const Header = () => {
       </div>
       <div className={styles.column_two}>
         <div className={styles.btn_container}>
-          <Button title={dict("btn3")} icon={table} styleName='btn_copy' onclick={handleClick} />
-          <Button title={dict("btn2")} icon={excel} styleName='btn_excel' onclick={() => setShowPopupExcel(true)} />
+          <Button
+            title={dict("btn3")}
+            icon={
+              <Icon name='table' width={25} height={25} strokeColor='#7f7f7f' strokeWidth={1.4} viewBox='0 0 25 14' />
+            }
+            styleName='btn_copy'
+            onclick={handleClick}
+          />
+
+          <Button
+            title={dict("btn2")}
+            icon={<Icon name='excel' />}
+            styleName='btn_excel'
+            onclick={() => setShowPopupExcel(true)}
+          />
         </div>
-        {/* <Button title={dict("btn")} icon={hotlink} styleName='btn_my_collection' /> */}
+        <Button
+          title={dict("btn")}
+          icon={<Icon name='hotlink' className='hotlink_light' viewBox='0 0 35 35' />}
+          styleName='btn_my_collection'
+        />
       </div>
       {showPopupExcel && (
         <PopupConfirm

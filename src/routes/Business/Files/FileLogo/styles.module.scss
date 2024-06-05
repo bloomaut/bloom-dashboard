@@ -21,6 +21,12 @@
         background: none;
         border: none;
         cursor: pointer;
+        &:hover {
+          svg {
+            transition: all 100ms ease-in;
+            transform: scale(1.2);
+          }
+        }
         .controls_icons {
           @include width-height(23px, auto);
           object-fit: contain;

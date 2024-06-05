@@ -1,8 +1,7 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
 import useFormValidator from "@/hooks/useFormValidator";
-import closeIcon from "../../../../public/icons/close.svg";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import Icon from "@/components/Icon";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
@@ -119,12 +118,11 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
       console.log(e);
     }
   };
-
   return (
     <section className={styles.popup_container}>
       <div className={styles.container} ref={dropdownRef}>
         <button className={styles.close} onClick={onCancel}>
-          <Image src={closeIcon} alt='close' />
+          <Icon name='close' width={30} height={30} />
         </button>
         <p className={styles.title}>{title}</p>
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -148,7 +146,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 textHolder={dict("clients.form_label_02")}
                 type='text'
                 name='ClientLastname'
-                value={formData.ClientLastname}
+                value={formData.ClientLastname || ""}
                 handleChange={handleInputChange}
               />
             </div>
@@ -159,7 +157,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_03")}
               type='text'
               name='ClientEmail'
-              value={formData.ClientEmail}
+              value={formData.ClientEmail || ""}
               handleChange={handleInputChange}
             />
             {checkValidation && (
@@ -172,7 +170,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_04")}
               type='text'
               name='ClientLocation'
-              value={formData.ClientLocation}
+              value={formData.ClientLocation || ""}
               handleChange={handleInputChange}
             />
           </div>
@@ -182,7 +180,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_05")}
               type='text'
               name='ClientPhone'
-              value={formData.ClientPhone}
+              value={formData.ClientPhone || ""}
               handleChange={handleInputChange}
             />
           </div>

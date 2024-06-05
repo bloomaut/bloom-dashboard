@@ -12,6 +12,7 @@ interface Context {
   loading: boolean;
   selectedFlakeId: string;
   setSelectedFlakeId: (id: string) => void;
+  difussionLink: string | null;
   id: string;
   setId: (i: string) => void;
   hotlinksList: HotlinkList[];
@@ -19,6 +20,7 @@ interface Context {
   filteredHotlinks: HotlinkList | null;
   setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList | null>>;
   getList: () => Promise<void>;
+  getDiffusionLink: (flakeId: string) => Promise<void>;
 }
 
 const FlakesContext = createContext<Context>({
@@ -26,6 +28,7 @@ const FlakesContext = createContext<Context>({
   loading: true,
   selectedFlakeId: "",
   setSelectedFlakeId: () => "",
+  difussionLink: null,
   id: "",
   setId: () => "",
   hotlinksList: [],
@@ -33,12 +36,14 @@ const FlakesContext = createContext<Context>({
   filteredHotlinks: null,
   setFilteredHotlinks: () => null,
   getList: () => Promise.resolve(),
+  getDiffusionLink: () => Promise.resolve(),
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const [flakes, setFlakes] = useState<Powerapp[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedFlakeId, setSelectedFlakeId] = useState("");
+  const [difussionLink, setDifussionLink] = useState<string | null>("");
   const { notifyError } = useMessageToast();
   const dict = useTranslations("dict.toast");
   const path = usePathname();
@@ -67,7 +72,9 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     if (response.statusCode === 200) {
       setFlakes(response.result.powerapps);
       if (response.result.powerapps.length) {
-        setSelectedFlakeId(response.result.powerapps[0]._id);
+        const firstFlakeId = response.result.powerapps[0]._id;
+        setSelectedFlakeId(firstFlakeId);
+        getDiffusionLink(firstFlakeId);
       } else {
         setSelectedFlakeId("");
       }
@@ -75,6 +82,15 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     } else {
       notifyError(dict("error_tryagain"));
       setLoading(false);
+    }
+  };
+
+  const getDiffusionLink = async (flakeId: string) => {
+    const response = await get(`hotlinks/diffusion/powerapp/${flakeId}`);
+    if (response.statusCode === 200) {
+      setDifussionLink(response.result.diffusionUrl);
+    } else {
+      setDifussionLink(null);
     }
   };
 
@@ -103,6 +119,12 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (selectedFlakeId) {
+      getDiffusionLink(selectedFlakeId);
+    }
+  }, [selectedFlakeId]);
+
   return (
     <FlakesContext.Provider
       value={{
@@ -110,6 +132,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         loading,
         selectedFlakeId,
         setSelectedFlakeId,
+        difussionLink,
         id,
         setId,
         hotlinksList,
@@ -117,6 +140,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         filteredHotlinks,
         setFilteredHotlinks,
         getList,
+        getDiffusionLink,
       }}
     >
       {children}

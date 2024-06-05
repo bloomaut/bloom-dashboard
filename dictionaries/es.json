@@ -16,6 +16,7 @@
       "hotlink": "Hotlink",
       "inbox": "Inbox",
       "collections": "Colecciones",
+      "catalog": "Catálogo",
       "clients": "Clients"
     },
     "navbar": {
@@ -24,8 +25,11 @@
     },
     "popup": {
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
+      "name": "Nombre",
       "confirm": "Eliminar",
-      "cancel": "Cancelar"
+      "create": "Crear",
+      "cancel": "Cancelar",
+      "edit": "Editar"
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
@@ -65,7 +69,8 @@
       }
     },
     "introduction": {
-      "title": "Introducción"
+      "title": "Introducción",
+      "checkbox": "Ya vi el video y deseo continuar"
     },
     "playground": {
       "breadcrumb_title": "Simulador",
@@ -83,7 +88,8 @@
         "copy": "Copiar",
         "btn": "Compartir en Whatsapp",
         "copy_success": "URL copiada al porpapapeles",
-        "copy_error": "Error al copiar URL"
+        "copy_error": "Error al copiar URL",
+        "no_diffusion_link": "Esta PowerApp no dispone de un link de difusión."
       },
       "loading_dots": "Escribiendo"
     },
@@ -147,7 +153,16 @@
       "file": {
         "title01": "Subí tu logo para iniciar",
         "title02": "Arrojá tus archivos aquí",
-        "subtitle": "Mis archivos"
+        "subtitle": "Mis archivos",
+        "file_name": "Nombre de archivo",
+        "last_updated": "Última actualización",
+        "palette": {
+          "palette_color": "Paleta de colores",
+          "select_color": "Selecione color base",
+          "cancel": "Cancelar",
+          "generate": "Generar",
+          "save": "Guardar"
+        }
       }
     },
     "clients": {
@@ -217,6 +232,7 @@
       "select": "Diseño",
       "form_title": "Campos",
       "form_btn": "Generar Hotlink",
+      "diffusion_link": "Copiar link difusión",
       "title_checkbox": "Llenar variables con cliente",
       "subtitle_checkbox": "Campos que se puedan completar con cliente",
       "search_clients": "Buscar clientes",
@@ -231,6 +247,11 @@
         "title_four": "Compartir",
         "empty": "Aún no tenés hotlinks"
       }
+    },
+    "catalog": {
+      "title": "Catálogo",
+      "ia": "Subir con IA",
+      "new": "Nuevo catálogo"
     }
   }
 }

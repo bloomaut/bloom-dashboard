@@ -1,3 +1,5 @@
+import { Flake } from "./hotlink.interface";
+
 export interface HotlinkCollection {
   active: boolean;
   created_at: string;
@@ -9,17 +11,4 @@ export interface HotlinkCollection {
   name: string;
   type_flake: string;
   updated_at: string;
-}
-
-interface Flake {
-  skinx: Skinx;
-  thumbnail: string;
-  title: string;
-  _id: string;
-}
-
-interface Skinx {
-  _id: string;
-  title: string;
-  thumbnail: string;
 }

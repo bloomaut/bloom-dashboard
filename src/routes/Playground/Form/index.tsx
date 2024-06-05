@@ -78,8 +78,8 @@ const Form = () => {
       },
     });
     if (response?.status === 200) {
-      const { hotlink, opengraph } = response.data.data.result;
-      setPaUrl(hotlink.url);
+      const { url, opengraph } = response.data.data.result;
+      setPaUrl(url);
       setPreviewData(opengraph);
       setTime();
       setShowPreview(true);

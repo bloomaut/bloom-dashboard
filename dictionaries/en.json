@@ -16,6 +16,7 @@
       "hotlink": "Hotlink",
       "inbox": "Inbox",
       "collections": "Collections",
+      "catalog": "Catalog",
       "clients": "Clients"
     },
     "navbar": {
@@ -24,8 +25,11 @@
     },
     "popup": {
       "delete_title": "Are you sure you want to delete this client?",
+      "name": "Name",
       "confirm": "Delete",
-      "cancel": "Cancel"
+      "create": "Create",
+      "cancel": "Cancel",
+      "edit": "Edit"
     },
     "toast": {
       "success_img": "Image uploaded successfully",
@@ -62,7 +66,8 @@
       }
     },
     "introduction": {
-      "title": "Introduction"
+      "title": "Introduction",
+      "checkbox": "I already watched the video and I want to continue"
     },
     "playground": {
       "breadcrumb_title": "Simulator",
@@ -79,8 +84,9 @@
         "title": "Share and test on Whatsapp",
         "copy": "Copy",
         "btn": "Share on Whatsapp",
-        "copy_succes": "URL copied to clipboard",
-        "copy_error": "Error copying URL"
+        "copy_success": "URL copied to clipboard",
+        "copy_error": "Error copying URL",
+        "no_diffusion_link": "This PowerApp does not have a diffusion link"
       },
       "loading_dots": "Writing"
     },
@@ -147,7 +153,16 @@
       "file": {
         "title01": "Upload your logo to start",
         "title02": "Drop your files here",
-        "subtitle": "My files"
+        "subtitle": "My files",
+        "file_name": "File name",
+        "last_updated": "Last Updated",
+        "palette": {
+          "palette_color": "Color palette",
+          "select_color": "Select color",
+          "cancel": "Cancel",
+          "generate": "Generate",
+          "save": "Save"
+        }
       }
     },
     "clients": {
@@ -217,6 +232,7 @@
       "select": "Design",
       "form_title": "Fields",
       "form_btn": "Generate Hotlink",
+      "diffusion_link": "Get difussion link",
       "title_checkbox": "Fill variables with client",
       "subtitle_checkbox": "Fields that can be completed with client",
       "search_clients": "Search clients",
@@ -231,6 +247,11 @@
         "title_four": "Share",
         "empty": "You don't have hotlinks yet"
       }
+    },
+    "catalog": {
+      "title": "Catalog",
+      "ia": "Upload with AI",
+      "new": "New catalog"
     }
   }
 }

@@ -1,0 +1,115 @@
+@import "@/styles/theme.scss";
+
+.hotlink_dark {
+  @include width-height(25px, 25px);
+  stroke-width: 1px;
+  path {
+    &:nth-of-type(2) {
+      fill: #381d2a;
+      stroke-width: 0.1px;
+    }
+    &:nth-of-type(1) {
+      fill: #381d2a;
+      stroke-width: 0.1px;
+    }
+  }
+}
+
+.hotlink_grey {
+  @extend .hotlink_dark;
+  path {
+    stroke: #7f7f7f;
+    &:nth-of-type(2) {
+      fill: #7f7f7f;
+    }
+    &:nth-of-type(1) {
+      fill: #7f7f7f;
+    }
+  }
+}
+
+.hotlink_light {
+  @extend .hotlink_dark;
+  path {
+    stroke: #fff;
+    &:nth-of-type(2) {
+      fill: #fff;
+    }
+    &:nth-of-type(1) {
+      fill: #fff;
+    }
+  }
+}
+
+.hotlink_color {
+  stroke-width: 0.1px;
+  path {
+    &:nth-of-type(1) {
+      fill: $lightGrey;
+      stroke: $lightGrey;
+    }
+    &:nth-of-type(2) {
+      fill: $orange;
+      stroke: $lightGrey;
+    }
+    &:nth-of-type(3) {
+      fill: $orange;
+      stroke: $orange;
+    }
+  }
+}
+
+.knowledge {
+  @include width-height(25px, 25px);
+  path {
+    &:nth-of-type(1) {
+      fill: #fff;
+      stroke-width: 0.1px;
+    }
+  }
+}
+
+.excel {
+  @include width-height(25px, 25px);
+  path {
+    stroke-width: 0.1px;
+    stroke: #000;
+    fill: #fff;
+    &:nth-of-type(1) {
+      fill: #20744a;
+    }
+    &:nth-of-type(2) {
+      fill: #20744a;
+    }
+  }
+}
+
+.pdf {
+  @include width-height(45px, 45px);
+  stroke-width: 0.1px;
+  fill: red;
+  stroke: red;
+}
+
+.doc {
+  @extend .pdf;
+  fill: #29b2ff;
+  stroke: #29b2ff;
+}
+
+.image {
+  @extend .pdf;
+  fill: #ff5722;
+  stroke: #ff5722;
+}
+
+.file {
+  @extend .pdf;
+  fill: $opacityGrey;
+  stroke: $opacityGrey;
+}
+
+.folder {
+  stroke-width: 1.5px;
+  stroke: $lightGrey;
+}

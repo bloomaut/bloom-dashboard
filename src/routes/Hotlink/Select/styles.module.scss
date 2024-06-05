@@ -52,16 +52,6 @@
             object-fit: cover;
             object-position: top;
           }
-          svg {
-            @include width-height(40px, 40px);
-            object-fit: contain;
-            path {
-              stroke: $lighterGrey;
-            }
-            path {
-              fill: $lighterGrey;
-            }
-          }
         }
         .sm_card {
           @include width-height(160px, 110px);

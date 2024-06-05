@@ -8,3 +8,12 @@ export interface ClientsProps {
   personalNote: string;
   clientCode?: string;
 }
+
+export interface UpdateClient {
+  ClientFirstname: string;
+  ClientLastname: string;
+  ClientEmail: string;
+  ClientPhone: string;
+  ClientLocation: string;
+  personalNote: string;
+}

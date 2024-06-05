@@ -1,7 +1,5 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
-import PwaIcon from "./Icon/Pwa";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useTranslations } from "next-intl";
 import { Fade } from "react-awesome-reveal";
@@ -9,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import Icon from "@/components/Icon";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
@@ -29,7 +28,7 @@ const Select = () => {
   return (
     <div className={styles.container}>
       <div className={styles.select}>
-        <label>Diseño</label>
+        <label>{dict("select")}</label>
         {flakes?.length ? (
           <Fade triggerOnce>
             <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
@@ -63,7 +62,14 @@ const Select = () => {
                         height={120}
                       />
                     ) : (
-                      <HogIcon />
+                      <Icon
+                        name='hog'
+                        width={40}
+                        height={40}
+                        fillColor='#7f7f7f'
+                        strokeColor='#7f7f7f'
+                        strokeWidth={0.5}
+                      />
                     )}
                   </div>
                   <div className={styles.lg_card}>
@@ -76,7 +82,15 @@ const Select = () => {
                         height={100}
                       />
                     ) : (
-                      <PwaIcon />
+                      <Icon
+                        name='pwa'
+                        width={80}
+                        height={80}
+                        fillColor='#7f7f7f'
+                        strokeColor='#7f7f7f'
+                        strokeWidth={0.1}
+                        viewBox='0 0 109 127'
+                      />
                     )}
                   </div>
                 </div>
