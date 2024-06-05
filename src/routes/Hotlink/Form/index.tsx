@@ -1,6 +1,4 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import HotlinkIcon from "@/../../public/icons/hotlink_icon_white.svg";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
 import { Flake, Variablesinuse } from "@/typescript/interfaces/flakes.interface";
@@ -16,6 +14,8 @@ import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Checkbox from "./Checkbox";
 import { Fade } from "react-awesome-reveal";
+import Icon from "@/components/Icon";
+import Button from "@/components/Button";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -37,9 +37,11 @@ const Form = () => {
   const dict = useTranslations("dict");
   const { clientSelected } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
-  const { flakes, selectedFlakeId, loading, getList } = useFlakesContext();
+  const { flakes, difussionLink, selectedFlakeId, loading, getList, getDiffusionLink } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
+  const [loadingButton, setLoadingButton] = useState<boolean>(false);
+
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
   useEffect(() => {
@@ -125,6 +127,20 @@ const Form = () => {
     setFormDataPost(updatedFormDataPost);
   };
 
+  const handleCopyClick = async () => {
+    setLoadingButton(true);
+    await getDiffusionLink(selectedFlakeId);
+    if (difussionLink) {
+      navigator.clipboard.writeText(difussionLink).then(function () {
+        notify(`${dict("playground.popup.copy_success")}`);
+      });
+      setLoadingButton(false);
+    } else {
+      notifyError(dict("playground.popup.no_diffusion_link"));
+      setLoadingButton(false);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <SectionTitle text={dict("hotlinks.form_title")} />
@@ -150,10 +166,20 @@ const Form = () => {
                 ))}
             </div>
             <Checkbox />
-            <button type='submit' className={styles.btn}>
-              <Image src={HotlinkIcon} alt='' />
-              {dict("hotlinks.form_btn")}
-            </button>
+            <div className={styles.btn_container}>
+              <Button
+                title={dict("hotlinks.form_btn")}
+                styleName='btn_reverse'
+                icon={<Icon name='hotlink' width={22} height={22} viewBox='0 0 30 34' className='hotlink_light' />}
+                type='submit'
+              />
+              <Button
+                title={dict("hotlinks.diffusion_link")}
+                styleName='btn_outline'
+                loading={loadingButton}
+                onclick={handleCopyClick}
+              />
+            </div>
           </form>
         </Fade>
       ) : null}

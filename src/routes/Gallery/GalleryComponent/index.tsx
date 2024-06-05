@@ -1,7 +1,6 @@
 "use clients";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import HogIcon from "@/routes/Playground/TemplatesSelector/Icons/Hog";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useFlakeData } from "@/hooks/useFlakesUser";
 import { useTranslations } from "next-intl";
@@ -12,8 +11,8 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import PwaIcon from "@/routes/Hotlink/Select/Icon/Pwa";
 import PopupImage from "@/components/PopupImage";
+import Icon from "@/components/Icon";
 
 const GalleryComponent = () => {
   const { flakes, loading } = useFlakeData();
@@ -48,7 +47,14 @@ const GalleryComponent = () => {
                       {app.hog_related.thumbnail ? (
                         <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
                       ) : (
-                        <HogIcon />
+                        <Icon
+                          name='hog'
+                          width={40}
+                          height={40}
+                          fillColor='#7f7f7f'
+                          strokeColor='#7f7f7f'
+                          strokeWidth={0.5}
+                        />
                       )}
                     </div>
                     <div className={styles.lg_card} onClick={() => handleClick(app.thumbnail, "powerapp")}>
@@ -64,7 +70,15 @@ const GalleryComponent = () => {
                           />
                         </Zoom>
                       ) : (
-                        <PwaIcon />
+                        <Icon
+                          name='pwa'
+                          width={80}
+                          height={80}
+                          fillColor='#7f7f7f'
+                          strokeColor='#7f7f7f'
+                          strokeWidth={0.1}
+                          viewBox='0 0 109 127'
+                        />
                       )}
                     </div>
                   </div>

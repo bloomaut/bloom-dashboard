@@ -1,6 +1,5 @@
 "use client";
 import styles from "./styles.module.scss";
-import skin from "@/../../public/icons/skin.svg";
 import { useLocale, useTranslations } from "next-intl";
 import { useCollectionsContext } from "@/context/CollectionsContext";
 import { useRouter } from "next/navigation";
@@ -10,6 +9,7 @@ import Button from "@/components/Button";
 import TableHead from "../TableHead";
 import TableRows from "../TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import Icon from "@/components/Icon";
 
 const Table = () => {
   const { id, collectionsList, filteredCollections, loading } = useCollectionsContext();
@@ -49,7 +49,13 @@ const Table = () => {
       </div>
       {filteredCollections?.length ||
         (collectionsList && (
-          <Button title={dict("btn")} icon={skin} isDisabled={!id} onclick={handleButton} styleName='btn_collections' />
+          <Button
+            title={dict("btn")}
+            icon={<Icon name='hotlink' className={!id ? "hotlink_grey" : "hotlink_dark"} viewBox='0 0 35 35' />}
+            isDisabled={!id}
+            onclick={handleButton}
+            styleName='btn_collections'
+          />
         ))}
     </>
   );

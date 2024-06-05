@@ -17,3 +17,19 @@ export interface BusinessDataProps {
   website: string;
   _id: string;
 }
+
+export interface UpdateBusiness {
+  name: string;
+  website: string;
+  description: string;
+  instagram: string;
+  phone: string;
+}
+
+export interface UpdateBusinessLogo {
+  logo: string;
+}
+
+export interface UpdatePalette {
+  palette: PaletteItem[];
+}

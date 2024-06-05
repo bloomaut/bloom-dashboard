@@ -1,6 +1,5 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import pencilIcon from "/public/icons/edit.svg";
+import Icon from "@/components/Icon";
 import { useState } from "react";
 import { colorPalleteGenerator } from "@/utils/colorPalleteGenerator";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -63,10 +62,10 @@ const PaletteGenerator = () => {
     <form className={styles.container} onSubmit={handleSubmitPallete}>
       <div className={styles.header}>
         {(palette.length || palettePreview.length) && !edit ? (
-          <p>Paleta de Colores</p>
+          <p>{dict("business.file.palette.palette_color")}</p>
         ) : (
           <>
-            <p>Seleccione el color base 👉</p>
+            <p>{dict("business.file.palette.select_color")} 👉</p>
             <input className={styles.color_base} type='color' value={colorBase} onChange={selectedColor} />
           </>
         )}
@@ -87,7 +86,7 @@ const PaletteGenerator = () => {
                 ))}
               </div>
               <button className={styles.btn_edit} onClick={handleEdit}>
-                <Image className={styles.controls_icons} src={pencilIcon} alt='pencil-icon' />
+                <Icon name='edit' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />
               </button>
             </>
           ) : (
@@ -105,14 +104,14 @@ const PaletteGenerator = () => {
               </div>
               <div className={styles.btn_container}>
                 <button className={styles.btn} onClick={handleCancel}>
-                  Cancelar
+                  {dict("business.file.palette.cancel")}
                 </button>
                 <button className={styles.btn} onClick={handleSetPallete}>
-                  Generar
+                  {dict("business.file.palette.generate")}
                 </button>
                 {palettePreview.length > 0 && (
                   <button className={styles.btn_submit} type='submit'>
-                    Guardar
+                    {dict("business.file.palette.save")}
                   </button>
                 )}
               </div>

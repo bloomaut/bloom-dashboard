@@ -1,12 +1,11 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import fileImage from "/public/icons/cloud_black.svg";
 import { Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import Icon from "../Icon";
 
 interface FileDragDropProps {
   file?: File | null;
@@ -69,7 +68,7 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
-      <Image className={styles.icon} src={fileImage} alt='cloud-icon' />
+      <Icon name='cloud' viewBox='0 0 101 91' width={60} height={60} strokeWidth={5} />
       <p className={styles.text}>{file ? file.name : `${dict("title")}`}</p>
     </div>
   );
