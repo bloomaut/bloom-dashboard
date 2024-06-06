@@ -49,6 +49,10 @@
     @include flex(row, flex-end, center, 30px);
     @include width-height(100%, auto);
   }
+  .trainbot_text {
+    @include fontSize-fontWeight(16px, 400);
+    color: $text;
+  }
 }
 
 @media (width >= $queryXl) {
