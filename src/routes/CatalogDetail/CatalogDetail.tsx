@@ -1,12 +1,15 @@
-import Breadcrumb from "@/components/Breadcrumb";
 import styles from "./styles.module.scss";
+import { Fade } from "react-awesome-reveal";
+import { useCatalogContext } from "@/context/CatalogContext";
+import { useTranslations } from "next-intl";
+import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
+// Components
+import Breadcrumb from "@/components/Breadcrumb";
 import Title from "@/components/Title";
 import Button from "@/components/Button";
 import TableHead from "./TableHead";
-import { Fade } from "react-awesome-reveal";
+import Select from "./Select";
 import Icon from "@/components/Icon";
-import { useCatalogContext } from "@/context/CatalogContext";
-import { useTranslations } from "next-intl";
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
@@ -29,6 +32,7 @@ const Detail = () => {
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
+  const [openTrainBot, setOpenTrainBot] = useState(false);
   const [formData, setFormData] = useState<DataItemsList>(initialFormData);
   const [checkValidation, setCheckValidation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -78,6 +82,20 @@ const Detail = () => {
     }));
   };
 
+  const handleDropdown = (value: string) => {
+    // Acá después ver lógica de enpoints. Tal vez mover o cambiar
+    switch (value) {
+      case "download_post_template":
+        break;
+      case "upload_post_excel":
+        break;
+      case "download_update_template":
+        break;
+      case "upload_update_excel":
+        break;
+    }
+  };
+
   return (
     <section className={styles.catalog_detail_container}>
       <div className={styles.header_container}>
@@ -92,6 +110,18 @@ const Detail = () => {
             styleName='btn_orange'
             icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
             onclick={() => setShowPopupCreate(true)}
+          />
+        </div>
+        <div className={styles.select_container}>
+          <Select
+            options={SelectOptionsCatalog("first")}
+            placeholder={dict("catalog.select.placeholder_one")}
+            onchange={handleDropdown}
+          />
+          <Select
+            options={SelectOptionsCatalog("second")}
+            placeholder={dict("catalog.select.placeholder_two")}
+            onchange={handleDropdown}
           />
         </div>
       </div>
@@ -127,6 +157,7 @@ const Detail = () => {
           title={dict("catalog.train_bot")}
           styleName='btn_dataset'
           icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
+          onclick={() => setOpenTrainBot(true)}
         />
       </div>
       {showPopupCreate && (
@@ -171,6 +202,18 @@ const Detail = () => {
           {checkValidation && (
             <p className={errors.listimage ? styles.error : styles.error_hidden}>{errors.listimage}</p>
           )}
+        </PopupChildren>
+      )}
+      {openTrainBot && (
+        <PopupChildren
+          onCancel={() => setOpenTrainBot(false)}
+          title={dict("catalog.train_bots")}
+          textAccept={dict("popup.train")}
+          textCancel={dict("popup.cancel")}
+          onConfirm={() => setOpenTrainBot(false)}
+          setShowConfirmation={setOpenTrainBot}
+        >
+          <p className={styles.trainbot_text}>{dict("catalog.train_bots_text")}</p>
         </PopupChildren>
       )}
     </section>

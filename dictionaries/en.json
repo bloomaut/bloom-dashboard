@@ -28,6 +28,7 @@
       "delete_title": "Are you sure you want to delete this client?",
       "name": "Name",
       "confirm": "Delete",
+      "train": "Train",
       "create": "Create",
       "create_product": "Create Product",
       "cancel": "Cancel",
@@ -263,6 +264,14 @@
       "price": "Price",
       "clean_bot": "Clean Bot",
       "train_bot": "Train Bot",
+      "train_bots_text": "¿Would you line to train your UiTool Bots this menu information?",
+      "select": {
+        "placeholder_one": "Bulk Load",
+        "placeholder_two": "Mass update",
+        "option_one": "Download template",
+        "option_two": "Upload with Excel",
+        "option_three": "Download menu"
+      },
       "empty": "This catalog does not yet contain any products."
     },
     "form_validation": {

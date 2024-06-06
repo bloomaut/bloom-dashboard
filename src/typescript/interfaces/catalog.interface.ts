@@ -50,3 +50,8 @@ export interface PostDataItem {
   data: DataItemsList;
   order: number;
 }
+
+export interface selectOptions {
+  title: string;
+  value: string;
+}

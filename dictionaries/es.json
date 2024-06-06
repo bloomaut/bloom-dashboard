@@ -28,6 +28,7 @@
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
       "name": "Nombre",
       "confirm": "Eliminar",
+      "train": "Entrenar",
       "create": "Crear",
       "create_product": "Crear producto",
       "cancel": "Cancelar",
@@ -263,6 +264,14 @@
       "price": "Precio",
       "clean_bot": "Reiniciar Bot",
       "train_bot": "Entrenar Bot",
+      "train_bots_text": "¿Te gustaría entrenar tus UiTool Bots con la información de este menú?",
+      "select": {
+        "placeholder_one": "Carga masiva",
+        "placeholder_two": "Actualización masiva",
+        "option_one": "Descargar template",
+        "option_two": "Subir con Excel",
+        "option_three": "Descargar menú"
+      },
       "empty": "Este catálogo aún no contiene ningún producto."
     },
     "form_validation": {
