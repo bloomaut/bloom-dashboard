@@ -1,10 +1,13 @@
-import styles from "./styles.module.scss";
-import { useParams } from "next/navigation";
+"use client";
+import { CatalogProvider } from "@/context/CatalogContext";
+import Detail from "./CatalogDetail";
 
 const CatalogDetail = () => {
-  const { id } = useParams();
-
-  return <div>Catalog Detail</div>;
+  return (
+    <CatalogProvider>
+      <Detail />
+    </CatalogProvider>
+  );
 };
 
 export default CatalogDetail;

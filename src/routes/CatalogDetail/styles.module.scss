@@ -1,1 +1,66 @@
 @import "@/styles/theme.scss";
+
+.catalog_detail_container {
+  @include flex(column, flex-start, flex-start, 20px);
+  @include width-height(100%, auto);
+  color: $text;
+  padding: 0 40px;
+  .header_container {
+    @include width-height(100%, auto);
+    .header {
+      @include flex(row, space-between, center);
+      @include width-height(100%, auto);
+      @include fontSize-fontWeight(20px, 400);
+      .title_container {
+        @include flex(row, center, center, 15px);
+        .catalog {
+          @include fontSize-fontWeight(25px, 400);
+        }
+      }
+    }
+    .select_container {
+      @include flex(row, flex-start, flex-start, 20px);
+      @include width-height(50%, auto);
+      margin-top: 20px;
+    }
+  }
+  .table_container {
+    @include width-height(100%, auto);
+    .content_container {
+      @include width-height(100%, 280px);
+      overflow-y: auto;
+    }
+    .content_container::-webkit-scrollbar {
+      width: 5px;
+      background-color: $greyBackground;
+    }
+
+    .content_container::-webkit-scrollbar-thumb {
+      background-color: $orange;
+      border-radius: 10px;
+    }
+    .catalog_empty {
+      @include width-height(100%, auto);
+      @include flex(row, center, center);
+      padding: 30px 0;
+    }
+  }
+  .buttons {
+    @include flex(row, flex-end, center, 30px);
+    @include width-height(100%, auto);
+  }
+  .trainbot_text {
+    @include fontSize-fontWeight(16px, 400);
+    color: $text;
+  }
+}
+
+@media (width >= $queryXl) {
+  .catalog_detail_container {
+    .table_container {
+      .content_container {
+        height: 600px;
+      }
+    }
+  }
+}

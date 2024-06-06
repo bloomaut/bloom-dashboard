@@ -1,14 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get, post, update } from "@/services/fetch";
-import { DataschemaProps, DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { DataschemaProps, DatasetProps, Dataset } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setDataschemaData } from "@/store/features/dataschemaSlice";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
+  datasetDetail: Dataset | null;
   loading: boolean;
   dataschemas: DataschemaProps[];
   updateDataset: (id: string, newName: string) => Promise<void>;
@@ -17,6 +19,7 @@ interface CatalogContextType {
 
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
+  datasetDetail: null,
   loading: true,
   dataschemas: [],
   updateDataset: async () => {
@@ -30,10 +33,12 @@ const CatalogContext = createContext<CatalogContextType>({
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
+  const [datasetDetail, setDatasetDetail] = useState<Dataset | null>(null);
   const { notify, notifyError } = useMessageToast();
   const dataschemas = useAppSelector(data => data.dataschema);
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict");
+  const { id } = useParams();
 
   const fetchDatasets = async () => {
     const data = await get("datasets/small/list", ENV.BOX);
@@ -50,6 +55,13 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     setLoading(false);
   };
 
+  const fetchDatasetById = async () => {
+    const data = await get(`datasets/${id}`, ENV.BOX);
+    if (data.statusCode === 200) {
+      setDatasetDetail(data.data);
+    }
+    setLoading(false);
+  };
   useEffect(() => {
     fetchDatasets();
     fetchDataSchemas();
@@ -67,6 +79,14 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       notifyError(dict("toast.error_edit"));
     }
   };
+
+  useEffect(() => {
+    fetchDatasets();
+  }, []);
+
+  useEffect(() => {
+    if (id) fetchDatasetById();
+  }, [id]);
 
   const postDataschema = async (name: string, id: string) => {
     const postDataschema = {
@@ -86,6 +106,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     <CatalogContext.Provider
       value={{
         datasets,
+        datasetDetail,
         loading,
         updateDataset,
         postDataschema,

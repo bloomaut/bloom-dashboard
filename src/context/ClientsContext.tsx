@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { setClientsData } from "@/store/features/clientsSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 interface ClientsContextType {
@@ -38,7 +37,6 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const fetchClients = async () => {
     const data = await get("client-customer");
     if (data.statusCode === 200) {
-      dispatch(setClientsData(data.result.data));
       setClients(data.result.data);
     }
     setLoading(false);
