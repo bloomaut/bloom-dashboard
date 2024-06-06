@@ -9,9 +9,12 @@ import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
+import { useState } from "react";
+import PopupChildren from "@/components/PopupChildren";
 
 const Detail = () => {
-  const dict = useTranslations("dict.catalog");
+  const dict = useTranslations("dict");
+  const [openTrainBot, setOpenTrainBot] = useState(false);
   const { datasetDetail } = useCatalogContext();
 
   return (
@@ -20,11 +23,11 @@ const Detail = () => {
         <Breadcrumb />
         <div className={styles.header}>
           <div className={styles.title_container}>
-            <Title text={`${dict("title")}:`} />
+            <Title text={`${dict("catalog.title")}:`} />
             <p className={styles.catalog}>{datasetDetail?.dataSet.name}</p>
           </div>
           <Button
-            title={dict("add_product")}
+            title={dict("catalog.add_product")}
             styleName='btn_orange'
             icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
           />
@@ -49,21 +52,34 @@ const Detail = () => {
             </Fade>
           </div>
         ) : (
-          <p className={styles.catalog_empty}>{dict("empty")}</p>
+          <p className={styles.catalog_empty}>{dict("catalog.empty")}</p>
         )}
       </div>
       <div className={styles.buttons}>
         <Button
-          title={dict("clean_bot")}
+          title={dict("catalog.clean_bot")}
           styleName='btn_clean'
           icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
         />
         <Button
-          title={dict("train_bot")}
+          title={dict("catalog.train_bot")}
           styleName='btn_dataset'
           icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
+          onclick={() => setOpenTrainBot(true)}
         />
       </div>
+      {openTrainBot && (
+        <PopupChildren
+          onCancel={() => setOpenTrainBot(false)}
+          title={dict("catalog.train_bots")}
+          textAccept={dict("popup.train")}
+          textCancel={dict("popup.cancel")}
+          onConfirm={() => setOpenTrainBot(false)}
+          setShowConfirmation={setOpenTrainBot}
+        >
+          <p className={styles.trainbot_text}>{dict("catalog.train_bots_text")}</p>
+        </PopupChildren>
+      )}
     </section>
   );
 };
