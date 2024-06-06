@@ -261,7 +261,14 @@
       "train_bot": "Train Bot",
       "empty": "This catalog does not yet contain any products.",
       "train_bots": "Train Bots",
-      "train_bots_text": "¿Would you line to train your UiTool Bots this menu information?"
+      "train_bots_text": "¿Would you line to train your UiTool Bots this menu information?",
+      "select": {
+        "placeholder_one": "Bulk Load",
+        "placeholder_two": "Mass update",
+        "option_one": "Download template",
+        "option_two": "Upload with Excel",
+        "option_three": "Download menu"
+      }
     }
   }
 }

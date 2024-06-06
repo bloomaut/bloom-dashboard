@@ -18,11 +18,16 @@
         }
       }
     }
+    .select_container {
+      @include flex(row, flex-start, flex-start, 20px);
+      @include width-height(50%, auto);
+      margin-top: 20px;
+    }
   }
   .table_container {
     @include width-height(100%, auto);
     .content_container {
-      @include width-height(100%, 320px);
+      @include width-height(100%, 280px);
       overflow-y: auto;
     }
     .content_container::-webkit-scrollbar {

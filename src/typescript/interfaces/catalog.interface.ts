@@ -44,3 +44,8 @@ export interface Dataset {
 export interface UpdateDataset {
   name: string;
 }
+
+export interface selectOptions {
+  title: string;
+  value: string;
+}

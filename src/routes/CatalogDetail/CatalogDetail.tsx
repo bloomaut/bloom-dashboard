@@ -1,21 +1,39 @@
-import Breadcrumb from "@/components/Breadcrumb";
 import styles from "./styles.module.scss";
+import { Fade } from "react-awesome-reveal";
+import { useCatalogContext } from "@/context/CatalogContext";
+import { useTranslations } from "next-intl";
+import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
+// Components
+import Breadcrumb from "@/components/Breadcrumb";
 import Title from "@/components/Title";
 import Button from "@/components/Button";
 import TableHead from "./TableHead";
-import { Fade } from "react-awesome-reveal";
 import Icon from "@/components/Icon";
-import { useCatalogContext } from "@/context/CatalogContext";
-import { useTranslations } from "next-intl";
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
+import Select from "./Select";
 import { useState } from "react";
 import PopupChildren from "@/components/PopupChildren";
+
 
 const Detail = () => {
   const dict = useTranslations("dict");
   const [openTrainBot, setOpenTrainBot] = useState(false);
   const { datasetDetail } = useCatalogContext();
+
+  const handleDropdown = (value: string) => {
+    // Acá después ver lógica de enpoints. Tal vez mover o cambiar
+    switch (value) {
+      case "download_post_template":
+        break;
+      case "upload_post_excel":
+        break;
+      case "download_update_template":
+        break;
+      case "upload_update_excel":
+        break;
+    }
+  };
 
   return (
     <section className={styles.catalog_detail_container}>
@@ -30,6 +48,18 @@ const Detail = () => {
             title={dict("catalog.add_product")}
             styleName='btn_orange'
             icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
+          />
+        </div>
+        <div className={styles.select_container}>
+          <Select
+            options={SelectOptionsCatalog("first")}
+            placeholder={dict("select.placeholder_one")}
+            onchange={handleDropdown}
+          />
+          <Select
+            options={SelectOptionsCatalog("second")}
+            placeholder={dict("select.placeholder_two")}
+            onchange={handleDropdown}
           />
         </div>
       </div>
