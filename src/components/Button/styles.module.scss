@@ -117,6 +117,43 @@
     }
   }
 }
+.btn_orange {
+  @include flex(row, center, center, 5px);
+  @include fontSize-fontWeight(16px, 300);
+  @include width-height(171px, 35px);
+  white-space: nowrap;
+  text-align: center;
+  color: $white;
+  background-color: $orange;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  &:hover {
+    background-color: $darkOrange;
+  }
+}
+.btn_dataset {
+  @include flex(row, center, center, 5px);
+}
+.btn_clean {
+  @extend .btn_outline;
+  color: $lightGrey;
+  &:hover {
+    color: #fff;
+    svg {
+      path {
+        stroke: #fff;
+        &:nth-of-type(2) {
+          fill: #b12b2b;
+        }
+        &:nth-of-type(1) {
+          fill: $orange;
+        }
+      }
+    }
+  }
+}
 
 @media (min-width: $queryLg) {
   .btn {

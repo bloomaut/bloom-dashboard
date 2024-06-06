@@ -251,7 +251,13 @@
     "catalog": {
       "title": "Catálogo",
       "ia": "Subir con IA",
-      "new": "Nuevo catálogo"
+      "new": "Nuevo catálogo",
+      "add_product": "Agregar Producto",
+      "name": "Nombre",
+      "description": "Descripción",
+      "price": "Precio",
+      "clean_bot": "Reiniciar Bot",
+      "train_bot": "Entrenar Bot"
     }
   }
 }
