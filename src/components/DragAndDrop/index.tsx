@@ -79,7 +79,7 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
       <Icon name='cloud' viewBox='0 0 101 91' width={60} height={60} strokeWidth={5} />
-      <p className={styles.text}>{file ? file.name : `${dict("title")}`}</p>
+      <p className={styles.text}>{file ? file.name : catalogPage ? `${dict("image")}` : `${dict("title")}`}</p>
     </div>
   );
 };

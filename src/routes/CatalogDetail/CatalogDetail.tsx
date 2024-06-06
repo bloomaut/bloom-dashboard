@@ -37,7 +37,6 @@ const Detail = () => {
       try {
         const response = await postFile("small-files/media", file);
         if (response.data.statusCode === 201) {
-          console.log(response);
           const logoUrl = response.data.result.media.url;
           const dataToSend = {
             dataset: datasetDetail?.dataSet._id ?? "",

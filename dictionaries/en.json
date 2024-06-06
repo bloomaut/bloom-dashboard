@@ -6,7 +6,8 @@
       "btn2": "Go back"
     },
     "drag": {
-      "title": "Drag or drop your files here"
+      "title": "Drag or drop your files here",
+      "image": "Select image"
     },
     "sidebar": {
       "home": "Home",

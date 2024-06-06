@@ -6,7 +6,8 @@
       "btn2": "Volver"
     },
     "drag": {
-      "title": "Arrastrá o soltá tus archivos aquí"
+      "title": "Arrastrá o soltá tus archivos aquí",
+      "image": "Seleccionar imagen"
     },
     "sidebar": {
       "home": "Inicio",
