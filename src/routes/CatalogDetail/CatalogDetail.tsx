@@ -15,7 +15,6 @@ import Select from "./Select";
 import { useState } from "react";
 import PopupChildren from "@/components/PopupChildren";
 
-
 const Detail = () => {
   const dict = useTranslations("dict");
   const [openTrainBot, setOpenTrainBot] = useState(false);

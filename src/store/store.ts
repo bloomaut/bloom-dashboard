@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./features/userSlice";
 import businessSlice from "./features/businessSlice";
 import filesSlice from "./features/filesSlice";
-import ClientsSlice from "./features/clientsSlice";
 import DataschemaSlice from "./features/dataschemaSlice";
 
 export const store = configureStore({
@@ -10,7 +9,6 @@ export const store = configureStore({
     user: userSlice,
     business: businessSlice,
     files: filesSlice,
-    clients: ClientsSlice,
     dataschema: DataschemaSlice,
   },
 });
