@@ -3,6 +3,7 @@ import userSlice from "./features/userSlice";
 import businessSlice from "./features/businessSlice";
 import filesSlice from "./features/filesSlice";
 import ClientsSlice from "./features/clientsSlice";
+import DataschemaSlice from "./features/dataschemaSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     business: businessSlice,
     files: filesSlice,
     clients: ClientsSlice,
+    dataschema: DataschemaSlice,
   },
 });
 

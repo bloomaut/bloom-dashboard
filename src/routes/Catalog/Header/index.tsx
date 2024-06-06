@@ -15,8 +15,13 @@ const Header = () => {
 
   const onChangeInput = (e: any) => {
     setInputValue(e.target.value);
-    console.log(e.target.value);
   };
+
+  const handleCreate = () => {
+    setShowPopupCreate(true);
+    setInputValue("");
+  };
+
   return (
     <div className={styles.header}>
       <Title text={dict("title")} />
@@ -30,7 +35,7 @@ const Header = () => {
           title={dict("new")}
           icon={<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
           styleName='btn_reverse'
-          onclick={() => setShowPopupCreate(true)}
+          onclick={handleCreate}
         />
         {showPopupCreate && (
           <PopupChildren
@@ -43,7 +48,7 @@ const Header = () => {
             children={
               <Input
                 type='text'
-                name='Nombre'
+                name='Name'
                 textHolder={dictpopup("name")}
                 value={inputValue}
                 handleChange={onChangeInput}

@@ -50,7 +50,9 @@
       "client_delete": "Cliente eliminado correctamente",
       "client_post_error": "Error al crear cliente",
       "client_edit_error": "Error al actualizar cliente",
-      "client_delete_error": "Error al eliminar cliente"
+      "client_delete_error": "Error al eliminar cliente",
+      "post_dataset": "Dataset publicado correctamente",
+      "error_dataset": "Error al publicar dataset"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
