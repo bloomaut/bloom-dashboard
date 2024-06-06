@@ -34,6 +34,7 @@
     },
     "toast": {
       "success_img": "Image uploaded successfully",
+      "success_item": "Product upload successfully",
       "success_file": "File uploaded successfully",
       "success_edit": "Information updated successfully",
       "success_delete": "File deleted successfully",
@@ -41,6 +42,7 @@
       "error_name": "Name is required",
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
+      "error_item": "Error uploading product",
       "error_file": "Error deleting file",
       "error_palette": "Error updating palette",
       "empty_fields": "All fields are required",

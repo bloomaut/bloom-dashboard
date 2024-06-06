@@ -15,6 +15,7 @@ import { DataItemsList } from "@/typescript/interfaces/catalog.interface";
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
 import { postFile } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
 
 const initialFormData = {
   listname: "",
@@ -25,6 +26,7 @@ const initialFormData = {
 
 const Detail = () => {
   const dict = useTranslations("dict");
+  const { notify, notifyError } = useMessageToast();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [formData, setFormData] = useState<DataItemsList>(initialFormData);
   const [file, setFile] = useState<File | null>(null);
@@ -38,6 +40,7 @@ const Detail = () => {
         const response = await postFile("small-files/media", file);
         if (response.data.statusCode === 201) {
           const logoUrl = response.data.result.media.url;
+
           const dataToSend = {
             dataset: datasetDetail?.dataSet._id ?? "",
             data: {
@@ -46,12 +49,16 @@ const Detail = () => {
             },
             order: 0,
           };
+
           await postDataItem(dataToSend);
+
+          notify(dict("toast.success_item"));
           setShowPopupCreate(false);
           setFormData(initialFormData);
           setFile(null);
         }
       } catch (error) {
+        notify(dict("toast.error_item"));
         console.error("Error updating dataset:", error);
       }
     }

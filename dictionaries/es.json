@@ -34,6 +34,7 @@
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
+      "success_item": "Producto añadido correctamente",
       "success_file": "Archivo subido correctamente",
       "success_edit": "Información actualizada correctamente",
       "success_delete": "Achivo eliminado correctamente",
@@ -41,6 +42,7 @@
       "error_name": "El nombre es obligatorio",
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
+      "error_item": "Error al subir el producto",
       "error_file": "Error al eliminar el archivo",
       "error_palette": "Error al subir la paleta",
       "empty_fields": "Todos los campos son requeridos",

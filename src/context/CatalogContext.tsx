@@ -53,10 +53,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const postDataItem = async (formData: PostDataItem) => {
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {
-      notify("Producto añadido correctamente");
       fetchDatasetById();
-    } else {
-      notifyError("Error al añadir el producto");
     }
   };
 
