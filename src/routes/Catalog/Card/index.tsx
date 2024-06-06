@@ -1,16 +1,17 @@
 import Button from "@/components/Button";
 import styles from "./styles.module.scss";
-import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import Icon from "@/components/Icon";
 import PopupChildren from "@/components/PopupChildren";
-import { useState } from "react";
+import PopupConfirm from "@/components/PopupConfirm";
 import Input from "@/components/Input";
+import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { useState } from "react";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
-import PopupConfirm from "@/components/PopupConfirm";
 import { remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
+import { Link } from "@/navigation";
 
 const Card = ({ name, _id }: DatasetProps) => {
   const [showPopupEdit, setShowPopupEdit] = useState(false);
@@ -35,7 +36,6 @@ const Card = ({ name, _id }: DatasetProps) => {
   const submitDelete = async () => {
     if (_id) {
       const response = await remove("datasets", dataSetId, ENV.BOX);
-      console.log(response);
       if (response.statusCode === 200) {
         setShowPopupDelete(false);
         notify(`${dict("toast.success_delete_catalog")}`);
@@ -48,7 +48,9 @@ const Card = ({ name, _id }: DatasetProps) => {
 
   return (
     <div className={styles.card}>
-      <h1 className={styles.name}>{name}</h1>
+      <Link href={`/catalog/${_id}`} className={styles.name}>
+        {name}
+      </Link>
       <div className={styles.btn_container}>
         <Button
           title=''
