@@ -19,6 +19,14 @@ interface DataItemsList {
   listprice: number;
 }
 
+interface DataItems {
+  order: number;
+  _id: string;
+  data: DataItemsList;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface DatasetProps {
   order: number;
   _id: string;
@@ -28,12 +36,9 @@ export interface DatasetProps {
   updatedAt: string;
 }
 
-export interface DataItems {
-  order: number;
-  _id: string;
-  data: DataItemsList;
-  createdAt: string;
-  updatedAt: string;
+export interface Dataset {
+  dataItems: DataItems[];
+  dataSet: DatasetProps;
 }
 
 export interface UpdateDataset {

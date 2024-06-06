@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get, update } from "@/services/fetch";
-import { DatasetProps, DataItems } from "@/typescript/interfaces/catalog.interface";
+import { DatasetProps, Dataset } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -8,14 +8,14 @@ import { useParams } from "next/navigation";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
-  datasetDetail: DataItems[];
+  datasetDetail: Dataset | null;
   loading: boolean;
   updateDataset: (id: string, newName: string) => Promise<void>;
 }
 
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
-  datasetDetail: [],
+  datasetDetail: null,
   loading: true,
   updateDataset: async () => {
     throw new Error("updateDataset function not implemented");
@@ -25,7 +25,7 @@ const CatalogContext = createContext<CatalogContextType>({
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
-  const [datasetDetail, setDatasetDetail] = useState<DataItems[]>([]);
+  const [datasetDetail, setDatasetDetail] = useState<Dataset | null>(null);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
   const { id } = useParams();
@@ -41,7 +41,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const fetchDatasetById = async () => {
     const data = await get(`datasets/${id}`, ENV.BOX);
     if (data.statusCode === 200) {
-      setDatasetDetail(data.data.dataItems);
+      setDatasetDetail(data.data);
     }
     setLoading(false);
   };

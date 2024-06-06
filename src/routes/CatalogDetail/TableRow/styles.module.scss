@@ -19,5 +19,6 @@
     @include flex(row, center, center, 5px);
     border-left: none;
     padding-left: 0px;
+    cursor: pointer;
   }
 }

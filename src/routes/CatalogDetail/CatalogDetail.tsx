@@ -8,6 +8,7 @@ import Icon from "@/components/Icon";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
 import TableRow from "./TableRow";
+import LoadingSpinner from "@/components/Loading";
 
 const Detail = () => {
   const dict = useTranslations("dict.catalog");
@@ -20,7 +21,7 @@ const Detail = () => {
         <div className={styles.header}>
           <div className={styles.title_container}>
             <Title text={`${dict("title")}:`} />
-            <p>Nombre de catálogo acá</p>
+            <p className={styles.catalog}>{datasetDetail?.dataSet.name}</p>
           </div>
           <Button
             title={dict("add_product")}
@@ -31,19 +32,25 @@ const Detail = () => {
       </div>
       <div className={styles.table_container}>
         <TableHead />
-        <div className={styles.content_container}>
-          <Fade cascade damping={0.3} triggerOnce>
-            {datasetDetail.map((item, index) => (
-              <TableRow
-                key={index}
-                name={item.data.listname}
-                description={item.data.listdescr}
-                price={item.data.listprice}
-                image={item.data.listimage}
-              />
-            ))}
-          </Fade>
-        </div>
+        {datasetDetail ? (
+          <>
+            <div className={styles.content_container}>
+              <Fade cascade damping={0.3} triggerOnce>
+                {datasetDetail?.dataItems.map((item, index) => (
+                  <TableRow
+                    key={index}
+                    name={item.data.listname}
+                    description={item.data.listdescr}
+                    price={item.data.listprice}
+                    image={item.data.listimage}
+                  />
+                ))}
+              </Fade>
+            </div>
+          </>
+        ) : (
+          <LoadingSpinner />
+        )}
       </div>
       <div className={styles.buttons}>
         <Button
