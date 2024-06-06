@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { get, update } from "@/services/fetch";
-import { DatasetProps, Dataset } from "@/typescript/interfaces/catalog.interface";
+import { get, post, update } from "@/services/fetch";
+import { DatasetProps, Dataset, PostDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -10,6 +10,7 @@ interface CatalogContextType {
   datasets: DatasetProps[];
   datasetDetail: Dataset | null;
   loading: boolean;
+  postDataItem: (formData: PostDataItem) => Promise<void>;
   updateDataset: (id: string, newName: string) => Promise<void>;
 }
 
@@ -19,6 +20,9 @@ const CatalogContext = createContext<CatalogContextType>({
   loading: true,
   updateDataset: async () => {
     throw new Error("updateDataset function not implemented");
+  },
+  postDataItem: async () => {
+    throw new Error("postDataItem function not implemented");
   },
 });
 
@@ -44,6 +48,16 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       setDatasetDetail(data.data);
     }
     setLoading(false);
+  };
+
+  const postDataItem = async (formData: PostDataItem) => {
+    const data = await post("dataitem", formData, ENV.BOX);
+    if (data.data.statusCode === 201) {
+      notify("Producto añadido correctamente");
+      fetchDatasetById();
+    } else {
+      notifyError("Error al añadir el producto");
+    }
   };
 
   const updateDataset = async (id: string, newName: string) => {
@@ -73,6 +87,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
         datasets,
         datasetDetail,
         loading,
+        postDataItem,
         updateDataset,
       }}
     >

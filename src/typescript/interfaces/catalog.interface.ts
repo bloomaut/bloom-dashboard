@@ -12,10 +12,10 @@ interface DatasetField {
   required: boolean;
 }
 
-interface DataItemsList {
+export interface DataItemsList {
   listname: string;
   listdescr: string;
-  listimage: string;
+  listimage: string | File;
   listprice: number;
 }
 
@@ -43,4 +43,10 @@ export interface Dataset {
 
 export interface UpdateDataset {
   name: string;
+}
+
+export interface PostDataItem {
+  dataset: string;
+  data: DataItemsList;
+  order: number;
 }

@@ -19,6 +19,8 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
   const dict = useTranslations("dict.drag");
 
   const businessPage = pathname?.includes("business");
+  const myCollectionPage = pathname?.includes("my-collection");
+  const catalogPage = pathname?.includes("catalog");
 
   const onDrop = (acceptedFiles: File[], fileRejections: any) => {
     // Si hay errores, manejarlos acá
@@ -43,8 +45,16 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
         }
       }
 
+      if (catalogPage) {
+        if (!acceptedFiles[0].type.includes("image")) {
+          notifyError("Debes seleccionar una imagen");
+        } else {
+          setFile(acceptedFiles[0]);
+        }
+      }
+
       // Lógica para controlar la carga en my-collection
-      if (!businessPage) {
+      if (myCollectionPage) {
         // Solo permitir la carga de planillas de excel
         if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
           notifyError("Debes seleccionar una planilla de excel");

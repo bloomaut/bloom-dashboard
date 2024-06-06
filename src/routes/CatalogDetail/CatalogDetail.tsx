@@ -9,10 +9,58 @@ import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
+import PopupChildren from "@/components/PopupChildren";
+import { useState } from "react";
+import { DataItemsList } from "@/typescript/interfaces/catalog.interface";
+import Input from "@/components/Input";
+import DragAndDrop from "@/components/DragAndDrop";
+
+const initialFormData = {
+  listname: "",
+  listdescr: "",
+  listprice: 0,
+  listimage: "",
+};
 
 const Detail = () => {
-  const dict = useTranslations("dict.catalog");
-  const { datasetDetail } = useCatalogContext();
+  const dict = useTranslations("dict");
+  const [showPopupCreate, setShowPopupCreate] = useState(false);
+  const [formData, setFormData] = useState<DataItemsList>(initialFormData);
+  const [file, setFile] = useState<File | null>(null);
+  const { datasetDetail, postDataItem } = useCatalogContext();
+
+  const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (file) {
+      try {
+        const dataToSend = {
+          dataset: datasetDetail?.dataSet._id ?? "",
+          data: {
+            ...formData,
+            listimage: file,
+          },
+          order: 0,
+        };
+        await postDataItem(dataToSend);
+        setShowPopupCreate(false);
+        setFormData(initialFormData);
+        setFile(null);
+      } catch (error) {
+        console.error("Error updating dataset:", error);
+      }
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  console.log(datasetDetail);
 
   return (
     <section className={styles.catalog_detail_container}>
@@ -20,13 +68,14 @@ const Detail = () => {
         <Breadcrumb />
         <div className={styles.header}>
           <div className={styles.title_container}>
-            <Title text={`${dict("title")}:`} />
+            <Title text={`${dict("catalog.title")}:`} />
             <p className={styles.catalog}>{datasetDetail?.dataSet.name}</p>
           </div>
           <Button
-            title={dict("add_product")}
+            title={dict("catalog.add_product")}
             styleName='btn_orange'
             icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
+            onclick={() => setShowPopupCreate(true)}
           />
         </div>
       </div>
@@ -43,27 +92,60 @@ const Detail = () => {
                   name={item.data.listname}
                   description={item.data.listdescr}
                   price={item.data.listprice}
-                  image={item.data.listimage}
+                  image={typeof item.data.listimage === "string" ? item.data.listimage : ""}
                 />
               ))}
             </Fade>
           </div>
         ) : (
-          <p className={styles.catalog_empty}>{dict("empty")}</p>
+          <p className={styles.catalog_empty}>{dict("catalog.empty")}</p>
         )}
       </div>
       <div className={styles.buttons}>
         <Button
-          title={dict("clean_bot")}
+          title={dict("catalog.clean_bot")}
           styleName='btn_clean'
           icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
         />
         <Button
-          title={dict("train_bot")}
+          title={dict("catalog.train_bot")}
           styleName='btn_dataset'
           icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
         />
       </div>
+      {showPopupCreate && (
+        <PopupChildren
+          title='Agregar Producto'
+          onConfirm={handleCreate}
+          onCancel={() => setShowPopupCreate(false)}
+          setShowConfirmation={setShowPopupCreate}
+          textCancel={dict("popup.cancel")}
+          textAccept={dict("popup.create")}
+        >
+          <Input
+            type='text'
+            textHolder={"Name"}
+            name='listname'
+            value={formData.listname}
+            handleChange={handleChange}
+          />
+          <Input
+            type='text'
+            textHolder={"Descripcion"}
+            name='listdescr'
+            value={formData.listdescr}
+            handleChange={handleChange}
+          />
+          <Input
+            type='number'
+            textHolder={"Precio"}
+            name='listprice'
+            value={formData.listprice.toString()}
+            handleChange={handleChange}
+          />
+          <DragAndDrop file={file} setFile={setFile} />
+        </PopupChildren>
+      )}
     </section>
   );
 };
