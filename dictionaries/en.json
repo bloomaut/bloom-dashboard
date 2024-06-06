@@ -258,7 +258,14 @@
       "price": "Price",
       "clean_bot": "Clean Bot",
       "train_bot": "Train Bot",
-      "empty": "This catalog does not yet contain any products."
+      "empty": "This catalog does not yet contain any products.",
+      "select": {
+        "placeholder_one": "Bulk Load",
+        "placeholder_two": "Mass update",
+        "option_one": "Download template",
+        "option_two": "Upload with Excel",
+        "option_three": "Download menu"
+      }
     }
   }
 }

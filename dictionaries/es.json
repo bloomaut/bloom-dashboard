@@ -258,7 +258,14 @@
       "price": "Precio",
       "clean_bot": "Reiniciar Bot",
       "train_bot": "Entrenar Bot",
-      "empty": "Este catálogo aún no contiene ningún producto."
+      "empty": "Este catálogo aún no contiene ningún producto.",
+      "select": {
+        "placeholder_one": "Carga masiva",
+        "placeholder_two": "Actualización masiva",
+        "option_one": "Descargar template",
+        "option_two": "Subir con Excel",
+        "option_three": "Descargar menú"
+      }
     }
   }
 }

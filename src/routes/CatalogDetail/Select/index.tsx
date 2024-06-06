@@ -4,11 +4,12 @@ import styles from "./styles.module.scss";
 interface DetailProps {
   options: Array<selectOptions>;
   placeholder: string;
+  onchange: (e: string) => void;
 }
 
-const Select = ({ options, placeholder }: DetailProps) => {
+const Select = ({ options, placeholder, onchange }: DetailProps) => {
   return (
-    <select className={styles.select_container}>
+    <select className={styles.select_container} onChange={e => onchange(e.target.value)}>
       <option disabled selected hidden>
         {placeholder}
       </option>

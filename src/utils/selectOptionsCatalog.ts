@@ -1,10 +1,21 @@
 import { selectOptions } from "@/typescript/interfaces/catalog.interface";
+import { useTranslations } from "next-intl";
 
-export const firstSelect: Array<selectOptions> = [
-  { title: "Descargar template", value: "download_post_template" },
-  { title: "Subir con Excel", value: "upload_post_excel" },
-];
-export const secondSelect: Array<selectOptions> = [
-  { title: "Descargar menú", value: "download_update_template" },
-  { title: "Subir con Excel", value: "upload_update_excel" },
-];
+export const SelectOptionsCatalog = (value: string) => {
+  const dict = useTranslations("dict.catalog.select");
+
+  const firstSelect: Array<selectOptions> = [
+    { title: `${dict("option_one")}`, value: "download_post_template" },
+    { title: `${dict("option_two")}`, value: "upload_post_excel" },
+  ];
+
+  const secondSelect: Array<selectOptions> = [
+    { title: `${dict("option_three")}`, value: "download_update_template" },
+    { title: `${dict("option_two")}`, value: "upload_update_excel" },
+  ];
+
+  if (value === "first") {
+    return firstSelect;
+  }
+  return secondSelect;
+};
