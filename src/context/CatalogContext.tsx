@@ -10,21 +10,21 @@ import { setDataschemaData } from "@/store/features/dataschemaSlice";
 interface CatalogContextType {
   datasets: DatasetProps[];
   loading: boolean;
+  dataschemas: DataschemaProps[];
   updateDataset: (id: string, newName: string) => Promise<void>;
   postDataschema: (name: string, id: string) => Promise<void>;
-  dataschemas: DataschemaProps[];
 }
 
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
   loading: true,
+  dataschemas: [],
   updateDataset: async () => {
     throw new Error("updateDataset function not implemented");
   },
   postDataschema: async () => {
     throw new Error("postDataschema function not implemented");
   },
-  dataschemas: [],
 });
 
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
@@ -53,7 +53,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   useEffect(() => {
     fetchDatasets();
     fetchDataSchemas();
-  }, []);
+  }, [datasets]);
 
   const updateDataset = async (id: string, newName: string) => {
     const updatedDataset = {
@@ -75,9 +75,8 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       order: 0,
     };
     const response = await post("datasets", postDataschema, ENV.BOX);
-    if (response.statusCode === 200) {
+    if (response.data.statusCode === 201) {
       notify(dict("toast.post_dataset"));
-      fetchDataSchemas();
     } else {
       notifyError(dict("toast.error_dataset"));
     }
