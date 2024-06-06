@@ -29,8 +29,10 @@
       "name": "Name",
       "confirm": "Delete",
       "create": "Create",
+      "create_product": "Create Product",
       "cancel": "Cancel",
-      "edit": "Edit"
+      "edit": "Edit",
+      "required": "* All fields are required"
     },
     "toast": {
       "success_img": "Image uploaded successfully",
@@ -262,6 +264,15 @@
       "clean_bot": "Clean Bot",
       "train_bot": "Train Bot",
       "empty": "This catalog does not yet contain any products."
+    },
+    "form_validation": {
+      "ClientFirstname": "The name is required",
+      "ClientEmail_01": "Email is required",
+      "ClientEmail_02": "Invalid email format",
+      "listname": "The product name is required",
+      "listdescr": "Product description is required",
+      "listprice": "The price of the product must be greater than 0",
+      "listimage": "The product must contain an image"
     }
   }
 }

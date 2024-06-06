@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { FormEvent, SetStateAction } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import { useTranslations } from "next-intl";
 
 interface PopupChildrenProps {
   onConfirm: (e: FormEvent<HTMLFormElement>) => void;
@@ -10,6 +11,7 @@ interface PopupChildrenProps {
   textCancel: string;
   textAccept: string;
   children: React.ReactNode;
+  validation?: boolean;
 }
 
 const PopupChildren = ({
@@ -20,13 +22,16 @@ const PopupChildren = ({
   textCancel,
   textAccept,
   children,
+  validation = false,
 }: PopupChildrenProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
+  const dict = useTranslations("dict.popup");
 
   return (
     <section className={styles.popup_container}>
       <div className={styles.container} ref={dropdownRef}>
         <p>{title}</p>
+        {validation && <p className={styles.validation}>{dict("required")}</p>}
         {children}
         <form className={styles.button_container} onSubmit={onConfirm}>
           <button className={styles.no} onClick={onCancel}>

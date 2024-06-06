@@ -16,6 +16,7 @@ import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
 import { postFile } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import useFormValidator from "@/hooks/useFormValidator";
 
 const initialFormData = {
   listname: "",
@@ -29,33 +30,38 @@ const Detail = () => {
   const { notify, notifyError } = useMessageToast();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [formData, setFormData] = useState<DataItemsList>(initialFormData);
+  const [checkValidation, setCheckValidation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const { datasetDetail, postDataItem } = useCatalogContext();
+  const errors = useFormValidator(formData, file);
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setCheckValidation(true);
     if (file) {
       try {
-        const response = await postFile("small-files/media", file);
-        if (response.data.statusCode === 201) {
-          const logoUrl = response.data.result.media.url;
+        if (Object.keys(errors).length === 0) {
+          const response = await postFile("small-files/media", file);
+          if (response.data.statusCode === 201) {
+            const logoUrl = response.data.result.media.url;
 
-          const dataToSend = {
-            dataset: datasetDetail?.dataSet._id ?? "",
-            data: {
-              ...formData,
-              listimage: logoUrl,
-            },
-            order: 0,
-          };
+            const dataToSend = {
+              dataset: datasetDetail?.dataSet._id ?? "",
+              data: {
+                ...formData,
+                listimage: logoUrl,
+              },
+              order: 0,
+            };
 
-          await postDataItem(dataToSend);
+            await postDataItem(dataToSend);
 
-          notify(dict("toast.success_item"));
-          setShowPopupCreate(false);
-          setFormData(initialFormData);
-          setFile(null);
+            notify(dict("toast.success_item"));
+            setShowPopupCreate(false);
+            setFormData(initialFormData);
+            setFile(null);
+            setCheckValidation(false);
+          }
         }
       } catch (error) {
         notifyError(dict("toast.error_item"));
@@ -125,7 +131,8 @@ const Detail = () => {
       </div>
       {showPopupCreate && (
         <PopupChildren
-          title='Agregar Producto'
+          validation
+          title={dict("popup.create_product")}
           onConfirm={handleCreate}
           onCancel={() => setShowPopupCreate(false)}
           setShowConfirmation={setShowPopupCreate}
@@ -139,6 +146,7 @@ const Detail = () => {
             value={formData.listname}
             handleChange={handleChange}
           />
+          {checkValidation && <p className={errors.listname ? styles.error : styles.error_hidden}>{errors.listname}</p>}
           <Input
             type='text'
             textHolder={"Descripcion"}
@@ -146,6 +154,9 @@ const Detail = () => {
             value={formData.listdescr}
             handleChange={handleChange}
           />
+          {checkValidation && (
+            <p className={errors.listdescr ? styles.error : styles.error_hidden}>{errors.listdescr}</p>
+          )}
           <Input
             type='number'
             textHolder={"Precio"}
@@ -153,7 +164,13 @@ const Detail = () => {
             value={formData.listprice === 0 ? "" : formData.listprice}
             handleChange={handleChange}
           />
+          {checkValidation && (
+            <p className={errors.listprice ? styles.error : styles.error_hidden}>{errors.listprice}</p>
+          )}
           <DragAndDrop file={file} setFile={setFile} />
+          {checkValidation && (
+            <p className={errors.listimage ? styles.error : styles.error_hidden}>{errors.listimage}</p>
+          )}
         </PopupChildren>
       )}
     </section>
