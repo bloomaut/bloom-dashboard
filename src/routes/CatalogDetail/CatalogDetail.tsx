@@ -14,6 +14,7 @@ import { useState } from "react";
 import { DataItemsList } from "@/typescript/interfaces/catalog.interface";
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
+import { postFile } from "@/services/fetch";
 
 const initialFormData = {
   listname: "",
@@ -34,18 +35,23 @@ const Detail = () => {
 
     if (file) {
       try {
-        const dataToSend = {
-          dataset: datasetDetail?.dataSet._id ?? "",
-          data: {
-            ...formData,
-            listimage: file,
-          },
-          order: 0,
-        };
-        await postDataItem(dataToSend);
-        setShowPopupCreate(false);
-        setFormData(initialFormData);
-        setFile(null);
+        const response = await postFile("small-files/media", file);
+        if (response.data.statusCode === 201) {
+          console.log(response);
+          const logoUrl = response.data.result.media.url;
+          const dataToSend = {
+            dataset: datasetDetail?.dataSet._id ?? "",
+            data: {
+              ...formData,
+              listimage: logoUrl,
+            },
+            order: 0,
+          };
+          await postDataItem(dataToSend);
+          setShowPopupCreate(false);
+          setFormData(initialFormData);
+          setFile(null);
+        }
       } catch (error) {
         console.error("Error updating dataset:", error);
       }
@@ -59,8 +65,6 @@ const Detail = () => {
       [name]: value,
     }));
   };
-
-  console.log(datasetDetail);
 
   return (
     <section className={styles.catalog_detail_container}>
@@ -92,7 +96,7 @@ const Detail = () => {
                   name={item.data.listname}
                   description={item.data.listdescr}
                   price={item.data.listprice}
-                  image={typeof item.data.listimage === "string" ? item.data.listimage : ""}
+                  image={item.data.listimage}
                 />
               ))}
             </Fade>

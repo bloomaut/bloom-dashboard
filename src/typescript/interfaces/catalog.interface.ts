@@ -15,7 +15,7 @@ interface DatasetField {
 export interface DataItemsList {
   listname: string;
   listdescr: string;
-  listimage: string | File;
+  listimage: string;
   listprice: number;
 }
 
