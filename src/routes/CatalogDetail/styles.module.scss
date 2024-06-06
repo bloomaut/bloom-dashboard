@@ -34,6 +34,11 @@
       background-color: $orange;
       border-radius: 10px;
     }
+    .catalog_empty {
+      @include width-height(100%, auto);
+      @include flex(row, center, center);
+      padding: 30px 0;
+    }
   }
   .buttons {
     @include flex(row, flex-end, center, 30px);

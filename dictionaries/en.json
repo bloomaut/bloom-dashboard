@@ -257,7 +257,8 @@
       "description": "Description",
       "price": "Price",
       "clean_bot": "Clean Bot",
-      "train_bot": "Train Bot"
+      "train_bot": "Train Bot",
+      "empty": "This catalog does not yet contain any products."
     }
   }
 }

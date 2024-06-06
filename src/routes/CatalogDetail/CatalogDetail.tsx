@@ -32,24 +32,24 @@ const Detail = () => {
       </div>
       <div className={styles.table_container}>
         <TableHead />
-        {datasetDetail ? (
-          <>
-            <div className={styles.content_container}>
-              <Fade cascade damping={0.3} triggerOnce>
-                {datasetDetail?.dataItems.map((item, index) => (
-                  <TableRow
-                    key={index}
-                    name={item.data.listname}
-                    description={item.data.listdescr}
-                    price={item.data.listprice}
-                    image={item.data.listimage}
-                  />
-                ))}
-              </Fade>
-            </div>
-          </>
-        ) : (
+        {!datasetDetail ? (
           <LoadingSpinner />
+        ) : datasetDetail?.dataItems.length ? (
+          <div className={styles.content_container}>
+            <Fade cascade damping={0.3} triggerOnce>
+              {datasetDetail.dataItems.map((item, index) => (
+                <TableRow
+                  key={index}
+                  name={item.data.listname}
+                  description={item.data.listdescr}
+                  price={item.data.listprice}
+                  image={item.data.listimage}
+                />
+              ))}
+            </Fade>
+          </div>
+        ) : (
+          <p className={styles.catalog_empty}>{dict("empty")}</p>
         )}
       </div>
       <div className={styles.buttons}>
