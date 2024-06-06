@@ -9,6 +9,17 @@ import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
+import Select from "./Select";
+import { selectOptions } from "@/typescript/interfaces/catalog.interface";
+
+const firstSelect: Array<selectOptions> = [
+  { title: "Descargar template", value: "download_post_template" },
+  { title: "Subir con Excel", value: "upload_post_excel" },
+];
+const secondSelect: Array<selectOptions> = [
+  { title: "Descargar menú", value: "download_update_template" },
+  { title: "Subir con Excel", value: "upload_update_excel" },
+];
 
 const Detail = () => {
   const dict = useTranslations("dict.catalog");
@@ -28,6 +39,10 @@ const Detail = () => {
             styleName='btn_orange'
             icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
           />
+        </div>
+        <div className={styles.select_container}>
+          <Select options={firstSelect} placeholder='Carga masiva' />
+          <Select options={secondSelect} placeholder='Actualización masiva' />
         </div>
       </div>
       <div className={styles.table_container}>
