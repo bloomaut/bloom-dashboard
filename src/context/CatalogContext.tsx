@@ -9,6 +9,7 @@ interface CatalogContextType {
   datasets: DatasetProps[];
   loading: boolean;
   updateDataset: (id: string, newName: string) => Promise<void>;
+  fetchDatasets: () => Promise<void>;
 }
 
 const CatalogContext = createContext<CatalogContextType>({
@@ -16,6 +17,9 @@ const CatalogContext = createContext<CatalogContextType>({
   loading: true,
   updateDataset: async () => {
     throw new Error("updateDataset function not implemented");
+  },
+  fetchDatasets: async () => {
+    throw new Error("fetchDatasets function not implemented");
   },
 });
 
@@ -56,6 +60,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
         datasets,
         loading,
         updateDataset,
+        fetchDatasets,
       }}
     >
       {children}
