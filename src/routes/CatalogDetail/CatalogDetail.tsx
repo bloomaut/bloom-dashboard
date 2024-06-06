@@ -150,7 +150,7 @@ const Detail = () => {
             type='number'
             textHolder={"Precio"}
             name='listprice'
-            value={formData.listprice}
+            value={formData.listprice === 0 ? "" : formData.listprice}
             handleChange={handleChange}
           />
           <DragAndDrop file={file} setFile={setFile} />
