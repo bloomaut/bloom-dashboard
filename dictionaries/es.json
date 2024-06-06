@@ -25,6 +25,7 @@
     },
     "popup": {
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
+      "delete_product": "¿Estás seguro que desea eliminar este producto?",
       "name": "Nombre",
       "confirm": "Eliminar",
       "train": "Entrenar",
@@ -38,6 +39,8 @@
       "success_edit": "Información actualizada correctamente",
       "success_delete": "Achivo eliminado correctamente",
       "success_palette": "Paleta actualizada correctamente",
+      "success_product_deleted": "Producto eliminado correctamente",
+      "error_product_deleted": "Error al eliminar un producto",
       "error_name": "El nombre es obligatorio",
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",

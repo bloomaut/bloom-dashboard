@@ -154,6 +154,14 @@
     }
   }
 }
+.bg_transparent {
+  background: transparent;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: transparent;
+    transform: scale(1.1);
+  }
+}
 
 @media (min-width: $queryLg) {
   .btn {
