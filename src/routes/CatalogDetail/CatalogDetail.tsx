@@ -58,7 +58,7 @@ const Detail = () => {
           setFile(null);
         }
       } catch (error) {
-        notify(dict("toast.error_item"));
+        notifyError(dict("toast.error_item"));
         console.error("Error updating dataset:", error);
       }
     }
@@ -150,7 +150,7 @@ const Detail = () => {
             type='number'
             textHolder={"Precio"}
             name='listprice'
-            value={formData.listprice.toString()}
+            value={formData.listprice}
             handleChange={handleChange}
           />
           <DragAndDrop file={file} setFile={setFile} />
