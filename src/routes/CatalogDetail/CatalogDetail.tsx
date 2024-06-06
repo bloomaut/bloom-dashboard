@@ -207,7 +207,7 @@ const Detail = () => {
       {openTrainBot && (
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
-          title={dict("catalog.train_bots")}
+          title={dict("catalog.train_bot")}
           textAccept={dict("popup.train")}
           textCancel={dict("popup.cancel")}
           onConfirm={() => setOpenTrainBot(false)}
