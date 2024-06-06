@@ -260,8 +260,8 @@
       "clean_bot": "Reiniciar Bot",
       "train_bot": "Entrenar Bot",
       "empty": "Este catálogo aún no contiene ningún producto.",
-  "train_bots": "Entrenar Bots",
-      "train_bots_text": "¿Te gustaría entrenar tus UiTool Bots con la información de este menú?"
+      "train_bots": "Entrenar Bots",
+      "train_bots_text": "¿Te gustaría entrenar tus UiTool Bots con la información de este menú?",
       "select": {
         "placeholder_one": "Carga masiva",
         "placeholder_two": "Actualización masiva",
@@ -269,9 +269,6 @@
         "option_two": "Subir con Excel",
         "option_three": "Descargar menú"
       }
-
-    
-
     }
   }
 }
