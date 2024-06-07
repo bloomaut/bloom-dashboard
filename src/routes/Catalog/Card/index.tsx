@@ -1,28 +1,49 @@
 import Button from "@/components/Button";
 import styles from "./styles.module.scss";
-import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import Icon from "@/components/Icon";
 import PopupChildren from "@/components/PopupChildren";
-import { useState } from "react";
+import PopupConfirm from "@/components/PopupConfirm";
 import Input from "@/components/Input";
+import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { useState } from "react";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
+import { remove, update } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { ENV } from "@/typescript/types/api";
 import { Link } from "@/navigation";
 
 const Card = ({ name, _id }: DatasetProps) => {
   const [showPopupEdit, setShowPopupEdit] = useState(false);
+  const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [catalogName, setCatalogName] = useState(name);
-  const { updateDataset } = useCatalogContext();
+  const { fetchDatasets } = useCatalogContext();
+  const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
   const submitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await updateDataset(_id, catalogName);
-    } catch (error) {
-      console.error("Error updating dataset:", error);
-    } finally {
+    const updatedDataset = {
+      name: catalogName,
+    };
+    const response = await update("datasets", updatedDataset, _id, ENV.BOX);
+    if (response.statusCode === 200) {
+      notify(dict("toast.success_edit"));
       setShowPopupEdit(false);
+      fetchDatasets();
+    } else {
+      notifyError(dict("toast.error_edit"));
+    }
+  };
+
+  const submitDelete = async () => {
+    const response = await remove("datasets", _id, ENV.BOX);
+    if (response.statusCode === 200) {
+      setShowPopupDelete(false);
+      notify(`${dict("toast.success_delete_catalog")}`);
+      fetchDatasets();
+    } else {
+      notifyError(`${dict("toast.error_catalog")}`);
     }
   };
 
@@ -42,6 +63,7 @@ const Card = ({ name, _id }: DatasetProps) => {
           title=''
           styleName='btn_square'
           icon={<Icon name='delete' width={20} height={20} strokeColor='#fff' viewBox='0 0 23 22' />}
+          onclick={() => setShowPopupDelete(true)}
         />
       </div>
       {showPopupEdit && (
@@ -60,6 +82,16 @@ const Card = ({ name, _id }: DatasetProps) => {
             handleChange={e => setCatalogName(e.target.value)}
           />
         </PopupChildren>
+      )}
+      {showPopupDelete && (
+        <PopupConfirm
+          onConfirm={submitDelete}
+          onCancel={() => setShowPopupDelete(false)}
+          setShowConfirmation={setShowPopupDelete}
+          title={dict("popup.delete")}
+          textCancel={dict("popup.cancel")}
+          textAccept={dict("popup.confirm")}
+        />
       )}
     </div>
   );

@@ -14,11 +14,12 @@ import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import { useState } from "react";
-import { DataItemsList } from "@/typescript/interfaces/catalog.interface";
-import { postFile } from "@/services/fetch";
+import { DataItemsList, PostDataItem } from "@/typescript/interfaces/catalog.interface";
+import { post, postFile } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import useFormValidator from "@/hooks/useFormValidator";
 import Form from "./Form";
+import { ENV } from "@/typescript/types/api";
 
 const initialFormData = {
   listname: "",
@@ -35,9 +36,16 @@ const Detail = () => {
   const [formData, setFormData] = useState<DataItemsList>(initialFormData);
   const [checkValidation, setCheckValidation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
-  const { datasetDetail, postDataItem } = useCatalogContext();
+  const { datasetDetail } = useCatalogContext();
   const fieldsToValidate = ["listname", "listdescr", "listprice", "listimage"];
   const errors = useFormValidator(formData, fieldsToValidate, file);
+
+  const postDataItem = async (formData: PostDataItem) => {
+    const data = await post("dataitem", formData, ENV.BOX);
+    if (data.data.statusCode === 201) {
+      // fetchDatasetById();
+    }
+  };
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -102,11 +110,11 @@ const Detail = () => {
         <Breadcrumb />
         <div className={styles.header}>
           <div className={styles.title_container}>
-            <Title text={`${dict("catalog.title")}:`} />
+            <Title text={`${dict("title")}:`} />
             <p className={styles.catalog}>{datasetDetail?.dataSet.name}</p>
           </div>
           <Button
-            title={dict("catalog.add_product")}
+            title={dict("add_product")}
             styleName='btn_orange'
             icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
             onclick={() => setShowPopupCreate(true)}
@@ -132,9 +140,10 @@ const Detail = () => {
         ) : datasetDetail?.dataItems.length ? (
           <div className={styles.content_container}>
             <Fade cascade damping={0.3} triggerOnce>
-              {datasetDetail.dataItems.map((item, index) => (
+              {datasetDetail.dataItems.map(item => (
                 <TableRow
-                  key={index}
+                  key={item._id}
+                  id={item._id}
                   name={item.data.listname}
                   description={item.data.listdescr}
                   price={item.data.listprice}
@@ -144,17 +153,17 @@ const Detail = () => {
             </Fade>
           </div>
         ) : (
-          <p className={styles.catalog_empty}>{dict("catalog.empty")}</p>
+          <p className={styles.catalog_empty}>{dict("empty")}</p>
         )}
       </div>
       <div className={styles.buttons}>
         <Button
-          title={dict("catalog.clean_bot")}
+          title={dict("clean_bot")}
           styleName='btn_clean'
           icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
         />
         <Button
-          title={dict("catalog.train_bot")}
+          title={dict("train_bot")}
           styleName='btn_dataset'
           icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
           onclick={() => setOpenTrainBot(true)}
@@ -175,13 +184,13 @@ const Detail = () => {
       {openTrainBot && (
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
-          title={dict("catalog.train_bot")}
+          title={dict("train_bots")}
           textAccept={dict("popup.train")}
           textCancel={dict("popup.cancel")}
           onConfirm={() => setOpenTrainBot(false)}
           setShowConfirmation={setOpenTrainBot}
         >
-          <p className={styles.trainbot_text}>{dict("catalog.train_bots_text")}</p>
+          <p className={styles.trainbot_text}>{dict("train_bots_text")}</p>
         </PopupChildren>
       )}
     </section>

@@ -26,6 +26,8 @@
     },
     "popup": {
       "delete_title": "Are you sure you want to delete this client?",
+      "delete_product": "Are you sure you want to remove this product?",
+      "delete": "Are you sure you want to delete this catalog?",
       "name": "Name",
       "confirm": "Delete",
       "train": "Train",
@@ -41,12 +43,16 @@
       "success_file": "File uploaded successfully",
       "success_edit": "Information updated successfully",
       "success_delete": "File deleted successfully",
+      "success_delete_catalog": "Catalog deleted successfully",
       "success_palette": "Palette updated successfully",
+      "success_product_deleted": "Product deletedd successfully",
+      "error_product_deleted": "Error when deleting a product",
       "error_name": "Name is required",
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
       "error_item": "Error uploading product",
       "error_file": "Error deleting file",
+      "error_catalog": "Error deleting catalog",
       "error_palette": "Error updating palette",
       "empty_fields": "All fields are required",
       "success_hotlink": "Hotlink created successfully",
@@ -56,7 +62,9 @@
       "client_delete": "Client deleted successfully",
       "client_post_error": "Error creating client",
       "client_edit_error": "Error updating client",
-      "client_delete_error": "Error deleting client"
+      "client_delete_error": "Error deleting client",
+      "post_dataset": "Dataset posted successfully",
+      "error_dataset": "Error posting dataset"
     },
     "popupLogin": {
       "login": "Log in",
