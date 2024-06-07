@@ -11,7 +11,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import PopupImage from "@/routes/Gallery/PopupImage";
+import PopupImage from "@/components/PopupImage";
 import Icon from "@/components/Icon";
 
 const GalleryComponent = () => {
