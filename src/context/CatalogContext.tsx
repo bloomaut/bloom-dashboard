@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { get, post, update } from "@/services/fetch";
-import { DatasetProps, Dataset, PostDataItem } from "@/typescript/interfaces/catalog.interface";
+import { get, update } from "@/services/fetch";
+import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -8,31 +8,27 @@ import { useParams } from "next/navigation";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
-  datasetDetail: Dataset | null;
   loading: boolean;
-  postDataItem: (formData: PostDataItem) => Promise<void>;
   updateDataset: (id: string, newName: string) => Promise<void>;
+  fetchDatasets: () => Promise<void>;
 }
 
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
-  datasetDetail: null,
   loading: true,
   updateDataset: async () => {
     throw new Error("updateDataset function not implemented");
   },
-  postDataItem: async () => {
-    throw new Error("postDataItem function not implemented");
+  fetchDatasets: async () => {
+    throw new Error("updateDataset function not implemented");
   },
 });
 
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
-  const [datasetDetail, setDatasetDetail] = useState<Dataset | null>(null);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
-  const { id } = useParams();
 
   const fetchDatasets = async () => {
     const data = await get("datasets/small/list", ENV.BOX);
@@ -40,21 +36,6 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       setDatasets(data.data.datasets);
     }
     setLoading(false);
-  };
-
-  const fetchDatasetById = async () => {
-    const data = await get(`datasets/${id}`, ENV.BOX);
-    if (data.statusCode === 200) {
-      setDatasetDetail(data.data);
-    }
-    setLoading(false);
-  };
-
-  const postDataItem = async (formData: PostDataItem) => {
-    const data = await post("dataitem", formData, ENV.BOX);
-    if (data.data.statusCode === 201) {
-      fetchDatasetById();
-    }
   };
 
   const updateDataset = async (id: string, newName: string) => {
@@ -74,18 +55,13 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     fetchDatasets();
   }, []);
 
-  useEffect(() => {
-    if (id) fetchDatasetById();
-  }, [id]);
-
   return (
     <CatalogContext.Provider
       value={{
         datasets,
-        datasetDetail,
         loading,
-        postDataItem,
         updateDataset,
+        fetchDatasets,
       }}
     >
       {children}

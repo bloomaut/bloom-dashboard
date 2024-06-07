@@ -1,8 +1,11 @@
 import styles from "./styles.module.scss";
 import { Fade } from "react-awesome-reveal";
-import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Dataset } from "@/typescript/interfaces/catalog.interface";
+import { ENV } from "@/typescript/types/api";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Title from "@/components/Title";
@@ -13,82 +16,15 @@ import Icon from "@/components/Icon";
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
-import { useState } from "react";
-import { DataItemsList, PostDataItem } from "@/typescript/interfaces/catalog.interface";
-import { post, postFile } from "@/services/fetch";
-import { useMessageToast } from "@/hooks/useMessageToast";
-import useFormValidator from "@/hooks/useFormValidator";
 import Form from "./Form";
-import { ENV } from "@/typescript/types/api";
-
-const initialFormData = {
-  listname: "",
-  listdescr: "",
-  listprice: 0,
-  listimage: "",
-};
+import { get } from "@/services/fetch";
+import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 
 const Detail = () => {
   const dict = useTranslations("dict");
-  const { notify, notifyError } = useMessageToast();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [openTrainBot, setOpenTrainBot] = useState(false);
-  const [formData, setFormData] = useState<DataItemsList>(initialFormData);
-  const [checkValidation, setCheckValidation] = useState(false);
-  const [file, setFile] = useState<File | null>(null);
-  const { datasetDetail } = useCatalogContext();
-  const fieldsToValidate = ["listname", "listdescr", "listprice", "listimage"];
-  const errors = useFormValidator(formData, fieldsToValidate, file);
-
-  const postDataItem = async (formData: PostDataItem) => {
-    const data = await post("dataitem", formData, ENV.BOX);
-    if (data.data.statusCode === 201) {
-      // fetchDatasetById();
-    }
-  };
-
-  const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setCheckValidation(true);
-    if (file) {
-      try {
-        if (Object.keys(errors).length === 0) {
-          const response = await postFile("small-files/media", file);
-          if (response.data.statusCode === 201) {
-            const logoUrl = response.data.result.media.url;
-
-            const dataToSend = {
-              dataset: datasetDetail?.dataSet._id ?? "",
-              data: {
-                ...formData,
-                listimage: logoUrl,
-              },
-              order: 0,
-            };
-
-            await postDataItem(dataToSend);
-
-            notify(dict("toast.success_item"));
-            setShowPopupCreate(false);
-            setFormData(initialFormData);
-            setFile(null);
-            setCheckValidation(false);
-          }
-        }
-      } catch (error) {
-        notifyError(dict("toast.error_item"));
-        console.error("Error updating dataset:", error);
-      }
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  const { datasetDetail } = useCatalogDetailContext();
 
   const handleDropdown = (value: string) => {
     // Acá después ver lógica de enpoints. Tal vez mover o cambiar
@@ -169,18 +105,7 @@ const Detail = () => {
           onclick={() => setOpenTrainBot(true)}
         />
       </div>
-      {showPopupCreate && (
-        <Form
-          setShowConfirmation={setShowPopupCreate}
-          onConfirm={handleCreate}
-          checkValidation={checkValidation}
-          errors={errors}
-          onChange={handleChange}
-          formData={formData}
-          file={file}
-          setFile={setFile}
-        />
-      )}
+      {showPopupCreate && <Form setShowPopupCreate={setShowPopupCreate} />}
       {openTrainBot && (
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
