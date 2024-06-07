@@ -110,11 +110,11 @@ const Detail = () => {
         <Breadcrumb />
         <div className={styles.header}>
           <div className={styles.title_container}>
-            <Title text={`${dict("title")}:`} />
+            <Title text={`${dict("catalog.title")}:`} />
             <p className={styles.catalog}>{datasetDetail?.dataSet.name}</p>
           </div>
           <Button
-            title={dict("add_product")}
+            title={dict("catalog.add_product")}
             styleName='btn_orange'
             icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
             onclick={() => setShowPopupCreate(true)}
@@ -158,12 +158,12 @@ const Detail = () => {
       </div>
       <div className={styles.buttons}>
         <Button
-          title={dict("clean_bot")}
+          title={dict("catalog.clean_bot")}
           styleName='btn_clean'
           icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
         />
         <Button
-          title={dict("train_bot")}
+          title={dict("catalog.train_bot")}
           styleName='btn_dataset'
           icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
           onclick={() => setOpenTrainBot(true)}
@@ -184,7 +184,7 @@ const Detail = () => {
       {openTrainBot && (
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
-          title={dict("train_bots")}
+          title={dict("catalog.train_bots")}
           textAccept={dict("popup.train")}
           textCancel={dict("popup.cancel")}
           onConfirm={() => setOpenTrainBot(false)}
