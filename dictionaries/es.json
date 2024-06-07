@@ -27,6 +27,7 @@
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
       "name": "Nombre",
       "confirm": "Eliminar",
+      "train": "Entrenar",
       "create": "Crear",
       "cancel": "Cancelar",
       "edit": "Editar"
@@ -50,7 +51,9 @@
       "client_delete": "Cliente eliminado correctamente",
       "client_post_error": "Error al crear cliente",
       "client_edit_error": "Error al actualizar cliente",
-      "client_delete_error": "Error al eliminar cliente"
+      "client_delete_error": "Error al eliminar cliente",
+      "post_dataset": "Dataset publicado correctamente",
+      "error_dataset": "Error al publicar dataset"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -257,7 +260,17 @@
       "description": "Descripción",
       "price": "Precio",
       "clean_bot": "Reiniciar Bot",
-      "train_bot": "Entrenar Bot"
+      "train_bot": "Entrenar Bot",
+      "empty": "Este catálogo aún no contiene ningún producto.",
+      "train_bots": "Entrenar Bots",
+      "train_bots_text": "¿Te gustaría entrenar tus UiTool Bots con la información de este menú?",
+      "select": {
+        "placeholder_one": "Carga masiva",
+        "placeholder_two": "Actualización masiva",
+        "option_one": "Descargar template",
+        "option_two": "Subir con Excel",
+        "option_three": "Descargar menú"
+      }
     }
   }
 }

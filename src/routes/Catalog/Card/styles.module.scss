@@ -2,15 +2,20 @@
 
 .card {
   @include width-height(250px, auto);
-  @include flex(row, space-between, center);
+  display: grid;
+  grid-template-columns: 84% 16%;
+  justify-content: space-between;
+  align-items: center;
   background: $blueishBackground;
   border-radius: 10px;
   border: 2px solid $text;
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
   .name {
-    color: $text;
+    @include width-height(auto, 100%);
+    @include flex(row, flex-start, center);
     @include fontSize-fontWeight(20px, 400);
-    padding-left: 15px;
+    color: $text;
+    padding: 15px;
   }
   .btn_container {
     @include flex(column, center, center);
