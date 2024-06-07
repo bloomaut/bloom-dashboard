@@ -116,12 +116,12 @@ const Detail = () => {
           <Select
             options={SelectOptionsCatalog("first")}
             placeholder={dict("catalog.select.placeholder_one")}
-            onchange={handleDropdown}
+            onChange={handleDropdown}
           />
           <Select
             options={SelectOptionsCatalog("second")}
             placeholder={dict("catalog.select.placeholder_two")}
-            onchange={handleDropdown}
+            onChange={handleDropdown}
           />
         </div>
       </div>
