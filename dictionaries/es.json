@@ -26,6 +26,7 @@
     "popup": {
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
       "delete_product": "¿Estás seguro que desea eliminar este producto?",
+      "delete": "¿Seguro que deseas eliminar este catálogo?",
       "name": "Nombre",
       "confirm": "Eliminar",
       "train": "Entrenar",
@@ -37,7 +38,8 @@
       "success_img": "Imágen subida correctamente",
       "success_file": "Archivo subido correctamente",
       "success_edit": "Información actualizada correctamente",
-      "success_delete": "Achivo eliminado correctamente",
+      "success_delete": "Archivo eliminado correctamente",
+      "success_delete_catalog": "Catálogo eliminado correctamente",
       "success_palette": "Paleta actualizada correctamente",
       "success_product_deleted": "Producto eliminado correctamente",
       "error_product_deleted": "Error al eliminar un producto",
@@ -45,6 +47,7 @@
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
       "error_file": "Error al eliminar el archivo",
+      "error_catalog": "Error al eliminar el catálogo",
       "error_palette": "Error al subir la paleta",
       "empty_fields": "Todos los campos son requeridos",
       "success_hotlink": "Hotlink creado correctamente",
@@ -54,7 +57,9 @@
       "client_delete": "Cliente eliminado correctamente",
       "client_post_error": "Error al crear cliente",
       "client_edit_error": "Error al actualizar cliente",
-      "client_delete_error": "Error al eliminar cliente"
+      "client_delete_error": "Error al eliminar cliente",
+      "post_dataset": "Dataset publicado correctamente",
+      "error_dataset": "Error al publicar dataset"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"

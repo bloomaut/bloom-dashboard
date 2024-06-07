@@ -24,17 +24,14 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
   const { fetchDatasets } = useCatalogContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
 
-  const dataItemId = id;
   const submitDelete = async () => {
-    if (id) {
-      const response = await remove("dataitem", dataItemId, ENV.BOX);
-      if (response.statusCode === 200) {
-        setShowPopupDelete(false);
-        notify(`${dict("toast.success_product_deleted")}`);
-        fetchDatasets();
-      } else {
-        notifyError(`${dict("toast.error_product_deleted")}`);
-      }
+    const response = await remove("dataitem", id, ENV.BOX);
+    if (response.statusCode === 200) {
+      setShowPopupDelete(false);
+      notify(`${dict("toast.success_product_deleted")}`);
+      fetchDatasets();
+    } else {
+      notifyError(`${dict("toast.error_product_deleted")}`);
     }
   };
 
