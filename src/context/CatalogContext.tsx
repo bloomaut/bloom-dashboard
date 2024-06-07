@@ -13,7 +13,7 @@ interface CatalogContextType {
   datasetDetail: Dataset | null;
   loading: boolean;
   dataschemas: DataschemaProps[];
-  updateDataset: (id: string, newName: string) => Promise<void>;
+  fetchDatasets: () => Promise<void>;
   postDataschema: (name: string, id: string) => Promise<void>;
 }
 
@@ -22,8 +22,8 @@ const CatalogContext = createContext<CatalogContextType>({
   datasetDetail: null,
   loading: true,
   dataschemas: [],
-  updateDataset: async () => {
-    throw new Error("updateDataset function not implemented");
+  fetchDatasets: async () => {
+    throw new Error("fetchDatasets function not implemented");
   },
   postDataschema: async () => {
     throw new Error("postDataschema function not implemented");
@@ -47,6 +47,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     }
     setLoading(false);
   };
+
   const fetchDataSchemas = async () => {
     const data = await get("dataschemas/dataprovider/small", ENV.BOX);
     if (data.statusCode === 200) {
@@ -62,26 +63,10 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     }
     setLoading(false);
   };
+
   useEffect(() => {
     fetchDatasets();
     fetchDataSchemas();
-  }, [datasets]);
-
-  const updateDataset = async (id: string, newName: string) => {
-    const updatedDataset = {
-      name: newName,
-    };
-    const response = await update("datasets", updatedDataset, id, ENV.BOX);
-    if (response.statusCode === 200) {
-      notify(dict("toast.success_edit"));
-      fetchDatasets();
-    } else {
-      notifyError(dict("toast.error_edit"));
-    }
-  };
-
-  useEffect(() => {
-    fetchDatasets();
   }, []);
 
   useEffect(() => {
@@ -108,7 +93,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
         datasets,
         datasetDetail,
         loading,
-        updateDataset,
+        fetchDatasets,
         postDataschema,
         dataschemas,
       }}
