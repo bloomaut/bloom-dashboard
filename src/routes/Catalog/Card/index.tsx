@@ -7,7 +7,6 @@ import { useState } from "react";
 import Input from "@/components/Input";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
-import { Link } from "@/navigation";
 
 const Card = ({ name, _id }: DatasetProps) => {
   const [showPopupEdit, setShowPopupEdit] = useState(false);
@@ -28,9 +27,7 @@ const Card = ({ name, _id }: DatasetProps) => {
 
   return (
     <div className={styles.card}>
-      <Link href={`/catalog/${_id}`} className={styles.name}>
-        {name}
-      </Link>
+      <h1 className={styles.name}>{name}</h1>
       <div className={styles.btn_container}>
         <Button
           title=''

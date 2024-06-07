@@ -2,7 +2,7 @@
 
 .container {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 2fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
   align-items: center;
   width: 100%;
   padding: 10px;
@@ -12,7 +12,5 @@
   .price {
     padding: 5px;
     border-left: 2px solid $lighterGrey;
-    @include fontSize-fontWeight(20px, 500);
-    color: $text;
   }
 }

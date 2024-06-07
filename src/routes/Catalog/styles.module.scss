@@ -7,6 +7,5 @@
   .cards_container {
     @include width-height(100%, 100%);
     @include flex(row, flex-start, flex-start, 30px);
-    flex-wrap: wrap;
   }
 }
