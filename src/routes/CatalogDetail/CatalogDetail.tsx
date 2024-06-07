@@ -15,11 +15,10 @@ import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import { useState } from "react";
 import { DataItemsList } from "@/typescript/interfaces/catalog.interface";
-import Input from "@/components/Input";
-import DragAndDrop from "@/components/DragAndDrop";
 import { postFile } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import useFormValidator from "@/hooks/useFormValidator";
+import Form from "./Form";
 
 const initialFormData = {
   listname: "",
@@ -37,7 +36,8 @@ const Detail = () => {
   const [checkValidation, setCheckValidation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const { datasetDetail, postDataItem } = useCatalogContext();
-  const errors = useFormValidator(formData, file);
+  const fieldsToValidate = ["listname", "listdescr", "listprice", "listimage"];
+  const errors = useFormValidator(formData, fieldsToValidate, file);
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -161,58 +161,16 @@ const Detail = () => {
         />
       </div>
       {showPopupCreate && (
-        <PopupChildren
-          validation
-          title={dict("popup.create_product")}
-          onConfirm={handleCreate}
-          onCancel={() => setShowPopupCreate(false)}
+        <Form
           setShowConfirmation={setShowPopupCreate}
-          textCancel={dict("popup.cancel")}
-          textAccept={dict("popup.create")}
-        >
-          <div className={styles.form_control}>
-            <Input
-              type='text'
-              textHolder={"Name"}
-              name='listname'
-              value={formData.listname}
-              handleChange={handleChange}
-            />
-            {checkValidation && (
-              <p className={errors.listname ? styles.error : styles.error_hidden}>{errors.listname}</p>
-            )}
-          </div>
-          <div className={styles.form_control}>
-            <Input
-              type='text'
-              textHolder={"Descripcion"}
-              name='listdescr'
-              value={formData.listdescr}
-              handleChange={handleChange}
-            />
-            {checkValidation && (
-              <p className={errors.listdescr ? styles.error : styles.error_hidden}>{errors.listdescr}</p>
-            )}
-          </div>
-          <div className={styles.form_control}>
-            <Input
-              type='number'
-              textHolder={"Precio"}
-              name='listprice'
-              value={formData.listprice === 0 ? "" : formData.listprice}
-              handleChange={handleChange}
-            />
-            {checkValidation && (
-              <p className={errors.listprice ? styles.error : styles.error_hidden}>{errors.listprice}</p>
-            )}
-          </div>
-          <div className={styles.form_control}>
-            <DragAndDrop file={file} setFile={setFile} />
-            {checkValidation && (
-              <p className={errors.listimage ? styles.error : styles.error_hidden}>{errors.listimage}</p>
-            )}
-          </div>
-        </PopupChildren>
+          onConfirm={handleCreate}
+          checkValidation={checkValidation}
+          errors={errors}
+          onChange={handleChange}
+          formData={formData}
+          file={file}
+          setFile={setFile}
+        />
       )}
       {openTrainBot && (
         <PopupChildren

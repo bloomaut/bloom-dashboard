@@ -49,23 +49,9 @@
     @include flex(row, flex-end, center, 30px);
     @include width-height(100%, auto);
   }
-  .form_control {
-    @include width-height(100%, auto);
-    @include flex(column, center, flex-start);
-    .error {
-      @include fontSize-fontWeight(12px, 400);
-      color: red;
-    }
-    .error_hidden {
-      display: none;
-      .trainbot_text {
-        @include fontSize-fontWeight(16px, 400);
-        color: $text;
-      }
-    }
-    &:nth-of-type(4) {
-      gap: 5px;
-    }
+  .trainbot_text {
+    @include fontSize-fontWeight(16px, 400);
+    color: $text;
   }
 
   @media (width >= $queryXl) {
