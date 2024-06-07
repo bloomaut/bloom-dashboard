@@ -35,10 +35,10 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
   const [datasetDetail, setDatasetDetail] = useState<Dataset | null>(null);
   const { notify, notifyError } = useMessageToast();
+  const { id } = useParams();
   const dataschemas = useAppSelector(data => data.dataschema);
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict");
-  const { id } = useParams();
 
   const fetchDatasets = async () => {
     const data = await get("datasets/small/list", ENV.BOX);
