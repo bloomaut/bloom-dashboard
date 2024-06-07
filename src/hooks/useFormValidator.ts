@@ -39,16 +39,8 @@ const useFormValidator = (formData: FormDataProps, fieldsToValidate?: (keyof For
         errors.listname = dict("form_validation.listname");
       }
 
-      if (fieldsToValidate?.includes("listdescr") && (!formData.listdescr || !formData.listdescr.trim())) {
-        errors.listdescr = dict("form_validation.listdescr");
-      }
-
       if (fieldsToValidate?.includes("listprice") && (formData.listprice === undefined || formData.listprice <= 0)) {
         errors.listprice = dict("form_validation.listprice");
-      }
-
-      if (fieldsToValidate?.includes("listimage") && !file) {
-        errors.listimage = dict("form_validation.listimage");
       }
 
       setErrors(errors);

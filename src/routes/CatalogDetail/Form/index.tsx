@@ -4,7 +4,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, postFile } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsList, PostDataItem } from "@/typescript/interfaces/catalog.interface";
+import { DataItemsList, Field, PostDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 // Components
@@ -30,38 +30,51 @@ const Form = ({ setShowPopupCreate }: Form) => {
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
-  const fieldsToValidate = datasetDetail?.dataSet.dataschema.fields.map((field: any) => field.name) || [];
+
+  const fieldsToValidate =
+    datasetDetail?.dataSet.dataschema.fields.filter((field: any) => field.required).map((field: any) => field.name) ||
+    [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCheckValidation(true);
-    if (file) {
-      try {
-        if (Object.keys(errors).length === 0) {
-          const response = await postFile("small-files/media", file);
-          if (response.data.statusCode === 201) {
-            const logoUrl = response.data.result.media.url;
-            const dataToSend = {
-              dataset: datasetDetail?.dataSet._id ?? "",
-              data: {
-                ...formData,
-                listimage: logoUrl,
-              },
-              order: 0,
-            };
-            await postDataItem(dataToSend);
-            notify(dict("toast.success_item"));
-            setShowPopupCreate(false);
-            setFormData(initialFormData);
-            setFile(null);
-            setCheckValidation(false);
-          }
+    try {
+      if (Object.keys(errors).length === 0 && file) {
+        const response = await postFile("small-files/media", file);
+        if (response.data.statusCode === 201) {
+          const logoUrl = response.data.result.media.url;
+          const dataToSend = {
+            dataset: datasetDetail?.dataSet._id ?? "",
+            data: {
+              ...formData,
+              listimage: logoUrl,
+            },
+            order: 0,
+          };
+          await postDataItem(dataToSend);
+          notify(dict("toast.success_item"));
+          setShowPopupCreate(false);
+          setFormData(initialFormData);
+          setFile(null);
+          setCheckValidation(false);
         }
-      } catch (error) {
-        notifyError(dict("toast.error_item"));
-        console.error("Error updating dataset:", error);
+      } else {
+        const dataToSend = {
+          dataset: datasetDetail?.dataSet._id ?? "",
+          data: formData,
+          order: 0,
+        };
+
+        await postDataItem(dataToSend);
+        notify(dict("toast.success_item"));
+        setShowPopupCreate(false);
+        setFormData(initialFormData);
+        setCheckValidation(false);
       }
+    } catch (error) {
+      notifyError(dict("toast.error_item"));
+      console.error("Error updating dataset:", error);
     }
   };
 
@@ -100,7 +113,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
       textAccept={dict("popup.create")}
     >
       {datasetDetail?.dataSet.dataschema.fields.map(
-        (field: any) =>
+        (field: Field) =>
           !field.name.includes("image") && (
             <div key={field._id} className={styles.form_control}>
               <Input
@@ -114,7 +127,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
             </div>
           ),
       )}
-      {datasetDetail?.dataSet.dataschema.fields.map((field: any) => {
+      {datasetDetail?.dataSet.dataschema.fields.map((field: Field) => {
         if (field.name.includes("image")) {
           return (
             <div key={field._id} className={styles.form_control}>
