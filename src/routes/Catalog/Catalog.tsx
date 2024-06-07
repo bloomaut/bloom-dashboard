@@ -7,8 +7,6 @@ import LoadingSpinner from "@/components/Loading";
 const Catalog = () => {
   const { datasets, loading } = useCatalogContext();
 
-  console.log(datasets);
-
   return (
     <div className={styles.catalog_container}>
       <Header />

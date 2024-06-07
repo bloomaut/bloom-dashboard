@@ -54,7 +54,9 @@
       "client_delete": "Client deleted successfully",
       "client_post_error": "Error creating client",
       "client_edit_error": "Error updating client",
-      "client_delete_error": "Error deleting client"
+      "client_delete_error": "Error deleting client",
+      "post_dataset": "Dataset posted successfully",
+      "error_dataset": "Error posting dataset"
     },
     "popupLogin": {
       "login": "Log in",

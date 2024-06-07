@@ -8,7 +8,7 @@ import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { useState } from "react";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
-import { remove } from "@/services/fetch";
+import { remove, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
 import { Link } from "@/navigation";
@@ -17,32 +17,33 @@ const Card = ({ name, _id }: DatasetProps) => {
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [catalogName, setCatalogName] = useState(name);
-  const { updateDataset, fetchDatasets } = useCatalogContext();
+  const { fetchDatasets } = useCatalogContext();
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
   const submitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await updateDataset(_id, catalogName);
-    } catch (error) {
-      console.error("Error updating dataset:", error);
-    } finally {
+    const updatedDataset = {
+      name: catalogName,
+    };
+    const response = await update("datasets", updatedDataset, _id, ENV.BOX);
+    if (response.statusCode === 200) {
+      notify(dict("toast.success_edit"));
       setShowPopupEdit(false);
+      fetchDatasets();
+    } else {
+      notifyError(dict("toast.error_edit"));
     }
   };
 
-  const dataSetId = _id;
   const submitDelete = async () => {
-    if (_id) {
-      const response = await remove("datasets", dataSetId, ENV.BOX);
-      if (response.statusCode === 200) {
-        setShowPopupDelete(false);
-        notify(`${dict("toast.success_delete_catalog")}`);
-        fetchDatasets();
-      } else {
-        notifyError(`${dict("toast.error_catalog")}`);
-      }
+    const response = await remove("datasets", _id, ENV.BOX);
+    if (response.statusCode === 200) {
+      setShowPopupDelete(false);
+      notify(`${dict("toast.success_delete_catalog")}`);
+      fetchDatasets();
+    } else {
+      notifyError(`${dict("toast.error_catalog")}`);
     }
   };
 
