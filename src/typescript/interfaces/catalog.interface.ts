@@ -3,7 +3,7 @@ interface Dataschema {
   fields: DatasetField[];
 }
 
-interface DatasetField {
+export interface DatasetField {
   _id: string;
   name: string;
   description: string;
@@ -16,7 +16,7 @@ export interface DataItemsList {
   listname: string;
   listdescr: string;
   listimage: string;
-  listprice: number;
+  listprice: number | null;
 }
 
 interface DataItems {

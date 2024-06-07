@@ -2,10 +2,7 @@ import styles from "./styles.module.scss";
 import { Fade } from "react-awesome-reveal";
 import { useTranslations } from "next-intl";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { Dataset } from "@/typescript/interfaces/catalog.interface";
-import { ENV } from "@/typescript/types/api";
+import { useState } from "react";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Title from "@/components/Title";
@@ -17,7 +14,6 @@ import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import Form from "./Form";
-import { get } from "@/services/fetch";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 
 const Detail = () => {

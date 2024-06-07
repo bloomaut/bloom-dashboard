@@ -1,10 +1,10 @@
 import styles from "./styles.module.scss";
 import useFormValidator from "@/hooks/useFormValidator";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, postFile } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsList, Dataset, PostDataItem } from "@/typescript/interfaces/catalog.interface";
+import { DataItemsList, PostDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 // Components
@@ -19,7 +19,7 @@ interface Form {
 const initialFormData = {
   listname: "",
   listdescr: "",
-  listprice: 0,
+  listprice: null,
   listimage: "",
 };
 
@@ -28,10 +28,10 @@ const Form = ({ setShowPopupCreate }: Form) => {
   const [checkValidation, setCheckValidation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const dict = useTranslations("dict");
-  const fieldsToValidate = ["listname", "listdescr", "listprice", "listimage"];
-  const errors = useFormValidator(formData, fieldsToValidate, file);
   const { notify, notifyError } = useMessageToast();
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
+  const fieldsToValidate = datasetDetail?.dataSet.dataschema.fields.map((field: any) => field.name) || [];
+  const errors = useFormValidator(formData, fieldsToValidate, file);
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,7 +42,6 @@ const Form = ({ setShowPopupCreate }: Form) => {
           const response = await postFile("small-files/media", file);
           if (response.data.statusCode === 201) {
             const logoUrl = response.data.result.media.url;
-
             const dataToSend = {
               dataset: datasetDetail?.dataSet._id ?? "",
               data: {
@@ -51,9 +50,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
               },
               order: 0,
             };
-
             await postDataItem(dataToSend);
-
             notify(dict("toast.success_item"));
             setShowPopupCreate(false);
             setFormData(initialFormData);
@@ -83,9 +80,18 @@ const Form = ({ setShowPopupCreate }: Form) => {
     }));
   };
 
+  const ErrorMessage = ({ error }: { error: string | undefined }) => (
+    <p className={error ? styles.error : styles.error_hidden}>{error}</p>
+  );
+
+  useEffect(() => {
+    if (checkValidation && Object.keys(errors).length === 0) {
+      setCheckValidation(false);
+    }
+  }, [errors]);
+
   return (
     <PopupChildren
-      validation
       title={dict("popup.create_product")}
       onConfirm={handleCreate}
       onCancel={() => setShowPopupCreate(false)}
@@ -93,34 +99,32 @@ const Form = ({ setShowPopupCreate }: Form) => {
       textCancel={dict("popup.cancel")}
       textAccept={dict("popup.create")}
     >
-      <div className={styles.form_control}>
-        <Input type='text' textHolder={"Name"} name='listname' value={formData.listname} handleChange={handleChange} />
-        {checkValidation && <p className={errors.listname ? styles.error : styles.error_hidden}>{errors.listname}</p>}
-      </div>
-      <div className={styles.form_control}>
-        <Input
-          type='text'
-          textHolder={"Descripcion"}
-          name='listdescr'
-          value={formData.listdescr}
-          handleChange={handleChange}
-        />
-        {checkValidation && <p className={errors.listdescr ? styles.error : styles.error_hidden}>{errors.listdescr}</p>}
-      </div>
-      <div className={styles.form_control}>
-        <Input
-          type='number'
-          textHolder={"Precio"}
-          name='listprice'
-          value={formData.listprice === 0 ? "" : formData.listprice}
-          handleChange={handleChange}
-        />
-        {checkValidation && <p className={errors.listprice ? styles.error : styles.error_hidden}>{errors.listprice}</p>}
-      </div>
-      <div className={styles.form_control}>
-        <DragAndDrop file={file} setFile={setFile} />
-        {checkValidation && <p className={errors.listimage ? styles.error : styles.error_hidden}>{errors.listimage}</p>}
-      </div>
+      {datasetDetail?.dataSet.dataschema.fields.map(
+        (field: any) =>
+          !field.name.includes("image") && (
+            <div key={field._id} className={styles.form_control}>
+              <Input
+                type={field.type === "number" ? "number" : "text"}
+                textHolder={field.description}
+                name={field.name}
+                value={formData[field.name as keyof DataItemsList] ?? ""}
+                handleChange={handleChange}
+              />
+              {checkValidation && <ErrorMessage error={errors[field.name as keyof DataItemsList]} />}
+            </div>
+          ),
+      )}
+      {datasetDetail?.dataSet.dataschema.fields.map((field: any) => {
+        if (field.name.includes("image")) {
+          return (
+            <div key={field._id} className={styles.form_control}>
+              <DragAndDrop file={file} setFile={setFile} />
+              {checkValidation && <ErrorMessage error={errors.listimage} />}
+            </div>
+          );
+        }
+        return null;
+      })}
     </PopupChildren>
   );
 };

@@ -11,7 +11,6 @@ interface PopupChildrenProps {
   textCancel: string;
   textAccept: string;
   children: React.ReactNode;
-  validation?: boolean;
 }
 
 const PopupChildren = ({
@@ -22,16 +21,13 @@ const PopupChildren = ({
   textCancel,
   textAccept,
   children,
-  validation = false,
 }: PopupChildrenProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
-  const dict = useTranslations("dict.popup");
 
   return (
     <section className={styles.popup_container}>
       <div className={styles.container} ref={dropdownRef}>
         <p>{title}</p>
-        {validation && <p className={styles.validation}>{dict("required")}</p>}
         {children}
         <form className={styles.button_container} onSubmit={onConfirm}>
           <button className={styles.no} onClick={onCancel}>
