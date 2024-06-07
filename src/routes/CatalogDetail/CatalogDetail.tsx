@@ -89,7 +89,7 @@ const Detail = () => {
             </Fade>
           </div>
         ) : (
-          <p className={styles.catalog_empty}>{dict("empty")}</p>
+          <p className={styles.catalog_empty}>{dict("catalog.empty")}</p>
         )}
       </div>
       <div className={styles.buttons}>
