@@ -6,7 +6,8 @@
       "btn2": "Volver"
     },
     "drag": {
-      "title": "Arrastrá o soltá tus archivos aquí"
+      "title": "Arrastrá o soltá tus archivos aquí",
+      "image": "Seleccionar imagen"
     },
     "sidebar": {
       "home": "Inicio",
@@ -30,11 +31,14 @@
       "name": "Nombre",
       "confirm": "Eliminar",
       "create": "Crear",
+      "create_product": "Crear producto",
       "cancel": "Cancelar",
-      "edit": "Editar"
+      "edit": "Editar",
+      "required": "* Todos los campos son requeridos"
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
+      "success_item": "Producto añadido correctamente",
       "success_file": "Archivo subido correctamente",
       "success_edit": "Información actualizada correctamente",
       "success_delete": "Archivo eliminado correctamente",
@@ -45,6 +49,7 @@
       "error_name": "El nombre es obligatorio",
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
+      "error_item": "Error al subir el producto",
       "error_file": "Error al eliminar el archivo",
       "error_catalog": "Error al eliminar el catálogo",
       "error_palette": "Error al subir la paleta",
@@ -58,7 +63,10 @@
       "client_edit_error": "Error al actualizar cliente",
       "client_delete_error": "Error al eliminar cliente",
       "post_dataset": "Dataset publicado correctamente",
-      "error_dataset": "Error al publicar dataset"
+      "error_dataset": "Error al publicar dataset",
+      "bot_train": "Bot entrenado correctamente",
+      "bot_clean": "Limpieza de bots exitosa",
+      "bot_error": "Ocurrió un error"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -269,7 +277,9 @@
       "cancel": "Cancelar",
       "empty": "Este catálogo aún no contiene ningún producto.",
       "train_bots": "Entrenar Bots",
+      "clean_bots": "Limpiar Bots",
       "train_bots_text": "¿Te gustaría entrenar tus UiTool Bots con la información de este menú?",
+      "clean_bots_text": "¿Te gustaría que tus UiTool Bots dejen de utilizar la información de este catálogo?",
       "select": {
         "placeholder_one": "Carga masiva",
         "placeholder_two": "Actualización masiva",
@@ -277,6 +287,15 @@
         "option_two": "Subir con Excel",
         "option_three": "Descargar menú"
       }
+    },
+    "form_validation": {
+      "ClientFirstname": "El nombre es requerido",
+      "ClientEmail_01": "El email es requerido",
+      "ClientEmail_02": "Formato de email inválido",
+      "listname": "El nombre del producto es requerido",
+      "listdescr": "La descripcion del producto es requerida",
+      "listprice": "El precio del producto debe ser mayor que 0",
+      "listimage": "El producto debe contener una imágen"
     }
   }
 }

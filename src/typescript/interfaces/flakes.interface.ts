@@ -26,8 +26,8 @@ interface HogRelated {
 interface Skinx {
   _id: string;
   title: string;
-  description?: any;
-  category?: any;
+  description?: string;
+  category?: string;
   thumbnail: string;
 }
 

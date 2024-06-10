@@ -1,26 +1,32 @@
 import styles from "./styles.module.scss";
-import { Fade } from "react-awesome-reveal";
-import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
+import { useState, FormEvent } from "react";
+import { post, remove } from "@/services/fetch";
+import { ENV } from "@/typescript/types/api";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Title from "@/components/Title";
 import Button from "@/components/Button";
 import TableHead from "./TableHead";
+import Select from "./Select";
 import Icon from "@/components/Icon";
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
-import Select from "./Select";
-import { FormEvent, useState } from "react";
 import PopupChildren from "@/components/PopupChildren";
-import { post } from "@/services/fetch";
-import { ENV } from "@/typescript/types/api";
+import Form from "./Form";
+import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { handleBotAction } from "@/utils/handleBotAction";
 
 const Detail = () => {
-  const dict = useTranslations("dict.catalog");
+  const dict = useTranslations("dict");
+  const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [openTrainBot, setOpenTrainBot] = useState(false);
-  const { datasetDetail } = useCatalogContext();
+  const [openCleanBot, setOpenCleanBot] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { datasetDetail } = useCatalogDetailContext();
+  const { notify, notifyError } = useMessageToast();
 
   const handleDropdown = (value: string) => {
     // Acá después ver lógica de enpoints. Tal vez mover o cambiar
@@ -39,10 +45,35 @@ const Detail = () => {
   const dataSetId = datasetDetail?.dataSet._id;
   const handleBotTrainer = async (e: FormEvent) => {
     e.preventDefault();
-
     if (dataSetId) {
-      const response = await post("datasets", `${dataSetId}/vectorize`, ENV.BOX);
-      console.log(response);
+      await handleBotAction(
+        "train",
+        `datasets/${dataSetId}/vectorize`,
+        "post",
+        dict("toast.bot_train"),
+        dict("toast.bot_error"),
+        setLoading,
+        notify,
+        notifyError,
+        setOpenTrainBot,
+      );
+    }
+  };
+
+  const handleBotCleaner = async (e: FormEvent) => {
+    e.preventDefault();
+    if (dataSetId) {
+      await handleBotAction(
+        "clean",
+        `datasets/${dataSetId}/vectorize`,
+        "remove",
+        dict("toast.bot_clean"),
+        dict("toast.bot_error"),
+        setLoading,
+        notify,
+        notifyError,
+        setOpenCleanBot,
+      );
     }
   };
 
@@ -52,25 +83,26 @@ const Detail = () => {
         <Breadcrumb />
         <div className={styles.header}>
           <div className={styles.title_container}>
-            <Title text={`${dict("title")}:`} />
+            <Title text={`${dict("catalog.title")}:`} />
             <p className={styles.catalog}>{datasetDetail?.dataSet.name}</p>
           </div>
           <Button
-            title={dict("add_product")}
+            title={dict("catalog.add_product")}
             styleName='btn_orange'
             icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
+            onclick={() => setShowPopupCreate(true)}
           />
         </div>
         <div className={styles.select_container}>
           <Select
             options={SelectOptionsCatalog("first")}
-            placeholder={dict("select.placeholder_one")}
-            onchange={handleDropdown}
+            placeholder={dict("catalog.select.placeholder_one")}
+            onChange={handleDropdown}
           />
           <Select
             options={SelectOptionsCatalog("second")}
-            placeholder={dict("select.placeholder_two")}
-            onchange={handleDropdown}
+            placeholder={dict("catalog.select.placeholder_two")}
+            onChange={handleDropdown}
           />
         </div>
       </div>
@@ -80,46 +112,60 @@ const Detail = () => {
           <LoadingSpinner />
         ) : datasetDetail?.dataItems.length ? (
           <div className={styles.content_container}>
-            <Fade cascade damping={0.3} triggerOnce>
-              {datasetDetail.dataItems.map(item => (
-                <TableRow
-                  key={item._id}
-                  id={item._id}
-                  name={item.data.listname}
-                  description={item.data.listdescr}
-                  price={item.data.listprice}
-                  image={item.data.listimage}
-                />
-              ))}
-            </Fade>
+            {datasetDetail.dataItems.map(item => (
+              <TableRow
+                key={item._id}
+                id={item._id}
+                name={item.data.listname}
+                description={item.data.listdescr}
+                price={item.data.listprice}
+                image={item.data.listimage}
+              />
+            ))}
           </div>
         ) : (
-          <p className={styles.catalog_empty}>{dict("empty")}</p>
+          <p className={styles.catalog_empty}>{dict("catalog.empty")}</p>
         )}
       </div>
       <div className={styles.buttons}>
         <Button
-          title={dict("clean_bot")}
+          title={dict("catalog.clean_bot")}
           styleName='btn_clean'
           icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
+          onclick={() => setOpenCleanBot(true)}
         />
         <Button
-          title={dict("train_bot")}
+          title={dict("catalog.train_bot")}
           styleName='btn_dataset'
           icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
           onclick={() => setOpenTrainBot(true)}
         />
       </div>
+      {showPopupCreate && <Form setShowPopupCreate={setShowPopupCreate} />}
       {openTrainBot && (
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
-          title={dict("train_bots")}
-          textAccept={dict("train_bot")}
-          textCancel={dict("cancel")}
+          title={dict("catalog.train_bots")}
+          textAccept={dict("catalog.train_bot")}
+          textCancel={dict("catalog.cancel")}
           onConfirm={handleBotTrainer}
           setShowConfirmation={setOpenTrainBot}
+          loading={loading}
         >
-          <p className={styles.trainbot_text}>{dict("train_bots_text")}</p>
+          <p className={styles.trainbot_text}>{dict("catalog.train_bots_text")}</p>
+        </PopupChildren>
+      )}
+      {openCleanBot && (
+        <PopupChildren
+          onCancel={() => setOpenCleanBot(false)}
+          title={dict("catalog.clean_bots")}
+          textAccept={dict("catalog.clean_bot")}
+          textCancel={dict("catalog.cancel")}
+          onConfirm={handleBotCleaner}
+          setShowConfirmation={setOpenCleanBot}
+          loading={loading}
+        >
+          <p className={styles.trainbot_text}>{dict("catalog.clean_bots_text")}</p>
         </PopupChildren>
       )}
     </section>

@@ -6,7 +6,7 @@ interface Props {
   textHolder: string;
   type: string;
   name: string;
-  value: string;
+  value: string | number;
   isDescription?: boolean;
   className?: string;
   iconSearch?: boolean;

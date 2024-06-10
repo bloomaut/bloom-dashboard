@@ -6,12 +6,12 @@ interface Context {
   captureTime: string;
   setShowPreview: (i: boolean) => void;
   showPreview: boolean;
-  previewData: any;
+  previewData: openGraph | null;
   paUrl: string;
   setPaUrl: (url: string) => void;
   setLoadingDots: (i: boolean) => void;
   loadingDots: boolean;
-  setPreviewData: (i: string) => void;
+  setPreviewData: (i: openGraph) => void;
 }
 
 const OpenGraphContext = createContext<Context>({
@@ -32,7 +32,7 @@ export const OpenGraphProvider = ({ children }: { children: JSX.Element }) => {
   const { selectedFlakeId } = useFlakesContext();
   const [captureTime, setCaptureTime] = useState<string>("");
   const [showPreview, setShowPreview] = useState(true);
-  const [previewData, setPreviewData] = useState<any | null>(null);
+  const [previewData, setPreviewData] = useState<openGraph | null>(null);
   const [paUrl, setPaUrl] = useState("");
   const [loadingDots, setLoadingDots] = useState(false);
 

@@ -1,21 +1,26 @@
-import Title from "@/components/Title";
 import styles from "./styles.module.scss";
+import { useTranslations } from "next-intl";
+import { ChangeEvent, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+import { post } from "@/services/fetch";
+import { ENV } from "@/typescript/types/api";
+import { useMessageToast } from "@/hooks/useMessageToast";
+// Components
+import Title from "@/components/Title";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
 import PopupChildren from "@/components/PopupChildren";
 import Input from "@/components/Input";
-import { useCatalogContext } from "@/context/CatalogContext";
 
 const Header = () => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const { dataschemas, postDataschema } = useCatalogContext();
   const [inputValue, setInputValue] = useState("");
   const dict = useTranslations("dict.catalog");
   const dictpopup = useTranslations("dict.popup");
+  const schema = useAppSelector(state => state.dataschema);
+  const { notify, notifyError } = useMessageToast();
 
-  const onChangeInput = (e: any) => {
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
 
@@ -23,15 +28,21 @@ const Header = () => {
     setShowPopupCreate(true);
     setInputValue("");
   };
+
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await postDataschema(inputValue, dataschemas[0]._id);
-    } catch (error) {
-      console.error("Error posting dataset:", error);
-    } finally {
-      setShowPopupCreate(false);
+    const postDataschema = {
+      name: inputValue,
+      dataschema: schema[0]._id,
+      order: 0,
+    };
+    const response = await post("datasets", postDataschema, ENV.BOX);
+    if (response.data.statusCode === 201) {
+      notify(dict("toast.post_dataset"));
+    } else {
+      notifyError(dict("toast.error_dataset"));
     }
+    setShowPopupCreate(false);
   };
 
   return (

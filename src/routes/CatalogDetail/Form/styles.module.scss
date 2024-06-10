@@ -1,0 +1,16 @@
+@import "@/styles/theme.scss";
+
+.form_control {
+  @include width-height(100%, auto);
+  @include flex(column, center, flex-start);
+  .error {
+    @include fontSize-fontWeight(12px, 400);
+    color: red;
+  }
+  .error_hidden {
+    display: none;
+  }
+  &:nth-of-type(4) {
+    gap: 5px;
+  }
+}
