@@ -32,7 +32,8 @@
       "train": "Entrenar",
       "create": "Crear",
       "cancel": "Cancelar",
-      "edit": "Editar"
+      "edit": "Editar",
+      "upload": "Subir"
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
@@ -276,7 +277,10 @@
         "option_one": "Descargar template",
         "option_two": "Subir con Excel",
         "option_three": "Descargar menú"
-      }
+      },
+      "upload_excel_title": "Subir Planilla Excel",
+      "upload_excel": "Subir Excel",
+      "cancel": "Cancelar"
     }
   }
 }

@@ -16,8 +16,9 @@ import { useState } from "react";
 import PopupChildren from "@/components/PopupChildren";
 
 const Detail = () => {
-  const dict = useTranslations("dict.catalog");
+  const dict = useTranslations("dict");
   const [openTrainBot, setOpenTrainBot] = useState(false);
+  const [uploadPopup, setUploadPopup] = useState(true);
   const { datasetDetail } = useCatalogContext();
 
   const handleDropdown = (value: string) => {
@@ -60,6 +61,18 @@ const Detail = () => {
             placeholder={dict("select.placeholder_two")}
             onchange={handleDropdown}
           />
+          {uploadPopup && (
+            <PopupChildren
+              onCancel={() => setUploadPopup(false)}
+              title={dict("upload_excel_title")}
+              textAccept={dict("popup.upload")}
+              textCancel={dict("popup.cancel")}
+              onConfirm={() => setUploadPopup(false)}
+              setShowConfirmation={setUploadPopup}
+            >
+              <p></p>
+            </PopupChildren>
+          )}
         </div>
       </div>
       <div className={styles.table_container}>

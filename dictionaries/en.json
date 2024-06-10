@@ -32,7 +32,8 @@
       "train": "Train",
       "create": "Create",
       "cancel": "Cancel",
-      "edit": "Edit"
+      "edit": "Edit",
+      "upload": "Upload"
     },
     "toast": {
       "success_img": "Image uploaded successfully",
@@ -276,7 +277,9 @@
         "option_one": "Download template",
         "option_two": "Upload with Excel",
         "option_three": "Download menu"
-      }
+      },
+      "upload_excel_title": "Upload Excel Spreadsheet",
+      "upload_excel": "Upload Excel"
     }
   }
 }
