@@ -1,12 +1,12 @@
 "use client";
-import { CatalogProvider } from "@/context/CatalogContext";
-import Detail from "./CatalogDetail";
+import { CatalogDetailProvider } from "@/context/CatalogDetailContext";
+import Detail from "./Detail";
 
 const CatalogDetail = () => {
   return (
-    <CatalogProvider>
+    <CatalogDetailProvider>
       <Detail />
-    </CatalogProvider>
+    </CatalogDetailProvider>
   );
 };
 

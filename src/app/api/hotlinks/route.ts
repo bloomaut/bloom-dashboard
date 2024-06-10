@@ -18,7 +18,6 @@ const handleRequest = async function handleFetch(req: NextRequest) {
         } else if (contentType.includes("application/json")) {
           const jsonData = await req?.json();
           fetchOptions.data = jsonData;
-          console.log("JSON que envio:", jsonData);
         }
       }
     }

@@ -63,13 +63,13 @@
     @include fontSize-fontWeight(16px, 400);
     color: $text;
   }
-}
 
-@media (width >= $queryXl) {
-  .catalog_detail_container {
-    .table_container {
-      .content_container {
-        height: 600px;
+  @media (width >= $queryXl) {
+    .catalog_detail_container {
+      .table_container {
+        .content_container {
+          height: 600px;
+        }
       }
     }
   }

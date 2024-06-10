@@ -22,6 +22,7 @@
       width: 100%;
       .no {
         @include flex(row, center, center, 5px);
+        @include fontSize-fontWeight(16px, 500);
         border: none;
         border-radius: 5px;
         padding: 10px;
@@ -35,8 +36,8 @@
       }
       .yes {
         @extend .no;
-        background: $white;
-        border: 2px solid $orange;
+        background: $orange;
+        color: $white;
         &:hover {
           background: $orange;
           color: $white;
