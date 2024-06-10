@@ -8,20 +8,20 @@ import { useState } from "react";
 import { remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
-import { useCatalogContext } from "@/context/CatalogContext";
+import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 
 interface Props {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price: number | null;
   image: string;
 }
 
 const TableRow = ({ id, name, description, price, image }: Props) => {
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
-  const { fetchDatasets } = useCatalogContext();
+  const { fetchDatasetById } = useCatalogDetailContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
 
   const submitDelete = async () => {
@@ -29,7 +29,7 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
     if (response.statusCode === 200) {
       setShowPopupDelete(false);
       notify(`${dict("toast.success_product_deleted")}`);
-      fetchDatasets();
+      fetchDatasetById();
     } else {
       notifyError(`${dict("toast.error_product_deleted")}`);
     }

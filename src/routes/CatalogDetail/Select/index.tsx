@@ -4,22 +4,24 @@ import styles from "./styles.module.scss";
 interface DetailProps {
   options: Array<selectOptions>;
   placeholder: string;
-  onchange: (e: string) => void;
+  onChange: (value: string) => void;
 }
 
-const Select = ({ options, placeholder, onchange }: DetailProps) => {
+const Select = ({ options, placeholder, onChange }: DetailProps) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(e.target.value);
+  };
+
   return (
-    <select className={styles.select_container} onChange={e => onchange(e.target.value)}>
-      <option disabled selected hidden>
+    <select className={styles.select_container} onChange={handleSelectChange} value=''>
+      <option value='' disabled hidden>
         {placeholder}
       </option>
-      {options.map(op => {
-        return (
-          <option key={op.title} value={op.value}>
-            {op.title}
-          </option>
-        );
-      })}
+      {options.map(op => (
+        <option key={op.value} value={op.value}>
+          {op.title}
+        </option>
+      ))}
     </select>
   );
 };

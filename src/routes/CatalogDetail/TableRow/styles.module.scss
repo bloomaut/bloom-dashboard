@@ -13,7 +13,7 @@
     padding-left: 10px;
   }
   .image {
-    @include width-height(75px, 75px);
+    @include width-height(80px, 80px);
     object-fit: contain;
   }
   .icons {

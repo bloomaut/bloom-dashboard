@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { FormEvent, SetStateAction } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import { useTranslations } from "next-intl";
 
 interface PopupChildrenProps {
   onConfirm: (e: FormEvent<HTMLFormElement>) => void;
