@@ -5,6 +5,8 @@ import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useParams } from "next/navigation";
+import { useAppDispatch } from "@/store/hooks";
+import { setDataschemaData } from "@/store/features/dataschemaSlice";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
@@ -29,6 +31,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
+  const dispatch = useAppDispatch();
 
   const fetchDatasets = async () => {
     const data = await get("datasets/small/list", ENV.BOX);
@@ -36,6 +39,13 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       setDatasets(data.data.datasets);
     }
     setLoading(false);
+  };
+
+  const fetchDataSchemas = async () => {
+    const data = await get("dataschemas/dataprovider/small", ENV.BOX);
+    if (data.statusCode === 200) {
+      dispatch(setDataschemaData(data.data));
+    }
   };
 
   const updateDataset = async (id: string, newName: string) => {
@@ -53,6 +63,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     fetchDatasets();
+    fetchDataSchemas();
   }, []);
 
   return (

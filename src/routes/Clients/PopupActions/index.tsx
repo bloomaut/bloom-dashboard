@@ -73,50 +73,42 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
   };
 
   const postClient = async () => {
-    try {
-      const data = await post("client-customer", formData);
-      if (data.data.statusCode === 201) {
-        notify(dict("toast.client_post"));
-        setShowPopup(false);
-        setFormData({
-          ClientFirstname: "",
-          ClientLastname: "",
-          ClientEmail: "",
-          ClientPhone: "",
-          ClientLocation: "",
-          personalNote: "",
-        });
-        fetchClients();
-        setClientSelected(null);
-      } else {
-        notifyError(dict("toast.client_post_error"));
-      }
-    } catch (e) {
-      console.log(e);
+    const data = await post("client-customer", formData);
+    if (data.data.statusCode === 201) {
+      notify(dict("toast.client_post"));
+      setShowPopup(false);
+      setFormData({
+        ClientFirstname: "",
+        ClientLastname: "",
+        ClientEmail: "",
+        ClientPhone: "",
+        ClientLocation: "",
+        personalNote: "",
+      });
+      fetchClients();
+      setClientSelected(null);
+    } else {
+      notifyError(dict("toast.client_post_error"));
     }
   };
 
   const editClient = async () => {
-    try {
-      const data = await update("client-customer", formData, clientId);
-      if (data.statusCode === 200) {
-        notify(dict("toast.client_edit"));
-        setShowPopup(false);
-        setFormData({
-          ClientFirstname: "",
-          ClientLastname: "",
-          ClientEmail: "",
-          ClientPhone: "",
-          ClientLocation: "",
-          personalNote: "",
-        });
-        fetchClients();
-        setClientSelected(null);
-      } else {
-        notifyError(dict("toast.client_edit_error"));
-      }
-    } catch (e) {
-      console.log(e);
+    const data = await update("client-customer", formData, clientId);
+    if (data.statusCode === 200) {
+      notify(dict("toast.client_edit"));
+      setShowPopup(false);
+      setFormData({
+        ClientFirstname: "",
+        ClientLastname: "",
+        ClientEmail: "",
+        ClientPhone: "",
+        ClientLocation: "",
+        personalNote: "",
+      });
+      fetchClients();
+      setClientSelected(null);
+    } else {
+      notifyError(dict("toast.client_edit_error"));
     }
   };
   return (

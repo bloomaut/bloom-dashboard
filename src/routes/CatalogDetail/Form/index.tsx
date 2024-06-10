@@ -79,8 +79,6 @@ const Form = ({ setShowPopupCreate }: Form) => {
         notifyError(dict("toast.error_item"));
         console.error("Error updating dataset:", error);
       }
-    } else {
-      console.log("NO");
     }
   };
 
