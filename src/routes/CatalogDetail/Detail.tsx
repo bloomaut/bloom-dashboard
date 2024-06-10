@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { useParams } from "next/navigation";
-import { post } from "@/services/fetch";
+import { post, postFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useState } from "react";
@@ -56,8 +56,7 @@ const Detail = () => {
   const submitExcel = async (event: React.FormEvent) => {
     event.preventDefault();
     if (selectedFile) {
-      console.log(selectedFile);
-      const response = await post(`datasets/${id}/create`, selectedFile, ENV.BOX);
+      const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
       if (response.data.statusCode === 201) {
         notify(dict("toast.success_file"));
       } else {
