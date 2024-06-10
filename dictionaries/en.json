@@ -35,6 +35,7 @@
       "create_product": "Create Product",
       "cancel": "Cancel",
       "edit": "Edit",
+      "upload": "Upload",
       "required": "* All fields are required"
     },
     "toast": {
@@ -63,8 +64,9 @@
       "client_post_error": "Error creating client",
       "client_edit_error": "Error updating client",
       "client_delete_error": "Error deleting client",
-      "post_dataset": "Dataset posted successfully",
-      "error_dataset": "Error posting dataset"
+      "post_dataset": "Catalog posted successfully",
+      "error_dataset": "Error posting catalog",
+      "error_uploading": "Error uploading file"
     },
     "popupLogin": {
       "login": "Log in",
@@ -280,6 +282,8 @@
         "option_two": "Upload with Excel",
         "option_three": "Download menu"
       },
+      "upload_excel_title": "Upload Excel Spreadsheet",
+      "upload_excel": "Upload Excel",
       "empty": "This catalog does not yet contain any products."
     },
     "form_validation": {

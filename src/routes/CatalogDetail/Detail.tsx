@@ -1,8 +1,13 @@
 import styles from "./styles.module.scss";
-import { Fade } from "react-awesome-reveal";
 import { useTranslations } from "next-intl";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
+import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { useParams } from "next/navigation";
+import { post, postFile } from "@/services/fetch";
+import { ENV } from "@/typescript/types/api";
+import { useMessageToast } from "@/hooks/useMessageToast";
 import { useState } from "react";
+import excel from "/public/assets/excel_logo.svg";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Title from "@/components/Title";
@@ -14,13 +19,17 @@ import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import Form from "./Form";
-import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import Image from "next/image";
 
 const Detail = () => {
-  const dict = useTranslations("dict");
   const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const [openTrainBot, setOpenTrainBot] = useState(false);
+  const [openTrainBot, setOpenTrainBot] = useState<boolean>(false);
+  const [uploadPopup, setUploadPopup] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const dict = useTranslations("dict");
   const { datasetDetail } = useCatalogDetailContext();
+  const { notify, notifyError } = useMessageToast();
+  const { id } = useParams();
 
   const handleDropdown = (value: string) => {
     // Acá después ver lógica de enpoints. Tal vez mover o cambiar
@@ -28,11 +37,32 @@ const Detail = () => {
       case "download_post_template":
         break;
       case "upload_post_excel":
+        setUploadPopup(!uploadPopup);
+
         break;
       case "download_update_template":
         break;
       case "upload_update_excel":
         break;
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  const submitExcel = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (selectedFile) {
+      const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
+      if (response.data.statusCode === 201) {
+        notify(dict("toast.success_file"));
+      } else {
+        notifyError(dict("toast.error_uploading"));
+      }
+      setUploadPopup(false);
     }
   };
 
@@ -63,6 +93,29 @@ const Detail = () => {
             placeholder={dict("catalog.select.placeholder_two")}
             onChange={handleDropdown}
           />
+          {uploadPopup && (
+            <PopupChildren
+              onCancel={() => setUploadPopup(false)}
+              title={dict("catalog.upload_excel_title")}
+              textAccept={dict("popup.upload")}
+              textCancel={dict("popup.cancel")}
+              onConfirm={submitExcel}
+              setShowConfirmation={setUploadPopup}
+            >
+              <input
+                type='file'
+                accept='.xlsx, .xls'
+                id='fileInput'
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+              <label htmlFor='fileInput' className={styles.excel_button}>
+                <Image src={excel} width={25} alt='excel' />
+                <p>{dict("catalog.upload_excel")}</p>
+                <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
+              </label>
+            </PopupChildren>
+          )}
         </div>
       </div>
       <div className={styles.table_container}>
