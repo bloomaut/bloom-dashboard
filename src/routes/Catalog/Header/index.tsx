@@ -15,8 +15,7 @@ import Input from "@/components/Input";
 const Header = () => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const dict = useTranslations("dict.catalog");
-  const dictpopup = useTranslations("dict.popup");
+  const dict = useTranslations("dict");
   const schema = useAppSelector(state => state.dataschema);
   const { notify, notifyError } = useMessageToast();
 
@@ -47,24 +46,24 @@ const Header = () => {
 
   return (
     <div className={styles.header}>
-      <Title text={dict("title")} />
+      <Title text={dict("catalog.title")} />
       <div className={styles.btn_container}>
         <Button
-          title={dict("ia")}
+          title={dict("catalog.ia")}
           icon={<Icon name='ia' strokeColor='#7f7f7f' viewBox='0 0 25 21' />}
           styleName='btn_outline'
         />
         <Button
-          title={dict("new")}
+          title={dict("catalog.new")}
           icon={<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
           styleName='btn_reverse'
           onclick={handleCreate}
         />
         {showPopupCreate && (
           <PopupChildren
-            title={dict("new")}
-            textAccept={dictpopup("create")}
-            textCancel={dictpopup("cancel")}
+            title={dict("catalog.new")}
+            textAccept={dict("popup.create")}
+            textCancel={dict("popup.cancel")}
             onCancel={() => setShowPopupCreate(false)}
             onConfirm={submitPost}
             setShowConfirmation={setShowPopupCreate}
@@ -72,7 +71,7 @@ const Header = () => {
               <Input
                 type='text'
                 name='Name'
-                textHolder={dictpopup("name")}
+                textHolder={dict("popup.name")}
                 value={inputValue}
                 handleChange={onChangeInput}
               />

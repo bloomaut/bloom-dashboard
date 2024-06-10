@@ -35,6 +35,7 @@
       "create_product": "Create Product",
       "cancel": "Cancel",
       "edit": "Edit",
+      "upload": "Upload",
       "required": "* All fields are required"
     },
     "toast": {
@@ -63,10 +64,11 @@
       "client_post_error": "Error creating client",
       "client_edit_error": "Error updating client",
       "client_delete_error": "Error deleting client",
-      "post_dataset": "Dataset posted successfully",
-      "error_dataset": "Error posting dataset",
       "bot_train_success": "Correctly trained bot",
-      "bot_error": "An error occurred"
+      "bot_error": "An error occurred",
+      "post_dataset": "Catalog posted successfully",
+      "error_dataset": "Error posting catalog",
+      "error_uploading": "Error uploading file"
     },
     "popupLogin": {
       "login": "Log in",
@@ -286,7 +288,9 @@
         "option_one": "Download template",
         "option_two": "Upload with Excel",
         "option_three": "Download menu"
-      }
+      },
+      "upload_excel_title": "Upload Excel Spreadsheet",
+      "upload_excel": "Upload Excel"
     },
     "form_validation": {
       "ClientFirstname": "The name is required",

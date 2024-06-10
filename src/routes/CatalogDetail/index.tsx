@@ -1,5 +1,5 @@
 "use client";
-import Detail from "./CatalogDetail";
+import Detail from "./Detail";
 import { CatalogDetailProvider } from "@/context/CatalogDetailContext";
 
 const CatalogDetail = () => {

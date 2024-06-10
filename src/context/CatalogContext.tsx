@@ -4,7 +4,6 @@ import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { useParams } from "next/navigation";
 import { useAppDispatch } from "@/store/hooks";
 import { setDataschemaData } from "@/store/features/dataschemaSlice";
 

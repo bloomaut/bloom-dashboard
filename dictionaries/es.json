@@ -34,6 +34,7 @@
       "create_product": "Crear producto",
       "cancel": "Cancelar",
       "edit": "Editar",
+      "upload": "Subir",
       "required": "* Todos los campos son requeridos"
     },
     "toast": {
@@ -62,11 +63,12 @@
       "client_post_error": "Error al crear cliente",
       "client_edit_error": "Error al actualizar cliente",
       "client_delete_error": "Error al eliminar cliente",
-      "post_dataset": "Dataset publicado correctamente",
-      "error_dataset": "Error al publicar dataset",
       "bot_train": "Bot entrenado correctamente",
       "bot_clean": "Limpieza de bots exitosa",
-      "bot_error": "Ocurrió un error"
+      "bot_error": "Ocurrió un error",
+      "post_dataset": "Catálogo publicado correctamente",
+      "error_dataset": "Error al publicar catálogo",
+      "error_uploading": "Error al subir el archivo"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -286,7 +288,9 @@
         "option_one": "Descargar template",
         "option_two": "Subir con Excel",
         "option_three": "Descargar menú"
-      }
+      },
+      "upload_excel_title": "Subir Planilla Excel",
+      "upload_excel": "Subir Excel"
     },
     "form_validation": {
       "ClientFirstname": "El nombre es requerido",
