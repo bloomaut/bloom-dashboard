@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { Dataset } from "@/typescript/interfaces/catalog.interface";
+import { DataItemsList, Dataset } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
 

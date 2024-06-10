@@ -13,10 +13,7 @@ export interface DatasetField {
 }
 
 export interface DataItemsList {
-  listname: string;
-  listdescr: string;
-  listimage: string;
-  listprice: number | null;
+  [key: string]: any;
 }
 
 interface DataItems {
@@ -47,7 +44,7 @@ export interface UpdateDataset {
 
 export interface PostDataItem {
   dataset: string;
-  data: DataItemsList;
+  data: DataItemsList | undefined;
   order: number;
 }
 

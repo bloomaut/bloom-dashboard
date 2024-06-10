@@ -16,65 +16,71 @@ interface Form {
   setShowPopupCreate: (value: SetStateAction<boolean>) => void;
 }
 
-const initialFormData = {
-  listname: "",
-  listdescr: "",
-  listprice: null,
-  listimage: "",
-};
-
 const Form = ({ setShowPopupCreate }: Form) => {
-  const [formData, setFormData] = useState<DataItemsList>(initialFormData);
+  const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
+  const [initialFormData, setInitialFormData] = useState<DataItemsList | undefined>();
+  const [formData, setFormData] = useState<DataItemsList | undefined>(initialFormData);
   const [checkValidation, setCheckValidation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
-  const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
 
+  // Crea los campos para el formulario vacíos
+  useEffect(() => {
+    const listEmptyForm: any = {};
+
+    datasetDetail?.dataSet.dataschema.fields.forEach(field => {
+      listEmptyForm[field.name] = "";
+    });
+
+    setInitialFormData(listEmptyForm);
+    setFormData(listEmptyForm);
+  }, []);
+
+  // Validación de campos
   const fieldsToValidate =
     datasetDetail?.dataSet.dataschema.fields.filter((field: any) => field.required).map((field: any) => field.name) ||
     [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
+  // Crea el form y lo postea
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCheckValidation(true);
-    try {
-      if (Object.keys(errors).length === 0 && file) {
-        const response = await postFile("small-files/media", file);
-        if (response.data.statusCode === 201) {
-          const logoUrl = response.data.result.media.url;
-          const dataToSend = {
-            dataset: datasetDetail?.dataSet._id ?? "",
-            data: {
-              ...formData,
-              listimage: logoUrl,
-            },
-            order: 0,
-          };
-          await postDataItem(dataToSend);
-          notify(dict("toast.success_item"));
-          setShowPopupCreate(false);
-          setFormData(initialFormData);
-          setFile(null);
-          setCheckValidation(false);
-        }
-      } else {
-        const dataToSend = {
+    if (Object.keys(errors).length === 0) {
+      try {
+        let dataToSend = {
           dataset: datasetDetail?.dataSet._id ?? "",
           data: formData,
           order: 0,
         };
 
+        if (file) {
+          const response = await postFile("small-files/media", file);
+          if (response.data.statusCode === 201) {
+            const logoUrl = response.data.result.media.url;
+            dataToSend = {
+              dataset: datasetDetail?.dataSet._id ?? "",
+              data: {
+                ...formData,
+                listimage: logoUrl,
+              },
+              order: 0,
+            };
+          }
+        }
         await postDataItem(dataToSend);
         notify(dict("toast.success_item"));
         setShowPopupCreate(false);
         setFormData(initialFormData);
+        setFile(null);
         setCheckValidation(false);
+      } catch (error) {
+        notifyError(dict("toast.error_item"));
+        console.error("Error updating dataset:", error);
       }
-    } catch (error) {
-      notifyError(dict("toast.error_item"));
-      console.error("Error updating dataset:", error);
+    } else {
+      console.log("NO");
     }
   };
 
@@ -87,7 +93,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState: any) => ({
       ...prevState,
       [name]: value,
     }));
@@ -114,13 +120,14 @@ const Form = ({ setShowPopupCreate }: Form) => {
     >
       {datasetDetail?.dataSet.dataschema.fields.map(
         (field: Field) =>
+          // Si el campo es de tipo text se renderiza el input
           !field.name.includes("image") && (
             <div key={field._id} className={styles.form_control}>
               <Input
                 type={field.type === "number" ? "number" : "text"}
                 textHolder={field.description}
                 name={field.name}
-                value={formData[field.name as keyof DataItemsList] ?? ""}
+                value={formData ? formData[field.name as keyof DataItemsList] : ""}
                 handleChange={handleChange}
               />
               {checkValidation && <ErrorMessage error={errors[field.name as keyof DataItemsList]} />}
@@ -128,6 +135,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
           ),
       )}
       {datasetDetail?.dataSet.dataschema.fields.map((field: Field) => {
+        // Si el campo es de tipo imagen se renderiza el drag and drop
         if (field.name.includes("image")) {
           return (
             <div key={field._id} className={styles.form_control}>
