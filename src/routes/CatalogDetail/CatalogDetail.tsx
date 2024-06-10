@@ -50,7 +50,6 @@ const Detail = () => {
   const submitExcel = async (event: React.FormEvent) => {
     event.preventDefault();
     if (selectedFile) {
-      console.log(id, "SID");
       postExcel(selectedFile, id);
       setUploadPopup(false);
     }
