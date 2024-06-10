@@ -6,7 +6,8 @@
       "btn2": "Go back"
     },
     "drag": {
-      "title": "Drag or drop your files here"
+      "title": "Drag or drop your files here",
+      "image": "Select image"
     },
     "sidebar": {
       "home": "Home",
@@ -31,11 +32,14 @@
       "confirm": "Delete",
       "train": "Train",
       "create": "Create",
+      "create_product": "Create Product",
       "cancel": "Cancel",
-      "edit": "Edit"
+      "edit": "Edit",
+      "required": "* All fields are required"
     },
     "toast": {
       "success_img": "Image uploaded successfully",
+      "success_item": "Product upload successfully",
       "success_file": "File uploaded successfully",
       "success_edit": "Information updated successfully",
       "success_delete": "File deleted successfully",
@@ -46,6 +50,7 @@
       "error_name": "Name is required",
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
+      "error_item": "Error uploading product",
       "error_file": "Error deleting file",
       "error_catalog": "Error deleting catalog",
       "error_palette": "Error updating palette",
@@ -267,8 +272,6 @@
       "price": "Price",
       "clean_bot": "Clean Bot",
       "train_bot": "Train Bot",
-      "empty": "This catalog does not yet contain any products.",
-      "train_bots": "Train Bots",
       "train_bots_text": "¿Would you line to train your UiTool Bots this menu information?",
       "select": {
         "placeholder_one": "Bulk Load",
@@ -276,7 +279,17 @@
         "option_one": "Download template",
         "option_two": "Upload with Excel",
         "option_three": "Download menu"
-      }
+      },
+      "empty": "This catalog does not yet contain any products."
+    },
+    "form_validation": {
+      "ClientFirstname": "The name is required",
+      "ClientEmail_01": "Email is required",
+      "ClientEmail_02": "Invalid email format",
+      "listname": "The product name is required",
+      "listdescr": "Product description is required",
+      "listprice": "The price of the product must be greater than 0",
+      "listimage": "The product must contain an image"
     }
   }
 }

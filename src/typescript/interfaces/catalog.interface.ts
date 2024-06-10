@@ -3,7 +3,7 @@ interface Dataschema {
   fields: DatasetField[];
 }
 
-interface DatasetField {
+export interface DatasetField {
   _id: string;
   name: string;
   description: string;
@@ -12,11 +12,8 @@ interface DatasetField {
   required: boolean;
 }
 
-interface DataItemsList {
-  listname: string;
-  listdescr: string;
-  listimage: string;
-  listprice: number;
+export interface DataItemsList {
+  [key: string]: any;
 }
 
 interface DataItems {
@@ -43,6 +40,12 @@ export interface Dataset {
 
 export interface UpdateDataset {
   name: string;
+}
+
+export interface PostDataItem {
+  dataset: string;
+  data: DataItemsList | undefined;
+  order: number;
 }
 
 export interface selectOptions {

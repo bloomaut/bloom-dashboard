@@ -1,46 +1,58 @@
+import { DataItemsList } from "@/typescript/interfaces/catalog.interface";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 interface FormDataProps {
-  ClientFirstname: string;
-  ClientLastname: string;
-  ClientEmail: string;
-  ClientLocation: string;
-  ClientPhone: string;
-  personalNote: string;
+  [key: string]: any | undefined;
 }
 
 interface FormErrorsProps {
-  ClientFirstname?: string;
-  ClientLastname?: string;
-  ClientEmail?: string;
-  ClientLocation?: string;
-  ClientPhone?: string;
-  personalNote?: string;
+  [key: string]: string;
 }
 
-const useFormValidator = (formData: FormDataProps) => {
+const useFormValidator = (
+  formData: DataItemsList | undefined,
+  fieldsToValidate?: (keyof FormDataProps)[],
+  file?: File | null,
+) => {
   const [errors, setErrors] = useState<FormErrorsProps>({});
+  const dict = useTranslations("dict");
 
   useEffect(() => {
     const validateFormData = () => {
       const errors: FormErrorsProps = {};
 
-      if (!formData.ClientFirstname.trim()) {
-        errors.ClientFirstname = "Nombre es requerido";
+      if (
+        fieldsToValidate?.includes("ClientFirstname") &&
+        (!formData?.ClientFirstname || !formData?.ClientFirstname.trim())
+      ) {
+        errors.ClientFirstname = dict("form_validation.ClientFirstname");
       }
 
-      if (formData.ClientEmail && formData.ClientEmail.trim()) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.ClientEmail)) {
-          errors.ClientEmail = "Formato de email inválido";
+      if (fieldsToValidate?.includes("ClientEmail")) {
+        if (!formData?.ClientEmail || !formData?.ClientEmail.trim()) {
+          errors.ClientEmail = dict("form_validation.ClientEmail_01");
+        } else {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(formData.ClientEmail)) {
+            errors.ClientEmail = dict("form_validation.ClientEmail_02");
+          }
         }
+      }
+
+      if (fieldsToValidate?.includes("listname") && (!formData?.listname || !formData?.listname.trim())) {
+        errors.listname = dict("form_validation.listname");
+      }
+
+      if (fieldsToValidate?.includes("listprice") && (formData?.listprice === undefined || formData?.listprice <= 0)) {
+        errors.listprice = dict("form_validation.listprice");
       }
 
       setErrors(errors);
     };
 
     validateFormData();
-  }, [formData]);
+  }, [formData, file]);
 
   return errors;
 };
