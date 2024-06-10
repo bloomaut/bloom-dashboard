@@ -71,18 +71,16 @@ const Detail = () => {
           <LoadingSpinner />
         ) : datasetDetail?.dataItems.length ? (
           <div className={styles.content_container}>
-            <Fade cascade damping={0.3} triggerOnce>
-              {datasetDetail.dataItems.map(item => (
-                <TableRow
-                  key={item._id}
-                  id={item._id}
-                  name={item.data.listname}
-                  description={item.data.listdescr}
-                  price={item.data.listprice}
-                  image={item.data.listimage}
-                />
-              ))}
-            </Fade>
+            {datasetDetail.dataItems.map(item => (
+              <TableRow
+                key={item._id}
+                id={item._id}
+                name={item.data.listname}
+                description={item.data.listdescr}
+                price={item.data.listprice}
+                image={item.data.listimage}
+              />
+            ))}
           </div>
         ) : (
           <p className={styles.catalog_empty}>{dict("catalog.empty")}</p>
