@@ -64,9 +64,9 @@
       "client_post_error": "Error al crear cliente",
       "client_edit_error": "Error al actualizar cliente",
       "client_delete_error": "Error al eliminar cliente",
-      "post_dataset": "Dataset publicado correctamente",
-      "error_dataset": "Error al publicar dataset",
-      "error_uploading": "Error uploading file"
+      "post_dataset": "Catálogo publicado correctamente",
+      "error_dataset": "Error al publicar catálogo",
+      "error_uploading": "Error al subir el archivo"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
