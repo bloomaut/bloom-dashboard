@@ -12,8 +12,10 @@ import Icon from "@/components/Icon";
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import Select from "./Select";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import PopupChildren from "@/components/PopupChildren";
+import { post } from "@/services/fetch";
+import { ENV } from "@/typescript/types/api";
 
 const Detail = () => {
   const dict = useTranslations("dict.catalog");
@@ -31,6 +33,16 @@ const Detail = () => {
         break;
       case "upload_update_excel":
         break;
+    }
+  };
+
+  const dataSetId = datasetDetail?.dataSet._id;
+  const handleBotTrainer = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (dataSetId) {
+      const response = await post("datasets", `${dataSetId}/vectorize`, ENV.BOX);
+      console.log(response);
     }
   };
 
@@ -102,9 +114,9 @@ const Detail = () => {
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
           title={dict("train_bots")}
-          textAccept={dict("popup.train")}
-          textCancel={dict("popup.cancel")}
-          onConfirm={() => setOpenTrainBot(false)}
+          textAccept={dict("train_bot")}
+          textCancel={dict("cancel")}
+          onConfirm={handleBotTrainer}
           setShowConfirmation={setOpenTrainBot}
         >
           <p className={styles.trainbot_text}>{dict("train_bots_text")}</p>
