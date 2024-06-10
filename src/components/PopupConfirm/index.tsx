@@ -71,10 +71,10 @@ const PopupConfirm = ({
         )}
         {textCancel && textAccept && (
           <div className={styles.button_container}>
-            <button className={styles.yes} onClick={onCancel}>
+            <button className={styles.no} onClick={onCancel}>
               {textCancel}
             </button>
-            <button className={styles.no} onClick={onConfirm}>
+            <button className={styles.yes} onClick={onConfirm}>
               {textAccept}
             </button>
           </div>

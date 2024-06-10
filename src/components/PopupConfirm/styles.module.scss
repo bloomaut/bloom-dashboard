@@ -22,26 +22,26 @@
       width: 100%;
       .no {
         @include flex(row, center, center, 5px);
-        background: $orange;
+        @include fontSize-fontWeight(16px, 500);
         border: none;
         border-radius: 5px;
         padding: 10px;
-        color: $white;
         cursor: pointer;
+        background: $greyBackground;
         transition: all 200ms ease-in-out;
         &:hover {
-          background: $greyBackground;
-          color: $text;
+          background: $lighterGrey;
+          color: $white;
         }
       }
       .yes {
         @extend .no;
-        background: $greyBackground;
-        color: $text;
-        transition: all 200ms ease-in;
+        background: $orange;
+        color: $white;
         &:hover {
           background: $orange;
           color: $white;
+          transition: all 200ms ease-in;
           svg {
             path {
               fill: #fff;
