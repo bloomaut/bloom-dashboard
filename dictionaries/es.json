@@ -60,7 +60,8 @@
       "client_edit_error": "Error al actualizar cliente",
       "client_delete_error": "Error al eliminar cliente",
       "post_dataset": "Dataset publicado correctamente",
-      "error_dataset": "Error al publicar dataset"
+      "error_dataset": "Error al publicar dataset",
+      "error_uploading": "Error uploading file"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"

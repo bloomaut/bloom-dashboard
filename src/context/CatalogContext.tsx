@@ -15,6 +15,7 @@ interface CatalogContextType {
   dataschemas: DataschemaProps[];
   fetchDatasets: () => Promise<void>;
   postDataschema: (name: string, id: string) => Promise<void>;
+  postExcel: (file: File, id: string | string[]) => Promise<void>;
 }
 
 const CatalogContext = createContext<CatalogContextType>({
@@ -27,6 +28,9 @@ const CatalogContext = createContext<CatalogContextType>({
   },
   postDataschema: async () => {
     throw new Error("postDataschema function not implemented");
+  },
+  postExcel: async () => {
+    throw new Error("postExcel function not implemented");
   },
 });
 
@@ -86,7 +90,14 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       notifyError(dict("toast.error_dataset"));
     }
   };
-
+  const postExcel = async (file: File, id: string | string[]) => {
+    const response = await post(`datasets/${id}/create`, file, ENV.BOX);
+    if (response.data.statusCode === 201) {
+      notify(dict("toast.success_file"));
+    } else {
+      notifyError(dict("toast.error_uploading"));
+    }
+  };
   return (
     <CatalogContext.Provider
       value={{
@@ -96,6 +107,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
         fetchDatasets,
         postDataschema,
         dataschemas,
+        postExcel,
       }}
     >
       {children}

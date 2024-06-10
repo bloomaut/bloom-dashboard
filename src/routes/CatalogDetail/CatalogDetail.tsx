@@ -14,12 +14,18 @@ import LoadingSpinner from "@/components/Loading";
 import Select from "./Select";
 import { useState } from "react";
 import PopupChildren from "@/components/PopupChildren";
+import Image from "next/image";
+import excel from "/public/assets/excel_logo.svg";
+import { useParams } from "next/navigation";
 
 const Detail = () => {
-  const dict = useTranslations("dict");
-  const [openTrainBot, setOpenTrainBot] = useState(false);
-  const [uploadPopup, setUploadPopup] = useState(true);
-  const { datasetDetail } = useCatalogContext();
+  const dict = useTranslations("dict.catalog");
+  const dictpopup = useTranslations("dict.popup");
+  const [openTrainBot, setOpenTrainBot] = useState<boolean>(false);
+  const [uploadPopup, setUploadPopup] = useState<boolean>(false);
+  const { datasetDetail, postExcel } = useCatalogContext();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { id } = useParams();
 
   const handleDropdown = (value: string) => {
     // Acá después ver lógica de enpoints. Tal vez mover o cambiar
@@ -27,11 +33,26 @@ const Detail = () => {
       case "download_post_template":
         break;
       case "upload_post_excel":
+        setUploadPopup(!uploadPopup);
+
         break;
       case "download_update_template":
         break;
       case "upload_update_excel":
         break;
+    }
+  };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+  const submitExcel = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (selectedFile) {
+      console.log(id, "SID");
+      postExcel(selectedFile, id);
+      setUploadPopup(false);
     }
   };
 
@@ -65,12 +86,23 @@ const Detail = () => {
             <PopupChildren
               onCancel={() => setUploadPopup(false)}
               title={dict("upload_excel_title")}
-              textAccept={dict("popup.upload")}
-              textCancel={dict("popup.cancel")}
-              onConfirm={() => setUploadPopup(false)}
+              textAccept={dictpopup("upload")}
+              textCancel={dictpopup("cancel")}
+              onConfirm={submitExcel}
               setShowConfirmation={setUploadPopup}
             >
-              <p></p>
+              <input
+                type='file'
+                accept='.xlsx, .xls'
+                id='fileInput'
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+              <label htmlFor='fileInput' className={styles.excel_button}>
+                <Image src={excel} width={25} alt='excel' />
+                <p>{dict("upload_excel")}</p>
+                <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
+              </label>
             </PopupChildren>
           )}
         </div>
@@ -115,8 +147,8 @@ const Detail = () => {
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
           title={dict("train_bots")}
-          textAccept={dict("popup.train")}
-          textCancel={dict("popup.cancel")}
+          textAccept={dictpopup("train")}
+          textCancel={dictpopup("cancel")}
           onConfirm={() => setOpenTrainBot(false)}
           setShowConfirmation={setOpenTrainBot}
         >
