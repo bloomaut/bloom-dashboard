@@ -22,9 +22,12 @@ const Navbar = () => {
 
   return (
     <nav className={styles.container}>
-      <Link href='/'>
-        <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
-      </Link>
+      <div className={styles.logo_container}>
+        <Link href='/'>
+          <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
+        </Link>
+        <Dropdown app='uitrade' />
+      </div>
       <div className={styles.inner_container}>
         {/* Knowledge */}
         <Link href='https://noti-knowledge.vercel.app/es/' target='_blank'>
@@ -35,8 +38,6 @@ const Navbar = () => {
         </Link>
         {/* Language Dropdown */}
         <LangDrop />
-        {/* Suite */}
-        <Dropdown app='uitrade' />
         {/* User | Login */}
         {!isLoading ? (
           <>{user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("login")} />}</>

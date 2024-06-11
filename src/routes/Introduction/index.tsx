@@ -15,53 +15,53 @@ interface Content {
 const IntroductionPage = () => {
   const dict = useTranslations("dict.introduction");
 
-  const content: Content[] = [
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-    {
-      title: "H2 sub",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
-    },
-  ];
+  // const content: Content[] = [
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  //   {
+  //     title: "H2 sub",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, ligula sed efficitur malesuada, massa ex faucibus odio, sed tempor lacus urna at purus. Nam vehicula dui vel ex gravida, sed dignissim turpis bibendum. Vivamus euismod finibus tortor, sit amet sollicitudin nisl accumsan a.",
+  //   },
+  // ];
 
   return (
     <section className={styles.container}>
@@ -71,12 +71,13 @@ const IntroductionPage = () => {
       <div className={styles.inner_container}>
         <div className={styles.content}>
           <Fade triggerOnce>
-            {content.map((noticia, index) => (
+            {/* {content.map((noticia, index) => (
               <div key={index}>
                 <h2 className={styles.title}>{noticia.title}</h2>
                 <p className={styles.description}>{noticia.description}</p>
               </div>
-            ))}
+            ))} */}
+            <h2 className={styles.text}>{dict("text")}</h2>
           </Fade>
         </div>
         <Fade triggerOnce>
