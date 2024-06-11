@@ -30,7 +30,6 @@
       "delete": "¿Seguro que deseas eliminar este catálogo?",
       "name": "Nombre",
       "confirm": "Eliminar",
-      "train": "Entrenar",
       "create": "Crear",
       "create_product": "Crear producto",
       "cancel": "Cancelar",
@@ -64,6 +63,9 @@
       "client_post_error": "Error al crear cliente",
       "client_edit_error": "Error al actualizar cliente",
       "client_delete_error": "Error al eliminar cliente",
+      "bot_train": "Bot entrenado correctamente",
+      "bot_clean": "Limpieza de bots exitosa",
+      "bot_error": "Ocurrió un error",
       "post_dataset": "Catálogo publicado correctamente",
       "error_dataset": "Error al publicar catálogo",
       "error_uploading": "Error al subir el archivo"
@@ -273,9 +275,14 @@
       "name": "Nombre",
       "description": "Descripción",
       "price": "Precio",
-      "clean_bot": "Reiniciar Bot",
-      "train_bot": "Entrenar Bot",
+      "clean_bot": "Limpiar",
+      "train_bot": "Entrenar",
+      "cancel": "Cancelar",
+      "empty": "Este catálogo aún no contiene ningún producto.",
+      "train_bots": "Entrenar Bots",
+      "clean_bots": "Limpiar Bots",
       "train_bots_text": "¿Te gustaría entrenar tus UiTool Bots con la información de este menú?",
+      "clean_bots_text": "¿Te gustaría que tus UiTool Bots dejen de utilizar la información de este catálogo?",
       "select": {
         "placeholder_one": "Carga masiva",
         "placeholder_two": "Actualización masiva",
@@ -284,9 +291,7 @@
         "option_three": "Descargar menú"
       },
       "upload_excel_title": "Subir Planilla Excel",
-      "upload_excel": "Subir Excel",
-      "cancel": "Cancelar",
-      "empty": "Este catálogo aún no contiene ningún producto."
+      "upload_excel": "Subir Excel"
     },
     "form_validation": {
       "ClientFirstname": "El nombre es requerido",
