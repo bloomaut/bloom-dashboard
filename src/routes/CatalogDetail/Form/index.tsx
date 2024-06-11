@@ -21,6 +21,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
   const [initialFormData, setInitialFormData] = useState<DataItemsList | undefined>();
   const [formData, setFormData] = useState<DataItemsList | undefined>(initialFormData);
   const [checkValidation, setCheckValidation] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
@@ -46,6 +47,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
   // Crea el form y lo postea
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
       try {
@@ -85,6 +87,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
   const postDataItem = async (formData: PostDataItem) => {
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {
+      setLoading(false);
       fetchDatasetById();
     }
   };
@@ -113,6 +116,7 @@ const Form = ({ setShowPopupCreate }: Form) => {
       onConfirm={handleCreate}
       onCancel={() => setShowPopupCreate(false)}
       setShowConfirmation={setShowPopupCreate}
+      loading={loading}
       textCancel={dict("popup.cancel")}
       textAccept={dict("popup.create")}
     >

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 // Components
 import DragAndDrop from "@/components/DragAndDrop";
 import Icon from "../Icon";
+import Button from "../Button";
 
 interface PopupConfirmProps {
   onConfirm?: () => void;
@@ -17,6 +18,7 @@ interface PopupConfirmProps {
   dragAndDrop?: boolean;
   file?: File | null;
   setFile?: Dispatch<SetStateAction<File | null>>;
+  loading?: boolean;
 }
 
 const PopupConfirm = ({
@@ -30,6 +32,7 @@ const PopupConfirm = ({
   dragAndDrop,
   file,
   setFile,
+  loading,
 }: PopupConfirmProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
   const pathname = usePathname();
@@ -71,12 +74,8 @@ const PopupConfirm = ({
         )}
         {textCancel && textAccept && (
           <div className={styles.button_container}>
-            <button className={styles.no} onClick={onCancel}>
-              {textCancel}
-            </button>
-            <button className={styles.yes} onClick={onConfirm}>
-              {textAccept}
-            </button>
+            <Button title={textCancel} onclick={onCancel} styleName='btn_cancel' />
+            <Button title={textAccept} onclick={onConfirm} loading={loading} />
           </div>
         )}
       </div>

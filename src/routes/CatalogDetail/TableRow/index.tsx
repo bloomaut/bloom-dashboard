@@ -19,16 +19,19 @@ interface Props {
 }
 
 const TableRow = ({ id, name, description, price, image }: Props) => {
-  const dict = useTranslations("dict");
-  const { notify, notifyError } = useMessageToast();
   const { fetchDatasetById } = useCatalogDetailContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const dict = useTranslations("dict");
+  const { notify, notifyError } = useMessageToast();
 
   const submitDelete = async () => {
+    setLoading(true);
     const response = await remove("dataitem", id, ENV.BOX);
     if (response.statusCode === 200) {
       setShowPopupDelete(false);
       notify(`${dict("toast.success_product_deleted")}`);
+      setLoading(false);
       fetchDatasetById();
     } else {
       notifyError(`${dict("toast.error_product_deleted")}`);
@@ -69,6 +72,7 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
           onCancel={() => setShowPopupDelete(false)}
           setShowConfirmation={setShowPopupDelete}
           title={dict("popup.delete_product")}
+          loading={loading}
           textCancel={dict("popup.cancel")}
           textAccept={dict("popup.confirm")}
         />

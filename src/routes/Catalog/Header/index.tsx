@@ -11,10 +11,13 @@ import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import PopupChildren from "@/components/PopupChildren";
 import Input from "@/components/Input";
+import { useCatalogContext } from "@/context/CatalogContext";
 
 const Header = () => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState("");
+  const { fetchDatasets } = useCatalogContext();
   const dict = useTranslations("dict");
   const schema = useAppSelector(state => state.dataschema);
   const { notify, notifyError } = useMessageToast();
@@ -29,6 +32,7 @@ const Header = () => {
   };
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     const postDataschema = {
       name: inputValue,
@@ -38,9 +42,11 @@ const Header = () => {
     const response = await post("datasets", postDataschema, ENV.BOX);
     if (response.data.statusCode === 201) {
       notify(dict("toast.post_dataset"));
+      fetchDatasets();
     } else {
       notifyError(dict("toast.error_dataset"));
     }
+    setLoading(false);
     setShowPopupCreate(false);
   };
 
@@ -65,6 +71,7 @@ const Header = () => {
             textAccept={dict("popup.create")}
             textCancel={dict("popup.cancel")}
             onCancel={() => setShowPopupCreate(false)}
+            loading={loading}
             onConfirm={submitPost}
             setShowConfirmation={setShowPopupCreate}
             children={
