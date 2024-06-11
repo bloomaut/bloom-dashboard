@@ -18,8 +18,8 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 20px 20px 20px 10px;
   border-radius: 4px;
+  padding: 5px;
 }
 
 .data {
@@ -29,8 +29,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 5px;
   padding-top: 8px;
+}
+
+.data > .png {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .dataTool:hover {
@@ -50,6 +55,7 @@
   font-size: 13px;
   font-weight: 400;
   color: #373435;
+  margin-top: 6px;
 }
 .data .textuitool {
   font-size: 13px;
@@ -62,7 +68,7 @@
   height: 35px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0 15px;
   flex-wrap: nowrap;
