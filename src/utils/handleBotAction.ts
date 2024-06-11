@@ -3,7 +3,6 @@ import { post, remove } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 
 export const handleBotAction = async (
-  action: "train" | "clean",
   url: string,
   method: "post" | "remove",
   successMessage: string,

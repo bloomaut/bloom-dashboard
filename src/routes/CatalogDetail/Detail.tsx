@@ -55,7 +55,6 @@ const Detail = () => {
     e.preventDefault();
     if (dataSetId) {
       await handleBotAction(
-        "train",
         `datasets/${dataSetId}/vectorize`,
         "post",
         dict("toast.bot_train"),
@@ -70,7 +69,6 @@ const Detail = () => {
     e.preventDefault();
     if (dataSetId) {
       await handleBotAction(
-        "clean",
         `datasets/${dataSetId}/vectorize`,
         "remove",
         dict("toast.bot_clean"),
