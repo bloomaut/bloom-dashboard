@@ -7,7 +7,7 @@ import { postFile, putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useState } from "react";
-import excel from "/public/assets/excel_logo.svg";
+
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Title from "@/components/Title";
@@ -19,7 +19,7 @@ import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import Form from "./Form";
-import Image from "next/image";
+import PopupExcel from "./PopupExcel";
 
 const Detail = () => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
@@ -98,56 +98,16 @@ const Detail = () => {
             placeholder={dict("catalog.select.placeholder_one")}
             onChange={handleDropdown}
           />
-          {uploadPopup && (
-            <PopupChildren
-              onCancel={() => setUploadPopup(false)}
-              title={dict("catalog.upload_excel_title")}
-              textAccept={dict("popup.upload")}
-              textCancel={dict("popup.cancel")}
-              onConfirm={submitExcel}
-              setShowConfirmation={setUploadPopup}
-            >
-              <input
-                type='file'
-                accept='.xlsx, .xls'
-                id='fileInput'
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-              <label htmlFor='fileInput' className={styles.excel_button}>
-                <Image src={excel} width={25} alt='excel' />
-                <p>{dict("catalog.upload_excel")}</p>
-                <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
-              </label>
-            </PopupChildren>
-          )}
           <Select
             options={SelectOptionsCatalog("second")}
             placeholder={dict("catalog.select.placeholder_two")}
             onChange={handleDropdown}
           />
+          {uploadPopup && (
+            <PopupExcel setFunction={setUploadPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
+          )}
           {putPopup && (
-            <PopupChildren
-              onCancel={() => setPutPopup(false)}
-              title={dict("catalog.upload_excel_title")}
-              textAccept={dict("popup.upload")}
-              textCancel={dict("popup.cancel")}
-              onConfirm={submitExcel}
-              setShowConfirmation={setPutPopup}
-            >
-              <input
-                type='file'
-                accept='.xlsx, .xls'
-                id='fileInput'
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-              <label htmlFor='fileInput' className={styles.excel_button}>
-                <Image src={excel} width={25} alt='excel' />
-                <p>{dict("catalog.upload_excel")}</p>
-                <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
-              </label>
-            </PopupChildren>
+            <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
           )}
         </div>
       </div>
