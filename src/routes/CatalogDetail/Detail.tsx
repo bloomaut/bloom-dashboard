@@ -185,7 +185,7 @@ const Detail = () => {
           onclick={() => setOpenTrainBot(true)}
         />
       </div>
-      {showPopupCreate && <Form setShowPopupCreate={setShowPopupCreate} />}
+      {showPopupCreate && <Form action='post' title={dict("popup.create_product")} setShowPopup={setShowPopupCreate} />}
       {openTrainBot && (
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}

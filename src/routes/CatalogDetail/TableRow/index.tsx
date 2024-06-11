@@ -9,6 +9,7 @@ import { remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import Form from "../Form";
 
 interface Props {
   id: string;
@@ -23,6 +24,7 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
   const { notify, notifyError } = useMessageToast();
   const { fetchDatasetById } = useCatalogDetailContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [showPopupEdit, setShowPopupEdit] = useState(false);
 
   const submitDelete = async () => {
     const response = await remove("dataitem", id, ENV.BOX);
@@ -55,7 +57,12 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
         <p>{`$ ${price}`}</p>
       </div>
       <div className={`${styles.icons} ${styles.box}`}>
-        <Icon name='edit' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />
+        <Button
+          title=''
+          styleName='bg_transparent'
+          icon={<Icon name='edit' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />}
+          onclick={() => setShowPopupEdit(true)}
+        />
         <Button
           title=''
           styleName='bg_transparent'
@@ -72,6 +79,9 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
           textCancel={dict("popup.cancel")}
           textAccept={dict("popup.confirm")}
         />
+      )}
+      {showPopupEdit && (
+        <Form action='put' title={dict("popup.edit_product")} id={id} setShowPopup={setShowPopupEdit} />
       )}
     </div>
   );

@@ -7,7 +7,8 @@
     },
     "drag": {
       "title": "Drag or drop your files here",
-      "image": "Select image"
+      "image": "Select image",
+      "edit_image": "Edit image"
     },
     "sidebar": {
       "home": "Home",
@@ -33,6 +34,7 @@
       "train_bot": "Train",
       "create": "Create",
       "create_product": "Create Product",
+      "edit_product": "Edit Product",
       "cancel": "Cancel",
       "edit": "Edit",
       "upload": "Upload",
