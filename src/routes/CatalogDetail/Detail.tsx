@@ -58,7 +58,8 @@ const Detail = () => {
     event.preventDefault();
     if (selectedFile && uploadPopup) {
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
-      if (response.data.statusCode === 201) {
+      console.log(response);
+      if (!response.error && response.data.statusCode === 201) {
         notify(dict("toast.success_file"));
       } else {
         notifyError(dict("toast.error_uploading"));
