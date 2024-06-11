@@ -108,6 +108,7 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   };
 
   const postDataItem = async (formData: PostDataItem) => {
+    setLoading(true);
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {
       setLoading(false);
@@ -120,9 +121,11 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   };
 
   const putDataItem = async (formData: PutDataItem, id: string) => {
+    setLoading(true);
     const data = await update("dataitem", formData, id, ENV.BOX);
     if (data.statusCode === 200) {
       notify(dict("toast.success_edit"));
+      setLoading(false);
       setShowPopup(false);
       fetchDatasetById();
     } else {
