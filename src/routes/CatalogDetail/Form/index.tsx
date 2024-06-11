@@ -12,7 +12,6 @@ import PopupChildren from "@/components/PopupChildren";
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
 import Image from "next/image";
-import Icon from "@/components/Icon";
 
 interface Form {
   setShowPopup: (value: SetStateAction<boolean>) => void;
@@ -27,6 +26,7 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   const [edit, setEdit] = useState(false);
   const [formData, setFormData] = useState(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
@@ -76,6 +76,7 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
       try {
@@ -107,8 +108,10 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   };
 
   const postDataItem = async (formData: PostDataItem) => {
+    setLoading(true);
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {
+      setLoading(false);
       notify(dict("toast.success_item"));
       setShowPopup(false);
       fetchDatasetById();
@@ -118,9 +121,11 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   };
 
   const putDataItem = async (formData: PutDataItem, id: string) => {
+    setLoading(true);
     const data = await update("dataitem", formData, id, ENV.BOX);
     if (data.statusCode === 200) {
       notify(dict("toast.success_edit"));
+      setLoading(false);
       setShowPopup(false);
       fetchDatasetById();
     } else {
@@ -148,7 +153,8 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
 
   return (
     <PopupChildren
-      title={title}
+      title={dict("popup.create_product")}
+      loading={loading}
       onConfirm={handleSubmit}
       onCancel={() => setShowPopup(false)}
       setShowConfirmation={setShowPopup}

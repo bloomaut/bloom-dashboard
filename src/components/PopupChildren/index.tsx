@@ -1,8 +1,7 @@
 import styles from "./styles.module.scss";
-import { FormEvent, SetStateAction } from "react";
+import { FormEvent, SetStateAction, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
-import { useTranslations } from "next-intl";
-import LoadingSpinner from "../Loading";
+import Button from "../Button";
 
 interface PopupChildrenProps {
   onConfirm: (e: FormEvent<HTMLFormElement>) => void;
@@ -26,26 +25,24 @@ const PopupChildren = ({
   loading,
 }: PopupChildrenProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
+  const [closing, setClosing] = useState(false);
+
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      onCancel();
+    }, 300);
+  };
 
   return (
-    <section className={styles.popup_container}>
+    <section className={`${styles.popup_container} ${closing && styles.closing}`}>
       <div className={styles.container} ref={dropdownRef}>
-        {!loading ? (
-          <>
-            <p>{title}</p>
-            {children}
-            <form className={styles.button_container} onSubmit={onConfirm}>
-              <button className={styles.no} onClick={onCancel}>
-                {textCancel}
-              </button>
-              <button className={styles.yes} type='submit'>
-                {textAccept}
-              </button>
-            </form>
-          </>
-        ) : (
-          <LoadingSpinner />
-        )}
+        <p>{title}</p>
+        {children}
+        <form className={styles.button_container} onSubmit={onConfirm}>
+          <Button title={textCancel} onclick={handleClose} styleName='btn_cancel' />
+          <Button title={textAccept} type='submit' loading={loading} />
+        </form>
       </div>
     </section>
   );
