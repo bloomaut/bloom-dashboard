@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { FormEvent, SetStateAction } from "react";
+import { FormEvent, SetStateAction, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Button from "../Button";
 
@@ -25,14 +25,22 @@ const PopupChildren = ({
   loading,
 }: PopupChildrenProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
+  const [closing, setClosing] = useState(false);
+
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      onCancel();
+    }, 300);
+  };
 
   return (
-    <section className={styles.popup_container}>
+    <section className={`${styles.popup_container} ${closing && styles.closing}`}>
       <div className={styles.container} ref={dropdownRef}>
         <p>{title}</p>
         {children}
         <form className={styles.button_container} onSubmit={onConfirm}>
-          <Button title={textCancel} onclick={onCancel} styleName='btn_cancel' />
+          <Button title={textCancel} onclick={handleClose} styleName='btn_cancel' />
           <Button title={textAccept} type='submit' loading={loading} />
         </form>
       </div>
