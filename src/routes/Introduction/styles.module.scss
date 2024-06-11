@@ -17,9 +17,13 @@
     gap: 20px;
     .content {
       @include width-height(100%, 100%);
-      @include flex(column, flex-start, flex-start, 20px);
+      @include flex(column, center, center, 20px);
       overflow-y: auto;
       color: $lightGrey;
+      .text {
+        @include fontSize-fontWeight(30px, 600);
+        color: $text;
+      }
       div {
         padding-right: 10px;
         h2 {
