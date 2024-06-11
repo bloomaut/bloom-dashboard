@@ -48,6 +48,11 @@ export interface PostDataItem {
   order: number;
 }
 
+export interface PutDataItem {
+  data: DataItemsList | undefined;
+  order: number;
+}
+
 export interface selectOptions {
   title: string;
   value: string;

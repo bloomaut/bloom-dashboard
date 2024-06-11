@@ -5,9 +5,10 @@ import logo_agents from "../../assets/logo_agents.svg";
 import logo_dashboard from "../../assets/logo_dashboard.svg";
 import logo_skinxpert from "../../assets/logo_skinxpert.svg";
 import logo_uibox from "../../assets/logo_uibox.svg";
-import logo_uitool from "../../assets/logo_uitool.svg";
-import logo_uitrade from "../../assets/logo_uitrade.svg";
+import logo_uitool from "../../assets/logo_uitool.png";
+import logo_uitrade from "../../assets/logo_uitrade.png";
 import logo_notimation from "../../assets/logo_notimation.svg";
+import logo_small from "../../assets/logo_small.png";
 
 interface IDropdownData {
   id: number;
@@ -29,21 +30,23 @@ enum Colors {
   dashboard_list_bg = "#F1F1F1",
 }
 export const devUrls = {
-  uitool: "https://uitool-dev.vercel.app/",
-  xpert: "https://sxpert-dev.vercel.app/",
-  uitrade: "https://uitrade-dev.vercel.app/",
-  notimation_dashboard: "https://noti-dashboard.vercel.app/",
-  agents: "https://agents-dev.vercel.app/",
-  uibox: "https://uibox-dev.vercel.app/",
+  small: "https://panel.small.ar",
+  uitool: "https://uitool.com",
+  uitrade: "https://uitrade.com",
+  inbox: "https://inbox.notimation.com",
+  notimation_dashboard: "#",
+  xpert: "#",
+  uibox: "https://uibox.app",
 };
 
 const prodUrls = {
-  uitool: "https://app.uitool.com/",
-  xpert: "https://sxpert.io/",
-  uitrade: "https://uitrade.com/",
-  notimation_dashboard: "https://dashboard.notimation.com/",
-  agents: "https://agents.notimation.com/",
-  uibox: "https://uibox.app/",
+  small: "https://panel.small.ar",
+  uitool: "https://uitool.com",
+  uitrade: "https://uitrade.com",
+  inbox: "https://inbox.notimation.com",
+  notimation_dashboard: "#",
+  xpert: "#",
+  uibox: "https://uibox.app",
 };
 
 const environment = process.env.VERCEL_ENV;
@@ -53,15 +56,15 @@ export const List = ({ app }: Props) => {
   const data: IDropdownData[] = [
     {
       id: 1,
-      img: logo_uitool,
-      title: "Tool",
-      route: selectedUrls.uitool,
+      img: logo_small,
+      title: "Small",
+      route: selectedUrls.small,
     },
     {
       id: 2,
-      img: logo_skinxpert,
-      title: "Pert",
-      route: selectedUrls.xpert,
+      img: logo_uitool,
+      title: "Tool",
+      route: selectedUrls.uitool,
     },
     {
       id: 3,
@@ -70,19 +73,25 @@ export const List = ({ app }: Props) => {
       route: selectedUrls.uitrade,
     },
     {
+      id: 5,
+      img: logo_agents,
+      title: "Inbox",
+      route: selectedUrls.inbox,
+    },
+    {
       id: 4,
+      img: logo_skinxpert,
+      title: "Pert",
+      route: selectedUrls.xpert,
+    },
+    {
+      id: 6,
       img: logo_dashboard,
       title: "Dashboard",
       route: selectedUrls.notimation_dashboard,
     },
     {
-      id: 5,
-      img: logo_agents,
-      title: "Agents",
-      route: selectedUrls.agents,
-    },
-    {
-      id: 6,
+      id: 7,
       img: logo_uibox,
       title: "Box",
       route: selectedUrls.uibox,
@@ -116,7 +125,13 @@ export const List = ({ app }: Props) => {
             }`}
             key={index}
           >
-            <Image src={item.img} className={`${item.id >= 4 && change_svg && styles.white_svgs}`} alt={item.title} />
+            <Image
+              src={item.img}
+              className={`${
+                item.title === "Small" || item.title === "Trade" || item.title === "Tool" ? styles.png : ""
+              }  ${item.id > 4 && change_svg && styles.white_svgs}`}
+              alt={item.title}
+            />
             <p className={change_svg ? styles.textuitool : styles.text}>{item.title}</p>
           </a>
         ))}
@@ -127,7 +142,6 @@ export const List = ({ app }: Props) => {
         className={styles.list_footer}
         style={{ background: list_bg }}
       >
-        <p className={styles.text}>+ Products</p>
         <Image
           src={logo_notimation}
           className={`${change_svg ? styles.notimation_white : styles.img}`}
