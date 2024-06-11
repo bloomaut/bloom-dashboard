@@ -61,8 +61,6 @@ const Detail = () => {
         dict("toast.bot_train"),
         dict("toast.bot_error"),
         setLoading,
-        notify,
-        notifyError,
         setOpenTrainBot,
       );
     }
@@ -78,8 +76,6 @@ const Detail = () => {
         dict("toast.bot_clean"),
         dict("toast.bot_error"),
         setLoading,
-        notify,
-        notifyError,
         setOpenCleanBot,
       );
     }

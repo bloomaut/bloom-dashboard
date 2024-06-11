@@ -1,3 +1,4 @@
+import { useMessageToast } from "@/hooks/useMessageToast";
 import { post, remove } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 
@@ -8,10 +9,9 @@ export const handleBotAction = async (
   successMessage: string,
   errorMessage: string,
   setLoading: (loading: boolean) => void,
-  notify: (message: string) => void,
-  notifyError: (message: string) => void,
   closePopup: (value: boolean) => void,
 ) => {
+  const { notify, notifyError } = useMessageToast();
   setLoading(true);
   let response;
 
