@@ -2,40 +2,45 @@ import styles from "./styles.module.scss";
 import useFormValidator from "@/hooks/useFormValidator";
 import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { post, postFile } from "@/services/fetch";
+import { post, postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsList, Field, PostDataItem } from "@/typescript/interfaces/catalog.interface";
+import { DataItemsList, Field, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 // Components
 import PopupChildren from "@/components/PopupChildren";
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
+import Image from "next/image";
+import Icon from "@/components/Icon";
 
 interface Form {
-  setShowPopupCreate: (value: SetStateAction<boolean>) => void;
+  setShowPopup: (value: SetStateAction<boolean>) => void;
+  title: string;
+  action: "post" | "put";
+  initialValues?: DataItemsList;
+  id?: string;
 }
 
-const Form = ({ setShowPopupCreate }: Form) => {
+const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
-  const [initialFormData, setInitialFormData] = useState<DataItemsList | undefined>();
-  const [formData, setFormData] = useState<DataItemsList | undefined>(initialFormData);
+  const [edit, setEdit] = useState(false);
+  const [formData, setFormData] = useState(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
 
-  // Crea los campos para el formulario vacíos
   useEffect(() => {
-    const listEmptyForm: any = {};
-
-    datasetDetail?.dataSet.dataschema.fields.forEach(field => {
-      listEmptyForm[field.name] = "";
-    });
-
-    setInitialFormData(listEmptyForm);
-    setFormData(listEmptyForm);
-  }, []);
+    if (action === "put" && id) {
+      const product = datasetDetail?.dataItems.find(item => item._id === id);
+      if (product) {
+        setFormData(product.data);
+      }
+    } else {
+      setFormData(initialValues);
+    }
+  }, [action, id, datasetDetail, initialValues]);
 
   // Validación de campos
   const fieldsToValidate =
@@ -43,36 +48,55 @@ const Form = ({ setShowPopupCreate }: Form) => {
     [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
-  // Crea el form y lo postea
-  const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
+  let dataToSend = {
+    dataset: datasetDetail?.dataSet._id ?? "",
+    data: formData,
+    order: 0,
+  };
+
+  const handleFileUpload = async () => {
+    if (file) {
+      const response = await postFile("small-files/media", file);
+      if (response.data.statusCode === 201) {
+        const logoUrl = response.data.result.media.url;
+        return {
+          dataset: datasetDetail?.dataSet._id ?? "",
+          data: {
+            ...formData,
+            listimage: logoUrl,
+          },
+          order: 0,
+        };
+      } else {
+        notifyError(dict("toast.error_uploading"));
+        return null;
+      }
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
       try {
-        let dataToSend = {
-          dataset: datasetDetail?.dataSet._id ?? "",
-          data: formData,
-          order: 0,
-        };
-
-        if (file) {
-          const response = await postFile("small-files/media", file);
-          if (response.data.statusCode === 201) {
-            const logoUrl = response.data.result.media.url;
-            dataToSend = {
-              dataset: datasetDetail?.dataSet._id ?? "",
-              data: {
-                ...formData,
-                listimage: logoUrl,
-              },
-              order: 0,
-            };
+        if (action === "post") {
+          const data = await handleFileUpload();
+          if (data) {
+            dataToSend = data;
           }
+          await postDataItem(dataToSend);
+        } else if (action === "put" && id) {
+          const updatedData = await handleFileUpload();
+          if (updatedData) {
+            dataToSend = updatedData;
+          }
+          const data = {
+            data: dataToSend.data,
+            order: 0,
+          };
+          await putDataItem(data, id);
         }
-        await postDataItem(dataToSend);
-        notify(dict("toast.success_item"));
-        setShowPopupCreate(false);
-        setFormData(initialFormData);
+        setFormData(initialValues);
         setFile(null);
         setCheckValidation(false);
       } catch (error) {
@@ -85,7 +109,22 @@ const Form = ({ setShowPopupCreate }: Form) => {
   const postDataItem = async (formData: PostDataItem) => {
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {
+      notify(dict("toast.success_item"));
+      setShowPopup(false);
       fetchDatasetById();
+    } else {
+      notifyError(dict("toast.error_file"));
+    }
+  };
+
+  const putDataItem = async (formData: PutDataItem, id: string) => {
+    const data = await update("dataitem", formData, id, ENV.BOX);
+    if (data.statusCode === 200) {
+      notify(dict("toast.success_edit"));
+      setShowPopup(false);
+      fetchDatasetById();
+    } else {
+      notifyError(dict("toast.error_edit"));
     }
   };
 
@@ -109,12 +148,12 @@ const Form = ({ setShowPopupCreate }: Form) => {
 
   return (
     <PopupChildren
-      title={dict("popup.create_product")}
-      onConfirm={handleCreate}
-      onCancel={() => setShowPopupCreate(false)}
-      setShowConfirmation={setShowPopupCreate}
+      title={title}
+      onConfirm={handleSubmit}
+      onCancel={() => setShowPopup(false)}
+      setShowConfirmation={setShowPopup}
       textCancel={dict("popup.cancel")}
-      textAccept={dict("popup.create")}
+      textAccept={action === "post" ? dict("popup.create") : dict("popup.edit")}
     >
       {datasetDetail?.dataSet.dataschema.fields.map(
         (field: Field) =>
@@ -132,18 +171,29 @@ const Form = ({ setShowPopupCreate }: Form) => {
             </div>
           ),
       )}
-      {datasetDetail?.dataSet.dataschema.fields.map((field: Field) => {
-        // Si el campo es de tipo imagen se renderiza el drag and drop
-        if (field.name.includes("image")) {
-          return (
-            <div key={field._id} className={styles.form_control}>
+      {action === "post" ? (
+        <div className={styles.form_control}>
+          <DragAndDrop file={file} setFile={setFile} />
+          {checkValidation && <ErrorMessage error={errors.listimage} />}
+        </div>
+      ) : (
+        <>
+          {edit && (
+            <div className={styles.form_control}>
               <DragAndDrop file={file} setFile={setFile} />
               {checkValidation && <ErrorMessage error={errors.listimage} />}
             </div>
-          );
-        }
-        return null;
-      })}
+          )}
+          {!edit && (
+            <div className={styles.image_container}>
+              <Image src={formData?.listimage} width={100} height={100} alt='Product Image' />
+              <p className={styles.edit} onClick={() => setEdit(true)}>
+                {dict("drag.edit_image")}
+              </p>
+            </div>
+          )}
+        </>
+      )}
     </PopupChildren>
   );
 };

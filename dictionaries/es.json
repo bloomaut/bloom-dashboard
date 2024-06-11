@@ -7,7 +7,8 @@
     },
     "drag": {
       "title": "Arrastrá o soltá tus archivos aquí",
-      "image": "Seleccionar imagen"
+      "image": "Seleccionar imagen",
+      "edit_image": "Editar imagen"
     },
     "sidebar": {
       "home": "Inicio",
@@ -33,6 +34,7 @@
       "train": "Entrenar",
       "create": "Crear",
       "create_product": "Crear producto",
+      "edit_product": "Editar producto",
       "cancel": "Cancelar",
       "edit": "Editar",
       "upload": "Subir",
