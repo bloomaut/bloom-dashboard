@@ -23,6 +23,9 @@
       .text {
         @include fontSize-fontWeight(30px, 600);
         color: $text;
+        text-align: center;
+        width: 70%;
+        margin: 0 auto;
       }
       div {
         padding-right: 10px;
