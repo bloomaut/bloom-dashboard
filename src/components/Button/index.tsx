@@ -23,14 +23,14 @@ const Button = ({ title, icon, styleName, onclick, isDisabled, type, loading }: 
         <Oval
           height={25}
           width={25}
-          color='#ff3d02'
+          color='#ff5722'
           wrapperStyle={{}}
           wrapperClass=''
           visible={true}
           ariaLabel='oval-loading'
-          secondaryColor='#ffc8b8'
-          strokeWidth={2}
-          strokeWidthSecondary={2}
+          secondaryColor='#fff'
+          strokeWidth={3.5}
+          strokeWidthSecondary={3.5}
         />
       ) : (
         <>

@@ -1,33 +1,36 @@
-import styles from "./styles.module.scss";
-import { useTranslations } from "next-intl";
-import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { useParams } from "next/navigation";
 import { postFile, putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { useState } from "react";
+import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
+import { useTranslations } from "next-intl";
+import { FormEvent, useState } from "react";
+import { handleBotAction } from "@/utils/handleBotAction";
+import styles from "./styles.module.scss";
 
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
-import Title from "@/components/Title";
 import Button from "@/components/Button";
-import TableHead from "./TableHead";
-import Select from "./Select";
 import Icon from "@/components/Icon";
-import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
-import Form from "./Form";
+import Title from "@/components/Title";
 import PopupExcel from "./PopupExcel";
+import Form from "./Form";
+import Select from "./Select";
+import TableHead from "./TableHead";
+import TableRow from "./TableRow";
 
 const Detail = () => {
+  const dict = useTranslations("dict");
   const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const [openTrainBot, setOpenTrainBot] = useState<boolean>(false);
+  const [openTrainBot, setOpenTrainBot] = useState(false);
+  const [openCleanBot, setOpenCleanBot] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [uploadPopup, setUploadPopup] = useState<boolean>(false);
   const [putPopup, setPutPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const dict = useTranslations("dict");
   const { datasetDetail } = useCatalogDetailContext();
   const { notify, notifyError } = useMessageToast();
   const { id } = useParams();
@@ -45,6 +48,35 @@ const Detail = () => {
       case "upload_update_excel":
         setPutPopup(!putPopup);
         break;
+    }
+  };
+
+  const dataSetId = datasetDetail?.dataSet._id;
+  const handleBotTrainer = async (e: FormEvent) => {
+    e.preventDefault();
+    if (dataSetId) {
+      await handleBotAction(
+        `datasets/${dataSetId}/vectorize`,
+        "post",
+        dict("toast.bot_train"),
+        dict("toast.bot_error"),
+        setLoading,
+        setOpenTrainBot,
+      );
+    }
+  };
+
+  const handleBotCleaner = async (e: FormEvent) => {
+    e.preventDefault();
+    if (dataSetId) {
+      await handleBotAction(
+        `datasets/${dataSetId}/vectorize`,
+        "remove",
+        dict("toast.bot_clean"),
+        dict("toast.bot_error"),
+        setLoading,
+        setOpenCleanBot,
+      );
     }
   };
 
@@ -137,6 +169,7 @@ const Detail = () => {
           title={dict("catalog.clean_bot")}
           styleName='btn_clean'
           icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
+          onclick={() => setOpenCleanBot(true)}
         />
         <Button
           title={dict("catalog.train_bot")}
@@ -145,17 +178,31 @@ const Detail = () => {
           onclick={() => setOpenTrainBot(true)}
         />
       </div>
-      {showPopupCreate && <Form setShowPopupCreate={setShowPopupCreate} />}
+      {showPopupCreate && <Form action='post' title={dict("popup.create_product")} setShowPopup={setShowPopupCreate} />}
       {openTrainBot && (
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
           title={dict("catalog.train_bots")}
-          textAccept={dict("popup.train")}
-          textCancel={dict("popup.cancel")}
-          onConfirm={() => setOpenTrainBot(false)}
+          textAccept={dict("catalog.train_bot")}
+          textCancel={dict("catalog.cancel")}
+          onConfirm={handleBotTrainer}
           setShowConfirmation={setOpenTrainBot}
+          loading={loading}
         >
-          <p className={styles.trainbot_text}>{dict("train_bots_text")}</p>
+          <p className={styles.trainbot_text}>{dict("catalog.train_bots_text")}</p>
+        </PopupChildren>
+      )}
+      {openCleanBot && (
+        <PopupChildren
+          onCancel={() => setOpenCleanBot(false)}
+          title={dict("catalog.clean_bots")}
+          textAccept={dict("catalog.clean_bot")}
+          textCancel={dict("catalog.cancel")}
+          onConfirm={handleBotCleaner}
+          setShowConfirmation={setOpenCleanBot}
+          loading={loading}
+        >
+          <p className={styles.trainbot_text}>{dict("catalog.clean_bots_text")}</p>
         </PopupChildren>
       )}
     </section>

@@ -27,8 +27,12 @@
   .table_container {
     @include width-height(100%, auto);
     .content_container {
-      @include width-height(100%, 280px);
+      @include width-height(100%, auto);
+      max-height: 280px;
       overflow-y: auto;
+      @media (width >= $queryXl) {
+        max-height: 500px;
+      }
     }
     .content_container::-webkit-scrollbar {
       width: 5px;
@@ -52,15 +56,5 @@
   .trainbot_text {
     @include fontSize-fontWeight(16px, 400);
     color: $text;
-  }
-
-  @media (width >= $queryXl) {
-    .catalog_detail_container {
-      .table_container {
-        .content_container {
-          height: 600px;
-        }
-      }
-    }
   }
 }

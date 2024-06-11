@@ -25,7 +25,7 @@ const IntroVideo = () => {
       <iframe
         width='100%'
         height={height}
-        src='https://www.youtube.com/embed/HdHaSAqO1I0'
+        src='https://www.youtube.com/embed/fijeAV5amv4'
         title='YouTube video player'
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
         allowFullScreen

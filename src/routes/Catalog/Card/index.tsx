@@ -17,12 +17,14 @@ const Card = ({ name, _id }: DatasetProps) => {
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [catalogName, setCatalogName] = useState(name);
+  const [loading, setLoading] = useState<boolean>(false);
   const { fetchDatasets } = useCatalogContext();
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
   const submitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const updatedDataset = {
       name: catalogName,
     };
@@ -30,6 +32,7 @@ const Card = ({ name, _id }: DatasetProps) => {
     if (response.statusCode === 200) {
       notify(dict("toast.success_edit"));
       setShowPopupEdit(false);
+      setLoading(false);
       fetchDatasets();
     } else {
       notifyError(dict("toast.error_edit"));
@@ -37,10 +40,12 @@ const Card = ({ name, _id }: DatasetProps) => {
   };
 
   const submitDelete = async () => {
+    setLoading(true);
     const response = await remove("datasets", _id, ENV.BOX);
     if (response.statusCode === 200) {
       setShowPopupDelete(false);
       notify(`${dict("toast.success_delete_catalog")}`);
+      setLoading(false);
       fetchDatasets();
     } else {
       notifyError(`${dict("toast.error_catalog")}`);
@@ -49,7 +54,7 @@ const Card = ({ name, _id }: DatasetProps) => {
 
   return (
     <div className={styles.card}>
-      <Link href={`/catalog/${_id}`} className={styles.name}>
+      <Link href={`/catalog/${_id}`} className={styles.name} title={name}>
         {name}
       </Link>
       <div className={styles.btn_container}>
@@ -71,6 +76,7 @@ const Card = ({ name, _id }: DatasetProps) => {
           onConfirm={submitEdit}
           onCancel={() => setShowPopupEdit(false)}
           setShowConfirmation={setShowPopupEdit}
+          loading={loading}
           textCancel={dict("popup.cancel")}
           textAccept={dict("popup.edit")}
         >
@@ -89,6 +95,7 @@ const Card = ({ name, _id }: DatasetProps) => {
           onCancel={() => setShowPopupDelete(false)}
           setShowConfirmation={setShowPopupDelete}
           title={dict("popup.delete")}
+          loading={loading}
           textCancel={dict("popup.cancel")}
           textAccept={dict("popup.confirm")}
         />
