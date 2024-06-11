@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { useParams } from "next/navigation";
-import { post, postFile } from "@/services/fetch";
+import { postFile, putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useState } from "react";
@@ -25,6 +25,7 @@ const Detail = () => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [openTrainBot, setOpenTrainBot] = useState<boolean>(false);
   const [uploadPopup, setUploadPopup] = useState<boolean>(false);
+  const [putPopup, setPutPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dict = useTranslations("dict");
   const { datasetDetail } = useCatalogDetailContext();
@@ -38,11 +39,11 @@ const Detail = () => {
         break;
       case "upload_post_excel":
         setUploadPopup(!uploadPopup);
-
         break;
       case "download_update_template":
         break;
       case "upload_update_excel":
+        setPutPopup(!putPopup);
         break;
     }
   };
@@ -55,7 +56,7 @@ const Detail = () => {
 
   const submitExcel = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (selectedFile) {
+    if (selectedFile && uploadPopup) {
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
       if (response.data.statusCode === 201) {
         notify(dict("toast.success_file"));
@@ -63,6 +64,14 @@ const Detail = () => {
         notifyError(dict("toast.error_uploading"));
       }
       setUploadPopup(false);
+    } else if (selectedFile && putPopup) {
+      const response = await putFile(`datasets/${id}/update`, selectedFile, ENV.BOX);
+      if (!response.error && response.data.statusCode === 200) {
+        notify(dict("toast.success_update"));
+      } else {
+        notifyError(dict("toast.error_update"));
+      }
+      setPutPopup(false);
     }
   };
 
@@ -88,11 +97,6 @@ const Detail = () => {
             placeholder={dict("catalog.select.placeholder_one")}
             onChange={handleDropdown}
           />
-          <Select
-            options={SelectOptionsCatalog("second")}
-            placeholder={dict("catalog.select.placeholder_two")}
-            onChange={handleDropdown}
-          />
           {uploadPopup && (
             <PopupChildren
               onCancel={() => setUploadPopup(false)}
@@ -101,6 +105,34 @@ const Detail = () => {
               textCancel={dict("popup.cancel")}
               onConfirm={submitExcel}
               setShowConfirmation={setUploadPopup}
+            >
+              <input
+                type='file'
+                accept='.xlsx, .xls'
+                id='fileInput'
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+              <label htmlFor='fileInput' className={styles.excel_button}>
+                <Image src={excel} width={25} alt='excel' />
+                <p>{dict("catalog.upload_excel")}</p>
+                <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
+              </label>
+            </PopupChildren>
+          )}
+          <Select
+            options={SelectOptionsCatalog("second")}
+            placeholder={dict("catalog.select.placeholder_two")}
+            onChange={handleDropdown}
+          />
+          {putPopup && (
+            <PopupChildren
+              onCancel={() => setPutPopup(false)}
+              title={dict("catalog.upload_excel_title")}
+              textAccept={dict("popup.upload")}
+              textCancel={dict("popup.cancel")}
+              onConfirm={submitExcel}
+              setShowConfirmation={setPutPopup}
             >
               <input
                 type='file'

@@ -66,7 +66,9 @@
       "client_delete_error": "Error al eliminar cliente",
       "post_dataset": "Catálogo publicado correctamente",
       "error_dataset": "Error al publicar catálogo",
-      "error_uploading": "Error al subir el archivo"
+      "error_uploading": "Error al subir el archivo",
+      "error_update": "Error al actualizar el archivo",
+      "success_update": "Archivo actualizado correctamente"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"

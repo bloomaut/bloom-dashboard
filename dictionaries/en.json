@@ -66,7 +66,9 @@
       "client_delete_error": "Error deleting client",
       "post_dataset": "Catalog posted successfully",
       "error_dataset": "Error posting catalog",
-      "error_uploading": "Error uploading file"
+      "error_uploading": "Error uploading file",
+      "error_update": "Error updating file",
+      "success_update": "File updated successfully"
     },
     "popupLogin": {
       "login": "Log in",

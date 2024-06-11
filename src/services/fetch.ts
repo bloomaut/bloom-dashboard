@@ -79,6 +79,25 @@ export const postFile = async (url: string, file: File, api?: EnvironmentApi) =>
     throw error;
   }
 };
+export const putFile = async (url: string, file: File, api?: EnvironmentApi) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const headers = new Headers();
+    if (api) headers.append("X-API", api);
+
+    const response = await fetch(`${API}/${url}`, {
+      method: "PUT",
+      headers,
+      body: formData,
+    });
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const update = async (url: string, data: UPDATE, id?: string, api?: EnvironmentApi) => {
   try {
