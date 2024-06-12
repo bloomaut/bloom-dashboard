@@ -75,6 +75,7 @@ const Card = ({ name, _id }: DatasetProps) => {
         <PopupChildren
           onConfirm={submitEdit}
           onCancel={() => setShowPopupEdit(false)}
+          title={dict("popup.edit_catalog")}
           setShowConfirmation={setShowPopupEdit}
           loading={loading}
           textCancel={dict("popup.cancel")}
