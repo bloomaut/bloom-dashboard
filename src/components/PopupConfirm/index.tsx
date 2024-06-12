@@ -46,10 +46,6 @@ const PopupConfirm = ({
         <p>{title}</p>
         {dragAndDrop && setFile && (
           <>
-            <button onClick={onCancel} className={styles.btn_close_icon}>
-              <Icon name='close' width={30} height={30} />
-            </button>
-            <DragAndDrop file={file} setFile={setFile} />
             {pathname.includes("my-collection") && (
               <div className={styles.button_container}>
                 {file !== null && (
