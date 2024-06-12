@@ -34,7 +34,8 @@
       "train_bot": "Train",
       "create": "Create",
       "create_product": "Create Product",
-      "edit_product": "Edit Product",
+      "edit_product": "Edit product",
+      "edit_catalog": "Edit catalog",
       "cancel": "Cancel",
       "edit": "Edit",
       "upload": "Upload",
@@ -48,7 +49,7 @@
       "success_delete": "File deleted successfully",
       "success_delete_catalog": "Catalog deleted successfully",
       "success_palette": "Palette updated successfully",
-      "success_product_deleted": "Product deletedd successfully",
+      "success_product_deleted": "Product deleted successfully",
       "error_product_deleted": "Error when deleting a product",
       "error_name": "Name is required",
       "error_edit": "Error updating information",
@@ -70,7 +71,9 @@
       "bot_error": "An error occurred",
       "post_dataset": "Catalog posted successfully",
       "error_dataset": "Error posting catalog",
-      "error_uploading": "Error uploading file"
+      "error_uploading": "Error uploading file",
+      "error_update": "Error updating file",
+      "success_update": "File updated successfully"
     },
     "popupLogin": {
       "login": "Log in",
@@ -283,7 +286,7 @@
       "empty": "This catalog does not yet contain any products.",
       "train_bots": "Train Bots",
       "clean_bots": "Clean Bots",
-      "train_bots_text": "Would you line to train your UiTool Bots this menu information?",
+      "train_bots_text": "Would you like to train your UiTool Bots with the information in this menu?",
       "clean_bots_text": "Would you like your UiTool Bots to stop using the information in this catalog?",
       "select": {
         "placeholder_one": "Bulk Load",

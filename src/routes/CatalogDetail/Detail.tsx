@@ -1,6 +1,6 @@
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { getExcelCatalog, postFile } from "@/services/fetch";
+import { getExcelCatalog, postFile, putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import { useTranslations } from "next-intl";
@@ -8,7 +8,6 @@ import { useParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { handleBotAction } from "@/utils/handleBotAction";
 import styles from "./styles.module.scss";
-import excel from "/public/assets/excel_logo.svg";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Button from "@/components/Button";
@@ -21,7 +20,7 @@ import Form from "./Form";
 import Select from "./Select";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
-import { downloadExcel } from "@/utils/downloadExcel";
+import PopupExcel from "./PopupExcel";
 
 const Detail = () => {
   const dict = useTranslations("dict");
@@ -30,6 +29,7 @@ const Detail = () => {
   const [openCleanBot, setOpenCleanBot] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploadPopup, setUploadPopup] = useState<boolean>(false);
+  const [putPopup, setPutPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { datasetDetail } = useCatalogDetailContext();
   const { notify, notifyError } = useMessageToast();
@@ -43,12 +43,12 @@ const Detail = () => {
         break;
       case "upload_post_excel":
         setUploadPopup(!uploadPopup);
-
         break;
       case "download_update_template":
         handleExcelDownload("download");
         break;
       case "upload_update_excel":
+        setPutPopup(!putPopup);
         break;
     }
   };
@@ -81,6 +81,7 @@ const Detail = () => {
       );
     }
   };
+
   const handleExcelDownload = async (type: string) => {
     if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
   };
@@ -93,14 +94,22 @@ const Detail = () => {
 
   const submitExcel = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (selectedFile) {
+    if (selectedFile && uploadPopup) {
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
-      if (response.data.statusCode === 201) {
+      if (!response.error && response.data.statusCode === 201) {
         notify(dict("toast.success_file"));
       } else {
         notifyError(dict("toast.error_uploading"));
       }
       setUploadPopup(false);
+    } else if (selectedFile && putPopup) {
+      const response = await putFile(`datasets/${id}/update`, selectedFile, ENV.BOX);
+      if (!response.error && response.data.statusCode === 200) {
+        notify(dict("toast.success_update"));
+      } else {
+        notifyError(dict("toast.error_update"));
+      }
+      setPutPopup(false);
     }
   };
 
@@ -131,29 +140,6 @@ const Detail = () => {
             placeholder={dict("catalog.select.placeholder_two")}
             onChange={handleDropdown}
           />
-          {uploadPopup && (
-            <PopupChildren
-              onCancel={() => setUploadPopup(false)}
-              title={dict("catalog.upload_excel_title")}
-              textAccept={dict("popup.upload")}
-              textCancel={dict("popup.cancel")}
-              onConfirm={submitExcel}
-              setShowConfirmation={setUploadPopup}
-            >
-              <input
-                type='file'
-                accept='.xlsx, .xls'
-                id='fileInput'
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-              <label htmlFor='fileInput' className={styles.excel_button}>
-                <Image src={excel} width={25} alt='excel' />
-                <p>{dict("catalog.upload_excel")}</p>
-                <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
-              </label>
-            </PopupChildren>
-          )}
         </div>
       </div>
       <div className={styles.table_container}>
@@ -217,6 +203,12 @@ const Detail = () => {
         >
           <p className={styles.trainbot_text}>{dict("catalog.clean_bots_text")}</p>
         </PopupChildren>
+      )}
+      {uploadPopup && (
+        <PopupExcel setFunction={setUploadPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
+      )}
+      {putPopup && (
+        <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
       )}
     </section>
   );
