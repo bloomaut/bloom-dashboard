@@ -11,7 +11,7 @@
   animation: fadeIn 0.3s ease-in-out forwards;
   .container {
     @include flex(column, space-evenly, center, 20px);
-    @include width-height(300px, auto);
+    @include width-height(320px, auto);
     @include fontSize-fontWeight(24px, 500);
     padding: 20px;
     background-color: $white;

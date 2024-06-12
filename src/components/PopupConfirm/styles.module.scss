@@ -66,21 +66,6 @@
       }
     }
   }
-  .drag_container {
-    height: auto;
-    padding: 20px;
-    position: relative;
-    gap: 20px;
-    .btn_close_icon {
-      background: none;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      position: absolute;
-      top: 5px;
-      right: 10px;
-    }
-  }
 }
 
 @keyframes fadeIn {

@@ -10,9 +10,11 @@ import Search from "@/components/Search";
 import Button from "@/components/Button";
 import PopupConfirm from "@/components/PopupConfirm";
 import Icon from "@/components/Icon";
+import PopupChildren from "@/components/PopupChildren";
+import DragAndDrop from "@/components/DragAndDrop";
 
 const Header = () => {
-  const dict = useTranslations("dict.my-collection");
+  const dict = useTranslations("dict");
   const { loading, hotlinkCollection } = useHotlinkListContext();
   const { notifyError } = useMessageToast();
   const [searchValue, setSearchValue] = useState("");
@@ -36,22 +38,22 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        <Title text={`${loading ? dict("loading") : hotlinkCollection?.name}`} />
+        <Title text={`${loading ? dict("my-collection.loading") : hotlinkCollection?.name}`} />
         <h4 className={styles.subtitle}>
           {loading
-            ? dict("loading")
+            ? dict("my-collection.loading")
             : `${hotlinkCollection?.flake?.skinx?.title || "Skinx Title"} / ${hotlinkCollection?.flake?.title || "Flake Title"}`}
         </h4>
         <Search
           searchValue={searchValue}
           handleSearchChange={e => setSearchValue(e.target.value)}
-          placeholder={dict("search_holder")}
+          placeholder={dict("my-collection.search_holder")}
         />
       </div>
       <div className={styles.column_two}>
         <div className={styles.btn_container}>
           <Button
-            title={dict("btn3")}
+            title={dict("my-collection.btn3")}
             icon={
               <Icon name='table' width={25} height={25} strokeColor='#7f7f7f' strokeWidth={1.4} viewBox='0 0 25 14' />
             }
@@ -60,28 +62,33 @@ const Header = () => {
           />
 
           <Button
-            title={dict("btn2")}
+            title={dict("my-collection.btn2")}
             icon={<Icon name='excel' />}
             styleName='btn_excel'
             onclick={() => setShowPopupExcel(true)}
           />
         </div>
         <Button
-          title={dict("btn")}
+          title={dict("my-collection.btn")}
           icon={<Icon name='hotlink' className='hotlink_light' viewBox='0 0 35 35' />}
           styleName='btn_my_collection'
         />
       </div>
       {showPopupExcel && (
-        <PopupConfirm
-          dragAndDrop={true}
-          file={file}
-          setFile={setFile}
-          setShowConfirmation={setShowPopupExcel}
-          onCancel={() => setShowPopupExcel(false)}
-          onReset={() => setFile(null)}
+        <PopupChildren
+          textAccept={"Generar Hotlink"}
+          textCancel={dict("popup.cancel")}
+          onCancel={() => setFile(null)}
           onConfirm={handleConfirm}
-        />
+          setShowConfirmation={setShowPopupExcel}
+        >
+          <DragAndDrop file={file} setFile={setFile} />
+          {file !== null && (
+            <button className={styles.reset} onClick={() => setFile(null)}>
+              Resetear
+            </button>
+          )}
+        </PopupChildren>
       )}
     </div>
   );
