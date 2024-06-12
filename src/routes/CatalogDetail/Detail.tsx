@@ -58,7 +58,7 @@ const Detail = () => {
       await handleBotAction(
         `datasets/${dataSetId}/vectorize`,
         "post",
-        dict("toast.bot_train"),
+        dict("toast.bot_train_success"),
         dict("toast.bot_error"),
         setLoading,
         setOpenTrainBot,
