@@ -1,0 +1,12 @@
+@import "@/styles/theme.scss";
+
+.excel_button {
+  @include flex(row, center, center, 15px);
+  @include width-height(100%, auto);
+  @include fontSize-fontWeight(16px, 600);
+  background: linear-gradient(to right, #6cd389, #386d47);
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}

@@ -70,7 +70,9 @@
       "bot_error": "An error occurred",
       "post_dataset": "Catalog posted successfully",
       "error_dataset": "Error posting catalog",
-      "error_uploading": "Error uploading file"
+      "error_uploading": "Error uploading file",
+      "error_update": "Error updating file",
+      "success_update": "File updated successfully"
     },
     "popupLogin": {
       "login": "Log in",

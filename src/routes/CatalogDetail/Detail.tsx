@@ -1,14 +1,14 @@
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
-import { useMessageToast } from "@/hooks/useMessageToast";
-import { postFile } from "@/services/fetch";
+import { useParams } from "next/navigation";
+import { postFile, putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
+import { useMessageToast } from "@/hooks/useMessageToast";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { handleBotAction } from "@/utils/handleBotAction";
 import styles from "./styles.module.scss";
-import excel from "/public/assets/excel_logo.svg";
+
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Button from "@/components/Button";
@@ -16,7 +16,7 @@ import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import Title from "@/components/Title";
-import Image from "next/image";
+import PopupExcel from "./PopupExcel";
 import Form from "./Form";
 import Select from "./Select";
 import TableHead from "./TableHead";
@@ -29,6 +29,7 @@ const Detail = () => {
   const [openCleanBot, setOpenCleanBot] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploadPopup, setUploadPopup] = useState<boolean>(false);
+  const [putPopup, setPutPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { datasetDetail } = useCatalogDetailContext();
   const { notify, notifyError } = useMessageToast();
@@ -41,11 +42,11 @@ const Detail = () => {
         break;
       case "upload_post_excel":
         setUploadPopup(!uploadPopup);
-
         break;
       case "download_update_template":
         break;
       case "upload_update_excel":
+        setPutPopup(!putPopup);
         break;
     }
   };
@@ -87,14 +88,23 @@ const Detail = () => {
 
   const submitExcel = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (selectedFile) {
+    if (selectedFile && uploadPopup) {
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
-      if (response.data.statusCode === 201) {
+      console.log(response);
+      if (!response.error && response.data.statusCode === 201) {
         notify(dict("toast.success_file"));
       } else {
         notifyError(dict("toast.error_uploading"));
       }
       setUploadPopup(false);
+    } else if (selectedFile && putPopup) {
+      const response = await putFile(`datasets/${id}/update`, selectedFile, ENV.BOX);
+      if (!response.error && response.data.statusCode === 200) {
+        notify(dict("toast.success_update"));
+      } else {
+        notifyError(dict("toast.error_update"));
+      }
+      setPutPopup(false);
     }
   };
 
@@ -126,27 +136,10 @@ const Detail = () => {
             onChange={handleDropdown}
           />
           {uploadPopup && (
-            <PopupChildren
-              onCancel={() => setUploadPopup(false)}
-              title={dict("catalog.upload_excel_title")}
-              textAccept={dict("popup.upload")}
-              textCancel={dict("popup.cancel")}
-              onConfirm={submitExcel}
-              setShowConfirmation={setUploadPopup}
-            >
-              <input
-                type='file'
-                accept='.xlsx, .xls'
-                id='fileInput'
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-              <label htmlFor='fileInput' className={styles.excel_button}>
-                <Image src={excel} width={25} alt='excel' />
-                <p>{dict("catalog.upload_excel")}</p>
-                <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
-              </label>
-            </PopupChildren>
+            <PopupExcel setFunction={setUploadPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
+          )}
+          {putPopup && (
+            <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
           )}
         </div>
       </div>
