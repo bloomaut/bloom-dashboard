@@ -1,6 +1,6 @@
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { postFile } from "@/services/fetch";
+import { getExcelCatalog, postFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import { useTranslations } from "next-intl";
@@ -21,6 +21,7 @@ import Form from "./Form";
 import Select from "./Select";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
+import { downloadExcel } from "@/utils/downloadExcel";
 
 const Detail = () => {
   const dict = useTranslations("dict");
@@ -38,12 +39,14 @@ const Detail = () => {
     // Acá después ver lógica de enpoints. Tal vez mover o cambiar
     switch (value) {
       case "download_post_template":
+        handleExcelDownload("template");
         break;
       case "upload_post_excel":
         setUploadPopup(!uploadPopup);
 
         break;
       case "download_update_template":
+        handleExcelDownload("download");
         break;
       case "upload_update_excel":
         break;
@@ -77,6 +80,9 @@ const Detail = () => {
         setOpenCleanBot,
       );
     }
+  };
+  const handleExcelDownload = async (type: string) => {
+    if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
