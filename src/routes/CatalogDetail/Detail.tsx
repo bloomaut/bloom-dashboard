@@ -1,14 +1,13 @@
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
-import { useParams } from "next/navigation";
-import { postFile, putFile } from "@/services/fetch";
-import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { getExcelCatalog, postFile, putFile } from "@/services/fetch";
+import { ENV } from "@/typescript/types/api";
 import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { handleBotAction } from "@/utils/handleBotAction";
 import styles from "./styles.module.scss";
-
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
 import Button from "@/components/Button";
@@ -16,11 +15,12 @@ import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import Title from "@/components/Title";
-import PopupExcel from "./PopupExcel";
+import Image from "next/image";
 import Form from "./Form";
 import Select from "./Select";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
+import PopupExcel from "./PopupExcel";
 
 const Detail = () => {
   const dict = useTranslations("dict");
@@ -39,11 +39,13 @@ const Detail = () => {
     // Acá después ver lógica de enpoints. Tal vez mover o cambiar
     switch (value) {
       case "download_post_template":
+        handleExcelDownload("template");
         break;
       case "upload_post_excel":
         setUploadPopup(!uploadPopup);
         break;
       case "download_update_template":
+        handleExcelDownload("download");
         break;
       case "upload_update_excel":
         setPutPopup(!putPopup);
@@ -58,7 +60,7 @@ const Detail = () => {
       await handleBotAction(
         `datasets/${dataSetId}/vectorize`,
         "post",
-        dict("toast.bot_train_success"),
+        dict("toast.bot_train"),
         dict("toast.bot_error"),
         setLoading,
         setOpenTrainBot,
@@ -80,6 +82,10 @@ const Detail = () => {
     }
   };
 
+  const handleExcelDownload = async (type: string) => {
+    if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
+  };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFile(event.target.files[0]);
@@ -90,7 +96,6 @@ const Detail = () => {
     event.preventDefault();
     if (selectedFile && uploadPopup) {
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
-      console.log(response);
       if (!response.error && response.data.statusCode === 201) {
         notify(dict("toast.success_file"));
       } else {
@@ -135,12 +140,6 @@ const Detail = () => {
             placeholder={dict("catalog.select.placeholder_two")}
             onChange={handleDropdown}
           />
-          {uploadPopup && (
-            <PopupExcel setFunction={setUploadPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
-          )}
-          {putPopup && (
-            <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
-          )}
         </div>
       </div>
       <div className={styles.table_container}>
@@ -204,6 +203,12 @@ const Detail = () => {
         >
           <p className={styles.trainbot_text}>{dict("catalog.clean_bots_text")}</p>
         </PopupChildren>
+      )}
+      {uploadPopup && (
+        <PopupExcel setFunction={setUploadPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
+      )}
+      {putPopup && (
+        <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
       )}
     </section>
   );

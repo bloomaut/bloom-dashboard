@@ -43,6 +43,29 @@ export const getExcel = async (id: string) => {
     }
   }
 };
+export const getExcelCatalog = async (id: string, type: string, path: string) => {
+  try {
+    if (id) {
+      const response = await fetch(`/api/${path}`, {
+        method: "GET",
+        headers: {
+          "X-ID": id,
+          "type-download": type,
+        },
+      });
+      const pdfBlob = await response?.blob();
+      const tempURL = URL.createObjectURL(pdfBlob as Blob);
+      window.open(tempURL, "_blank");
+      URL.revokeObjectURL(tempURL);
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
 
 export const post = async (url: string, data: POST, api?: EnvironmentApi) => {
   try {
