@@ -54,7 +54,7 @@ const Card = ({ name, _id }: DatasetProps) => {
 
   return (
     <div className={styles.card}>
-      <Link href={`/catalog/${_id}`} className={styles.name}>
+      <Link href={`/catalog/${_id}`} className={styles.name} title={name}>
         {name}
       </Link>
       <div className={styles.btn_container}>
