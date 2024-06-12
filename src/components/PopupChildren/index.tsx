@@ -2,6 +2,8 @@ import styles from "./styles.module.scss";
 import { FormEvent, SetStateAction, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Button from "../Button";
+import Icon from "../Icon";
+import { usePathname } from "next/navigation";
 
 interface PopupChildrenProps {
   onConfirm: (e: FormEvent<HTMLFormElement>) => void;
@@ -26,6 +28,7 @@ const PopupChildren = ({
 }: PopupChildrenProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
   const [closing, setClosing] = useState(false);
+  const pathname = usePathname();
 
   const handleClose = () => {
     setClosing(true);
@@ -41,7 +44,23 @@ const PopupChildren = ({
         {children}
         <form className={styles.button_container} onSubmit={onConfirm}>
           <Button title={textCancel} onclick={handleClose} styleName='btn_cancel' />
-          <Button title={textAccept} type='submit' loading={loading} />
+          <Button
+            title={textAccept}
+            type='submit'
+            loading={loading}
+            icon={
+              pathname.includes("my-collection") ? (
+                <Icon
+                  name='hotlink'
+                  className='hotlink_light'
+                  strokeWidth={1}
+                  width={20}
+                  height={25}
+                  viewBox='0 0 30 34'
+                />
+              ) : undefined
+            }
+          />
         </form>
       </div>
     </section>
