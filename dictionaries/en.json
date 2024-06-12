@@ -48,7 +48,7 @@
       "success_delete": "File deleted successfully",
       "success_delete_catalog": "Catalog deleted successfully",
       "success_palette": "Palette updated successfully",
-      "success_product_deleted": "Product deletedd successfully",
+      "success_product_deleted": "Product deleted successfully",
       "error_product_deleted": "Error when deleting a product",
       "error_name": "Name is required",
       "error_edit": "Error updating information",
@@ -283,7 +283,7 @@
       "empty": "This catalog does not yet contain any products.",
       "train_bots": "Train Bots",
       "clean_bots": "Clean Bots",
-      "train_bots_text": "Would you line to train your UiTool Bots this menu information?",
+      "train_bots_text": "Would you like to train your UiTool Bots with the information in this menu?",
       "clean_bots_text": "Would you like your UiTool Bots to stop using the information in this catalog?",
       "select": {
         "placeholder_one": "Bulk Load",
