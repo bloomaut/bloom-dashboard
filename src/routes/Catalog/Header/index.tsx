@@ -63,6 +63,7 @@ const Header = () => {
           title={dict("catalog.new")}
           icon={<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
           styleName='btn_reverse'
+          onclick={handleCreate}
         />
         {showPopupCreate && (
           <PopupChildren

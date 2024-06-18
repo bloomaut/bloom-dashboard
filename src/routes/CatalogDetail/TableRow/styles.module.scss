@@ -15,6 +15,7 @@
   .image {
     @include width-height(80px, 80px);
     object-fit: contain;
+    margin: 0 auto;
   }
   .icons {
     @include flex(row, center, center, 5px);

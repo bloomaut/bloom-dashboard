@@ -1,0 +1,22 @@
+@import "@/styles/theme.scss";
+
+.select_container {
+  @include width-height(100%, auto);
+  @include flex(column, flex-start, flex-start, 5px);
+  padding: 5px 0;
+  @include fontSize-fontWeight(14px, 400);
+  color: $text;
+  border: none;
+  border-bottom: 1px solid $lighterGrey;
+  cursor: pointer;
+  &:focus {
+    border: none;
+    border-bottom: 1px solid $orange;
+    outline: none;
+  }
+  option {
+    @include fontSize-fontWeight(14px, 400);
+    color: $text;
+    cursor: pointer;
+  }
+}
