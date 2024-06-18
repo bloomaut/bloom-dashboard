@@ -4,17 +4,23 @@ import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { useAppDispatch } from "@/store/hooks";
+import { setDataschemaData } from "@/store/features/dataschemaSlice";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
   loading: boolean;
   updateDataset: (id: string, newName: string) => Promise<void>;
+  fetchDatasets: () => Promise<void>;
 }
 
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
   loading: true,
   updateDataset: async () => {
+    throw new Error("updateDataset function not implemented");
+  },
+  fetchDatasets: async () => {
     throw new Error("updateDataset function not implemented");
   },
 });
@@ -24,6 +30,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
+  const dispatch = useAppDispatch();
 
   const fetchDatasets = async () => {
     const data = await get("datasets/small/list", ENV.BOX);
@@ -33,9 +40,12 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    fetchDatasets();
-  }, []);
+  const fetchDataSchemas = async () => {
+    const data = await get("dataschemas/dataprovider/small", ENV.BOX);
+    if (data.statusCode === 200) {
+      dispatch(setDataschemaData(data.data));
+    }
+  };
 
   const updateDataset = async (id: string, newName: string) => {
     const updatedDataset = {
@@ -50,12 +60,18 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
+  useEffect(() => {
+    fetchDatasets();
+    fetchDataSchemas();
+  }, []);
+
   return (
     <CatalogContext.Provider
       value={{
         datasets,
         loading,
         updateDataset,
+        fetchDatasets,
       }}
     >
       {children}

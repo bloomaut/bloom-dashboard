@@ -1,6 +1,9 @@
 import styles from "./styles.module.scss";
-import { FormEvent, SetStateAction } from "react";
+import { FormEvent, SetStateAction, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import Button from "../Button";
+import Icon from "../Icon";
+import { usePathname } from "next/navigation";
 
 interface PopupChildrenProps {
   onConfirm: (e: FormEvent<HTMLFormElement>) => void;
@@ -10,6 +13,7 @@ interface PopupChildrenProps {
   textCancel: string;
   textAccept: string;
   children: React.ReactNode;
+  loading?: boolean;
 }
 
 const PopupChildren = ({
@@ -20,21 +24,43 @@ const PopupChildren = ({
   textCancel,
   textAccept,
   children,
+  loading,
 }: PopupChildrenProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
+  const [closing, setClosing] = useState(false);
+  const pathname = usePathname();
+
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      onCancel();
+    }, 300);
+  };
 
   return (
-    <section className={styles.popup_container}>
+    <section className={`${styles.popup_container} ${closing && styles.closing}`}>
       <div className={styles.container} ref={dropdownRef}>
         <p>{title}</p>
         {children}
         <form className={styles.button_container} onSubmit={onConfirm}>
-          <button className={styles.no} onClick={onCancel}>
-            {textCancel}
-          </button>
-          <button className={styles.yes} type='submit'>
-            {textAccept}
-          </button>
+          <Button title={textCancel} onclick={handleClose} styleName='btn_cancel' />
+          <Button
+            title={textAccept}
+            type='submit'
+            loading={loading}
+            icon={
+              pathname.includes("my-collection") ? (
+                <Icon
+                  name='hotlink'
+                  className='hotlink_light'
+                  strokeWidth={1}
+                  width={20}
+                  height={25}
+                  viewBox='0 0 30 34'
+                />
+              ) : undefined
+            }
+          />
         </form>
       </div>
     </section>

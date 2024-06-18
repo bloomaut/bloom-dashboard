@@ -19,11 +19,20 @@
       }
     }
   }
+  .select_container {
+    @include flex(row, flex-start, flex-start, 20px);
+    @include width-height(50%, auto);
+    margin-top: 20px;
+  }
   .table_container {
     @include width-height(100%, auto);
     .content_container {
-      @include width-height(100%, 270px);
+      @include width-height(100%, auto);
+      max-height: 270px;
       overflow-y: auto;
+      @media (width >= $queryXl) {
+        max-height: 500px;
+      }
     }
     .content_container::-webkit-scrollbar {
       width: 5px;
@@ -38,6 +47,9 @@
   .buttons {
     @include flex(row, flex-end, center, 30px);
     @include width-height(100%, auto);
-    margin-top: 50px;
+  }
+  .trainbot_text {
+    @include fontSize-fontWeight(16px, 400);
+    color: $text;
   }
 }

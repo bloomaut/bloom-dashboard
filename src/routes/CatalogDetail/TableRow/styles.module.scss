@@ -12,8 +12,10 @@
     border-left: 2px solid $lighterGrey;
     padding-left: 10px;
   }
-  .imagen {
-    @include width-height(100%, 55px);
+  .image {
+    @include width-height(80px, 80px);
+    object-fit: contain;
+    margin: 0 auto;
   }
   .icons {
     @include flex(row, center, center, 5px);

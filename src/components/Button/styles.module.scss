@@ -21,6 +21,16 @@
   cursor: default;
 }
 
+.btn_cancel {
+  @extend .btn;
+  background: $lighterGrey;
+  transition: all 100ms ease-in;
+  &:hover {
+    background: $lightGrey;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+}
+
 .btn_outline {
   flex-direction: row;
   @extend .btn;
@@ -152,6 +162,14 @@
         }
       }
     }
+  }
+}
+.bg_transparent {
+  background: transparent;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: transparent;
+    transform: scale(1.1);
   }
 }
 

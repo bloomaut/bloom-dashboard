@@ -8,15 +8,23 @@
   left: 0;
   z-index: 99999;
   background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in-out forwards;
   .container {
     @include flex(column, space-evenly, center, 20px);
-    @include width-height(300px, auto);
+    @include width-height(320px, auto);
     @include fontSize-fontWeight(24px, 500);
     padding: 20px;
     background-color: $white;
     border-radius: 15px;
     text-align: center;
     box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    animation: scaleIn 0.3s ease-in-out forwards;
+    .validation {
+      @include width-height(100%, auto);
+      @include fontSize-fontWeight(13px, 500);
+      @include flex(row, flex-start, center, 5px);
+      color: $lighterGrey;
+    }
     .button_container {
       @include flex(row, space-evenly, center);
       width: 100%;
@@ -51,5 +59,36 @@
         }
       }
     }
+  }
+}
+
+.closing {
+  animation: fadeOutPopup 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutPopup {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

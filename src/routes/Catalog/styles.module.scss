@@ -5,7 +5,8 @@
   @include flex(column, flex-start, flex-start, 40px);
   padding: 10px 40px;
   .cards_container {
-    @include width-height(100%, 100%);
+    @include width-height(100%, auto);
     @include flex(row, flex-start, flex-start, 30px);
+    flex-wrap: wrap;
   }
 }

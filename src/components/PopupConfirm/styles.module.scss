@@ -8,6 +8,7 @@
   left: 0;
   z-index: 99999;
   background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in-out forwards;
   .container {
     @include flex(column, space-evenly, center);
     @include width-height(375px, 150px);
@@ -16,12 +17,14 @@
     border-radius: 15px;
     text-align: center;
     box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    animation: scaleIn 0.3s ease-in-out forwards;
     .button_container {
       @include flex(row, space-evenly, center);
       @include fontSize-fontWeight(16px, 400);
       width: 100%;
       .no {
         @include flex(row, center, center, 5px);
+        @include fontSize-fontWeight(16px, 500);
         border: none;
         border-radius: 5px;
         padding: 10px;
@@ -35,8 +38,8 @@
       }
       .yes {
         @extend .no;
-        background: $white;
-        border: 2px solid $orange;
+        background: $orange;
+        color: $white;
         &:hover {
           background: $orange;
           color: $white;
@@ -63,19 +66,22 @@
       }
     }
   }
-  .drag_container {
-    height: auto;
-    padding: 20px;
-    position: relative;
-    gap: 20px;
-    .btn_close_icon {
-      background: none;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      position: absolute;
-      top: 5px;
-      right: 10px;
-    }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
   }
 }

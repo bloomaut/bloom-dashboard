@@ -12,6 +12,8 @@ import Subtitle from "../Subtitle";
 import FileCard from "./FileCard";
 import FileLogo from "./FileLogo";
 import PopupConfirm from "@/components/PopupConfirm";
+import PopupChildren from "@/components/PopupChildren";
+import DragAndDrop from "../../../components/DragAndDrop";
 
 interface FilesProps {
   fetchData: () => void;
@@ -133,12 +135,16 @@ const Files = ({ fetchData }: FilesProps) => {
           />
         )}
         {showPopupEdit && (
-          <PopupConfirm
-            dragAndDrop={true}
-            setFile={setFile}
-            setShowConfirmation={setShowPopupEdit}
+          <PopupChildren
+            title={dict("drag.image")}
+            textAccept={dict("popup.upload")}
+            textCancel={dict("popup.cancel")}
             onCancel={() => setShowPopupEdit(false)}
-          />
+            onConfirm={() => setShowPopupEdit(false)}
+            setShowConfirmation={setShowPopupEdit}
+          >
+            <DragAndDrop file={file} setFile={setFile} />
+          </PopupChildren>
         )}
       </div>
     </div>

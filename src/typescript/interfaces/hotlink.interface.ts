@@ -3,7 +3,7 @@ export interface HotlinkData {
 }
 
 export interface Hotlink {
-  id?: any;
+  id?: string;
   power_app_hash: string;
 }
 

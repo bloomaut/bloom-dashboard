@@ -43,6 +43,29 @@ export const getExcel = async (id: string) => {
     }
   }
 };
+export const getExcelCatalog = async (id: string, type: string, path: string) => {
+  try {
+    if (id) {
+      const response = await fetch(`/api/${path}`, {
+        method: "GET",
+        headers: {
+          "X-ID": id,
+          "type-download": type,
+        },
+      });
+      const pdfBlob = await response?.blob();
+      const tempURL = URL.createObjectURL(pdfBlob as Blob);
+      window.open(tempURL, "_blank");
+      URL.revokeObjectURL(tempURL);
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
 
 export const post = async (url: string, data: POST, api?: EnvironmentApi) => {
   try {
@@ -70,6 +93,25 @@ export const postFile = async (url: string, file: File, api?: EnvironmentApi) =>
 
     const response = await fetch(`${API}/${url}`, {
       method: "POST",
+      headers,
+      body: formData,
+    });
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+export const putFile = async (url: string, file: File, api?: EnvironmentApi) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const headers = new Headers();
+    if (api) headers.append("X-API", api);
+
+    const response = await fetch(`${API}/${url}`, {
+      method: "PUT",
       headers,
       body: formData,
     });

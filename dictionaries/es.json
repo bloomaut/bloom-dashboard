@@ -6,7 +6,9 @@
       "btn2": "Volver"
     },
     "drag": {
-      "title": "Arrastrá o soltá tus archivos aquí"
+      "title": "Arrastrá o soltá tus archivos aquí",
+      "image": "Seleccionar imagen",
+      "edit_image": "Editar imagen"
     },
     "sidebar": {
       "home": "Inicio",
@@ -25,22 +27,35 @@
     },
     "popup": {
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
+      "delete_product": "¿Estás seguro que desea eliminar este producto?",
+      "delete": "¿Seguro que deseas eliminar este catálogo?",
       "name": "Nombre",
       "confirm": "Eliminar",
       "create": "Crear",
+      "create_product": "Crear producto",
+      "edit_product": "Editar producto",
+      "edit_catalog": "Editar catálogo",
       "cancel": "Cancelar",
-      "edit": "Editar"
+      "edit": "Editar",
+      "upload": "Subir",
+      "required": "* Todos los campos son requeridos"
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
+      "success_item": "Producto añadido correctamente",
       "success_file": "Archivo subido correctamente",
       "success_edit": "Información actualizada correctamente",
-      "success_delete": "Achivo eliminado correctamente",
+      "success_delete": "Archivo eliminado correctamente",
+      "success_delete_catalog": "Catálogo eliminado correctamente",
       "success_palette": "Paleta actualizada correctamente",
+      "success_product_deleted": "Producto eliminado correctamente",
+      "error_product_deleted": "Error al eliminar un producto",
       "error_name": "El nombre es obligatorio",
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
+      "error_item": "Error al subir el producto",
       "error_file": "Error al eliminar el archivo",
+      "error_catalog": "Error al eliminar el catálogo",
       "error_palette": "Error al subir la paleta",
       "empty_fields": "Todos los campos son requeridos",
       "success_hotlink": "Hotlink creado correctamente",
@@ -50,7 +65,15 @@
       "client_delete": "Cliente eliminado correctamente",
       "client_post_error": "Error al crear cliente",
       "client_edit_error": "Error al actualizar cliente",
-      "client_delete_error": "Error al eliminar cliente"
+      "client_delete_error": "Error al eliminar cliente",
+      "bot_train_success": "Bot entrenado correctamente",
+      "bot_clean": "Limpieza de bots exitosa",
+      "bot_error": "Ocurrió un error",
+      "post_dataset": "Catálogo publicado correctamente",
+      "error_dataset": "Error al publicar catálogo",
+      "error_uploading": "Error al subir el archivo",
+      "error_update": "Error al actualizar el archivo",
+      "success_update": "Archivo actualizado correctamente"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -70,6 +93,7 @@
     },
     "introduction": {
       "title": "Introducción",
+      "text": "¡Conocé todo lo que Small tiene para ofercerte!",
       "checkbox": "Ya vi el video y deseo continuar"
     },
     "playground": {
@@ -256,8 +280,32 @@
       "name": "Nombre",
       "description": "Descripción",
       "price": "Precio",
-      "clean_bot": "Reiniciar Bot",
-      "train_bot": "Entrenar Bot"
+      "clean_bot": "Limpiar",
+      "train_bot": "Entrenar",
+      "cancel": "Cancelar",
+      "empty": "Este catálogo aún no contiene ningún producto.",
+      "train_bots": "Entrenar Bots",
+      "clean_bots": "Limpiar Bots",
+      "train_bots_text": "¿Te gustaría entrenar tus UiTool Bots con la información de este menú?",
+      "clean_bots_text": "¿Te gustaría que tus UiTool Bots dejen de utilizar la información de este catálogo?",
+      "select": {
+        "placeholder_one": "Carga masiva",
+        "placeholder_two": "Actualización masiva",
+        "option_one": "Descargar template",
+        "option_two": "Subir con Excel",
+        "option_three": "Descargar menú"
+      },
+      "upload_excel_title": "Subir Planilla Excel",
+      "upload_excel": "Subir Excel"
+    },
+    "form_validation": {
+      "ClientFirstname": "El nombre es requerido",
+      "ClientEmail_01": "El email es requerido",
+      "ClientEmail_02": "Formato de email inválido",
+      "listname": "El nombre del producto es requerido",
+      "listdescr": "La descripcion del producto es requerida",
+      "listprice": "El precio del producto debe ser mayor que 0",
+      "listimage": "El producto debe contener una imágen"
     }
   }
 }

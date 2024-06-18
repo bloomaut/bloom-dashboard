@@ -18,4 +18,18 @@
       @include flex(row, flex-end, center, 20px);
     }
   }
+  .reset {
+    @include flex(row, center, center, 5px);
+    @include fontSize-fontWeight(16px, 500);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    background: $greyBackground;
+    transition: all 200ms ease-in-out;
+    &:hover {
+      background: $lighterGrey;
+      color: $white;
+    }
+  }
 }
