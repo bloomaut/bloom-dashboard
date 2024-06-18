@@ -2,10 +2,7 @@
 
 .card {
   @include width-height(250px, auto);
-  display: grid;
-  grid-template-columns: 84% 16%;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(row, space-between, center);
   background: $blueishBackground;
   border-radius: 10px;
   border: 2px solid $text;
@@ -14,7 +11,7 @@
     @include fontSize-fontWeight(20px, 400);
     color: $text;
     display: inline-block;
-    max-width: 230px;
+    max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

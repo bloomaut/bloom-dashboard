@@ -25,17 +25,11 @@ interface DataItems {
 }
 
 export interface DatasetProps {
-  order: number;
   _id: string;
   name: string;
-  dataschema: Dataschema;
+  dataschema: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface Dataset {
-  dataItems: DataItems[];
-  dataSet: DatasetProps;
 }
 
 export interface UpdateDataset {

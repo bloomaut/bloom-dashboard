@@ -2,7 +2,7 @@
 
 .container {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 2fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
   grid-template-rows: auto;
   width: 100%;
   padding: 10px;
@@ -20,6 +20,5 @@
     @include flex(row, center, center, 5px);
     border-left: none;
     padding-left: 0px;
-    cursor: pointer;
   }
 }

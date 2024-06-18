@@ -5,13 +5,13 @@ import { useAppSelector } from "@/store/hooks";
 import { post } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { useCatalogContext } from "@/context/CatalogContext";
 // Components
 import Title from "@/components/Title";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import PopupChildren from "@/components/PopupChildren";
 import Input from "@/components/Input";
-import { useCatalogContext } from "@/context/CatalogContext";
 
 const Header = () => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
@@ -63,7 +63,6 @@ const Header = () => {
           title={dict("catalog.new")}
           icon={<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
           styleName='btn_reverse'
-          onclick={handleCreate}
         />
         {showPopupCreate && (
           <PopupChildren
