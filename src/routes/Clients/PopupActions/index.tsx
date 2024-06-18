@@ -153,9 +153,6 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               value={formData.ClientEmail || ""}
               handleChange={handleInputChange}
             />
-            {checkValidation && (
-              <p className={errors.ClientEmail ? styles.error : styles.error_hidden}>{errors.ClientEmail}</p>
-            )}
           </div>
           <div className={styles.form_control}>
             <Input
