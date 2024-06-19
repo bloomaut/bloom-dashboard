@@ -1,0 +1,33 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, auto);
+  @include flex(column, flex-start, flex-start, 30px);
+  .logo {
+    @include width-height(150px, auto);
+    object-fit: contain;
+  }
+  .subtitle {
+    color: $text;
+    @include fontSize-fontWeight(16px, 400);
+  }
+  .update {
+    color: $text;
+    @include fontSize-fontWeight(16px, 400);
+  }
+  .list_container {
+    @include flex(column, flex-start, flex-start, 40px);
+    color: $text;
+    .item {
+      .content {
+        @include flex(column, flex-start, flex-start, 10px);
+      }
+      .item_title {
+        @include fontSize-fontWeight(20px, 600);
+      }
+      .item_description {
+        @include fontSize-fontWeight(18px, 400);
+      }
+    }
+  }
+}

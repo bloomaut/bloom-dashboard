@@ -2,11 +2,11 @@ import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { getExcelCatalog, postFile, putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
-import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { handleBotAction } from "@/utils/handleBotAction";
+import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import styles from "./styles.module.scss";
 // Components
 import Breadcrumb from "@/components/Breadcrumb";
@@ -150,7 +150,7 @@ const Detail = () => {
           <LoadingSpinner />
         ) : datasetDetail?.dataItems.length ? (
           <div className={styles.content_container}>
-            {datasetDetail.dataItems.map(item => (
+            {datasetDetail.dataItems.map((item: any) => (
               <TableRow
                 key={item._id}
                 id={item._id}

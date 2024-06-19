@@ -49,15 +49,15 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
           name='dataset'
           width={70}
           height={30}
-          viewBox='0 0 84 54'
-          strokeColor='#BEBEBE'
+          viewBox={"0 0 84 54"}
+          strokeColor={"#BEBEBE"}
           className='dataset_default'
         />
       )}
       <p className={styles.box}>{name}</p>
       <p className={styles.box}>{description}</p>
       <div className={styles.box}>
-        <p>{`$ ${price}`}</p>
+        <p>{`${dict("catalog.price")}-$- ${price}`}</p>
       </div>
       <div className={`${styles.icons} ${styles.box}`}>
         <Button

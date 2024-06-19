@@ -307,6 +307,23 @@
       "listdescr": "La descripcion del producto es requerida",
       "listprice": "El precio del producto debe ser mayor que 0",
       "listimage": "El producto debe contener una imágen"
+    },
+    "privacy": {
+      "title": "Políticas de privacidad",
+      "update": "Última actualización:",
+      "subtitle": "Al utilizar la plataforma Small, usted acepta y se compromete a cumplir con los siguientes términos y condiciones.",
+      "title_01": "Elegibilidad y Acceso",
+      "description_01": "Small es una aplicación diseñada para que negocios puedan gestionar sus contactos de manera eficiente. Al registrarse y acceder a la aplicación, usted confirma que es un representante autorizado del negocio y que ha proporcionado información veraz y precisa.",
+      "title_02": "Privacidad y Protección de Datos",
+      "description_02": "Respetamos su privacidad y protegemos sus datos personales. Small recopilará y almacenará información personal, como nombres, direcciones de correo electrónico, números de teléfono y direcciones físicas de sus contactos, con el único propósito de ayudarle a gestionar sus relaciones comerciales. Para obtener más información sobre cómo manejamos sus datos personales, consulte nuestra Política de Privacidad.",
+      "title_03": "Uso Responsable",
+      "description_03": "Small está diseñada para facilitar la gestión de contactos comerciales de manera segura y eficiente. Usted se compromete a utilizar la aplicación de manera responsable y respetuosa, tanto con sus contactos como con otros usuarios de la aplicación. Cualquier comportamiento inapropiado o no autorizado dentro de la aplicación puede resultar en la suspensión o eliminación de su cuenta.",
+      "title_04": "Seguridad de la Cuenta",
+      "description_04": "La seguridad de su cuenta es de suma importancia. Mantenga su información de inicio de sesión en secreto y no comparta sus credenciales con nadie más. Si sospecha de un acceso no autorizado a su cuenta, notifíquelo de inmediato a nuestro equipo de soporte.",
+      "title_05": "Actualizaciones y Cambios",
+      "description_05": "Nos esforzamos por mejorar continuamente Small. Esto puede incluir actualizaciones de funciones y cambios en los servicios. Le informaremos sobre cualquier cambio significativo en la plataforma.",
+      "title_06": "Contacto y Soporte",
+      "description_06": "Si tiene preguntas, comentarios o necesita asistencia, no dude en ponerse en contacto con nuestro equipo de soporte. Estamos aquí para ayudarle en cada paso del camino."
     }
   }
 }
