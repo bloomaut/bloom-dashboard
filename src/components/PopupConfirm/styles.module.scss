@@ -25,14 +25,15 @@
       .no {
         @include flex(row, center, center, 5px);
         @include fontSize-fontWeight(16px, 500);
-        border: none;
-        border-radius: 5px;
+        background: transparent;
+        color: $text;
+        font-weight: 700;
         padding: 10px;
+        border: 1px solid $orange;
         cursor: pointer;
-        background: $greyBackground;
         transition: all 200ms ease-in-out;
         &:hover {
-          background: $lighterGrey;
+          background: $darkOrange;
           color: $white;
         }
       }
