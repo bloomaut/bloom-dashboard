@@ -14,6 +14,7 @@ interface PopupChildrenProps {
   textAccept: string;
   children: React.ReactNode;
   loading?: boolean;
+  btnCancel?: string;
 }
 
 const PopupChildren = ({
@@ -25,6 +26,7 @@ const PopupChildren = ({
   textAccept,
   children,
   loading,
+  btnCancel,
 }: PopupChildrenProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
   const [closing, setClosing] = useState(false);
@@ -43,7 +45,7 @@ const PopupChildren = ({
         <p>{title}</p>
         {children}
         <form className={styles.button_container} onSubmit={onConfirm}>
-          <Button title={textCancel} onclick={handleClose} styleName='btn_cancel' />
+          <Button title={textCancel} onclick={handleClose} styleName={`${btnCancel || "btn_cancel"}`} />
           <Button
             title={textAccept}
             type='submit'

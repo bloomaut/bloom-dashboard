@@ -22,6 +22,7 @@ const PopupExcel = ({ setFunction, submitFunction, handleFileChange }: Props) =>
       textCancel={dict("popup.cancel")}
       onConfirm={submitFunction}
       setShowConfirmation={setFunction}
+      btnCancel='btn_outline'
     >
       <input type='file' accept='.xlsx, .xls' id='fileInput' onChange={handleFileChange} style={{ display: "none" }} />
       <label htmlFor='fileInput' className={styles.excel_button}>

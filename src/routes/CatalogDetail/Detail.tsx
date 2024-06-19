@@ -15,7 +15,6 @@ import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import Title from "@/components/Title";
-import Image from "next/image";
 import Form from "./Form";
 import Select from "./Select";
 import TableHead from "./TableHead";
@@ -31,7 +30,7 @@ const Detail = () => {
   const [uploadPopup, setUploadPopup] = useState<boolean>(false);
   const [putPopup, setPutPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { datasetDetail } = useCatalogDetailContext();
+  const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const { notify, notifyError } = useMessageToast();
   const { id } = useParams();
 
@@ -89,6 +88,7 @@ const Detail = () => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFile(event.target.files[0]);
+      notify(dict("toast.success_file_add"));
     }
   };
 
@@ -97,6 +97,7 @@ const Detail = () => {
     if (selectedFile && uploadPopup) {
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
       if (!response.error && response.data.statusCode === 201) {
+        fetchDatasetById();
         notify(dict("toast.success_file"));
       } else {
         notifyError(dict("toast.error_uploading"));
@@ -105,6 +106,7 @@ const Detail = () => {
     } else if (selectedFile && putPopup) {
       const response = await putFile(`datasets/${id}/update`, selectedFile, ENV.BOX);
       if (!response.error && response.data.statusCode === 200) {
+        fetchDatasetById();
         notify(dict("toast.success_update"));
       } else {
         notifyError(dict("toast.error_update"));

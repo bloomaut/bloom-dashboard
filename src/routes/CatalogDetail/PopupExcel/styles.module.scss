@@ -9,4 +9,18 @@
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
+  &:hover {
+    animation: gradient-animation 50ms forwards;
+  }
+}
+@keyframes gradient-animation {
+  0% {
+    background: linear-gradient(to right, #6cd389, #386d47);
+  }
+  50% {
+    background: linear-gradient(to top, #386d47, #6cd389);
+  }
+  100% {
+    background: linear-gradient(to right, #386d47, #6cd389);
+  }
 }
