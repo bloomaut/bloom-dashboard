@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { Dataset } from "@/typescript/interfaces/catalog.interface";
+/* import { Dataset } from "@/typescript/interfaces/catalog.interface"; */
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
 
 interface CatalogDetailContextType {
-  datasetDetail: Dataset | null;
+  datasetDetail: any | null;
   fetchDatasetById: () => Promise<void>;
 }
 
@@ -17,7 +17,7 @@ const CatalogDetailContext = createContext<CatalogDetailContextType>({
 });
 
 export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) => {
-  const [datasetDetail, setDatasetDetail] = useState<Dataset | null>(null);
+  const [datasetDetail, setDatasetDetail] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useParams();
 
