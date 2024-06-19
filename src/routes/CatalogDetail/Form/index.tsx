@@ -33,7 +33,7 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
 
   useEffect(() => {
     if (action === "put" && id) {
-      const product = datasetDetail?.dataItems.find(item => item._id === id);
+      const product = datasetDetail?.dataItems.find((item: any) => item._id === id);
       if (product) {
         setFormData(product.data);
       }

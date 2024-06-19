@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./features/userSlice";
 import businessSlice from "./features/businessSlice";
 import filesSlice from "./features/filesSlice";
-import dataSchemaSlice from "./features/dataSchemaSlice";
+import dataSchemaSlice from "./features/dataschemaSlice";
 
 export const store = configureStore({
   reducer: {
