@@ -9,7 +9,7 @@ const TableRow = ({ hotlink }: { hotlink: HotlinkList }) => {
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.playground.popup");
 
-  const baseUrlEngine = 'https://power-app-engine.vercel.app'; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
+  const baseUrlEngine = "https://power-app-engine.vercel.app"; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
 
   const handleCopyClick = () => {
     navigator.clipboard.writeText(`${baseUrlEngine}/${hotlink.hash}`).then(

@@ -17,7 +17,7 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.playground.popup");
 
-  const baseUrlEngine = 'https://power-app-engine.vercel.app'; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
+  const baseUrlEngine = "https://power-app-engine.vercel.app"; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
 
   const handleClick = () => {
     setId(hotlink.id);
@@ -25,22 +25,23 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   };
 
   const handleCopyClick = () => {
-    navigator.clipboard.writeText(`${baseUrlEngine}/${hotlink.hash}`)
-      .then(
-        function () {
-          notify(`${dict("copy_success")}`);
-        },
-        function (err) {
-          notifyError(`${dict("copy_error")}`);
-          console.error("Error al copiar al portapapeles", err);
-        },
-      );
+    navigator.clipboard.writeText(`${baseUrlEngine}/${hotlink.hash}`).then(
+      function () {
+        notify(`${dict("copy_success")}`);
+      },
+      function (err) {
+        notifyError(`${dict("copy_error")}`);
+        console.error("Error al copiar al portapapeles", err);
+      },
+    );
   };
 
   return (
     <div className={`${styles.container} ${id === hotlink.id && styles.hotlink_selected}`} onClick={handleClick}>
       <div className={styles.column}>
-        <p>{hotlink.flake_power_app?.skinx.title} - {hotlink.flake_power_app?.title}</p>
+        <p>
+          {hotlink.flake_power_app?.skinx.title} - {hotlink.flake_power_app?.title}
+        </p>
       </div>
       <div className={styles.column}>
         {hotlink.customer ? (

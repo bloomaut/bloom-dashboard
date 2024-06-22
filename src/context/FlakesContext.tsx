@@ -95,7 +95,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   //Función para acceder a la lista de hotlinks sin colección
   const getList = async () => {
     const response = await get("hotlinks/no-collection");
-    console.log('response', response)
+    console.log("response", response);
     if (response.statusCode === 200) {
       setHotlinksList(response.result.hotlinks.hotlinks);
       setLoading(false);
