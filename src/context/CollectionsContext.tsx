@@ -35,9 +35,8 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
   useEffect(() => {
     const getCollections = async () => {
       const response = await get("hotlink-collections/client/list");
-
       if (response.statusCode === 200) {
-        setCollectionsList(response.result.hotlinkCollections);
+        setCollectionsList(response.result);
         setLoading(false);
       } else {
         notifyError(dict("error_tryagain"));

@@ -14,15 +14,8 @@ export interface HotlinkList {
   created_at: string;
   updated_at: string;
   customer_id: string;
-  power_app: Powerapp;
+  flake_power_app: Flake;
   customer?: Customer;
-}
-
-export interface Powerapp {
-  id: string | number;
-  hash?: string;
-  flake_type: string;
-  flake: Flake;
 }
 
 export interface Flake {

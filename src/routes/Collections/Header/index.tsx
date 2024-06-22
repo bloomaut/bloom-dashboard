@@ -44,17 +44,6 @@ const Header = () => {
             placeholder={dict("search")}
           />
         </div>
-        <div className={styles.period_container}>
-          <button className={styles.period}>
-            {dict("period_btn")}
-            <Icon name='arrow_down_chevron' strokeWidth={1.5} viewBox='0 0 18 8' />
-          </button>
-
-          <div className={styles.period}>
-            <Icon name='bar' width={10} height={25} strokeWidth={2} strokeColor='#bebebe' viewBox='0 0 10 30' />
-            <Icon name='period' strokeWidth={2} viewBox='0 0 20 20' strokeColor='#ff5722' />
-          </div>
-        </div>
         <Link href={`/${locale}/collections/new-collection`} className={styles.new_btn}>
           {<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
           {dict("new_btn")}

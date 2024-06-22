@@ -56,7 +56,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const fetchData = async () => {
     const response = await axios.get("/api/small");
     const allFlakes = response.data.data;
-
     if (allFlakes.statusCode === 200) {
       setFlakes(allFlakes.result.powerapps);
       setSelectedFlakeId(allFlakes.result.powerapps[0]._id);
@@ -74,7 +73,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
       if (response.result.powerapps.length) {
         const firstFlakeId = response.result.powerapps[0]._id;
         setSelectedFlakeId(firstFlakeId);
-        getDiffusionLink(firstFlakeId);
       } else {
         setSelectedFlakeId("");
       }
@@ -97,6 +95,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   //Función para acceder a la lista de hotlinks sin colección
   const getList = async () => {
     const response = await get("hotlinks/no-collection");
+    console.log('response', response)
     if (response.statusCode === 200) {
       setHotlinksList(response.result.hotlinks.hotlinks);
       setLoading(false);
@@ -118,12 +117,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
       fetchData();
     }
   }, []);
-
-  useEffect(() => {
-    if (selectedFlakeId) {
-      getDiffusionLink(selectedFlakeId);
-    }
-  }, [selectedFlakeId]);
 
   return (
     <FlakesContext.Provider

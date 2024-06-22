@@ -26,13 +26,8 @@ const TableRow = ({ collection }: ContentProps) => {
         <p>{collection.name}</p>
         <p>{formattDate}</p>
       </div>
-      <div className={`${styles.column} ${styles.column_two}`}>
-        <p>{collection.description}</p>
-        <p>{`${collection.flake?.skinx?.title || dict("template")}/${collection.flake?.title || dict("template")}`}</p>
-      </div>
       <div className={`${styles.column} ${styles.column_three}`}>
-        <p>{collection.hotlinkCount}</p>
-        <p>-</p>
+        <p>-</p> {/* TODO: volver a pedirle a backend el total de hotlinks de cada colección */}
       </div>
     </div>
   );
