@@ -17,28 +17,31 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.playground.popup");
 
+  const baseUrlEngine = "https://power-app-engine.vercel.app"; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
+
   const handleClick = () => {
     setId(hotlink.id);
     setSelected(true);
   };
 
   const handleCopyClick = () => {
-    if (hotlink.url)
-      navigator.clipboard.writeText(hotlink.url).then(
-        function () {
-          notify(`${dict("copy_success")}`);
-        },
-        function (err) {
-          notifyError(`${dict("copy_error")}`);
-          console.error("Error al copiar al portapapeles", err);
-        },
-      );
+    navigator.clipboard.writeText(`${baseUrlEngine}/${hotlink.hash}`).then(
+      function () {
+        notify(`${dict("copy_success")}`);
+      },
+      function (err) {
+        notifyError(`${dict("copy_error")}`);
+        console.error("Error al copiar al portapapeles", err);
+      },
+    );
   };
 
   return (
     <div className={`${styles.container} ${id === hotlink.id && styles.hotlink_selected}`} onClick={handleClick}>
       <div className={styles.column}>
-        <p>{hotlink.power_app?.flake?.title}</p>
+        <p>
+          {hotlink.flake_power_app?.skinx.title} - {hotlink.flake_power_app?.title}
+        </p>
       </div>
       <div className={styles.column}>
         {hotlink.customer ? (
@@ -50,23 +53,14 @@ const TableRow = ({ hotlink }: TableRowProps) => {
         )}
       </div>
       <div className={styles.column}>
-        <Link href={hotlink.url} target='_blank' className={styles.hotlink_url}>
-          {hotlink.url}
+        <Link href={`${baseUrlEngine}/${hotlink.hash}`} target='_blank' className={styles.hotlink_url}>
+          {`${baseUrlEngine}/${hotlink.hash}`}
         </Link>
       </div>
       <div className={styles.column}>
         <button onClick={handleCopyClick}>
           <Icon name='copy' width={28} height={28} strokeColor='#7f7f7f' strokeWidth={4} viewBox='0 0 60 65' />
         </button>
-        <Icon
-          name='whatsapp'
-          width={28}
-          height={28}
-          strokeWidth={1}
-          strokeColor='#7f7f7f'
-          fillColor='#7f7f7f'
-          viewBox='0 0 60 65'
-        />
       </div>
     </div>
   );

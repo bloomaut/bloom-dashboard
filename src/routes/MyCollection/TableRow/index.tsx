@@ -3,35 +3,36 @@ import Link from "next/link";
 import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
+import Icon from "@/components/Icon";
 
 const TableRow = ({ hotlink }: { hotlink: HotlinkList }) => {
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.playground.popup");
 
+  const baseUrlEngine = "https://power-app-engine.vercel.app"; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
+
   const handleCopyClick = () => {
-    if (hotlink.url)
-      navigator.clipboard.writeText(hotlink.url).then(
-        function () {
-          notify(`${dict("copy_success")}`);
-        },
-        function (err) {
-          notifyError(`${dict("copy_error")}`);
-          console.error("Error al copiar al portapapeles", err);
-        },
-      );
+    navigator.clipboard.writeText(`${baseUrlEngine}/${hotlink.hash}`).then(
+      function () {
+        notify(`${dict("copy_success")}`);
+      },
+      function (err) {
+        notifyError(`${dict("copy_error")}`);
+        console.error("Error al copiar al portapapeles", err);
+      },
+    );
   };
 
   return (
     <div className={styles.container}>
       <p className={styles.customer}>{hotlink.customer_id}</p>
-      <Link href={hotlink.url} target='_blank' className={styles.link}>
-        {hotlink.url}
+      <Link href={`${baseUrlEngine}/${hotlink.hash}`} target='_blank' className={styles.link}>
+        {`${baseUrlEngine}/${hotlink.hash}`}
       </Link>
       <div className={styles.share_container}>
-        <button className={styles.btn} onClick={handleCopyClick}>
-          {/* <Image src={copyIcon} width={30} height={30} alt='icon' /> */}
+        <button onClick={handleCopyClick}>
+          <Icon name='copy' width={28} height={28} strokeColor='#7f7f7f' strokeWidth={4} viewBox='0 0 60 65' />
         </button>
-        <button className={styles.btn}>{/* <Image src={wpIcon} width={30} height={30} alt='icon' /> */}</button>
       </div>
     </div>
   );

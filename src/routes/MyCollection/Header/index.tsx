@@ -39,11 +39,6 @@ const Header = () => {
     <div className={styles.container}>
       <div className={styles.column}>
         <Title text={`${loading ? dict("my-collection.loading") : hotlinkCollection?.name}`} />
-        <h4 className={styles.subtitle}>
-          {loading
-            ? dict("my-collection.loading")
-            : `${hotlinkCollection?.flake?.skinx?.title || "Skinx Title"} / ${hotlinkCollection?.flake?.title || "Flake Title"}`}
-        </h4>
         <Search
           searchValue={searchValue}
           handleSearchChange={e => setSearchValue(e.target.value)}
@@ -60,7 +55,6 @@ const Header = () => {
             styleName='btn_copy'
             onclick={handleClick}
           />
-
           <Button
             title={dict("my-collection.btn2")}
             icon={<Icon name='excel' />}
