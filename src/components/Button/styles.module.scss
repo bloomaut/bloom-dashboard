@@ -31,6 +31,18 @@
   }
 }
 
+.btn_popup {
+  @extend .btn;
+  background: transparent;
+  color: $text;
+  border: 1px solid $orange;
+  transition: all 100ms ease-in;
+  &:hover {
+    background: $darkOrange;
+    color: $white;
+  }
+}
+
 .btn_outline {
   flex-direction: row;
   @extend .btn;
