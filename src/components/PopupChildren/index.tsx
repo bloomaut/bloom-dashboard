@@ -43,7 +43,7 @@ const PopupChildren = ({
         <p>{title}</p>
         {children}
         <form className={styles.button_container} onSubmit={onConfirm}>
-          <Button title={textCancel} onclick={handleClose} styleName='btn_cancel' />
+          <Button title={textCancel} onclick={handleClose} styleName='btn_outline' />
           <Button
             title={textAccept}
             type='submit'

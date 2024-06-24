@@ -31,6 +31,18 @@
   }
 }
 
+.btn_popup {
+  @extend .btn;
+  background: transparent;
+  color: $text;
+  border: 1px solid $orange;
+  transition: all 100ms ease-in;
+  &:hover {
+    background: $darkOrange;
+    color: $white;
+  }
+}
+
 .btn_outline {
   flex-direction: row;
   @extend .btn;
@@ -134,13 +146,13 @@
   white-space: nowrap;
   text-align: center;
   color: $white;
-  background-color: $orange;
+  background-color: $darkOrange;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background 0.3s ease;
   &:hover {
-    background-color: $darkOrange;
+    background-color: $orange;
   }
 }
 .btn_dataset {
