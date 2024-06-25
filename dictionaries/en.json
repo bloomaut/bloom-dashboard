@@ -81,6 +81,13 @@
       "title": "To continue, we will ask you to log in",
       "link": "Go back"
     },
+    "login": {
+      "title": "has the efficiency your business needs",
+      "login": "Login",
+      "account": "Don't have an account?",
+      "signup": "Sign up now",
+      "policy": "Policy privacy"
+    },
     "home": {
       "banner": {
         "welcome": "We welcome you to Small",

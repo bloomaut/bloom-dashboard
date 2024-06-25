@@ -1,6 +1,37 @@
 @import "@/styles/theme.scss";
 
 .container {
+  @include flex(column, flex-start, center);
   @include width-height(100%, 100vh);
-  @include flex(row, center, center);
+  .inner_container {
+    @include flex(row, flex-start, center);
+    @include width-height(100%, 100vh);
+    .left_section {
+      @include width-height(70%, 100%);
+      background-color: #fff3ef;
+      padding: 7%;
+      transition: 2s;
+      .title {
+        @include width-height(450px, max-content);
+        @include fontSize-fontWeight(40px, 800);
+        border-left: 5px solid $orange;
+        padding: 10px;
+        .small {
+          color: $orange;
+          padding-right: 4px;
+        }
+        animation: colorChange 6s infinite;
+      }
+    }
+  }
+}
+
+@keyframes colorChange {
+  0%,
+  100% {
+    color: $text;
+  }
+  50% {
+    color: $orange;
+  }
 }
