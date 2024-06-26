@@ -7,18 +7,18 @@ import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
 
 //Icons
-import small from "@/../public/assets/logo_small.png";
+import small from "@/../public/assets/logo_small_color.png";
 
 //Components
 import Icon from "../Icon";
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
-import { Dropdown } from "./Suite/dropdown";
 import LinkComponent from "../LinkComponent";
+import { Dropdown } from "./Suite/dropdown";
 
 const Navbar = () => {
   const { user, isLoading } = useUser();
-  const dict = useTranslations("dict.navbar");
+  const dict = useTranslations("dict.login");
 
   return (
     <nav className={styles.container}>
@@ -29,18 +29,11 @@ const Navbar = () => {
         <Dropdown app='uitrade' />
       </div>
       <div className={styles.inner_container}>
-        {/* Knowledge */}
-        <Link href='https://noti-knowledge.vercel.app/es/' target='_blank'>
-          <div className={styles.knowledge}>
-            <Icon name='knowledge' className='knowledge' viewBox='0 0 31 24' />
-            <p className={styles.text_knowledge}>Knowledge</p>
-          </div>
-        </Link>
         {/* Language Dropdown */}
-        <LangDrop />
+        {user ? <LangDrop /> : <></>}
         {/* User | Login */}
         {!isLoading ? (
-          <>{user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("login")} />}</>
+          <>{user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("register")} />}</>
         ) : (
           <Oval
             height={25}

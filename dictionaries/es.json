@@ -85,8 +85,9 @@
       "link": "Volver"
     },
     "login": {
-      "title": "Tiene la eficiencia que su negocio necesita",
+      "description": "tiene la eficiencia que su negocio necesita",
       "login": "Iniciar sesión",
+      "register": "Registrarse",
       "account": "No tienes una cuenta?",
       "signup": "Regístrate ahora",
       "policy": "Política de privacidad"

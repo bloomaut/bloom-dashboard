@@ -82,8 +82,9 @@
       "link": "Go back"
     },
     "login": {
-      "title": "has the efficiency your business needs",
+      "description": "has the efficiency your business needs",
       "login": "Login",
+      "register": "Register",
       "account": "Don't have an account?",
       "signup": "Sign up now",
       "policy": "Policy privacy"

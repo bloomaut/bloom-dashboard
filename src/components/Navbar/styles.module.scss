@@ -1,41 +1,47 @@
-@import "@/styles/theme.scss";
+@import '@/styles/theme.scss';
 
 .container {
-  @include width-height(100%, 65px);
-  @include flex(row, space-between, center);
-  flex-wrap: nowrap;
-  padding: 20px;
-  background: $gradient;
-  border-bottom: 1px solid $lightGrey;
-
-  .logo_container {
-    @include flex(row, center, center, 15px);
-
-    .logo {
-      @include width-height(130px, 60px);
-      object-fit: contain;
-      cursor: pointer;
+    @include width-height(100%, 65px);
+    @include flex(row, space-between, center);
+    flex-wrap: nowrap;
+    padding: 20px;
+    border-bottom: 1px solid $border;
+    background-color: white;
+    .logo_container {
+        @include flex(row, center, center, 15px);
+        position: relative;
+        .logo {
+            @include width-height(130px, 60px);
+            object-fit: contain;
+            cursor: pointer;
+        }
+        .title {
+            @include fontSize-fontWeight(16px, 500);
+            color: $lightGrey;
+            position: absolute;
+            right: 45px;
+            bottom: 5px;
+        }
     }
-  }
-  .inner_container {
-    @include flex(row, center, center, 50px);
-    padding: 0 20px;
+    .inner_container {
+        @include flex(row, center, center, 50px);
+        padding: 0 20px;
 
-    .knowledge {
-      @include flex(row, space-around, center, 10px);
-      cursor: pointer;
-      transition: color 0.3s ease;
+        .knowledge {
+            @include flex(row, space-around, center, 10px);
+            cursor: pointer;
+            transition: color 0.3s ease;
 
-      .logo_knowledge {
-        @include width-height(20px, auto);
-        object-fit: contain;
-      }
-      .text_knowledge {
-        @include fontSize-fontWeight(14px, 400);
-        line-height: 24px;
-        color: $white;
-        transition: color 0.7s;
-      }
+            .logo_knowledge {
+                @include width-height(20px, auto);
+                object-fit: contain;
+            }
+            .text_knowledge {
+                @include fontSize-fontWeight(14px, 400);
+                line-height: 24px;
+                color: $white;
+                transition: color 0.7s;
+            }
+        }
     }
-  }
 }
