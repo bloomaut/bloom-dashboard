@@ -63,7 +63,7 @@
   @include width-height(25px, 25px);
   path {
     &:nth-of-type(1) {
-      fill: #fff;
+      fill: $text;
       stroke-width: 0.1px;
     }
   }

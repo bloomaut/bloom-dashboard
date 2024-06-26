@@ -13,6 +13,7 @@
     select {
       @include width-height(350px, 30px);
       border-radius: 4px;
+      border: 1px solid $lighterGrey;
       padding: 0 10px;
       option {
         @include fontSize-fontWeight(12px, 400);

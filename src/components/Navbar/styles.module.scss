@@ -5,8 +5,8 @@
   @include flex(row, space-between, center);
   flex-wrap: nowrap;
   padding: 20px;
-  background: $gradient;
-  border-bottom: 1px solid $lightGrey;
+  background: #fff;
+  border-bottom: 2px solid #cfcfcf;
 
   .logo_container {
     @include flex(row, center, center, 15px);
@@ -33,7 +33,7 @@
       .text_knowledge {
         @include fontSize-fontWeight(14px, 400);
         line-height: 24px;
-        color: $white;
+        color: $text;
         transition: color 0.7s;
       }
     }

@@ -6,6 +6,9 @@
   grid-template-rows: auto;
   width: 100%;
   padding: 10px;
+  &:hover {
+    background-color: $orangeBackground;
+  }
   .box {
     display: flex;
     align-items: center;
