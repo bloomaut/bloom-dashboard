@@ -1,6 +1,69 @@
 @import "@/styles/theme.scss";
 
-.container {
-  @include width-height(100%, 100vh);
-  @include flex(row, center, center);
+.login_container {
+  @include width-height(100%, 100%);
+  @include flex(row, space-around, flex-start);
+  background-color: $softPink;
+  min-height: calc(100vh - 65px);
+  .description {
+    @include width-height(75%, 100%);
+    .text {
+      @include fontSize-fontWeight(25px, 600);
+      max-width: 325px;
+      margin: 100px 0 0 100px;
+      border-left: 5px solid $darkOrange;
+      padding: 10px 5px;
+      .small {
+        color: $orange;
+      }
+    }
+  }
+  .login_info {
+    @include width-height(25%, 100%);
+    min-height: calc(100vh - 65px);
+    background-color: $white;
+    position: relative;
+    .logo_container {
+      @include flex(row, center, center, 15px);
+      position: relative;
+      margin-top: 80px;
+      .logo {
+        @include width-height(165px, auto);
+        object-fit: contain;
+        cursor: pointer;
+      }
+    }
+    .login_btn {
+      margin-top: 50px;
+      text-align: center;
+      padding: 0 60px;
+      a {
+        display: block;
+        width: 100%;
+      }
+    }
+    .account {
+      @include fontSize-fontWeight(14px, 600);
+      margin-top: 30px;
+      text-align: center;
+      p {
+        color: $intervened;
+      }
+    }
+    .notimation {
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      bottom: 20px;
+      p,
+      .policy {
+        @include fontSize-fontWeight(12px, 600);
+        color: #373534;
+      }
+      .policy {
+        display: block;
+        margin-top: 15px;
+      }
+    }
+  }
 }

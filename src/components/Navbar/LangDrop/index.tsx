@@ -16,8 +16,8 @@ const LangDrop = () => {
   return (
     <div className={styles.container} ref={dropdownRef}>
       <button onClick={() => setOpen(!open)} className={styles.lang_button}>
-        <Icon name='language' strokeColor='#fff' viewBox='0 0 25 20' />
-        <Icon name='bar' width={5} height={15} strokeWidth={3} strokeColor='#fff' viewBox='0 0 10 25' />
+        <Icon name='language' strokeColor='#7f7f7f' viewBox='0 0 25 20' />
+        <Icon name='bar' width={5} height={15} strokeWidth={3} strokeColor='#7f7f7f' viewBox='0 0 10 25' />
         <h1> {locale}</h1>
       </button>
 
@@ -29,7 +29,11 @@ const LangDrop = () => {
               <div key={loc}>
                 <button
                   className={open ? `${styles.list_text}` : `${styles.list_text} ${styles.list_text_hidden}`}
-                  onClick={() => router.replace(pathname, { locale: loc })}
+                  onClick={() =>
+                    router.replace(pathname, {
+                      locale: loc,
+                    })
+                  }
                 >
                   {loc}
                 </button>

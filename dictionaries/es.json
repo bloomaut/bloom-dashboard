@@ -79,10 +79,13 @@
     "breadcrumb": {
       "breadcrumb_link": "Volver"
     },
-    "popupLogin": {
+    "login": {
+      "description": "tiene la eficiencia que su negocio necesita",
       "login": "Iniciar sesión",
-      "title": "Para ingresar debes iniciar sesión",
-      "link": "Volver"
+      "register": "Registrarse",
+      "account": "No tienes una cuenta?",
+      "signup": "Regístrate ahora",
+      "policy": "Política de privacidad"
     },
     "home": {
       "banner": {
