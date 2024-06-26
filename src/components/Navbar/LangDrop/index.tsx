@@ -29,7 +29,11 @@ const LangDrop = () => {
               <div key={loc}>
                 <button
                   className={open ? `${styles.list_text}` : `${styles.list_text} ${styles.list_text_hidden}`}
-                  onClick={() => router.replace(pathname, { locale: loc })}
+                  onClick={() =>
+                    router.replace(pathname, {
+                      locale: loc,
+                    })
+                  }
                 >
                   {loc}
                 </button>

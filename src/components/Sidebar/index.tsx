@@ -33,11 +33,6 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       path: "/",
     },
     {
-      title: `${dict("guide")}`,
-      icon: <Icon name='guide' viewBox='0 0 50 50' />,
-      path: "/guide",
-    },
-    {
       title: `${dict("my_business")}`,
       icon: <Icon name='business' viewBox='0 0 32 32' />,
       path: "/my-business",

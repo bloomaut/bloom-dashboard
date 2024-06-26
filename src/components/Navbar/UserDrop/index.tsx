@@ -7,9 +7,9 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import Icon from "@/components/Icon";
 
 const UserDrop = () => {
+  const dict = useTranslations("dict.navbar");
   const [open, setOpen] = useState<boolean>(false);
   const { dropdownRef } = useCloseDropdown(setOpen);
-  const dict = useTranslations("dict.navbar");
   const { user } = useUser();
 
   return (
