@@ -6,9 +6,7 @@
   white-space: nowrap;
   margin: 7px 0px;
   cursor: pointer;
-  &:hover {
-    background-color: $blueishBackground;
-  }
+
   .column {
     @include width-height(100%, auto);
     display: grid;
@@ -38,5 +36,5 @@
 
 .content:hover,
 .content.collection_selected {
-  background-color: $blueishBackground;
+  background-color: $orangeBackground;
 }

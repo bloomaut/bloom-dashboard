@@ -17,13 +17,13 @@
   &:hover {
     border-left: 2px solid $orange;
     border-radius: 0 4px 4px 0;
-    background-color: $blueishBackground;
+    background-color: $orangeBackground;
   }
 }
 
 .container_selected {
   transition: all 100ms ease-in;
-  background-color: $blueishBackground;
+  background-color: $orangeBackground;
   border-left: 2px solid $orange;
   border-radius: 0 4px 4px 0;
 }

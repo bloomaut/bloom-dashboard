@@ -11,7 +11,7 @@
     @include flex(row, space-between, flex-start);
     padding: 20px;
     border-radius: 8px;
-    background-color: $blueishBackground;
+    background-color: $orangeLightBackground;
     .banner_text {
       @include flex(column, space-between, flex-start, 30px);
       .title {
