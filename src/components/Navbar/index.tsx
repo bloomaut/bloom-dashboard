@@ -10,7 +10,6 @@ import { Oval } from "react-loader-spinner";
 import small from "@/../public/assets/logo_small_color.png";
 
 //Components
-import Icon from "../Icon";
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
