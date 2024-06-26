@@ -76,11 +76,6 @@
       "success_update": "File updated successfully",
       "success_file_add": "File selected"
     },
-    "popupLogin": {
-      "login": "Log in",
-      "title": "To continue, we will ask you to log in",
-      "link": "Go back"
-    },
     "login": {
       "description": "has the efficiency your business needs",
       "login": "Login",
