@@ -3,7 +3,7 @@
 .card {
   @include width-height(250px, auto);
   @include flex(row, space-between, center);
-  background: $blueishBackground;
+  background: $white;
   border-radius: 10px;
   border: 2px solid $text;
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
@@ -20,6 +20,7 @@
   .btn_container {
     @include flex(column, center, center);
     overflow: hidden;
+    border-left: 2px solid #3a3a3a;
     :nth-child(1) {
       border-top-right-radius: 8px;
     }
