@@ -33,7 +33,7 @@ const Login = () => {
           <div className={styles.notimation}>
             <p>Power by</p>
             <Image src={notimation} alt='Small' className={styles.logo} width={100} height={20} priority />
-            <Link href='/' className={styles.policy}>
+            <Link href='/policy' className={styles.policy}>
               {dict("policy")}
             </Link>
           </div>
