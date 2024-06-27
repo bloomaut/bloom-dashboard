@@ -9,6 +9,8 @@
     .row {
       padding: 10px;
       cursor: pointer;
+      background-color: $white;
+      border-radius: 4px;
     }
   }
 }
@@ -23,7 +25,7 @@
   border-radius: 10px;
 }
 
-.row:hover,
-.row.selected {
+.clients_container .row:hover,
+.clients_container .row.selected {
   background-color: $orangeBackground;
 }
