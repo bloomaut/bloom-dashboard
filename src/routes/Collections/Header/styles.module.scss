@@ -34,8 +34,8 @@
     }
     .new_btn {
       @include flex(row, center, center, 10px);
-      @include fontSize-fontWeight(16px, 300);
       @include width-height(171px, 35px);
+      @include fontSize-fontWeight(16px, 300);
       white-space: nowrap;
       text-align: center;
       color: $white;
@@ -48,5 +48,10 @@
         background-color: $darkOrange;
       }
     }
+  }
+  .error {
+    @include fontSize-fontWeight(12px, 300);
+    color: $error;
+    margin: -25px 0 25px -170px;
   }
 }

@@ -7,9 +7,9 @@ import { Fade } from "react-awesome-reveal";
 // Components
 import Button from "@/components/Button";
 import TableHead from "../TableHead";
-import TableRows from "../TableRow";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Icon from "@/components/Icon";
+import TableRow from "../TableRow";
 
 const Table = () => {
   const { id, collectionsList, filteredCollections, loading } = useCollectionsContext();
@@ -34,15 +34,15 @@ const Table = () => {
             <p className={styles.text}>{dict("header.empty_collections")}</p>
           ) : filteredCollections ? (
             <Fade cascade damping={0.3} triggerOnce>
-              {filteredCollections.map(collection => {
-                return <TableRows key={collection._id} collection={collection} />;
-              })}
+              {filteredCollections.map(collection => (
+                <TableRow key={collection._id} collection={collection} />
+              ))}
             </Fade>
           ) : (
             <Fade cascade damping={0.1} triggerOnce>
-              {collectionsList.map(collection => {
-                return <TableRows key={collection._id} collection={collection} />;
-              })}
+              {collectionsList.map(collection => (
+                <TableRow key={collection._id} collection={collection} />
+              ))}
             </Fade>
           )}
         </div>

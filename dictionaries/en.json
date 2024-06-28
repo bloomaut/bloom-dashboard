@@ -215,7 +215,10 @@
         "search": "Search Collections...",
         "period_btn": "Period",
         "new_btn": "New Collection",
-        "empty_collections": "You don't have collections yet"
+        "empty_collections": "You don't have collections yet",
+        "add_collection": "Add Collection",
+        "name": "Nombre",
+        "description": "Descripcción"
       },
       "titles": {
         "title_one": "Name",

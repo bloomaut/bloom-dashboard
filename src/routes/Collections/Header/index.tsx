@@ -1,19 +1,31 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useCollectionsContext } from "@/context/CollectionsContext";
 // Components
 import Title from "@/components/Title";
 import Search from "@/components/Search";
 import Icon from "@/components/Icon";
+import PopupChildren from "@/components/PopupChildren";
+import Input from "@/components/Input";
+import { post } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
+
+const InitialEmptyForm = {
+  name: "",
+  description: "",
+  type_flake: "flake_power_apps",
+  flake_id: "",
+};
 
 const Header = () => {
-  const locale = useLocale();
-  const dict = useTranslations("dict.collections.header");
-  const { collectionsList, setFilteredCollections, filteredCollections } = useCollectionsContext();
+  const dict = useTranslations("dict");
+  const { collectionsList, setFilteredCollections, filteredCollections, addCollection } = useCollectionsContext();
+  const { notify, notifyError } = useMessageToast();
   const [searchValue, setSearchValue] = useState<string>("");
+  const [openPopup, setOpenPopup] = useState(false);
+  const [form, setForm] = useState(InitialEmptyForm);
+  const [errors, setErrors] = useState<{ name?: string; desc?: string }>({});
 
   useEffect(() => {
     if (searchValue) {
@@ -32,23 +44,89 @@ const Header = () => {
     }
   }, [searchValue]);
 
+  useEffect(() => {
+    if (form.name && errors.name) setErrors({ ...errors, name: "" });
+    if (form.description && errors.desc) setErrors({ ...errors, desc: "" });
+  }, [form]);
+
+  const handlePopupChildren = () => {
+    setOpenPopup(!openPopup);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const handleSendForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!form.name.trim() || !form.description.trim()) {
+      setErrors({ name: "Campo requerido *", desc: "Campo requerido *" });
+      return;
+    }
+
+    const response = await post("hotlink-collections", form);
+    console.log("API response:", response); // Verifica la respuesta de la API
+    console.log("Response data:", response.data); // Verifica la estructura completa de response.data
+
+    if (response.data.statusCode === 201) {
+      notify(dict("collections.new_collection.colection_created"));
+      console.log("New collection:", response.data.result.hotlinkCollection); // Verifica el contenido de la nueva colección
+      addCollection(response.data.result.hotlinkCollection); // Usa response.data.result.hotlinkCollection
+      setOpenPopup(false);
+    } else {
+      notifyError(dict("collections.new_collection.colection_error"));
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <Title text={dict("title")} />
+      <Title text={dict("collections.header.title")} />
 
       <div className={styles.inputs_container}>
         <div className={styles.search_container}>
           <Search
             searchValue={searchValue}
             handleSearchChange={e => setSearchValue(e.target.value)}
-            placeholder={dict("search")}
+            placeholder={dict("collections.header.search")}
           />
         </div>
-        <Link href={`/${locale}/collections/new-collection`} className={styles.new_btn}>
+        <button className={styles.new_btn} onClick={handlePopupChildren}>
           {<Icon name='add' strokeWidth={3} strokeColor='#fff' viewBox='0 0 25 21' />}
-          {dict("new_btn")}
-        </Link>
+          {dict("collections.header.new_btn")}
+        </button>
       </div>
+      {openPopup && (
+        <PopupChildren
+          title={dict("collections.header.add_collection")}
+          textAccept={dict("popup.create")}
+          textCancel={dict("popup.cancel")}
+          onCancel={() => setOpenPopup(false)}
+          onConfirm={handleSendForm}
+          setShowConfirmation={setOpenPopup}
+        >
+          <Input
+            type='text'
+            textHolder={dict("collections.header.name")}
+            name='name'
+            value={form.name}
+            handleChange={handleChange}
+          />
+          <p className={errors.name ? styles.error : styles.error_hidden}>{errors.name}</p>
+          <Input
+            type='text'
+            textHolder={dict("collections.header.description")}
+            name='description'
+            value={form.description}
+            handleChange={handleChange}
+          />
+          <p className={errors.desc ? styles.error : styles.error_hidden}>{errors.desc}</p>
+        </PopupChildren>
+      )}
     </div>
   );
 };
