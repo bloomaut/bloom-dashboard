@@ -4,10 +4,10 @@ import { FlakesProvider } from "@/context/FlakesContext";
 import { useTranslations } from "next-intl";
 import { OpenGraphProvider } from "@/context/OpenGraphContext";
 // Components
-import Breadcrumb from "@/components/Breadcrumb";
 import Form from "./Form";
 import PhoneCase from "./PhoneCase";
 import TemplatesSelector from "./TemplatesSelector";
+import Title from "@/components/Title";
 
 const Playground = () => {
   const dict = useTranslations("dict.playground");
@@ -16,8 +16,8 @@ const Playground = () => {
     <FlakesProvider>
       <OpenGraphProvider>
         <section className={styles.container}>
-          <div className={styles.breadcrumb_container}>
-            <Breadcrumb title={dict("breadcrumb_title")} />
+          <div className={styles.title_container}>
+            <Title text={dict("title")} />
           </div>
           <div className={styles.inner_container}>
             <TemplatesSelector />

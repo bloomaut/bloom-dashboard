@@ -90,13 +90,14 @@
 }
 
 .btn_playground_outline {
-  @extend .btn_outline;
+  @extend .btn_reverse;
   position: absolute;
   bottom: 50px;
   right: 0;
 }
 
 .btn2_playground_outline {
+  @extend .btn_outline;
   position: absolute;
   right: 0;
   bottom: 0;

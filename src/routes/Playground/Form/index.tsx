@@ -13,6 +13,7 @@ import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import Icon from "@/components/Icon";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -125,7 +126,12 @@ const Form = () => {
                 />
               ))}
           </Fade>
-          <Button title={dict("playground.form.button_hotlink")} styleName='btn_playground_outline' type='submit' />
+          <Button
+            title={dict("playground.form.button_hotlink")}
+            styleName='btn_playground_outline'
+            icon={<Icon name='generate_hotlink' viewBox='0 0 20 20' strokeColor='#fff' />}
+            type='submit'
+          />
           {showButton && (
             <Button
               title={dict("playground.form.button_share")}

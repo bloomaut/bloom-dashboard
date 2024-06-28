@@ -3,8 +3,9 @@
 .container {
   @include width-height(100%, 100%);
   @include flex(column, center, center, 20px);
+  padding: 40px 0px;
   max-width: 1200px;
-  .breadcrumb_container {
+  .title_container {
     @include width-height(100%, auto);
     @include flex(row, flex-start, flex-start);
   }
@@ -15,7 +16,6 @@
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
-    overflow: hidden;
   }
 }
 
