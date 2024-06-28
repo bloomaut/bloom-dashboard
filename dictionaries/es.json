@@ -113,7 +113,6 @@
       },
       "popup": {
         "title": "Compartir y probar en Whatsapp",
-        "copy": "Copiar",
         "btn": "Compartir en Whatsapp",
         "copy_success": "URL copiada al porpapapeles",
         "copy_error": "Error al copiar URL",

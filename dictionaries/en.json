@@ -110,7 +110,6 @@
       },
       "popup": {
         "title": "Share and test on Whatsapp",
-        "copy": "Copy",
         "btn": "Share on Whatsapp",
         "copy_success": "URL copied to clipboard",
         "copy_error": "Error copying URL",
