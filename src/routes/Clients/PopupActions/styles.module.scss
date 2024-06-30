@@ -13,7 +13,7 @@
     @include flex(column, space-evenly, flex-start, 20px);
     @include width-height(500px, auto);
     @include fontSize-fontWeight(18px, 400);
-    background-color: $white;
+    background-color: $generalBackground;
     border-radius: 15px;
     text-align: center;
     box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);

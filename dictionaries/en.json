@@ -73,12 +73,16 @@
       "error_dataset": "Error posting catalog",
       "error_uploading": "Error uploading file",
       "error_update": "Error updating file",
-      "success_update": "File updated successfully"
+      "success_update": "File updated successfully",
+      "success_file_add": "File selected"
     },
-    "popupLogin": {
-      "login": "Log in",
-      "title": "To continue, we will ask you to log in",
-      "link": "Go back"
+    "login": {
+      "description": "has the efficiency your business needs",
+      "login": "Login",
+      "register": "Register",
+      "account": "Don't have an account?",
+      "signup": "Sign up now",
+      "policy": "Policy privacy"
     },
     "home": {
       "banner": {

@@ -11,6 +11,7 @@
 
 .btn_square {
   @include main-btn;
+  background: transparent;
   border-radius: 0;
 }
 
@@ -28,6 +29,18 @@
   &:hover {
     background: $lightGrey;
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.btn_popup {
+  @extend .btn;
+  background: transparent;
+  color: $text;
+  border: 1px solid $orange;
+  transition: all 100ms ease-in;
+  &:hover {
+    background: $darkOrange;
+    color: $white;
   }
 }
 
@@ -134,13 +147,13 @@
   white-space: nowrap;
   text-align: center;
   color: $white;
-  background-color: $orange;
+  background-color: $darkOrange;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background 0.3s ease;
   &:hover {
-    background-color: $darkOrange;
+    background-color: $orange;
   }
 }
 .btn_dataset {

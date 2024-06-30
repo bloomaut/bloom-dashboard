@@ -14,6 +14,7 @@
     border-bottom: 1px solid $orange;
     outline: none;
   }
+
   option {
     @include fontSize-fontWeight(14px, 400);
     color: $text;

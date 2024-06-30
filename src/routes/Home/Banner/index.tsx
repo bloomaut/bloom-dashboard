@@ -21,9 +21,7 @@ const Banner = () => {
             <p className={styles.paragraph}>{dict("paragraph")}</p>
             <LinkComponent href={`${locale}/playground`} title={dict("btn")} />
           </div>
-          <div className={styles.banner_img}>
-            <Image src={banner_home} alt='Banner' />
-          </div>
+          <Image src={banner_home} alt='Banner' />
         </article>
       </div>
     </Fade>

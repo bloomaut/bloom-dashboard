@@ -7,8 +7,10 @@
   cursor: pointer;
   border-bottom: 1px solid $blueishBackground;
   transition: all 200ms ease-in-out;
+  background: $white;
+  border-radius: 4px;
   &:hover {
-    background: $blueishBackground;
+    background: $orangeBackground;
   }
   .names {
     @include width-height(100%, auto);

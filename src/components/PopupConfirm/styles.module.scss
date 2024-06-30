@@ -22,48 +22,6 @@
       @include flex(row, space-evenly, center);
       @include fontSize-fontWeight(16px, 400);
       width: 100%;
-      .no {
-        @include flex(row, center, center, 5px);
-        @include fontSize-fontWeight(16px, 500);
-        border: none;
-        border-radius: 5px;
-        padding: 10px;
-        cursor: pointer;
-        background: $greyBackground;
-        transition: all 200ms ease-in-out;
-        &:hover {
-          background: $lighterGrey;
-          color: $white;
-        }
-      }
-      .yes {
-        @extend .no;
-        background: $orange;
-        color: $white;
-        &:hover {
-          background: $orange;
-          color: $white;
-          transition: all 200ms ease-in;
-          svg {
-            path {
-              fill: #fff;
-              stroke: #fff;
-            }
-          }
-        }
-        &:disabled {
-          border: none;
-          background: inherit;
-          color: lightGrey;
-          cursor: not-allowed;
-          svg {
-            path {
-              fill: $lighterGrey;
-              stroke: $lighterGrey;
-            }
-          }
-        }
-      }
     }
   }
 }

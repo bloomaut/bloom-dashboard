@@ -24,18 +24,11 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     setIsOpen(!isOpen);
   };
 
-  const inboxPath = process.env.NEXT_PUBLIC_INBOX_URL ?? "/";
-
   const sidebar: Array<SidebarCard> = [
     {
       title: `${dict("home")}`,
       icon: <Icon name='home' />,
       path: "/",
-    },
-    {
-      title: `${dict("guide")}`,
-      icon: <Icon name='guide' viewBox='0 0 50 50' />,
-      path: "/guide",
     },
     {
       title: `${dict("my_business")}`,
@@ -53,11 +46,6 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             title: `${dict("hotlink")}`,
             icon: <Icon name='hotlink' className='hotlink_dark' viewBox='1 0 30 34' />,
             path: "/hotlink",
-          },
-          {
-            title: `${dict("inbox")}`,
-            icon: <Icon name='inbox' />,
-            path: inboxPath,
           },
           {
             title: `${dict("catalog")}`,

@@ -61,13 +61,13 @@ const Card = ({ name, _id }: DatasetProps) => {
         <Button
           title=''
           styleName='btn_square'
-          icon={<Icon name='edit' width={20} height={20} strokeColor='#fff' viewBox='0 0 20 23' />}
+          icon={<Icon name='edit_catalog' width={20} height={20} strokeColor='#3A3A3A' viewBox='0 0 20 23' />}
           onclick={() => setShowPopupEdit(true)}
         />
         <Button
           title=''
           styleName='btn_square'
-          icon={<Icon name='delete' width={20} height={20} strokeColor='#fff' viewBox='0 0 23 22' />}
+          icon={<Icon name='delete' width={20} height={20} strokeColor='#3A3A3A' viewBox='0 0 23 22' />}
           onclick={() => setShowPopupDelete(true)}
         />
       </div>

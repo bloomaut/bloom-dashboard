@@ -73,15 +73,19 @@
       "error_dataset": "Error al publicar catálogo",
       "error_uploading": "Error al subir el archivo",
       "error_update": "Error al actualizar el archivo",
-      "success_update": "Archivo actualizado correctamente"
+      "success_update": "Archivo actualizado correctamente",
+      "success_file_add": "Archivo seleccionado"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
     },
-    "popupLogin": {
+    "login": {
+      "description": "tiene la eficiencia que su negocio necesita",
       "login": "Iniciar sesión",
-      "title": "Para ingresar debes iniciar sesión",
-      "link": "Volver"
+      "register": "Registrarse",
+      "account": "No tienes una cuenta?",
+      "signup": "Regístrate ahora",
+      "policy": "Política de privacidad"
     },
     "home": {
       "banner": {

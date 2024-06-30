@@ -34,7 +34,7 @@ const PopupConfirm = ({
       <div className={styles.container} ref={dropdownRef}>
         <p>{title}</p>
         <div className={styles.button_container}>
-          <Button title={textCancel} onclick={onCancel} styleName='btn_cancel' />
+          <Button title={textCancel} onclick={onCancel} styleName='btn_popup' />
           <Button title={textAccept} onclick={onConfirm} loading={loading} />
         </div>
       </div>
