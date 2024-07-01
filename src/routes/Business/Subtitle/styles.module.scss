@@ -1,6 +1,0 @@
-@import "@/styles/theme.scss";
-
-.text {
-  color: $text;
-  @include fontSize-fontWeight(20px, 400);
-}
