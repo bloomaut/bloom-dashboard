@@ -9,6 +9,7 @@ interface Context {
   setId: (i: string) => void;
   collectionsList: CollectionList[];
   setCollectionsList: React.Dispatch<React.SetStateAction<CollectionList[]>>;
+  addCollection: (collection: CollectionList) => void;
   filteredCollections: CollectionList[] | null;
   setFilteredCollections: React.Dispatch<React.SetStateAction<CollectionList[] | null>>;
   loading: boolean;
@@ -19,6 +20,8 @@ const CollectionsContext = createContext<Context>({
   setId: () => "",
   collectionsList: [],
   setCollectionsList: () => [],
+  // eslint-disable-next-line no-empty-function
+  addCollection: () => {},
   filteredCollections: null,
   setFilteredCollections: () => null,
   loading: true,
@@ -47,6 +50,10 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
     getCollections();
   }, []);
 
+  const addCollection = (collection: CollectionList) => {
+    setCollectionsList(prevList => [...prevList, collection]);
+  };
+
   return (
     <CollectionsContext.Provider
       value={{
@@ -54,6 +61,7 @@ export const CollectionsProvider = ({ children }: { children: JSX.Element }) => 
         setId,
         collectionsList,
         setCollectionsList,
+        addCollection,
         filteredCollections,
         setFilteredCollections,
         loading,
