@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
-import Icon from "@/components/Icon";
+import flake_icon_01 from "/public/flake_icon_01.svg";
+import flake_icon_02 from "/public/flake_icon_02.svg";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
@@ -62,14 +63,7 @@ const Select = () => {
                         height={120}
                       />
                     ) : (
-                      <Icon
-                        name='hog'
-                        width={40}
-                        height={40}
-                        fillColor='#7f7f7f'
-                        strokeColor='#7f7f7f'
-                        strokeWidth={0.5}
-                      />
+                      <Image className={styles.empty_img} src={flake_icon_02} alt='Icon' />
                     )}
                   </div>
                   <div className={styles.lg_card}>
@@ -82,15 +76,7 @@ const Select = () => {
                         height={100}
                       />
                     ) : (
-                      <Icon
-                        name='pwa'
-                        width={80}
-                        height={80}
-                        fillColor='#7f7f7f'
-                        strokeColor='#7f7f7f'
-                        strokeWidth={0.1}
-                        viewBox='0 0 109 127'
-                      />
+                      <Image className={styles.empty_img} src={flake_icon_01} alt='Icon' />
                     )}
                   </div>
                 </div>
