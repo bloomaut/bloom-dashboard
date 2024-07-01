@@ -40,7 +40,7 @@ const ListHotlinks = () => {
         <h4>{dict("title_one")}</h4>
         <h4>{dict("title_two")}</h4>
         <h4>{dict("title_three")}</h4>
-        <h4>{dict("title_four")}</h4>
+        <h4></h4>
       </div>
       <div className={styles.rows_container}>
         {loading ? (

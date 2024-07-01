@@ -2,7 +2,7 @@ import { IconsProps } from "./interface";
 import icons from "./icons";
 import styles from "./styles.module.scss";
 
-const Icon = ({ width, height, strokeColor, fillColor, strokeWidth, className, viewBox, name }: IconsProps) => {
+const Icon = ({ width, height, strokeColor, fillColor, strokeWidth, className, viewBox, name, title }: IconsProps) => {
   const paths = icons[name] || [];
 
   return (
@@ -19,6 +19,7 @@ const Icon = ({ width, height, strokeColor, fillColor, strokeWidth, className, v
       fillRule='evenodd'
       clipRule='evenodd'
     >
+      {title && <title>{title}</title>}
       {paths.map((d, index) => (
         <path key={index} d={d} />
       ))}

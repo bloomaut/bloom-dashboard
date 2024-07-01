@@ -31,6 +31,14 @@
       }
     }
   }
+  .btn {
+    @include flex(row, center, center, 5px);
+    .info {
+      @include width-height(20px, 27px);
+      box-shadow: 0px 0px 0px 2px $opacityGrey;
+      border-radius: 5px;
+    }
+  }
 }
 
 .container:hover,

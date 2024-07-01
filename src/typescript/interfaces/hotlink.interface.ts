@@ -16,6 +16,7 @@ export interface HotlinkList {
   customer_id: string;
   flake_power_app: Flake;
   customer?: Customer;
+  variables: Variable[];
 }
 
 export interface Flake {
@@ -47,3 +48,14 @@ export interface Customer {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Variable {
+  key: string;
+  name: string;
+  target: string;
+  description: string;
+  value: string;
+  tableColumns: TableColumn[];
+}
+
+export interface TableColumn {}
