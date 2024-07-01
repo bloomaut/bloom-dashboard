@@ -101,7 +101,7 @@
       "checkbox": "Ya vi el video y deseo continuar"
     },
     "playground": {
-      "breadcrumb_title": "Simulador",
+      "title": "Simulador",
       "template_title": "Plantillas",
       "form": {
         "title": "Campos",
@@ -113,7 +113,6 @@
       },
       "popup": {
         "title": "Compartir y probar en Whatsapp",
-        "copy": "Copiar",
         "btn": "Compartir en Whatsapp",
         "copy_success": "URL copiada al porpapapeles",
         "copy_error": "Error al copiar URL",
