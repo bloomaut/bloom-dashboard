@@ -52,6 +52,8 @@
   .error {
     @include fontSize-fontWeight(12px, 300);
     color: $error;
-    margin: -25px 0 25px -170px;
+    position: absolute;
+    left: 1px;
+    bottom: -9px;
   }
 }

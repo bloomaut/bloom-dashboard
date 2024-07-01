@@ -11,6 +11,7 @@ interface Props {
   className?: string;
   iconSearch?: boolean;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => void;
+  ErrorMessage?: JSX.Element;
 }
 
 const Input = ({
@@ -23,6 +24,7 @@ const Input = ({
   className,
   isDescription,
   iconSearch = false,
+  ErrorMessage,
 }: Props) => {
   const inputType = type === "textarea" ? `${styles.input} ${styles.textarea}` : styles.input;
 
@@ -46,6 +48,7 @@ const Input = ({
           <Icon name='search' width={23} height={23} strokeWidth={0.1} fillColor='#7f7f7f' viewBox='0 0 25 25' />
         )}
       </div>
+      {ErrorMessage && ErrorMessage}
     </div>
   );
 };

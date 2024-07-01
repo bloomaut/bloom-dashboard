@@ -217,8 +217,9 @@
         "new_btn": "New Collection",
         "empty_collections": "You don't have collections yet",
         "add_collection": "Add Collection",
-        "name": "Nombre",
-        "description": "Descripcción"
+        "name": "Name",
+        "description": "Description",
+        "required": "Required field *"
       },
       "titles": {
         "title_one": "Name",

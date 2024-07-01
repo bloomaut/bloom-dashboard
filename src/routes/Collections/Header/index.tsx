@@ -45,9 +45,14 @@ const Header = () => {
   }, [searchValue]);
 
   useEffect(() => {
+    if (!openPopup) {
+      setForm(InitialEmptyForm);
+      setErrors({ name: "", desc: "" });
+    }
+
     if (form.name && errors.name) setErrors({ ...errors, name: "" });
     if (form.description && errors.desc) setErrors({ ...errors, desc: "" });
-  }, [form]);
+  }, [form, openPopup]);
 
   const handlePopupChildren = () => {
     setOpenPopup(!openPopup);
@@ -65,18 +70,15 @@ const Header = () => {
     e.preventDefault();
 
     if (!form.name.trim() || !form.description.trim()) {
-      setErrors({ name: "Campo requerido *", desc: "Campo requerido *" });
+      setErrors({ name: dict("collections.header.required"), desc: dict("collections.header.required") });
       return;
     }
 
     const response = await post("hotlink-collections", form);
-    console.log("API response:", response); // Verifica la respuesta de la API
-    console.log("Response data:", response.data); // Verifica la estructura completa de response.data
 
     if (response.data.statusCode === 201) {
       notify(dict("collections.new_collection.colection_created"));
-      console.log("New collection:", response.data.result.hotlinkCollection); // Verifica el contenido de la nueva colección
-      addCollection(response.data.result.hotlinkCollection); // Usa response.data.result.hotlinkCollection
+      addCollection(response.data.result.hotlinkCollection);
       setOpenPopup(false);
     } else {
       notifyError(dict("collections.new_collection.colection_error"));
@@ -115,16 +117,16 @@ const Header = () => {
             name='name'
             value={form.name}
             handleChange={handleChange}
+            ErrorMessage={<p className={errors.name ? styles.error : styles.error_hidden}>{errors.name}</p>}
           />
-          <p className={errors.name ? styles.error : styles.error_hidden}>{errors.name}</p>
           <Input
             type='text'
             textHolder={dict("collections.header.description")}
             name='description'
             value={form.description}
             handleChange={handleChange}
+            ErrorMessage={<p className={errors.desc ? styles.error : styles.error_hidden}>{errors.desc}</p>}
           />
-          <p className={errors.desc ? styles.error : styles.error_hidden}>{errors.desc}</p>
         </PopupChildren>
       )}
     </div>

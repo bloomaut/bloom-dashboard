@@ -218,7 +218,8 @@
         "empty_collections": "Todavía no tenés colecciones",
         "add_collection": "Agrear Colección",
         "name": "Name",
-        "description": "Description"
+        "description": "Descripcción",
+        "required": "Campo requerido *"
       },
       "titles": {
         "title_one": "Nombre",
