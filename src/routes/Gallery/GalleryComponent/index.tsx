@@ -12,12 +12,13 @@ import "react-medium-image-zoom/dist/styles.css";
 // Components
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import PopupImage from "@/components/PopupImage";
-import Icon from "@/components/Icon";
+import flake_icon_01 from "/public/flake_icon_01.svg";
+import flake_icon_02 from "/public/flake_icon_02.svg";
 
 const GalleryComponent = () => {
-  const { flakes, loading } = useFlakeData();
-  const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
   const dict = useTranslations("dict.gallery");
+  const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
+  const { flakes, loading } = useFlakeData();
   const { notifyError } = useMessageToast();
 
   const handleClick = (url: string, type: string) => {
@@ -47,14 +48,7 @@ const GalleryComponent = () => {
                       {app.hog_related.thumbnail ? (
                         <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
                       ) : (
-                        <Icon
-                          name='hog'
-                          width={40}
-                          height={40}
-                          fillColor='#7f7f7f'
-                          strokeColor='#7f7f7f'
-                          strokeWidth={0.5}
-                        />
+                        <Image className={styles.empty_img} src={flake_icon_02} alt='Icon' />
                       )}
                     </div>
                     <div className={styles.lg_card} onClick={() => handleClick(app.thumbnail, "powerapp")}>
@@ -70,15 +64,7 @@ const GalleryComponent = () => {
                           />
                         </Zoom>
                       ) : (
-                        <Icon
-                          name='pwa'
-                          width={80}
-                          height={80}
-                          fillColor='#7f7f7f'
-                          strokeColor='#7f7f7f'
-                          strokeWidth={0.1}
-                          viewBox='0 0 109 127'
-                        />
+                        <Image className={styles.empty_img} src={flake_icon_01} alt='Icon' />
                       )}
                     </div>
                   </div>
