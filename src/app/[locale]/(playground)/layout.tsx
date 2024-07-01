@@ -32,13 +32,7 @@ const PlaygroundLayout = ({ children }: { children: React.ReactNode }) => {
       <div className={styles.inner_container}>
         {user && <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />}
         <div
-          className={
-            isOpen
-              ? user
-                ? `${styles.children_container}`
-                : `${styles.children_container} ${styles.not_user}`
-              : `${styles.children_container} ${styles.children_container_closed}`
-          }
+          className={`${styles.children_container} ${isOpen && styles.not_user} ${user && styles.children_container_closed}`}
         >
           {children}
         </div>
