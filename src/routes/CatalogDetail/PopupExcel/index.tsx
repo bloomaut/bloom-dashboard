@@ -4,15 +4,27 @@ import excel from "/public/assets/excel_logo.svg";
 import Icon from "@/components/Icon";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 interface Props {
   setFunction: (value: React.SetStateAction<boolean>) => void;
   submitFunction: (event: React.FormEvent) => Promise<void>;
   handleFileChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
+  loading?: boolean;
 }
 
-const PopupExcel = ({ setFunction, submitFunction, handleFileChange }: Props) => {
+const PopupExcel = ({ setFunction, submitFunction, handleFileChange, loading }: Props) => {
+  const [fileName, setFileName] = useState<string | null>(null);
   const dict = useTranslations("dict");
+
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileChange(event);
+    if (event.target.files && event.target.files.length > 0) {
+      setFileName(event.target.files[0].name);
+    } else {
+      setFileName(null);
+    }
+  };
 
   return (
     <PopupChildren
@@ -22,13 +34,15 @@ const PopupExcel = ({ setFunction, submitFunction, handleFileChange }: Props) =>
       textCancel={dict("popup.cancel")}
       onConfirm={submitFunction}
       setShowConfirmation={setFunction}
+      loading={loading}
     >
-      <input type='file' accept='.xlsx, .xls' id='fileInput' onChange={handleFileChange} style={{ display: "none" }} />
+      <input type='file' accept='.xlsx, .xls' id='fileInput' onChange={onFileChange} style={{ display: "none" }} />
       <label htmlFor='fileInput' className={styles.excel_button}>
         <Image src={excel} width={25} alt='excel' />
         <p>{dict("catalog.upload_excel")}</p>
         <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
       </label>
+      {fileName && <p className={styles.file_name}>{fileName}</p>}
     </PopupChildren>
   );
 };
