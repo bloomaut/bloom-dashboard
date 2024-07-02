@@ -16,5 +16,11 @@
   .flakes_container {
     @include flex(row, flex-start, center, 30px);
     flex-wrap: wrap;
+    @include width-height(100%, 100%);
+
+    .loading {
+      @include flex(column, center, center);
+      @include width-height(100%, 100%);
+    }
   }
 }

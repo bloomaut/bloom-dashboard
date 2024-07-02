@@ -1,15 +1,28 @@
 @import "@/styles/theme.scss";
 .template_container {
-  @include width-height(auto, auto);
   @include flex(column, center, flex-start);
+  @include width-height(auto, auto);
   padding: 10px;
   border-radius: 5px;
   border: 1px solid transparent;
   transition: 0.5s;
+  position: relative;
   &:hover {
     border: 1px solid $orange;
   }
-
+  .link {
+    @include flex(row, center, center, 5px);
+    @include fontSize-fontWeight(12px, 400);
+    position: absolute;
+    left: 45px;
+    color: $orange;
+    &:hover {
+      color: $text;
+      svg {
+        stroke: $text;
+      }
+    }
+  }
   .title {
     @include fontSize-fontWeight(16px, 500);
     color: $text;
@@ -24,7 +37,7 @@
     .sm_card {
       @include width-height(160px, 110px);
       border: 0.298px solid $lightGrey;
-      border-radius: 2.495px;
+      border-radius: 9px;
       background-color: $greyBackground;
       @include flex(row, center, center);
       img {

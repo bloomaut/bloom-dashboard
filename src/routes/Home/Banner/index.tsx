@@ -1,6 +1,5 @@
 import styles from "./styles.module.scss";
 import { useLocale, useTranslations } from "next-intl";
-import { Fade } from "react-awesome-reveal";
 import { useState } from "react";
 // Components
 import Title from "@/components/Title";
@@ -14,34 +13,32 @@ const Banner = () => {
   const dict = useTranslations("dict");
 
   return (
-    <Fade triggerOnce>
-      <div className={styles.container}>
-        <Title text={dict("home.welcome")} />
-        <div className={styles.link_container}>
-          <div onClick={() => setOpenPopup(true)}>
-            <LinkCard text={dict("home.introduction.title")} description={dict("home.introduction.description")} />
-          </div>
-
-          <LinkCard
-            text={dict("home.business.title")}
-            description={dict("home.business.description")}
-            link={`${locale}/my-business`}
-          />
-          <LinkCard
-            text={dict("home.hotlink.title")}
-            description={dict("home.hotlink.description")}
-            link={`${locale}/hotlink`}
-          />
-          {openPopup && (
-            <PopupVideo
-              title={dict("popup.introduction")}
-              video={<IntroVideo height='280px' />}
-              onClose={() => setOpenPopup(false)}
-            />
-          )}
+    <div className={styles.container}>
+      <Title text={dict("home.welcome")} />
+      <div className={styles.link_container}>
+        <div onClick={() => setOpenPopup(true)}>
+          <LinkCard text={dict("home.introduction.title")} description={dict("home.introduction.description")} />
         </div>
+
+        <LinkCard
+          text={dict("home.business.title")}
+          description={dict("home.business.description")}
+          link={`${locale}/my-business`}
+        />
+        <LinkCard
+          text={dict("home.hotlink.title")}
+          description={dict("home.hotlink.description")}
+          link={`${locale}/hotlink`}
+        />
+        {openPopup && (
+          <PopupVideo
+            title={dict("popup.introduction")}
+            video={<IntroVideo height='280px' />}
+            onClose={() => setOpenPopup(false)}
+          />
+        )}
       </div>
-    </Fade>
+    </div>
   );
 };
 
