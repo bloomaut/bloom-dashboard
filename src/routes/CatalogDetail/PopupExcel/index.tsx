@@ -9,9 +9,10 @@ interface Props {
   setFunction: (value: React.SetStateAction<boolean>) => void;
   submitFunction: (event: React.FormEvent) => Promise<void>;
   handleFileChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
+  loading?: boolean;
 }
 
-const PopupExcel = ({ setFunction, submitFunction, handleFileChange }: Props) => {
+const PopupExcel = ({ setFunction, submitFunction, handleFileChange, loading }: Props) => {
   const dict = useTranslations("dict");
 
   return (
@@ -22,6 +23,7 @@ const PopupExcel = ({ setFunction, submitFunction, handleFileChange }: Props) =>
       textCancel={dict("popup.cancel")}
       onConfirm={submitFunction}
       setShowConfirmation={setFunction}
+      loading={loading}
     >
       <input type='file' accept='.xlsx, .xls' id='fileInput' onChange={handleFileChange} style={{ display: "none" }} />
       <label htmlFor='fileInput' className={styles.excel_button}>

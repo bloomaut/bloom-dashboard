@@ -74,7 +74,7 @@
       "error_uploading": "Error uploading file",
       "error_update": "Error updating file",
       "success_update": "File updated successfully",
-      "success_file_add": "File selected"
+      "success_file_add": "File selected successfully"
     },
     "login": {
       "description": "has the efficiency your business needs",
@@ -290,6 +290,7 @@
       "clean_bot": "Clean",
       "train_bot": "Train",
       "cancel": "Cancel",
+      "empty_datasets": "You don't have any catalogs yet",
       "empty": "This catalog does not yet contain any products.",
       "train_bots": "Train Bots",
       "clean_bots": "Clean Bots",

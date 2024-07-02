@@ -94,6 +94,7 @@ const Detail = () => {
 
   const submitExcel = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
     if (selectedFile && uploadPopup) {
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
       if (!response.error && response.data.statusCode === 201) {
@@ -207,7 +208,12 @@ const Detail = () => {
         </PopupChildren>
       )}
       {uploadPopup && (
-        <PopupExcel setFunction={setUploadPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
+        <PopupExcel
+          setFunction={setUploadPopup}
+          handleFileChange={handleFileChange}
+          submitFunction={submitExcel}
+          loading={loading}
+        />
       )}
       {putPopup && (
         <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />

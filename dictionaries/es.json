@@ -74,7 +74,7 @@
       "error_uploading": "Error al subir el archivo",
       "error_update": "Error al actualizar el archivo",
       "success_update": "Archivo actualizado correctamente",
-      "success_file_add": "Archivo seleccionado"
+      "success_file_add": "Archivo seleccionado correctamente"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -290,6 +290,7 @@
       "clean_bot": "Limpiar",
       "train_bot": "Entrenar",
       "cancel": "Cancelar",
+      "empty_datasets": "Aún no cuentas con ningún catálogo",
       "empty": "Este catálogo aún no contiene ningún producto.",
       "train_bots": "Entrenar Bots",
       "clean_bots": "Limpiar Bots",
