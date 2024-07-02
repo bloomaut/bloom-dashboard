@@ -129,9 +129,10 @@ const Form = () => {
 
   const handleCopyClick = async () => {
     setLoadingButton(true);
-    await getDiffusionLink(selectedFlakeId);
-    if (difussionLink) {
-      navigator.clipboard.writeText(difussionLink).then(function () {
+    const link = await getDiffusionLink(selectedFlakeId);
+
+    if (link) {
+      navigator.clipboard.writeText(link).then(function () {
         notify(`${dict("playground.popup.copy_success")}`);
       });
       setLoadingButton(false);

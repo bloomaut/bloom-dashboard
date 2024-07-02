@@ -5,6 +5,7 @@ import { Link } from "@/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
+import { createPortal } from "react-dom";
 
 //Icons
 import small from "@/../public/assets/logo_small_color.png";
@@ -13,11 +14,13 @@ import small from "@/../public/assets/logo_small_color.png";
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
-import { Dropdown } from "./Suite/dropdown";
+import Suite from "./Suite";
+import { useState } from "react";
 
 const Navbar = () => {
   const { user, isLoading } = useUser();
   const dict = useTranslations("dict.login");
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <nav className={styles.container}>
@@ -25,11 +28,13 @@ const Navbar = () => {
         <Link href='/'>
           <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
         </Link>
-        <Dropdown app='uitrade' />
       </div>
       <div className={styles.inner_container}>
         {/* Language Dropdown */}
-        {user ? <LangDrop /> : <></>}
+        {user && <LangDrop />}
+        <button className={styles.suite} onClick={() => setShowModal(!showModal)}>
+          <Image src='/assets/suite.svg' alt='bars' width={30} height={30} />
+        </button>
         {/* User | Login */}
         {!isLoading ? (
           <>{user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("register")} />}</>
@@ -45,6 +50,7 @@ const Navbar = () => {
           />
         )}
       </div>
+      {showModal && createPortal(<Suite />, document.body)}
     </nav>
   );
 };

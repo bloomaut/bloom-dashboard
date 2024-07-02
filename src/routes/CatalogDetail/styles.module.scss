@@ -26,6 +26,7 @@
   }
   .table_container {
     @include width-height(100%, auto);
+    @include flex(column, flex-start, flex-start, 20px);
     .content_container {
       @include width-height(100%, auto);
       max-height: 270px;

@@ -10,11 +10,13 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import PopupImage from "@/components/PopupImage";
 import FlakeGallery from "@/components/FlakeGallery";
+import flake_icon_01 from "/public/flake_icon_01.svg";
+import flake_icon_02 from "/public/flake_icon_02.svg";
 
 const GalleryComponent = () => {
-  const { flakes, loading } = useFlakeData();
-  const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
   const dict = useTranslations("dict.gallery");
+  const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
+  const { flakes, loading } = useFlakeData();
   const { notifyError } = useMessageToast();
 
   const handleClick = (url: string, type: string) => {

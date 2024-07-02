@@ -1,0 +1,22 @@
+@import "@/styles/theme.scss";
+
+.layout_container {
+  @include width-height(100%, 100%);
+  max-width: 1200px;
+  min-height: 100vh;
+  background-color: $white;
+  padding: 40px;
+  margin: auto;
+}
+
+@media (width <= $querySm) {
+  .layout_container {
+    padding: 20px;
+  }
+}
+
+@media (min-width: $queryXl) {
+  .layout_container {
+    max-width: 1400px;
+  }
+}

@@ -57,7 +57,7 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
       <p className={styles.box}>{name}</p>
       <p className={styles.box}>{description}</p>
       <div className={styles.box}>
-        <p>{`${dict("catalog.price")}-$- ${price}`}</p>
+        <p>$ {price}</p>
       </div>
       <div className={`${styles.icons} ${styles.box}`}>
         <Button
