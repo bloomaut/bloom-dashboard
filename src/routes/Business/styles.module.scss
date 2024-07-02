@@ -1,13 +1,109 @@
 @import "@/styles/theme.scss";
 
-.container {
+.container_business {
   @include width-height(100%, calc(100vh - 110px));
+  @include flex(row, space-between, flex-start);
   max-width: 1200px;
-  @include flex(column, center, center, 20px);
+  padding: 40px 0;
+  .form_data {
+    @include width-height(100%, 100%);
+    padding: 0 15px;
+    .subtitle {
+      @include fontSize-fontWeight(16px, 400);
+      color: $lightGrey;
+    }
+    .form {
+      @include flex(column, flex-start, flex-start, 50px);
+      margin-top: 40px;
+      .input_name {
+        @include flex(row, space-between, flex-start, 40px);
+      }
+      .select {
+        @include width-height(100%, 100%);
+        label {
+          @include fontSize-fontWeight(14px, 400);
+          color: $text;
+        }
+        select {
+          @include width-height(100%, 30px);
+          border-radius: 3px;
+          border: none;
+          outline: none;
+          margin-top: 5px;
+          box-shadow: 0px 0px 2px $lightGrey;
+          color: $lightGrey;
+        }
+      }
+    }
+  }
+  .data {
+    @include width-height(100%, 100%);
+    @include flex(column, center, center);
+    padding: 0 15px;
+    color: $lightGrey;
+    h6 {
+      @include fontSize-fontWeight(14px, 500);
+      margin-bottom: 5px;
+    }
+    .drag_drop {
+      @include width-height(100%, 50%);
+      @include flex(row, space-between, flex-start, 30px);
+      .logo {
+        width: 40%;
+      }
+      .banner {
+        width: 60%;
+      }
+    }
+    .color_info {
+      @include width-height(100%, auto);
+      @include flex(row, space-between, flex-start, 15px);
+      .colors {
+        @include flex(column, flex-start, flex-start, 20px);
+        .container_circle {
+          @include flex(row, flex-start, center, 5px);
+          .circle {
+            @include width-height(50px, 50px);
+            @include flex(row, center, center);
+            border-radius: 99%;
+            border: 1px solid $lightGrey;
+          }
+        }
+        .description {
+          @include fontSize-fontWeight(12px, 500);
+          max-width: 300px;
+          margin-bottom: 5px;
+        }
+      }
+      .add_info {
+        @include width-height(100%, 100%);
+        .subtitle {
+          margin-bottom: 20px;
+        }
+        .input {
+          @include flex(row, flex-end, center, 10px);
+          label {
+            @include fontSize-fontWeight(14px, 400);
+            color: $text;
+          }
+          & > div {
+            max-width: 218px;
+          }
+        }
+      }
+      .btn_next {
+        @include flex(row, flex-end, center);
+        margin-top: 35px;
+        button {
+          padding: 10px 25px;
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: $queryXl) {
-  .container {
+  .container_business {
     max-width: 1400px;
   }
 }
