@@ -30,11 +30,11 @@ const Navbar = () => {
         </Link>
       </div>
       <div className={styles.inner_container}>
+        {/* Language Dropdown */}
+        {user && <LangDrop />}
         <button className={styles.suite} onClick={() => setShowModal(!showModal)}>
           <Image src='/assets/suite.svg' alt='bars' width={30} height={30} />
         </button>
-        {/* Language Dropdown */}
-        {user ? <LangDrop /> : <></>}
         {/* User | Login */}
         {!isLoading ? (
           <>{user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("register")} />}</>

@@ -7,6 +7,7 @@ import inbox_logo from "/public/assets/logo_inbox.svg";
 import uibox_logo from "/public/assets/logo_uibox.svg";
 import notimation_logo from "/public/assets/notimation_logo_black.png";
 import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const logos = [
   { title: "Small", href: "https://panel.small.ar", src: small_logo, alt: "Small Logo" },
@@ -18,11 +19,13 @@ const logos = [
 ];
 
 const Suite = () => {
+  const { user } = useUser();
+
   const mainLogos = logos.slice(0, -1);
   const lastLogo = logos[logos.length - 1];
 
   return (
-    <div className={styles.modal}>
+    <div className={user ? styles.modal_logged : styles.modal}>
       <div className={styles.container}>
         <div className={styles.inner_container}>
           {mainLogos.map((logo, index) => (

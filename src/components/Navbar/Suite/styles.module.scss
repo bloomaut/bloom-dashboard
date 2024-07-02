@@ -1,11 +1,11 @@
 @import "@/styles/theme.scss";
 
 .modal {
-  @include width-height(12%, 36%);
+  @include width-height(220px, 330px);
   @include flex(row, center, center, 5px);
   position: fixed;
-  top: 6%;
-  right: 5.5%;
+  top: 60px;
+  right: 75px;
   border-radius: 15px;
   border: 8px solid rgba(207, 207, 207);
   background: rgba(207, 207, 207);
@@ -26,6 +26,7 @@
       padding: 10px;
       background-color: $white;
       .logo_container {
+        @include width-height(100%, auto);
         @include flex(column, center, center, 5px);
         .logo {
           @include width-height(40px, auto);
@@ -49,6 +50,11 @@
       }
     }
   }
+}
+
+.modal_logged {
+  @extend .modal;
+  right: 140px;
 }
 
 @keyframes fadeIn {
