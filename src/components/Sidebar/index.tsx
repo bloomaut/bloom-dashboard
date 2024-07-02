@@ -27,7 +27,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const sidebar: Array<SidebarCard> = [
     {
       title: `${dict("home")}`,
-      icon: <Icon name='home' />,
+      icon: <Icon name='home' viewBox='0 0 30 35' />,
       path: "/",
     },
     {
@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           },
           {
             title: `${dict("hotlink")}`,
-            icon: <Icon name='hotlink' className='hotlink_dark' viewBox='1 0 30 34' />,
+            icon: <Icon name='hotlink' viewBox='1 0 25 25' strokeWidth={1.2} />,
             path: "/hotlink",
           },
           {

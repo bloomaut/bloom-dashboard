@@ -7,4 +7,5 @@ export interface IconsProps {
   viewBox?: string;
   className?: string;
   fillColor?: string;
+  title?: string;
 }

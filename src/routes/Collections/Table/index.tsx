@@ -51,7 +51,7 @@ const Table = () => {
         (collectionsList && (
           <Button
             title={dict("btn")}
-            icon={<Icon name='hotlink' className={!id ? "hotlink_grey" : "hotlink_dark"} viewBox='0 0 35 35' />}
+            icon={<Icon name='hotlink' className={!id ? "hotlink_grey" : "hotlink_color"} viewBox='0 0 30 32' />}
             isDisabled={!id}
             onclick={handleButton}
             styleName='btn_collections'

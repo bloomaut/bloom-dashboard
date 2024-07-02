@@ -2,10 +2,10 @@ import styles from "./styles.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import Icon from "../Icon";
+import { useAppSelector } from "@/store/hooks";
 
 interface FileDragDropProps {
   file?: File | null;
@@ -17,8 +17,6 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
   const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
-
-  console.log(companyLogo);
 
   const businessPage = pathname?.includes("business");
   const myCollectionPage = pathname?.includes("my-collection");
@@ -34,19 +32,6 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
         notifyError("Solo se permite subir un archivo");
       }
     } else {
-      // Lógica para controlar la carga en my-business
-      if (businessPage) {
-        // Si no hay logo, la primera carga debe ser una imagen
-        if (!companyLogo && acceptedFiles[0].type.includes("pdf")) {
-          notifyError("La primera carga debe ser una imagen");
-          // Si ya hay logo y se quiere editar, solo se permite seleccionar imagenes
-        } else if (companyLogo && (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("sheet"))) {
-          notifyError("Debes seleccionar una imagen");
-        } else {
-          setFile(acceptedFiles[0]);
-        }
-      }
-
       if (catalogPage) {
         if (!acceptedFiles[0].type.includes("image")) {
           notifyError("Debes seleccionar una imagen");
