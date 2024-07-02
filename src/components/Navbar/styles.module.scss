@@ -26,7 +26,13 @@
   .inner_container {
     @include flex(row, center, center, 50px);
     padding: 0 20px;
-
+    .suite {
+      @include flex(row, center, center);
+      border: none;
+      background: none;
+      outline: none;
+      cursor: pointer;
+    }
     .knowledge {
       @include flex(row, space-around, center, 10px);
       cursor: pointer;
