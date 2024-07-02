@@ -30,7 +30,7 @@
   }
   .cards_container {
     @include width-height(100%, 100%);
-    @include flex(column, flex-start, flex-start, 10px);
+    @include flex(column, flex-start, flex-start, 12px);
     position: relative;
     padding-left: 3px;
     z-index: 99;

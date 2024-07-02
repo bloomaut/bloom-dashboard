@@ -13,6 +13,11 @@
     animation: gradient-animation 50ms forwards;
   }
 }
+
+.file_name {
+  @include fontSize-fontWeight(16px, 500);
+}
+
 @keyframes gradient-animation {
   0% {
     background: linear-gradient(to right, #6cd389, #386d47);

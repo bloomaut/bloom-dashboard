@@ -139,6 +139,11 @@
     img {
       filter: brightness(10);
     }
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
   }
 }
 .btn_orange {
