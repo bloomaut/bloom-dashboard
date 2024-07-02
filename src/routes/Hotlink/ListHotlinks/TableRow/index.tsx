@@ -17,7 +17,7 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.playground.popup");
 
-  const baseUrlEngine = "https://app.small.ar"; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
+  const baseUrlEngine = process.env.NEXT_PUBLIC_ENGINE_URL; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
 
   const handleClick = () => {
     setId(hotlink.id);
