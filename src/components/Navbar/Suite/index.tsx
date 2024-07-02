@@ -25,8 +25,8 @@ const Suite = () => {
   const lastLogo = logos[logos.length - 1];
 
   return (
-    <div className={user ? styles.modal_logged : styles.modal}>
-      <div className={styles.container}>
+    <section className={user ? styles.modal_logged : styles.modal}>
+      <article className={styles.container}>
         <div className={styles.inner_container}>
           {mainLogos.map((logo, index) => (
             <div key={index} className={styles.logo_container}>
@@ -42,8 +42,8 @@ const Suite = () => {
             <Image src={lastLogo.src} alt={lastLogo.alt} className={styles.logo} width={150} height={150} />
           </Link>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 
