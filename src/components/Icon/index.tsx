@@ -9,7 +9,7 @@ const Icon = ({ width, height, strokeColor, fillColor, strokeWidth, className, v
     <svg
       className={className ? `${styles[name]} ${styles[className]}` : `${styles[name]}`}
       width={width ?? 20}
-      height={height ?? 20}
+      height={height ?? 35}
       viewBox={viewBox ?? "0 0 30 30"}
       fill={fillColor ?? "none"}
       stroke={strokeColor ?? "#381d2a"}
