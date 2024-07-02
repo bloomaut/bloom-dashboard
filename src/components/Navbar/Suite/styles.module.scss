@@ -9,7 +9,6 @@
   border-radius: 15px;
   border: 8px solid rgba(207, 207, 207);
   background: rgba(207, 207, 207);
-  z-index: 1000;
   animation: fadeIn 0.3s ease-in-out forwards;
   .container {
     @include width-height(100%, 100%);
