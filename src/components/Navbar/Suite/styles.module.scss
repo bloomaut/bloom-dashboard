@@ -9,11 +9,13 @@
   border-radius: 15px;
   border: 8px solid rgba(207, 207, 207);
   background: rgba(207, 207, 207);
+  box-sizing: border-box;
   animation: fadeIn 0.3s ease-in-out forwards;
   .container {
-    @include width-height(100%, 100%);
+    @include width-height(100%, auto);
     @include flex(column, space-between, center, 15px);
     animation: scaleIn 0.2s ease-in-out forwards;
+
     .inner_container {
       @include width-height(100%, auto);
       display: grid;
