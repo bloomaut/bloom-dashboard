@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Icon from "@/components/Icon";
+import Link from "next/link";
 
 interface SidebarCard {
   title: string;
@@ -79,6 +80,10 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
         ))}
       </div>
+      <Link href='https://panel.small.ar/' target='_blank' className={styles.link_container}>
+        <Icon name='link' width={30} height={30} viewBox='0 -1 30 30' className='cursor_pointer' />
+        {isOpen && <p>{dict("link_inbox")}</p>}
+      </Link>
     </div>
   );
 };

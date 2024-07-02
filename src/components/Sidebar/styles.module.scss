@@ -46,6 +46,12 @@
     @include width-height(46px, 100%);
     padding-left: 1px;
   }
+  .link_container {
+    @include flex(row, center, center, 8px);
+    @include fontSize-fontWeight(20px, 500);
+    color: $text;
+    padding: 10px;
+  }
 }
 .container_closed {
   @include width-height(60px, 100%);

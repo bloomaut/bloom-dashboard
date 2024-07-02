@@ -1,0 +1,16 @@
+@import "@/styles/theme";
+
+.container {
+  @include flex(column, flex-start, flex-start, 10px);
+  @include width-height(100%, 100%);
+
+  .title_container {
+    @include flex(row, space-between, center);
+    @include width-height(100%, 100%);
+    .trade_link {
+      @include flex(row, center, center, 10px);
+      @include fontSize-fontWeight(14px, 400);
+      color: $lightGrey;
+    }
+  }
+}

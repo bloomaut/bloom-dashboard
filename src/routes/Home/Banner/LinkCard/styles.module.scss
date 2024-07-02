@@ -1,0 +1,17 @@
+@import "@/styles/theme";
+
+.container {
+  @include flex(column, flex-start, flex-start, 10px);
+  @include width-height(300px, 160px);
+  @include fontSize-fontWeight(15px, 400);
+  background-color: $softPink;
+  border-radius: 4px;
+  padding: 10px;
+  color: $text;
+  transition: 0.6s;
+  cursor: pointer;
+  &:hover {
+    transition: 0.3s;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05);
+  }
+}
