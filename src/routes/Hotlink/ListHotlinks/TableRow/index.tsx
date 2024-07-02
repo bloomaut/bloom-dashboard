@@ -43,38 +43,47 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   };
 
   return (
-    <div className={`${styles.container} ${id === hotlink.id && styles.hotlink_selected}`} onClick={handleClick}>
-      <div className={styles.column}>
-        <p>
-          {hotlink.flake_power_app?.skinx.title} - {hotlink.flake_power_app?.title}
-        </p>
-      </div>
-      <div className={styles.column}>
-        {hotlink.customer ? (
-          <>
-            {hotlink.customer.clientCode} {hotlink.customer.ClientFirstname} {hotlink.customer.ClientLastname}
-          </>
-        ) : (
-          <em>-</em>
-        )}
-      </div>
-      <div className={styles.column}>
-        <Link href={`${baseUrlEngine}/${hotlink.hash}`} target='_blank' className={styles.hotlink_url}>
-          {`${baseUrlEngine}/${hotlink.hash}`}
-        </Link>
-      </div>
-      <div className={`${styles.column} ${styles.btn}`}>
-        <button className={styles.info} onClick={handleOpenInfoPopup}>
-          <Icon name='lightning' width={35} height={35} strokeColor='#7f7f7f' strokeWidth={1} viewBox='2.6 -2 10 20' />
-        </button>
-        <button onClick={handleCopyClick}>
-          <Icon name='copy' width={28} height={28} strokeColor='#7f7f7f' strokeWidth={4} viewBox='0 0 60 65' />
-        </button>
+    <>
+      <div className={`${styles.container} ${id === hotlink.id && styles.hotlink_selected}`} onClick={handleClick}>
+        <div className={styles.column}>
+          <p>
+            {hotlink.flake_power_app?.skinx.title} - {hotlink.flake_power_app?.title}
+          </p>
+        </div>
+        <div className={styles.column}>
+          {hotlink.customer ? (
+            <>
+              {hotlink.customer.clientCode} {hotlink.customer.ClientFirstname} {hotlink.customer.ClientLastname}
+            </>
+          ) : (
+            <em>-</em>
+          )}
+        </div>
+        <div className={styles.column}>
+          <Link href={`${baseUrlEngine}/${hotlink.hash}`} target='_blank' className={styles.hotlink_url}>
+            {`${baseUrlEngine}/${hotlink.hash}`}
+          </Link>
+        </div>
+        <div className={`${styles.column} ${styles.btn}`}>
+          <button className={styles.info} onClick={handleOpenInfoPopup}>
+            <Icon
+              name='lightning'
+              width={35}
+              height={35}
+              strokeColor='#7f7f7f'
+              strokeWidth={1}
+              viewBox='2.6 -2 10 20'
+            />
+          </button>
+          <button onClick={handleCopyClick}>
+            <Icon name='copy' width={28} height={28} strokeColor='#7f7f7f' strokeWidth={4} viewBox='0 0 60 65' />
+          </button>
+        </div>
       </div>
       {openInfoPopup && (
         <PopupInfo setShowConfirmation={handleOpenInfoPopup} title='Hotlink Info' hotlinkInfo={hotlink.variables} />
       )}
-    </div>
+    </>
   );
 };
 
