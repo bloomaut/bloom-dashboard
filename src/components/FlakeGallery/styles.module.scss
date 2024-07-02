@@ -1,0 +1,45 @@
+@import "@/styles/theme.scss";
+.template_container {
+  @include width-height(auto, auto);
+  @include flex(column, center, flex-start);
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  transition: 0.5s;
+  &:hover {
+    border: 1px solid $orange;
+  }
+
+  .title {
+    @include fontSize-fontWeight(16px, 500);
+    color: $text;
+    margin-bottom: 10px;
+  }
+  .template {
+    @include width-height(300px, 300px);
+    @include flex(row, space-between, flex-start, 5px);
+    border: 0.298px solid transparent;
+    border-radius: 4.775px;
+    cursor: pointer;
+    .sm_card {
+      @include width-height(160px, 110px);
+      border: 0.298px solid $lightGrey;
+      border-radius: 2.495px;
+      background-color: $greyBackground;
+      @include flex(row, center, center);
+      img {
+        @include width-height(100%, 100%);
+        object-fit: cover;
+      }
+    }
+    .lg_card {
+      @extend .sm_card;
+      @include width-height(140px, 100%);
+      overflow: hidden;
+      .image {
+        @include width-height(100%, 100%);
+        object-fit: cover;
+      }
+    }
+  }
+}
