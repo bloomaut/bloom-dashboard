@@ -34,6 +34,9 @@
             @include width-height(100%, 100%);
             object-fit: cover;
           }
+          .empty_img {
+            @include width-height(30%, auto);
+          }
         }
         .lg_card {
           @extend .sm_card;
@@ -42,6 +45,9 @@
           .image {
             @include width-height(100%, 100%);
             object-fit: cover;
+          }
+          .empty_img {
+            @include width-height(60%, auto);
           }
         }
       }

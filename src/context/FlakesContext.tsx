@@ -20,7 +20,7 @@ interface Context {
   filteredHotlinks: HotlinkList | null;
   setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList | null>>;
   getList: () => Promise<void>;
-  getDiffusionLink: (flakeId: string) => Promise<void>;
+  getDiffusionLink: (flakeId: string) => Promise<string | null>;
 }
 
 const FlakesContext = createContext<Context>({
@@ -36,7 +36,7 @@ const FlakesContext = createContext<Context>({
   filteredHotlinks: null,
   setFilteredHotlinks: () => null,
   getList: () => Promise.resolve(),
-  getDiffusionLink: () => Promise.resolve(),
+  getDiffusionLink: () => Promise.resolve(null),
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -83,12 +83,13 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
-  const getDiffusionLink = async (flakeId: string) => {
+  const getDiffusionLink = async (flakeId: string): Promise<string | null> => {
     const response = await get(`hotlinks/diffusion/powerapp/${flakeId}`);
+    console.log(response);
     if (response.statusCode === 200) {
-      setDifussionLink(response.result.diffusionUrl);
+      return response.result.diffusionUrl;
     } else {
-      setDifussionLink(null);
+      return null;
     }
   };
 
