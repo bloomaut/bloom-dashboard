@@ -15,12 +15,13 @@ import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
 import Suite from "./Suite";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const Navbar = () => {
   const { user, isLoading } = useUser();
   const dict = useTranslations("dict.login");
   const [showModal, setShowModal] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <nav className={styles.container}>
@@ -32,7 +33,7 @@ const Navbar = () => {
       <div className={styles.inner_container}>
         {/* Language Dropdown */}
         {user && <LangDrop />}
-        <button className={styles.suite} onClick={() => setShowModal(!showModal)}>
+        <button className={styles.suite} ref={buttonRef} onClick={() => setShowModal(prev => !prev)}>
           <Image src='/assets/suite.svg' alt='bars' width={30} height={30} />
         </button>
         {/* User | Login */}
@@ -50,7 +51,7 @@ const Navbar = () => {
           />
         )}
       </div>
-      {showModal && createPortal(<Suite />, document.body)}
+      {showModal && createPortal(<Suite setShowModal={setShowModal} buttonRef={buttonRef} />, document.body)}
     </nav>
   );
 };
