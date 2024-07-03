@@ -3,7 +3,6 @@
 .container {
   @include flex(column, flex-start, flex-start, 20px);
   @include width-height(100%, 100%);
-
   .title_container {
     @include flex(row, space-between, center);
     @include width-height(100%, 100%);
@@ -17,7 +16,6 @@
     @include flex(row, flex-start, center, 30px);
     flex-wrap: wrap;
     @include width-height(100%, 100%);
-
     .loading {
       @include flex(column, center, center);
       @include width-height(100%, 100%);

@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useMessageToast } from "@/hooks/useMessageToast";
 // Components
 import Title from "@/components/Title";
-import FlakeGallery from "@/components/FlakeGallery";
+import FlakeGallery from "@/routes/Home/TemplateList/FlakeGallery";
 import LoadingSpinner from "@/components/Loading";
 
 const Templates = () => {
@@ -44,7 +44,7 @@ const Templates = () => {
       </div>
       <div className={styles.flakes_container}>
         {flakes.length ? (
-          flakes?.slice(0, 6).map((app: Powerapp) => <FlakeGallery app={app} handleClick={handleClick} />)
+          flakes?.map((app: Powerapp) => <FlakeGallery app={app} handleClick={handleClick} />)
         ) : (
           <div className={styles.loading}>
             <LoadingSpinner />
