@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, RefObject } from "react";
 
-export const useCloseDropdown = (setOpen: (status: boolean) => void) => {
+export const useCloseDropdown = (setOpen: (status: boolean) => void, buttonRef?: RefObject<HTMLButtonElement>) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleKeyUp = useCallback(
@@ -14,7 +14,11 @@ export const useCloseDropdown = (setOpen: (status: boolean) => void) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        (!buttonRef?.current || !buttonRef.current.contains(event.target as Node))
+      ) {
         setOpen(false);
       }
     };
@@ -26,7 +30,7 @@ export const useCloseDropdown = (setOpen: (status: boolean) => void) => {
       window.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [setOpen, handleKeyUp]);
+  }, [setOpen, handleKeyUp, buttonRef]);
 
   return { dropdownRef };
 };

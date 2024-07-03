@@ -18,7 +18,8 @@
       "inbox": "Inbox",
       "collections": "Colecciones",
       "catalog": "Catálogo",
-      "clients": "Clients"
+      "clients": "Clients",
+      "link_inbox": "Ir a Inbox"
     },
     "navbar": {
       "login": "Iniciar Sesión",
@@ -37,7 +38,8 @@
       "cancel": "Cancelar",
       "edit": "Editar",
       "upload": "Subir",
-      "required": "* Todos los campos son requeridos"
+      "required": "* Todos los campos son requeridos",
+      "introduction": "¡Aprende todo lo que Small tiene para ofrecerte!"
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
@@ -87,11 +89,21 @@
       "policy": "Política de privacidad"
     },
     "home": {
-      "banner": {
-        "welcome": "Te damos la bienvenida a Small",
-        "title": "Aprendé con Playground",
-        "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
-        "btn": "Creá tu propio diseño"
+      "welcome": "Bienvenido a Small",
+      "templates": "Mis plantillas",
+      "find_designs": "Encuentra más diseños en",
+      "link_uitool": "Abrir en UiTool",
+      "introduction": {
+        "title": "Introducción",
+        "description": "¡Aprende todo lo que Small tiene para ofrecerte!"
+      },
+      "business": {
+        "title": "Mi negocio",
+        "description": "Completa el perfil de tu negocio y obtén tu primera plantilla."
+      },
+      "hotlink": {
+        "title": "Simulador de Hotlink",
+        "description": "Crea tu primer hotlink y aprende a compartirlo."
       }
     },
     "introduction": {

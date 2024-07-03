@@ -1,6 +1,15 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include flex(column, flex-start, flex-start);
+  @include flex(column, flex-start, flex-start, 30px);
   padding: 0px 40px;
+}
+.container::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
 }

@@ -1,27 +1,13 @@
 @import "@/styles/theme";
 
 .container {
-  @include width-height(auto, 100%);
-  .welcome {
-    @include fontSize-fontWeight(20px, 400);
-    color: $text;
-    margin-bottom: 15px;
-  }
-  .banner {
+  @include flex(column, flex-start, flex-start, 10px);
+  @include width-height(100%, 100%);
+  border-bottom: 1px solid $lighterGrey;
+  padding-bottom: 40px;
+  .link_container {
     @include flex(row, space-between, flex-start);
-    padding: 20px;
-    border-radius: 8px;
-    background-color: $orangeLightBackground;
-    .banner_text {
-      @include flex(column, space-between, flex-start, 30px);
-      .title {
-        @include fontSize-fontWeight(34px, 600);
-        color: $text;
-      }
-      .paragraph {
-        @include fontSize-fontWeight(16px, 400);
-        color: $text;
-      }
-    }
+    @include width-height(100%, 100%);
+    flex-wrap: wrap;
   }
 }
