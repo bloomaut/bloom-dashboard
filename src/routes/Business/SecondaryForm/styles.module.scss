@@ -1,0 +1,34 @@
+@import "@/styles/theme.scss";
+
+.secondary_form {
+  @include width-height(100%, 100%);
+  @include flex(column, center, center, 50px);
+  padding: 0 15px;
+  color: $lightGrey;
+  h6 {
+    @include fontSize-fontWeight(14px, 500);
+    margin-bottom: 5px;
+  }
+  .color_info {
+    @include width-height(100%, 100%);
+    @include flex(row, space-between, flex-start, 30px);
+    .colors {
+      @include flex(column, flex-start, flex-start, 20px);
+      padding: 10px;
+      .container_circle {
+        @include flex(row, flex-start, center, 5px);
+        .circle {
+          @include width-height(50px, 50px);
+          @include flex(row, center, center);
+          border-radius: 99%;
+          border: 1px solid $lightGrey;
+        }
+      }
+      .description {
+        @include fontSize-fontWeight(12px, 500);
+        max-width: 300px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+}

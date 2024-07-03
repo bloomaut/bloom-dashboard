@@ -1,0 +1,12 @@
+@import "@/styles/theme.scss";
+
+.drag_drop {
+  @include width-height(100%, 100%);
+  @include flex(row, space-between, flex-start, 30px);
+  .logo {
+    width: 40%;
+  }
+  .banner {
+    width: 60%;
+  }
+}
