@@ -1,13 +1,13 @@
 import styles from "./styles.module.scss";
 // Components
 import Banner from "./Banner";
-import Templates from "./Templates";
+import TemplateList from "./TemplateList";
 
 const HomePage = () => {
   return (
     <section className={styles.container}>
       <Banner />
-      <Templates />
+      <TemplateList />
     </section>
   );
 };

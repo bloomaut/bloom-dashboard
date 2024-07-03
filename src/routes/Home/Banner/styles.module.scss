@@ -6,7 +6,7 @@
   border-bottom: 1px solid $lighterGrey;
   padding-bottom: 40px;
   .link_container {
-    @include flex(row, space-evenly, flex-start);
+    @include flex(row, space-between, flex-start);
     @include width-height(100%, 100%);
     flex-wrap: wrap;
   }

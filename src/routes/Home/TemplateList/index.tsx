@@ -1,10 +1,10 @@
 import styles from "./styles.module.scss";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
 import Image from "next/image";
 import logo from "/public/assets/logo_uitrade.png";
+import { useTranslations } from "next-intl";
 import { useFlakeData } from "@/hooks/useFlakesUser";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
-import Link from "next/link";
 import { useState } from "react";
 import { useMessageToast } from "@/hooks/useMessageToast";
 // Components
@@ -13,13 +13,12 @@ import FlakeGallery from "@/components/FlakeGallery";
 import LoadingSpinner from "@/components/Loading";
 
 const Templates = () => {
-  const { flakes, loading } = useFlakeData();
+  const { flakes } = useFlakeData();
   const dict = useTranslations("dict.home");
   const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
   const { notifyError } = useMessageToast();
 
   const handleClick = (url: string, type: string) => {
-    console.log("url", url, "type", type);
     if (url && type === "hog")
       setSelectedImage(prevState => {
         if (prevState?.url === url && prevState.type === type) {

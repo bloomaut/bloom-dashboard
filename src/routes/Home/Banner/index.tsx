@@ -4,7 +4,7 @@ import { useState } from "react";
 // Components
 import Title from "@/components/Title";
 import LinkCard from "./LinkCard";
-import IntroVideo from "@/components/IntroVideo";
+import IntroVideo from "./IntroVideo";
 import PopupVideo from "@/components/PopupVideo";
 
 const Banner = () => {
