@@ -29,8 +29,7 @@ const Suite = ({ setShowModal, buttonRef }: SuiteProps) => {
   const { user } = useUser();
   const { dropdownRef } = useCloseDropdown(setShowModal, buttonRef);
 
-  const mainSuite = logos.slice(0, 4);
-  const lastSuite = logos[4];
+  const mainSuite = logos.slice(0, 5);
   const lastLogo = logos[logos.length - 1];
 
   return (
@@ -38,7 +37,7 @@ const Suite = ({ setShowModal, buttonRef }: SuiteProps) => {
       <article className={styles.container}>
         <div className={styles.inner_container}>
           {mainSuite.map((logo, index) => (
-            <Link href={logo.href} target='_blank'>
+            <Link href={logo.href} target='_blank' style={{ gridArea: String(logo.title) }}>
               <div key={index} className={styles.logo_container}>
                 <Image src={logo.src} alt={logo.alt} className={styles.logo} width={30} height={30} />
                 <span>{logo.title}</span>
@@ -46,14 +45,6 @@ const Suite = ({ setShowModal, buttonRef }: SuiteProps) => {
             </Link>
           ))}
         </div>
-        <Link href={lastSuite.href} target='_blank'>
-          <div className={styles.logo_container_centered}>
-            <div>
-              <Image src={lastSuite.src} alt={lastSuite.alt} className={styles.logo} width={40} height={40} />
-              <span>{lastSuite.title}</span>
-            </div>
-          </div>
-        </Link>
       </article>
       <Link href={lastLogo.href} target='_blank'>
         <div className={styles.company}>
