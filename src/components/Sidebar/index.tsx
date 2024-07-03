@@ -76,7 +76,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         ))}
       </div>
       <Link href='https://panel.small.ar/' target='_blank' className={styles.link_container}>
-        <Icon name='link' width={30} height={30} viewBox='0 -1 30 30' className='cursor_pointer' />
+        <Icon name='link' width={20} height={20} viewBox='0 -1 30 30' className='cursor_pointer' />
         {isOpen && <p>{dict("link_inbox")}</p>}
       </Link>
     </div>

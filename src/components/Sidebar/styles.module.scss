@@ -48,7 +48,7 @@
   }
   .link_container {
     @include flex(row, center, center, 8px);
-    @include fontSize-fontWeight(20px, 500);
+    @include fontSize-fontWeight(18px, 500);
     color: $text;
     padding: 10px;
   }
