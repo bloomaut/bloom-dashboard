@@ -19,7 +19,8 @@
       "inbox": "Inbox",
       "collections": "Collections",
       "catalog": "Catalog",
-      "clients": "Clients"
+      "clients": "Clients",
+      "link_inbox": "Go to Inbox"
     },
     "navbar": {
       "login": "Login",
@@ -39,7 +40,8 @@
       "cancel": "Cancel",
       "edit": "Edit",
       "upload": "Upload",
-      "required": "* All fields are required"
+      "required": "* All fields are required",
+      "introduction": "Learn everything Small has to offer you!"
     },
     "toast": {
       "success_img": "Image uploaded successfully",
@@ -85,11 +87,21 @@
       "policy": "Policy privacy"
     },
     "home": {
-      "banner": {
-        "welcome": "We welcome you to Small",
-        "title": "Learn with Playground",
-        "paragraph": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.nisi ut aliquid ex ea commodi consequatur?",
-        "btn": "Create your own design"
+      "welcome": "Welcome to Small",
+      "templates": "My templates",
+      "find_designs": "Find more designs in",
+      "link_uitool": "Open in UiTool",
+      "introduction": {
+        "title": "Introduction",
+        "description": "Learn everything Small has to offer you!"
+      },
+      "business": {
+        "title": "My business",
+        "description": "Complete your business profile and get your first template."
+      },
+      "hotlink": {
+        "title": "Hotlink simulator",
+        "description": "Create your first hotlink and learn how to share it."
       }
     },
     "introduction": {
