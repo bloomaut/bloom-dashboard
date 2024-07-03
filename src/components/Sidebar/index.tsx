@@ -39,11 +39,6 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
     ...(user
       ? [
           {
-            title: `${dict("gallery")}`,
-            icon: <Icon name='design' viewBox='0 0 33 33' />,
-            path: "/gallery",
-          },
-          {
             title: `${dict("hotlink")}`,
             icon: <Icon name='hotlink' viewBox='1 0 25 25' strokeWidth={1.2} />,
             path: "/hotlink",
