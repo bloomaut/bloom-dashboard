@@ -5,8 +5,10 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import Image from "next/image";
 import Link from "next/link";
-//Components
+
 import Icon from "@/components/Icon";
+import flake_icon_01 from "/public/flake_icon_01.svg";
+import flake_icon_02 from "/public/flake_icon_02.svg";
 
 interface Props {
   app: Powerapp;
@@ -34,7 +36,7 @@ const FlakeGallery = ({ app, handleClick }: Props) => {
               style={{ borderRadius: "8px" }}
             />
           ) : (
-            <Icon name='hog' width={30} height={50} fillColor='#7f7f7f' strokeColor='#7f7f7f' strokeWidth={0.5} />
+            <Image className={styles.empty_img} src={flake_icon_01} alt='Icon' />
           )}
         </div>
         <div className={styles.lg_card} onClick={() => handleClick(app.thumbnail, "powerapp")}>
@@ -50,7 +52,7 @@ const FlakeGallery = ({ app, handleClick }: Props) => {
               />
             </Zoom>
           ) : (
-            <Icon name='pwa' width={80} height={100} fillColor='#7f7f7f' strokeColor='#7f7f7f' strokeWidth={0.1} />
+            <Image className={styles.empty_img} src={flake_icon_02} alt='Icon' />
           )}
         </div>
       </div>

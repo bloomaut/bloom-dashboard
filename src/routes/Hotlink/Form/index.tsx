@@ -11,11 +11,11 @@ import { post } from "@/services/fetch";
 // Components
 import Input from "@/components/Input";
 import SectionTitle from "@/components/SectionTitle";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Checkbox from "./Checkbox";
 import { Fade } from "react-awesome-reveal";
 import Icon from "@/components/Icon";
 import Button from "@/components/Button";
+import Loading from "@/app/[locale]/(no layout)/policy/loading";
 
 const EmptyFormData = {
   typeFlake: "",
