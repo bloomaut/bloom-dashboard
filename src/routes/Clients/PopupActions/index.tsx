@@ -34,7 +34,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { clients, fetchClients, setClientSelected } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
-  const fieldsToValidate = ["ClientFirstname", "ClientEmail"];
+  const fieldsToValidate = ["ClientFirstname"];
   const errors = useFormValidator(formData, fieldsToValidate);
   const dict = useTranslations("dict");
 
