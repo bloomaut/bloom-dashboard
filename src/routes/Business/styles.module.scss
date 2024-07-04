@@ -3,9 +3,11 @@
 .container_business {
   @include width-height(100%, calc(100vh - 110px));
   max-width: 1200px;
-  padding: 40px 0;
+  padding: 0px 40px;
   .container_columns {
-    @include flex(row, space-between, flex-start);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 40px;
     margin-top: 40px;
   }
 }

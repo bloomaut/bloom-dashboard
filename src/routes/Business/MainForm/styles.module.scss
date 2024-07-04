@@ -3,12 +3,12 @@
 .main_form {
   @include width-height(100%, 100%);
   @include flex(column, flex-start, flex-start, 30px);
-  padding: 0 15px;
   .input_name {
+    @include width-height(100%, auto);
     @include flex(row, space-between, flex-start, 40px);
   }
   .select {
-    @include width-height(100%, 100%);
+    @include width-height(100%, auto);
     label {
       @include fontSize-fontWeight(14px, 400);
       color: $text;

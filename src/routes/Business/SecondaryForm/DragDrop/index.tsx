@@ -2,8 +2,9 @@ import styles from "./styles.module.scss";
 import DragAndDrop from "@/components/DragAndDrop";
 
 const DragDrop = () => {
-  // eslint-disable-next-line no-empty-function
-  const handleFile = () => {};
+  const handleFile = () => {
+    null;
+  };
 
   return (
     <section className={styles.drag_drop}>

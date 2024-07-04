@@ -7,13 +7,13 @@
   }
   .input {
     @include width-height(100%, auto);
-    @include flex(row, flex-end, center, 10px);
+    @include flex(row, space-between, center, 10px);
     label {
       @include fontSize-fontWeight(14px, 400);
       color: $text;
     }
     & > div {
-      max-width: 218px;
+      max-width: 70%;
     }
   }
   .btn_next {

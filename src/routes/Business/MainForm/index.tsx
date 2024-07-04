@@ -1,12 +1,13 @@
-import { useTranslations } from "next-intl";
 import styles from "./styles.module.scss";
+import { useTranslations } from "next-intl";
 import Input from "@/components/Input";
 
 const Form = () => {
   const dict = useTranslations("dict.business");
 
-  // eslint-disable-next-line no-empty-function
-  const handleChange = () => {};
+  const handleChange = () => {
+    null;
+  };
 
   return (
     <form className={styles.main_form}>

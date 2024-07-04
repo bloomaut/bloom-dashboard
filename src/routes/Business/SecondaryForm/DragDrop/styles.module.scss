@@ -1,12 +1,12 @@
 @import "@/styles/theme.scss";
 
 .drag_drop {
-  @include width-height(100%, 100%);
-  @include flex(row, space-between, flex-start, 30px);
-  .logo {
-    width: 40%;
-  }
+  @include width-height(100%, 50%);
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 30px;
+  .logo,
   .banner {
-    width: 60%;
+    width: 100%;
   }
 }
