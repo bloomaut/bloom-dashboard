@@ -12,7 +12,7 @@ import Input from "@/components/Input";
 import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import Loading from "@/app/[locale]/(no layout)/policy/loading";
 import Icon from "@/components/Icon";
 
 const EmptyFormData = {

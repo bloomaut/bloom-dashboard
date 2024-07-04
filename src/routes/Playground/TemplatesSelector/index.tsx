@@ -5,7 +5,7 @@ import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 // Components
 import SectionTitle from "@/components/SectionTitle";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import Loading from "@/app/[locale]/(no layout)/policy/loading";
 import { Fade } from "react-awesome-reveal";
 import Icon from "@/components/Icon";
 
