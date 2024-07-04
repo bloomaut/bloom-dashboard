@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 // Components
 import Search from "@/components/Search";
 import TableRow from "./TableRow";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import Loading from "@/app/[locale]/(no layout)/policy/loading";
 
 const ListHotlinks = () => {
   const [searchValue, setSearchValue] = useState<string>("");
