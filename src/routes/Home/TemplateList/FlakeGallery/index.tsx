@@ -21,7 +21,7 @@ const FlakeGallery = ({ app, handleClick }: Props) => {
   return (
     <div className={styles.template_container} key={app._id}>
       <h4 className={styles.title}>{app.skinx.title}</h4>
-      <Link href={`${process.env.NEXT_PUBLIC_UITOOL_URL}skinx/${app._id}`} className={styles.link} target='_blank'>
+      <Link href={`${process.env.NEXT_PUBLIC_UITOOL_URL}/skinx/${app._id}`} className={styles.link} target='_blank'>
         <p>{dict("link_uitool")}</p>
         <Icon name='link' strokeColor='#ff5722' viewBox='0 -13 50 50' />
       </Link>
