@@ -9,5 +9,20 @@
     @include flex(row, flex-start, flex-start, 30px);
     padding-bottom: 20px;
     flex-wrap: wrap;
+    .add {
+      @include width-height(275px, 200px);
+      @include flex(column, center, center);
+      border: 2px dashed $blue;
+      background: $sweetBlue;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 150ms ease-in;
+      @media (width >= $queryXl) {
+        width: 300px;
+      }
+      &:hover {
+        background: rgb(214, 217, 252);
+      }
+    }
   }
 }
