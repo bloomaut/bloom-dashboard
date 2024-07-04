@@ -12,8 +12,8 @@ import Input from "@/components/Input";
 import PopupShare from "@/routes/Playground/PopupShare";
 import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Icon from "@/components/Icon";
+import LoadingSpinner from "@/components/Loading";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -107,7 +107,7 @@ const Form = () => {
     <div className={styles.container}>
       <SectionTitle text={dict("playground.form.title")} />
       {loading ? (
-        <Loading />
+        <LoadingSpinner />
       ) : (
         <form className={styles.form} onSubmit={handleSubmit}>
           <Fade triggerOnce>

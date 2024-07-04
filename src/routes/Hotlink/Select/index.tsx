@@ -6,9 +6,9 @@ import { Fade } from "react-awesome-reveal";
 import { useEffect, useState } from "react";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 // Components
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import flake_icon_01 from "/public/flake_icon_01.svg";
 import flake_icon_02 from "/public/flake_icon_02.svg";
+import LoadingSpinner from "@/components/Loading";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
@@ -84,7 +84,7 @@ const Select = () => {
             )}
           </div>
         ) : (
-          <Loading />
+          <LoadingSpinner />
         )}
       </div>
     </div>

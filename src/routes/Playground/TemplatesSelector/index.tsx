@@ -5,9 +5,9 @@ import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 // Components
 import SectionTitle from "@/components/SectionTitle";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import { Fade } from "react-awesome-reveal";
 import Icon from "@/components/Icon";
+import LoadingSpinner from "@/components/Loading";
 
 const TemplatesSelector = () => {
   const dict = useTranslations("dict.playground");
@@ -48,7 +48,7 @@ const TemplatesSelector = () => {
             </Fade>
           ))
         ) : (
-          <Loading />
+          <LoadingSpinner />
         )}
       </div>
     </section>
