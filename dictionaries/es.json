@@ -6,9 +6,8 @@
       "btn2": "Volver"
     },
     "drag": {
-      "title": "Arrastrá o soltá tus archivos aquí",
-      "image": "Seleccionar imagen",
-      "edit_image": "Editar imagen"
+      "upload": "Clic para cargar",
+      "drag_drop": "o arrastrar y soltar"
     },
     "sidebar": {
       "home": "Inicio",
@@ -162,46 +161,22 @@
       }
     },
     "business": {
-      "breadcrumb_title": "Carga de Datos",
-      "sequence": {
-        "title": "Secuencia",
-        "card_title_01": "Cargar información del negocio",
-        "card_title_02": "Subí el logo de tu empresa",
-        "card_title_03": "Documentos descriptivos",
-        "card_title_04": "Flyer, brochure, brandin o publicidad",
-        "card_description_01": "Con esta información de contexto diseñamos el contenido y la conversación de los chatbots. Tu sitio web ayuda",
-        "card_description_02": "Del logo tomamos automáticamente la paleta de color que luego podrás editar",
-        "card_description_03": "Podes adjuntar la cantidad de información que consideres necesaria para tu negocio",
-        "card_description_04": "Subí archivos referentes a tu negocio para extraer informacion",
-        "button": "Terminé de cargar los datos"
-      },
       "form": {
         "title": "Información del negocio",
-        "subtitle": "Mientras más campos se completen mejor será el resultado",
+        "subtitle": "Cuantos más campos completes, mejor será el resultado",
         "name": "Nombre",
-        "placeholder_name": "Ingrese el nombre",
-        "website": "Sitio web",
-        "placeholder_website": "Ingrese su sitio web",
-        "description": "Descripción",
-        "placeholder_description": "Ingrese la descripción",
-        "placeholder_instagram": "Ingrese su instagram",
-        "phone": "Teléfono",
-        "placeholder_phone": "Ingrese su teléfono",
-        "button": "Guardar"
+        "last_name": "Apellido",
+        "business_name": "Nombre del negocio",
+        "type_business": "Tipo de negocio",
+        "describe_business": "Describe de que se trata tu negocio"
       },
-      "file": {
-        "title01": "Subí tu logo para iniciar",
-        "title02": "Arrojá tus archivos aquí",
-        "subtitle": "Mis archivos",
-        "file_name": "Nombre de archivo",
-        "last_updated": "Última actualización",
-        "palette": {
-          "palette_color": "Paleta de colores",
-          "select_color": "Selecione color base",
-          "cancel": "Cancelar",
-          "generate": "Generar",
-          "save": "Guardar"
-        }
+      "data": {
+        "colors": "Colores",
+        "description": "A partir del logotipo generamos automáticamente una paleta de colores que podrás modificar posteriormente",
+        "add_info": "Información Adicional",
+        "website": "Sitio web",
+        "instagram": "Instagram",
+        "phone": "Teléfono"
       }
     },
     "clients": {

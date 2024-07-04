@@ -1,27 +1,26 @@
 @import "@/styles/theme.scss";
 
 .container {
-  @include width-height(100%, auto);
-  @include flex(row, center, center, 20px);
+  @include width-height(100%, 160px);
+  @include flex(column, center, center, 20px);
   background: $blueishBackground;
   border-radius: 8px;
-  border: 2px dashed $lightGrey;
+  border: 2px dashed $blue;
   cursor: pointer;
   transition: all 100ms ease-in-out;
-  padding: 10px 0;
-  &:hover {
-    border-color: $orange;
-  }
+  padding: 20px 30px;
   .icon {
-    @include width-height(50px, auto);
-    object-fit: contain;
-    transition: all 0.3s;
-  }
-  &:hover > .icon {
-    transform: scale(1.05);
+    @include width-height(30px, auto);
   }
   .text {
-    @include fontSize-fontWeight(15px, 400);
+    @include fontSize-fontWeight(14px, 400);
+    max-width: 110px;
+    text-align: center;
+    span {
+      @include fontSize-fontWeight(14px, 600);
+      color: $blue;
+      border-bottom: 1px solid $blue;
+    }
   }
 }
 .isActive {

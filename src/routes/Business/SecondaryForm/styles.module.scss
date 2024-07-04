@@ -1,0 +1,17 @@
+@import "@/styles/theme.scss";
+
+.secondary_form {
+  @include width-height(100%, auto);
+  @include flex(column, center, center, 30px);
+  color: $lightGrey;
+  h6 {
+    @include fontSize-fontWeight(14px, 500);
+    margin-bottom: 5px;
+  }
+  .second_row {
+    @include width-height(100%, 50%);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+  }
+}
