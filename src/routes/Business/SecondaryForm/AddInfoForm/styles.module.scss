@@ -1,0 +1,26 @@
+@import "@/styles/theme.scss";
+
+.add_info {
+  @include width-height(100%, 100%);
+  .subtitle {
+    margin-bottom: 20px;
+  }
+  .input {
+    @include width-height(100%, auto);
+    @include flex(row, space-between, center, 10px);
+    label {
+      @include fontSize-fontWeight(14px, 400);
+      color: $text;
+    }
+    & > div {
+      max-width: 70%;
+    }
+  }
+  .btn_next {
+    @include flex(row, flex-end, center);
+    margin-top: 35px;
+    button {
+      padding: 10px 25px;
+    }
+  }
+}

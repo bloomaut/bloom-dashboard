@@ -1,0 +1,26 @@
+@import "@/styles/theme.scss";
+
+.main_form {
+  @include width-height(100%, 100%);
+  @include flex(column, flex-start, flex-start, 30px);
+  .input_name {
+    @include width-height(100%, auto);
+    @include flex(row, space-between, flex-start, 40px);
+  }
+  .select {
+    @include width-height(100%, auto);
+    label {
+      @include fontSize-fontWeight(14px, 400);
+      color: $text;
+    }
+    select {
+      @include width-height(100%, 30px);
+      border-radius: 3px;
+      border: none;
+      outline: none;
+      margin-top: 5px;
+      box-shadow: 0px 0px 2px $lightGrey;
+      color: $lightGrey;
+    }
+  }
+}

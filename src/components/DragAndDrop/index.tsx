@@ -5,6 +5,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import Icon from "../Icon";
+import { useAppSelector } from "@/store/hooks";
 
 interface FileDragDropProps {
   file?: File | null;
@@ -13,6 +14,7 @@ interface FileDragDropProps {
 
 const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
   const { notifyError } = useMessageToast();
+  const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
 
@@ -63,8 +65,10 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
-      <Icon name='cloud' viewBox='0 0 101 91' width={60} height={60} strokeWidth={5} />
-      <p className={styles.text}>{file ? file.name : catalogPage ? `${dict("image")}` : `${dict("title")}`}</p>
+      <Icon name='cloud' viewBox='0 0 33 30' width={30} height={30} strokeWidth={3.18493} strokeColor='#1616a5' />
+      <p className={styles.text}>
+        <span>{dict("upload")}</span> {dict("drag_drop")}
+      </p>
     </div>
   );
 };
