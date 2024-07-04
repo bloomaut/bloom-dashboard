@@ -13,10 +13,10 @@ import FlakeGallery from "@/routes/Home/TemplateList/FlakeGallery";
 import LoadingSpinner from "@/components/Loading";
 
 const Templates = () => {
-  const { flakes } = useFlakeData();
   const dict = useTranslations("dict.home");
-  const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
+  const { flakes } = useFlakeData();
   const { notifyError } = useMessageToast();
+  const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
 
   const handleClick = (url: string, type: string) => {
     if (url && type === "hog")
@@ -44,7 +44,7 @@ const Templates = () => {
       </div>
       <div className={styles.flakes_container}>
         {flakes.length ? (
-          flakes?.map((app: Powerapp) => <FlakeGallery app={app} handleClick={handleClick} />)
+          flakes?.map((app: Powerapp) => <FlakeGallery key={app._id} app={app} handleClick={handleClick} />)
         ) : (
           <div className={styles.loading}>
             <LoadingSpinner />

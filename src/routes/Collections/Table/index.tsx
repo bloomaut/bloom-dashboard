@@ -7,9 +7,9 @@ import { Fade } from "react-awesome-reveal";
 // Components
 import Button from "@/components/Button";
 import TableHead from "../TableHead";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
 import Icon from "@/components/Icon";
 import TableRow from "../TableRow";
+import Loading from "@/app/[locale]/(no layout)/policy/loading";
 
 const Table = () => {
   const { id, collectionsList, filteredCollections, loading } = useCollectionsContext();

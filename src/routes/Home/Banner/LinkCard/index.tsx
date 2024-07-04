@@ -1,3 +1,4 @@
+import SectionTitle from "@/components/SectionTitle";
 import styles from "./styles.module.scss";
 import Title from "@/components/Title";
 import Link from "next/link";
@@ -13,12 +14,12 @@ const LinkCard = ({ text, description, link }: Props) => {
     <>
       {link ? (
         <Link href={link} className={styles.container}>
-          <Title text={text} />
+          <h3 className={styles.title}>{text}</h3>
           {description}
         </Link>
       ) : (
         <div className={styles.container}>
-          <Title text={text} />
+          <h3 className={styles.title}>{text}</h3>
           {description}
         </div>
       )}

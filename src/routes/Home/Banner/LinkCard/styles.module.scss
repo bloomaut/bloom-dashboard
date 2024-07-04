@@ -14,4 +14,9 @@
     transition: 0.3s;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05);
   }
+  .title {
+    @include fontSize-fontWeight(24px, 600);
+    line-height: 48px;
+    color: $text;
+  }
 }

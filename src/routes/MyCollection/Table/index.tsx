@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Fade } from "react-awesome-reveal";
 // Components
 import TableRow from "../TableRow";
-import Loading from "@/app/[locale]/(playground)/introduction/loading";
+import Loading from "@/app/[locale]/(no layout)/policy/loading";
 
 const Table = () => {
   const dict = useTranslations("dict.my-collection");
