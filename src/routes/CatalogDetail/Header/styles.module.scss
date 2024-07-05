@@ -1,0 +1,16 @@
+@import "@/styles/theme.scss";
+
+.header_container {
+  @include width-height(100%, auto);
+  @include flex(row, space-between, center);
+  .btn_container {
+    @include flex(row, center, center, 15px);
+  }
+  .title_container {
+    @include flex(row, center, center, 10px);
+    p {
+      @include fontSize-fontWeight(28px, 500);
+      margin-bottom: 5px;
+    }
+  }
+}
