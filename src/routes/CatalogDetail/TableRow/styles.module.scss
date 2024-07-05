@@ -1,28 +1,30 @@
 @import "@/styles/theme.scss";
 
 .container {
+  @include width-height(100%, auto);
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
+  grid-template-columns: 1.3fr 1.7fr 1fr 1fr;
   grid-template-rows: auto;
-  width: 100%;
   padding: 10px;
-  &:hover {
-    background-color: $orangeBackground;
+  .name_container {
+    @include width-height(100%, auto);
+    @include flex(row, flex-start, center);
+    .image {
+      @include width-height(80px, 80px);
+      object-fit: contain;
+    }
   }
   .box {
     display: flex;
     align-items: center;
-    border-left: 2px solid $lighterGrey;
     padding-left: 10px;
-  }
-  .image {
-    @include width-height(80px, 80px);
-    object-fit: contain;
-    margin: 0 auto;
   }
   .icons {
     @include flex(row, center, center, 5px);
     border-left: none;
     padding-left: 0px;
+  }
+  &:hover {
+    background-color: $orangeBackground;
   }
 }
