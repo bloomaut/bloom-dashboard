@@ -198,3 +198,39 @@
     padding: 10px;
   }
 }
+
+.btn_upload {
+  @extend .btn;
+  flex-direction: row;
+  gap: 5px;
+  background: $white;
+  color: $lightGrey;
+  border: 1px solid $lightGrey;
+  @media (width >= $queryXl) {
+    padding: 8px 25px;
+  }
+  &:hover {
+    border: 1px solid $white;
+    color: $white;
+    svg {
+      path {
+        stroke: #fff;
+      }
+    }
+  }
+}
+
+.btn_add {
+  @extend .btn_upload;
+  background: $orange;
+  color: $white;
+  gap: 10px;
+  border: none;
+  @media (width >= $queryXl) {
+    padding: 12.5px 28px;
+  }
+  &:hover {
+    border: none;
+    background: $darkOrange;
+  }
+}
