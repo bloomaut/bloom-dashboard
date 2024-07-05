@@ -6,17 +6,13 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { handleBotAction } from "@/utils/handleBotAction";
-import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import styles from "./styles.module.scss";
 // Components
-import Breadcrumb from "@/components/Breadcrumb";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
-import Title from "@/components/Title";
 import Form from "./Form";
-import Select from "./Select";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import PopupExcel from "./PopupExcel";
@@ -186,6 +182,20 @@ const Detail = () => {
       {putPopup && (
         <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
       )}
+      {/* <div className={styles.buttons}>
+        <Button
+          title={dict("catalog.clean_bot")}
+          styleName='btn_clean'
+          icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
+          onclick={() => setOpenCleanBot(true)}
+        />
+        <Button
+          title={dict("catalog.train_bot")}
+          styleName='btn_dataset'
+          icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
+          onclick={() => setOpenTrainBot(true)}
+        />
+      </div> */}
     </section>
   );
 };
