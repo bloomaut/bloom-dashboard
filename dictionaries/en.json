@@ -283,6 +283,9 @@
       "clean_bots": "Clean Bots",
       "train_bots_text": "Would you like to train your UiTool Bots with the information in this menu?",
       "clean_bots_text": "Would you like your UiTool Bots to stop using the information in this catalog?",
+      "massive_upload": "Massive upload",
+      "massive_update": "Massive update",
+      "update_changes": "Update changes",
       "select": {
         "placeholder_one": "Bulk Load",
         "placeholder_two": "Mass update",
