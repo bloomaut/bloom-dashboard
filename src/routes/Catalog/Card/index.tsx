@@ -53,10 +53,8 @@ const Card = ({ name, _id }: DatasetProps) => {
   };
 
   return (
-    <article className={styles.card}>
-      <Link href={`/catalog/${_id}`} className={styles.image_container} title={name}>
-        {name}
-      </Link>
+    <Link href={`/catalog/${_id}`} className={styles.card}>
+      <div className={styles.image_container}>{name}</div>
       <div className={styles.content}>
         <div className={styles.title_container}>
           <h2 className={styles.title}>{name}</h2>
@@ -98,7 +96,7 @@ const Card = ({ name, _id }: DatasetProps) => {
           textAccept={dict("popup.confirm")}
         />
       )}
-    </article>
+    </Link>
   );
 };
 
