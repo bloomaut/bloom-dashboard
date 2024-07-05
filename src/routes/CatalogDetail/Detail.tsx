@@ -48,7 +48,7 @@ const Detail = () => {
   //   }
   // };
 
-  const dataSetId = datasetDetail?.dataSet._id;
+  // const dataSetId = datasetDetail?.dataSet._id;
   // const handleBotTrainer = async (e: FormEvent) => {
   //   e.preventDefault();
   //   if (dataSetId) {
@@ -77,9 +77,9 @@ const Detail = () => {
   //   }
   // };
 
-  const handleExcelDownload = async (type: string) => {
-    if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
-  };
+  // const handleExcelDownload = async (type: string) => {
+  //   if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
+  // };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
