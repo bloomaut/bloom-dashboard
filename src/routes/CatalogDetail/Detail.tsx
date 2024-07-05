@@ -4,15 +4,14 @@ import { getExcelCatalog, postFile, putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { FormEvent, useState } from "react";
-import { handleBotAction } from "@/utils/handleBotAction";
+import { useState } from "react";
+// import { handleBotAction } from "@/utils/handleBotAction";
 import styles from "./styles.module.scss";
 // Components
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
-import PopupChildren from "@/components/PopupChildren";
-import Form from "./Form";
+// import PopupChildren from "@/components/PopupChildren";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import PopupExcel from "./PopupExcel";
@@ -20,9 +19,9 @@ import Header from "./Header";
 
 const Detail = () => {
   const dict = useTranslations("dict");
-  const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const [openTrainBot, setOpenTrainBot] = useState(false);
-  const [openCleanBot, setOpenCleanBot] = useState(false);
+
+  // const [openTrainBot, setOpenTrainBot] = useState(false);
+  // const [openCleanBot, setOpenCleanBot] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploadPopup, setUploadPopup] = useState<boolean>(false);
   const [putPopup, setPutPopup] = useState<boolean>(false);
@@ -31,52 +30,52 @@ const Detail = () => {
   const { notify, notifyError } = useMessageToast();
   const { id } = useParams();
 
-  const handleDropdown = (value: string) => {
-    // Acá después ver lógica de enpoints. Tal vez mover o cambiar
-    switch (value) {
-      case "download_post_template":
-        handleExcelDownload("template");
-        break;
-      case "upload_post_excel":
-        setUploadPopup(!uploadPopup);
-        break;
-      case "download_update_template":
-        handleExcelDownload("download");
-        break;
-      case "upload_update_excel":
-        setPutPopup(!putPopup);
-        break;
-    }
-  };
+  // const handleDropdown = (value: string) => {
+  //   // Acá después ver lógica de enpoints. Tal vez mover o cambiar
+  //   switch (value) {
+  //     case "download_post_template":
+  //       handleExcelDownload("template");
+  //       break;
+  //     case "upload_post_excel":
+  //       setUploadPopup(!uploadPopup);
+  //       break;
+  //     case "download_update_template":
+  //       handleExcelDownload("download");
+  //       break;
+  //     case "upload_update_excel":
+  //       setPutPopup(!putPopup);
+  //       break;
+  //   }
+  // };
 
   const dataSetId = datasetDetail?.dataSet._id;
-  const handleBotTrainer = async (e: FormEvent) => {
-    e.preventDefault();
-    if (dataSetId) {
-      await handleBotAction(
-        `datasets/${dataSetId}/vectorize`,
-        "post",
-        dict("toast.bot_train"),
-        dict("toast.bot_error"),
-        setLoading,
-        setOpenTrainBot,
-      );
-    }
-  };
+  // const handleBotTrainer = async (e: FormEvent) => {
+  //   e.preventDefault();
+  //   if (dataSetId) {
+  //     await handleBotAction(
+  //       `datasets/${dataSetId}/vectorize`,
+  //       "post",
+  //       dict("toast.bot_train"),
+  //       dict("toast.bot_error"),
+  //       setLoading,
+  //       setOpenTrainBot,
+  //     );
+  //   }
+  // };
 
-  const handleBotCleaner = async (e: FormEvent) => {
-    e.preventDefault();
-    if (dataSetId) {
-      await handleBotAction(
-        `datasets/${dataSetId}/vectorize`,
-        "remove",
-        dict("toast.bot_clean"),
-        dict("toast.bot_error"),
-        setLoading,
-        setOpenCleanBot,
-      );
-    }
-  };
+  // const handleBotCleaner = async (e: FormEvent) => {
+  //   e.preventDefault();
+  //   if (dataSetId) {
+  //     await handleBotAction(
+  //       `datasets/${dataSetId}/vectorize`,
+  //       "remove",
+  //       dict("toast.bot_clean"),
+  //       dict("toast.bot_error"),
+  //       setLoading,
+  //       setOpenCleanBot,
+  //     );
+  //   }
+  // };
 
   const handleExcelDownload = async (type: string) => {
     if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
@@ -144,8 +143,8 @@ const Detail = () => {
         />
         <Button title={dict("catalog.update_changes")} styleName='btn_add' />
       </div>
-      {showPopupCreate && <Form action='post' title={dict("popup.create_product")} setShowPopup={setShowPopupCreate} />}
-      {openTrainBot && (
+
+      {/* {openTrainBot && (
         <PopupChildren
           onCancel={() => setOpenTrainBot(false)}
           title={dict("catalog.train_bots")}
@@ -157,8 +156,8 @@ const Detail = () => {
         >
           <p className={styles.trainbot_text}>{dict("catalog.train_bots_text")}</p>
         </PopupChildren>
-      )}
-      {openCleanBot && (
+      )} */}
+      {/* {openCleanBot && (
         <PopupChildren
           onCancel={() => setOpenCleanBot(false)}
           title={dict("catalog.clean_bots")}
@@ -170,7 +169,7 @@ const Detail = () => {
         >
           <p className={styles.trainbot_text}>{dict("catalog.clean_bots_text")}</p>
         </PopupChildren>
-      )}
+      )} */}
       {uploadPopup && (
         <PopupExcel
           setFunction={setUploadPopup}

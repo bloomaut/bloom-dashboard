@@ -5,7 +5,10 @@
   @include flex(column, flex-start, flex-start, 5px);
   padding: 5px 0;
   position: relative;
-  .label,
+  .label {
+    @include fontSize-fontWeight(14px, 400);
+    color: $lightGrey;
+  }
   .input {
     @include fontSize-fontWeight(14px, 400);
     color: $text;

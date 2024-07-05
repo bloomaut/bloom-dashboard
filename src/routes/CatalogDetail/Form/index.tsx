@@ -4,14 +4,15 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsList, Field, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
+import { DataItemsList, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 // Components
-import PopupChildren from "@/components/PopupChildren";
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
-import Image from "next/image";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import Button from "@/components/Button";
+import CheckBox from "./Checkbox";
 
 interface Form {
   setShowPopup: (value: SetStateAction<boolean>) => void;
@@ -21,14 +22,22 @@ interface Form {
   id?: string;
 }
 
+const headers = [
+  { id: 1, name: "Product's information" },
+  { id: 2, name: "Price" },
+  { id: 3, name: "Media" },
+];
+
 const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const [edit, setEdit] = useState(false);
   const [formData, setFormData] = useState(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
+  const [visibility, setVisibility] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const dict = useTranslations("dict");
+  const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
 
   useEffect(() => {
@@ -141,6 +150,10 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
     }));
   };
 
+  const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVisibility(e.target.checked);
+  };
+
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
@@ -152,55 +165,85 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   }, [errors]);
 
   return (
-    <PopupChildren
-      title={dict("popup.create_product")}
-      loading={loading}
-      onConfirm={handleSubmit}
-      onCancel={() => setShowPopup(false)}
-      setShowConfirmation={setShowPopup}
-      textCancel={dict("popup.cancel")}
-      textAccept={action === "post" ? dict("popup.create") : dict("popup.edit")}
-    >
-      {datasetDetail?.dataSet.dataschema.fields.map(
-        (field: Field) =>
-          // Si el campo es de tipo text se renderiza el input
-          !field.name.includes("image") && (
-            <div key={field._id} className={styles.form_control}>
-              <Input
-                type={field.type === "number" ? "number" : "text"}
-                textHolder={field.description}
-                name={field.name}
-                value={formData ? formData[field.name as keyof DataItemsList] : ""}
-                handleChange={handleChange}
-              />
-              {checkValidation && <ErrorMessage error={errors[field.name as keyof DataItemsList]} />}
-            </div>
-          ),
-      )}
-      {action === "post" ? (
-        <div className={styles.form_control}>
-          <DragAndDrop file={file} setFile={setFile} />
-          {checkValidation && <ErrorMessage error={errors.listimage} />}
-        </div>
-      ) : (
-        <>
-          {edit && (
+    <form className={styles.form_container}>
+      <div className={styles.inner_container} ref={dropdownRef}>
+        <header className={styles.header}>
+          {headers.map(h => (
+            <p key={h.id}>{h.name}</p>
+          ))}
+        </header>
+        <div className={styles.inputs_container}>
+          <div className={styles.products_information}>
+            <Input
+              type='text'
+              textLabel='Product name'
+              textHolder=''
+              name='product_name'
+              value={""}
+              handleChange={handleChange}
+            />
+            <Input
+              type='textarea'
+              textLabel='Description'
+              textHolder=''
+              name='description'
+              value={""}
+              handleChange={handleChange}
+            />
+            <CheckBox text='Visibile on my apps' active={visibility} onChange={handleVisibility} />
+          </div>
+          <div className={styles.price}>
+            <Input type='number' textLabel='Price' textHolder='$' name='price' value={""} handleChange={handleChange} />
+          </div>
+          <div className={styles.media}>
+            <label className={styles.label}>Photo product</label>
+            <DragAndDrop file={file} setFile={setFile} />
+          </div>
+          {/* {datasetDetail?.dataSet.dataschema.fields.map(
+            (field: Field) =>
+              // Si el campo es de tipo text se renderiza el input
+              !field.name.includes("image") && (
+                <div key={field._id} className={styles.form_control}>
+                  <Input
+                    type={field.type === "number" ? "number" : "text"}
+                    textHolder={field.description}
+                    name={field.name}
+                    value={formData ? formData[field.name as keyof DataItemsList] : ""}
+                    handleChange={handleChange}
+                  />
+                  {checkValidation && <ErrorMessage error={errors[field.name as keyof DataItemsList]} />}
+                </div>
+              ),
+          )}
+          {action === "post" ? (
             <div className={styles.form_control}>
               <DragAndDrop file={file} setFile={setFile} />
               {checkValidation && <ErrorMessage error={errors.listimage} />}
             </div>
-          )}
-          {!edit && (
-            <div className={styles.image_container}>
-              <Image src={formData?.listimage} width={100} height={100} alt='Product Image' />
-              <p className={styles.edit} onClick={() => setEdit(true)}>
-                {dict("drag.edit_image")}
-              </p>
-            </div>
-          )}
-        </>
-      )}
-    </PopupChildren>
+          ) : (
+            <>
+              {edit && (
+                <div className={styles.form_control}>
+                  <DragAndDrop file={file} setFile={setFile} />
+                  {checkValidation && <ErrorMessage error={errors.listimage} />}
+                </div>
+              )}
+              {!edit && (
+                <div className={styles.image_container}>
+                  <Image src={formData?.listimage} width={100} height={100} alt='Product Image' />
+                  <p className={styles.edit} onClick={() => setEdit(true)}>
+                    {dict("drag.edit_image")}
+                  </p>
+                </div>
+              )}
+            </>
+          )} */}
+        </div>
+        <div className={styles.button_container}>
+          <Button title='Save product' />
+        </div>
+      </div>
+    </form>
   );
 };
 
