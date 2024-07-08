@@ -10,6 +10,11 @@
     gap: 40px;
     margin-top: 40px;
   }
+  .loading {
+    & > div {
+      @include width-height(78vw, 75vh);
+    }
+  }
 }
 
 @media (min-width: $queryXl) {

@@ -1,16 +1,15 @@
 @import "@/styles/theme.scss";
 
 .container {
+  @include width-height(100%, auto);
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
+  grid-template-columns: 1.3fr 1.7fr 1fr 1fr;
   align-items: center;
-  width: 100%;
-  padding: 10px;
-  border-bottom: 1px solid $lighterGrey;
-  .name,
-  .description,
-  .price {
-    padding: 5px;
-    border-left: 2px solid $lighterGrey;
+  padding: 15px;
+  background: $sweetBlue;
+  border-bottom: 1px solid $blue;
+  h2 {
+    color: $blue;
+    @include fontSize-fontWeight(20px, 600);
   }
 }

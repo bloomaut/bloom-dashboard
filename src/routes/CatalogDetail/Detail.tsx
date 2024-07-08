@@ -6,20 +6,17 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { handleBotAction } from "@/utils/handleBotAction";
-import { SelectOptionsCatalog } from "@/utils/selectOptionsCatalog";
 import styles from "./styles.module.scss";
 // Components
-import Breadcrumb from "@/components/Breadcrumb";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
-import Title from "@/components/Title";
 import Form from "./Form";
-import Select from "./Select";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import PopupExcel from "./PopupExcel";
+import Header from "./Header";
 
 const Detail = () => {
   const dict = useTranslations("dict");
@@ -117,33 +114,7 @@ const Detail = () => {
 
   return (
     <section className={styles.catalog_detail_container}>
-      <div className={styles.header_container}>
-        <Breadcrumb />
-        <div className={styles.header}>
-          <div className={styles.title_container}>
-            <Title text={`${dict("catalog.title")}:`} />
-            <p className={styles.catalog}>{datasetDetail?.dataSet.name}</p>
-          </div>
-          <Button
-            title={dict("catalog.add_product")}
-            styleName='btn_orange'
-            icon={<Icon name='add' viewBox='0 0 25 20' strokeColor='#fff' />}
-            onclick={() => setShowPopupCreate(true)}
-          />
-        </div>
-        <div className={styles.select_container}>
-          <Select
-            options={SelectOptionsCatalog("first")}
-            placeholder={dict("catalog.select.placeholder_one")}
-            onChange={handleDropdown}
-          />
-          <Select
-            options={SelectOptionsCatalog("second")}
-            placeholder={dict("catalog.select.placeholder_two")}
-            onChange={handleDropdown}
-          />
-        </div>
-      </div>
+      <Header name={datasetDetail?.dataSet.name} />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (
@@ -165,19 +136,13 @@ const Detail = () => {
           <p className={styles.catalog_empty}>{dict("catalog.empty")}</p>
         )}
       </div>
-      <div className={styles.buttons}>
+      <div className={styles.btn_container}>
         <Button
-          title={dict("catalog.clean_bot")}
-          styleName='btn_clean'
-          icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
-          onclick={() => setOpenCleanBot(true)}
+          title={dict("catalog.massive_update")}
+          styleName='btn_upload'
+          icon={<Icon name='reload' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 0 22 15' />}
         />
-        <Button
-          title={dict("catalog.train_bot")}
-          styleName='btn_dataset'
-          icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
-          onclick={() => setOpenTrainBot(true)}
-        />
+        <Button title={dict("catalog.update_changes")} styleName='btn_add' />
       </div>
       {showPopupCreate && <Form action='post' title={dict("popup.create_product")} setShowPopup={setShowPopupCreate} />}
       {openTrainBot && (
@@ -217,6 +182,20 @@ const Detail = () => {
       {putPopup && (
         <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
       )}
+      {/* <div className={styles.buttons}>
+        <Button
+          title={dict("catalog.clean_bot")}
+          styleName='btn_clean'
+          icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
+          onclick={() => setOpenCleanBot(true)}
+        />
+        <Button
+          title={dict("catalog.train_bot")}
+          styleName='btn_dataset'
+          icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
+          onclick={() => setOpenTrainBot(true)}
+        />
+      </div> */}
     </section>
   );
 };

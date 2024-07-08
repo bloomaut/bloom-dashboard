@@ -1,24 +1,10 @@
 @import "@/styles/theme.scss";
 
 .catalog_detail_container {
-  @include flex(column, flex-start, flex-start, 20px);
+  @include flex(column, flex-start, flex-start, 50px);
   @include width-height(100%, auto);
   color: $text;
   padding: 0 40px;
-  .header_container {
-    @include width-height(100%, auto);
-    .header {
-      @include flex(row, space-between, center);
-      @include width-height(100%, auto);
-      @include fontSize-fontWeight(20px, 400);
-      .title_container {
-        @include flex(row, center, center, 5px);
-        p {
-          margin-top: 5px;
-        }
-      }
-    }
-  }
   .select_container {
     @include flex(row, flex-start, flex-start, 20px);
     @include width-height(50%, auto);
@@ -45,12 +31,8 @@
       border-radius: 10px;
     }
   }
-  .buttons {
-    @include flex(row, flex-end, center, 30px);
+  .btn_container {
     @include width-height(100%, auto);
-  }
-  .trainbot_text {
-    @include fontSize-fontWeight(16px, 400);
-    color: $text;
+    @include flex(row, flex-end, center, 30px);
   }
 }

@@ -53,22 +53,17 @@ const Card = ({ name, _id }: DatasetProps) => {
   };
 
   return (
-    <div className={styles.card}>
-      <Link href={`/catalog/${_id}`} className={styles.name} title={name}>
-        {name}
-      </Link>
-      <div className={styles.btn_container}>
+    <Link href={`/catalog/${_id}`} className={styles.card}>
+      <div className={styles.image_container}>{name}</div>
+      <div className={styles.content}>
+        <div className={styles.title_container}>
+          <h2 className={styles.title}>{name}</h2>
+        </div>
         <Button
           title=''
-          styleName='btn_square'
-          icon={<Icon name='edit_catalog' width={20} height={20} strokeColor='#3A3A3A' viewBox='0 0 20 23' />}
+          styleName='bg_transparent'
+          icon={<Icon name='edit' width={25} height={25} strokeWidth={1.3} strokeColor='#fff' viewBox='0 0 20 22' />}
           onclick={() => setShowPopupEdit(true)}
-        />
-        <Button
-          title=''
-          styleName='btn_square'
-          icon={<Icon name='delete' width={20} height={20} strokeColor='#3A3A3A' viewBox='0 0 23 22' />}
-          onclick={() => setShowPopupDelete(true)}
         />
       </div>
       {showPopupEdit && (
@@ -101,7 +96,7 @@ const Card = ({ name, _id }: DatasetProps) => {
           textAccept={dict("popup.confirm")}
         />
       )}
-    </div>
+    </Link>
   );
 };
 
