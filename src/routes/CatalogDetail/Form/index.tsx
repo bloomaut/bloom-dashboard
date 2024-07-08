@@ -58,6 +58,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
     if (action === "put" && id) {
       const product = datasetDetail?.dataItems.find((item: any) => item._id === id);
       if (product) {
+        setVisibility(product.visibility);
         setFormData(product.data);
       }
     } else {
@@ -75,6 +76,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
     dataset: datasetDetail?.dataSet._id ?? "",
     data: formData,
     order: 0,
+    visibility: visibility,
   };
 
   const handleFileUpload = async () => {
@@ -89,6 +91,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
             listimage: logoUrl,
           },
           order: 0,
+          visibility: visibility,
         };
       } else {
         notifyError(dict("toast.error_uploading"));
@@ -117,6 +120,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
           const data = {
             data: dataToSend.data,
             order: 0,
+            visibility: visibility,
           };
           await putDataItem(data, id);
         }
@@ -226,7 +230,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
           </div>
           <div className={styles.media}>
             <label className={styles.label}>Photo product</label>
-            <DragAndDrop file={file} setFile={setFile} img='Logo' />
+            <DragAndDrop file={action === "put" ? formData.listimage : file} setFile={setFile} img='Logo' />
           </div>
         </div>
         <div className={styles.button_container}>

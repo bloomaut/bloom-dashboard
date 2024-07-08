@@ -1,13 +1,14 @@
 import styles from "./styles.module.scss";
 import Icon from "../Icon";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useBusinessContext } from "@/context/BusinessContext";
+import default_image from "/public/assets/default_image.webp";
 import Button from "../Button";
 
 interface FileDragDropProps {
@@ -22,6 +23,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
   const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const businessPage = pathname?.includes("business");
   const myCollectionPage = pathname?.includes("my-collection");
@@ -69,6 +71,14 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
     maxFiles: 1,
   });
 
+  useEffect(() => {
+    if (file instanceof File && file.type.includes("image")) {
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+  }, [file]);
+
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
@@ -77,9 +87,12 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
         <span>{dict("upload")}</span> {dict("drag_drop")}
       </p>
       {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={100} height={100} />}
-      {file?.type.includes("image") && (
-        <Image src={URL.createObjectURL(file)} alt={file.name} width={100} height={100} />
-      )}
+      {file &&
+        (typeof file === "string" ? (
+          <Image src={file} alt='Image' width={300} height={300} />
+        ) : (
+          imageUrl && <Image src={imageUrl} alt={file.name} width={100} height={100} />
+        ))}
     </div>
   );
 };
