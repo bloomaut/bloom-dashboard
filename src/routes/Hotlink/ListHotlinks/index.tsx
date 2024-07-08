@@ -14,32 +14,47 @@ const ListHotlinks = () => {
   const dict = useTranslations("dict.hotlinks.list");
   const { hotlinksList, filteredHotlinks, setFilteredHotlinks, loading } = useFlakesContext();
   const [currentItems, setCurrentItems] = useState<HotlinkList[]>([]);
+  const [currentItemsFiltered, setCurrentItemsFiltered] = useState<HotlinkList[]>([]);
 
   useEffect(() => {
     if (searchValue) {
-      hotlinksList.map(hotlink => {
-        if (hotlink.customer?.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase())) {
-          setFilteredHotlinks(hotlink);
-        } else if (hotlink.flake_power_app.skinx.title.toLowerCase().includes(searchValue.toLowerCase())) {
-          setFilteredHotlinks(hotlink);
+      console.log(searchValue);
+      setFilteredHotlinks([]);
+      hotlinksList.forEach(hotlink => {
+        if (
+          hotlink.customer?.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          hotlink.flake_power_app.skinx.title.toLowerCase().includes(searchValue.toLowerCase())
+        ) {
+          setFilteredHotlinks(prevItems => {
+            if (!prevItems.some(item => item.id === hotlink.id)) {
+              return [...prevItems, hotlink];
+            }
+            return prevItems;
+          });
         }
       });
     } else {
       setSearchValue("");
-      setFilteredHotlinks(null);
+      setFilteredHotlinks([]);
     }
   }, [searchValue]);
-
+  console.log(hotlinksList[4], "S");
   const handlePageChange = (page: number = 1, itemsPerPage: number = 5) => {
     //Cantidad por default de items = 5 y pagina default= 1
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     setCurrentItems(hotlinksList.slice(startIndex, endIndex));
   };
+  const handlePageChangeFilter = (page: number = 1, itemsPerPage: number = 5) => {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setCurrentItemsFiltered(filteredHotlinks.slice(startIndex, endIndex));
+  };
 
   useEffect(() => {
     handlePageChange();
-  }, [hotlinksList]);
+    handlePageChangeFilter();
+  }, [hotlinksList, filteredHotlinks]);
 
   return (
     <div className={styles.container}>
@@ -61,8 +76,8 @@ const ListHotlinks = () => {
       <div className={styles.rows_container}>
         {loading ? (
           <LoadingSpinner /> // Si está cargando, mostramos el spinner
-        ) : filteredHotlinks ? (
-          <TableRow key={filteredHotlinks.id} hotlink={filteredHotlinks} /> // Si existe un hotlink filtrado, se muestra
+        ) : filteredHotlinks.length > 0 ? (
+          currentItemsFiltered.map((hotlink, index) => <TableRow key={index} hotlink={hotlink} />) // Si existe un hotlink filtrado, se muestra
         ) : !hotlinksList || hotlinksList.length === 0 ? (
           <p className={styles.text}>{dict("empty")}</p> // Si la lista está vacía o no existe, mostramos el texto "empty"
         ) : (
@@ -70,9 +85,15 @@ const ListHotlinks = () => {
           currentItems.map(hotlink => <TableRow key={hotlink.id} hotlink={hotlink} />)
         )}
       </div>
-      {!filteredHotlinks && (
-        <Pagination totalItems={hotlinksList.length} itemsPerPage={5} onPageChange={handlePageChange} />
-      )}
+
+      {filteredHotlinks.length === 0 && //Paginacion inicial
+        hotlinksList.length > 5 && (
+          <Pagination totalItems={hotlinksList.length} itemsPerPage={5} onPageChange={handlePageChange} />
+        )}
+      {filteredHotlinks.length > 0 && //Paginacion al filtrar
+        filteredHotlinks.length > 5 && (
+          <Pagination totalItems={filteredHotlinks.length} itemsPerPage={5} onPageChange={handlePageChangeFilter} />
+        )}
     </div>
   );
 };

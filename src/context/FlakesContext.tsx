@@ -17,8 +17,8 @@ interface Context {
   setId: (i: string) => void;
   hotlinksList: HotlinkList[];
   setHotlinksList: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
-  filteredHotlinks: HotlinkList | null;
-  setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList | null>>;
+  filteredHotlinks: HotlinkList[];
+  setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
   getList: () => Promise<void>;
   getDiffusionLink: (flakeId: string) => Promise<string | null>;
 }
@@ -33,8 +33,8 @@ const FlakesContext = createContext<Context>({
   setId: () => "",
   hotlinksList: [],
   setHotlinksList: () => [],
-  filteredHotlinks: null,
-  setFilteredHotlinks: () => null,
+  filteredHotlinks: [],
+  setFilteredHotlinks: () => [],
   getList: () => Promise.resolve(),
   getDiffusionLink: () => Promise.resolve(null),
 });
@@ -50,7 +50,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
 
   const [id, setId] = useState<string>("");
   const [hotlinksList, setHotlinksList] = useState<HotlinkList[]>([]);
-  const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList | null>(null);
+  const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList[]>([]);
 
   //Fetch sin necesidad de estar logueado
   const fetchData = async () => {
