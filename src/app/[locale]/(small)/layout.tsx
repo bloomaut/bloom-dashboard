@@ -8,9 +8,12 @@ import { useState } from "react";
 // Components
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import SideTrack from "@/components/SideTrack";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const { user } = useUser();
 
   return (
     <div className={styles.container}>
@@ -29,7 +32,8 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
         transition={Slide}
       />
       <div className={styles.inner_container}>
-        <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+        {user && <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />}
+        <SideTrack />
         <div
           className={
             isOpen ? `${styles.children_container}` : `${styles.children_container} ${styles.children_container_closed}`

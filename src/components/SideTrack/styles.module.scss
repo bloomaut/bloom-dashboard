@@ -1,22 +1,30 @@
 @import "@/styles/theme.scss";
 
-.layout_container {
-  @include width-height(100%, 100%);
-  max-width: 1200px;
-  min-height: 100vh;
+.sidetrack_container {
+  @include width-height(250px, 100%);
+  display: grid;
+  grid-template-rows: 1fr 6fr;
   background-color: $white;
-  padding: 40px;
-  margin: auto;
-}
-
-@media (width <= $querySm) {
-  .layout_container {
-    padding: 20px;
+  border-right: 1px solid $lighterGrey;
+  box-sizing: border-box;
+  .title_container {
+    @include flex(column, center, flex-start, 5px);
+    padding: 10px;
+    border-bottom: 1px solid $lighterGrey;
+    .title {
+      @include fontSize-fontWeight(18px, 600);
+      color: $text;
+    }
+    .description {
+      @include fontSize-fontWeight(16px, 400);
+      color: $lightGrey;
+    }
   }
-}
-
-@media (min-width: $queryXl) {
-  .layout_container {
-    max-width: 1400px;
+  .steps_container {
+    @include flex(column, space-evenly, center);
+    button {
+      @include width-height(100%, 100%);
+      cursor: pointer;
+    }
   }
 }
