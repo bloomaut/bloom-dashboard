@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useBusinessContext } from "@/context/BusinessContext";
+import Button from "../Button";
 
 interface FileDragDropProps {
   file?: File | null;
@@ -76,6 +77,9 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
         <span>{dict("upload")}</span> {dict("drag_drop")}
       </p>
       {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={100} height={100} />}
+      {file?.type.includes("image") && (
+        <Image src={URL.createObjectURL(file)} alt={file.name} width={100} height={100} />
+      )}
     </div>
   );
 };

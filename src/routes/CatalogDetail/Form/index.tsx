@@ -4,7 +4,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, postFile, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsList, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
+import { PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 // Components
@@ -201,6 +201,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
               value={formData.listname}
               handleChange={handleChange}
             />
+            {checkValidation && <ErrorMessage error={errors.listname} />}
             <Input
               type='textarea'
               textLabel='Description'
@@ -215,33 +216,21 @@ const Form = ({ setShowPopup, action, id }: Form) => {
             <Input
               type='number'
               textLabel='Price'
-              textHolder='$'
+              textHolder=''
               name='listprice'
               value={formData.listprice || ""}
               handleChange={handleChange}
+              inputPrice
             />
+            {checkValidation && <ErrorMessage error={errors.listprice} />}
           </div>
           <div className={styles.media}>
             <label className={styles.label}>Photo product</label>
-
-            {file ? (
-              <>
-                <Image src={URL.createObjectURL(file)} alt='product' width={165} height={165} />
-                <Button
-                  title='Cambiar foto'
-                  styleName='btn_outline'
-                  onclick={() => {
-                    setFile(null);
-                  }}
-                />
-              </>
-            ) : (
-              <DragAndDrop file={file} setFile={setFile} />
-            )}
+            <DragAndDrop file={file} setFile={setFile} img='Logo' />
           </div>
         </div>
         <div className={styles.button_container}>
-          <Button title='Save product' type='submit' />
+          <Button title='Save product' type='submit' loading={loading} />
         </div>
       </div>
     </form>
