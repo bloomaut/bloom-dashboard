@@ -1,13 +1,17 @@
 import styles from "./styles.module.scss";
-import { useTranslations } from "next-intl";
 import Input from "@/components/Input";
+import { useTranslations } from "next-intl";
+import { useBusinessContext } from "@/context/BusinessContext";
 
 const Form = () => {
   const dict = useTranslations("dict.business");
+  const { userData } = useBusinessContext();
 
   const handleChange = () => {
     null;
   };
+
+  console.log(userData);
 
   return (
     <form className={styles.main_form}>
@@ -17,7 +21,7 @@ const Form = () => {
           textHolder={dict("form.name")}
           type='text'
           name='name'
-          value=''
+          value={userData?.name || ""}
           handleChange={handleChange}
         />
         <Input
@@ -25,7 +29,7 @@ const Form = () => {
           textHolder={dict("form.last_name")}
           type='text'
           name='last_name'
-          value=''
+          value={userData?.lastname || ""}
           handleChange={handleChange}
         />
       </div>
@@ -34,13 +38,16 @@ const Form = () => {
         textHolder={dict("form.business_name")}
         type='text'
         name='business_name'
-        value=''
+        value={userData?.client.name || ""}
         handleChange={handleChange}
       />
       <div className={styles.select}>
         <label>{dict("form.type_business")}</label>
         <select>
           <option>Select industry</option>
+          {userData?.client.category &&
+            // No se que dato es ni cual vendrá en category
+            userData?.client.category.map((category: any) => <option key={userData.id}>{category}</option>)}
         </select>
       </div>
       <Input
@@ -48,7 +55,7 @@ const Form = () => {
         textHolder={dict("form.describe_business")}
         type='textarea'
         name='describe_business'
-        value=''
+        value={userData?.client.description || ""}
         handleChange={handleChange}
       />
     </form>
