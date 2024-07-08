@@ -73,4 +73,5 @@ export interface DataSchema {
   name: string;
   dataschema: string;
   order: number;
+  visibility: boolean;
 }

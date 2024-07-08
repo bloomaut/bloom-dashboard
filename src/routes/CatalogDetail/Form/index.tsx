@@ -12,7 +12,7 @@ import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Button from "@/components/Button";
-import CheckBox from "./Checkbox";
+import CheckBox from "../../../components/Checkbox";
 import Image from "next/image";
 import Icon from "@/components/Icon";
 
