@@ -10,7 +10,12 @@
     @include width-height(100%, auto);
     @include flex(row, flex-start, center);
     .image {
-      @include width-height(80px, 80px);
+      @include width-height(80px, 60px);
+      object-fit: contain;
+    }
+    .icon_container {
+      @include flex(row, center, center);
+      @include width-height(80px, 60px);
       object-fit: contain;
     }
   }
