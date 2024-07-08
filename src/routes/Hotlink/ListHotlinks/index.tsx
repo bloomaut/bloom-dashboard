@@ -18,7 +18,6 @@ const ListHotlinks = () => {
 
   useEffect(() => {
     if (searchValue) {
-      console.log(searchValue);
       setFilteredHotlinks([]);
       hotlinksList.forEach(hotlink => {
         if (
