@@ -1,19 +1,23 @@
 import styles from "./styles.module.scss";
+import Icon from "../Icon";
+import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import Icon from "../Icon";
 import { useAppSelector } from "@/store/hooks";
+import { useBusinessContext } from "@/context/BusinessContext";
 
 interface FileDragDropProps {
   file?: File | null;
   setFile: Dispatch<SetStateAction<File | null>>;
+  img?: "Logo" | "Banner";
 }
 
-const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
+const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
   const { notifyError } = useMessageToast();
+  const { userData } = useBusinessContext();
   const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
@@ -21,6 +25,8 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
   const businessPage = pathname?.includes("business");
   const myCollectionPage = pathname?.includes("my-collection");
   const catalogPage = pathname?.includes("catalog");
+  const logo = userData?.client.logo;
+  const banner = "";
 
   const onDrop = (acceptedFiles: File[], fileRejections: any) => {
     // Si hay errores, manejarlos acá
@@ -69,6 +75,7 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
       <p className={styles.text}>
         <span>{dict("upload")}</span> {dict("drag_drop")}
       </p>
+      {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={100} height={100} />}
     </div>
   );
 };
