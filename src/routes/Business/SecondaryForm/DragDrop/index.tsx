@@ -2,7 +2,8 @@ import styles from "./styles.module.scss";
 import DragAndDrop from "@/components/DragAndDrop";
 
 const DragDrop = () => {
-  const handleFile = () => {
+  const handleFile = ({ prop }: PropFile) => {
+    console.log(prop, "S");
     null;
   };
 

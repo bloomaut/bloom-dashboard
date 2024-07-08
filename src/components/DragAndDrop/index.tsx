@@ -13,7 +13,7 @@ interface FileDragDropProps {
 }
 
 const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
-  const { notifyError } = useMessageToast();
+  const { notifyError, notify } = useMessageToast();
   const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
@@ -34,7 +34,7 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
     } else {
       if (catalogPage) {
         if (!acceptedFiles[0].type.includes("image")) {
-          notifyError("Debes seleccionar una imagen");
+          notifyError(dict("error_image"));
         } else {
           setFile(acceptedFiles[0]);
         }
@@ -47,6 +47,15 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
           notifyError("Debes seleccionar una planilla de excel");
         } else {
           setFile(acceptedFiles[0]);
+        }
+      }
+      // Lógica para controlar la carga en my-business
+      if (businessPage) {
+        if (!acceptedFiles[0].type.includes("image")) {
+          notifyError(dict("error_image"));
+        } else {
+          setFile(acceptedFiles[0]);
+          notify(dict("selected_image"));
         }
       }
     }
