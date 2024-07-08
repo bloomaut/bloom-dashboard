@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useBusinessContext } from "@/context/BusinessContext";
-import default_image from "/public/assets/default_image.webp";
 import Button from "../Button";
 
 interface FileDragDropProps {
@@ -76,6 +75,8 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       const url = URL.createObjectURL(file);
       setImageUrl(url);
       return () => URL.revokeObjectURL(url);
+    } else {
+      setImageUrl(null);
     }
   }, [file]);
 
@@ -87,12 +88,9 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
         <span>{dict("upload")}</span> {dict("drag_drop")}
       </p>
       {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={100} height={100} />}
-      {file &&
-        (typeof file === "string" ? (
-          <Image src={file} alt='Image' width={300} height={300} />
-        ) : (
-          imageUrl && <Image src={imageUrl} alt={file.name} width={100} height={100} />
-        ))}
+      {file instanceof File
+        ? imageUrl && <Image src={imageUrl} alt={file.name} width={100} height={100} />
+        : file && <Image src={file} alt='Image' width={300} height={300} />}
     </div>
   );
 };

@@ -54,6 +54,8 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
 
+  const imageUrl = action === "put" && formData.listimage ? formData.listimage : null;
+
   useEffect(() => {
     if (action === "put" && id) {
       const product = datasetDetail?.dataItems.find((item: any) => item._id === id);
@@ -230,7 +232,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
           </div>
           <div className={styles.media}>
             <label className={styles.label}>Photo product</label>
-            <DragAndDrop file={action === "put" ? formData.listimage : file} setFile={setFile} img='Logo' />
+            <DragAndDrop file={file || imageUrl} setFile={setFile} img='Logo' />
           </div>
         </div>
         <div className={styles.button_container}>
