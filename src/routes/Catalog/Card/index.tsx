@@ -1,19 +1,21 @@
 import Button from "@/components/Button";
 import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
-import PopupChildren from "@/components/PopupChildren";
 import PopupConfirm from "@/components/PopupConfirm";
-import Input from "@/components/Input";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { useState } from "react";
 import { useCatalogContext } from "@/context/CatalogContext";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { remove, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
 import { Link } from "@/navigation";
+import Image from "next/image";
+import default_product_image from "/public/assets/default_product_image.png";
+import FormActions from "../FormActions";
+import { useRouter } from "next/navigation";
 
-const Card = ({ name, _id, totalDataItems }: DatasetProps) => {
+const Card = ({ _id, name, description, image, totalDataItems }: DatasetProps) => {
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [catalogName, setCatalogName] = useState(name);
@@ -21,6 +23,8 @@ const Card = ({ name, _id, totalDataItems }: DatasetProps) => {
   const { fetchDatasets } = useCatalogContext();
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
+  const router = useRouter();
+  const locale = useLocale();
 
   const submitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,42 +56,34 @@ const Card = ({ name, _id, totalDataItems }: DatasetProps) => {
     }
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if ((e.target as HTMLDivElement).closest("button")) {
-      e.preventDefault();
-    }
-  };
-
   return (
     <article className={styles.container}>
-      <Link href={`/catalog/${_id}`} className={styles.card} onClick={handleClick}>
-        <div className={styles.image_container}>{name}</div>
-        <div className={styles.content}>
+      <div className={styles.card}>
+        <Link href={`/catalog/${_id}`} className={styles.image_container}>
+          {image ? (
+            <Image src={image} className={styles.image} alt={name} width={140} height={140} />
+          ) : (
+            <Image src={default_product_image} className={styles.default_image} alt={name} width={140} height={140} />
+          )}
+        </Link>
+        <Link href={`/catalog/${_id}`} className={styles.content}>
           <div className={styles.title_container}>
             <h2 className={styles.title} title={name}>
               {name}
             </h2>
             <span>({totalDataItems})</span>
           </div>
-        </div>
+        </Link>
         {showPopupEdit && (
-          <PopupChildren
-            onConfirm={submitEdit}
-            onCancel={() => setShowPopupEdit(false)}
-            title={dict("popup.edit_catalog")}
+          <FormActions
+            action='put'
+            id={_id}
+            name={name}
+            description={description}
+            image={image}
+            fetchDatasets={fetchDatasets}
             setShowConfirmation={setShowPopupEdit}
-            loading={loading}
-            textCancel={dict("popup.cancel")}
-            textAccept={dict("popup.edit")}
-          >
-            <Input
-              type='text'
-              textHolder={dict("popup.name")}
-              name={dict("popup.name")}
-              value={catalogName}
-              handleChange={e => setCatalogName(e.target.value)}
-            />
-          </PopupChildren>
+          />
         )}
         {showPopupDelete && (
           <PopupConfirm
@@ -100,7 +96,7 @@ const Card = ({ name, _id, totalDataItems }: DatasetProps) => {
             textAccept={dict("popup.confirm")}
           />
         )}
-      </Link>
+      </div>
       <div className={styles.btn_edit}>
         <Button
           title=''

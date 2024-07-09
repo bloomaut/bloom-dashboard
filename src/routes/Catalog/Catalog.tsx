@@ -5,14 +5,8 @@ import Card from "./Card";
 import LoadingSpinner from "@/components/Loading";
 import { useTranslations } from "next-intl";
 import Icon from "@/components/Icon";
-import { ChangeEvent, useState } from "react";
-import { post } from "@/services/fetch";
-import { useMessageToast } from "@/hooks/useMessageToast";
-import { useAppSelector } from "@/store/hooks";
-import { ENV } from "@/typescript/types/api";
-import PopupChildren from "@/components/PopupChildren";
-import Input from "@/components/Input";
-import PopupCreate from "./PopupCreate";
+import { useState } from "react";
+import FormActions from "./FormActions";
 
 const Catalog = () => {
   const { datasets, fetchDatasets, loading } = useCatalogContext();
@@ -38,11 +32,7 @@ const Catalog = () => {
           <p>{dict("catalog.empty_datasets")}</p>
         )}
         {showPopupCreate && (
-          <PopupCreate
-            title="Catalog's Information"
-            setShowConfirmation={setShowPopupCreate}
-            fetchDatasets={fetchDatasets}
-          />
+          <FormActions setShowConfirmation={setShowPopupCreate} fetchDatasets={fetchDatasets} action='post' />
         )}
       </div>
     </div>

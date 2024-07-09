@@ -16,9 +16,19 @@
     .image_container {
       @include width-height(100%, 65%);
       @include flex(row, center, center);
+      overflow: hidden;
+
       border-radius: 10px;
       color: $white;
       background: white;
+      .default_image {
+        @include width-height(100px, auto);
+        object-fit: cover;
+      }
+      .image {
+        @include width-height(100%, auto);
+        object-position: top;
+      }
     }
     .content {
       @include width-height(100%, 35%);
@@ -28,7 +38,7 @@
         @include flex(row, flex-start, center, 10px);
         .title {
           @include fontSize-fontWeight(24px, 300);
-          max-width: 150px;
+          max-width: 175px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -43,12 +53,13 @@
     }
   }
   .btn_edit {
-    height: 65.5px;
+    @include width-height(auto, 65px);
     @include flex(column, center, center);
     position: absolute;
     bottom: 0;
     right: 10px;
+    padding-left: 5px;
     border-left: 1px solid $border;
-    padding-left: 10px;
+    background: transparent;
   }
 }
