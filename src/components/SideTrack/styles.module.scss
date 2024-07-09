@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 .sidetrack_container {
-  @include width-height(250px, 100%);
+  @include width-height(280px, 100%);
   display: grid;
   grid-template-rows: 1fr 6fr;
   background-color: $white;
