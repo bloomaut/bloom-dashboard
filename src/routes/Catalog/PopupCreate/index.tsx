@@ -77,9 +77,9 @@ const PopupCreate = ({ setShowConfirmation, title, fetchDatasets }: PopupCreateP
       try {
         const postDataschema = {
           name: formData.category_name,
+          description: formData.category_description,
           dataschema: schema[0]._id,
           order: 0,
-          visibility: visibility,
         };
 
         const response = await post("datasets", postDataschema, ENV.BOX);

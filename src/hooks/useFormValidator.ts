@@ -49,7 +49,9 @@ const useFormValidator = (
       }
 
       if (fieldsToValidate?.includes("category_name")) {
-        errors.category_name = "Debes ingresar un nombre para el catalogo";
+        if (!formData?.category_name || !formData?.category_name.trim()) {
+          errors.category_name = "Debes ingresar un nombre para el catálogo";
+        }
       }
 
       setErrors(errors);

@@ -71,7 +71,8 @@ export interface Field {
 }
 export interface DataSchema {
   name: string;
+  description: string;
   dataschema: string;
   order: number;
-  visibility: boolean;
+  // image: string;
 }
