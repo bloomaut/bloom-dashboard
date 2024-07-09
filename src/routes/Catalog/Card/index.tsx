@@ -52,16 +52,56 @@ const Card = ({ name, _id, totalDataItems }: DatasetProps) => {
     }
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if ((e.target as HTMLDivElement).closest("button")) {
+      e.preventDefault();
+    }
+  };
+
   return (
-    <Link href={`/catalog/${_id}`} className={styles.card}>
-      <div className={styles.image_container}>{name}</div>
-      <div className={styles.content}>
-        <div className={styles.title_container}>
-          <h2 className={styles.title} title={name}>
-            {name}
-          </h2>
-          <span>({totalDataItems})</span>
+    <article className={styles.container}>
+      <Link href={`/catalog/${_id}`} className={styles.card} onClick={handleClick}>
+        <div className={styles.image_container}>{name}</div>
+        <div className={styles.content}>
+          <div className={styles.title_container}>
+            <h2 className={styles.title} title={name}>
+              {name}
+            </h2>
+            <span>({totalDataItems})</span>
+          </div>
         </div>
+        {showPopupEdit && (
+          <PopupChildren
+            onConfirm={submitEdit}
+            onCancel={() => setShowPopupEdit(false)}
+            title={dict("popup.edit_catalog")}
+            setShowConfirmation={setShowPopupEdit}
+            loading={loading}
+            textCancel={dict("popup.cancel")}
+            textAccept={dict("popup.edit")}
+          >
+            <Input
+              type='text'
+              textHolder={dict("popup.name")}
+              name={dict("popup.name")}
+              value={catalogName}
+              handleChange={e => setCatalogName(e.target.value)}
+            />
+          </PopupChildren>
+        )}
+        {showPopupDelete && (
+          <PopupConfirm
+            onConfirm={submitDelete}
+            onCancel={() => setShowPopupDelete(false)}
+            setShowConfirmation={setShowPopupDelete}
+            title={dict("popup.delete")}
+            loading={loading}
+            textCancel={dict("popup.cancel")}
+            textAccept={dict("popup.confirm")}
+          />
+        )}
+      </Link>
+      <div className={styles.btn_edit}>
         <Button
           title=''
           styleName='bg_transparent'
@@ -69,37 +109,7 @@ const Card = ({ name, _id, totalDataItems }: DatasetProps) => {
           onclick={() => setShowPopupEdit(true)}
         />
       </div>
-      {showPopupEdit && (
-        <PopupChildren
-          onConfirm={submitEdit}
-          onCancel={() => setShowPopupEdit(false)}
-          title={dict("popup.edit_catalog")}
-          setShowConfirmation={setShowPopupEdit}
-          loading={loading}
-          textCancel={dict("popup.cancel")}
-          textAccept={dict("popup.edit")}
-        >
-          <Input
-            type='text'
-            textHolder={dict("popup.name")}
-            name={dict("popup.name")}
-            value={catalogName}
-            handleChange={e => setCatalogName(e.target.value)}
-          />
-        </PopupChildren>
-      )}
-      {showPopupDelete && (
-        <PopupConfirm
-          onConfirm={submitDelete}
-          onCancel={() => setShowPopupDelete(false)}
-          setShowConfirmation={setShowPopupDelete}
-          title={dict("popup.delete")}
-          loading={loading}
-          textCancel={dict("popup.cancel")}
-          textAccept={dict("popup.confirm")}
-        />
-      )}
-    </Link>
+    </article>
   );
 };
 
