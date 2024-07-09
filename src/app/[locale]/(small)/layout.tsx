@@ -15,6 +15,8 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const { user } = useUser();
 
+  const showTrack = false;
+
   return (
     <div className={styles.container}>
       <Navbar />
@@ -33,7 +35,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
       />
       <div className={styles.inner_container}>
         {user && <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />}
-        <SideTrack />
+        {showTrack && <SideTrack />}
         <div
           className={
             isOpen ? `${styles.children_container}` : `${styles.children_container} ${styles.children_container_closed}`
