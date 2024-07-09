@@ -104,9 +104,9 @@ const Form = ({ setShowPopup, action, id }: Form) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
+      setLoading(true);
       try {
         if (action === "post") {
           const data = await handleFileUpload();
