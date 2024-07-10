@@ -52,6 +52,7 @@ const SideTrack = () => {
         {data.map(btn => {
           return (
             <ItemTrack
+              key={btn.title}
               title={btn.title}
               iconH={btn.iconH}
               iconW={btn.iconW}
