@@ -21,6 +21,7 @@ interface FormActionsProps {
   id?: string;
   name?: string;
   description?: string;
+  visibility?: boolean;
   image?: string;
 }
 
@@ -28,11 +29,13 @@ interface InitialValuesProps {
   category_name: string;
   category_description: string;
   category_image: File | null;
+  category_visibility: boolean;
 }
 const initialValues: InitialValuesProps = {
   category_name: "",
   category_description: "",
   category_image: null,
+  category_visibility: true,
 };
 
 const FormActions = ({
@@ -42,13 +45,14 @@ const FormActions = ({
   id,
   name,
   description,
+  visibility,
   image,
 }: FormActionsProps) => {
   const [formData, setFormData] = useState(initialValues);
   const [popupDelete, setPopupDelete] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checkValidation, setCheckValidation] = useState(false);
-  const [visibility, setVisibility] = useState(false);
+  const [newVisibility, setNewVisibility] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState(false);
   const schema = useAppSelector(state => state.dataschema);
@@ -67,7 +71,10 @@ const FormActions = ({
   };
 
   const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVisibility(e.target.checked);
+    setFormData(prevState => ({
+      ...prevState,
+      category_visibility: e.target.checked,
+    }));
   };
 
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
@@ -120,7 +127,7 @@ const FormActions = ({
             order: 0,
             description: formData.category_description,
             image: postDataschema.image || formData.category_image,
-            visibility: visibility,
+            visibility: formData.category_visibility,
           };
 
           response = await update("datasets", updatedDataset, id, ENV.BOX);
@@ -171,10 +178,11 @@ const FormActions = ({
         category_name: name || "",
         category_description: description || "",
         category_image: image as unknown as File | null,
+        category_visibility: visibility ?? true,
       });
       setFile(null);
     }
-  }, [action, name, description, image]);
+  }, [action, name, description, image, visibility]);
 
   useEffect(() => {
     if (checkValidation && Object.keys(errors).length === 0) {
@@ -210,7 +218,7 @@ const FormActions = ({
               value={formData.category_description}
               handleChange={handleChange}
             />
-            <CheckBox text='Visibile on my apps' active={visibility} onChange={handleVisibility} />
+            <CheckBox text='Visibile on my apps' active={formData.category_visibility} onChange={handleVisibility} />
           </div>
           <div className={styles.media}>
             <label className={styles.label}>Photo product</label>

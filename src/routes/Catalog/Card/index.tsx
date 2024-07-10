@@ -9,7 +9,7 @@ import Image from "next/image";
 import default_product_image from "/public/assets/default_product_image.png";
 import FormActions from "../FormActions";
 
-const Card = ({ _id, name, description, image, totalDataItems }: DatasetProps) => {
+const Card = ({ _id, name, description, image, visibility, totalDataItems }: DatasetProps) => {
   const { fetchDatasets } = useCatalogContext();
   const [showPopup, setShowPopup] = useState(false);
 
@@ -38,6 +38,7 @@ const Card = ({ _id, name, description, image, totalDataItems }: DatasetProps) =
             name={name}
             description={description}
             image={image}
+            visibility={visibility}
             fetchDatasets={fetchDatasets}
             setShowConfirmation={setShowPopup}
           />
