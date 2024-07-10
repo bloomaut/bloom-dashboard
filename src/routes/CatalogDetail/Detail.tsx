@@ -81,39 +81,39 @@ const Detail = () => {
   //   if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
   // };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
-    }
-  };
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     setSelectedFile(event.target.files[0]);
+  //   }
+  // };
 
-  const submitExcel = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setLoading(true);
-    if (selectedFile && uploadPopup) {
-      const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
-      if (!response.error && response.data.statusCode === 201) {
-        fetchDatasetById();
-        notify(dict("toast.success_file"));
-      } else {
-        notifyError(dict("toast.error_uploading"));
-      }
-      setUploadPopup(false);
-    } else if (selectedFile && putPopup) {
-      const response = await putFile(`datasets/${id}/update`, selectedFile, ENV.BOX);
-      if (!response.error && response.data.statusCode === 200) {
-        fetchDatasetById();
-        notify(dict("toast.success_update"));
-      } else {
-        notifyError(dict("toast.error_update"));
-      }
-      setPutPopup(false);
-    }
-  };
+  // const submitExcel = async (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   setLoading(true);
+  //   if (selectedFile && uploadPopup) {
+  //     const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
+  //     if (!response.error && response.data.statusCode === 201) {
+  //       fetchDatasetById();
+  //       notify(dict("toast.success_file"));
+  //     } else {
+  //       notifyError(dict("toast.error_uploading"));
+  //     }
+  //     setUploadPopup(false);
+  //   } else if (selectedFile && putPopup) {
+  //     const response = await putFile(`datasets/${id}/update`, selectedFile, ENV.BOX);
+  //     if (!response.error && response.data.statusCode === 200) {
+  //       fetchDatasetById();
+  //       notify(dict("toast.success_update"));
+  //     } else {
+  //       notifyError(dict("toast.error_update"));
+  //     }
+  //     setPutPopup(false);
+  //   }
+  // };
 
   return (
     <section className={styles.catalog_detail_container}>
-      <Header name={datasetDetail?.dataSet.name} />
+      <Header name={datasetDetail?.dataSet.name} id={id} />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (
@@ -170,7 +170,7 @@ const Detail = () => {
           <p className={styles.trainbot_text}>{dict("catalog.clean_bots_text")}</p>
         </PopupChildren>
       )} */}
-      {uploadPopup && (
+      {/* {uploadPopup && (
         <PopupExcel
           setFunction={setUploadPopup}
           handleFileChange={handleFileChange}
@@ -180,7 +180,7 @@ const Detail = () => {
       )}
       {putPopup && (
         <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
-      )}
+      )} */}
       {/* <div className={styles.buttons}>
         <Button
           title={dict("catalog.clean_bot")}

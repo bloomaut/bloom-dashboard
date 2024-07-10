@@ -23,6 +23,10 @@
       border-bottom: 1px solid $blue;
     }
   }
+  .text_excel {
+    @extend .text;
+    max-width: none;
+  }
   img {
     @include width-height(100%, 100%);
     object-fit: cover;
@@ -35,4 +39,12 @@
 }
 .isActive {
   border: 1px solid $orange;
+}
+
+.container_excel {
+  @include width-height(100%, auto);
+  @include flex(row, center, center, 20px);
+  padding: 30px;
+  background: none;
+  border: 1px solid $border;
 }
