@@ -15,14 +15,9 @@
       @include width-height(100%, 65%);
       @include flex(row, center, center);
       overflow: hidden;
-
       border-radius: 10px;
       color: $white;
       background: white;
-      .default_image {
-        @include width-height(100px, auto);
-        object-fit: cover;
-      }
       .image {
         @include width-height(100%, auto);
         object-position: top;
