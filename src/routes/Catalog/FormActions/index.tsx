@@ -52,7 +52,6 @@ const FormActions = ({
   const [popupDelete, setPopupDelete] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checkValidation, setCheckValidation] = useState(false);
-  const [newVisibility, setNewVisibility] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState(false);
   const schema = useAppSelector(state => state.dataschema);
