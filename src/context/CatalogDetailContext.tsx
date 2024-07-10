@@ -7,6 +7,8 @@ import { useParams } from "next/navigation";
 interface CatalogDetailContextType {
   datasetDetail: any | null;
   fetchDatasetById: () => Promise<void>;
+  setLoading: (value: boolean) => void;
+  loading: boolean;
 }
 
 const CatalogDetailContext = createContext<CatalogDetailContextType>({
@@ -14,6 +16,10 @@ const CatalogDetailContext = createContext<CatalogDetailContextType>({
   fetchDatasetById: async () => {
     throw new Error("updateDataset function not implemented");
   },
+  setLoading: () => {
+    throw new Error("setLoading function not implemented");
+  },
+  loading: true,
 });
 
 export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) => {
@@ -38,6 +44,8 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
       value={{
         datasetDetail,
         fetchDatasetById,
+        setLoading,
+        loading,
       }}
     >
       {children}

@@ -20,23 +20,18 @@ const Header = ({ name, id }: Header) => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [bulkLoadPopup, setBulkLoadPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
-  const dict = useTranslations("dict.catalog");
+  const { loading, setLoading, fetchDatasetById } = useCatalogDetailContext();
+  const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
-      notify(dict("toast.success_file_add"));
-    }
-  };
 
   const handleBulkLoad = async (event: React.FormEvent) => {
     event.preventDefault();
     if (selectedFile && bulkLoadPopup) {
+      setLoading(true);
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
       if (!response.error && response.data.statusCode === 201) {
         fetchDatasetById();
+        setLoading(false);
         notify(dict("toast.success_file"));
       } else {
         notifyError(dict("toast.error_uploading"));
@@ -53,13 +48,13 @@ const Header = ({ name, id }: Header) => {
       </div>
       <div className={styles.btn_container}>
         <Button
-          title={dict("massive_upload")}
+          title={dict("catalog.massive_upload")}
           styleName='btn_upload'
           icon={<Icon name='arrow_upload' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 -5 30 30' />}
           onclick={() => setBulkLoadPopup(true)}
         />
         <Button
-          title={dict("add_product")}
+          title={dict("catalog.add_product")}
           styleName='btn_add'
           icon={<Icon name='add' viewBox='0 0 20 22' strokeColor='#fff' width={18} height={18} strokeWidth={2} />}
           onclick={() => setShowPopupCreate(true)}
@@ -67,13 +62,14 @@ const Header = ({ name, id }: Header) => {
       </div>
       {bulkLoadPopup && (
         <PopupExcel
-          title='Bulk load from Excel'
-          subtitle='Download the template and import the products from Excel'
+          type='upload'
+          title={dict("catalog.popup_excel.massive_upload_title")}
+          subtitle={dict("catalog.popup_excel.massive_upload_subtitle")}
           id={typeof id === "string" ? id : id[0]}
+          loading={loading}
           file={selectedFile}
           setFile={setSelectedFile}
           setFunction={setBulkLoadPopup}
-          handleFileChange={handleFileChange}
           submitFunction={handleBulkLoad}
         />
       )}

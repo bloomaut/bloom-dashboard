@@ -103,7 +103,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       )}
       <p className={img === "Excel" ? styles.text_excel : styles.text}>
         {img === "Excel" && file ? (
-          <p>{file?.name}</p>
+          <span>{file?.name}</span>
         ) : (
           <>
             <span>{dict("upload")}</span> {dict("drag_drop")}

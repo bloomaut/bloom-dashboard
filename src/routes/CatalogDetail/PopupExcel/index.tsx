@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import DragAndDrop from "@/components/DragAndDrop";
 
 interface PopupExcelProps {
+  type: string;
   id: string;
   title: string;
   subtitle: string;
@@ -17,11 +18,11 @@ interface PopupExcelProps {
   setFile: (value: React.SetStateAction<File | null>) => void;
   setFunction: (value: React.SetStateAction<boolean>) => void;
   submitFunction: (event: React.FormEvent) => Promise<void>;
-  handleFileChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
   loading?: boolean;
 }
 
 const PopupExcel = ({
+  type,
   id,
   title,
   subtitle,
@@ -29,21 +30,10 @@ const PopupExcel = ({
   setFile,
   setFunction,
   submitFunction,
-  handleFileChange,
   loading,
 }: PopupExcelProps) => {
-  const [fileName, setFileName] = useState<string | null>(null);
   const [closing, setClosing] = useState(false);
   const dict = useTranslations("dict");
-
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileChange(event);
-    if (event.target.files && event.target.files.length > 0) {
-      setFileName(event.target.files[0].name);
-    } else {
-      setFileName(null);
-    }
-  };
 
   const handleExcelDownload = async (type: string) => {
     if (id) await getExcelCatalog(id, type, "getExcelCatalog");
@@ -70,15 +60,15 @@ const PopupExcel = ({
         </header>
         <div className={styles.btn_template}>
           <Button
-            title='Donwload template'
+            title={dict("catalog.popup_excel.download_template")}
             icon={<Icon name='arrow_download' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 -3 30 30' />}
             styleName='btn_upload'
-            onclick={() => handleExcelDownload("template")}
+            onclick={() => handleExcelDownload(type === "upload" ? "template" : "download")}
           />
         </div>
         <DragAndDrop file={file} setFile={setFile} img='Excel' />
         <div className={styles.btn_upload}>
-          <Button title={title.includes("Massive") ? "Update" : "Upload"} type='submit' loading={loading} />
+          <Button title={type === "upload" ? "Upload" : "Update"} type='submit' loading={loading} />
         </div>
       </div>
     </form>
