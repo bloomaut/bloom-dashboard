@@ -96,7 +96,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       <p className={styles.text}>
         <span>{dict("upload")}</span> {dict("drag_drop")}
       </p>
-      {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={100} height={100} />}
+      {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={300} height={100} />}
       {file instanceof File
         ? imageUrl && <Image src={imageUrl} alt={file.name} width={100} height={100} />
         : file && <Image src={file} alt='Image' width={300} height={300} />}
