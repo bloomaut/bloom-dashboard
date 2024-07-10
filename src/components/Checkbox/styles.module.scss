@@ -1,0 +1,38 @@
+@import "@/styles/theme.scss";
+
+.switch_button {
+  @include flex(row, flex-start, center, 5px);
+  .checkbox {
+    display: none;
+  }
+  .label {
+    background-color: #e8e8e8;
+    width: 30px;
+    height: 18px;
+    border-radius: 3rem;
+    display: inline-block;
+    position: relative;
+    margin-bottom: -1px;
+    cursor: pointer;
+    &:before {
+      transition: 0.2s;
+      display: block;
+      position: absolute;
+      width: 13px;
+      height: 16px;
+      background-color: #fff;
+      content: "";
+      border-radius: 50%;
+      border: 1px solid #64748b;
+    }
+  }
+  .checkbox:checked + .label {
+    background-color: $green;
+    &:before {
+      transform: translateX(1rem);
+    }
+  }
+  .text {
+    @include fontSize-fontWeight(15px, 400);
+  }
+}

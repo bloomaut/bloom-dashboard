@@ -5,7 +5,10 @@
   @include flex(column, flex-start, flex-start, 5px);
   padding: 5px 0;
   position: relative;
-  .label,
+  .label {
+    @include fontSize-fontWeight(14px, 400);
+    color: $lightGrey;
+  }
   .input {
     @include fontSize-fontWeight(14px, 400);
     color: $text;
@@ -20,6 +23,17 @@
     &::placeholder {
       color: $lighterGrey;
     }
+  }
+  .input_price {
+    @extend .input;
+    padding-left: 20px;
+  }
+  .sign {
+    position: absolute;
+    top: 32px;
+    left: 8px;
+    @include fontSize-fontWeight(16px, 400);
+    color: $text;
   }
   .description_input {
     @include width-height(100%, 90px);

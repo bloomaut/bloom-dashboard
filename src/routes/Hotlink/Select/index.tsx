@@ -8,7 +8,7 @@ import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 // Components
 import flake_icon_01 from "/public/flake_icon_01.svg";
 import flake_icon_02 from "/public/flake_icon_02.svg";
-import Loading from "@/app/[locale]/(no layout)/policy/loading";
+import LoadingSpinner from "@/components/Loading";
 
 const Select = () => {
   const { flakes, loading, selectedFlakeId, setSelectedFlakeId } = useFlakesContext();
@@ -84,7 +84,7 @@ const Select = () => {
             )}
           </div>
         ) : (
-          <Loading />
+          <LoadingSpinner />
         )}
       </div>
     </div>
