@@ -1,4 +1,4 @@
-import { FormEvent, SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import useFormValidator from "@/hooks/useFormValidator";
 import Input from "@/components/Input";
@@ -216,23 +216,22 @@ const FormActions = ({
               icon={<Icon name='delete' width={20} height={20} strokeColor='#ff0000' viewBox='0 0 23 26' />}
               styleName='btn_delete'
               onclick={() => setPopupDelete(true)}
-              loading={!popupDelete && loading}
             />
           )}
           <Button title='Save catalog' type='submit' loading={!popupDelete && loading} />
         </div>
-        {popupDelete && (
-          <PopupConfirm
-            onConfirm={handleDelete}
-            onCancel={() => setPopupDelete(false)}
-            setShowConfirmation={setPopupDelete}
-            title={dict("popup.delete")}
-            loading={loading}
-            textCancel={dict("popup.cancel")}
-            textAccept={dict("popup.confirm")}
-          />
-        )}
       </div>
+      {popupDelete && (
+        <PopupConfirm
+          onConfirm={handleDelete}
+          onCancel={() => setPopupDelete(false)}
+          setShowConfirmation={setPopupDelete}
+          title={dict("popup.delete")}
+          loading={loading}
+          textCancel={dict("popup.cancel")}
+          textAccept={dict("popup.confirm")}
+        />
+      )}
     </form>
   );
 };

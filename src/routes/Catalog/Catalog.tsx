@@ -32,7 +32,7 @@ const Catalog = () => {
           <p>{dict("catalog.empty_datasets")}</p>
         )}
         {showPopupCreate && (
-          <FormActions setShowConfirmation={setShowPopupCreate} fetchDatasets={fetchDatasets} action='post' />
+          <FormActions action='post' setShowConfirmation={setShowPopupCreate} fetchDatasets={fetchDatasets} />
         )}
       </div>
     </div>
