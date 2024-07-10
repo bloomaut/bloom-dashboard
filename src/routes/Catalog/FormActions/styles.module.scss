@@ -80,6 +80,10 @@
   }
 }
 
+.closing {
+  animation: fadeOutPopup 0.3s ease-in-out forwards;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -95,5 +99,14 @@
   }
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes fadeOutPopup {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

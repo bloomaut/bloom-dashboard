@@ -50,6 +50,7 @@ const FormActions = ({
   const [checkValidation, setCheckValidation] = useState(false);
   const [visibility, setVisibility] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [closing, setClosing] = useState(false);
   const schema = useAppSelector(state => state.dataschema);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
@@ -157,6 +158,13 @@ const FormActions = ({
       });
   };
 
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setShowConfirmation(false);
+    }, 300);
+  };
+
   useEffect(() => {
     if (action === "put") {
       setFormData({
@@ -175,11 +183,11 @@ const FormActions = ({
   }, [errors]);
 
   return (
-    <form className={styles.form_container} onSubmit={handleSubmit}>
+    <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
       <div className={styles.inner_container}>
         <p className={styles.title}>Catalog's Information</p>
         <div className={styles.btn_close}>
-          <button onClick={() => setShowConfirmation(false)}>
+          <button onClick={handleClose} type='button'>
             <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
           </button>
         </div>

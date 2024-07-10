@@ -50,6 +50,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   const [visibility, setVisibility] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const [closing, setClosing] = useState(false);
   const dict = useTranslations("dict");
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
@@ -161,6 +162,13 @@ const Form = ({ setShowPopup, action, id }: Form) => {
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
 
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 300);
+  };
+
   useEffect(() => {
     if (checkValidation && Object.keys(errors).length === 0) {
       setCheckValidation(false);
@@ -168,10 +176,10 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   }, [errors]);
 
   return (
-    <form className={styles.form_container} onSubmit={handleSubmit}>
+    <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
       <div className={styles.inner_container} ref={dropdownRef}>
         <div className={styles.btn_close}>
-          <button onClick={() => setShowPopup(false)}>
+          <button onClick={handleClose} type='button'>
             <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
           </button>
         </div>
