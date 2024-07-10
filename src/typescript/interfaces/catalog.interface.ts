@@ -27,10 +27,14 @@ interface DataItems {
 export interface DatasetProps {
   _id: string;
   name: string;
+  description: string;
+  image: string;
+  visibility: boolean;
   dataschema: string;
   createdAt: string;
   updatedAt: string;
   totalDataItems: number;
+  order: number;
 }
 
 export interface UpdateDataset {
@@ -71,6 +75,8 @@ export interface Field {
 }
 export interface DataSchema {
   name: string;
+  description: string;
   dataschema: string;
   order: number;
+  // image: string;
 }

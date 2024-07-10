@@ -2,18 +2,18 @@ import styles from "./styles.module.scss";
 import useFormValidator from "@/hooks/useFormValidator";
 import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { post, postFile, update } from "@/services/fetch";
+import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { handleFileUpload } from "@/utils/handleFileUpload";
 // Components
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Button from "@/components/Button";
-import CheckBox from "./Checkbox";
-import Image from "next/image";
+import CheckBox from "../../../components/Checkbox";
 import Icon from "@/components/Icon";
 
 interface Form {
@@ -50,6 +50,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   const [visibility, setVisibility] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const [closing, setClosing] = useState(false);
   const dict = useTranslations("dict");
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
@@ -74,51 +75,33 @@ const Form = ({ setShowPopup, action, id }: Form) => {
     [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
-  let dataToSend = {
-    dataset: datasetDetail?.dataSet._id ?? "",
-    data: formData,
-    order: 0,
-    visibility: visibility,
-  };
-
-  const handleFileUpload = async () => {
-    if (file) {
-      const response = await postFile("small-files/media", file);
-      if (response.data.statusCode === 201) {
-        const logoUrl = response.data.result.media.url;
-        return {
-          dataset: datasetDetail?.dataSet._id ?? "",
-          data: {
-            ...formData,
-            listimage: logoUrl,
-          },
-          order: 0,
-          visibility: visibility,
-        };
-      } else {
-        notifyError(dict("toast.error_uploading"));
-        return null;
-      }
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
       setLoading(true);
       try {
-        if (action === "post") {
-          const data = await handleFileUpload();
-          if (data) {
-            dataToSend = data;
+        const dataToSend = {
+          dataset: datasetDetail?.dataSet._id ?? "",
+          data: formData,
+          order: 0,
+          visibility: visibility,
+        };
+
+        // UPLOAD IMAGE
+        if (file) {
+          const uploadedImageUrl = await handleFileUpload(file);
+          if (uploadedImageUrl) {
+            dataToSend.data.listimage = uploadedImageUrl;
+          } else {
+            throw new Error("File upload failed");
           }
+        }
+
+        // METHOD VERIFICATION
+        if (action === "post") {
           await postDataItem(dataToSend);
         } else if (action === "put" && id) {
-          const updatedData = await handleFileUpload();
-          if (updatedData) {
-            dataToSend = updatedData;
-          }
           const data = {
             data: dataToSend.data,
             order: 0,
@@ -126,6 +109,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
           };
           await putDataItem(data, id);
         }
+
         setFormData(initialValues);
         setFile(null);
         setCheckValidation(false);
@@ -178,6 +162,13 @@ const Form = ({ setShowPopup, action, id }: Form) => {
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
 
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 300);
+  };
+
   useEffect(() => {
     if (checkValidation && Object.keys(errors).length === 0) {
       setCheckValidation(false);
@@ -185,10 +176,10 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   }, [errors]);
 
   return (
-    <form className={styles.form_container} onSubmit={handleSubmit}>
+    <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
       <div className={styles.inner_container} ref={dropdownRef}>
         <div className={styles.btn_close}>
-          <button onClick={() => setShowPopup(false)}>
+          <button onClick={handleClose} type='button'>
             <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
           </button>
         </div>

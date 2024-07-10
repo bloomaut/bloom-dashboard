@@ -90,6 +90,25 @@
   }
 }
 
+.btn_delete {
+  @extend .btn_outline;
+  color: #ff0000;
+  &:hover {
+    background: #ff0000;
+    svg {
+      path {
+        stroke: #fff;
+        &:nth-of-type(2) {
+          fill: none;
+        }
+        &:nth-of-type(1) {
+          fill: none;
+        }
+      }
+    }
+  }
+}
+
 .btn_playground_outline {
   @extend .btn_reverse;
   position: absolute;

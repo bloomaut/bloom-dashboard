@@ -293,6 +293,15 @@
       "massive_upload": "Massive upload",
       "massive_update": "Massive update",
       "update_changes": "Update changes",
+      "form_actions": {
+        "title": "Catalog information",
+        "name": "Name",
+        "description": "Description",
+        "image": "Photo product",
+        "visibility": "Visible on my apps",
+        "delete": "Delete catalog",
+        "save": "Save catalog"
+      },
       "select": {
         "placeholder_one": "Bulk Load",
         "placeholder_two": "Mass update",
