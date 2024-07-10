@@ -21,6 +21,7 @@ interface FormActionsProps {
   id?: string;
   name?: string;
   description?: string;
+  visibility?: boolean;
   image?: string;
 }
 
@@ -28,11 +29,13 @@ interface InitialValuesProps {
   category_name: string;
   category_description: string;
   category_image: File | null;
+  category_visibility: boolean;
 }
 const initialValues: InitialValuesProps = {
   category_name: "",
   category_description: "",
   category_image: null,
+  category_visibility: true,
 };
 
 const FormActions = ({
@@ -42,13 +45,13 @@ const FormActions = ({
   id,
   name,
   description,
+  visibility,
   image,
 }: FormActionsProps) => {
   const [formData, setFormData] = useState(initialValues);
   const [popupDelete, setPopupDelete] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checkValidation, setCheckValidation] = useState(false);
-  const [visibility, setVisibility] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState(false);
   const schema = useAppSelector(state => state.dataschema);
@@ -67,7 +70,10 @@ const FormActions = ({
   };
 
   const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVisibility(e.target.checked);
+    setFormData(prevState => ({
+      ...prevState,
+      category_visibility: e.target.checked,
+    }));
   };
 
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
@@ -120,7 +126,7 @@ const FormActions = ({
             order: 0,
             description: formData.category_description,
             image: postDataschema.image || formData.category_image,
-            visibility: visibility,
+            visibility: formData.category_visibility,
           };
 
           response = await update("datasets", updatedDataset, id, ENV.BOX);
@@ -171,10 +177,11 @@ const FormActions = ({
         category_name: name || "",
         category_description: description || "",
         category_image: image as unknown as File | null,
+        category_visibility: visibility ?? true,
       });
       setFile(null);
     }
-  }, [action, name, description, image]);
+  }, [action, name, description, image, visibility]);
 
   useEffect(() => {
     if (checkValidation && Object.keys(errors).length === 0) {
@@ -185,7 +192,7 @@ const FormActions = ({
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
       <div className={styles.inner_container}>
-        <p className={styles.title}>Catalog's Information</p>
+        <p className={styles.title}>{dict("catalog.form_actions.title")}</p>
         <div className={styles.btn_close}>
           <button onClick={handleClose} type='button'>
             <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
@@ -195,7 +202,7 @@ const FormActions = ({
           <div className={styles.products_information}>
             <Input
               type='text'
-              textLabel='Category name'
+              textLabel={dict("catalog.form_actions.name")}
               textHolder=''
               name='category_name'
               value={formData.category_name}
@@ -204,29 +211,33 @@ const FormActions = ({
             {checkValidation && <ErrorMessage error={errors.category_name} />}
             <Input
               type='textarea'
-              textLabel='Description'
+              textLabel={dict("catalog.form_actions.description")}
               textHolder=''
               name='category_description'
               value={formData.category_description}
               handleChange={handleChange}
             />
-            <CheckBox text='Visibile on my apps' active={visibility} onChange={handleVisibility} />
+            <CheckBox
+              text={dict("catalog.form_actions.visibility")}
+              active={formData.category_visibility}
+              onChange={handleVisibility}
+            />
           </div>
           <div className={styles.media}>
-            <label className={styles.label}>Photo product</label>
+            <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
             <DragAndDrop file={file || formData.category_image} setFile={setFile} img='Logo' />
           </div>
         </div>
         <div className={action === "put" ? styles.button_container : styles.button}>
           {action === "put" && (
             <Button
-              title='Delete catalog'
+              title={dict("catalog.form_actions.delete")}
               icon={<Icon name='delete' width={20} height={20} strokeColor='#ff0000' viewBox='0 0 23 26' />}
               styleName='btn_delete'
               onclick={() => setPopupDelete(true)}
             />
           )}
-          <Button title='Save catalog' type='submit' loading={!popupDelete && loading} />
+          <Button title={dict("catalog.form_actions.save")} type='submit' loading={!popupDelete && loading} />
         </div>
       </div>
       {popupDelete && (
