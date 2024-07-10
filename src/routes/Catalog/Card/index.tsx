@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { Link } from "@/navigation";
 import Image from "next/image";
-import default_product_image from "/public/assets/default_product_image.png";
 import FormActions from "../FormActions";
 
 const Card = ({ _id, name, description, image, visibility, totalDataItems }: DatasetProps) => {
@@ -20,7 +19,9 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
           {image ? (
             <Image src={image} className={styles.image} alt={name} width={140} height={140} />
           ) : (
-            <Image src={default_product_image} className={styles.default_image} alt={name} width={140} height={140} />
+            <div className={styles.icon_container}>
+              <Icon name='dataset' width={50} height={50} strokeColor={"#BEBEBE"} viewBox='0 0 25 24' />
+            </div>
           )}
         </Link>
         <Link href={`/catalog/${_id}`} className={styles.content}>
