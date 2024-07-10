@@ -22,6 +22,7 @@ const Detail = () => {
 
   // const [openTrainBot, setOpenTrainBot] = useState(false);
   // const [openCleanBot, setOpenCleanBot] = useState(false);
+  const [massiveUpdatePopup, setMassiveUpdatePopup] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [uploadPopup, setUploadPopup] = useState<boolean>(false);
   const [putPopup, setPutPopup] = useState<boolean>(false);
@@ -81,11 +82,11 @@ const Detail = () => {
   //   if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
   // };
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     setSelectedFile(event.target.files[0]);
-  //   }
-  // };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
 
   // const submitExcel = async (event: React.FormEvent) => {
   //   event.preventDefault();
@@ -110,6 +111,10 @@ const Detail = () => {
   //     setPutPopup(false);
   //   }
   // };
+
+  const handleMassiveUpload = async (event: React.FormEvent) => {
+    console.log("Hola");
+  };
 
   return (
     <section className={styles.catalog_detail_container}>
@@ -140,6 +145,7 @@ const Detail = () => {
           title={dict("catalog.massive_update")}
           styleName='btn_upload'
           icon={<Icon name='reload' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 0 22 15' />}
+          onclick={() => setMassiveUpdatePopup(true)}
         />
         <Button title={dict("catalog.update_changes")} styleName='btn_add' />
       </div>
@@ -195,6 +201,18 @@ const Detail = () => {
           onclick={() => setOpenTrainBot(true)}
         />
       </div> */}
+      {massiveUpdatePopup && (
+        <PopupExcel
+          title='Massive update from Excel'
+          subtitle='Download the template and update the products from Excel'
+          id={typeof id === "string" ? id : id[0]}
+          file={selectedFile}
+          setFile={setSelectedFile}
+          setFunction={setMassiveUpdatePopup}
+          handleFileChange={handleFileChange}
+          submitFunction={handleMassiveUpload}
+        />
+      )}
     </section>
   );
 };

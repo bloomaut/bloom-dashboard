@@ -27,7 +27,8 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
 
   const businessPage = pathname?.includes("business");
   const myCollectionPage = pathname?.includes("my-collection");
-  const catalogPage = pathname?.includes("catalog");
+  const catalogPage = pathname?.match(/^\/\w{2}\/catalog\/?$/) !== null;
+  const catalogDetail = pathname?.match(/^\/\w{2}\/catalog\/\w+$/) !== null;
   const logo = userData?.client.logo;
   const banner = "";
 
@@ -52,6 +53,13 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       // Lógica para controlar la carga en my-collection
       if (myCollectionPage) {
         // Solo permitir la carga de planillas de excel
+        if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
+          notifyError("Debes seleccionar una planilla de excel");
+        } else {
+          setFile(acceptedFiles[0]);
+        }
+      }
+      if (img === "Excel" && catalogDetail) {
         if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
           notifyError("Debes seleccionar una planilla de excel");
         } else {
@@ -94,13 +102,18 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
         <Icon name='cloud' viewBox='0 0 33 30' width={30} height={30} strokeWidth={3.18493} strokeColor='#1616a5' />
       )}
       <p className={img === "Excel" ? styles.text_excel : styles.text}>
-        <span>{dict("upload")}</span> {dict("drag_drop")}
+        {img === "Excel" && file ? (
+          <p>{file?.name}</p>
+        ) : (
+          <>
+            <span>{dict("upload")}</span> {dict("drag_drop")}
+          </>
+        )}
       </p>
       {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={100} height={100} />}
       {file instanceof File
         ? imageUrl && <Image src={imageUrl} alt={file.name} width={100} height={100} />
         : file && <Image src={file} alt='Image' width={300} height={300} />}
-      {/* {img === "Excel" && <Image src={excel} width={25} alt='excel' />} */}
     </div>
   );
 };

@@ -18,7 +18,7 @@ interface Header {
 
 const Header = ({ name, id }: Header) => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const [uploadPopup, setUploadPopup] = useState<boolean>(false);
+  const [bulkLoadPopup, setBulkLoadPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const dict = useTranslations("dict.catalog");
@@ -31,9 +31,9 @@ const Header = ({ name, id }: Header) => {
     }
   };
 
-  const submitExcel = async (event: React.FormEvent) => {
+  const handleBulkLoad = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (selectedFile && uploadPopup) {
+    if (selectedFile && bulkLoadPopup) {
       const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
       if (!response.error && response.data.statusCode === 201) {
         fetchDatasetById();
@@ -41,7 +41,7 @@ const Header = ({ name, id }: Header) => {
       } else {
         notifyError(dict("toast.error_uploading"));
       }
-      setUploadPopup(false);
+      setBulkLoadPopup(false);
     }
   };
 
@@ -56,7 +56,7 @@ const Header = ({ name, id }: Header) => {
           title={dict("massive_upload")}
           styleName='btn_upload'
           icon={<Icon name='arrow_upload' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 -5 30 30' />}
-          onclick={() => setUploadPopup(true)}
+          onclick={() => setBulkLoadPopup(true)}
         />
         <Button
           title={dict("add_product")}
@@ -65,13 +65,16 @@ const Header = ({ name, id }: Header) => {
           onclick={() => setShowPopupCreate(true)}
         />
       </div>
-      {uploadPopup && (
+      {bulkLoadPopup && (
         <PopupExcel
+          title='Bulk load from Excel'
+          subtitle='Download the template and import the products from Excel'
+          id={typeof id === "string" ? id : id[0]}
           file={selectedFile}
           setFile={setSelectedFile}
-          setFunction={setUploadPopup}
+          setFunction={setBulkLoadPopup}
           handleFileChange={handleFileChange}
-          submitFunction={submitExcel}
+          submitFunction={handleBulkLoad}
         />
       )}
       {showPopupCreate && <Form action='post' title={dict("popup.create_product")} setShowPopup={setShowPopupCreate} />}

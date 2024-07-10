@@ -13,6 +13,7 @@ import { useTranslations } from "next-intl";
 import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useAppSelector } from "@/store/hooks";
 import PopupConfirm from "@/components/PopupConfirm";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 
 interface FormActionsProps {
   setShowConfirmation: (value: SetStateAction<boolean>) => void;
@@ -55,6 +56,7 @@ const FormActions = ({
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState(false);
   const schema = useAppSelector(state => state.dataschema);
+  const { dropdownRef } = useCloseDropdown(setShowConfirmation);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
@@ -191,7 +193,7 @@ const FormActions = ({
 
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
-      <div className={styles.inner_container}>
+      <div className={styles.inner_container} ref={dropdownRef}>
         <p className={styles.title}>{dict("catalog.form_actions.title")}</p>
         <div className={styles.btn_close}>
           <button onClick={handleClose} type='button'>

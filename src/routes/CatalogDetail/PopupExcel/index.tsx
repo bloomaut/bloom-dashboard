@@ -3,12 +3,16 @@ import PopupChildren from "@/components/PopupChildren";
 import excel from "/public/assets/excel_logo.svg";
 import Icon from "@/components/Icon";
 import Image from "next/image";
+import { getExcelCatalog } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import Button from "@/components/Button";
 import DragAndDrop from "@/components/DragAndDrop";
 
-interface Props {
+interface PopupExcelProps {
+  id: string;
+  title: string;
+  subtitle: string;
   file: File | null;
   setFile: (value: React.SetStateAction<File | null>) => void;
   setFunction: (value: React.SetStateAction<boolean>) => void;
@@ -17,7 +21,17 @@ interface Props {
   loading?: boolean;
 }
 
-const PopupExcel = ({ file, setFile, setFunction, submitFunction, handleFileChange, loading }: Props) => {
+const PopupExcel = ({
+  id,
+  title,
+  subtitle,
+  file,
+  setFile,
+  setFunction,
+  submitFunction,
+  handleFileChange,
+  loading,
+}: PopupExcelProps) => {
   const [fileName, setFileName] = useState<string | null>(null);
   const [closing, setClosing] = useState(false);
   const dict = useTranslations("dict");
@@ -29,6 +43,10 @@ const PopupExcel = ({ file, setFile, setFunction, submitFunction, handleFileChan
     } else {
       setFileName(null);
     }
+  };
+
+  const handleExcelDownload = async (type: string) => {
+    if (id) await getExcelCatalog(id, type, "getExcelCatalog");
   };
 
   const handleClose = () => {
@@ -47,19 +65,20 @@ const PopupExcel = ({ file, setFile, setFunction, submitFunction, handleFileChan
           </button>
         </div>
         <header className={styles.header}>
-          <p className={styles.title}>Massive upload from Excel</p>
-          <p className={styles.text}>Download the template and import the products from Excel</p>
+          <p className={styles.title}>{title}</p>
+          <p className={styles.text}>{subtitle}</p>
         </header>
         <div className={styles.btn_template}>
           <Button
             title='Donwload template'
             icon={<Icon name='arrow_download' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 -3 30 30' />}
             styleName='btn_upload'
+            onclick={() => handleExcelDownload("template")}
           />
         </div>
         <DragAndDrop file={file} setFile={setFile} img='Excel' />
         <div className={styles.btn_upload}>
-          <Button title='Upload' type='submit' loading={loading} />
+          <Button title={title.includes("Massive") ? "Update" : "Upload"} type='submit' loading={loading} />
         </div>
       </div>
     </form>
