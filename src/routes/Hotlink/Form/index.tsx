@@ -11,11 +11,11 @@ import { post } from "@/services/fetch";
 // Components
 import Input from "@/components/Input";
 import SectionTitle from "@/components/SectionTitle";
-import Loading from "@/app/[locale]/(no layout)/policy/loading";
 import Checkbox from "./Checkbox";
 import { Fade } from "react-awesome-reveal";
 import Icon from "@/components/Icon";
 import Button from "@/components/Button";
+import LoadingSpinner from "@/components/Loading";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -146,7 +146,7 @@ const Form = () => {
     <div className={styles.container}>
       <SectionTitle text={dict("hotlinks.form_title")} />
       {loading ? (
-        <Loading />
+        <LoadingSpinner />
       ) : flakes.length ? (
         <Fade triggerOnce>
           <form className={styles.form_container} onSubmit={handleSubmit}>

@@ -1,26 +1,34 @@
 import styles from "./styles.module.scss";
-import { Dispatch, SetStateAction } from "react";
+import Icon from "../Icon";
+import Image from "next/image";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import Icon from "../Icon";
 import { useAppSelector } from "@/store/hooks";
+import { useBusinessContext } from "@/context/BusinessContext";
+import Button from "../Button";
 
 interface FileDragDropProps {
   file?: File | null;
   setFile: Dispatch<SetStateAction<File | null>>;
+  img?: "Logo" | "Banner";
 }
 
-const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
+const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
   const { notifyError, notify } = useMessageToast();
+  const { userData } = useBusinessContext();
   const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const businessPage = pathname?.includes("business");
   const myCollectionPage = pathname?.includes("my-collection");
   const catalogPage = pathname?.includes("catalog");
+  const logo = userData?.client.logo;
+  const banner = "";
 
   const onDrop = (acceptedFiles: File[], fileRejections: any) => {
     // Si hay errores, manejarlos acá
@@ -71,6 +79,16 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
     maxFiles: 1,
   });
 
+  useEffect(() => {
+    if (file instanceof File && file.type.includes("image")) {
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setImageUrl(null);
+    }
+  }, [file]);
+
   return (
     <div {...getRootProps()} className={isDragActive ? `${styles.container} ${styles.isActive}` : styles.container}>
       <input {...getInputProps()} />
@@ -78,6 +96,10 @@ const DragAndDrop = ({ file, setFile }: FileDragDropProps) => {
       <p className={styles.text}>
         <span>{dict("upload")}</span> {dict("drag_drop")}
       </p>
+      {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={100} height={100} />}
+      {file instanceof File
+        ? imageUrl && <Image src={imageUrl} alt={file.name} width={100} height={100} />
+        : file && <Image src={file} alt='Image' width={300} height={300} />}
     </div>
   );
 };

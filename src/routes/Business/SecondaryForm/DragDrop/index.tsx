@@ -11,11 +11,11 @@ const DragDrop = () => {
     <section className={styles.drag_drop}>
       <div className={styles.logo}>
         <h6>Logo</h6>
-        <DragAndDrop setFile={handleFile} />
+        <DragAndDrop setFile={handleFile} img='Logo' />
       </div>
       <div className={styles.banner}>
         <h6>Banner</h6>
-        <DragAndDrop setFile={handleFile} />
+        <DragAndDrop setFile={handleFile} img='Banner' />
       </div>
     </section>
   );

@@ -23,6 +23,13 @@
       "clients": "Clients",
       "link_inbox": "Go to Inbox"
     },
+    "sidetrack": {
+      "title": "Step",
+      "step_1": "Business information",
+      "step_2": "Select template",
+      "step_3": "Catalog",
+      "step_4": "Generate PowerApp"
+    },
     "navbar": {
       "login": "Login",
       "logout": "Log Out"
@@ -285,6 +292,18 @@
       "clean_bots": "Clean Bots",
       "train_bots_text": "Would you like to train your UiTool Bots with the information in this menu?",
       "clean_bots_text": "Would you like your UiTool Bots to stop using the information in this catalog?",
+      "massive_upload": "Massive upload",
+      "massive_update": "Massive update",
+      "update_changes": "Update changes",
+      "form_actions": {
+        "title": "Catalog information",
+        "name": "Name",
+        "description": "Description",
+        "image": "Photo product",
+        "visibility": "Visible on my apps",
+        "delete": "Delete catalog",
+        "save": "Save catalog"
+      },
       "select": {
         "placeholder_one": "Bulk Load",
         "placeholder_two": "Mass update",

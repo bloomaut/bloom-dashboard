@@ -42,19 +42,16 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
 
   return (
     <div className={styles.container}>
-      {image ? (
-        <Image src={image} className={styles.image} alt={name} width={100} height={100} />
-      ) : (
-        <Icon
-          name='dataset'
-          width={70}
-          height={30}
-          viewBox={"0 0 84 54"}
-          strokeColor={"#BEBEBE"}
-          className='dataset_default'
-        />
-      )}
-      <p className={styles.box}>{name}</p>
+      <div className={styles.name_container}>
+        {image ? (
+          <Image src={image} className={styles.image} alt={name} width={100} height={100} />
+        ) : (
+          <div className={styles.icon_container}>
+            <Icon name='dataset' width={30} height={30} strokeColor={"#BEBEBE"} />
+          </div>
+        )}
+        <p className={styles.box}>{name}</p>
+      </div>
       <p className={styles.box}>{description}</p>
       <div className={styles.box}>
         <p>$ {price}</p>

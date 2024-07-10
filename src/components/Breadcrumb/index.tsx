@@ -28,8 +28,8 @@ const Breadcrumb = ({ title }: BreadcrumbProps) => {
       <li className={styles.title}>{title}</li>
       <li>
         <button className={styles.btn} onClick={handleBack}>
-          <Icon name='arrow_left' viewBox='0 0 22 17' />
-          <p className={styles.text}>{dict("breadcrumb_link")}</p>
+          <Icon name='arrow_left' width={30} height={30} viewBox='0 0 22 17' />
+          {/* <p className={styles.text}>{dict("breadcrumb_link")}</p> */}
         </button>
       </li>
     </ul>
