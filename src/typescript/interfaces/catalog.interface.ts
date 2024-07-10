@@ -30,6 +30,7 @@ export interface DatasetProps {
   dataschema: string;
   createdAt: string;
   updatedAt: string;
+  totalDataItems: number;
 }
 
 export interface UpdateDataset {

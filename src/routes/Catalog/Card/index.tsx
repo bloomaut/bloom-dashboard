@@ -13,7 +13,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
 import { Link } from "@/navigation";
 
-const Card = ({ name, _id }: DatasetProps) => {
+const Card = ({ name, _id, totalDataItems }: DatasetProps) => {
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [catalogName, setCatalogName] = useState(name);
@@ -57,7 +57,10 @@ const Card = ({ name, _id }: DatasetProps) => {
       <div className={styles.image_container}>{name}</div>
       <div className={styles.content}>
         <div className={styles.title_container}>
-          <h2 className={styles.title}>{name}</h2>
+          <h2 className={styles.title} title={name}>
+            {name}
+          </h2>
+          <span>({totalDataItems})</span>
         </div>
         <Button
           title=''

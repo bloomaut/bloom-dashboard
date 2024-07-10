@@ -12,6 +12,7 @@ interface Props {
   iconSearch?: boolean;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => void;
   ErrorMessage?: JSX.Element;
+  inputPrice?: boolean;
 }
 
 const Input = ({
@@ -25,6 +26,7 @@ const Input = ({
   isDescription,
   iconSearch = false,
   ErrorMessage,
+  inputPrice = false,
 }: Props) => {
   const inputType = type === "textarea" ? `${styles.input} ${styles.textarea}` : styles.input;
 
@@ -34,14 +36,17 @@ const Input = ({
       {type === "textarea" ? (
         <textarea className={inputType} placeholder={textHolder} name={name} value={value} onChange={handleChange} />
       ) : (
-        <input
-          className={`${styles.input} ${isDescription ? styles.description_input : ""} ${className ? styles.search : ""}`}
-          type={type}
-          placeholder={textHolder}
-          name={name}
-          value={value}
-          onChange={handleChange}
-        />
+        <>
+          <input
+            className={`${styles.input} ${isDescription ? styles.description_input : ""} ${className ? styles.search : ""} ${inputPrice ? styles.input_price : ""} `}
+            type={type}
+            placeholder={textHolder}
+            name={name}
+            value={value}
+            onChange={handleChange}
+          />
+          {inputPrice && <p className={styles.sign}>$</p>}
+        </>
       )}
       <div className={styles.search_container}>
         {iconSearch && (

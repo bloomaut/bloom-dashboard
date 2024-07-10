@@ -3,12 +3,15 @@ import styles from "./styles.module.scss";
 import Breadcrumb from "@/components/Breadcrumb";
 import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import Form from "../Form";
 
 interface Header {
   name: string;
 }
 
 const Header = ({ name }: Header) => {
+  const [showPopupCreate, setShowPopupCreate] = useState(false);
   const dict = useTranslations("dict.catalog");
 
   return (
@@ -27,8 +30,10 @@ const Header = ({ name }: Header) => {
           title={dict("add_product")}
           styleName='btn_add'
           icon={<Icon name='add' viewBox='0 0 20 22' strokeColor='#fff' width={18} height={18} strokeWidth={2} />}
+          onclick={() => setShowPopupCreate(true)}
         />
       </div>
+      {showPopupCreate && <Form action='post' title={dict("popup.create_product")} setShowPopup={setShowPopupCreate} />}
     </div>
   );
 };
