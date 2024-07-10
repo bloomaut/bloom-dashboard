@@ -21,6 +21,13 @@
       "clients": "Clients",
       "link_inbox": "Go to Inbox"
     },
+    "sidetrack": {
+      "title": "Step",
+      "step_1": "Business information",
+      "step_2": "Select template",
+      "step_3": "Catalog",
+      "step_4": "Generate PowerApp"
+    },
     "navbar": {
       "login": "Login",
       "logout": "Log Out"

@@ -4,7 +4,6 @@
   @include flex(row, space-around, center, 10px);
   position: relative;
   cursor: pointer;
-
   z-index: 99;
   .logo {
     @include width-height(20px, auto);
@@ -19,7 +18,7 @@
     @include flex(column, center, center, 5px);
     position: absolute;
     cursor: pointer;
-    top: 45px;
+    top: 50px;
     transition: all 0.3s ease;
 
     li {
