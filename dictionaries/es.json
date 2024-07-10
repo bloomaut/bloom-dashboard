@@ -286,6 +286,15 @@
       "massive_upload": "Carga masiva",
       "massive_update": "Actualización masiva",
       "update_changes": "Actualizar cambios",
+      "form_actions": {
+        "title": "Información del catálogo",
+        "name": "Nombre",
+        "description": "Descripción",
+        "image": "Foto del producto",
+        "visibility": "Visibile en mis aplicaciones",
+        "delete": "Eliminar catálogo",
+        "save": "Guardar catálogo"
+      },
       "select": {
         "placeholder_one": "Carga masiva",
         "placeholder_two": "Actualización masiva",

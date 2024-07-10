@@ -192,7 +192,7 @@ const FormActions = ({
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
       <div className={styles.inner_container}>
-        <p className={styles.title}>Catalog's Information</p>
+        <p className={styles.title}>{dict("catalog.form_actions.title")}</p>
         <div className={styles.btn_close}>
           <button onClick={handleClose} type='button'>
             <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
@@ -202,7 +202,7 @@ const FormActions = ({
           <div className={styles.products_information}>
             <Input
               type='text'
-              textLabel='Category name'
+              textLabel={dict("catalog.form_actions.name")}
               textHolder=''
               name='category_name'
               value={formData.category_name}
@@ -211,29 +211,33 @@ const FormActions = ({
             {checkValidation && <ErrorMessage error={errors.category_name} />}
             <Input
               type='textarea'
-              textLabel='Description'
+              textLabel={dict("catalog.form_actions.description")}
               textHolder=''
               name='category_description'
               value={formData.category_description}
               handleChange={handleChange}
             />
-            <CheckBox text='Visibile on my apps' active={formData.category_visibility} onChange={handleVisibility} />
+            <CheckBox
+              text={dict("catalog.form_actions.visibility")}
+              active={formData.category_visibility}
+              onChange={handleVisibility}
+            />
           </div>
           <div className={styles.media}>
-            <label className={styles.label}>Photo product</label>
+            <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
             <DragAndDrop file={file || formData.category_image} setFile={setFile} img='Logo' />
           </div>
         </div>
         <div className={action === "put" ? styles.button_container : styles.button}>
           {action === "put" && (
             <Button
-              title='Delete catalog'
+              title={dict("catalog.form_actions.delete")}
               icon={<Icon name='delete' width={20} height={20} strokeColor='#ff0000' viewBox='0 0 23 26' />}
               styleName='btn_delete'
               onclick={() => setPopupDelete(true)}
             />
           )}
-          <Button title='Save catalog' type='submit' loading={!popupDelete && loading} />
+          <Button title={dict("catalog.form_actions.save")} type='submit' loading={!popupDelete && loading} />
         </div>
       </div>
       {popupDelete && (
