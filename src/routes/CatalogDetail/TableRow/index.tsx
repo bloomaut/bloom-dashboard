@@ -46,14 +46,9 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
         {image ? (
           <Image src={image} className={styles.image} alt={name} width={100} height={100} />
         ) : (
-          <Icon
-            name='dataset'
-            width={70}
-            height={30}
-            viewBox={"0 0 84 54"}
-            strokeColor={"#BEBEBE"}
-            className='dataset_default'
-          />
+          <div className={styles.icon_container}>
+            <Icon name='dataset' width={30} height={30} strokeColor={"#BEBEBE"} />
+          </div>
         )}
         <p className={styles.box}>{name}</p>
       </div>

@@ -48,6 +48,12 @@ const useFormValidator = (
         errors.listprice = dict("form_validation.listprice");
       }
 
+      if (fieldsToValidate?.includes("category_name")) {
+        if (!formData?.category_name || !formData?.category_name.trim()) {
+          errors.category_name = "Debes ingresar un nombre para el catálogo";
+        }
+      }
+
       setErrors(errors);
     };
 

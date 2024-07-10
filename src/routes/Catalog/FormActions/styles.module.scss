@@ -10,15 +10,20 @@
   background-color: rgba(0, 0, 0, 0.5);
   animation: fadeIn 0.3s ease-in-out forwards;
   .inner_container {
-    @include flex(column, center, center, 20px);
-    @include width-height(900px, auto);
+    @include flex(column, center, flex-start, 20px);
+    @include width-height(750px, auto);
     @include fontSize-fontWeight(24px, 500);
+    position: relative;
     padding: 50px 25px 20px 25px;
     background-color: $white;
     border-radius: 15px;
     text-align: center;
     box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
     animation: scaleIn 0.3s ease-in-out forwards;
+    .title {
+      @include fontSize-fontWeight(30px, 600);
+      color: $text;
+    }
     .btn_close {
       @include width-height(100%, auto);
       button {
@@ -31,23 +36,16 @@
         cursor: pointer;
       }
     }
-    .header {
-      @include width-height(100%, auto);
-      display: grid;
-      grid-template-columns: 40% 20% 30%;
-      gap: 4%;
-      p {
-        @include fontSize-fontWeight(24px, 600);
-        text-align: start;
-        color: $text;
-      }
-    }
     .inputs_container {
       @include width-height(100%, auto);
       display: grid;
       gap: 4%;
-      grid-template-columns: 40% 20% 30%;
+      grid-template-columns: 57% 37%;
       position: relative;
+      margin-bottom: 20px;
+      @media (width >= $queryXl) {
+        margin-bottom: 60px;
+      }
       .products_information {
         @include flex(column, center, flex-start, 15px);
       }
@@ -62,10 +60,14 @@
     }
     .button_container {
       @include width-height(100%, auto);
+      @include flex(row, space-between, center);
+    }
+    .button {
+      @include width-height(100%, auto);
       @include flex(row, flex-end, center);
     }
     .error {
-      @include width-height(200px, auto);
+      @include width-height(300px, auto);
       text-align: start;
       position: absolute;
       top: 60px;
@@ -75,36 +77,5 @@
     .error_hidden {
       display: none;
     }
-  }
-}
-
-.closing {
-  animation: fadeOutPopup 0.3s ease-in-out forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.5);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeOutPopup {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
   }
 }

@@ -2,39 +2,65 @@ import styles from "./styles.module.scss";
 import useFormValidator from "@/hooks/useFormValidator";
 import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { post, postFile, update } from "@/services/fetch";
+import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsList, Field, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
+import { PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { handleFileUpload } from "@/utils/handleFileUpload";
 // Components
-import PopupChildren from "@/components/PopupChildren";
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
-import Image from "next/image";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import Button from "@/components/Button";
+import CheckBox from "../../../components/Checkbox";
+import Icon from "@/components/Icon";
 
 interface Form {
   setShowPopup: (value: SetStateAction<boolean>) => void;
   title: string;
   action: "post" | "put";
-  initialValues?: DataItemsList;
   id?: string;
 }
 
-const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
+interface InitialValuesProps {
+  listname: string;
+  listdescription: string;
+  listprice: number | null;
+  listimage: File | null;
+}
+
+const headers = [
+  { id: 1, name: "Product's information" },
+  { id: 2, name: "Price" },
+  { id: 3, name: "Media" },
+];
+
+const initialValues: InitialValuesProps = {
+  listname: "",
+  listdescription: "",
+  listprice: null,
+  listimage: null,
+};
+
+const Form = ({ setShowPopup, action, id }: Form) => {
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
-  const [edit, setEdit] = useState(false);
   const [formData, setFormData] = useState(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
+  const [visibility, setVisibility] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const dict = useTranslations("dict");
+  const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
+
+  const imageUrl = action === "put" && formData.listimage ? formData.listimage : null;
 
   useEffect(() => {
     if (action === "put" && id) {
       const product = datasetDetail?.dataItems.find((item: any) => item._id === id);
       if (product) {
+        setVisibility(product.visibility);
         setFormData(product.data);
       }
     } else {
@@ -48,55 +74,41 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
     [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
-  let dataToSend = {
-    dataset: datasetDetail?.dataSet._id ?? "",
-    data: formData,
-    order: 0,
-  };
-
-  const handleFileUpload = async () => {
-    if (file) {
-      const response = await postFile("small-files/media", file);
-      if (response.data.statusCode === 201) {
-        const logoUrl = response.data.result.media.url;
-        return {
-          dataset: datasetDetail?.dataSet._id ?? "",
-          data: {
-            ...formData,
-            listimage: logoUrl,
-          },
-          order: 0,
-        };
-      } else {
-        notifyError(dict("toast.error_uploading"));
-        return null;
-      }
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
+      setLoading(true);
       try {
-        if (action === "post") {
-          const data = await handleFileUpload();
-          if (data) {
-            dataToSend = data;
+        const dataToSend = {
+          dataset: datasetDetail?.dataSet._id ?? "",
+          data: formData,
+          order: 0,
+          visibility: visibility,
+        };
+
+        // UPLOAD IMAGE
+        if (file) {
+          const uploadedImageUrl = await handleFileUpload(file);
+          if (uploadedImageUrl) {
+            dataToSend.data.listimage = uploadedImageUrl;
+          } else {
+            throw new Error("File upload failed");
           }
+        }
+
+        // METHOD VERIFICATION
+        if (action === "post") {
           await postDataItem(dataToSend);
         } else if (action === "put" && id) {
-          const updatedData = await handleFileUpload();
-          if (updatedData) {
-            dataToSend = updatedData;
-          }
           const data = {
             data: dataToSend.data,
             order: 0,
+            visibility: visibility,
           };
           await putDataItem(data, id);
         }
+
         setFormData(initialValues);
         setFile(null);
         setCheckValidation(false);
@@ -141,6 +153,10 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
     }));
   };
 
+  const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVisibility(e.target.checked);
+  };
+
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
@@ -152,55 +168,61 @@ const Form = ({ setShowPopup, title, action, initialValues, id }: Form) => {
   }, [errors]);
 
   return (
-    <PopupChildren
-      title={dict("popup.create_product")}
-      loading={loading}
-      onConfirm={handleSubmit}
-      onCancel={() => setShowPopup(false)}
-      setShowConfirmation={setShowPopup}
-      textCancel={dict("popup.cancel")}
-      textAccept={action === "post" ? dict("popup.create") : dict("popup.edit")}
-    >
-      {datasetDetail?.dataSet.dataschema.fields.map(
-        (field: Field) =>
-          // Si el campo es de tipo text se renderiza el input
-          !field.name.includes("image") && (
-            <div key={field._id} className={styles.form_control}>
-              <Input
-                type={field.type === "number" ? "number" : "text"}
-                textHolder={field.description}
-                name={field.name}
-                value={formData ? formData[field.name as keyof DataItemsList] : ""}
-                handleChange={handleChange}
-              />
-              {checkValidation && <ErrorMessage error={errors[field.name as keyof DataItemsList]} />}
-            </div>
-          ),
-      )}
-      {action === "post" ? (
-        <div className={styles.form_control}>
-          <DragAndDrop file={file} setFile={setFile} />
-          {checkValidation && <ErrorMessage error={errors.listimage} />}
+    <form className={styles.form_container} onSubmit={handleSubmit}>
+      <div className={styles.inner_container} ref={dropdownRef}>
+        <div className={styles.btn_close}>
+          <button onClick={() => setShowPopup(false)}>
+            <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
+          </button>
         </div>
-      ) : (
-        <>
-          {edit && (
-            <div className={styles.form_control}>
-              <DragAndDrop file={file} setFile={setFile} />
-              {checkValidation && <ErrorMessage error={errors.listimage} />}
-            </div>
-          )}
-          {!edit && (
-            <div className={styles.image_container}>
-              <Image src={formData?.listimage} width={100} height={100} alt='Product Image' />
-              <p className={styles.edit} onClick={() => setEdit(true)}>
-                {dict("drag.edit_image")}
-              </p>
-            </div>
-          )}
-        </>
-      )}
-    </PopupChildren>
+        <header className={styles.header}>
+          {headers.map(h => (
+            <p key={h.id}>{h.name}</p>
+          ))}
+        </header>
+        <div className={styles.inputs_container}>
+          <div className={styles.products_information}>
+            <Input
+              type='text'
+              textLabel='Product name'
+              textHolder=''
+              name='listname'
+              value={formData.listname}
+              handleChange={handleChange}
+            />
+            {checkValidation && <ErrorMessage error={errors.listname} />}
+            <Input
+              type='textarea'
+              textLabel='Description'
+              textHolder=''
+              name='listdescription'
+              value={formData.listdescription}
+              handleChange={handleChange}
+            />
+            <CheckBox text='Visibile on my apps' active={visibility} onChange={handleVisibility} />
+          </div>
+          <div className={styles.price}>
+            <Input
+              type='number'
+              textLabel='Price'
+              textHolder=''
+              name='listprice'
+              value={formData.listprice || ""}
+              handleChange={handleChange}
+              inputPrice
+            />
+            {checkValidation && <ErrorMessage error={errors.listprice} />}
+          </div>
+          <div className={styles.media}>
+            <label className={styles.label}>Photo product</label>
+            <DragAndDrop file={file || imageUrl} setFile={setFile} img='Logo' />
+          </div>
+        </div>
+        <div className={styles.button_container}>
+          <Button title='Save product' type='submit' loading={loading} />
+        </div>
+      </div>
+    </form>
   );
 };
 
