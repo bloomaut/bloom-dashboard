@@ -17,7 +17,7 @@ interface FileDragDropProps {
 }
 
 const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
-  const { notifyError } = useMessageToast();
+  const { notifyError, notify } = useMessageToast();
   const { userData } = useBusinessContext();
   const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
@@ -42,7 +42,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
     } else {
       if (catalogPage) {
         if (!acceptedFiles[0].type.includes("image")) {
-          notifyError("Debes seleccionar una imagen");
+          notifyError(dict("error_image"));
         } else {
           setFile(acceptedFiles[0]);
         }
@@ -53,6 +53,14 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
         // Solo permitir la carga de planillas de excel
         if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
           notifyError("Debes seleccionar una planilla de excel");
+        } else {
+          setFile(acceptedFiles[0]);
+        }
+      }
+      // Lógica para controlar la carga en my-business
+      if (businessPage) {
+        if (!acceptedFiles[0].type.includes("image")) {
+          notifyError(dict("error_image"));
         } else {
           setFile(acceptedFiles[0]);
         }
@@ -87,7 +95,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       <p className={styles.text}>
         <span>{dict("upload")}</span> {dict("drag_drop")}
       </p>
-      {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={100} height={100} />}
+      {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={300} height={100} />}
       {file instanceof File
         ? imageUrl && <Image src={imageUrl} alt={file.name} width={100} height={100} />
         : file && <Image src={file} alt='Image' width={300} height={300} />}
