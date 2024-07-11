@@ -7,7 +7,9 @@
     },
     "drag": {
       "upload": "Clic para cargar",
-      "drag_drop": "o arrastrar y soltar"
+      "drag_drop": "o arrastrar y soltar",
+      "selected_image": "Imagen seleccionada",
+      "error_image": "Debes seleccionar una imagen"
     },
     "sidebar": {
       "home": "Inicio",

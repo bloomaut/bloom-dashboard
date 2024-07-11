@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import Button from "@/components/Button";
 import DragAndDrop from "@/components/DragAndDrop";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 
 interface PopupExcelProps {
   type: string;
@@ -34,6 +35,7 @@ const PopupExcel = ({
 }: PopupExcelProps) => {
   const [closing, setClosing] = useState(false);
   const dict = useTranslations("dict");
+  const { dropdownRef } = useCloseDropdown(setFunction);
 
   const handleExcelDownload = async (type: string) => {
     if (id) await getExcelCatalog(id, type, "getExcelCatalog");
@@ -43,12 +45,13 @@ const PopupExcel = ({
     setClosing(true);
     setTimeout(() => {
       setFunction(false);
+      setFile(null);
     }, 300);
   };
 
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={submitFunction}>
-      <div className={styles.inner_container}>
+      <div className={styles.inner_container} ref={dropdownRef}>
         <div className={styles.btn_close}>
           <button onClick={handleClose} type='button'>
             <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
