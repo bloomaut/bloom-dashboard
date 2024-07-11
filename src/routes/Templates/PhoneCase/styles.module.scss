@@ -48,7 +48,7 @@
   }
 }
 
-@media (width <= 1280px) {
+@media (max-height: 720px) {
   .container {
     .phone_container {
       @include width-height(230px, 420px);
