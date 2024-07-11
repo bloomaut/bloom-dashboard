@@ -53,7 +53,11 @@ const TemplatesSelector = () => {
                       )}
                     </div>
                     <div className={styles.lg_card}>
-                      {app.thumbnail && <Image className={styles.empty_img} src={flake_icon_01} alt='Icon' />}
+                      {app.thumbnail ? (
+                        <Image src={app.thumbnail} alt={app.skinx.title} width={137} height={100} />
+                      ) : (
+                        <Image className={styles.empty_img} src={flake_icon_01} alt='Icon' />
+                      )}
                     </div>
                     <div className={styles.hover} style={{ display: selectedFlakeId === app._id ? "flex" : "" }}>
                       <button className={styles.preview}>Preview</button>
