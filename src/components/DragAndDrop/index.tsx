@@ -63,7 +63,6 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
           notifyError(dict("error_image"));
         } else {
           setFile(acceptedFiles[0]);
-          notify(dict("selected_image"));
         }
       }
     }
