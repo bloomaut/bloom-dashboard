@@ -36,10 +36,10 @@
     cursor: pointer;
     .sm_card {
       @include width-height(160px, 110px);
+      @include flex(row, center, center);
       border: 0.298px solid $lightGrey;
       border-radius: 9px;
       background-color: $greyBackground;
-      @include flex(row, center, center);
       img {
         @include width-height(100%, 100%);
         object-fit: cover;

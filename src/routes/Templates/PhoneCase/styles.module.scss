@@ -1,0 +1,66 @@
+@import "@/styles/theme.scss";
+
+.container {
+  @include width-height(100%, 100%);
+  @include flex(column, center, center, 10px);
+  margin-top: 40px;
+  .phone_container {
+    @include width-height(250px, 500px);
+    position: relative;
+    margin-left: 20px;
+    .phone {
+      @include width-height(100%, 100%);
+      position: absolute;
+    }
+    .wa {
+      @include width-height(100%, 100%);
+      position: absolute;
+    }
+    .phone_inner_container {
+      @include width-height(215px, 420px);
+      position: absolute;
+      top: 10px;
+      border: none;
+      overflow: hidden;
+      border-radius: 20px;
+      iframe {
+        @include width-height(200%, 200%);
+        transform-origin: 0 0;
+        transform: scale(0.5);
+      }
+    }
+  }
+  .dot_container {
+    @include flex(row, center, center, 10px);
+    margin-left: 20px;
+    .dot {
+      display: block;
+      @include width-height(10px, 10px);
+      cursor: pointer;
+      border-radius: 100%;
+    }
+    .dot_active {
+      background-color: $text;
+    }
+    .dot_inactive {
+      background-color: $lighterGrey;
+    }
+  }
+}
+
+@media (width <= 1280px) {
+  .container {
+    .phone_container {
+      @include width-height(230px, 420px);
+    }
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    margin-left: 20px;
+    .phone_container {
+      @include width-height(270px, 515px);
+    }
+  }
+}

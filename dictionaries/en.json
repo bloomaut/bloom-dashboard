@@ -19,6 +19,7 @@
       "collections": "Collections",
       "catalog": "Catalog",
       "clients": "Clients",
+      "templates": "Templates",
       "link_inbox": "Go to Inbox"
     },
     "sidetrack": {
@@ -337,6 +338,11 @@
       "description_05": "We strive to continually improve Small. This may include feature updates and changes to services. We will inform you of any significant changes to the platform.",
       "title_06": "Contact and Support",
       "description_06": "If you have questions, comments, or need assistance, please feel free to contact our support team. We are here to help you every step of the way."
+    },
+    "templates": {
+      "title": "Templates",
+      "subtitle": "Select the template that best suits your business",
+      "select": "Select"
     }
   }
 }

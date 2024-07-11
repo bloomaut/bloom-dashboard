@@ -1,0 +1,13 @@
+@import "@/styles/theme.scss";
+
+.templates_container {
+  @include width-height(100%, 100%);
+  padding: 40px;
+  .inner_container {
+    @include flex(row, space-between, flex-start);
+
+    .phone_image {
+      @include flex(column, space-between, flex-end, 20px);
+    }
+  }
+}
