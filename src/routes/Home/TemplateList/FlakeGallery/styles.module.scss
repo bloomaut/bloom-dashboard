@@ -42,13 +42,15 @@
       img {
         @include width-height(100%, 100%);
         object-fit: cover;
-        transition: all 300ms ease;
-        &:hover {
-          transform: scale(1.1);
-        }
       }
       .empty_img {
         @include width-height(30%, auto);
+      }
+      & > div {
+        @include width-height(100%, 100%);
+        & > div {
+          @include width-height(100%, 100%);
+        }
       }
     }
     .lg_card {

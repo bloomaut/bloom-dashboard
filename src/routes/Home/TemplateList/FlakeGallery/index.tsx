@@ -32,7 +32,9 @@ const FlakeGallery = ({ app, handleClick }: Props) => {
       <div className={styles.template}>
         <div className={styles.sm_card} onClick={() => handleClick(app.hog_related.thumbnail, "hog")}>
           {app.hog_related.thumbnail ? (
-            <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
+            <Zoom classDialog='custom-zoom'>
+              <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
+            </Zoom>
           ) : (
             <Image className={styles.empty_img} src={flake_icon_02} alt='Icon' />
           )}
