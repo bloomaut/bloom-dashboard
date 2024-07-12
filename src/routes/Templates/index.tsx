@@ -12,9 +12,8 @@ const Templates = () => {
     <section className={styles.templates_container}>
       <Header title={dict("title")} subtitle={dict("subtitle")} />
       <div className={styles.inner_container}>
-        <div className={styles.templates}>
-          <TemplatesSelector />
-        </div>
+        <TemplatesSelector />
+
         <div className={styles.phone_image}>
           <PhoneCase />
           <Button title='Next' isDisabled={true} />

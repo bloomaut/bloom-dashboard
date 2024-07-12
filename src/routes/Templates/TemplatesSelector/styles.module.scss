@@ -1,8 +1,8 @@
 @import "@/styles/theme.scss";
 
 .container {
+  @include width-height(100%, inherit);
   height: inherit;
-  margin-top: 40px;
   .flakes {
     @include width-height(100%, 100%);
     @include flex(row, space-between, flex-start, 10px);

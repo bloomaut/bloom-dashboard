@@ -2,12 +2,23 @@
 
 .templates_container {
   @include width-height(100%, 100%);
-  padding: 40px;
+  padding: 0 40px;
+  box-sizing: border-box;
+  header {
+    @include width-height(auto, 15%);
+  }
   .inner_container {
-    @include flex(row, space-between, flex-start);
-
+    @include width-height(auto, 85%);
+    @include flex(row, space-between, center);
     .phone_image {
-      @include flex(column, space-between, flex-end, 20px);
+      @include width-height(auto, 100%);
+      @include flex(column, center, center, 20px);
+      position: relative;
+      button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
     }
   }
 }

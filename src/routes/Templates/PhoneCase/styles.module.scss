@@ -1,33 +1,23 @@
 @import "@/styles/theme.scss";
 
-.container {
-  @include width-height(100%, 100%);
-  @include flex(column, center, center, 10px);
-  margin-top: 40px;
-  .phone_container {
-    @include width-height(250px, 500px);
-    position: relative;
-    margin-left: 20px;
-    .phone {
-      @include width-height(100%, 100%);
-      position: absolute;
-    }
+.phone_container {
+  @include width-height(250px, 500px);
+  position: relative;
+  margin-left: 20px;
+  .phone {
+    @include width-height(100%, 100%);
+    position: absolute;
   }
 }
 
 @media (max-height: 720px) {
-  .container {
-    .phone_container {
-      @include width-height(230px, 420px);
-    }
+  .phone_container {
+    @include width-height(200px, 370px);
   }
 }
 
 @media (min-width: 1600px) {
-  .container {
-    margin-left: 20px;
-    .phone_container {
-      @include width-height(270px, 515px);
-    }
+  .phone_container {
+    @include width-height(270px, 515px);
   }
 }
