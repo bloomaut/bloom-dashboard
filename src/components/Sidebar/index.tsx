@@ -59,6 +59,11 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             icon: <Icon name='clients' />,
             path: "/clients",
           },
+          {
+            title: `${dict("templates")}`,
+            icon: <Icon name='templates' />,
+            path: "/templates",
+          },
         ]
       : []),
   ];

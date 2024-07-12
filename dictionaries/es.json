@@ -21,6 +21,7 @@
       "collections": "Colecciones",
       "catalog": "Catálogo",
       "clients": "Clients",
+      "templates": "Plantillas",
       "link_inbox": "Ir a Inbox"
     },
     "sidetrack": {
@@ -346,6 +347,11 @@
       "description_05": "Nos esforzamos por mejorar continuamente Small. Esto puede incluir actualizaciones de funciones y cambios en los servicios. Le informaremos sobre cualquier cambio significativo en la plataforma.",
       "title_06": "Contacto y Soporte",
       "description_06": "Si tiene preguntas, comentarios o necesita asistencia, no dude en ponerse en contacto con nuestro equipo de soporte. Estamos aquí para ayudarle en cada paso del camino."
+    },
+    "templates": {
+      "title": "Plantillas",
+      "subtitle": "Selecciona la plantilla que mejor se adapta a tu negocio",
+      "select": "Seleccionar"
     }
   }
 }
