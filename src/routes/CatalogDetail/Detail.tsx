@@ -1,6 +1,6 @@
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { getExcelCatalog, postFile, putFile } from "@/services/fetch";
+import { putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
@@ -18,102 +18,32 @@ import PopupExcel from "./PopupExcel";
 import Header from "./Header";
 
 const Detail = () => {
-  const dict = useTranslations("dict");
-
-  // const [openTrainBot, setOpenTrainBot] = useState(false);
-  // const [openCleanBot, setOpenCleanBot] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [uploadPopup, setUploadPopup] = useState<boolean>(false);
-  const [putPopup, setPutPopup] = useState<boolean>(false);
+  const [massiveUpdatePopup, setMassiveUpdatePopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
+  const { loading, setLoading, datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const { notify, notifyError } = useMessageToast();
   const { id } = useParams();
+  const dict = useTranslations("dict");
 
-  // const handleDropdown = (value: string) => {
-  //   // Acá después ver lógica de enpoints. Tal vez mover o cambiar
-  //   switch (value) {
-  //     case "download_post_template":
-  //       handleExcelDownload("template");
-  //       break;
-  //     case "upload_post_excel":
-  //       setUploadPopup(!uploadPopup);
-  //       break;
-  //     case "download_update_template":
-  //       handleExcelDownload("download");
-  //       break;
-  //     case "upload_update_excel":
-  //       setPutPopup(!putPopup);
-  //       break;
-  //   }
-  // };
-
-  // const dataSetId = datasetDetail?.dataSet._id;
-  // const handleBotTrainer = async (e: FormEvent) => {
-  //   e.preventDefault();
-  //   if (dataSetId) {
-  //     await handleBotAction(
-  //       `datasets/${dataSetId}/vectorize`,
-  //       "post",
-  //       dict("toast.bot_train"),
-  //       dict("toast.bot_error"),
-  //       setLoading,
-  //       setOpenTrainBot,
-  //     );
-  //   }
-  // };
-
-  // const handleBotCleaner = async (e: FormEvent) => {
-  //   e.preventDefault();
-  //   if (dataSetId) {
-  //     await handleBotAction(
-  //       `datasets/${dataSetId}/vectorize`,
-  //       "remove",
-  //       dict("toast.bot_clean"),
-  //       dict("toast.bot_error"),
-  //       setLoading,
-  //       setOpenCleanBot,
-  //     );
-  //   }
-  // };
-
-  // const handleExcelDownload = async (type: string) => {
-  //   if (dataSetId) await getExcelCatalog(dataSetId, type, "getExcelCatalog");
-  // };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
-    }
-  };
-
-  const submitExcel = async (event: React.FormEvent) => {
+  const handleMassiveUpload = async (event: React.FormEvent) => {
     event.preventDefault();
-    setLoading(true);
-    if (selectedFile && uploadPopup) {
-      const response = await postFile(`datasets/${id}/create`, selectedFile, ENV.BOX);
-      if (!response.error && response.data.statusCode === 201) {
+    if (selectedFile) {
+      setLoading(true);
+      const response = await putFile(`datasets/${id}/update`, selectedFile, ENV.BOX);
+      if (!response.error && response.data.statusCode === 200) {
         fetchDatasetById();
+        setLoading(false);
         notify(dict("toast.success_file"));
       } else {
         notifyError(dict("toast.error_uploading"));
       }
-      setUploadPopup(false);
-    } else if (selectedFile && putPopup) {
-      const response = await putFile(`datasets/${id}/update`, selectedFile, ENV.BOX);
-      if (!response.error && response.data.statusCode === 200) {
-        fetchDatasetById();
-        notify(dict("toast.success_update"));
-      } else {
-        notifyError(dict("toast.error_update"));
-      }
-      setPutPopup(false);
+      setMassiveUpdatePopup(false);
     }
   };
 
   return (
     <section className={styles.catalog_detail_container}>
-      <Header name={datasetDetail?.dataSet.name} />
+      <Header name={datasetDetail?.dataSet.name} id={id} />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (
@@ -140,61 +70,23 @@ const Detail = () => {
           title={dict("catalog.massive_update")}
           styleName='btn_upload'
           icon={<Icon name='reload' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 0 22 15' />}
+          onclick={() => setMassiveUpdatePopup(true)}
         />
         <Button title={dict("catalog.update_changes")} styleName='btn_add' />
       </div>
-
-      {/* {openTrainBot && (
-        <PopupChildren
-          onCancel={() => setOpenTrainBot(false)}
-          title={dict("catalog.train_bots")}
-          textAccept={dict("catalog.train_bot")}
-          textCancel={dict("catalog.cancel")}
-          onConfirm={handleBotTrainer}
-          setShowConfirmation={setOpenTrainBot}
-          loading={loading}
-        >
-          <p className={styles.trainbot_text}>{dict("catalog.train_bots_text")}</p>
-        </PopupChildren>
-      )} */}
-      {/* {openCleanBot && (
-        <PopupChildren
-          onCancel={() => setOpenCleanBot(false)}
-          title={dict("catalog.clean_bots")}
-          textAccept={dict("catalog.clean_bot")}
-          textCancel={dict("catalog.cancel")}
-          onConfirm={handleBotCleaner}
-          setShowConfirmation={setOpenCleanBot}
-          loading={loading}
-        >
-          <p className={styles.trainbot_text}>{dict("catalog.clean_bots_text")}</p>
-        </PopupChildren>
-      )} */}
-      {uploadPopup && (
+      {massiveUpdatePopup && (
         <PopupExcel
-          setFunction={setUploadPopup}
-          handleFileChange={handleFileChange}
-          submitFunction={submitExcel}
+          type='update'
+          title={dict("catalog.popup_excel.massive_update_title")}
+          subtitle={dict("catalog.popup_excel.massive_update_subtitle")}
+          id={typeof id === "string" ? id : id[0]}
+          file={selectedFile}
+          setFile={setSelectedFile}
           loading={loading}
+          setFunction={setMassiveUpdatePopup}
+          submitFunction={handleMassiveUpload}
         />
       )}
-      {putPopup && (
-        <PopupExcel setFunction={setPutPopup} handleFileChange={handleFileChange} submitFunction={submitExcel} />
-      )}
-      {/* <div className={styles.buttons}>
-        <Button
-          title={dict("catalog.clean_bot")}
-          styleName='btn_clean'
-          icon={<Icon name='clean' strokeColor='#7F7F7F' viewBox='0 -4 25 25' />}
-          onclick={() => setOpenCleanBot(true)}
-        />
-        <Button
-          title={dict("catalog.train_bot")}
-          styleName='btn_dataset'
-          icon={<Icon name='train' strokeColor='white' viewBox='0 -3 25 25' />}
-          onclick={() => setOpenTrainBot(true)}
-        />
-      </div> */}
     </section>
   );
 };

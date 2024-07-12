@@ -6,10 +6,12 @@
   .flakes {
     @include width-height(100%, 100%);
     @include flex(row, space-between, flex-start, 10px);
+    max-height: 650px;
     flex-wrap: wrap;
     border-radius: 4.775px;
     overflow-y: auto;
     row-gap: 20px;
+    padding: 0 5px;
     .template_container {
       .title {
         @include fontSize-fontWeight(14px, 500);
@@ -111,10 +113,10 @@
   border-radius: 10px;
 }
 
-@media (min-width: $queryLg) {
+@media (min-width: 1280px) and (max-height: 720px) {
   .container {
     .flakes {
-      max-height: 650px;
+      max-height: 480px;
     }
   }
 }

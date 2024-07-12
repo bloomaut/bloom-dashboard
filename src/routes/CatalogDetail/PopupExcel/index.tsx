@@ -3,47 +3,78 @@ import PopupChildren from "@/components/PopupChildren";
 import excel from "/public/assets/excel_logo.svg";
 import Icon from "@/components/Icon";
 import Image from "next/image";
+import { getExcelCatalog } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import Button from "@/components/Button";
+import DragAndDrop from "@/components/DragAndDrop";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 
-interface Props {
+interface PopupExcelProps {
+  type: string;
+  id: string;
+  title: string;
+  subtitle: string;
+  file: File | null;
+  setFile: (value: React.SetStateAction<File | null>) => void;
   setFunction: (value: React.SetStateAction<boolean>) => void;
   submitFunction: (event: React.FormEvent) => Promise<void>;
-  handleFileChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
   loading?: boolean;
 }
 
-const PopupExcel = ({ setFunction, submitFunction, handleFileChange, loading }: Props) => {
-  const [fileName, setFileName] = useState<string | null>(null);
+const PopupExcel = ({
+  type,
+  id,
+  title,
+  subtitle,
+  file,
+  setFile,
+  setFunction,
+  submitFunction,
+  loading,
+}: PopupExcelProps) => {
+  const [closing, setClosing] = useState(false);
   const dict = useTranslations("dict");
+  const { dropdownRef } = useCloseDropdown(setFunction);
 
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileChange(event);
-    if (event.target.files && event.target.files.length > 0) {
-      setFileName(event.target.files[0].name);
-    } else {
-      setFileName(null);
-    }
+  const handleExcelDownload = async (type: string) => {
+    if (id) await getExcelCatalog(id, type, "getExcelCatalog");
+  };
+
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setFunction(false);
+      setFile(null);
+    }, 300);
   };
 
   return (
-    <PopupChildren
-      onCancel={() => setFunction(false)}
-      title={dict("catalog.upload_excel_title")}
-      textAccept={dict("popup.upload")}
-      textCancel={dict("popup.cancel")}
-      onConfirm={submitFunction}
-      setShowConfirmation={setFunction}
-      loading={loading}
-    >
-      <input type='file' accept='.xlsx, .xls' id='fileInput' onChange={onFileChange} style={{ display: "none" }} />
-      <label htmlFor='fileInput' className={styles.excel_button}>
-        <Image src={excel} width={25} alt='excel' />
-        <p>{dict("catalog.upload_excel")}</p>
-        <Icon name='arrow_upload' strokeColor='white' width={25} height={25} viewBox='0 -5 30 30' />
-      </label>
-      {fileName && <p className={styles.file_name}>{fileName}</p>}
-    </PopupChildren>
+    <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={submitFunction}>
+      <div className={styles.inner_container} ref={dropdownRef}>
+        <div className={styles.btn_close}>
+          <button onClick={handleClose} type='button'>
+            <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
+          </button>
+        </div>
+        <header className={styles.header}>
+          <p className={styles.title}>{title}</p>
+          <p className={styles.text}>{subtitle}</p>
+        </header>
+        <div className={styles.btn_template}>
+          <Button
+            title={dict("catalog.popup_excel.download_template")}
+            icon={<Icon name='arrow_download' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 -3 30 30' />}
+            styleName='btn_upload'
+            onclick={() => handleExcelDownload(type === "upload" ? "template" : "download")}
+          />
+        </div>
+        <DragAndDrop file={file} setFile={setFile} img='Excel' />
+        <div className={styles.btn_upload}>
+          <Button title={type === "upload" ? "Upload" : "Update"} type='submit' loading={loading} />
+        </div>
+      </div>
+    </form>
   );
 };
 

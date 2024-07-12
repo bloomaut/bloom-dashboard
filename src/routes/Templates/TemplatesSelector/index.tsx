@@ -43,7 +43,10 @@ const TemplatesSelector = () => {
             <Fade triggerOnce key={app._id}>
               <div className={styles.template_container}>
                 <h4 className={styles.title}>{app.skinx.title}</h4>
-                <div className={styles.template}>
+                <div
+                  className={styles.template}
+                  style={{ border: selectedFlakeId === app._id ? "3px solid #282e7ebd" : "3px solid transparent" }}
+                >
                   <>
                     <div className={styles.sm_card}>
                       {app.hog_related.thumbnail ? (
@@ -59,7 +62,7 @@ const TemplatesSelector = () => {
                         <Image className={styles.empty_img} src={flake_icon_01} alt='Icon' />
                       )}
                     </div>
-                    <div className={styles.hover} style={{ display: selectedFlakeId === app._id ? "flex" : "" }}>
+                    <div className={styles.hover}>
                       <button className={styles.preview}>Preview</button>
                       <button className={styles.select} onClick={() => setSelectedFlakeId(app._id)}>
                         {dict("select")}

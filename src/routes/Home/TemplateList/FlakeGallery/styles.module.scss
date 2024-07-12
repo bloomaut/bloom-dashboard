@@ -3,7 +3,7 @@
   @include flex(column, center, flex-start);
   @include width-height(auto, auto);
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 2px;
   border: 1px solid transparent;
   transition: 0.5s;
   position: relative;
@@ -30,15 +30,14 @@
   }
   .template {
     @include width-height(300px, 300px);
-    @include flex(row, space-between, flex-start, 5px);
+    @include flex(row, space-between, flex-start, 10px);
     border: 0.298px solid transparent;
-    border-radius: 4.775px;
     cursor: pointer;
     .sm_card {
       @include width-height(160px, 110px);
       @include flex(row, center, center);
       border: 0.298px solid $lightGrey;
-      border-radius: 9px;
+      border-radius: 2px;
       background-color: $greyBackground;
       img {
         @include width-height(100%, 100%);
@@ -46,6 +45,12 @@
       }
       .empty_img {
         @include width-height(30%, auto);
+      }
+      & > div {
+        @include width-height(100%, 100%);
+        & > div {
+          @include width-height(100%, 100%);
+        }
       }
     }
     .lg_card {

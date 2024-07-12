@@ -305,6 +305,13 @@
         "delete": "Eliminar catálogo",
         "save": "Guardar catálogo"
       },
+      "popup_excel": {
+        "massive_upload_title": "Carga masiva desde Excel",
+        "massive_upload_subtitle": "Descarga la plantilla e importa tus productos desde Excel",
+        "massive_update_title": "Actualización masiva desde Excel",
+        "massive_update_subtitle": "Descarga la plantilla y actualiza tus productos desde Excel",
+        "download_template": "Descargar plantilla"
+      },
       "select": {
         "placeholder_one": "Carga masiva",
         "placeholder_two": "Actualización masiva",
