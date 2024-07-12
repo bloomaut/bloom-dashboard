@@ -304,6 +304,13 @@
         "delete": "Delete catalog",
         "save": "Save catalog"
       },
+      "popup_excel": {
+        "massive_upload_title": "Massive upload from Excel",
+        "massive_upload_subtitle": "Download the template and import the products from Excel",
+        "massive_update_title": "Massive update from Excel",
+        "massive_update_subtitle": "Download the template and update products from Excel",
+        "download_template": "Download template"
+      },
       "select": {
         "placeholder_one": "Bulk Load",
         "placeholder_two": "Mass update",

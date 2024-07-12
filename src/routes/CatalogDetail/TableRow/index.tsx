@@ -40,10 +40,16 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
     }
   };
 
+  // Expresión regular para validar URLs cuando se carga una imágen a traves de Excel
+  const isValidImageUrl = (url: string) => {
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    return urlRegex.test(url);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.name_container}>
-        {image ? (
+        {isValidImageUrl(image) ? (
           <Image src={image} className={styles.image} alt={name} width={100} height={100} />
         ) : (
           <div className={styles.icon_container}>
