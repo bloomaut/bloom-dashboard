@@ -20,6 +20,7 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const dict = useTranslations("dict.sidebar");
   const { user } = useUser();
+  const INBOX_URL = process.env.NEXT_PUBLIC_INBOX_URL;
 
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -75,7 +76,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           <Card key={card.title} text={card.title} path={card.path} icon={card.icon} />
         ))}
       </div>
-      <Link href='https://panel.small.ar/' target='_blank' className={styles.link_container}>
+      <Link href={INBOX_URL!} target='_blank' className={styles.link_container}>
         <Icon name='link' width={20} height={20} viewBox='0 -1 30 30' className='cursor_pointer' />
         {isOpen && <p>{dict("link_inbox")}</p>}
       </Link>
