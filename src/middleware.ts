@@ -19,10 +19,6 @@ export default async function authMiddleware(req: NextRequest) {
   const response = NextResponse.next();
   const session = await getSession(req, response);
 
-  if (req.nextUrl.pathname === "/" && !session?.user) {
-    return NextResponse.redirect(new URL("/en", req.url));
-  }
-
   if (!session?.user && isProtectedRoute(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL("/", req.url));
   }
