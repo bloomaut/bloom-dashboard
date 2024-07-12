@@ -9,18 +9,24 @@ const intlMiddleware = createMiddleware({
   defaultLocale: "en",
 });
 
-const protectedRoutes = ["catalog", "clients", "collections", "hotlink", "my-business", "my-collection"];
+const protectedRoutes = ["/", "catalog", "clients", "collections", "hotlink", "my-business", "my-collection"];
+const publicRoutes = ["/playground", "/policy", "/login"];
 
 function isProtectedRoute(pathname: string) {
   return protectedRoutes.some(route => pathname.includes(route));
 }
 
+function isPublicRoute(pathname: string) {
+  return publicRoutes.some(route => pathname.includes(route));
+}
+
 export default async function authMiddleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
   const response = NextResponse.next();
   const session = await getSession(req, response);
 
-  if (!session?.user && isProtectedRoute(req.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL("/", req.url));
+  if (!session?.user && isProtectedRoute(pathname) && !isPublicRoute(pathname) && !pathname.includes("login")) {
+    return NextResponse.redirect(new URL("/en/login", req.url));
   }
 
   return intlMiddleware(req);

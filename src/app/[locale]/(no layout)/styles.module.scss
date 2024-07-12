@@ -1,6 +1,6 @@
 @import "@/styles/theme.scss";
 
-.layout_container {
+.policy_container {
   @include width-height(100%, 100%);
   max-width: 1200px;
   min-height: 100vh;
@@ -9,14 +9,18 @@
   margin: auto;
 }
 
+.login_container {
+  @include width-height(100%, 100%);
+}
+
 @media (width <= $querySm) {
-  .layout_container {
+  .policy_container {
     padding: 20px;
   }
 }
 
 @media (min-width: $queryXl) {
-  .layout_container {
+  .policy_container {
     max-width: 1400px;
   }
 }
