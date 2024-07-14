@@ -25,7 +25,7 @@ interface Form {
 
 interface InitialValuesProps {
   listname: string;
-  listdescription: string;
+  listdescr: string;
   listprice: number | null;
   listimage: File | null;
 }
@@ -38,7 +38,7 @@ const headers = [
 
 const initialValues: InitialValuesProps = {
   listname: "",
-  listdescription: "",
+  listdescr: "",
   listprice: null,
   listimage: null,
 };
@@ -203,8 +203,8 @@ const Form = ({ setShowPopup, action, id }: Form) => {
               type='textarea'
               textLabel='Description'
               textHolder=''
-              name='listdescription'
-              value={formData.listdescription}
+              name='listdescr'
+              value={formData.listdescr}
               handleChange={handleChange}
             />
             <CheckBox text='Visibile on my apps' active={visibility} onChange={handleVisibility} />
