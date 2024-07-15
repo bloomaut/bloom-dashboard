@@ -54,6 +54,30 @@ const useFormValidator = (
         }
       }
 
+      if (fieldsToValidate?.includes("name")) {
+        if (!formData?.name || !formData?.name.trim()) {
+          errors.name = "Debes ingresar un nombre";
+        }
+      }
+
+      if (fieldsToValidate?.includes("lastname")) {
+        if (!formData?.lastname || !formData?.lastname.trim()) {
+          errors.lastname = "Debes ingresar un apellido";
+        }
+      }
+
+      if (fieldsToValidate?.includes("business_name")) {
+        if (!formData?.business_name || !formData?.business_name.trim()) {
+          errors.business_name = "Debes ingresar el nombre del negocio";
+        }
+      }
+
+      if (fieldsToValidate?.includes("business_description")) {
+        if (!formData?.business_description || !formData?.business_description.trim()) {
+          errors.business_description = "Debes ingresar una descripción para el negocio";
+        }
+      }
+
       setErrors(errors);
     };
 

@@ -9,18 +9,18 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 const DragDrop = () => {
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
-  const [file, setFile] = useState<File | null>(null);
-  const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const [logo, setLogo] = useState<File | null>(null);
+  const [banner, setBanner] = useState<File | null>(null);
 
   const handleFile = async () => {
     try {
-      if (file) {
-        const response = await putFile(`/small-business/logo`, file, ENV.DASHBOARD);
+      if (logo) {
+        const response = await putFile(`/small-business/logo`, logo, ENV.DASHBOARD);
         if (!response.error && response.data.statusCode === 200) {
           notify(dict("toast.success_update"));
         }
-      } else if (bannerFile) {
-        const response = await putFile(`/small-business/banner`, bannerFile, ENV.DASHBOARD);
+      } else if (banner) {
+        const response = await putFile(`/small-business/banner`, banner, ENV.DASHBOARD);
         if (!response.error && response.data.statusCode === 200) {
           notify(dict("toast.success_update"));
         }
@@ -32,19 +32,19 @@ const DragDrop = () => {
 
   useEffect(() => {
     handleFile();
-  }, [file, bannerFile]);
+  }, [logo, banner]);
 
-  console.log(file);
+  console.log(logo);
 
   return (
     <section className={styles.drag_drop}>
       <div className={styles.logo}>
         <h6>Logo</h6>
-        <DragAndDrop setFile={setFile} img='Logo' file={file} />
+        <DragAndDrop setFile={setLogo} img='Logo' file={logo} />
       </div>
       <div className={styles.banner}>
         <h6>Banner</h6>
-        <DragAndDrop setFile={setBannerFile} img='Banner' />
+        <DragAndDrop setFile={setBanner} img='Banner' />
       </div>
     </section>
   );

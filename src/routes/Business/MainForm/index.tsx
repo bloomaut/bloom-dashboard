@@ -1,23 +1,27 @@
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
 import { useTranslations } from "next-intl";
-import { useAppSelector } from "@/store/hooks";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { UserBusiness } from "@/typescript/interfaces/business.interface";
-import { userInitialState } from "@/store/features/userSlice";
+import useFormValidator from "@/hooks/useFormValidator";
 
-const Form = () => {
+interface FormProps {
+  userData?: UserBusiness;
+  formData: UserBusiness;
+  onSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  setFormData: React.Dispatch<React.SetStateAction<UserBusiness>>;
+  validation: boolean;
+}
+
+const Form = ({ formData, onChange, onSubmit, setFormData, userData, validation }: FormProps) => {
+  const fieldsToValidate = ["category_name"];
+  const errors = useFormValidator(formData, fieldsToValidate);
   const dict = useTranslations("dict.business");
-  const [formData, setFormData] = useState<UserBusiness>(userInitialState);
-  const userData = useAppSelector(state => state.userData);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
+  const ErrorMessage = ({ error }: { error: string | undefined }) => (
+    <p className={error ? styles.error : styles.error_hidden}>{error}</p>
+  );
 
   console.log(formData);
 
@@ -36,25 +40,28 @@ const Form = () => {
           type='text'
           name='name'
           value={formData.name || ""}
-          handleChange={handleChange}
+          handleChange={onChange}
         />
+        {validation && <ErrorMessage error={errors.name} />}
         <Input
           textLabel={dict("form.last_name")}
           textHolder={dict("form.last_name")}
           type='text'
           name='lastname'
           value={formData.lastname || ""}
-          handleChange={handleChange}
+          handleChange={onChange}
         />
+        {validation && <ErrorMessage error={errors.lastname} />}
       </div>
       <Input
         textLabel={dict("form.business_name")}
         textHolder={dict("form.business_name")}
         type='text'
-        name='client.name'
+        name='business.name'
         value={formData.client.name || ""}
-        handleChange={handleChange}
+        handleChange={onChange}
       />
+      {validation && <ErrorMessage error={errors.business_name} />}
       <div className={styles.select}>
         <label>{dict("form.type_business")}</label>
         <select name='client.category' value={formData.client.category?.join(",") || ""}>
@@ -67,10 +74,11 @@ const Form = () => {
         textLabel={dict("form.describe_business")}
         textHolder={dict("form.describe_business")}
         type='textarea'
-        name='client.description'
+        name='business.description'
         value={formData.client.description || ""}
-        handleChange={handleChange}
+        handleChange={onChange}
       />
+      {validation && <ErrorMessage error={errors.business_description} />}
       <button type='submit'>Submit</button>
     </form>
   );

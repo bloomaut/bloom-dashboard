@@ -16,6 +16,7 @@ export interface Client {
   id: number | null;
   name: string | null;
   cuit: string;
+  banner: string | null;
   razon_social: string;
   company_web: string;
   logo: string;
