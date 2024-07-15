@@ -3,14 +3,14 @@
 .setup_container {
   @include width-height(230px, 130px);
   padding-left: 3px;
-  transition: all 0.7s;
-  animation: fadeIn 0.3s ease-in-out forwards;
+  border: none;
+  cursor: pointer;
   .inner_container {
     @include width-height(100%, 100%);
     @include flex(column, center, flex-start, 15px);
     background-color: $blueBackground;
     padding: 20px 10px;
-    animation: scaleIn 0.3s ease-in-out forwards;
+    animation: fadeIn 0.7s ease-in-out forwards;
     .title {
       @include fontSize-fontWeight(15px, 500);
       color: $white;
@@ -43,14 +43,5 @@
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.5);
-  }
-  to {
-    transform: scale(1);
   }
 }

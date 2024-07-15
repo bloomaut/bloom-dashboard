@@ -10,7 +10,7 @@ const Setup = ({ value = 1 }: SetupProps) => {
   const progressWidth = `${(value / 4) * 100}%`;
 
   return (
-    <div className={styles.setup_container}>
+    <button className={styles.setup_container} onClick={() => null}>
       <div className={styles.inner_container}>
         <h3 className={styles.title}>{dict("setup.title")}</h3>
         <div className={styles.bar_container}>
@@ -18,7 +18,7 @@ const Setup = ({ value = 1 }: SetupProps) => {
         </div>
         <p className={styles.step}>{`${value}/4 ${dict("setup.completed")}`}</p>
       </div>
-    </div>
+    </button>
   );
 };
 
