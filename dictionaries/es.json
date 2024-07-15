@@ -22,7 +22,11 @@
       "catalog": "Catálogo",
       "clients": "Clients",
       "templates": "Plantillas",
-      "link_inbox": "Ir a Inbox"
+      "link_inbox": "Ir a Inbox",
+      "setup": {
+        "title": "Vamos a configurar tu negocio",
+        "completed": "completado"
+      }
     },
     "sidetrack": {
       "title": "Paso",

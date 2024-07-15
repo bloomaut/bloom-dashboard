@@ -22,7 +22,11 @@
       "catalog": "Catalog",
       "clients": "Clients",
       "templates": "Templates",
-      "link_inbox": "Go to Inbox"
+      "link_inbox": "Go to Inbox",
+      "setup": {
+        "title": "Let's setup your business",
+        "completed": "completed"
+      }
     },
     "sidetrack": {
       "title": "Step",
