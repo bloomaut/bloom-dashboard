@@ -20,7 +20,6 @@
     cursor: pointer;
     top: 50px;
     transition: all 0.3s ease;
-
     li {
       @include flex(column, center, center);
       @include fontSize-fontWeight(14px, 400);
@@ -29,12 +28,12 @@
       color: $lightGrey;
       transition: all 0.3s;
       border: $border 1px solid;
-
-      padding: 20px 10px;
       cursor: pointer;
       text-align: center;
       background-color: $white;
       a {
+        @include width-height(100%, 100%);
+        @include flex(column, center, center);
         color: $lightGrey;
         transition: color 0.7s;
       }

@@ -150,20 +150,20 @@ const FormActions = ({
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     setLoading(true);
-    remove("datasets", id || "", ENV.BOX)
-      .then(() => {
-        notify(dict("toast.success_delete"));
-        fetchDatasets();
+    if (id) {
+      const data = await remove("datasets", id, ENV.BOX);
+      if (data.statusCode === 200) {
         setShowConfirmation(false);
-      })
-      .catch(() => {
-        notifyError(dict("toast.error_delete"));
-      })
-      .finally(() => {
+        notify(dict("toast.success_delete"));
         setLoading(false);
-      });
+        fetchDatasets();
+      } else {
+        notifyError(dict("toast.error_delete"));
+        setLoading(false);
+      }
+    }
   };
 
   const handleClose = () => {
@@ -193,7 +193,7 @@ const FormActions = ({
 
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
-      <div className={styles.inner_container} ref={dropdownRef}>
+      <div className={styles.inner_container} ref={!popupDelete ? dropdownRef : null}>
         <p className={styles.title}>{dict("catalog.form_actions.title")}</p>
         <div className={styles.btn_close}>
           <button onClick={handleClose} type='button'>
