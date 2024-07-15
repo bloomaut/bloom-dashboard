@@ -47,7 +47,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const [formData, setFormData] = useState(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
-  const [visibility, setVisibility] = useState(false);
+  const [visibility, setVisibility] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState(false);

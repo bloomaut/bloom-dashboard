@@ -24,13 +24,13 @@ const Catalog = () => {
             {datasets.map(dataset => (
               <Card key={dataset._id} {...dataset} />
             ))}
-            <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
-              <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
-            </div>
           </>
         ) : (
           <p>{dict("catalog.empty_datasets")}</p>
         )}
+        <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
+          <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
+        </div>
         {showPopupCreate && (
           <FormActions action='post' setShowConfirmation={setShowPopupCreate} fetchDatasets={fetchDatasets} />
         )}

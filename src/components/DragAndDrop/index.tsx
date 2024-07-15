@@ -8,8 +8,6 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useBusinessContext } from "@/context/BusinessContext";
-import excel from "/public/assets/excel_logo.svg";
-import Button from "../Button";
 
 interface FileDragDropProps {
   file?: File | null;
@@ -63,6 +61,12 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       if (img === "Excel" && catalogDetail) {
         if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
           notifyError("Debes seleccionar una planilla de excel");
+        } else {
+          setFile(acceptedFiles[0]);
+        }
+      } else if (img === "Logo" && catalogDetail) {
+        if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("excel")) {
+          notifyError("Debes seleccionar una imagen");
         } else {
           setFile(acceptedFiles[0]);
         }
