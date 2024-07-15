@@ -1,10 +1,13 @@
 @import "@/styles/theme.scss";
 
 .setup_container {
-  @include width-height(230px, 130px);
+  @include width-height(232px, 130px);
   padding-left: 3px;
   border: none;
   cursor: pointer;
+  @media (width >= $queryXl) {
+    width: 242px;
+  }
   .inner_container {
     @include width-height(100%, 100%);
     @include flex(column, center, flex-start, 15px);

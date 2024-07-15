@@ -15,7 +15,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const { user } = useUser();
 
-  const showTrack = false;
+  const showTrack = true;
 
   return (
     <div className={styles.container}>
