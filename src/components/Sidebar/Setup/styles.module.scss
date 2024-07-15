@@ -1,0 +1,56 @@
+@import "@/styles/theme.scss";
+
+.setup_container {
+  @include width-height(230px, 130px);
+  padding-left: 3px;
+  transition: all 0.7s;
+  animation: fadeIn 0.3s ease-in-out forwards;
+  .inner_container {
+    @include width-height(100%, 100%);
+    @include flex(column, center, flex-start, 15px);
+    background-color: $blueBackground;
+    padding: 20px 10px;
+    animation: scaleIn 0.3s ease-in-out forwards;
+    .title {
+      @include fontSize-fontWeight(15px, 500);
+      color: $white;
+    }
+    .bar_container {
+      @include width-height(100%, 4px);
+      background-color: $darkBlue;
+      position: relative;
+      overflow: hidden;
+      .bar {
+        @include width-height(auto, 100%);
+        background-color: $orange;
+        transition: width 0.7s;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    .step {
+      @include fontSize-fontWeight(12px, 400);
+      color: $white;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}

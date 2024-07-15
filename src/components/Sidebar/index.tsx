@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Icon from "@/components/Icon";
 import Link from "next/link";
+import Setup from "./Setup";
 
 interface SidebarCard {
   title: string;
@@ -73,7 +74,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
-
+      {/* {isOpen && <Setup value={1} />} */}
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >
