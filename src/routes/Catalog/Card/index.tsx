@@ -20,7 +20,14 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
             <Image src={image} className={styles.image} alt={name} width={140} height={140} />
           ) : (
             <div className={styles.icon_container}>
-              <Icon name='dataset' width={50} height={50} strokeColor={"#BEBEBE"} viewBox='0 0 25 24' />
+              <Icon
+                name='dataset'
+                width={50}
+                height={50}
+                strokeWidth={1.3}
+                strokeColor={"#BEBEBE"}
+                viewBox='0 0 25 24'
+              />
             </div>
           )}
         </Link>

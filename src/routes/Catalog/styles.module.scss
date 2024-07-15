@@ -17,9 +17,6 @@
       border-radius: 10px;
       cursor: pointer;
       transition: all 150ms ease-in;
-      @media (width >= $queryXl) {
-        width: 300px;
-      }
       &:hover {
         background: rgb(214, 217, 252);
       }
