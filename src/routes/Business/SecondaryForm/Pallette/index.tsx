@@ -1,11 +1,11 @@
 import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
-import { useBusinessContext } from "@/context/BusinessContext";
+import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
 
 const Pallette = () => {
   const dict = useTranslations("dict.business");
-  const { userData } = useBusinessContext();
+  const userData = useAppSelector(state => state.userData);
 
   return (
     <div className={styles.colors}>

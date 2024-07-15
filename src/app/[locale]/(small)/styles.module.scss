@@ -9,7 +9,7 @@
     @include flex(row, space-between, flex-start);
     flex-wrap: nowrap;
     .children_container {
-      @include width-height(calc(100vw - 250px), calc(100vh - 65px));
+      @include width-height(calc(100vw - 300px), calc(100vh - 65px));
       @include flex(column, flex-start, center);
       background-color: $generalBackground;
       overflow-y: auto;

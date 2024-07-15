@@ -1,17 +1,31 @@
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
 import { useTranslations } from "next-intl";
-import { useBusinessContext } from "@/context/BusinessContext";
+import { useAppSelector } from "@/store/hooks";
+import { useEffect, useState } from "react";
+import { UserBusiness } from "@/typescript/interfaces/business.interface";
+import { userInitialState } from "@/store/features/userSlice";
 
 const Form = () => {
   const dict = useTranslations("dict.business");
-  const { userData } = useBusinessContext();
+  const [formData, setFormData] = useState<UserBusiness>(userInitialState);
+  const userData = useAppSelector(state => state.userData);
 
-  const handleChange = () => {
-    null;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
-  console.log(userData);
+  console.log(formData);
+
+  useEffect(() => {
+    if (userData) {
+      setFormData(userData);
+    }
+  }, [userData]);
 
   return (
     <form className={styles.main_form}>
@@ -21,15 +35,15 @@ const Form = () => {
           textHolder={dict("form.name")}
           type='text'
           name='name'
-          value={userData?.name || ""}
+          value={formData.name || ""}
           handleChange={handleChange}
         />
         <Input
           textLabel={dict("form.last_name")}
           textHolder={dict("form.last_name")}
           type='text'
-          name='last_name'
-          value={userData?.lastname || ""}
+          name='lastname'
+          value={formData.lastname || ""}
           handleChange={handleChange}
         />
       </div>
@@ -37,27 +51,27 @@ const Form = () => {
         textLabel={dict("form.business_name")}
         textHolder={dict("form.business_name")}
         type='text'
-        name='business_name'
-        value={userData?.client.name || ""}
+        name='client.name'
+        value={formData.client.name || ""}
         handleChange={handleChange}
       />
       <div className={styles.select}>
         <label>{dict("form.type_business")}</label>
-        <select>
+        <select name='client.category' value={formData.client.category?.join(",") || ""}>
           <option>Select industry</option>
-          {userData?.client.category &&
-            // No se que dato es ni cual vendrá en category
-            userData?.client.category.map((category: any) => <option key={userData.id}>{category}</option>)}
+          {formData.client.category &&
+            formData.client.category.map((category, index) => <option key={index}>{category}</option>)}
         </select>
       </div>
       <Input
         textLabel={dict("form.describe_business")}
         textHolder={dict("form.describe_business")}
         type='textarea'
-        name='describe_business'
-        value={userData?.client.description || ""}
+        name='client.description'
+        value={formData.client.description || ""}
         handleChange={handleChange}
       />
+      <button type='submit'>Submit</button>
     </form>
   );
 };

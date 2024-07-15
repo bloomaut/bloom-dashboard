@@ -1,11 +1,14 @@
 import styles from "./styles.module.scss";
 import Card from "./Card";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Icon from "@/components/Icon";
 import Link from "next/link";
 import Setup from "./Setup";
+import { useAppDispatch } from "@/store/hooks";
+import { setUserData } from "@/store/features/userSlice";
+import { get } from "@/services/fetch";
 
 interface SidebarCard {
   title: string;
@@ -21,6 +24,7 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
   const dict = useTranslations("dict.sidebar");
   const { user } = useUser();
+  const dispatch = useAppDispatch();
   const INBOX_URL = process.env.NEXT_PUBLIC_INBOX_URL;
 
   const handleMenu = () => {
@@ -68,6 +72,17 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         ]
       : []),
   ];
+
+  const getUserData = async () => {
+    const res = await get("user/me");
+    if (res.statusCode === 200) {
+      dispatch(setUserData(res.result.user));
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <div className={isOpen ? `${styles.container}` : `${styles.container} ${styles.container_closed}`}>

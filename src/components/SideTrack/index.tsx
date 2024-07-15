@@ -4,10 +4,12 @@ import styles from "./styles.module.scss";
 
 const SideTrack = () => {
   const dict = useTranslations("dict.sidetrack");
+
   const data = [
     {
       position: 1,
       title: `${dict("step_1")}`,
+      route: `/my-business`,
       iconName: "business_info",
       iconW: 22,
       iconH: 22,
@@ -16,7 +18,8 @@ const SideTrack = () => {
     {
       position: 2,
       title: `${dict("step_2")}`,
-      isActive: false,
+      route: `/templates`,
+      isActive: true,
       iconName: "select_template",
       iconW: 20,
       iconH: 19,
@@ -24,6 +27,7 @@ const SideTrack = () => {
     {
       position: 3,
       title: `${dict("step_3")}`,
+      route: `/catalog`,
       isActive: false,
       iconName: "select_catalog",
       iconW: 20,
@@ -32,6 +36,7 @@ const SideTrack = () => {
     {
       position: 4,
       title: `${dict("step_4")}`,
+      route: `/hotlink`,
       isActive: false,
       iconName: "generate_powerapp",
       iconW: 22,
@@ -54,6 +59,7 @@ const SideTrack = () => {
             <ItemTrack
               key={btn.title}
               title={btn.title}
+              route={btn.route}
               iconH={btn.iconH}
               iconW={btn.iconW}
               iconName={btn.iconName}

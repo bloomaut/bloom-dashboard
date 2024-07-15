@@ -2,11 +2,11 @@ import Input from "@/components/Input";
 import styles from "./styles.module.scss";
 import Button from "@/components/Button";
 import { useTranslations } from "next-intl";
-import { useBusinessContext } from "@/context/BusinessContext";
+import { useAppSelector } from "@/store/hooks";
 
 const AddInfoForm = () => {
   const dict = useTranslations("dict.business");
-  const { userData } = useBusinessContext();
+  const userData = useAppSelector(state => state.userData);
 
   // eslint-disable-next-line no-empty-function
   const handleChange = () => {};

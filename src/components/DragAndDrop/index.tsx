@@ -7,7 +7,6 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
-import { useBusinessContext } from "@/context/BusinessContext";
 
 interface FileDragDropProps {
   file?: File | null;
@@ -17,7 +16,7 @@ interface FileDragDropProps {
 
 const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
   const { notifyError, notify } = useMessageToast();
-  const { userData } = useBusinessContext();
+  const userData = useAppSelector(data => data.userData);
   const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
