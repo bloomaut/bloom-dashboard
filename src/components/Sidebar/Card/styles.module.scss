@@ -2,7 +2,7 @@
 
 .container,
 .container_noselected {
-  @include width-height(200px, 50px);
+  @include width-height(228px, 50px);
   display: grid;
   grid-template-columns: 20% 80%;
   justify-content: center;
