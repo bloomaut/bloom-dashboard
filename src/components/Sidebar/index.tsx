@@ -1,6 +1,7 @@
+"use client";
 import styles from "./styles.module.scss";
 import Card from "./Card";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Icon from "@/components/Icon";
@@ -13,12 +14,8 @@ interface SidebarCard {
   path: string;
 }
 
-interface SidebarProps {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}
-
-const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
+const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const dict = useTranslations("dict.sidebar");
   const { user } = useUser();
   const INBOX_URL = process.env.NEXT_PUBLIC_INBOX_URL;

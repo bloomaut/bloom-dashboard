@@ -1,4 +1,3 @@
-"use client";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import { Link } from "@/navigation";
@@ -32,7 +31,7 @@ const Navbar = () => {
       </div>
       <div className={styles.inner_container}>
         {/* Language Dropdown */}
-        {user && <LangDrop />}
+        <LangDrop />
         <button className={styles.suite} ref={buttonRef} onClick={() => setShowModal(prev => !prev)}>
           <Image src='/assets/suite.svg' alt='bars' width={30} height={30} />
         </button>
