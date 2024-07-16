@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { UserBusiness } from "@/typescript/interfaces/business.interface";
 import { FormErrorsProps } from "@/hooks/useFormValidator";
 import Button from "@/components/Button";
+import Select from "./Select";
 
 interface FormProps {
   userData?: UserBusiness;
@@ -15,6 +16,8 @@ interface FormProps {
   validation: boolean;
   errors: FormErrorsProps;
   loading: boolean;
+  category: string;
+  onCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export const initialFormData: UserBusiness = {
@@ -33,7 +36,18 @@ export const initialFormData: UserBusiness = {
   phone: "",
 };
 
-const Form = ({ formData, onChange, onSubmit, setFormData, userData, validation, errors, loading }: FormProps) => {
+const Form = ({
+  formData,
+  onChange,
+  onSubmit,
+  setFormData,
+  userData,
+  validation,
+  errors,
+  loading,
+  category,
+  onCategoryChange,
+}: FormProps) => {
   const dict = useTranslations("dict.business");
 
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
@@ -87,11 +101,7 @@ const Form = ({ formData, onChange, onSubmit, setFormData, userData, validation,
       </div>
       <div className={styles.row_03}>
         <label>{dict("form.type_business")}</label>
-        <select name='client.category' value={formData.client.category?.join(",") || ""}>
-          <option>Select industry</option>
-          {formData.client.category &&
-            formData.client.category.map((category, index) => <option key={index}>{category}</option>)}
-        </select>
+        <Select name='category' value={category} onChange={onCategoryChange} />
       </div>
       <div className={styles.row_04}>
         <Input

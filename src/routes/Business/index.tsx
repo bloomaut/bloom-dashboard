@@ -11,7 +11,6 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import useFormValidator from "@/hooks/useFormValidator";
 import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
-import { ENV } from "@/typescript/types/api";
 
 const Business = () => {
   const userData = useAppSelector(state => state.userData);
@@ -20,6 +19,7 @@ const Business = () => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState<File | null>(null);
   const [banner, setBanner] = useState<File | null>(null);
+  const [category, setCategory] = useState<string>("");
   const { notify, notifyError } = useMessageToast();
   const fieldsToValidate = ["name", "lastname", "business_name", "business_description"];
   const errors = useFormValidator(formData, fieldsToValidate);
@@ -45,20 +45,27 @@ const Business = () => {
     });
   };
 
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
       setLoading(true);
+
       let logoURL = "";
       let colors = [];
+
       if (logo) {
         const data = await handleLogoUpload(logo);
         logoURL = data?.url;
         colors = data?.colors || [];
       }
 
-      const transformedPalette = colors.map((color: string) => ({ color }));
+      const parsedPalette = colors.map((color: string) => ({ color }));
+      const palette = parsedPalette.length > 0 ? parsedPalette : formData.client.palette;
 
       const dataToSend = {
         userName: formData.name,
@@ -69,7 +76,7 @@ const Business = () => {
         instagram: formData.client.instagram,
         phone: formData.phone,
         logo: logoURL,
-        palette: transformedPalette,
+        palette: palette,
       };
 
       const response = await update("small-business", dataToSend);
@@ -112,6 +119,8 @@ const Business = () => {
           validation={checkValidation}
           errors={errors}
           loading={loading}
+          category={category}
+          onCategoryChange={handleCategoryChange}
         />
         <SecondaryForm
           logo={logo}
