@@ -1,33 +1,33 @@
 export interface UserBusiness {
-  id: number | null;
-  auth0_id: string;
+  id?: number | null;
+  auth0_id?: string;
   name: string | null;
   lastname: string | null;
-  email: string;
+  email?: string;
   phone: string;
-  company_position: string;
-  active: boolean;
-  created_at: string;
-  updated_at: string;
+  company_position?: string;
+  active?: boolean;
+  created_at?: string;
+  updated_at?: string;
   client: Client;
 }
 
 export interface Client {
-  id: number | null;
+  id?: number | null;
   name: string | null;
-  cuit: string;
+  cuit?: string;
   banner: string | null;
-  razon_social: string;
+  razon_social?: string;
   company_web: string;
   logo: string;
-  active: boolean;
+  active?: boolean;
   instagram: string | null;
   description: string | null;
   category: [] | null;
-  palette: [] | null;
-  created_at: string;
-  updated_at: string;
-  onboardings: Onboardings | null;
+  palette: { color: string }[] | null;
+  created_at?: string;
+  updated_at?: string;
+  onboardings?: Onboardings | null;
 }
 
 export interface Onboardings {
@@ -45,4 +45,16 @@ interface SkinxTemplate {
 
 interface SkinxGenerated {
   _id: string;
+}
+
+export interface PutBusiness {
+  userName: string | null;
+  userLastname: string | null;
+  clientName: string | null;
+  description: string | null;
+  website: string | null;
+  instagram: string | null;
+  phone: string | null;
+  logo: string | null;
+  palette: { color: string }[] | null;
 }

@@ -1,21 +1,27 @@
 import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
-import { useAppSelector } from "@/store/hooks";
+import { UserBusiness } from "@/typescript/interfaces/business.interface";
 import { useTranslations } from "next-intl";
 
-const Pallette = () => {
+interface PaletteProps {
+  palette: { color: string }[] | null;
+  setFormData: React.Dispatch<React.SetStateAction<UserBusiness>>;
+}
+
+const Palette = ({ palette, setFormData }: PaletteProps) => {
   const dict = useTranslations("dict.business");
-  const userData = useAppSelector(state => state.userData);
 
   return (
     <div className={styles.colors}>
       <h6>{dict("data.colors")}</h6>
       <div className={styles.container_circle}>
-        {userData?.client.palette ? (
-          // No se que dato es ni cual vendrá en pallete
-          userData?.client.palette.map((color: any) => <option key={userData.id}>{color}</option>)
+        {palette && palette.length > 0 ? (
+          palette.map((color, index) => (
+            <article key={index} className={styles.circle} style={{ backgroundColor: color.color }}></article>
+          ))
         ) : (
           <>
+            <article className={styles.circle}></article>
             <article className={styles.circle}></article>
             <article className={styles.circle}></article>
           </>
@@ -29,4 +35,4 @@ const Pallette = () => {
   );
 };
 
-export default Pallette;
+export default Palette;

@@ -6,7 +6,7 @@ interface FormDataProps {
   [key: string]: any | undefined;
 }
 
-interface FormErrorsProps {
+export interface FormErrorsProps {
   [key: string]: string;
 }
 
@@ -67,13 +67,13 @@ const useFormValidator = (
       }
 
       if (fieldsToValidate?.includes("business_name")) {
-        if (!formData?.business_name || !formData?.business_name.trim()) {
+        if (!formData?.client.name || !formData?.client.name.trim()) {
           errors.business_name = "Debes ingresar el nombre del negocio";
         }
       }
 
       if (fieldsToValidate?.includes("business_description")) {
-        if (!formData?.business_description || !formData?.business_description.trim()) {
+        if (!formData?.client.description || !formData?.client.description.trim()) {
           errors.business_description = "Debes ingresar una descripción para el negocio";
         }
       }

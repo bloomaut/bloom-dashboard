@@ -14,4 +14,14 @@
     grid-template-columns: 1fr 1.5fr;
     gap: 30px;
   }
+  .drag_container {
+    @include width-height(100%, 50%);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+    .logo,
+    .banner {
+      width: 100%;
+    }
+  }
 }

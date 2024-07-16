@@ -2,14 +2,15 @@ import Input from "@/components/Input";
 import styles from "./styles.module.scss";
 import Button from "@/components/Button";
 import { useTranslations } from "next-intl";
-import { useAppSelector } from "@/store/hooks";
+import { UserBusiness } from "@/typescript/interfaces/business.interface";
 
-const AddInfoForm = () => {
+interface AddInfoFormProps {
+  formData: UserBusiness;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}
+
+const AddInfoForm = ({ formData, onChange }: AddInfoFormProps) => {
   const dict = useTranslations("dict.business");
-  const userData = useAppSelector(state => state.userData);
-
-  // eslint-disable-next-line no-empty-function
-  const handleChange = () => {};
 
   return (
     <form className={styles.add_info}>
@@ -19,9 +20,9 @@ const AddInfoForm = () => {
         <Input
           textHolder={dict("data.website")}
           type='text'
-          name='website'
-          value={userData?.client.company_web || ""}
-          handleChange={handleChange}
+          name='business_company_web'
+          value={formData.client.company_web || ""}
+          handleChange={onChange}
         />
       </div>
       <div className={styles.input}>
@@ -29,9 +30,9 @@ const AddInfoForm = () => {
         <Input
           textHolder={dict("data.instagram")}
           type='text'
-          name='instagram'
-          value={userData?.client.instagram || ""}
-          handleChange={handleChange}
+          name='business_instagram'
+          value={formData.client.instagram || ""}
+          handleChange={onChange}
         />
       </div>
       <div className={styles.input}>
@@ -40,8 +41,8 @@ const AddInfoForm = () => {
           textHolder={dict("data.phone")}
           type='text'
           name='phone'
-          value={userData?.phone || ""}
-          handleChange={handleChange}
+          value={formData.phone || ""}
+          handleChange={onChange}
         />
       </div>
       <div className={styles.btn_next}>
