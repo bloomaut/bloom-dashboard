@@ -1,5 +1,3 @@
-@import "@/styles/theme.scss";
-
 .secondary_form {
   @include width-height(100%, auto);
   @include flex(column, center, center, 30px);

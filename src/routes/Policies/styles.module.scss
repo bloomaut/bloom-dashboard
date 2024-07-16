@@ -1,5 +1,3 @@
-@import "@/styles/theme.scss";
-
 .container {
   @include width-height(100%, auto);
   @include flex(column, flex-start, flex-start, 30px);

@@ -1,5 +1,3 @@
-@import "@/styles/theme.scss";
-
 .button {
   padding: 10px;
   @include flex(row, flex-end, center, 15px);

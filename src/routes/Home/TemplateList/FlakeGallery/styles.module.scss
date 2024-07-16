@@ -1,4 +1,3 @@
-@import "@/styles/theme.scss";
 .template_container {
   @include flex(column, center, flex-start);
   @include width-height(auto, auto);

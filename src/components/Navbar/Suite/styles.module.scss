@@ -1,5 +1,3 @@
-@import "@/styles/theme.scss";
-
 .modal {
   @include width-height(220px, 355px);
   @include flex(column, space-between, center, 5px);
