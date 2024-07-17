@@ -7,11 +7,8 @@ import { Slide } from "react-toastify";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import SideTrack from "@/components/SideTrack";
-import { useUser } from "@auth0/nextjs-auth0/client";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useUser();
-
   const showTrack = false;
 
   return (
@@ -31,7 +28,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
         transition={Slide}
       />
       <div className={styles.inner_container}>
-        {user && <Sidebar />}
+        <Sidebar />
         {showTrack && <SideTrack />}
         <div className={styles.children_container}>{children}</div>
       </div>
