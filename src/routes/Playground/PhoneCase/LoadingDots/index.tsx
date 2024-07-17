@@ -1,5 +1,4 @@
 "use client";
-import "@/styles/theme.scss";
 import styles from "./styles.module.scss";
 import { ThreeDots } from "react-loader-spinner";
 import { useTranslations } from "next-intl";
