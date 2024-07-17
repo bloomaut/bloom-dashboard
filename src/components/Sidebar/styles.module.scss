@@ -1,5 +1,5 @@
 .container {
-  @include width-height(250px, 100%);
+  @include width-height(305px, 100%);
   @include flex(column, space-between, flex-start, 10px);
   background-color: $white;
   border-right: 1px solid $lighterGrey;

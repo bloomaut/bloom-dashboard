@@ -23,7 +23,9 @@ const Sidebar = () => {
   const dispatch = useAppDispatch();
   const INBOX_URL = process.env.NEXT_PUBLIC_INBOX_URL;
 
-  const { currentStep } = useStepValidation();
+  const { currentStep, step_04 } = useStepValidation();
+
+  console.log(step_04);
 
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -79,7 +81,7 @@ const Sidebar = () => {
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
-      {isOpen && <Setup value={currentStep} />}
+      {isOpen && !step_04 && <Setup value={currentStep} />}
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >
