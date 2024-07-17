@@ -33,8 +33,6 @@ const TemplatesSelector = () => {
     fetchDataHotlink();
   }, []);
 
-  console.log(flakes);
-
   return (
     <section className={styles.container}>
       <div className={styles.flakes}>
