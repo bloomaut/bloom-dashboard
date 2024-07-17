@@ -8,11 +8,9 @@ import Button from "@/components/Button";
 import Select from "./Select";
 
 interface FormProps {
-  userData?: UserBusiness;
   formData: UserBusiness;
   onSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  setFormData: React.Dispatch<React.SetStateAction<UserBusiness>>;
   validation: boolean;
   errors: FormErrorsProps;
   loading: boolean;
@@ -20,47 +18,12 @@ interface FormProps {
   onCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const initialFormData: UserBusiness = {
-  name: "",
-  lastname: "",
-  client: {
-    name: "",
-    description: "",
-    category: "",
-    logo: "",
-    banner: "",
-    palette: [],
-    company_web: "",
-    instagram: "",
-  },
-  phone: "",
-};
-
-const Form = ({
-  formData,
-  onChange,
-  onSubmit,
-  setFormData,
-  userData,
-  validation,
-  errors,
-  loading,
-  category,
-  onCategoryChange,
-}: FormProps) => {
+const Form = ({ formData, onChange, onSubmit, validation, errors, loading, category, onCategoryChange }: FormProps) => {
   const dict = useTranslations("dict.business");
 
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
-
-  useEffect(() => {
-    if (userData) {
-      setFormData(userData);
-    } else {
-      setFormData(initialFormData);
-    }
-  }, [userData]);
 
   return (
     <form className={styles.main_form} onSubmit={onSubmit}>

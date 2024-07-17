@@ -25,8 +25,6 @@ const Sidebar = () => {
 
   const { currentStep, step_04 } = useStepValidation();
 
-  console.log(step_04);
-
   const handleMenu = () => {
     setIsOpen(!isOpen);
   };

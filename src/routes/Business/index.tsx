@@ -3,7 +3,7 @@ import MainForm from "./MainForm";
 import SecondaryForm from "./SecondaryForm";
 import Header from "@/components/Header";
 import { useAppSelector } from "@/store/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserBusiness } from "@/typescript/interfaces/business.interface";
 import { useTranslations } from "next-intl";
 import { userInitialState } from "@/store/features/userSlice";
@@ -11,7 +11,22 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import useFormValidator from "@/hooks/useFormValidator";
 import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
-import LoadingSpinner from "@/components/Loading";
+
+const initialFormData: UserBusiness = {
+  name: "",
+  lastname: "",
+  client: {
+    name: "",
+    description: "",
+    category: "",
+    logo: "",
+    banner: "",
+    palette: [],
+    company_web: "",
+    instagram: "",
+  },
+  phone: "",
+};
 
 const Business = () => {
   const userData = useAppSelector(state => state.userData);
@@ -116,38 +131,38 @@ const Business = () => {
     }
   };
 
+  useEffect(() => {
+    if (userData) {
+      setFormData(userData);
+    } else {
+      setFormData(initialFormData);
+    }
+  }, [userData]);
+
   return (
     <section className={styles.container_business}>
-      {!userData.name ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <Header title={dict("business.form.title")} subtitle={dict("business.form.subtitle")} />
-          <div className={styles.container_columns}>
-            <MainForm
-              userData={userData}
-              formData={formData}
-              setFormData={setFormData}
-              onSubmit={handleSubmit}
-              onChange={handleChange}
-              validation={checkValidation}
-              errors={errors}
-              loading={loading}
-              category={category}
-              onCategoryChange={handleCategoryChange}
-            />
-            <SecondaryForm
-              logo={logo}
-              setLogo={setLogo}
-              banner={banner}
-              setBanner={setBanner}
-              formData={formData}
-              setFormData={setFormData}
-              onChange={handleChange}
-            />
-          </div>
-        </>
-      )}
+      <Header title={dict("business.form.title")} subtitle={dict("business.form.subtitle")} />
+      <div className={styles.container_columns}>
+        <MainForm
+          formData={formData}
+          onSubmit={handleSubmit}
+          onChange={handleChange}
+          validation={checkValidation}
+          errors={errors}
+          loading={loading}
+          category={category}
+          onCategoryChange={handleCategoryChange}
+        />
+        <SecondaryForm
+          logo={logo}
+          setLogo={setLogo}
+          banner={banner}
+          setBanner={setBanner}
+          formData={formData}
+          setFormData={setFormData}
+          onChange={handleChange}
+        />
+      </div>
     </section>
   );
 };
