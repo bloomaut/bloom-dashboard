@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import MainForm from "./MainForm";
 import SecondaryForm from "./SecondaryForm";
 import Header from "@/components/Header";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 import { UserBusiness } from "@/typescript/interfaces/business.interface";
 import { useTranslations } from "next-intl";
@@ -11,6 +11,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import useFormValidator from "@/hooks/useFormValidator";
 import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
+import { setUserData } from "@/store/features/userSlice";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -30,12 +31,14 @@ const initialFormData: UserBusiness = {
 
 const Business = () => {
   const userData = useAppSelector(state => state.userData);
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<UserBusiness>(userInitialState);
   const [checkValidation, setCheckValidation] = useState(false);
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState<File | null>(null);
   const [banner, setBanner] = useState<File | null>(null);
   const [category, setCategory] = useState<string>("");
+  const [errorLogo, setErrorLogo] = useState(false);
   const { notify, notifyError } = useMessageToast();
   const fieldsToValidate = ["name", "lastname", "business_name", "business_category", "business_description"];
   const errors = useFormValidator(formData, fieldsToValidate);
@@ -72,14 +75,22 @@ const Business = () => {
     }));
   };
 
+  const validateLogo = () => {
+    return Boolean(logo) || Boolean(formData.client.logo);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCheckValidation(true);
-    if (Object.keys(errors).length === 0) {
-      setLoading(true);
+    const logoExists = validateLogo();
 
-      let logoURL = "";
-      let colors = [];
+    if (Object.keys(errors).length === 0 && logoExists) {
+      setLoading(true);
+      setCheckValidation(false);
+      setErrorLogo(false);
+
+      let logoURL = formData.client.logo || "";
+      let colors;
 
       if (logo) {
         const data = await handleLogoUpload(logo);
@@ -87,8 +98,7 @@ const Business = () => {
         colors = data?.colors || [];
       }
 
-      const parsedPalette = colors.map((color: string) => ({ color }));
-      const palette = parsedPalette.length > 0 ? parsedPalette : formData.client.palette;
+      const parsedPalette = colors.map((color: string) => ({ color })) || [];
 
       const dataToSend = {
         userName: formData.name,
@@ -100,7 +110,7 @@ const Business = () => {
         instagram: formData.client.instagram,
         phone: formData.phone,
         logo: logoURL,
-        palette: palette,
+        palette: parsedPalette,
       };
 
       const response = await update("small-business", dataToSend);
@@ -108,26 +118,29 @@ const Business = () => {
       if (response.statusCode === 200) {
         notify(dict("toast.success_edit"));
         setLoading(false);
-        setFormData(prevFormData => ({
-          ...prevFormData,
-          name: dataToSend.userName,
-          lastname: dataToSend.userLastname,
-          client: {
-            ...prevFormData.client,
-            name: dataToSend.clientName,
-            category: dataToSend.category,
-            description: dataToSend.description,
-            company_web: dataToSend.website,
-            instagram: dataToSend.instagram,
-            palette: dataToSend.palette,
-          },
-          phone: dataToSend.phone,
-          logo: dataToSend.logo,
-        }));
+        dispatch(
+          setUserData({
+            name: dataToSend.userName,
+            lastname: dataToSend.userLastname,
+            client: {
+              name: dataToSend.clientName,
+              category: dataToSend.category,
+              description: dataToSend.description,
+              logo: dataToSend.logo,
+              banner: formData.client.banner,
+              palette: dataToSend.palette,
+              company_web: dataToSend.website,
+              instagram: dataToSend.instagram,
+            },
+            phone: dataToSend.phone,
+          }),
+        );
       } else {
         notifyError(dict("toast.error_edit"));
         setLoading(false);
       }
+    } else {
+      setErrorLogo(!validateLogo());
     }
   };
 
@@ -138,6 +151,12 @@ const Business = () => {
       setFormData(initialFormData);
     }
   }, [userData]);
+
+  useEffect(() => {
+    if (logo || formData.client.logo) {
+      setErrorLogo(false);
+    }
+  }, [logo, formData.client.logo]);
 
   return (
     <section className={styles.container_business}>
@@ -156,6 +175,7 @@ const Business = () => {
         <SecondaryForm
           logo={logo}
           setLogo={setLogo}
+          errorLogo={errorLogo}
           banner={banner}
           setBanner={setBanner}
           formData={formData}

@@ -46,9 +46,7 @@ const Templates = () => {
         {flakes.length ? (
           flakes?.map((app: Powerapp) => <FlakeGallery key={app._id} app={app} handleClick={handleClick} />)
         ) : (
-          <div className={styles.loading}>
-            <LoadingSpinner />
-          </div>
+          <p>Aún no posees ningun Flake.</p>
         )}
       </div>
     </div>

@@ -8,7 +8,7 @@ import useStepValidation from "@/hooks/useStepValidation";
 import { useRouter } from "@/navigation";
 
 const Templates = () => {
-  const { step_04 } = useStepValidation();
+  const { step_02, step_04 } = useStepValidation();
   const router = useRouter();
   const dict = useTranslations("dict.templates");
 
@@ -23,7 +23,7 @@ const Templates = () => {
         <TemplatesSelector />
         <div className={styles.phone_image}>
           <PhoneCase />
-          {!step_04 && <Button title='Next' onclick={handleNavigation} />}
+          {!step_04 && <Button title='Next' isDisabled={!step_02} onclick={handleNavigation} />}
         </div>
       </div>
     </section>
