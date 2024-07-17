@@ -11,6 +11,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import useFormValidator from "@/hooks/useFormValidator";
 import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
+import LoadingSpinner from "@/components/Loading";
 
 const Business = () => {
   const userData = useAppSelector(state => state.userData);
@@ -117,30 +118,36 @@ const Business = () => {
 
   return (
     <section className={styles.container_business}>
-      <Header title={dict("business.form.title")} subtitle={dict("business.form.subtitle")} />
-      <div className={styles.container_columns}>
-        <MainForm
-          userData={userData}
-          formData={formData}
-          setFormData={setFormData}
-          onSubmit={handleSubmit}
-          onChange={handleChange}
-          validation={checkValidation}
-          errors={errors}
-          loading={loading}
-          category={category}
-          onCategoryChange={handleCategoryChange}
-        />
-        <SecondaryForm
-          logo={logo}
-          setLogo={setLogo}
-          banner={banner}
-          setBanner={setBanner}
-          formData={formData}
-          setFormData={setFormData}
-          onChange={handleChange}
-        />
-      </div>
+      {!userData.name ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <Header title={dict("business.form.title")} subtitle={dict("business.form.subtitle")} />
+          <div className={styles.container_columns}>
+            <MainForm
+              userData={userData}
+              formData={formData}
+              setFormData={setFormData}
+              onSubmit={handleSubmit}
+              onChange={handleChange}
+              validation={checkValidation}
+              errors={errors}
+              loading={loading}
+              category={category}
+              onCategoryChange={handleCategoryChange}
+            />
+            <SecondaryForm
+              logo={logo}
+              setLogo={setLogo}
+              banner={banner}
+              setBanner={setBanner}
+              formData={formData}
+              setFormData={setFormData}
+              onChange={handleChange}
+            />
+          </div>
+        </>
+      )}
     </section>
   );
 };

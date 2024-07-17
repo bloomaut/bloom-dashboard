@@ -13,9 +13,8 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [activeSideTrack, setActiveSideTrack] = useState<boolean>(true);
   const { user } = useUser();
-
-  const showTrack = true;
 
   return (
     <div className={styles.container}>
@@ -35,7 +34,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
       />
       <div className={styles.inner_container}>
         {user && <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />}
-        {showTrack && <SideTrack />}
+        {activeSideTrack && <SideTrack setActiveSideTrack={setActiveSideTrack} />}
         <div
           className={
             isOpen ? `${styles.children_container}` : `${styles.children_container} ${styles.children_container_closed}`

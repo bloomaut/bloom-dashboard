@@ -1,9 +1,60 @@
 import { useTranslations } from "next-intl";
 import ItemTrack from "./ItemTrack";
 import styles from "./styles.module.scss";
+import { useAppSelector } from "@/store/hooks";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
-const SideTrack = () => {
+interface SideTrackProps {
+  setActiveSideTrack: Dispatch<SetStateAction<boolean>>;
+}
+
+const SideTrack = ({ setActiveSideTrack }: SideTrackProps) => {
+  const userData = useAppSelector(state => state.userData);
   const dict = useTranslations("dict.sidetrack");
+
+  const handleValidationStep01 = () => {
+    if (
+      userData.name &&
+      userData.lastname &&
+      userData.client.name &&
+      userData.client.category &&
+      userData.client.description &&
+      userData.client.logo
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleValidationStep02 = (step_01: boolean) => {
+    if (step_01) {
+      if (userData.client.onboardings?.skinx_template && userData.client.onboardings?.skinx_template !== null) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const handleValidationStep04 = () => {
+    if (userData.client.onboardings?.skinx_generated && userData.client.onboardings?.skinx_generated !== null) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const step_01 = handleValidationStep01();
+  const step_02 = handleValidationStep02(step_01);
+  const step_04 = handleValidationStep04();
+
+  useEffect(() => {
+    if (step_04) {
+      setActiveSideTrack(false);
+    } else {
+      setActiveSideTrack(true);
+    }
+  }, [step_04]);
 
   const data = [
     {
@@ -13,16 +64,16 @@ const SideTrack = () => {
       iconName: "business_info",
       iconW: 22,
       iconH: 22,
-      isActive: true,
+      isActive: !step_01,
     },
     {
       position: 2,
       title: `${dict("step_2")}`,
       route: `/templates`,
-      isActive: true,
       iconName: "select_template",
       iconW: 20,
       iconH: 19,
+      isActive: step_02 === false ? true : false,
     },
     {
       position: 3,
@@ -37,7 +88,7 @@ const SideTrack = () => {
       position: 4,
       title: `${dict("step_4")}`,
       route: `/hotlink`,
-      isActive: false,
+      isActive: step_01 === false && step_02 === false && step_04 === true ? false : true,
       iconName: "generate_powerapp",
       iconW: 22,
       iconH: 12,
