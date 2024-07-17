@@ -21,7 +21,7 @@ const Business = () => {
   const [banner, setBanner] = useState<File | null>(null);
   const [category, setCategory] = useState<string>("");
   const { notify, notifyError } = useMessageToast();
-  const fieldsToValidate = ["name", "lastname", "business_name", "business_description"];
+  const fieldsToValidate = ["name", "lastname", "business_name", "business_category", "business_description"];
   const errors = useFormValidator(formData, fieldsToValidate);
   const dict = useTranslations("dict");
 
@@ -47,6 +47,13 @@ const Business = () => {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      client: {
+        ...prevFormData.client,
+        category: e.target.value,
+      },
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,6 +78,7 @@ const Business = () => {
         userName: formData.name,
         userLastname: formData.lastname,
         clientName: formData.client.name,
+        category: formData.client.category,
         description: formData.client.description,
         website: formData.client.company_web,
         instagram: formData.client.instagram,
@@ -91,6 +99,7 @@ const Business = () => {
           client: {
             ...prevFormData.client,
             name: dataToSend.clientName,
+            category: dataToSend.category,
             description: dataToSend.description,
             company_web: dataToSend.website,
             instagram: dataToSend.instagram,

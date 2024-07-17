@@ -24,7 +24,7 @@ export const userInitialState: UserBusiness = {
     banner: null,
     instagram: null,
     description: null,
-    category: [],
+    category: null,
     palette: null,
     created_at: "",
     updated_at: "",

@@ -72,6 +72,16 @@ const useFormValidator = (
         }
       }
 
+      if (fieldsToValidate?.includes("business_category")) {
+        if (
+          !formData?.client.category ||
+          typeof formData?.client.category !== "string" ||
+          !formData?.client.category.trim()
+        ) {
+          errors.business_category = "Debes ingresar la categoría del negocio";
+        }
+      }
+
       if (fieldsToValidate?.includes("business_description")) {
         if (!formData?.client.description || !formData?.client.description.trim()) {
           errors.business_description = "Debes ingresar una descripción para el negocio";

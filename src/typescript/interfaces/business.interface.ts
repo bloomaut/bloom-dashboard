@@ -23,7 +23,7 @@ export interface Client {
   active?: boolean;
   instagram: string | null;
   description: string | null;
-  category: [] | null;
+  category: string | null;
   palette: { color: string }[] | null;
   created_at?: string;
   updated_at?: string;

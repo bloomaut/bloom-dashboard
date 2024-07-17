@@ -26,7 +26,7 @@ export const initialFormData: UserBusiness = {
   client: {
     name: "",
     description: "",
-    category: [],
+    category: "",
     logo: "",
     banner: "",
     palette: [],
@@ -101,7 +101,8 @@ const Form = ({
       </div>
       <div className={styles.row_03}>
         <label>{dict("form.type_business")}</label>
-        <Select name='category' value={category} onChange={onCategoryChange} />
+        <Select name='business_category' value={formData.client.category || category} onChange={onCategoryChange} />
+        {validation && <ErrorMessage error={errors.business_category} />}
       </div>
       <div className={styles.row_04}>
         <Input
