@@ -1,0 +1,18 @@
+.colors {
+  @include flex(column, flex-start, flex-start, 20px);
+
+  .container_circle {
+    @include flex(row, flex-start, center, 5px);
+    .circle {
+      @include width-height(50px, 50px);
+      @include flex(row, center, center);
+      border-radius: 99%;
+      border: 1px solid $lightGrey;
+    }
+  }
+  .description {
+    @include fontSize-fontWeight(12px, 500);
+    max-width: 300px;
+    margin-bottom: 5px;
+  }
+}
