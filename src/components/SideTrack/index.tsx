@@ -66,8 +66,8 @@ const SideTrack = () => {
       } else {
         setActiveSideTrack(false);
       }
+      console.log(step_01, step_02, step_03, step_04);
     }
-    console.log(step_01, step_02, step_03, step_04);
   }, [step_04, userData]);
 
   // Data to render
