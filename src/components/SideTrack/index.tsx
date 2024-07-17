@@ -9,6 +9,7 @@ const SideTrack = () => {
   const userData = useAppSelector(state => state.userData);
   const dict = useTranslations("dict.sidetrack");
   const [activeSideTrack, setActiveSideTrack] = useState<boolean>(false);
+  const [stepCompleted, setStepCompleted] = useState<number>(0);
 
   const handleValidationStep01 = () => {
     if (
@@ -69,6 +70,14 @@ const SideTrack = () => {
       console.log(step_01, step_02, step_03, step_04);
     }
   }, [step_04, userData]);
+
+  useEffect(() => {
+    if (userData.id) {
+      if (step_01) setStepCompleted(1);
+      if (step_02) setStepCompleted(2);
+      if (step_03) setStepCompleted(3);
+    }
+  }, [userData, step_01, step_02, step_03]);
 
   // Data to render
   const data = [
