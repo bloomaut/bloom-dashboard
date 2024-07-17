@@ -9,6 +9,7 @@ import Setup from "./Setup";
 import { useAppDispatch } from "@/store/hooks";
 import { setUserData } from "@/store/features/userSlice";
 import { get } from "@/services/fetch";
+import useStepValidation from "@/hooks/useStepValidation";
 
 interface SidebarCard {
   title: string;
@@ -21,6 +22,8 @@ const Sidebar = () => {
   const dict = useTranslations("dict.sidebar");
   const dispatch = useAppDispatch();
   const INBOX_URL = process.env.NEXT_PUBLIC_INBOX_URL;
+
+  const { currentStep } = useStepValidation();
 
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -76,7 +79,7 @@ const Sidebar = () => {
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
-      {isOpen && <Setup value={1} />}
+      {isOpen && <Setup value={currentStep} />}
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >
