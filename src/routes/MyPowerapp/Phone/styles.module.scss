@@ -1,0 +1,10 @@
+.container {
+  @include flex(column, flex-start, center);
+  @include width-height(100%, 80vh);
+  .inner_container {
+    @include flex(column, flex-start, flex-start, 30px);
+    @include fontSize-fontWeight(12px, 500);
+    @include width-height(70%, 100%);
+    color: $blueBackground;
+  }
+}

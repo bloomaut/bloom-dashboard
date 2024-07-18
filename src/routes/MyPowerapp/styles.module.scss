@@ -1,0 +1,17 @@
+.container {
+  @include flex(column, flex-start, flex-start, 20px);
+  @include width-height(100%, auto);
+  .subtitle {
+    @include fontSize-fontWeight(14px, 400);
+    color: $lightGrey;
+  }
+  .inner_container {
+    @include width-height(100%, 100%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .button {
+    @include flex(column, flex-end, flex-end);
+    @include width-height(100%, 100%);
+  }
+}

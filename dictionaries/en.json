@@ -191,6 +191,16 @@
         "website": "Website",
         "instagram": "Instagram",
         "phone": "Phone"
+      },
+      "my-powerapp": {
+        "title": "Your app is almost ready",
+        "subtitle": "Check your information validate it before creating your app",
+        "uploaded_catalogs": "Uploaded Catalogs",
+        "chosen_templates": "Chosen Templates",
+        "empty_dataset": "There are no catalogs uploaded",
+        "product": "product",
+        "products": "products",
+        "button_generate": "Generate my app!"
       }
     },
     "clients": {
