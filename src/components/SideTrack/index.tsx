@@ -5,12 +5,14 @@ import styles from "./styles.module.scss";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 import useStepValidation from "@/hooks/useStepValidation";
+import { usePathname } from "next/navigation";
 
 const SideTrack = () => {
   const userData = useAppSelector(state => state.userData);
   const dict = useTranslations("dict.sidetrack");
   const [activeSideTrack, setActiveSideTrack] = useState<boolean>(false);
-  const { step_01, step_02, step_03, step_04 } = useStepValidation();
+  const { step_01, step_02, step_03, step_04, currentStep } = useStepValidation();
+  const path = usePathname();
 
   // Cuando el componente se monta, se chequea si completó el onboarding
   useEffect(() => {
@@ -62,7 +64,7 @@ const SideTrack = () => {
       iconH: 12,
     },
   ];
-  const subtitle = data.find(i => i.isActive === true);
+  const subtitle = data.find(i => path.includes(i.route)) || data[currentStep];
 
   return (
     <>
