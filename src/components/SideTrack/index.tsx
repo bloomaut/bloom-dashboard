@@ -4,60 +4,13 @@ import ItemTrack from "./ItemTrack";
 import styles from "./styles.module.scss";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
+import useStepValidation from "@/hooks/useStepValidation";
 
 const SideTrack = () => {
   const userData = useAppSelector(state => state.userData);
   const dict = useTranslations("dict.sidetrack");
   const [activeSideTrack, setActiveSideTrack] = useState<boolean>(false);
-  const [stepCompleted, setStepCompleted] = useState<number>(0);
-
-  const handleValidationStep01 = () => {
-    if (
-      userData.name &&
-      userData.lastname &&
-      userData.client.name &&
-      userData.client.category &&
-      userData.client.description &&
-      userData.client.logo
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const handleValidationStep02 = () => {
-    if (step_01) {
-      if (userData.client.onboardings?.skinx_template && userData.client.onboardings?.skinx_template !== null) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  const handleValidationStep03 = () => {
-    if (step_01 && step_02) {
-      // Falta lógica acá
-      return false;
-    } else {
-      return false;
-    }
-  };
-
-  const handleValidationStep04 = () => {
-    if (step_01 && step_02 && step_03) {
-      if (userData.client.onboardings?.skinx_generated && userData.client.onboardings?.skinx_generated !== null) {
-        return true;
-      }
-    } else {
-      return false;
-    }
-  };
-
-  const step_01 = handleValidationStep01() || false;
-  const step_02 = handleValidationStep02() || false;
-  const step_03 = handleValidationStep03() || false;
-  const step_04 = handleValidationStep04() || false;
+  const { step_01, step_02, step_03, step_04 } = useStepValidation();
 
   // Cuando el componente se monta, se chequea si completó el onboarding
   useEffect(() => {
@@ -67,17 +20,8 @@ const SideTrack = () => {
       } else {
         setActiveSideTrack(false);
       }
-      console.log(step_01, step_02, step_03, step_04);
     }
   }, [step_04, userData]);
-
-  useEffect(() => {
-    if (userData.id) {
-      if (step_01) setStepCompleted(1);
-      if (step_02) setStepCompleted(2);
-      if (step_03) setStepCompleted(3);
-    }
-  }, [userData, step_01, step_02, step_03]);
 
   // Data to render
   const data = [

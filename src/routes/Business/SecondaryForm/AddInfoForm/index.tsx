@@ -3,6 +3,8 @@ import styles from "./styles.module.scss";
 import Button from "@/components/Button";
 import { useTranslations } from "next-intl";
 import { UserBusiness } from "@/typescript/interfaces/business.interface";
+import { useRouter } from "@/navigation";
+import useStepValidation from "@/hooks/useStepValidation";
 
 interface AddInfoFormProps {
   formData: UserBusiness;
@@ -11,6 +13,12 @@ interface AddInfoFormProps {
 
 const AddInfoForm = ({ formData, onChange }: AddInfoFormProps) => {
   const dict = useTranslations("dict.business");
+  const { step_01, step_04 } = useStepValidation();
+  const router = useRouter();
+
+  const handleNavigation = () => {
+    router.push("/templates");
+  };
 
   return (
     <form className={styles.add_info}>
@@ -46,7 +54,7 @@ const AddInfoForm = ({ formData, onChange }: AddInfoFormProps) => {
         />
       </div>
       <div className={styles.btn_next}>
-        <Button title='Next' />
+        {!step_04 && <Button title='Next' isDisabled={!step_01} onclick={handleNavigation} />}
       </div>
     </form>
   );

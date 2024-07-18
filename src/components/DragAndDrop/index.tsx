@@ -124,7 +124,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
         )}
       </p>
       {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={300} height={100} />}
-      {file instanceof File
+      {file
         ? imageUrl && <Image src={imageUrl} alt={file.name} width={100} height={100} />
         : file && <Image src={file} alt='Image' width={300} height={300} />}
     </div>

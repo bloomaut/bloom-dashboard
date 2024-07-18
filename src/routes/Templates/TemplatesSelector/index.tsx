@@ -36,8 +36,10 @@ const TemplatesSelector = () => {
   return (
     <section className={styles.container}>
       <div className={styles.flakes}>
-        {!loading ? (
-          flakes?.map((app: Powerapp) => (
+        {loading ? (
+          <LoadingSpinner />
+        ) : flakes.length > 0 ? (
+          flakes.map((app: Powerapp) => (
             <Fade triggerOnce key={app._id}>
               <div className={styles.template_container}>
                 <h4 className={styles.title}>{app.skinx.title}</h4>
@@ -45,34 +47,32 @@ const TemplatesSelector = () => {
                   className={styles.template}
                   style={{ border: selectedFlakeId === app._id ? "3px solid #282e7ebd" : "3px solid transparent" }}
                 >
-                  <>
-                    <div className={styles.sm_card}>
-                      {app.hog_related.thumbnail ? (
-                        <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
-                      ) : (
-                        <Image className={styles.empty_img} src={flake_icon_02} alt='Icon' />
-                      )}
-                    </div>
-                    <div className={styles.lg_card}>
-                      {app.thumbnail ? (
-                        <Image src={app.thumbnail} alt={app.skinx.title} width={137} height={100} />
-                      ) : (
-                        <Image className={styles.empty_img} src={flake_icon_01} alt='Icon' />
-                      )}
-                    </div>
-                    <div className={styles.hover}>
-                      <button className={styles.preview}>Preview</button>
-                      <button className={styles.select} onClick={() => setSelectedFlakeId(app._id)}>
-                        {dict("select")}
-                      </button>
-                    </div>
-                  </>
+                  <div className={styles.sm_card}>
+                    {app.hog_related.thumbnail ? (
+                      <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
+                    ) : (
+                      <Image className={styles.empty_img} src={flake_icon_02} alt='Icon' />
+                    )}
+                  </div>
+                  <div className={styles.lg_card}>
+                    {app.thumbnail ? (
+                      <Image src={app.thumbnail} alt={app.skinx.title} width={137} height={100} />
+                    ) : (
+                      <Image className={styles.empty_img} src={flake_icon_01} alt='Icon' />
+                    )}
+                  </div>
+                  <div className={styles.hover}>
+                    <button className={styles.preview}>Preview</button>
+                    <button className={styles.select} onClick={() => setSelectedFlakeId(app._id)}>
+                      {dict("select")}
+                    </button>
+                  </div>
                 </div>
               </div>
             </Fade>
           ))
         ) : (
-          <LoadingSpinner />
+          <p>No hay flakes</p>
         )}
       </div>
     </section>
