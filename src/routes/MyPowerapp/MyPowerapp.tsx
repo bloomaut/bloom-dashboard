@@ -10,7 +10,7 @@ import Phone from "./Phone";
 const MyPowerapp = () => {
   const dict = useTranslations("dict.business.my-powerapp");
   const { datasets, loading } = useCatalogContext();
-  console.log(datasets, "SDA");
+
   return (
     <div className={styles.container}>
       <div>

@@ -1,10 +1,17 @@
 .container {
-  @include flex(column, flex-start, center);
-  @include width-height(100%, 80vh);
+  @include width-height(100%, 100%);
+  @include flex(column, flex-start, flex-start, 40px);
+  padding: 10px 40px;
   .inner_container {
     @include flex(column, flex-start, flex-start, 30px);
     @include fontSize-fontWeight(12px, 500);
-    @include width-height(70%, 100%);
+    @include width-height(80%, auto);
     color: $blueBackground;
+    text-align: start;
+    .phone {
+      align-self: center;
+      @include width-height(230px, 440px);
+      object-fit: contain;
+    }
   }
 }
