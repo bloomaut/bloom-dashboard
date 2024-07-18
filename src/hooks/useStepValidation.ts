@@ -36,10 +36,10 @@ const useStepValidation = () => {
   }, [step_01, step_02, step_03, userData]);
 
   const currentStep = useMemo(() => {
-    if (!step_01) return 1;
-    if (!step_02) return 2;
-    if (!step_03) return 3;
-    if (!step_04) return 4;
+    if (!step_01) return 0;
+    if (!step_02) return 1;
+    if (!step_03) return 2;
+    if (!step_04) return 3;
     return 4;
   }, [step_01, step_02, step_03, step_04]);
 
