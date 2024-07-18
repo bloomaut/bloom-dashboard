@@ -5,7 +5,7 @@ interface SetupProps {
   value: number;
 }
 
-const Setup = ({ value = 1 }: SetupProps) => {
+const Setup = ({ value = 0 }: SetupProps) => {
   const dict = useTranslations("dict.sidebar");
   const progressWidth = `${(value / 4) * 100}%`;
 

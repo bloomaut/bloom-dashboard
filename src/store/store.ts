@@ -5,7 +5,7 @@ import dataSchemaSlice from "./features/dataschemaSlice";
 
 export const store = configureStore({
   reducer: {
-    user: userSlice,
+    userData: userSlice,
     files: filesSlice,
     dataschema: dataSchemaSlice,
   },

@@ -1,12 +1,15 @@
 "use client";
 import styles from "./styles.module.scss";
 import Card from "./Card";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import Icon from "@/components/Icon";
 import Link from "next/link";
 import Setup from "./Setup";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setUserData } from "@/store/features/userSlice";
+import { get } from "@/services/fetch";
+import useStepValidation from "@/hooks/useStepValidation";
 
 interface SidebarCard {
   title: string;
@@ -15,10 +18,13 @@ interface SidebarCard {
 }
 
 const Sidebar = () => {
+  const userData = useAppSelector(state => state.userData);
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const dict = useTranslations("dict.sidebar");
-  const { user } = useUser();
+  const dispatch = useAppDispatch();
   const INBOX_URL = process.env.NEXT_PUBLIC_INBOX_URL;
+
+  const { currentStep, step_04 } = useStepValidation();
 
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -58,12 +64,23 @@ const Sidebar = () => {
     },
   ];
 
+  const getUserData = async () => {
+    const res = await get("user/me");
+    if (res.statusCode === 200) {
+      dispatch(setUserData(res.result.user));
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <div className={isOpen ? `${styles.container}` : `${styles.container} ${styles.container_closed}`}>
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
-      {isOpen && <Setup value={1} />}
+      {isOpen && userData.id && !step_04 && <Setup value={currentStep} />}
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >

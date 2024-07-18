@@ -6,7 +6,7 @@ interface FormDataProps {
   [key: string]: any | undefined;
 }
 
-interface FormErrorsProps {
+export interface FormErrorsProps {
   [key: string]: string;
 }
 
@@ -51,6 +51,40 @@ const useFormValidator = (
       if (fieldsToValidate?.includes("category_name")) {
         if (!formData?.category_name || !formData?.category_name.trim()) {
           errors.category_name = "Debes ingresar un nombre para el catálogo";
+        }
+      }
+
+      if (fieldsToValidate?.includes("name")) {
+        if (!formData?.name || !formData?.name.trim()) {
+          errors.name = "Debes ingresar un nombre";
+        }
+      }
+
+      if (fieldsToValidate?.includes("lastname")) {
+        if (!formData?.lastname || !formData?.lastname.trim()) {
+          errors.lastname = "Debes ingresar un apellido";
+        }
+      }
+
+      if (fieldsToValidate?.includes("business_name")) {
+        if (!formData?.client.name || !formData?.client.name.trim()) {
+          errors.business_name = "Debes ingresar el nombre del negocio";
+        }
+      }
+
+      if (fieldsToValidate?.includes("business_category")) {
+        if (
+          !formData?.client.category ||
+          typeof formData?.client.category !== "string" ||
+          !formData?.client.category.trim()
+        ) {
+          errors.business_category = "Debes ingresar la categoría del negocio";
+        }
+      }
+
+      if (fieldsToValidate?.includes("business_description")) {
+        if (!formData?.client.description || !formData?.client.description.trim()) {
+          errors.business_description = "Debes ingresar una descripción para el negocio";
         }
       }
 

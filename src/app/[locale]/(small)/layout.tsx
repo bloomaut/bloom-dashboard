@@ -9,8 +9,6 @@ import Navbar from "@/components/Navbar";
 import SideTrack from "@/components/SideTrack";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
-  const showTrack = false;
-
   return (
     <div className={styles.container}>
       <Navbar />
@@ -29,7 +27,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
       />
       <div className={styles.inner_container}>
         <Sidebar />
-        {showTrack && <SideTrack />}
+        <SideTrack />
         <div className={styles.children_container}>{children}</div>
       </div>
     </div>

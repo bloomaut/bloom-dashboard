@@ -1,5 +1,5 @@
 .container {
-  @include width-height(250px, 100%);
+  @include width-height(305px, 100%);
   @include flex(column, space-between, flex-start, 10px);
   background-color: $white;
   border-right: 1px solid $lighterGrey;
@@ -53,7 +53,7 @@
   }
 }
 .container_closed {
-  @include width-height(60px, 100%);
+  @include width-height(65px, 100%);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
