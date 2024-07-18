@@ -1,5 +1,6 @@
 .container {
-  @include flex(column, flex-start, flex-start, 20px);
+  @include flex(column, flex-start, flex-start, 40px);
+  padding: 10px 40px;
   @include width-height(100%, auto);
   .subtitle {
     @include fontSize-fontWeight(14px, 400);

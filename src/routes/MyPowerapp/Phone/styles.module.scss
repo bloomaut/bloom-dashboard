@@ -1,7 +1,6 @@
 .container {
   @include width-height(100%, 100%);
-  @include flex(column, flex-start, flex-start, 40px);
-  padding: 10px 40px;
+  @include flex(column, flex-start, center);
   .inner_container {
     @include flex(column, flex-start, flex-start, 30px);
     @include fontSize-fontWeight(12px, 500);
