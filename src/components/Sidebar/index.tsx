@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import Icon from "@/components/Icon";
 import Link from "next/link";
 import Setup from "./Setup";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setUserData } from "@/store/features/userSlice";
 import { get } from "@/services/fetch";
 import useStepValidation from "@/hooks/useStepValidation";
@@ -18,6 +18,7 @@ interface SidebarCard {
 }
 
 const Sidebar = () => {
+  const userData = useAppSelector(state => state.userData);
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const dict = useTranslations("dict.sidebar");
   const dispatch = useAppDispatch();
@@ -79,7 +80,7 @@ const Sidebar = () => {
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
-      {isOpen && !step_04 && <Setup value={currentStep} />}
+      {isOpen && userData.id && !step_04 && <Setup value={currentStep} />}
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >
