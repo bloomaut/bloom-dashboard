@@ -191,6 +191,16 @@
         "website": "Sitio web",
         "instagram": "Instagram",
         "phone": "Teléfono"
+      },
+      "my-powerapp": {
+        "title": "Tu aplicación está casi lista",
+        "subtitle": "Revisa tu información y valídala antes de crear tu aplicación",
+        "uploaded_catalogs": "Catálogos Subidos",
+        "chosen_templates": "Plantillas Elegidas",
+        "empty_dataset": "No hay catálogos subidos",
+        "product": "producto",
+        "products": "productos",
+        "button_generate": "Generar mi app!"
       }
     },
     "clients": {
