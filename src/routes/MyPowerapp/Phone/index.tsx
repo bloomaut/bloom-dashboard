@@ -10,7 +10,9 @@ const Phone = () => {
     <div className={styles.container}>
       <div className={styles.inner_container}>
         <h2>{dict("chosen_templates")}</h2>
-        <Image src={caseImage} width={550} height={500} alt='' className={styles.phone} />
+        <div className={styles.phone_container}>
+          <Image src={caseImage} width={550} height={500} alt='' className={styles.phone} />
+        </div>
       </div>
     </div>
   );

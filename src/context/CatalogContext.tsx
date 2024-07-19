@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get, update } from "@/services/fetch";
-import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { DataItems, DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useAppDispatch } from "@/store/hooks";
 import { setDataschemaData } from "@/store/features/dataschemaSlice";
+import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
@@ -36,6 +37,8 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     const data = await get("datasets/small/list", ENV.BOX);
     if (data.statusCode === 200) {
       setDatasets(data.data.datasets);
+      const isComplete = data.data.datasets.some((obj: DataItems) => obj.totalDataItems >= 1);
+      dispatch(setCatalogComplete(isComplete));
     }
     setLoading(false);
   };

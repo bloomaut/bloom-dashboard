@@ -30,6 +30,7 @@ export const userInitialState: UserBusiness = {
     updated_at: "",
     onboardings: null,
   },
+  isCatalogComplete: false,
 };
 
 export const userSlice = createSlice({
@@ -39,9 +40,12 @@ export const userSlice = createSlice({
     setUserData: (state, action: PayloadAction<UserBusiness>) => {
       return { ...state, ...action.payload };
     },
+    setCatalogComplete: (state, action: PayloadAction<UserBusiness>) => {
+      return { ...state, isCatalogComplete: action.payload };
+    },
   },
 });
 
-export const { setUserData } = userSlice.actions;
+export const { setUserData, setCatalogComplete } = userSlice.actions;
 export const userState = (state: RootState) => state.userData;
 export default userSlice.reducer;

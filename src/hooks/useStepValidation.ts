@@ -16,14 +16,12 @@ const useStepValidation = () => {
   }, [userData]);
 
   const step_02 = useMemo(() => {
-    return Boolean(
-      step_01 && userData.client.onboardings?.skinx_template && userData.client.onboardings?.skinx_template !== null,
-    );
+    return Boolean(step_01 && userData.client.onboardings !== null);
   }, [step_01, userData]);
 
   const step_03 = useMemo(() => {
-    return step_01 && step_02; // Agregar la lógica del step_03 acá
-  }, [step_01, step_02]);
+    return Boolean(step_01 && step_02 && userData.isCatalogComplete);
+  }, [step_01, step_02, userData]);
 
   const step_04 = useMemo(() => {
     return Boolean(

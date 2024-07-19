@@ -34,8 +34,6 @@ const DragDrop = () => {
     handleFile();
   }, [logo, banner]);
 
-  console.log(logo);
-
   return (
     <section className={styles.drag_drop}>
       <div className={styles.logo}>

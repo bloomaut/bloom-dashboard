@@ -14,8 +14,6 @@ const TemplatesPage = () => {
   const dict = useTranslations("dict.templates");
   const { selectedTemplateId } = useTemplateContext();
 
-  console.log(selectedTemplateId.length);
-
   const handleNavigation = () => {
     router.push("/catalog");
   };

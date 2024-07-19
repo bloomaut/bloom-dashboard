@@ -57,7 +57,7 @@ const SideTrack = () => {
     {
       position: 4,
       title: `${dict("step_4")}`,
-      route: `/hotlink`,
+      route: `/my-powerapp`,
       isActive: step_03,
       iconName: "generate_powerapp",
       iconW: 22,

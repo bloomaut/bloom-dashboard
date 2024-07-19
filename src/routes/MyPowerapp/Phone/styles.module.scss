@@ -7,10 +7,16 @@
     @include width-height(80%, auto);
     color: $blueBackground;
     text-align: start;
-    .phone {
-      align-self: center;
+    .phone_container {
+      @include flex(column, flex-start, center);
       @include width-height(230px, 440px);
-      object-fit: contain;
+      position: relative;
+      .phone {
+        @include flex(column, flex-start, center);
+        @include width-height(230px, 440px);
+        position: relative;
+        margin-left: 20px;
+      }
     }
   }
 }

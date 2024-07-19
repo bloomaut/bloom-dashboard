@@ -16,10 +16,11 @@ export interface DataItemsList {
   [key: string]: any;
 }
 
-interface DataItems {
+export interface DataItems {
   order: number;
   _id: string;
   data: DataItemsList;
+  totalDataItems: number;
   createdAt: string;
   updatedAt: string;
 }
