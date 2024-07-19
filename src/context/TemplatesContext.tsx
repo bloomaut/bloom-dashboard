@@ -69,4 +69,4 @@ export const TemplateProvider = ({ children }: { children: JSX.Element }) => {
   );
 };
 
-export const useTemplateContex = () => useContext(TemplateContext);
+export const useTemplateContext = () => useContext(TemplateContext);

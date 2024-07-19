@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Fade } from "react-awesome-reveal";
 import { useEffect, useState } from "react";
-import { useTemplateContex } from "@/context/TemplatesContext";
+import { useTemplateContext } from "@/context/TemplatesContext";
 import { Template } from "@/typescript/interfaces/template.interface";
 import { useSelector } from "react-redux";
 import { update } from "@/services/fetch";
@@ -19,7 +19,7 @@ const TemplatesSelector = () => {
   const onboardings = useSelector((state: UserBusiness) => state.userData?.client?.onboardings);
   const [onboardingId, setOnboardingId] = useState("");
   const { templates, loading, selectedTemplateId, setSelectedTemplateId, setPreviewId, setPreviewLoading } =
-    useTemplateContex();
+    useTemplateContext();
   const { notify, notifyError } = useMessageToast();
 
   useEffect(() => {
@@ -31,9 +31,9 @@ const TemplatesSelector = () => {
   const handleSubmitPut = async (skinx_id: string, template_id: string, powerapp_id: string) => {
     const response = await update("small-template/onboarding", { skinx_id, template_id }, onboardingId);
     if (response.statusCode === 200) {
-      notify(response.result.data);
+      notify(dict("toast.success_template"));
     } else {
-      notifyError(dict("error.message"));
+      notifyError(dict("toast.error_template"));
     }
 
     handleShowPreview(powerapp_id);
@@ -105,7 +105,7 @@ const TemplatesSelector = () => {
             </Fade>
           ))
         ) : (
-          <p>No hay flakes</p>
+          <p>{dict("templates.empty")}</p>
         )}
       </div>
     </section>
