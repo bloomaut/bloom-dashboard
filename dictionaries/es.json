@@ -89,7 +89,9 @@
       "error_uploading": "Error al subir el archivo",
       "error_update": "Error al actualizar el archivo",
       "success_update": "Archivo actualizado correctamente",
-      "success_file_add": "Archivo seleccionado correctamente"
+      "success_file_add": "Archivo seleccionado correctamente",
+      "success_template": "Plantilla seleccionada",
+      "error_template": "Error al seleccionar la plantilla"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -365,7 +367,9 @@
     "templates": {
       "title": "Plantillas",
       "subtitle": "Selecciona la plantilla que mejor se adapta a tu negocio",
-      "select": "Seleccionar"
+      "select": "Seleccionar",
+      "empty": "No tienes plantillas disponibles",
+      "next": "Siguiente"
     }
   }
 }

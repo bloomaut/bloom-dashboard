@@ -3,14 +3,18 @@ import styles from "./styles.module.scss";
 import TemplatesSelector from "./TemplatesSelector";
 import PhoneCase from "./PhoneCase";
 import Button from "@/components/Button";
-import { useTranslations } from "next-intl";
 import useStepValidation from "@/hooks/useStepValidation";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/navigation";
+import { useTemplateContext } from "@/context/TemplatesContext";
 
-const Templates = () => {
-  const { step_02, step_04 } = useStepValidation();
+const TemplatesPage = () => {
+  const { step_04 } = useStepValidation();
   const router = useRouter();
   const dict = useTranslations("dict.templates");
+  const { selectedTemplateId } = useTemplateContext();
+
+  console.log(selectedTemplateId.length);
 
   const handleNavigation = () => {
     router.push("/catalog");
@@ -23,11 +27,17 @@ const Templates = () => {
         <TemplatesSelector />
         <div className={styles.phone_image}>
           <PhoneCase />
-          {!step_04 && <Button title='Next' isDisabled={!step_02} onclick={handleNavigation} />}
+          {!step_04 && (
+            <Button
+              title={dict("next")}
+              isDisabled={selectedTemplateId.length ? false : true}
+              onclick={handleNavigation}
+            />
+          )}
         </div>
       </div>
     </section>
   );
 };
 
-export default Templates;
+export default TemplatesPage;

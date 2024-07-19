@@ -89,7 +89,9 @@
       "error_uploading": "Error uploading file",
       "error_update": "Error updating file",
       "success_update": "File updated successfully",
-      "success_file_add": "File selected successfully"
+      "success_file_add": "File selected successfully",
+      "success_template": "Template selected",
+      "error_template": "Error selecting template"
     },
     "login": {
       "description": "has the efficiency your business needs",
@@ -365,7 +367,9 @@
     "templates": {
       "title": "Templates",
       "subtitle": "Select the template that best suits your business",
-      "select": "Select"
+      "select": "Select",
+      "empty": "You don't have templates avaliable",
+      "next": "Next"
     }
   }
 }

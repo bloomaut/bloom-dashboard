@@ -1,6 +1,7 @@
 export enum ENV {
   DASHBOARD = "NEXT_PUBLIC_API_DASH",
   BOX = "NEXT_PUBLIC_API_BOX",
+  TOOL = "NEXT_PUBLIC_API_TOOL",
 }
 
-export type EnvironmentApi = ENV.BOX | ENV.DASHBOARD;
+export type EnvironmentApi = ENV.BOX | ENV.DASHBOARD | ENV.TOOL;

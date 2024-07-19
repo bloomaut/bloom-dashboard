@@ -1,4 +1,5 @@
 export interface UserBusiness {
+  [x: string]: any;
   id?: number | null;
   auth0_id?: string;
   name: string | null;
