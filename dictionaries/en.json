@@ -202,7 +202,15 @@
         "empty_dataset": "There are no catalogs uploaded",
         "product": "product",
         "products": "products",
-        "button_generate": "Generate my app!"
+        "button_generate": "Generate my app!",
+        "business_title": "Business information",
+        "name": "Name",
+        "last_name": "Last name",
+        "business_name": "Business name",
+        "category": "Category",
+        "business_description": "Business description",
+        "colors": "Colors",
+        "button": "Continue editing"
       }
     },
     "clients": {

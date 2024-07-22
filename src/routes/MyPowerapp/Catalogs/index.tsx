@@ -24,7 +24,7 @@ const Catalogs = ({ datasets, loading }: Props) => {
           ) : datasets.length ? (
             <>
               {datasets.map(dataset => (
-                <CatalogCard title={dataset.name} products={dataset.totalDataItems} />
+                <CatalogCard key={dataset._id} title={dataset.name} products={dataset.totalDataItems} />
               ))}
             </>
           ) : (

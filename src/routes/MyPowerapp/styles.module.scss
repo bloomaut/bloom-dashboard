@@ -1,6 +1,6 @@
 .container {
   @include flex(column, flex-start, flex-start, 40px);
-  padding: 10px 40px;
+  padding: 10px 0;
   @include width-height(100%, auto);
   .subtitle {
     @include fontSize-fontWeight(14px, 400);
@@ -10,6 +10,40 @@
     @include width-height(100%, 100%);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    .business {
+      @include flex(column, flex-start, flex-start, 30px);
+      padding: 0 10px;
+      .title {
+        @include fontSize-fontWeight(18px, 700);
+        color: $blueBackground;
+      }
+      .data_container {
+        @include flex(row, flex-start, flex-start, 20px);
+        flex-wrap: wrap;
+      }
+      .container_circle {
+        h6 {
+          @include fontSize-fontWeight(14px, 500);
+          color: $lightGrey;
+          margin-bottom: 5px;
+        }
+        .colors {
+          @include flex(row, flex-start, center, 5px);
+          .circle {
+            @include width-height(40px, 40px);
+            @include flex(row, center, center);
+            border-radius: 99%;
+          }
+        }
+      }
+      .btn {
+        @include fontSize-fontWeight(14px, 500);
+        border: 1px solid $lightGrey;
+        padding: 8px 12px;
+        border-radius: 4px;
+        color: $lightGrey;
+      }
+    }
   }
   .button {
     @include flex(column, flex-end, flex-end);
