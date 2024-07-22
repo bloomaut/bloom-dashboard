@@ -202,7 +202,12 @@
         "empty_dataset": "There are no catalogs uploaded",
         "product": "product",
         "products": "products",
-        "button_generate": "Generate my app!"
+        "button_generate": "Generate my app!",
+        "button_go_edit": "Go to edit",
+        "name": "Name",
+        "description": "Description",
+        "price": "Price",
+        "catalog": "Catalog: "
       }
     },
     "clients": {

@@ -21,7 +21,6 @@ const Catalog = () => {
   const handleNavigation = () => {
     router.push("/hotlink");
   };
-
   return (
     <div className={styles.catalog_container}>
       <Header />
