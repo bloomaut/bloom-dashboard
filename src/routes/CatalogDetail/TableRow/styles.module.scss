@@ -1,14 +1,18 @@
 .container {
   @include width-height(100%, auto);
   display: grid;
-  grid-template-columns: 1.3fr 1.7fr 1fr 1fr;
+  grid-template-columns: 0.2fr 1.3fr 1.7fr 1fr 1fr;
   grid-template-rows: auto;
-  padding: 10px;
+  padding: 5px 10px;
+  .order {
+    @include width-height(100%, auto);
+    @include flex(row, flex-start, center);
+  }
   .name_container {
     @include width-height(100%, auto);
     @include flex(row, flex-start, center);
     .image {
-      @include width-height(80px, 60px);
+      @include width-height(50px, 50px);
       object-fit: contain;
     }
     .icon_container {
@@ -21,6 +25,7 @@
     display: flex;
     align-items: center;
     padding-left: 10px;
+    @include fontSize-fontWeight(14px, 400);
   }
   .icons {
     @include flex(row, center, center, 5px);

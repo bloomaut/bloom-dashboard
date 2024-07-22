@@ -10,6 +10,8 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import Form from "../Form";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 interface Props {
   id: string;
@@ -17,9 +19,10 @@ interface Props {
   description: string;
   price: number | null;
   image: string;
+  position: number;
 }
 
-const TableRow = ({ id, name, description, price, image }: Props) => {
+const TableRow = ({ id, name, description, price, image, position }: Props) => {
   const { fetchDatasetById } = useCatalogDetailContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,9 +51,12 @@ const TableRow = ({ id, name, description, price, image }: Props) => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.order}>{position}</div>
       <div className={styles.name_container}>
         {isValidImageUrl(image) ? (
-          <Image src={image} className={styles.image} alt={name} width={100} height={100} />
+          <Zoom classDialog='custom-zoom'>
+            <Image src={image} className={styles.image} alt={name} width={300} height={300} />
+          </Zoom>
         ) : (
           <div className={styles.icon_container}>
             <Icon name='dataset' width={30} height={30} strokeColor={"#BEBEBE"} />
