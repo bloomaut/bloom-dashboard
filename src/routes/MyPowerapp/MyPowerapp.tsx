@@ -17,6 +17,8 @@ const MyPowerapp = () => {
   const dict = useTranslations("dict.business.my-powerapp");
   const { datasets, loading } = useCatalogContext();
 
+  console.log(userData.client);
+
   return (
     <section className={styles.container}>
       <div>
@@ -35,7 +37,7 @@ const MyPowerapp = () => {
                 <BusinessInfo title={dict("last_name")} value={userData.lastname!} />
                 <BusinessInfo title={dict("business_name")} value={userData.client.name!} />
               </div>
-              <LogoBanner logo={userData.client.logo} banner={userData.client.banner!} />
+              <LogoBanner logo={userData.client.logo} banner={userData.client.banner} />
               <BusinessInfo title={dict("category")} value={userData.client.category!} />
               <BusinessInfo title={dict("business_description")} value={userData.client.description!} />
               <div className={styles.container_circle}>
@@ -46,9 +48,6 @@ const MyPowerapp = () => {
                   ))}
                 </div>
               </div>
-              <Link className={styles.btn} href='/my-business'>
-                {dict("button")}
-              </Link>
             </>
           )}
         </div>
@@ -56,6 +55,9 @@ const MyPowerapp = () => {
         <Phone />
       </div>
       <div className={styles.button}>
+        <Link className={styles.btn} href='/my-business'>
+          {dict("button")}
+        </Link>
         <Button title={dict("button_generate")} />
       </div>
     </section>

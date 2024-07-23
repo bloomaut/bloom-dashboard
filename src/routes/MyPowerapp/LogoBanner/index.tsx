@@ -2,8 +2,8 @@ import Image from "next/image";
 import styles from "./styles.module.scss";
 
 interface Props {
-  logo: string;
-  banner: string;
+  logo: string | null;
+  banner: string | null;
 }
 
 const LogoBanner = ({ logo, banner }: Props) => {
@@ -15,12 +15,14 @@ const LogoBanner = ({ logo, banner }: Props) => {
           {logo && <Image src={logo ? logo : ""} alt='Logo' width={100} height={100} />}
         </div>
       </div>
-      <div className={styles.border}>
-        <h6>Banner</h6>
-        <div className={styles.banner}>
-          {banner && <Image src={banner ? banner : ""} alt='Banner' width={100} height={100} />}
+      {banner && (
+        <div className={styles.border}>
+          <h6>Banner</h6>
+          <div className={styles.banner}>
+            <Image src={banner} alt='Banner' width={100} height={100} />
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

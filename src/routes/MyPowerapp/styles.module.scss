@@ -36,17 +36,17 @@
           }
         }
       }
-      .btn {
-        @include fontSize-fontWeight(14px, 500);
-        border: 1px solid $lightGrey;
-        padding: 8px 12px;
-        border-radius: 4px;
-        color: $lightGrey;
-      }
     }
   }
   .button {
-    @include flex(column, flex-end, flex-end);
+    @include flex(row, space-between, center);
     @include width-height(100%, 100%);
+    .btn {
+      @include fontSize-fontWeight(14px, 500);
+      border: 1px solid $lightGrey;
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: $lightGrey;
+    }
   }
 }

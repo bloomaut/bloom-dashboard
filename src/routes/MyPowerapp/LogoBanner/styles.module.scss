@@ -10,7 +10,8 @@
   }
   .logo,
   .banner {
-    @include width-height(100%, 100px);
+    @include width-height(100px, 100px);
+    object-fit: contain;
     border: 2px dashed $blueBackground;
     border-radius: 10px;
     img {
