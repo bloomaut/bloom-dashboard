@@ -227,7 +227,7 @@ const FormActions = ({
           </div>
           <div className={styles.media}>
             <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
-            <DragAndDrop file={file || formData.category_image} setFile={setFile} img='Logo' />
+            <DragAndDrop file={file || formData.category_image} setFile={setFile} />
           </div>
         </div>
         <div className={action === "put" ? styles.button_container : styles.button}>
