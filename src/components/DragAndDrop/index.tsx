@@ -17,7 +17,6 @@ interface FileDragDropProps {
 const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
   const { notifyError, notify } = useMessageToast();
   const userData = useAppSelector(data => data.userData);
-  const companyLogo = useAppSelector(data => data);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
   const [imageUrl, setImageUrl] = useState<string | null>(null);

@@ -223,7 +223,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
           </div>
           <div className={styles.media}>
             <label className={styles.label}>Photo product</label>
-            <DragAndDrop file={file || imageUrl} setFile={setFile} img='Logo' />
+            <DragAndDrop file={file || imageUrl} setFile={setFile} />
           </div>
         </div>
         <div className={styles.button_container}>

@@ -14,7 +14,7 @@ import LoadingSpinner from "@/components/Loading";
 
 const Templates = () => {
   const dict = useTranslations("dict.home");
-  const { flakes } = useFlakeData();
+  const { flakes, loading } = useFlakeData();
   const { notifyError } = useMessageToast();
   const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
 
@@ -43,10 +43,12 @@ const Templates = () => {
         </div>
       </div>
       <div className={styles.flakes_container}>
-        {flakes.length ? (
+        {loading ? (
+          <LoadingSpinner />
+        ) : flakes.length > 0 ? (
           flakes?.map((app: Powerapp) => <FlakeGallery key={app._id} app={app} handleClick={handleClick} />)
         ) : (
-          <p>Aún no posees ningun Flake.</p>
+          <p>{dict("empty_templates")}</p>
         )}
       </div>
     </div>

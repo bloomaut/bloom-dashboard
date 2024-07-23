@@ -2,10 +2,12 @@ import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import LoadingSpinner from "@/components/Loading";
-
+import { useState } from "react";
 //Components
 import CatalogCard from "./CatalogCard";
 import { Fade } from "react-awesome-reveal";
+import ProductsPopup from "./ProductsPopup";
+import { useCatalogContext } from "@/context/CatalogContext";
 
 interface Props {
   datasets: DatasetProps[];
@@ -13,7 +15,10 @@ interface Props {
 }
 
 const Catalogs = ({ datasets, loading }: Props) => {
+  const [showModal, setShowModal] = useState(false);
+  const { datasetDetail } = useCatalogContext();
   const dict = useTranslations("dict.business.my-powerapp");
+
   return (
     <div className={styles.container}>
       <div className={styles.inner_container}>
@@ -23,8 +28,14 @@ const Catalogs = ({ datasets, loading }: Props) => {
             <LoadingSpinner />
           ) : datasets.length ? (
             <>
-              {datasets.map(dataset => (
-                <CatalogCard key={dataset._id} title={dataset.name} products={dataset.totalDataItems} />
+              {datasets.map((dataset, index) => (
+                <CatalogCard
+                  title={dataset.name}
+                  products={dataset.totalDataItems}
+                  setShowModal={setShowModal}
+                  id={dataset._id}
+                  key={dataset._id}
+                />
               ))}
             </>
           ) : (
@@ -32,6 +43,9 @@ const Catalogs = ({ datasets, loading }: Props) => {
           )}
         </Fade>
       </div>
+      {showModal && datasetDetail && (
+        <ProductsPopup title={datasetDetail.dataSet.name} setShowConfirmation={setShowModal} products={datasetDetail} />
+      )}
     </div>
   );
 };

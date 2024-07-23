@@ -21,7 +21,6 @@ const Catalog = () => {
   const handleNavigation = () => {
     router.push("/hotlink");
   };
-
   return (
     <div className={styles.catalog_container}>
       <Header />
@@ -33,13 +32,14 @@ const Catalog = () => {
             {datasets.map(dataset => (
               <Card key={dataset._id} {...dataset} />
             ))}
+            <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
+              <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
+            </div>
           </>
         ) : (
           <p>{dict("catalog.empty_datasets")}</p>
         )}
-        <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
-          <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
-        </div>
+
         <div className={styles.btn_next}>
           {!step_04 && <Button title='Next' isDisabled={!step_03} onclick={handleNavigation} />}
         </div>
