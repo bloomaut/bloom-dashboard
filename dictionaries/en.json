@@ -207,7 +207,8 @@
         "name": "Name",
         "description": "Description",
         "price": "Price",
-        "catalog": "Catalog: "
+        "catalog": "Catalog: ",
+        "empty_products": "This catalog doesn't have products yet"
       }
     },
     "clients": {

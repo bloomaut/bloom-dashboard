@@ -1,0 +1,47 @@
+.container {
+  @include width-height(100%, auto);
+  color: #4a4a4a;
+
+  .header {
+    @include width-height(100%, auto);
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr;
+    border-collapse: collapse;
+    padding: 15px;
+    text-align: left;
+    background-color: #f4f5ff;
+    color: #282e7e;
+    border-bottom: 1px solid $lighterGrey;
+  }
+  .rows_container {
+    @include width-height(100%, 240px);
+    overflow-y: auto;
+    .cell {
+      @include width-height(100%, auto);
+      display: grid;
+      grid-template-columns: 1.5fr 1.5fr 1fr;
+      border-collapse: collapse;
+      text-align: left;
+      align-items: center;
+      padding: 10px;
+      .product_name {
+        @include flex(row, flex-start, center, 20px);
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+  }
+  p {
+    margin-top: 10px;
+  }
+  .rows_container::-webkit-scrollbar {
+    width: 5px;
+    background-color: $greyBackground;
+  }
+
+  .rows_container::-webkit-scrollbar-thumb {
+    background-color: $orange;
+    border-radius: 10px;
+  }
+}

@@ -28,12 +28,13 @@ const Catalogs = ({ datasets, loading }: Props) => {
             <LoadingSpinner />
           ) : datasets.length ? (
             <>
-              {datasets.map(dataset => (
+              {datasets.map((dataset, index) => (
                 <CatalogCard
                   title={dataset.name}
                   products={dataset.totalDataItems}
                   setShowModal={setShowModal}
                   id={dataset._id}
+                  key={index}
                 />
               ))}
             </>
