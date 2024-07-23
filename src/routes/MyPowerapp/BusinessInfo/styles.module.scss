@@ -1,0 +1,11 @@
+.info {
+  .data_title {
+    @include fontSize-fontWeight(12px, 500);
+    color: $lightGrey;
+    margin-bottom: 5px;
+  }
+  .data_value {
+    @include fontSize-fontWeight(16px, 600);
+    color: $lightGrey;
+  }
+}
