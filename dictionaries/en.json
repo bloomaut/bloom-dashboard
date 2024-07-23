@@ -382,7 +382,7 @@
       "title": "Templates",
       "subtitle": "Select the template that best suits your business",
       "select": "Select",
-      "empty": "You don't have templates avaliable",
+      "empty": "There are no templates available. Try again in a few minutes",
       "next": "Next"
     }
   }

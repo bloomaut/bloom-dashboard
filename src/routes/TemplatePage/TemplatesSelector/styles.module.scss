@@ -3,7 +3,7 @@
   height: inherit;
   .flakes {
     @include width-height(100%, 100%);
-    @include flex(row, space-between, flex-start, 10px);
+    @include flex(row, flex-start, flex-start, 15px);
     max-height: 650px;
     flex-wrap: wrap;
     border-radius: 4.775px;
@@ -98,6 +98,9 @@
         }
       }
     }
+    .empty {
+      @include fontSize-fontWeight(15px, 600);
+    }
   }
 }
 
@@ -115,6 +118,14 @@
   .container {
     .flakes {
       max-height: 480px;
+    }
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    .flakes {
+      justify-content: center;
     }
   }
 }
