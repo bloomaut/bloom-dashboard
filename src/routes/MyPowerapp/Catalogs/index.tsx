@@ -34,7 +34,7 @@ const Catalogs = ({ datasets, loading }: Props) => {
                   products={dataset.totalDataItems}
                   setShowModal={setShowModal}
                   id={dataset._id}
-                  key={index}
+                  key={dataset._id}
                 />
               ))}
             </>

@@ -6,6 +6,7 @@ const TableHead = () => {
 
   return (
     <div className={styles.container}>
+      <h2 className={styles.name}></h2>
       <h2 className={styles.name}>{dict("name")}</h2>
       <h2 className={styles.description}>{dict("description")}</h2>
       <h2 className={styles.price}>{dict("price")}</h2>

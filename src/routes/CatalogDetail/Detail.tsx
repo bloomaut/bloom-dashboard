@@ -50,7 +50,7 @@ const Detail = () => {
           <LoadingSpinner />
         ) : datasetDetail?.dataItems.length ? (
           <div className={styles.content_container}>
-            {datasetDetail.dataItems.map((item: any) => (
+            {datasetDetail.dataItems.map((item: any, index: number) => (
               <TableRow
                 key={item._id}
                 id={item._id}
@@ -58,6 +58,7 @@ const Detail = () => {
                 description={item.data.listdescr}
                 price={item.data.listprice}
                 image={item.data.listimage}
+                position={index + 1}
               />
             ))}
           </div>
