@@ -1,19 +1,12 @@
-.container {
+.column_container {
   @include width-height(100%, 100%);
-  @include flex(column, center, center, 10px);
-  border-left: 1px solid $lightGrey;
+  @include flex(column, center, center);
+  margin-left: 20px;
   .phone_container {
     @include width-height(230px, 440px);
     position: relative;
-    margin-left: 20px;
     .phone {
       @include width-height(230px, 440px);
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, 0);
-    }
-    .wa {
-      @include width-height(225px, 435px);
       position: absolute;
       left: 50%;
       transform: translate(-50%, 0);
@@ -34,34 +27,24 @@
       }
     }
   }
-  .dot_container {
-    @include flex(row, center, center, 10px);
-    margin-left: 20px;
-    .dot {
-      display: block;
-      @include width-height(10px, 10px);
-      cursor: pointer;
-      border-radius: 100%;
-    }
-    .dot_active {
-      background-color: $text;
-    }
-    .dot_inactive {
-      background-color: $lighterGrey;
-    }
-  }
 }
 
-@media (min-width: $queryLg) {
-  .container {
-    max-height: 500px;
+@media (max-height: 720px) {
+  .phone_container {
+    @include width-height(200px, 370px);
+    .phone {
+      @include width-height(200px, 370px);
+    }
+    .iframe_container {
+      @include width-height(200px, 370px);
+    }
   }
 }
 
 @media (min-width: 1600px) {
-  .container {
-    margin-left: 20px;
-    .phone_container {
+  .phone_container {
+    @include width-height(270px, 515px);
+    .phone {
       @include width-height(270px, 515px);
     }
     .iframe_container {
