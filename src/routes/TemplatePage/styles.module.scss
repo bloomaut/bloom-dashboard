@@ -3,7 +3,7 @@
   padding: 0 40px;
   box-sizing: border-box;
   header {
-    @include width-height(auto, 15%);
+    @include width-height(auto, 10%);
   }
   .inner_container {
     @include width-height(auto, 85%);
@@ -14,7 +14,7 @@
       position: relative;
       button {
         position: absolute;
-        bottom: 0;
+        bottom: 50px;
         right: 0;
       }
     }

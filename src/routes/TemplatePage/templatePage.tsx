@@ -9,9 +9,9 @@ import { useRouter } from "@/navigation";
 import { useTemplateContext } from "@/context/TemplatesContext";
 
 const TemplatesPage = () => {
-  const { step_04 } = useStepValidation();
   const router = useRouter();
   const dict = useTranslations("dict.templates");
+  const { step_04 } = useStepValidation();
   const { selectedTemplateId } = useTemplateContext();
 
   const handleNavigation = () => {
