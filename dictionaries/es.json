@@ -211,7 +211,12 @@
         "category": "Categoría",
         "business_description": "Descripción del negocio",
         "colors": "Colores",
-        "button": "Continuar editando"
+        "button": "Continuar editando",
+        "button_go_edit": "Ir a editar",
+        "description": "Descripción",
+        "price": "Precio",
+        "catalog": "Cátalogo: ",
+        "empty_products": "Este catálogo aún no tiene productos"
       }
     },
     "clients": {

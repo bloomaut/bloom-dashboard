@@ -211,7 +211,12 @@
         "category": "Category",
         "business_description": "Business description",
         "colors": "Colors",
-        "button": "Continue editing"
+        "button": "Continue editing",
+        "button_go_edit": "Go to edit",
+        "description": "Description",
+        "price": "Price",
+        "catalog": "Catalog: ",
+        "empty_products": "This catalog doesn't have products yet"
       }
     },
     "clients": {
