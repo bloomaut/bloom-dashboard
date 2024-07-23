@@ -106,6 +106,7 @@
       "templates": "My templates",
       "find_designs": "Find more designs in",
       "link_uitool": "Open in UiTool",
+      "empty_templates": "You don't have any template yet",
       "introduction": {
         "title": "Introduction",
         "description": "Learn everything Small has to offer you!"
