@@ -16,6 +16,8 @@ const PhoneCase = () => {
   return (
     <div className={styles.container}>
       <div className={styles.phone_container}>
+        <Image src={caseImage} width={804} height={1570} alt='Phone case' className={styles.phone} />
+        {showPreview && <Image src={whatsappImage} width={804} height={1570} alt='Whatsapp' className={styles.wa} />}
         <div className={styles.iframe_container}>
           {loadingDots ? (
             <LoadingDots />
@@ -35,8 +37,6 @@ const PhoneCase = () => {
             </>
           )}
         </div>
-        <Image src={caseImage} width={804} height={1570} alt='Phone case' className={styles.phone} />
-        {showPreview && <Image src={whatsappImage} width={804} height={1570} alt='Whatsapp' className={styles.wa} />}
       </div>
 
       <div className={styles.dot_container}>
