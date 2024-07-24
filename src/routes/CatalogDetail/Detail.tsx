@@ -5,13 +5,11 @@ import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-// import { handleBotAction } from "@/utils/handleBotAction";
 import styles from "./styles.module.scss";
 // Components
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
-// import PopupChildren from "@/components/PopupChildren";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import PopupExcel from "./PopupExcel";
@@ -50,7 +48,7 @@ const Detail = () => {
           <LoadingSpinner />
         ) : datasetDetail?.dataItems.length ? (
           <div className={styles.content_container}>
-            {datasetDetail.dataItems.map((item: any) => (
+            {datasetDetail.dataItems.map((item: any, index: number) => (
               <TableRow
                 key={item._id}
                 id={item._id}
@@ -58,6 +56,7 @@ const Detail = () => {
                 description={item.data.listdescr}
                 price={item.data.listprice}
                 image={item.data.listimage}
+                position={index + 1}
               />
             ))}
           </div>
@@ -72,7 +71,6 @@ const Detail = () => {
           icon={<Icon name='reload' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 0 22 15' />}
           onclick={() => setMassiveUpdatePopup(true)}
         />
-        <Button title={dict("catalog.update_changes")} styleName='btn_add' />
       </div>
       {massiveUpdatePopup && (
         <PopupExcel

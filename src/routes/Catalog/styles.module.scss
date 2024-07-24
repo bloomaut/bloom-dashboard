@@ -1,13 +1,10 @@
-@import "@/styles/theme.scss";
-
 .catalog_container {
-  @include width-height(100%, 100%);
+  @include width-height(100%, auto);
   @include flex(column, flex-start, flex-start, 40px);
   padding: 10px 40px;
   .cards_container {
     @include width-height(100%, auto);
-    @include flex(row, flex-start, flex-start, 30px);
-    padding-bottom: 20px;
+    @include flex(row, flex-start, flex-start, 25px);
     flex-wrap: wrap;
     .add {
       @include width-height(275px, 200px);
@@ -19,6 +16,13 @@
       transition: all 150ms ease-in;
       &:hover {
         background: rgb(214, 217, 252);
+      }
+    }
+    .btn_next {
+      @include width-height(100%, auto);
+      @include flex(row, flex-end, center);
+      button {
+        padding: 10px 25px;
       }
     }
   }

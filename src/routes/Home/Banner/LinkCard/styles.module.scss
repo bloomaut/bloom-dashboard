@@ -2,7 +2,8 @@
 
 .container {
   @include flex(column, flex-start, flex-start, 10px);
-  @include width-height(330px, 160px);
+  @include width-height(100%, 160px);
+  max-width: 330px;
   @include fontSize-fontWeight(15px, 400);
   background-color: $softPink;
   border-radius: 4px;
@@ -16,7 +17,7 @@
   }
   .title {
     @include fontSize-fontWeight(24px, 600);
-    line-height: 48px;
+    line-height: 35px;
     color: $text;
   }
 }

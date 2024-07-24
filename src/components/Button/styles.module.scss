@@ -1,5 +1,3 @@
-@import "@/styles/theme.scss";
-
 .btn {
   @include main-btn;
 }
@@ -251,5 +249,15 @@
   &:hover {
     border: none;
     background: $darkOrange;
+  }
+}
+.btn_edit {
+  background: transparent;
+  color: $lightGrey;
+  border: 1px solid $lightGrey;
+  width: 150px;
+  &:hover {
+    color: #fff;
+    background: $lightGrey;
   }
 }

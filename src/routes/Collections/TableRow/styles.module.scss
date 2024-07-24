@@ -1,5 +1,3 @@
-@import "@/styles/theme.scss";
-
 .content {
   @include flex(row, flex-start, flex-start);
   @include fontSize-fontWeight(14px, 400);

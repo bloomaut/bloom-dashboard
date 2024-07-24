@@ -1,5 +1,3 @@
-@import "@/styles/theme.scss";
-
 .container {
   @include flex(row, space-around, center, 10px);
   position: relative;

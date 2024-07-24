@@ -1,7 +1,5 @@
-@import "@/styles/theme.scss";
-
 .catalog_detail_container {
-  @include flex(column, flex-start, flex-start, 50px);
+  @include flex(column, flex-start, flex-start, 35px);
   @include width-height(100%, auto);
   color: $text;
   padding: 0 40px;
@@ -12,13 +10,13 @@
   }
   .table_container {
     @include width-height(100%, auto);
-    @include flex(column, flex-start, flex-start, 20px);
+    @include flex(column, flex-start, flex-start, 5px);
     .content_container {
       @include width-height(100%, auto);
-      max-height: 270px;
+      max-height: 376px;
       overflow-y: auto;
       @media (width >= $queryXl) {
-        max-height: 500px;
+        max-height: 585px;
       }
     }
     .content_container::-webkit-scrollbar {

@@ -1,9 +1,7 @@
-@import "@/styles/theme.scss";
-
 .container {
   @include width-height(100%, auto);
   display: grid;
-  grid-template-columns: 1.3fr 1.7fr 1fr 1fr;
+  grid-template-columns: 0.2fr 1.3fr 1.7fr 1fr 1fr;
   align-items: center;
   padding: 15px;
   background: $sweetBlue;

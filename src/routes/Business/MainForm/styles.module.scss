@@ -1,26 +1,73 @@
-@import "@/styles/theme.scss";
-
 .main_form {
   @include width-height(100%, 100%);
   @include flex(column, flex-start, flex-start, 30px);
-  .input_name {
+  .row_01 {
     @include width-height(100%, auto);
     @include flex(row, space-between, flex-start, 40px);
+    .form_control {
+      @include width-height(100%, auto);
+      position: relative;
+      .error {
+        @include width-height(200px, auto);
+        text-align: start;
+        position: absolute;
+        top: 60px;
+        @include fontSize-fontWeight(12px, 400);
+        color: red;
+      }
+      .error_hidden {
+        display: none;
+      }
+    }
   }
-  .select {
+  .row_02 {
     @include width-height(100%, auto);
+    position: relative;
+    .error {
+      @include width-height(200px, auto);
+      text-align: start;
+      position: absolute;
+      top: 60px;
+      @include fontSize-fontWeight(12px, 400);
+      color: red;
+    }
+    .error_hidden {
+      display: none;
+    }
+  }
+  .row_03 {
+    @include width-height(100%, auto);
+    @include flex(column, flex-start, flex-start, 5px);
+    position: relative;
     label {
       @include fontSize-fontWeight(14px, 400);
-      color: $text;
-    }
-    select {
-      @include width-height(100%, 30px);
-      border-radius: 3px;
-      border: none;
-      outline: none;
-      margin-top: 5px;
-      box-shadow: 0px 0px 2px $lightGrey;
       color: $lightGrey;
+    }
+    .error {
+      @include width-height(250px, auto);
+      text-align: start;
+      position: absolute;
+      top: 55px;
+      @include fontSize-fontWeight(12px, 400);
+      color: red;
+    }
+    .error_hidden {
+      display: none;
+    }
+  }
+  .row_04 {
+    @include width-height(100%, auto);
+    position: relative;
+    .error {
+      @include width-height(250px, auto);
+      text-align: start;
+      position: absolute;
+      top: 120px;
+      @include fontSize-fontWeight(12px, 400);
+      color: red;
+    }
+    .error_hidden {
+      display: none;
     }
   }
 }

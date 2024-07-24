@@ -37,7 +37,7 @@ const ListHotlinks = () => {
       setFilteredHotlinks([]);
     }
   }, [searchValue]);
-  console.log(hotlinksList[4], "S");
+
   const handlePageChange = (page: number = 1, itemsPerPage: number = 5) => {
     //Cantidad por default de items = 5 y pagina default= 1
     const startIndex = (page - 1) * itemsPerPage;

@@ -3,9 +3,9 @@ import Image from "next/image";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
+import { Fade } from "react-awesome-reveal";
 // Components
 import SectionTitle from "@/components/SectionTitle";
-import { Fade } from "react-awesome-reveal";
 import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
 

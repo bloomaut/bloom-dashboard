@@ -1,0 +1,37 @@
+@import "@/styles/theme.scss";
+
+.colors {
+  @include flex(column, flex-start, flex-start, 20px);
+  .container_circle {
+    @include flex(row, flex-start, center, 5px);
+    .circle {
+      @include width-height(30px, 30px);
+      @include flex(row, center, center);
+      border-radius: 99%;
+      border: 1px solid $lightGrey;
+      cursor: pointer;
+    }
+    .additional_color_container {
+      width: 30px;
+      height: 30px;
+      border-radius: 99%;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid $lightGrey;
+      .color_input {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        cursor: pointer;
+        position: absolute;
+        top: -5.1px;
+        left: -5px;
+      }
+    }
+  }
+  .description {
+    @include fontSize-fontWeight(12px, 500);
+    max-width: 300px;
+    margin-bottom: 5px;
+  }
+}

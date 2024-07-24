@@ -1,14 +1,15 @@
-@import "@/styles/theme.scss";
-
 .container,
 .container_noselected {
-  @include width-height(228px, 50px);
+  @include width-height(230px, 50px);
   display: grid;
   grid-template-columns: 20% 80%;
   justify-content: center;
   align-items: center;
   padding: 5px 10px;
   transition: all 100ms ease-in;
+  @media (width >= $queryXl) {
+    width: 240px;
+  }
   .text {
     @include fontSize-fontWeight(18px, 500);
     color: $text;

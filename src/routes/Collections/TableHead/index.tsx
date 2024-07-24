@@ -7,7 +7,6 @@ const TableHead = () => {
     <div>
       <div className={styles.title}>
         <h2>{dict("title_one")}</h2>
-        {/* <h2 className={styles.border}>{dict("title_two")}</h2> */}
         <h2 className={styles.border}>{dict("title_three")}</h2>
       </div>
       <div className={styles.subtitle}>

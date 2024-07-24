@@ -1,0 +1,22 @@
+.logo_banner {
+  @include width-height(100%, auto);
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 30px;
+  h6 {
+    @include fontSize-fontWeight(14px, 500);
+    color: $lightGrey;
+    margin-bottom: 5px;
+  }
+  .logo,
+  .banner {
+    @include width-height(100px, 100px);
+    object-fit: contain;
+    border: 2px dashed $blueBackground;
+    border-radius: 10px;
+    img {
+      @include width-height(100%, 100%);
+      border-radius: 10px;
+    }
+  }
+}

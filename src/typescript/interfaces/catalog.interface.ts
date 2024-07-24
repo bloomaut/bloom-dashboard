@@ -16,10 +16,11 @@ export interface DataItemsList {
   [key: string]: any;
 }
 
-interface DataItems {
+export interface DataItems {
   order: number;
   _id: string;
   data: DataItemsList;
+  totalDataItems: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -79,4 +80,8 @@ export interface DataSchema {
   dataschema: string;
   order: number;
   // image: string;
+}
+export interface Onboarding {
+  template_id: string;
+  onboarding_id: string;
 }

@@ -14,7 +14,7 @@
   }
   .flakes_container {
     @include width-height(100%, 100%);
-    @include flex(row, space-between, center, 30px);
+    @include flex(row, space-evenly, center, 30px);
     flex-wrap: wrap;
     .loading {
       @include flex(column, center, center);

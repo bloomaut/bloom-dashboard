@@ -1,3 +1,4 @@
+"use client";
 import styles from "./styles.module.scss";
 import Link from "next/link";
 import Image from "next/image";
@@ -5,8 +6,6 @@ import logo from "/public/assets/logo_uitrade.png";
 import { useTranslations } from "next-intl";
 import { useFlakeData } from "@/hooks/useFlakesUser";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
-import { useState } from "react";
-import { useMessageToast } from "@/hooks/useMessageToast";
 // Components
 import Title from "@/components/Title";
 import FlakeGallery from "@/routes/Home/TemplateList/FlakeGallery";
@@ -14,22 +13,7 @@ import LoadingSpinner from "@/components/Loading";
 
 const Templates = () => {
   const dict = useTranslations("dict.home");
-  const { flakes } = useFlakeData();
-  const { notifyError } = useMessageToast();
-  const [selectedImage, setSelectedImage] = useState<{ url: string; type: string } | null>(null);
-
-  const handleClick = (url: string, type: string) => {
-    if (url && type === "hog")
-      setSelectedImage(prevState => {
-        if (prevState?.url === url && prevState.type === type) {
-          return prevState;
-        }
-        return { url, type };
-      });
-    else if (url === null) {
-      notifyError(dict("error"));
-    }
-  };
+  const { flakes, loading } = useFlakeData();
 
   return (
     <div className={styles.container}>
@@ -43,12 +27,12 @@ const Templates = () => {
         </div>
       </div>
       <div className={styles.flakes_container}>
-        {flakes.length ? (
-          flakes?.map((app: Powerapp) => <FlakeGallery key={app._id} app={app} handleClick={handleClick} />)
+        {loading ? (
+          <LoadingSpinner />
+        ) : flakes.length > 0 ? (
+          flakes?.map((app: Powerapp) => <FlakeGallery key={app._id} app={app} />)
         ) : (
-          <div className={styles.loading}>
-            <LoadingSpinner />
-          </div>
+          <p>{dict("empty_templates")}</p>
         )}
       </div>
     </div>

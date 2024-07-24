@@ -1,4 +1,6 @@
 import { PutDataItem, UpdateDataset } from "../interfaces/catalog.interface";
 import { UpdateClient } from "../interfaces/clients.interface";
+import { PutBusiness } from "../interfaces/business.interface";
+import { PutTemplate } from "../interfaces/template.interface";
 
-export type UPDATE = UpdateClient | UpdateDataset | PutDataItem;
+export type UPDATE = UpdateClient | UpdateDataset | PutDataItem | PutBusiness | PutTemplate;

@@ -1,5 +1,3 @@
-@import "@/styles/theme.scss";
-
 .login_container {
   @include width-height(100%, 100%);
   @include flex(row, space-around, flex-start);

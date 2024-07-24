@@ -89,7 +89,9 @@
       "error_uploading": "Error al subir el archivo",
       "error_update": "Error al actualizar el archivo",
       "success_update": "Archivo actualizado correctamente",
-      "success_file_add": "Archivo seleccionado correctamente"
+      "success_file_add": "Archivo seleccionado correctamente",
+      "success_template": "Plantilla seleccionada",
+      "error_template": "Error al seleccionar la plantilla"
     },
     "breadcrumb": {
       "breadcrumb_link": "Volver"
@@ -107,6 +109,7 @@
       "templates": "Mis plantillas",
       "find_designs": "Encuentra más diseños en",
       "link_uitool": "Abrir en UiTool",
+      "empty_templates": "Aún no posees ningun Template",
       "introduction": {
         "title": "Introducción",
         "description": "¡Aprende todo lo que Small tiene para ofrecerte!"
@@ -191,6 +194,38 @@
         "website": "Sitio web",
         "instagram": "Instagram",
         "phone": "Teléfono"
+      },
+      "my-powerapp": {
+        "title": "Tu aplicación está casi lista",
+        "subtitle": "Revisa tu información y valídala antes de crear tu aplicación",
+        "uploaded_catalogs": "Catálogos Subidos",
+        "chosen_templates": "Plantillas Elegidas",
+        "empty_dataset": "No hay catálogos subidos",
+        "product": "producto",
+        "products": "productos",
+        "button_generate": "Generar mi app!",
+        "business_title": "Información del negocio",
+        "name": "Nombre",
+        "last_name": "Apellido",
+        "business_name": "Nombre del negocio",
+        "category": "Categoría",
+        "business_description": "Descripción del negocio",
+        "colors": "Colores",
+        "button": "Continuar editando",
+        "button_go_edit": "Ir a editar",
+        "description": "Descripción",
+        "price": "Precio",
+        "catalog": "Cátalogo: ",
+        "empty_products": "Este catálogo aún no tiene productos",
+        "generate_popup_title": "¿Deseas generar tu aplicación?",
+        "generate_popup_subtitle": "Este proceso puede tardar unos minutos.",
+        "cancel": "Cancelar",
+        "create": "Crear",
+        "congratulation": "¡Felicidades!",
+        "success_subtitle": "Tu aplicación ha sido creada con éxito.",
+        "success_text": "Ahora, es momento de crear tu primer enlace y compartirlo con tus clientes.",
+        "button_first_link": "Generar mi primer enlace",
+        "error_generate": "Hubo un error al generar la aplicación."
       }
     },
     "clients": {
@@ -206,6 +241,8 @@
       "form_label_04": "Ubicación",
       "form_label_05": "Teléfono",
       "form_label_06": "Notas personales",
+      "form_label_07": "Registrado",
+      "form_label_08": "Actualización",
       "search_holder": "Buscar cliente ..."
     },
     "collections": {
@@ -355,7 +392,9 @@
     "templates": {
       "title": "Plantillas",
       "subtitle": "Selecciona la plantilla que mejor se adapta a tu negocio",
-      "select": "Seleccionar"
+      "select": "Seleccionar",
+      "empty": "No hay plantillas disponibles. Vuelve a intentarlo en unos minutos.",
+      "next": "Siguiente"
     }
   }
 }
