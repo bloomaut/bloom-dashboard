@@ -2,6 +2,11 @@ import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useAppSelector } from "@/store/hooks";
+import Link from "next/link";
+import { ENV } from "@/typescript/types/api";
+import { get, post } from "@/services/fetch";
+import { useEffect, useState } from "react";
+import { useMessageToast } from "@/hooks/useMessageToast";
 //Components
 import Button from "@/components/Button";
 import Title from "@/components/Title";
@@ -9,11 +14,9 @@ import Catalogs from "./Catalogs";
 import BusinessInfo from "./BusinessInfo";
 import LogoBanner from "./LogoBanner";
 import LoadingSpinner from "@/components/Loading";
-import Link from "next/link";
+import PopupChildren from "@/components/PopupChildren";
+import PopupSuccess from "./PopupSuccess";
 import PhoneCase from "@/components/PhoneCase";
-import { useEffect, useState } from "react";
-import { get } from "@/services/fetch";
-import { useMessageToast } from "@/hooks/useMessageToast";
 
 const MyPowerapp = () => {
   const userData = useAppSelector(state => state.userData);
@@ -21,10 +24,15 @@ const MyPowerapp = () => {
   const { datasets, loading } = useCatalogContext();
   const [url, setUrl] = useState("");
   const [loadingPhone, setLoadingPhone] = useState(true);
+  const [popupGenerate, setPopupGenerate] = useState(false);
+  const [popupSuccess, setPopupSuccess] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState<boolean>(false);
   const { notifyError } = useMessageToast();
 
   useEffect(() => {
+    const { notifyError } = useMessageToast();
     setLoadingPhone(true);
+
     const getTemplate = async (id: string) => {
       const response = await get(`small-template/${id}`);
       if (response.statusCode === 200) {
@@ -37,10 +45,38 @@ const MyPowerapp = () => {
     };
 
     if (userData.client.onboardings) {
-      const id = userData.client.onboardings[0].skinx_template._id;
+      const id = userData.client.onboardings[0].skinx_template?._id;
       getTemplate(id);
     }
   }, [userData]);
+
+  const handleFinalPost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const template_id = userData.client.onboardings?.[0].skinx_template._id;
+    const onboarding_id = userData.client.onboardings?.[0]._id;
+
+    console.log(userData);
+
+    if (template_id && onboarding_id) {
+      setLoadingPopup(true);
+      const response = await post(
+        "skinx-generator",
+        {
+          template_id,
+          onboarding_id,
+        },
+        ENV.TOOL,
+      );
+      if (response.data.statusCode !== 201) {
+        notifyError(dict("error_generate"));
+        setPopupSuccess(false);
+      } else {
+        setPopupSuccess(true);
+      }
+      setLoadingPopup(false);
+      setPopupGenerate(false);
+    }
+  };
 
   return (
     <section className={styles.container}>
@@ -81,8 +117,22 @@ const MyPowerapp = () => {
         <Link className={styles.btn} href='/my-business'>
           {dict("button")}
         </Link>
-        <Button title={dict("button_generate")} />
+        <Button title={dict("button_generate")} onclick={() => setPopupGenerate(true)} />
       </div>
+      {popupGenerate && (
+        <PopupChildren
+          title={dict("generate_popup_title")}
+          textAccept={dict("create")}
+          textCancel={dict("cancel")}
+          onCancel={() => setPopupGenerate(false)}
+          onConfirm={handleFinalPost}
+          setShowConfirmation={setPopupGenerate}
+          loading={loadingPopup}
+        >
+          <p className={styles.generate_popup}>{dict("generate_popup_subtitle")}</p>
+        </PopupChildren>
+      )}
+      {popupSuccess && <PopupSuccess setShowConfirmation={setPopupSuccess} />}
     </section>
   );
 };

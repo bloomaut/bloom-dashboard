@@ -1,23 +1,17 @@
 import styles from "./styles.module.scss";
 import { useCollectionsContext } from "@/context/CollectionsContext";
 import { CollectionList } from "@/typescript/interfaces/hotlinkCollections.interface";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
 
 interface ContentProps {
   collection: CollectionList;
 }
 
 const TableRow = ({ collection }: ContentProps) => {
-  const dict = useTranslations("dict.collections");
   const { id, setId } = useCollectionsContext();
-  const [selected, setSelected] = useState(false);
-
   const formattDate = collection.created_at.slice(0, 10);
 
   const handleClick = () => {
     setId(collection._id);
-    setSelected(true);
   };
 
   return (

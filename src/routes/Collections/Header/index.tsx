@@ -2,14 +2,14 @@ import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useCollectionsContext } from "@/context/CollectionsContext";
+import { post } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
 // Components
 import Title from "@/components/Title";
 import Search from "@/components/Search";
 import Icon from "@/components/Icon";
 import PopupChildren from "@/components/PopupChildren";
 import Input from "@/components/Input";
-import { post } from "@/services/fetch";
-import { useMessageToast } from "@/hooks/useMessageToast";
 
 const InitialEmptyForm = {
   name: "",

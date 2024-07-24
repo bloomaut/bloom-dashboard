@@ -1,3 +1,4 @@
+"use client";
 import styles from "./styles.module.scss";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
@@ -5,7 +6,7 @@ import { useState } from "react";
 import Title from "@/components/Title";
 import LinkCard from "./LinkCard";
 import IntroVideo from "./IntroVideo";
-import PopupVideo from "@/components/PopupVideo";
+import PopupVideo from "@/routes/Home/Banner/PopupVideo";
 
 const Banner = () => {
   const [openPopup, setOpenPopup] = useState(false);
@@ -19,7 +20,6 @@ const Banner = () => {
         <div onClick={() => setOpenPopup(true)}>
           <LinkCard text={dict("home.introduction.title")} description={dict("home.introduction.description")} />
         </div>
-
         <LinkCard
           text={dict("home.business.title")}
           description={dict("home.business.description")}

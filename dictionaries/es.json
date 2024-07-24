@@ -216,7 +216,16 @@
         "description": "Descripción",
         "price": "Precio",
         "catalog": "Cátalogo: ",
-        "empty_products": "Este catálogo aún no tiene productos"
+        "empty_products": "Este catálogo aún no tiene productos",
+        "generate_popup_title": "¿Deseas generar tu aplicación?",
+        "generate_popup_subtitle": "Este proceso puede tardar unos minutos.",
+        "cancel": "Cancelar",
+        "create": "Crear",
+        "congratulation": "¡Felicidades!",
+        "success_subtitle": "Tu aplicación ha sido creada con éxito.",
+        "success_text": "Ahora, es momento de crear tu primer enlace y compartirlo con tus clientes.",
+        "button_first_link": "Generar mi primer enlace",
+        "error_generate": "Hubo un error al generar la aplicación."
       }
     },
     "clients": {

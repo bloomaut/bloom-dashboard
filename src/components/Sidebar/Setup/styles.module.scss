@@ -1,5 +1,5 @@
 .setup_container {
-  @include width-height(232px, 130px);
+  @include width-height(95%, 130px);
   padding-left: 3px;
   border: none;
   cursor: pointer;
@@ -15,6 +15,7 @@
     .title {
       @include fontSize-fontWeight(15px, 500);
       color: $white;
+      text-align: left;
     }
     .bar_container {
       @include width-height(100%, 4px);
