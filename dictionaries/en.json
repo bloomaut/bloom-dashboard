@@ -216,7 +216,16 @@
         "description": "Description",
         "price": "Price",
         "catalog": "Catalog: ",
-        "empty_products": "This catalog doesn't have products yet"
+        "empty_products": "This catalog doesn't have products yet",
+        "generate_popup_title": "Do you want to generate your app?",
+        "generate_popup_subtitle": "This process can take some minutes.",
+        "cancel": "Cancel",
+        "create": "Create",
+        "congratulation": "Congratulation!",
+        "success_subtitle": "Your app has been created successfully.",
+        "success_text": "Now, it’s time to create your first link and share with your clients.",
+        "button_first_link": "Generate my first link",
+        "error_generate": "There was an error generating the app"
       }
     },
     "clients": {

@@ -1,4 +1,3 @@
-"use client";
 import styles from "./styles.module.scss";
 import { useLocale, useTranslations } from "next-intl";
 import { useCollectionsContext } from "@/context/CollectionsContext";
@@ -9,7 +8,7 @@ import Button from "@/components/Button";
 import TableHead from "../TableHead";
 import Icon from "@/components/Icon";
 import TableRow from "../TableRow";
-import Loading from "@/app/[locale]/(no layout)/policy/loading";
+import LoadingSpinner from "@/components/Loading";
 
 const Table = () => {
   const { id, collectionsList, filteredCollections, loading } = useCollectionsContext();
@@ -28,7 +27,7 @@ const Table = () => {
         {/* CONTENIDO */}
         <div className={styles.content_container}>
           {loading ? (
-            <Loading />
+            <LoadingSpinner />
           ) : (filteredCollections && filteredCollections.length === 0) ||
             (collectionsList && collectionsList.length === 0) ? (
             <p className={styles.text}>{dict("header.empty_collections")}</p>
