@@ -28,7 +28,7 @@ export interface Client {
   palette: { color: string }[] | null;
   created_at?: string;
   updated_at?: string;
-  onboardings?: Onboardings | null;
+  onboardings?: Onboardings[] | null;
 }
 
 export interface Onboardings {

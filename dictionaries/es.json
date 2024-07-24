@@ -210,7 +210,15 @@
         "category": "Categoría",
         "business_description": "Descripción del negocio",
         "colors": "Colores",
-        "button": "Continuar editando"
+        "button": "Continuar editando",
+        "generate_popup_title": "¿Deseas generar tu aplicación?",
+        "generate_popup_subtitle": "Este proceso puede tardar unos minutos.",
+        "cancel": "Cancelar",
+        "create": "Crear",
+        "congratulation": "¡Felicidades!",
+        "success_subtitle": "Tu aplicación ha sido creada con éxito.",
+        "success_text": "Ahora, es momento de crear tu primer enlace y compartirlo con tus clientes.",
+        "button_first_link": "Generar mi primer enlace"
       }
     },
     "clients": {

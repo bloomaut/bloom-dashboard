@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { get, update } from "@/services/fetch";
-import { DataItems, DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { get, post, update } from "@/services/fetch";
+import { DataItems, DatasetProps, Onboarding } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -13,6 +13,7 @@ interface CatalogContextType {
   loading: boolean;
   updateDataset: (id: string, newName: string) => Promise<void>;
   fetchDatasets: () => Promise<void>;
+  postOnboarding: (template_id: string, onboarding_id: string) => Promise<void>;
 }
 
 const CatalogContext = createContext<CatalogContextType>({
@@ -23,6 +24,9 @@ const CatalogContext = createContext<CatalogContextType>({
   },
   fetchDatasets: async () => {
     throw new Error("updateDataset function not implemented");
+  },
+  postOnboarding: async () => {
+    throw new Error("postOnboarding function not implemented");
   },
 });
 
@@ -63,6 +67,20 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
+  const postOnboarding = async (template_id: string, onboarding_id: string) => {
+    setLoading(true);
+    const postedOnboarding = {
+      template_id,
+      onboarding_id,
+    };
+
+    const response = await post("skinx-generator", postedOnboarding, ENV.TOOL);
+    if (response.data.statusCode !== 201) {
+      notifyError(dict("toast.bot_error"));
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     fetchDatasets();
     fetchDataSchemas();
@@ -75,6 +93,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
         loading,
         updateDataset,
         fetchDatasets,
+        postOnboarding,
       }}
     >
       {children}
