@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ENV } from "@/typescript/types/api";
 import { get, post } from "@/services/fetch";
 import { useEffect, useState } from "react";
+import { useMessageToast } from "@/hooks/useMessageToast";
 //Components
 import Button from "@/components/Button";
 import Title from "@/components/Title";
@@ -16,7 +17,6 @@ import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import PopupSuccess from "./PopupSuccess";
 import PhoneCase from "@/components/PhoneCase";
-import { useMessageToast } from "@/hooks/useMessageToast";
 
 const MyPowerapp = () => {
   const userData = useAppSelector(state => state.userData);
@@ -32,6 +32,7 @@ const MyPowerapp = () => {
   useEffect(() => {
     const { notifyError } = useMessageToast();
     setLoadingPhone(true);
+
     const getTemplate = async (id: string) => {
       const response = await get(`small-template/${id}`);
       if (response.statusCode === 200) {
@@ -44,37 +45,36 @@ const MyPowerapp = () => {
     };
 
     if (userData.client.onboardings) {
-      const id = userData.client.onboardings[0].skinx_template._id;
+      const id = userData.client.onboardings[0].skinx_template?._id;
       getTemplate(id);
     }
   }, [userData]);
 
-  //console.log(userData);
-  const postOnboarding = async (template_id: string, onboarding_id: string) => {
-    setLoadingPopup(true);
-    const postedOnboarding = {
-      template_id,
-      onboarding_id,
-    };
-
-    const response = await post("skinx-generator", postedOnboarding, ENV.TOOL);
-    if (response.data.statusCode !== 201) {
-      notifyError(dict("error_generate"));
-      setLoadingPopup(false);
-      return false;
-    }
-    setLoadingPopup(false);
-    return true;
-  };
-
-  const handleGenerate = async (e: React.FormEvent) => {
+  const handleFinalPost = async (e: React.FormEvent) => {
     e.preventDefault();
     const template_id = userData.client.onboardings?.[0].skinx_template._id;
     const onboarding_id = userData.client.onboardings?.[0]._id;
+
+    console.log(userData);
+
     if (template_id && onboarding_id) {
-      const post = await postOnboarding(template_id, onboarding_id);
+      setLoadingPopup(true);
+      const response = await post(
+        "skinx-generator",
+        {
+          template_id,
+          onboarding_id,
+        },
+        ENV.TOOL,
+      );
+      if (response.data.statusCode !== 201) {
+        notifyError(dict("error_generate"));
+        setPopupSuccess(false);
+      } else {
+        setPopupSuccess(true);
+      }
+      setLoadingPopup(false);
       setPopupGenerate(false);
-      if (post) setPopupSuccess(true);
     }
   };
 
@@ -125,7 +125,7 @@ const MyPowerapp = () => {
           textAccept={dict("create")}
           textCancel={dict("cancel")}
           onCancel={() => setPopupGenerate(false)}
-          onConfirm={handleGenerate}
+          onConfirm={handleFinalPost}
           setShowConfirmation={setPopupGenerate}
           loading={loadingPopup}
         >
