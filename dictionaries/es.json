@@ -232,6 +232,8 @@
       "form_label_04": "Ubicación",
       "form_label_05": "Teléfono",
       "form_label_06": "Notas personales",
+      "form_label_07": "Registrado",
+      "form_label_08": "Actualización",
       "search_holder": "Buscar cliente ..."
     },
     "collections": {

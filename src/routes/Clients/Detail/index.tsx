@@ -33,18 +33,28 @@ const Detail = () => {
               {dict("form_label_04")}: <br /> <span>{clientSelected?.ClientLocation}</span>
             </p>
           )}
-
           {clientSelected?.ClientPhone && (
             <p className={styles.label}>
               {dict("form_label_05")}: <br />
               <span>{clientSelected?.ClientPhone}</span>
             </p>
           )}
-
           {clientSelected?.personalNote && (
             <p className={styles.personal_note}>
               {dict("form_label_06")}: <br />
               <span>{clientSelected?.personalNote}</span>
+            </p>
+          )}
+          {clientSelected?.createdAt && (
+            <p className={styles.personal_note}>
+              {dict("form_label_07")}: <br />
+              <span>{clientSelected?.createdAt.replace("T", ", ").substring(0, 17)}</span>
+            </p>
+          )}
+          {clientSelected?.updatedAt && (
+            <p className={styles.personal_note}>
+              {dict("form_label_08")}: <br />
+              <span>{clientSelected?.updatedAt.replace("T", ", ").substring(0, 17)}</span>
             </p>
           )}
         </div>
