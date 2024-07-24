@@ -2,25 +2,48 @@ import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useAppSelector } from "@/store/hooks";
-import { useState } from "react";
 import Link from "next/link";
 //Components
 import Button from "@/components/Button";
 import Title from "@/components/Title";
 import Catalogs from "./Catalogs";
-import Phone from "./Phone";
 import BusinessInfo from "./BusinessInfo";
 import LogoBanner from "./LogoBanner";
 import LoadingSpinner from "@/components/Loading";
 import PopupChildren from "@/components/PopupChildren";
 import PopupSuccess from "./PopupSuccess";
+import PhoneCase from "@/components/PhoneCase";
+import { useEffect, useState } from "react";
+import { get } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
 
 const MyPowerapp = () => {
   const userData = useAppSelector(state => state.userData);
   const dict = useTranslations("dict.business.my-powerapp");
   const { datasets, loading, postOnboarding } = useCatalogContext();
+  const [url, setUrl] = useState("");
+  const [loadingPhone, setLoadingPhone] = useState(true);
   const [popupGenerate, setPopupGenerate] = useState(false);
   const [popupSuccess, setPopupSuccess] = useState(false);
+  useEffect(() => {
+    const { notifyError } = useMessageToast();
+    setLoadingPhone(true);
+    const getTemplate = async (id: string) => {
+      const response = await get(`small-template/${id}`);
+      if (response.statusCode === 200) {
+        const idPowerapp = response.result.template.skinx_demo.powerapp[0]._id;
+        setUrl(`${process.env.NEXT_PUBLIC_ENGINE_URL}/preview/powerapp/${idPowerapp}`);
+      } else {
+        notifyError("error");
+      }
+      setLoadingPhone(false);
+    };
+
+    if (userData.client.onboardings) {
+      const id = userData.client.onboardings[0].skinx_template._id;
+      getTemplate(id);
+    }
+  }, [userData]);
 
   //console.log(userData);
 
@@ -70,7 +93,7 @@ const MyPowerapp = () => {
           )}
         </div>
         <Catalogs datasets={datasets} loading={loading} />
-        <Phone />
+        <PhoneCase loading={loadingPhone} previewId={url} setPreviewLoading={setLoadingPhone} />
       </div>
       <div className={styles.button}>
         <Link className={styles.btn} href='/my-business'>

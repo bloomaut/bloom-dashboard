@@ -1,18 +1,18 @@
 import Header from "@/components/Header";
 import styles from "./styles.module.scss";
 import TemplatesSelector from "./TemplatesSelector";
-import PhoneCase from "./PhoneCase";
 import Button from "@/components/Button";
 import useStepValidation from "@/hooks/useStepValidation";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/navigation";
 import { useTemplateContext } from "@/context/TemplatesContext";
+import PhoneCase from "@/components/PhoneCase";
 
 const TemplatesPage = () => {
-  const { step_04 } = useStepValidation();
   const router = useRouter();
   const dict = useTranslations("dict.templates");
-  const { selectedTemplateId } = useTemplateContext();
+  const { step_04 } = useStepValidation();
+  const { selectedTemplateId, previewId, previewLoading, setPreviewLoading } = useTemplateContext();
 
   const handleNavigation = () => {
     router.push("/catalog");
@@ -24,7 +24,7 @@ const TemplatesPage = () => {
       <div className={styles.inner_container}>
         <TemplatesSelector />
         <div className={styles.phone_image}>
-          <PhoneCase />
+          <PhoneCase loading={previewLoading} previewId={previewId} setPreviewLoading={setPreviewLoading} />
           {!step_04 && (
             <Button
               title={dict("next")}

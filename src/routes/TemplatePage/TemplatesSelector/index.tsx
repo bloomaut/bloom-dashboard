@@ -28,6 +28,19 @@ const TemplatesSelector = () => {
     }
   }, [onboardings]);
 
+  useEffect(() => {
+    const selectedTemplateIdStorage = window.localStorage.getItem("selectedTemplateId");
+    if (selectedTemplateIdStorage) {
+      setSelectedTemplateId(selectedTemplateIdStorage);
+
+      // Encontrar el template correspondiente para mostrar el preview
+      const selectedTemplate = templates.find(template => template._id === selectedTemplateIdStorage);
+      if (selectedTemplate) {
+        handleShowPreview(selectedTemplate.skinx_demo.powerapp[0]._id);
+      }
+    }
+  }, [templates]);
+
   const handleSubmitPut = async (skinx_id: string, template_id: string, powerapp_id: string) => {
     const response = await update("small-template/onboarding", { skinx_id, template_id }, onboardingId);
     if (response.statusCode === 200) {
@@ -54,7 +67,6 @@ const TemplatesSelector = () => {
           templates.map((app: Template) => (
             <Fade triggerOnce key={app._id}>
               <div className={styles.template_container}>
-                <h4 className={styles.title}>{app.skinx_demo.title}</h4>
                 <div
                   className={styles.template}
                   style={{ border: selectedTemplateId === app._id ? "3px solid #282e7ebd" : "3px solid transparent" }}
@@ -94,6 +106,7 @@ const TemplatesSelector = () => {
                       className={styles.select}
                       onClick={() => {
                         setSelectedTemplateId(app._id);
+                        window.localStorage.setItem("selectedTemplateId", app._id);
                         handleSubmitPut(app.skinx_demo._id, app._id, app.skinx_demo.powerapp[0]._id);
                       }}
                     >
@@ -105,7 +118,7 @@ const TemplatesSelector = () => {
             </Fade>
           ))
         ) : (
-          <p>{dict("templates.empty")}</p>
+          <p className={styles.empty}>{dict("templates.empty")}</p>
         )}
       </div>
     </section>

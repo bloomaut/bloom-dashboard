@@ -49,7 +49,11 @@ export const TemplateProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     fetchDataHotlink();
-  }, []);
+
+    if (selectedTemplateId) {
+      window.localStorage.setItem("selectedTemplateId", selectedTemplateId);
+    }
+  }, [selectedTemplateId]);
 
   return (
     <TemplateContext.Provider

@@ -109,6 +109,7 @@
       "templates": "Mis plantillas",
       "find_designs": "Encuentra más diseños en",
       "link_uitool": "Abrir en UiTool",
+      "empty_templates": "Aún no posees ningun Template",
       "introduction": {
         "title": "Introducción",
         "description": "¡Aprende todo lo que Small tiene para ofrecerte!"
@@ -211,6 +212,11 @@
         "business_description": "Descripción del negocio",
         "colors": "Colores",
         "button": "Continuar editando",
+        "button_go_edit": "Ir a editar",
+        "description": "Descripción",
+        "price": "Precio",
+        "catalog": "Cátalogo: ",
+        "empty_products": "Este catálogo aún no tiene productos",
         "generate_popup_title": "¿Deseas generar tu aplicación?",
         "generate_popup_subtitle": "Este proceso puede tardar unos minutos.",
         "cancel": "Cancelar",
@@ -384,7 +390,7 @@
       "title": "Plantillas",
       "subtitle": "Selecciona la plantilla que mejor se adapta a tu negocio",
       "select": "Seleccionar",
-      "empty": "No tienes plantillas disponibles",
+      "empty": "No hay plantillas disponibles. Vuelve a intentarlo en unos minutos.",
       "next": "Siguiente"
     }
   }
