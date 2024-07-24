@@ -19,7 +19,7 @@ const Catalog = () => {
   const dict = useTranslations("dict");
 
   const handleNavigation = () => {
-    router.push("/hotlink");
+    router.push("/my-powerapp");
   };
   return (
     <div className={styles.catalog_container}>
@@ -37,7 +37,11 @@ const Catalog = () => {
             </div>
           </>
         ) : (
-          <p>{dict("catalog.empty_datasets")}</p>
+          <>
+            <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
+              <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
+            </div>
+          </>
         )}
 
         <div className={styles.btn_next}>

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { get, update } from "@/services/fetch";
+import { get, post, update } from "@/services/fetch";
 import { DataItems, DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
@@ -76,6 +76,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       setDatasetDetail(data.data);
     }
   };
+
   useEffect(() => {
     fetchDatasets();
     fetchDataSchemas();

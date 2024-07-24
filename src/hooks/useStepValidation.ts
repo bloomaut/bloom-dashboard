@@ -28,7 +28,6 @@ const useStepValidation = () => {
       return Boolean(
         step_01 &&
           step_02 &&
-          step_03 &&
           userData.client.onboardings[0].skinx_generated &&
           userData.client.onboardings[0].skinx_generated !== null,
       );

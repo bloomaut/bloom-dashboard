@@ -23,8 +23,10 @@ const TemplatesPage = () => {
       <Header title={dict("title")} subtitle={dict("subtitle")} />
       <div className={styles.inner_container}>
         <TemplatesSelector />
-        <div className={styles.phone_image}>
-          <PhoneCase loading={previewLoading} previewId={previewId} setPreviewLoading={setPreviewLoading} />
+        <div className={styles.column_container}>
+          <div className={styles.phone_image}>
+            <PhoneCase loading={previewLoading} previewId={previewId} setPreviewLoading={setPreviewLoading} />
+          </div>
           {!step_04 && (
             <Button
               title={dict("next")}
