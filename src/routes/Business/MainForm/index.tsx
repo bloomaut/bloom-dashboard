@@ -1,7 +1,6 @@
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { UserBusiness } from "@/typescript/interfaces/business.interface";
 import { FormErrorsProps } from "@/hooks/useFormValidator";
 import Button from "@/components/Button";
@@ -78,7 +77,7 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
         />
         {validation && <ErrorMessage error={errors.business_description} />}
       </div>
-      <Button title='Enviar' loading={loading} type='submit' />
+      <Button title={formData.name ? "Update" : "Enviar"} loading={loading} type='submit' />
     </form>
   );
 };

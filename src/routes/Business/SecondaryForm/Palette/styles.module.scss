@@ -1,33 +1,50 @@
 @import "@/styles/theme.scss";
 
 .colors {
-  @include flex(column, flex-start, flex-start, 20px);
-  .container_circle {
-    @include flex(row, flex-start, center, 5px);
+  @include flex(column, flex-start, flex-start, 10px);
+  .container {
+    @include width-height(100%, auto);
+    @include flex(row, center, flex-start, 10px);
+    position: relative;
+    .column {
+      @include width-height(auto, 75px);
+      @include flex(column, flex-start, flex-start);
+      .additional_color_container {
+        width: 35px;
+        height: 35px;
+        border-radius: 99%;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid $lighterGrey;
+        .color_input {
+          width: 45px;
+          height: 45px;
+          padding: 0;
+          cursor: pointer;
+          position: absolute;
+          top: -5.1px;
+          left: -5px;
+        }
+      }
+    }
     .circle {
-      @include width-height(30px, 30px);
+      @include width-height(35px, 35px);
       @include flex(row, center, center);
+      background: $blueishBackground;
       border-radius: 99%;
       border: 1px solid $lightGrey;
       cursor: pointer;
     }
-    .additional_color_container {
-      width: 30px;
-      height: 30px;
-      border-radius: 99%;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid $lightGrey;
-      .color_input {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        cursor: pointer;
-        position: absolute;
-        top: -5.1px;
-        left: -5px;
-      }
-    }
+  }
+  .loading_container {
+    @include width-height(100%, auto);
+    @include flex(row, center, center);
+  }
+  .submit {
+    @include fontSize-fontWeight(14px, 600);
+    color: $blue;
+    cursor: pointer;
+    border-bottom: 1px solid $blue;
   }
   .description {
     @include fontSize-fontWeight(12px, 500);
