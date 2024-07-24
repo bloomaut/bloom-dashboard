@@ -5,7 +5,7 @@ import success from "/public/assets/success.png";
 import Title from "@/components/Title";
 import { useTranslations, useLocale } from "next-intl";
 import Button from "@/components/Button";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 interface Props {
   setShowConfirmation: (value: React.SetStateAction<boolean>) => void;
@@ -27,7 +27,7 @@ const PopupSuccess = ({ setShowConfirmation }: Props) => {
           </div>
         </div>
         <p className={styles.success_text}>{dict("success_text")}</p>
-        <Link href={`${locale}/hotlink`}>
+        <Link href='/hotlink'>
           <Button title={dict("button_first_link")} />
         </Link>
       </div>

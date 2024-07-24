@@ -224,7 +224,8 @@
         "congratulation": "¡Felicidades!",
         "success_subtitle": "Tu aplicación ha sido creada con éxito.",
         "success_text": "Ahora, es momento de crear tu primer enlace y compartirlo con tus clientes.",
-        "button_first_link": "Generar mi primer enlace"
+        "button_first_link": "Generar mi primer enlace",
+        "error_generate": "Hubo un error al generar la aplicación."
       }
     },
     "clients": {
