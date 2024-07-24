@@ -5,17 +5,15 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import Image from "next/image";
 import Link from "next/link";
-
 import Icon from "@/components/Icon";
 import flake_icon_01 from "/public/flake_icon_01.svg";
 import flake_icon_02 from "/public/flake_icon_02.svg";
 
 interface Props {
   app: Powerapp;
-  handleClick: (url: string, type: string) => void;
 }
 
-const FlakeGallery = ({ app, handleClick }: Props) => {
+const FlakeGallery = ({ app }: Props) => {
   const dict = useTranslations("dict.home");
 
   return (
@@ -30,7 +28,7 @@ const FlakeGallery = ({ app, handleClick }: Props) => {
         <Icon name='link' strokeColor='#ff5722' viewBox='0 -13 50 50' />
       </Link>
       <div className={styles.template}>
-        <div className={styles.sm_card} onClick={() => handleClick(app.hog_related.thumbnail, "hog")}>
+        <div className={styles.sm_card}>
           {app.hog_related.thumbnail ? (
             <Zoom classDialog='custom-zoom'>
               <Image src={app.hog_related.thumbnail} alt={app.skinx.title} width={167} height={120} />
@@ -39,7 +37,7 @@ const FlakeGallery = ({ app, handleClick }: Props) => {
             <Image className={styles.empty_img} src={flake_icon_02} alt='Icon' />
           )}
         </div>
-        <div className={styles.lg_card} onClick={() => handleClick(app.thumbnail, "powerapp")}>
+        <div className={styles.lg_card}>
           {app.thumbnail ? (
             <Zoom classDialog='custom-zoom'>
               <Image

@@ -17,7 +17,7 @@
   }
   .title {
     @include fontSize-fontWeight(24px, 600);
-    line-height: 48px;
+    line-height: 35px;
     color: $text;
   }
 }

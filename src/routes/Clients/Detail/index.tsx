@@ -24,24 +24,27 @@ const Detail = () => {
         <div className={styles.info}>
           {clientSelected?.ClientEmail && (
             <p className={styles.label}>
-              {dict("form_label_03")}: <span>{clientSelected?.ClientEmail}</span>
+              {dict("form_label_03")}: <br />
+              <span>{clientSelected?.ClientEmail}</span>
             </p>
           )}
           {clientSelected?.ClientLocation && (
             <p className={styles.label}>
-              {dict("form_label_04")}: <span>{clientSelected?.ClientLocation}</span>
+              {dict("form_label_04")}: <br /> <span>{clientSelected?.ClientLocation}</span>
             </p>
           )}
 
           {clientSelected?.ClientPhone && (
             <p className={styles.label}>
-              {dict("form_label_05")}: <span>{clientSelected?.ClientPhone}</span>
+              {dict("form_label_05")}: <br />
+              <span>{clientSelected?.ClientPhone}</span>
             </p>
           )}
 
           {clientSelected?.personalNote && (
             <p className={styles.personal_note}>
-              {dict("form_label_06")}: <span>{clientSelected?.personalNote}</span>
+              {dict("form_label_06")}: <br />
+              <span>{clientSelected?.personalNote}</span>
             </p>
           )}
         </div>
