@@ -241,6 +241,8 @@
       "form_label_04": "Location",
       "form_label_05": "Phone",
       "form_label_06": "Personal notes",
+      "form_label_07": "Register",
+      "form_label_08": "Update",
       "search_holder": "Search customer ...."
     },
     "collections": {

@@ -81,3 +81,7 @@ export interface DataSchema {
   order: number;
   // image: string;
 }
+export interface Onboarding {
+  template_id: string;
+  onboarding_id: string;
+}

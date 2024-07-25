@@ -29,6 +29,8 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     ClientPhone: "",
     ClientLocation: "",
     personalNote: "",
+    createdAt: "",
+    updatedAt: "",
   });
   const [checkValidation, setCheckValidation] = useState(false);
   const { dropdownRef } = useCloseDropdown(setShowPopup);
@@ -48,6 +50,8 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
         ClientPhone: foundClient.ClientPhone,
         ClientLocation: foundClient.ClientLocation,
         personalNote: foundClient.personalNote,
+        createdAt: foundClient.createdAt,
+        updatedAt: foundClient.updatedAt,
       });
     }
   }, [clients, requestType, clientId]);
@@ -84,6 +88,8 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
         ClientPhone: "",
         ClientLocation: "",
         personalNote: "",
+        createdAt: "",
+        updatedAt: "",
       });
       fetchClients();
       setClientSelected(null);
@@ -104,6 +110,8 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
         ClientPhone: "",
         ClientLocation: "",
         personalNote: "",
+        createdAt: "",
+        updatedAt: "",
       });
       fetchClients();
       setClientSelected(null);
