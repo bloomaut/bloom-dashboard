@@ -21,20 +21,22 @@ interface PopupActionsProps {
   clientId?: string;
 }
 
+const emptyFormData = {
+  ClientFirstname: "",
+  ClientLastname: "",
+  ClientEmail: "",
+  ClientPhone: "",
+  ClientLocation: "",
+  personalNote: "",
+  createdAt: "",
+  updatedAt: "",
+};
+
 const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, clientId }: PopupActionsProps) => {
-  const [formData, setFormData] = useState<ClientsProps>({
-    ClientFirstname: "",
-    ClientLastname: "",
-    ClientEmail: "",
-    ClientPhone: "",
-    ClientLocation: "",
-    personalNote: "",
-    createdAt: "",
-    updatedAt: "",
-  });
+  const [formData, setFormData] = useState<ClientsProps>(emptyFormData);
   const [checkValidation, setCheckValidation] = useState(false);
   const { dropdownRef } = useCloseDropdown(setShowPopup);
-  const { clients, fetchClients, setClientSelected } = useClientsContext();
+  const { clients, setClientSelected, updateClients } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
   const fieldsToValidate = ["ClientFirstname"];
   const errors = useFormValidator(formData, fieldsToValidate);
@@ -68,57 +70,48 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     e.preventDefault();
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
+      const newData = {
+        ClientFirstname: formData.ClientFirstname,
+        ClientLastname: formData.ClientLastname,
+        ClientEmail: formData.ClientEmail,
+        ClientPhone: formData.ClientPhone,
+        ClientLocation: formData.ClientLocation,
+        personalNote: formData.personalNote,
+      };
       if (requestType === "POST") {
-        postClient();
+        postClient(newData);
       } else {
-        editClient();
+        editClient(newData);
       }
     }
   };
 
-  const postClient = async () => {
-    const data = await post("client-customer", formData);
+  const postClient = async (newData: ClientsProps) => {
+    const data = await post("client-customer", newData);
     if (data.data.statusCode === 201) {
       notify(dict("toast.client_post"));
       setShowPopup(false);
-      setFormData({
-        ClientFirstname: "",
-        ClientLastname: "",
-        ClientEmail: "",
-        ClientPhone: "",
-        ClientLocation: "",
-        personalNote: "",
-        createdAt: "",
-        updatedAt: "",
-      });
-      fetchClients();
+      setFormData(emptyFormData);
+      updateClients(data.data.result.data);
       setClientSelected(null);
     } else {
       notifyError(dict("toast.client_post_error"));
     }
   };
 
-  const editClient = async () => {
-    const data = await update("client-customer", formData, clientId);
+  const editClient = async (newData: ClientsProps) => {
+    const data = await update("client-customer", newData, clientId);
     if (data.statusCode === 200) {
       notify(dict("toast.client_edit"));
       setShowPopup(false);
-      setFormData({
-        ClientFirstname: "",
-        ClientLastname: "",
-        ClientEmail: "",
-        ClientPhone: "",
-        ClientLocation: "",
-        personalNote: "",
-        createdAt: "",
-        updatedAt: "",
-      });
-      fetchClients();
+      setFormData(emptyFormData);
+      updateClients(data.result.data);
       setClientSelected(null);
     } else {
       notifyError(dict("toast.client_edit_error"));
     }
   };
+
   return (
     <section className={styles.popup_container}>
       <div className={styles.container} ref={dropdownRef}>

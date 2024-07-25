@@ -13,7 +13,7 @@ import LoadingSpinner from "@/components/Loading";
 import PopupConfirm from "@/components/PopupConfirm";
 
 const List = () => {
-  const { loading, fetchClients, setClientSelected, filteredClients } = useClientsContext();
+  const { loading, setClientSelected, filteredClients, setClients } = useClientsContext();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [clientId, setClientId] = useState<string | undefined>(undefined);
@@ -27,7 +27,7 @@ const List = () => {
         setShowPopupDelete(false);
         setClientSelected(null);
         notify(dict("toast.client_delete"));
-        fetchClients();
+        setClients(prevClients => prevClients.filter(client => client._id !== clientId));
       } else {
         notifyError(dict("toast.client_delete_error"));
       }
