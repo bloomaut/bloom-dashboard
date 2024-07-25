@@ -12,6 +12,7 @@ import useFormValidator from "@/hooks/useFormValidator";
 import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
+import { handleLogoBanner } from "@/utils/handleUploadBanner";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -168,6 +169,23 @@ const Business = () => {
 
     uploadLogo();
   }, [logo]);
+
+  useEffect(() => {
+    const uploadBanner = async () => {
+      if (banner) {
+        const bannerUrl = await handleLogoBanner(banner);
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          client: {
+            ...prevFormData.client,
+            banner: bannerUrl,
+          },
+        }));
+      }
+    };
+
+    uploadBanner();
+  }, [banner]);
 
   return (
     <section className={styles.container_business}>
