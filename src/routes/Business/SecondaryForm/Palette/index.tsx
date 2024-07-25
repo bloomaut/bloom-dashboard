@@ -16,6 +16,7 @@ interface PaletteProps {
 const Palette = ({ palette, setFormData }: PaletteProps) => {
   const [colors, setColors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [showIcon, setShowIcon] = useState<boolean>(false);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.business");
 
@@ -40,6 +41,7 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
   };
 
   const handleAddColor = () => {
+    setShowIcon(true);
     if (colors.length < 5) {
       setColors([...colors, "#ffffff"]);
     }
@@ -69,6 +71,14 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
     }
   };
 
+  useEffect(() => {
+    if (colors.length > 3) {
+      setShowIcon(true);
+    } else {
+      setShowIcon(false);
+    }
+  }, [colors.length]);
+
   return (
     <div className={styles.colors}>
       <h6>{dict("data.colors")}</h6>
@@ -81,14 +91,17 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
                 value={color}
                 onChange={e => handleColorChange(index, e.target.value)}
                 className={styles.color_input}
+                disabled={colors.length === 3}
               />
             </div>
-            <Button
-              title={""}
-              icon={<Icon name='delete' width={20} height={20} strokeColor='#7f7f7f' viewBox='0 0 23 26' />}
-              styleName='btn_delete_business'
-              onclick={() => handleRemoveColor(index)}
-            />
+            {showIcon && (
+              <Button
+                title={""}
+                icon={<Icon name='delete' width={20} height={20} strokeColor='#7f7f7f' viewBox='0 0 23 26' />}
+                styleName='btn_delete_business'
+                onclick={() => handleRemoveColor(index)}
+              />
+            )}
           </div>
         ))}
         {colors.length < 5 && (
