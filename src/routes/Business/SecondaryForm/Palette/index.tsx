@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
 import { UserBusiness } from "@/typescript/interfaces/business.interface";
 import { useTranslations } from "next-intl";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { Oval } from "react-loader-spinner";
@@ -20,11 +20,13 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.business");
 
+  const newColorInputRef = useRef<HTMLInputElement | null>(null);
+
   useEffect(() => {
     if (palette && palette.length > 0) {
       setColors(palette.map(({ color }) => color));
     } else {
-      setColors(["#ffffff", "#ffffff", "#ffffff"]);
+      setColors(["#ffffff"]);
     }
   }, [palette]);
 
@@ -36,14 +38,23 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
 
   const handleRemoveColor = (index: number) => {
     const updatedColors = colors.filter((_, i) => i !== index);
-    if (updatedColors.length < 3) return;
+    if (updatedColors.length < 1) return;
     setColors(updatedColors);
   };
 
   const handleAddColor = () => {
     setShowIcon(true);
     if (colors.length < 5) {
-      setColors([...colors, "#ffffff"]);
+      setColors(prevColors => {
+        const updatedColors = [...prevColors, "#ffffff"];
+        // Enfocar el nuevo input de color
+        setTimeout(() => {
+          if (newColorInputRef.current) {
+            newColorInputRef.current.click();
+          }
+        }, 0);
+        return updatedColors;
+      });
     }
   };
 
@@ -72,7 +83,7 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
   };
 
   useEffect(() => {
-    if (colors.length > 3) {
+    if (colors.length > 1) {
       setShowIcon(true);
     } else {
       setShowIcon(false);
@@ -91,7 +102,8 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
                 value={color}
                 onChange={e => handleColorChange(index, e.target.value)}
                 className={styles.color_input}
-                disabled={colors.length === 3}
+                disabled={colors.length === 1}
+                ref={index === colors.length - 1 ? newColorInputRef : null}
               />
             </div>
             {showIcon && (
@@ -126,7 +138,7 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
           />
         </div>
       ) : (
-        showIcon && (
+        colors.length >= 1 && (
           <p className={styles.submit} onClick={handleSaveColors}>
             Update palette
           </p>

@@ -22,7 +22,7 @@ const initialFormData: UserBusiness = {
     category: "",
     logo: "",
     banner: "",
-    palette: [{ color: "#ffffff" }, { color: "#ffffff" }, { color: "#ffffff" }],
+    palette: [{ color: "#ffffff" }],
     company_web: "",
     instagram: "",
   },
