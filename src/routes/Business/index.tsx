@@ -13,6 +13,7 @@ import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
 import { handleLogoBanner } from "@/utils/handleUploadBanner";
+import { categories } from "@/utils/categories";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -20,7 +21,7 @@ const initialFormData: UserBusiness = {
   client: {
     name: "",
     description: "",
-    category: "",
+    category: categories[0].options[0].value,
     logo: "",
     banner: "",
     palette: [{ color: "#ffffff" }],
@@ -38,7 +39,7 @@ const Business = () => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState<File | null>(null);
   const [banner, setBanner] = useState<File | null>(null);
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>(categories[0].options[0].value);
   const [errorLogo, setErrorLogo] = useState(false);
   const { notify, notifyError } = useMessageToast();
   const fieldsToValidate = ["name", "lastname", "business_name", "business_category", "business_description"];
@@ -135,7 +136,7 @@ const Business = () => {
   };
 
   useEffect(() => {
-    if (userData) {
+    if (userData.name !== "") {
       setFormData(userData);
     } else {
       setFormData(initialFormData);
@@ -196,6 +197,7 @@ const Business = () => {
           onSubmit={handleSubmit}
           onChange={handleChange}
           validation={checkValidation}
+          formValidate={Object.keys(errors).length === 0}
           errors={errors}
           loading={loading}
           category={category}
