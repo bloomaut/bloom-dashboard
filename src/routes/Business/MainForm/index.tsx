@@ -1,11 +1,12 @@
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { UserBusiness } from "@/typescript/interfaces/business.interface";
 import { FormErrorsProps } from "@/hooks/useFormValidator";
 import Button from "@/components/Button";
 import Select from "./Select";
+import useStepValidation from "@/hooks/useStepValidation";
+import { useRouter } from "@/navigation";
 
 interface FormProps {
   formData: UserBusiness;
@@ -19,11 +20,17 @@ interface FormProps {
 }
 
 const Form = ({ formData, onChange, onSubmit, validation, errors, loading, category, onCategoryChange }: FormProps) => {
+  const { step_04 } = useStepValidation();
+  const router = useRouter();
   const dict = useTranslations("dict.business");
 
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
+
+  const handleNavigation = () => {
+    router.push("/templates");
+  };
 
   return (
     <form className={styles.main_form} onSubmit={onSubmit}>
@@ -78,7 +85,14 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
         />
         {validation && <ErrorMessage error={errors.business_description} />}
       </div>
-      <Button title='Enviar' loading={loading} type='submit' />
+      <Button
+        title={step_04 ? "Update" : "Update and Next"}
+        loading={loading}
+        type='submit'
+        onclick={() => {
+          if (!step_04) handleNavigation();
+        }}
+      />
     </form>
   );
 };

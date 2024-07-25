@@ -12,6 +12,7 @@ import useFormValidator from "@/hooks/useFormValidator";
 import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
+import { handleLogoBanner } from "@/utils/handleUploadBanner";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -22,7 +23,7 @@ const initialFormData: UserBusiness = {
     category: "",
     logo: "",
     banner: "",
-    palette: [],
+    palette: [{ color: "#ffffff" }],
     company_web: "",
     instagram: "",
   },
@@ -89,17 +90,6 @@ const Business = () => {
       setCheckValidation(false);
       setErrorLogo(false);
 
-      let logoURL = formData.client.logo || "";
-      let colors;
-
-      if (logo) {
-        const data = await handleLogoUpload(logo);
-        logoURL = data?.url;
-        colors = data?.colors || [];
-      }
-
-      const parsedPalette = colors.map((color: string) => ({ color })) || [];
-
       const dataToSend = {
         userName: formData.name,
         userLastname: formData.lastname,
@@ -109,8 +99,8 @@ const Business = () => {
         website: formData.client.company_web,
         instagram: formData.client.instagram,
         phone: formData.phone,
-        logo: logoURL,
-        palette: parsedPalette,
+        logo: formData.client.logo,
+        palette: formData.client.palette,
       };
 
       const response = await update("small-business", dataToSend);
@@ -157,6 +147,45 @@ const Business = () => {
       setErrorLogo(false);
     }
   }, [logo, formData.client.logo]);
+
+  useEffect(() => {
+    const uploadLogo = async () => {
+      if (logo) {
+        const data = await handleLogoUpload(logo);
+        const logoURL = data?.url || "";
+        const colors = data?.colors || [];
+        const parsedPalette = colors.map((color: string) => ({ color }));
+
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          client: {
+            ...prevFormData.client,
+            logo: logoURL,
+            palette: parsedPalette,
+          },
+        }));
+      }
+    };
+
+    uploadLogo();
+  }, [logo]);
+
+  useEffect(() => {
+    const uploadBanner = async () => {
+      if (banner) {
+        const bannerUrl = await handleLogoBanner(banner);
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          client: {
+            ...prevFormData.client,
+            banner: bannerUrl,
+          },
+        }));
+      }
+    };
+
+    uploadBanner();
+  }, [banner]);
 
   return (
     <section className={styles.container_business}>

@@ -261,3 +261,12 @@
     background: $lightGrey;
   }
 }
+
+.btn_delete_business {
+  @extend .btn;
+  background: none;
+  padding: 10px 0 10px 5px;
+  &:hover {
+    background: none;
+  }
+}
