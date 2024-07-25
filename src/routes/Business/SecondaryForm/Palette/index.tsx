@@ -126,9 +126,11 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
           />
         </div>
       ) : (
-        <p className={styles.submit} onClick={handleSaveColors}>
-          Update palette
-        </p>
+        showIcon && (
+          <p className={styles.submit} onClick={handleSaveColors}>
+            Update palette
+          </p>
+        )
       )}
       <p className={styles.description}>{dict("data.description")}</p>
     </div>
