@@ -1,17 +1,3 @@
-interface Dataschema {
-  _id: string;
-  fields: DatasetField[];
-}
-
-export interface DatasetField {
-  _id: string;
-  name: string;
-  description: string;
-  type: "string" | "number" | "image";
-  placeholder: string;
-  required: boolean;
-}
-
 export interface DataItemsList {
   [key: string]: any;
 }
@@ -31,7 +17,9 @@ export interface DatasetProps {
   description: string;
   image: string;
   visibility: boolean;
-  dataschema: string;
+  dataschema: {
+    fields: [];
+  };
   createdAt: string;
   updatedAt: string;
   totalDataItems: number;
@@ -61,13 +49,13 @@ export interface selectOptions {
 export interface DataschemaProps {
   _id: string;
   name: string;
-  fields: Field[];
+  fields: DataschemaField[];
   createdAt: string;
   updatedAt: string;
   category: string;
 }
 
-export interface Field {
+export interface DataschemaField {
   name: string;
   description: string;
   type: string;
@@ -76,7 +64,7 @@ export interface Field {
   required: boolean;
 }
 
-export interface DataSchema {
+export interface PostDataSchema {
   name: string;
   description: string;
   dataschema: string;
@@ -84,24 +72,26 @@ export interface DataSchema {
   // image: string;
 }
 
-export interface Onboarding {
+export interface PostOnboarding {
   template_id: string;
   onboarding_id: string;
 }
 
-export interface myPowerAppDataDetail {
-  dataItems: {
-    createdAt: string;
-    data: {
-      listdescr: string;
-      listimage: string;
-      listname: string;
-      listprice: string;
-    };
-    order: number;
-    updatedAt: string;
-    visibility: boolean;
-    _id: string;
-  };
+export interface DatasetDetailType {
+  dataItems: Array<DataItemsType>;
   dataSet: DatasetProps;
+}
+
+interface DataItemsType {
+  createdAt: string;
+  data: {
+    listdescr: string;
+    listimage: string;
+    listname: string;
+    listprice: string;
+  };
+  order: number;
+  updatedAt: string;
+  visibility: boolean;
+  _id: string;
 }

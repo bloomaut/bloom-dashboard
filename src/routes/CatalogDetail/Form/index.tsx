@@ -45,7 +45,7 @@ const initialValues: InitialValuesProps = {
 
 const Form = ({ setShowPopup, action, id }: Form) => {
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
-  const [formData, setFormData] = useState(initialValues);
+  const [formData, setFormData] = useState<any>(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
   const [visibility, setVisibility] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);

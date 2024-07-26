@@ -41,12 +41,12 @@ const Detail = () => {
 
   return (
     <section className={styles.catalog_detail_container}>
-      <Header name={datasetDetail?.dataSet.name} id={id} />
+      <Header name={datasetDetail ? datasetDetail.dataSet.name : ""} id={id} />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (
           <LoadingSpinner />
-        ) : datasetDetail?.dataItems.length ? (
+        ) : datasetDetail?.dataItems ? (
           <div className={styles.content_container}>
             {datasetDetail.dataItems.map((item: any, index: number) => (
               <TableRow

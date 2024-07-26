@@ -65,7 +65,7 @@ const FormActions = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prevState: any) => ({
+    setFormData((prevState: InitialValuesProps) => ({
       ...prevState,
       [name]: value,
     }));
