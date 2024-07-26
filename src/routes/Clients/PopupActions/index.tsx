@@ -1,6 +1,4 @@
 import styles from "./styles.module.scss";
-import useFormValidator from "@/hooks/useFormValidator";
-import Icon from "@/components/Icon";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -8,7 +6,9 @@ import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { post, update } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
+import useFormValidator from "@/hooks/useFormValidator";
 // Components
+import Icon from "@/components/Icon";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 
@@ -21,7 +21,7 @@ interface PopupActionsProps {
   clientId?: string;
 }
 
-const emptyFormData = {
+const initialFormData: ClientsProps = {
   ClientFirstname: "",
   ClientLastname: "",
   ClientEmail: "",
@@ -33,7 +33,7 @@ const emptyFormData = {
 };
 
 const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, clientId }: PopupActionsProps) => {
-  const [formData, setFormData] = useState<ClientsProps>(emptyFormData);
+  const [formData, setFormData] = useState<ClientsProps>(initialFormData);
   const [checkValidation, setCheckValidation] = useState(false);
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { clients, setClientSelected, updateClients } = useClientsContext();
@@ -43,27 +43,15 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
   const dict = useTranslations("dict");
 
   useEffect(() => {
-    if (requestType === "PUT") {
-      const foundClient = clients.filter(client => client._id === clientId)[0];
-      setFormData({
-        ClientFirstname: foundClient.ClientFirstname,
-        ClientLastname: foundClient.ClientLastname,
-        ClientEmail: foundClient.ClientEmail,
-        ClientPhone: foundClient.ClientPhone,
-        ClientLocation: foundClient.ClientLocation,
-        personalNote: foundClient.personalNote,
-        createdAt: foundClient.createdAt,
-        updatedAt: foundClient.updatedAt,
-      });
+    if (requestType === "PUT" && clientId) {
+      const foundClient = clients.find(client => client._id === clientId);
+      if (foundClient) setFormData(foundClient);
     }
   }, [clients, requestType, clientId]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const fieldName = e.target.name as keyof FormData;
-    setFormData({
-      ...formData,
-      [fieldName]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -91,7 +79,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     if (data.data.statusCode === 201) {
       notify(dict("toast.client_post"));
       setShowPopup(false);
-      setFormData(emptyFormData);
+      setFormData(initialFormData);
       updateClients(data.data.result.data);
       setClientSelected(null);
     } else {
@@ -104,7 +92,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     if (data.statusCode === 200) {
       notify(dict("toast.client_edit"));
       setShowPopup(false);
-      setFormData(emptyFormData);
+      setFormData(initialFormData);
       updateClients(data.result.data);
       setClientSelected(null);
     } else {

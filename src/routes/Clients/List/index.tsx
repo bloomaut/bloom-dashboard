@@ -27,7 +27,7 @@ const List = () => {
         setShowPopupDelete(false);
         setClientSelected(null);
         notify(dict("toast.client_delete"));
-        setClients(prevClients => prevClients.filter(client => client._id !== clientId));
+        setClients((prevClients: ClientsProps[]) => prevClients.filter(client => client._id !== clientId));
       } else {
         notifyError(dict("toast.client_delete_error"));
       }

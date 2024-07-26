@@ -143,8 +143,9 @@ const Form = () => {
   };
 
   useEffect(() => {
-    const handleKeyDown = (e: { ctrlKey: boolean; key: string }) => {
-      if ((e.ctrlKey && e.key === "c") || (e.ctrlKey && e.key === "C")) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key.toLowerCase() === "d") {
+        e.preventDefault();
         handleCopyClick();
       }
     };
