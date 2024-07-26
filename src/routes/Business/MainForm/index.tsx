@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import Select from "./Select";
 import useStepValidation from "@/hooks/useStepValidation";
 import { useRouter } from "@/navigation";
+import { useCallback } from "react";
 
 interface FormProps {
   formData: UserBusiness;
@@ -14,12 +15,23 @@ interface FormProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   validation: boolean;
   errors: FormErrorsProps;
+  formValidate: boolean;
   loading: boolean;
   category: string;
   onCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Form = ({ formData, onChange, onSubmit, validation, errors, loading, category, onCategoryChange }: FormProps) => {
+const Form = ({
+  formData,
+  onChange,
+  onSubmit,
+  validation,
+  formValidate,
+  errors,
+  loading,
+  category,
+  onCategoryChange,
+}: FormProps) => {
   const { step_04 } = useStepValidation();
   const router = useRouter();
   const dict = useTranslations("dict.business");
@@ -28,9 +40,15 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
 
-  const handleNavigation = () => {
+  const handleNavigation = useCallback(() => {
     router.push("/templates");
-  };
+  }, [router]);
+
+  const nextStep = useCallback(() => {
+    setTimeout(() => {
+      handleNavigation();
+    }, 3500);
+  }, [step_04, formValidate, handleNavigation]);
 
   return (
     <form className={styles.main_form} onSubmit={onSubmit}>
@@ -90,7 +108,7 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
         loading={loading}
         type='submit'
         onclick={() => {
-          if (!step_04) handleNavigation();
+          if (!step_04 && formValidate) nextStep();
         }}
       />
     </form>

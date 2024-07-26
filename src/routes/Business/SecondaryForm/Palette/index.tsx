@@ -11,9 +11,10 @@ import { Oval } from "react-loader-spinner";
 interface PaletteProps {
   palette: { color: string }[] | null;
   setFormData: React.Dispatch<React.SetStateAction<UserBusiness>>;
+  logo: File | null;
 }
 
-const Palette = ({ palette, setFormData }: PaletteProps) => {
+const Palette = ({ palette, setFormData, logo }: PaletteProps) => {
   const [colors, setColors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showIcon, setShowIcon] = useState<boolean>(false);
@@ -47,7 +48,6 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
     if (colors.length < 5) {
       setColors(prevColors => {
         const updatedColors = [...prevColors, "#ffffff"];
-        // Enfocar el nuevo input de color
         setTimeout(() => {
           if (newColorInputRef.current) {
             newColorInputRef.current.click();
@@ -93,35 +93,37 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
   return (
     <div className={styles.colors}>
       <h6>{dict("data.colors")}</h6>
-      <div className={styles.container}>
-        {colors.map((color, index) => (
-          <div key={index} className={styles.column}>
-            <div className={styles.additional_color_container}>
-              <input
-                type='color'
-                value={color}
-                onChange={e => handleColorChange(index, e.target.value)}
-                className={styles.color_input}
-                disabled={colors.length === 1}
-                ref={index === colors.length - 1 ? newColorInputRef : null}
-              />
+      {logo && (
+        <div className={styles.container}>
+          {colors.map((color, index) => (
+            <div key={index} className={styles.column}>
+              <div className={styles.additional_color_container}>
+                <input
+                  type='color'
+                  value={color}
+                  onChange={e => handleColorChange(index, e.target.value)}
+                  className={styles.color_input}
+                  disabled={colors.length === 1}
+                  ref={index === colors.length - 1 ? newColorInputRef : null}
+                />
+              </div>
+              {showIcon && (
+                <Button
+                  title={""}
+                  icon={<Icon name='delete' width={20} height={20} strokeColor='#7f7f7f' viewBox='0 0 23 26' />}
+                  styleName='btn_delete_business'
+                  onclick={() => handleRemoveColor(index)}
+                />
+              )}
             </div>
-            {showIcon && (
-              <Button
-                title={""}
-                icon={<Icon name='delete' width={20} height={20} strokeColor='#7f7f7f' viewBox='0 0 23 26' />}
-                styleName='btn_delete_business'
-                onclick={() => handleRemoveColor(index)}
-              />
-            )}
-          </div>
-        ))}
-        {colors.length < 5 && (
-          <button className={styles.circle} onClick={handleAddColor}>
-            <Icon name='add' viewBox='0 0 20 20' width={16} height={16} strokeWidth={1} />
-          </button>
-        )}
-      </div>
+          ))}
+          {colors.length < 5 && (
+            <button className={styles.circle} onClick={handleAddColor}>
+              <Icon name='add' viewBox='0 0 20 20' width={16} height={16} strokeWidth={1} />
+            </button>
+          )}
+        </div>
+      )}
       {loading ? (
         <div className={styles.loading_container}>
           <Oval
@@ -138,6 +140,7 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
           />
         </div>
       ) : (
+        logo &&
         colors.length >= 1 && (
           <p className={styles.submit} onClick={handleSaveColors}>
             Update palette
