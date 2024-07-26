@@ -55,8 +55,6 @@ const MyPowerapp = () => {
     const template_id = userData.client.onboardings?.[0].skinx_template._id;
     const onboarding_id = userData.client.onboardings?.[0]._id;
 
-    console.log(userData);
-
     if (template_id && onboarding_id) {
       setLoadingPopup(true);
       const response = await post(

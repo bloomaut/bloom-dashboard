@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get, post, update } from "@/services/fetch";
-import { DataItems, DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { DataItems, DatasetProps, myPowerAppDataDetail } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -11,7 +11,7 @@ import { setCatalogComplete } from "@/store/features/userSlice";
 interface CatalogContextType {
   datasets: DatasetProps[];
   loading: boolean;
-  datasetDetail: DatasetProps | null;
+  datasetDetail: myPowerAppDataDetail | null;
   updateDataset: (id: string, newName: string) => Promise<void>;
   fetchDatasets: () => Promise<void>;
   fetchDatasetById: (id: string) => Promise<void>;
@@ -35,7 +35,7 @@ const CatalogContext = createContext<CatalogContextType>({
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
-  const [datasetDetail, setDatasetDetail] = useState<DatasetProps | null>(null);
+  const [datasetDetail, setDatasetDetail] = useState<myPowerAppDataDetail | null>(null);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
   const dispatch = useAppDispatch();

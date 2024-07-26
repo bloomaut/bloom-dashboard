@@ -66,6 +66,7 @@ export interface DataschemaProps {
   updatedAt: string;
   category: string;
 }
+
 export interface Field {
   name: string;
   description: string;
@@ -74,6 +75,7 @@ export interface Field {
   _id: string;
   required: boolean;
 }
+
 export interface DataSchema {
   name: string;
   description: string;
@@ -81,7 +83,25 @@ export interface DataSchema {
   order: number;
   // image: string;
 }
+
 export interface Onboarding {
   template_id: string;
   onboarding_id: string;
+}
+
+export interface myPowerAppDataDetail {
+  dataItems: {
+    createdAt: string;
+    data: {
+      listdescr: string;
+      listimage: string;
+      listname: string;
+      listprice: string;
+    };
+    order: number;
+    updatedAt: string;
+    visibility: boolean;
+    _id: string;
+  };
+  dataSet: DatasetProps;
 }
