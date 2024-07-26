@@ -54,7 +54,6 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
       </div>
       <div className={styles.btn_edit}>
         <Button
-          title=''
           styleName='bg_transparent'
           icon={<Icon name='edit' width={25} height={25} strokeWidth={1.3} strokeColor='#fff' viewBox='0 0 20 22' />}
           onclick={() => setShowPopup(true)}

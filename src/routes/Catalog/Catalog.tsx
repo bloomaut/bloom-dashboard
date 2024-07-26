@@ -1,5 +1,4 @@
 import styles from "./styles.module.scss";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 import useStepValidation from "@/hooks/useStepValidation";
 import { useCatalogContext } from "@/context/CatalogContext";
@@ -17,7 +16,6 @@ const Catalog = () => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const { step_03, step_04 } = useStepValidation();
   const router = useRouter();
-  const dict = useTranslations("dict");
 
   const handleNavigation = () => {
     router.push("/my-powerapp");
