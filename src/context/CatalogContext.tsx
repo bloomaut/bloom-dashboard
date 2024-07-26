@@ -11,7 +11,7 @@ import { setCatalogComplete } from "@/store/features/userSlice";
 interface CatalogContextType {
   datasets: DatasetProps[];
   loading: boolean;
-  datasetDetail: any;
+  datasetDetail: DatasetProps | null;
   updateDataset: (id: string, newName: string) => Promise<void>;
   fetchDatasets: () => Promise<void>;
   fetchDatasetById: (id: string) => Promise<void>;
@@ -20,7 +20,7 @@ interface CatalogContextType {
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
   loading: true,
-  datasetDetail: false,
+  datasetDetail: null,
   updateDataset: async () => {
     throw new Error("updateDataset function not implemented");
   },
@@ -35,7 +35,7 @@ const CatalogContext = createContext<CatalogContextType>({
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
-  const [datasetDetail, setDatasetDetail] = useState(false);
+  const [datasetDetail, setDatasetDetail] = useState<DatasetProps | null>(null);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
   const dispatch = useAppDispatch();
@@ -69,8 +69,9 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       notifyError(dict("toast.error_edit"));
     }
   };
+
   const fetchDatasetById = async (id: string) => {
-    setDatasetDetail(false);
+    setDatasetDetail(null);
     const data = await get(`datasets/${id}`, ENV.BOX);
     if (data.statusCode === 200) {
       setDatasetDetail(data.data);
