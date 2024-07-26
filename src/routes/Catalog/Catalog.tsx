@@ -38,7 +38,7 @@ const Catalog = () => {
           </>
         )}
         <div className={styles.btn_next}>
-          {!step_04 && <Button title='Next' isDisabled={!step_03} onclick={handleNavigation} />}
+          {!step_04 && <Button title='Next' isDisabled={step_03} onclick={handleNavigation} />}
         </div>
         {showPopupCreate && (
           <FormActions action='post' setShowConfirmation={setShowPopupCreate} fetchDatasets={fetchDatasets} />
