@@ -55,18 +55,24 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
           setFile(acceptedFiles[0]);
         }
       }
-
-      if (img === "Excel" && catalogDetail) {
-        if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
-          notifyError("Debes seleccionar una planilla de excel");
-        } else {
+      //Logica para la pagina de detalle del catalogo
+      if (catalogDetail) {
+        if (img === "Excel" && catalogDetail) {
+          if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
+            notifyError("Debes seleccionar una planilla de excel");
+          } else {
+            setFile(acceptedFiles[0]);
+          }
+        } else if (img === "Logo" && catalogDetail) {
+          if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("excel")) {
+            notifyError("Debes seleccionar una imagen");
+          } else {
+            setFile(acceptedFiles[0]);
+          }
+        } else if (acceptedFiles[0].type.includes("image")) {
           setFile(acceptedFiles[0]);
-        }
-      } else if (img === "Logo" && catalogDetail) {
-        if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("excel")) {
-          notifyError("Debes seleccionar una imagen");
         } else {
-          setFile(acceptedFiles[0]);
+          notifyError(dict("error_image"));
         }
       }
 
@@ -84,7 +90,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp"],
+      "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp", ".svg"],
       "application/pdf": [".pdf"],
       "application/vnd.ms-excel": [".xls", ".xlsx"],
     },
@@ -110,12 +116,16 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       <input {...getInputProps()} />
       {img === "Excel" ? (
         <Icon name='excel' width={35} height={35} viewBox='0 0 25 30' />
+      ) : imageUrl ? (
+        <></>
       ) : (
         <Icon name='cloud' viewBox='0 0 33 30' width={30} height={30} strokeWidth={3.18493} strokeColor='#1616a5' />
       )}
       <p className={img === "Excel" ? styles.text_excel : styles.text}>
         {img === "Excel" && file ? (
           <span>{file?.name}</span>
+        ) : imageUrl ? (
+          <></>
         ) : (
           <>
             <span>{dict("upload")}</span> {dict("drag_drop")}
