@@ -25,7 +25,7 @@ export const userInitialState: UserBusiness = {
     instagram: null,
     description: null,
     category: null,
-    palette: null,
+    palette: [{ color: "#ffffff" }],
     created_at: "",
     updated_at: "",
     onboardings: null,
@@ -38,9 +38,9 @@ export const userSlice = createSlice({
   initialState: userInitialState,
   reducers: {
     setUserData: (state, action: PayloadAction<UserBusiness>) => {
-      return { ...state, ...action.payload };
+      return { ...state, ...action.payload, client: { ...state.client, ...action.payload.client } };
     },
-    setCatalogComplete: (state, action: PayloadAction<UserBusiness>) => {
+    setCatalogComplete: (state, action: PayloadAction<boolean>) => {
       return { ...state, isCatalogComplete: action.payload };
     },
   },

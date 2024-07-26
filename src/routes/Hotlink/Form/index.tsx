@@ -142,6 +142,20 @@ const Form = () => {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: { ctrlKey: boolean; key: string }) => {
+      if ((e.ctrlKey && e.key === "c") || (e.ctrlKey && e.key === "C")) {
+        handleCopyClick();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedFlakeId]);
+
   return (
     <div className={styles.container}>
       <SectionTitle text={dict("hotlinks.form_title")} />

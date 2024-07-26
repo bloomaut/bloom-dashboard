@@ -59,3 +59,7 @@ export interface PutBusiness {
   logo: string | null;
   palette: { color: string }[] | null;
 }
+
+export interface PutPalette {
+  palette: { color: string }[] | null;
+}
