@@ -11,9 +11,10 @@ import { Oval } from "react-loader-spinner";
 interface PaletteProps {
   palette: { color: string }[] | null;
   setFormData: React.Dispatch<React.SetStateAction<UserBusiness>>;
+  logo: File | null;
 }
 
-const Palette = ({ palette, setFormData }: PaletteProps) => {
+const Palette = ({ palette, setFormData, logo }: PaletteProps) => {
   const [colors, setColors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showIcon, setShowIcon] = useState<boolean>(false);
@@ -47,7 +48,6 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
     if (colors.length < 5) {
       setColors(prevColors => {
         const updatedColors = [...prevColors, "#ffffff"];
-        // Enfocar el nuevo input de color
         setTimeout(() => {
           if (newColorInputRef.current) {
             newColorInputRef.current.click();
@@ -89,6 +89,8 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
       setShowIcon(false);
     }
   }, [colors.length]);
+
+  console.log(logo);
 
   return (
     <div className={styles.colors}>
@@ -138,6 +140,7 @@ const Palette = ({ palette, setFormData }: PaletteProps) => {
           />
         </div>
       ) : (
+        logo &&
         colors.length >= 1 && (
           <p className={styles.submit} onClick={handleSaveColors}>
             Update palette

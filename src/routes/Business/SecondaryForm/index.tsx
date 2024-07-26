@@ -39,7 +39,7 @@ const SecondaryForm = ({
         </div>
       </div>
       <section className={styles.second_row}>
-        <Palette palette={formData.client.palette} setFormData={setFormData} />
+        <Palette palette={formData.client.palette} setFormData={setFormData} logo={logo} />
         <AddInfoForm formData={formData} onChange={onChange} />
       </section>
     </div>

@@ -42,7 +42,6 @@ export const TemplateProvider = ({ children }: { children: JSX.Element }) => {
       setTemplates(response.result.templates);
       setLoading(false);
     } else {
-      notifyError(dict("message"));
       setLoading(false);
     }
   };
