@@ -21,6 +21,13 @@ const SideTrack = () => {
         setActiveSideTrack(true);
       } else {
         setActiveSideTrack(false);
+        // Limpia el storage si terminó con los pasos
+        window.localStorage.removeItem("selectedTemplateId");
+      }
+
+      // Limpia el storage si es cliente nuevo
+      if (!step_01) {
+        window.localStorage.removeItem("selectedTemplateId");
       }
     }
   }, [step_04, userData]);

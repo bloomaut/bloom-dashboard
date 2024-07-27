@@ -16,9 +16,6 @@ export const useFlakeData = () => {
       if (response.statusCode === 200) {
         setFlakes(response.result.powerapps);
         setLoading(false);
-      } else {
-        notifyError(dict("error_tryagain"));
-        setLoading(false);
       }
     };
 

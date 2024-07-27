@@ -77,9 +77,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         setSelectedFlakeId("");
       }
       setLoading(false);
-    } else {
-      notifyError(dict("error_tryagain"));
-      setLoading(false);
     }
   };
 
