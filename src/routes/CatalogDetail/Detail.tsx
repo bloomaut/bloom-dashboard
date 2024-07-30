@@ -14,9 +14,12 @@ import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import PopupExcel from "./PopupExcel";
 import Header from "./Header";
+import PopupUpdatePrice from "./PopupUpdatePrices";
+import PopupUpdatePrices from "./PopupUpdatePrices";
 
 const Detail = () => {
   const [massiveUpdatePopup, setMassiveUpdatePopup] = useState<boolean>(false);
+  const [updatePricePopup, setUpdatePricePopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { loading, setLoading, datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const { notify, notifyError } = useMessageToast();
@@ -66,6 +69,11 @@ const Detail = () => {
       </div>
       <div className={styles.btn_container}>
         <Button
+          title={dict("catalog.update_prices")}
+          styleName='btn_update_prices'
+          onclick={() => setUpdatePricePopup(true)}
+        />
+        <Button
           title={dict("catalog.massive_update")}
           styleName='btn_upload'
           icon={<Icon name='reload' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 0 22 15' />}
@@ -85,6 +93,7 @@ const Detail = () => {
           submitFunction={handleMassiveUpload}
         />
       )}
+      {updatePricePopup && <PopupUpdatePrices closePopup={setUpdatePricePopup} id={id} />}
     </section>
   );
 };
