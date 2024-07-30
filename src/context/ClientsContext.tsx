@@ -6,23 +6,25 @@ import { useAppDispatch } from "@/store/hooks";
 interface ClientsContextType {
   clients: ClientsProps[];
   loading: boolean;
-  fetchClients: () => void;
   clientSelected: ClientsProps | null;
   setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
   searchValue: string;
   setSearchValue: (i: string) => void;
   filteredClients: ClientsProps[];
+  updateClients: (newClient: ClientsProps) => void;
+  setClients: Dispatch<SetStateAction<ClientsProps[]>>;
 }
 
 const ClientsContext = createContext<ClientsContextType>({
   clients: [],
   loading: true,
-  fetchClients: () => Promise<void>,
   clientSelected: null,
   setClientSelected: () => null,
   searchValue: "",
   setSearchValue: () => "",
   filteredClients: [],
+  updateClients: () => null,
+  setClients: () => null,
 });
 
 export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
@@ -46,6 +48,19 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
     fetchClients();
   }, [dispatch]);
 
+  const updateClients = (newClient: ClientsProps) => {
+    setClients(prevClients => {
+      const index = prevClients.findIndex(client => client._id === newClient._id);
+      if (index > -1) {
+        // Cliente existe, reemplazar el cliente existente
+        return prevClients.map((client, i) => (i === index ? newClient : client));
+      } else {
+        // Cliente no existe, agregar el nuevo cliente al array
+        return [...prevClients, newClient];
+      }
+    });
+  };
+
   useEffect(() => {
     if (clients) {
       const filteredData = clients.filter(
@@ -63,12 +78,13 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
       value={{
         clients,
         loading,
-        fetchClients,
         clientSelected,
         setClientSelected,
         searchValue,
         setSearchValue,
         filteredClients,
+        updateClients,
+        setClients,
       }}
     >
       {children}

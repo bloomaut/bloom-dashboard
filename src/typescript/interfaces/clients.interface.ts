@@ -7,8 +7,8 @@ export interface ClientsProps {
   ClientPhone: string;
   personalNote: string;
   clientCode?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface UpdateClient {

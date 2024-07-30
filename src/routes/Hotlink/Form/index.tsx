@@ -144,8 +144,9 @@ const Form = () => {
   };
 
   useEffect(() => {
-    const handleKeyDown = (e: { ctrlKey: boolean; key: string }) => {
-      if ((e.ctrlKey && e.key === "c") || (e.ctrlKey && e.key === "C")) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key.toLowerCase() === "d") {
+        e.preventDefault();
         handleCopyClick();
       }
     };
@@ -170,7 +171,7 @@ const Form = () => {
                 formInfo.map((info, index) => (
                   <Input
                     key={info.key}
-                    type={info.target}
+                    type='text'
                     textLabel={info.description}
                     value={info.value!}
                     handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
