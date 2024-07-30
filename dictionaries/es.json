@@ -344,7 +344,8 @@
         "image": "Foto del producto",
         "visibility": "Visibile en mis aplicaciones",
         "delete": "Eliminar catálogo",
-        "save": "Guardar catálogo"
+        "save": "Guardar catálogo",
+        "order_description": "El mismo será generado automáticamente"
       },
       "popup_excel": {
         "massive_upload_title": "Carga masiva desde Excel",

@@ -40,11 +40,14 @@ const useFormValidator = (
         }
       }
 
-      if (fieldsToValidate?.includes("listname") && (!formData?.listname || !formData?.listname.trim())) {
+      if (fieldsToValidate?.includes("listname") && (!formData?.data?.listname || !formData?.data?.listname.trim())) {
         errors.listname = dict("form_validation.listname");
       }
 
-      if (fieldsToValidate?.includes("listprice") && (formData?.listprice === undefined || formData?.listprice <= 0)) {
+      if (
+        fieldsToValidate?.includes("listprice") &&
+        (formData?.data?.listprice === undefined || formData?.data?.listprice <= 0)
+      ) {
         errors.listprice = dict("form_validation.listprice");
       }
 

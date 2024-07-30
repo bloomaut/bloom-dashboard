@@ -24,10 +24,14 @@ interface Form {
 }
 
 interface InitialValuesProps {
-  listname: string;
-  listdescr: string;
-  listprice: number | null;
-  listimage: File | null;
+  data: {
+    listname: string;
+    listdescr: string;
+    listprice: number | null;
+    listimage: File | null;
+  };
+  order: number | null;
+  visibility: boolean;
 }
 
 const headers = [
@@ -37,17 +41,20 @@ const headers = [
 ];
 
 const initialValues: InitialValuesProps = {
-  listname: "",
-  listdescr: "",
-  listprice: null,
-  listimage: null,
+  data: {
+    listname: "",
+    listdescr: "",
+    listprice: null,
+    listimage: null,
+  },
+  order: null,
+  visibility: true,
 };
 
 const Form = ({ setShowPopup, action, id }: Form) => {
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const [formData, setFormData] = useState(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
-  const [visibility, setVisibility] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState(false);
@@ -55,14 +62,17 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
 
-  const imageUrl = action === "put" && formData.listimage ? formData.listimage : null;
+  const imageUrl = action === "put" && formData.data?.listimage ? formData.data?.listimage : null;
 
   useEffect(() => {
     if (action === "put" && id) {
       const product = datasetDetail?.dataItems.find((item: any) => item._id === id);
       if (product) {
-        setVisibility(product.visibility);
-        setFormData(product.data);
+        setFormData({
+          data: product.data,
+          order: product.order,
+          visibility: product.visibility,
+        });
       }
     } else {
       setFormData(initialValues);
@@ -83,9 +93,9 @@ const Form = ({ setShowPopup, action, id }: Form) => {
       try {
         const dataToSend = {
           dataset: datasetDetail?.dataSet._id ?? "",
-          data: formData,
-          order: 0,
-          visibility: visibility,
+          data: formData.data,
+          order: formData.order,
+          visibility: formData.visibility,
         };
 
         // UPLOAD IMAGE
@@ -104,8 +114,8 @@ const Form = ({ setShowPopup, action, id }: Form) => {
         } else if (action === "put" && id) {
           const data = {
             data: dataToSend.data,
-            order: 0,
-            visibility: visibility,
+            order: dataToSend.order,
+            visibility: dataToSend.visibility,
           };
           await putDataItem(data, id);
         }
@@ -121,6 +131,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   };
 
   const postDataItem = async (formData: PostDataItem) => {
+    console.log(formData);
     setLoading(true);
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {
@@ -148,14 +159,28 @@ const Form = ({ setShowPopup, action, id }: Form) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prevState: any) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name in formData.data) {
+      setFormData(prevState => ({
+        ...prevState,
+        data: {
+          ...prevState.data,
+          [name]: value,
+        },
+      }));
+    } else if (name === "order") {
+      setFormData(prevState => ({
+        ...prevState,
+        order: Number(value) || null,
+      }));
+    }
   };
 
   const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVisibility(e.target.checked);
+    const isVisible = e.target.checked;
+    setFormData(prevState => ({
+      ...prevState,
+      visibility: isVisible,
+    }));
   };
 
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
@@ -195,7 +220,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
               textLabel='Product name'
               textHolder=''
               name='listname'
-              value={formData.listname}
+              value={formData.data?.listname}
               handleChange={handleChange}
             />
             {checkValidation && <ErrorMessage error={errors.listname} />}
@@ -204,10 +229,19 @@ const Form = ({ setShowPopup, action, id }: Form) => {
               textLabel='Description'
               textHolder=''
               name='listdescr'
-              value={formData.listdescr}
+              value={formData.data?.listdescr}
               handleChange={handleChange}
             />
-            <CheckBox text='Visibile on my apps' active={visibility} onChange={handleVisibility} />
+            <Input
+              type='text'
+              textLabel='Order number'
+              textHolder=''
+              textDescription={dict("catalog.form_actions.order_description")}
+              name='order'
+              value={formData.order || 0}
+              handleChange={handleChange}
+            />
+            <CheckBox text='Visible on my apps' active={formData.visibility} onChange={handleVisibility} />
           </div>
           <div className={styles.price}>
             <Input
@@ -215,14 +249,14 @@ const Form = ({ setShowPopup, action, id }: Form) => {
               textLabel='Price'
               textHolder=''
               name='listprice'
-              value={formData.listprice || ""}
+              value={formData.data?.listprice || ""}
               handleChange={handleChange}
               inputPrice
             />
             {checkValidation && <ErrorMessage error={errors.listprice} />}
           </div>
           <div className={styles.media}>
-            <label className={styles.label}>Photo product</label>
+            <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
             <DragAndDrop file={file || imageUrl} setFile={setFile} />
           </div>
         </div>

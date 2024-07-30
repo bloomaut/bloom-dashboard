@@ -4,6 +4,7 @@ import Icon from "../Icon";
 interface Props {
   textLabel?: string;
   textHolder: string;
+  textDescription?: string;
   type: string;
   name: string;
   value: string | number;
@@ -18,6 +19,7 @@ interface Props {
 const Input = ({
   textLabel,
   textHolder,
+  textDescription,
   type,
   name,
   value,
@@ -33,6 +35,7 @@ const Input = ({
   return (
     <div className={styles.input_container}>
       {textLabel && <label className={styles.label}>{textLabel}</label>}
+      {textLabel === "Order number" && <p className={styles.order}>({textDescription})</p>}
       {type === "textarea" ? (
         <textarea className={inputType} placeholder={textHolder} name={name} value={value} onChange={handleChange} />
       ) : (

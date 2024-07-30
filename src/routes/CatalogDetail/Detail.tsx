@@ -41,7 +41,7 @@ const Detail = () => {
 
   return (
     <section className={styles.catalog_detail_container}>
-      <Header name={datasetDetail?.dataSet.name} id={id} />
+      <Header name={datasetDetail?.dataSet.name} quantity={datasetDetail?.dataItems.length} id={id} />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (
@@ -56,7 +56,7 @@ const Detail = () => {
                 description={item.data.listdescr}
                 price={item.data.listprice}
                 image={item.data.listimage}
-                position={index + 1}
+                position={item.order}
               />
             ))}
           </div>
