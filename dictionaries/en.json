@@ -370,7 +370,13 @@
       "listname": "The product name is required",
       "listdescr": "Product description is required",
       "listprice": "The price of the product must be greater than 0",
-      "listimage": "The product must contain an image"
+      "listimage": "The product must contain an image",
+      "category_name": "You must enter a name for the catalog",
+      "name": "You must enter a name",
+      "lastname": "You must enter a last name",
+      "business_name": "You must enter a business name",
+      "business_category": "You must enter a business category",
+      "business_description": "You must enter a description for the business"
     },
     "privacy": {
       "title": "Privacy policies",

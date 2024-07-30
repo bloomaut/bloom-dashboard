@@ -370,7 +370,13 @@
       "listname": "El nombre del producto es requerido",
       "listdescr": "La descripcion del producto es requerida",
       "listprice": "El precio del producto debe ser mayor que 0",
-      "listimage": "El producto debe contener una imágen"
+      "listimage": "El producto debe contener una imágen",
+      "category_name": "Debes ingresar un nombre para el catálogo",
+      "name": "Debes ingresar un nombre",
+      "lastname": "Debes ingresar un apellido",
+      "business_name": "Debes ingresar el nombre del negocio",
+      "business_category": "Debes ingresar la categoría del negocio",
+      "business_description": "Debes ingresar una descripción para el negocio"
     },
     "privacy": {
       "title": "Políticas de privacidad",

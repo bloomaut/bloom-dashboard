@@ -94,7 +94,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
           if (uploadedImageUrl) {
             dataToSend.data.listimage = uploadedImageUrl;
           } else {
-            throw new Error("File upload failed");
+            throw new Error(dict("toast.error_uploading"));
           }
         }
 

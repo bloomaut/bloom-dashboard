@@ -50,25 +50,25 @@ const useFormValidator = (
 
       if (fieldsToValidate?.includes("category_name")) {
         if (!formData?.category_name || !formData?.category_name.trim()) {
-          errors.category_name = "Debes ingresar un nombre para el catálogo";
+          errors.category_name = dict("form_validation.category_name");
         }
       }
 
       if (fieldsToValidate?.includes("name")) {
         if (!formData?.name || !formData?.name.trim()) {
-          errors.name = "Debes ingresar un nombre";
+          errors.name = dict("form_validation.name");
         }
       }
 
       if (fieldsToValidate?.includes("lastname")) {
         if (!formData?.lastname || !formData?.lastname.trim()) {
-          errors.lastname = "Debes ingresar un apellido";
+          errors.lastname = dict("form_validation.lastname");
         }
       }
 
       if (fieldsToValidate?.includes("business_name")) {
         if (!formData?.client.name || !formData?.client.name.trim()) {
-          errors.business_name = "Debes ingresar el nombre del negocio";
+          errors.business_name = dict("form_validation.business_name");
         }
       }
 
@@ -78,13 +78,13 @@ const useFormValidator = (
           typeof formData?.client.category !== "string" ||
           !formData?.client.category.trim()
         ) {
-          errors.business_category = "Debes ingresar la categoría del negocio";
+          errors.business_category = dict("form_validation.business_category");
         }
       }
 
       if (fieldsToValidate?.includes("business_description")) {
         if (!formData?.client.description || !formData?.client.description.trim()) {
-          errors.business_description = "Debes ingresar una descripción para el negocio";
+          errors.business_description = dict("form_validation.business_description");
         }
       }
 
