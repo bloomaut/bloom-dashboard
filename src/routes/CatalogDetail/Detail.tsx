@@ -14,7 +14,6 @@ import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import PopupExcel from "./PopupExcel";
 import Header from "./Header";
-import PopupUpdatePrice from "./PopupUpdatePrices";
 import PopupUpdatePrices from "./PopupUpdatePrices";
 
 const Detail = () => {

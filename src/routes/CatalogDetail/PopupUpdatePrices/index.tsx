@@ -19,6 +19,7 @@ const PopupUpdatePrices = ({ id, closePopup }: Props) => {
   const { notify, notifyError } = useMessageToast();
   const [closing, setClosing] = useState(false);
   const [percentageValue, setPercentageValue] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPercentageValue(e.target.value);
@@ -29,8 +30,8 @@ const PopupUpdatePrices = ({ id, closePopup }: Props) => {
     const numValue = parseFloat(percentageValue);
 
     if (!isNaN(numValue) && numValue >= -99 && numValue <= 100) {
+      setLoading(true);
       const response = await update("datasets", { percentage: numValue }, `${id}/pricing`, ENV.BOX);
-      console.log(response);
       if (response.statusCode === 200) {
         notify(dict("catalog.price_success"));
       } else {
@@ -41,6 +42,7 @@ const PopupUpdatePrices = ({ id, closePopup }: Props) => {
     }
 
     setClosing(true);
+    setLoading(false);
   };
 
   return (
@@ -60,7 +62,7 @@ const PopupUpdatePrices = ({ id, closePopup }: Props) => {
           <input type='text' placeholder='%' name='percentage' value={percentageValue} onChange={handleChange} />
         </div>
         <div className={styles.btn_upload}>
-          <Button title='Update' type='submit' />
+          <Button title='Update' type='submit' loading={loading} />
         </div>
       </div>
     </form>

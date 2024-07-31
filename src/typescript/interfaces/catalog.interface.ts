@@ -85,3 +85,7 @@ export interface Onboarding {
   template_id: string;
   onboarding_id: string;
 }
+
+export interface PutPorcentage {
+  percentage: string | number;
+}
