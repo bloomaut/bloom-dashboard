@@ -64,4 +64,12 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+  .order {
+    position: absolute;
+    top: 7px;
+    left: 90px;
+    @include fontSize-fontWeight(11.5px, 400);
+    color: $lightGrey;
+    font-style: italic;
+  }
 }
