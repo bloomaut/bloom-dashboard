@@ -1,5 +1,5 @@
 .container {
-  @include width-height(305px, 100%);
+  @include width-height(360px, 100%);
   @include flex(column, space-between, flex-start, 10px);
   background-color: $white;
   border-right: 1px solid $lighterGrey;
@@ -46,10 +46,14 @@
     padding-left: 1px;
   }
   .link_container {
-    @include flex(row, center, center, 8px);
+    display: grid;
+    grid-template-columns: 20% 80%;
+    justify-content: center;
+    align-items: center;
     @include fontSize-fontWeight(18px, 500);
     color: $text;
-    padding: 10px;
+    padding: 5px 12px;
+    @include width-height(230px, 50px);
   }
 }
 .container_closed {
