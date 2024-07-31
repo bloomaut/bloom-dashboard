@@ -45,12 +45,14 @@ export interface UpdateDataset {
 export interface PostDataItem {
   dataset: string;
   data: DataItemsList | undefined;
-  order: number;
+  order: number | null;
+  visibility: boolean;
 }
 
 export interface PutDataItem {
   data: DataItemsList | undefined;
-  order: number;
+  order: number | null;
+  visibility: boolean;
 }
 
 export interface selectOptions {
