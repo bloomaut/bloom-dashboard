@@ -197,7 +197,6 @@ const Business = () => {
           onSubmit={handleSubmit}
           onChange={handleChange}
           validation={checkValidation}
-          formValidate={Object.keys(errors).length === 0}
           errors={errors}
           loading={loading}
           category={category}
@@ -212,6 +211,8 @@ const Business = () => {
           formData={formData}
           setFormData={setFormData}
           onChange={handleChange}
+          formValidate={Object.keys(errors).length === 0}
+          loading={loading}
         />
       </div>
     </section>
