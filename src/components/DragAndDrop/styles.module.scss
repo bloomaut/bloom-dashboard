@@ -27,12 +27,13 @@
   }
   img {
     @include width-height(100%, 100%);
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 8px;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 999;
+    background-color: $blueishBackground;
   }
 }
 .isActive {

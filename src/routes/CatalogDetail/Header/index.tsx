@@ -14,9 +14,10 @@ import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 interface Header {
   name: string;
   id: string | string[];
+  quantity: number;
 }
 
-const Header = ({ name, id }: Header) => {
+const Header = ({ name, id, quantity }: Header) => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [bulkLoadPopup, setBulkLoadPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -44,7 +45,10 @@ const Header = ({ name, id }: Header) => {
     <div className={styles.header_container}>
       <div className={styles.title_container}>
         <Breadcrumb />
-        <p className={styles.catalog}>{name}</p>
+        <p className={styles.catalog}>
+          {name}
+          {quantity && <span>({quantity})</span>}
+        </p>
       </div>
       <div className={styles.btn_container}>
         <Button
