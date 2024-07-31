@@ -4,6 +4,7 @@ import { useState } from "react";
 import useStepValidation from "@/hooks/useStepValidation";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useRouter } from "@/navigation";
+import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 // Components
 import Header from "./Header";
 import Card from "./Card";
@@ -23,6 +24,16 @@ const Catalog = () => {
     router.push("/my-powerapp");
   };
 
+  const sumProducts = (array: DatasetProps[]) => {
+    return array.reduce((sum: number, obj: DatasetProps) => {
+      if (obj.hasOwnProperty("totalDataItems")) {
+        return sum + obj.totalDataItems;
+      }
+      return sum;
+    }, 0);
+  };
+  const numberOfProducts = sumProducts(datasets);
+
   return (
     <div className={styles.catalog_container}>
       <Header />
@@ -31,6 +42,18 @@ const Catalog = () => {
           <LoadingSpinner />
         ) : (
           <>
+            <Card
+              _id='1'
+              createdAt='10'
+              dataschema='20'
+              description='All products'
+              image='https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651'
+              name={dict("catalog.all_products")}
+              order={1}
+              totalDataItems={numberOfProducts}
+              updatedAt='1'
+              visibility
+            />
             {datasets.length > 0 && datasets.map(dataset => <Card key={dataset._id} {...dataset} />)}
             <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
               <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
