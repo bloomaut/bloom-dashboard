@@ -11,11 +11,11 @@ import FormActions from "../FormActions";
 const Card = ({ _id, name, description, image, visibility, totalDataItems }: DatasetProps) => {
   const { fetchDatasets } = useCatalogContext();
   const [showPopup, setShowPopup] = useState(false);
-
+  console.log(_id);
   return (
     <article className={styles.container}>
       <div className={styles.card}>
-        <Link href={`/catalog/${_id}`} className={styles.image_container}>
+        <Link href={`${_id === "1" ? "all-products" : `/catalog/${_id}`}`} className={styles.image_container}>
           {image ? (
             <Image src={image} className={styles.image} alt={name} width={140} height={140} />
           ) : (
@@ -31,7 +31,7 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
             </div>
           )}
         </Link>
-        <Link href={`/catalog/${_id}`} className={styles.content}>
+        <Link href={`${_id === "1" ? "all-products" : `/catalog/${_id}`}`} className={styles.content}>
           <div className={styles.title_container}>
             <h2 className={styles.title} title={name}>
               {name}
