@@ -1,0 +1,7 @@
+.suite_container {
+  @include flex(column, center, center);
+  button {
+    border: none;
+    cursor: pointer;
+  }
+}
