@@ -368,7 +368,8 @@
         "option_three": "Descargar menú"
       },
       "upload_excel_title": "Subir Planilla Excel",
-      "upload_excel": "Subir Excel"
+      "upload_excel": "Subir Excel",
+      "all_products": "Productos"
     },
     "form_validation": {
       "ClientFirstname": "El nombre es requerido",

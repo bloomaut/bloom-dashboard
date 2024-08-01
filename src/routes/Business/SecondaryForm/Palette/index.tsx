@@ -90,8 +90,6 @@ const Palette = ({ palette, setFormData, logo }: PaletteProps) => {
     }
   }, [colors.length]);
 
-  console.log(logo);
-
   return (
     <div className={styles.colors}>
       <h6>{dict("data.colors")}</h6>
