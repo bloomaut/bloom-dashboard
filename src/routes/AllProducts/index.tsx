@@ -40,7 +40,9 @@ const AllProducts = () => {
     <div className={styles.products_container}>
       <div className={styles.header_container}>
         <Breadcrumb />
-        <p>{dict("all_products")} </p>
+        <p>
+          {dict("all_products")} ({products?.length})
+        </p>
       </div>
 
       <div className={styles.table_container}>
