@@ -242,7 +242,7 @@ const FormActions = ({
           <Button title={dict("catalog.form_actions.save")} type='submit' loading={!popupDelete && loading} />
         </div>
       </div>
-      {popupDelete && (
+      {popupDelete && id !== "1" && (
         <PopupConfirm
           onConfirm={handleDelete}
           onCancel={() => setPopupDelete(false)}
