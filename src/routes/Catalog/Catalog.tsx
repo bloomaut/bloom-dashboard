@@ -11,12 +11,14 @@ import LoadingSpinner from "@/components/Loading";
 import Icon from "@/components/Icon";
 import FormActions from "./FormActions";
 import Button from "@/components/Button";
+import { useTranslations } from "next-intl";
 
 const Catalog = () => {
   const { datasets, fetchDatasets, loading } = useCatalogContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const { step_03, step_04 } = useStepValidation();
   const router = useRouter();
+  const dict = useTranslations("dict");
 
   const handleNavigation = () => {
     router.push("/my-powerapp");
@@ -44,7 +46,7 @@ const Catalog = () => {
             <Card
               _id='1'
               createdAt='10'
-              dataschema='20'
+              dataschema={datasets[0].dataschema}
               description='All products'
               image='https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651'
               name={dict("catalog.all_products")}

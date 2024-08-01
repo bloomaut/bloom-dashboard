@@ -11,7 +11,7 @@ import FormActions from "../FormActions";
 const Card = ({ _id, name, description, image, visibility, totalDataItems }: DatasetProps) => {
   const { fetchDatasets } = useCatalogContext();
   const [showPopup, setShowPopup] = useState(false);
-  console.log(_id);
+
   return (
     <article className={styles.container}>
       <div className={styles.card}>

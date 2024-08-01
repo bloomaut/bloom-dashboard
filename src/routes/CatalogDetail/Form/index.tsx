@@ -160,7 +160,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name in formData.data) {
-      setFormData(prevState => ({
+      setFormData((prevState: any) => ({
         ...prevState,
         data: {
           ...prevState.data,
@@ -168,7 +168,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
         },
       }));
     } else if (name === "order") {
-      setFormData(prevState => ({
+      setFormData((prevState: any) => ({
         ...prevState,
         order: Number(value) || null,
       }));
@@ -177,7 +177,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
 
   const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isVisible = e.target.checked;
-    setFormData(prevState => ({
+    setFormData((prevState: any) => ({
       ...prevState,
       visibility: isVisible,
     }));
