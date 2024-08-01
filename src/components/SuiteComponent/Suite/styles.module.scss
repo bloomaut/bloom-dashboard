@@ -1,9 +1,8 @@
 .modal {
   @include width-height(220px, 355px);
   @include flex(column, space-between, center, 5px);
-  position: fixed;
-  top: 70px;
-  right: 75px;
+  position: absolute;
+  top: 60px;
   border-radius: 15px;
   border: 8px solid rgba(207, 207, 207);
   background: rgba(207, 207, 207);
@@ -92,7 +91,6 @@
 
 .modal_logged {
   @extend .modal;
-  right: 140px;
 }
 
 @keyframes fadeIn {

@@ -13,7 +13,7 @@ const SuiteComponent = () => {
       <button className={styles.suite} ref={buttonRef} onClick={() => setShowModal(prev => !prev)}>
         <Image src='/assets/suite.svg' alt='bars' width={30} height={30} />
       </button>
-      {showModal && createPortal(<Suite setShowModal={setShowModal} buttonRef={buttonRef} />, document.body)}
+      {showModal && <Suite setShowModal={setShowModal} buttonRef={buttonRef} />}
     </div>
   );
 };

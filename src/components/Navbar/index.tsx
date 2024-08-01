@@ -5,7 +5,6 @@ import { Link } from "@/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
-import { createPortal } from "react-dom";
 
 //Icons
 import small from "@/../public/assets/logo_small_color.png";
@@ -14,7 +13,6 @@ import small from "@/../public/assets/logo_small_color.png";
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
-import Suite from "./Suite";
 import SuiteComponent from "../SuiteComponent";
 
 const Navbar = () => {
@@ -34,11 +32,7 @@ const Navbar = () => {
         <SuiteComponent />
         {/* User | Login */}
         {!isLoading ? (
-          <>
-            {user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("register")} />}
-            {user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("register")} />}
-            {user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("register")} />}
-          </>
+          <>{user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("register")} />}</>
         ) : (
           <Oval
             height={25}
