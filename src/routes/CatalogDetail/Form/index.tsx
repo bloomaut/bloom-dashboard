@@ -62,6 +62,8 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
 
+  console.log(datasetDetail);
+
   const imageUrl = action === "put" && formData.data?.listimage ? formData.data?.listimage : null;
 
   useEffect(() => {

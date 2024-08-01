@@ -24,6 +24,10 @@ const AllProducts = () => {
     fetchProducts();
   }, []);
 
+  const handleDeleteItem = (deletedId: string) => {
+    setProducts((prevItems: any) => prevItems.filter((item: any) => item._id !== deletedId));
+  };
+
   return (
     <div className={styles.products_container}>
       <div className={styles.header_container}>
@@ -37,7 +41,7 @@ const AllProducts = () => {
           <LoadingSpinner />
         ) : products?.length ? (
           <div className={styles.content_container}>
-            {products.map((item: any, index: number) => (
+            {products.map((item: any) => (
               <TableRow
                 key={item._id}
                 id={item._id}
@@ -46,6 +50,7 @@ const AllProducts = () => {
                 price={item.data.listprice}
                 image={item.data.listimage}
                 position={item.order}
+                onDelete={handleDeleteItem}
               />
             ))}
           </div>

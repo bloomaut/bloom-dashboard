@@ -9,6 +9,7 @@ import { remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { usePathname } from "next/navigation";
 import Form from "../Form";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
@@ -20,15 +21,16 @@ interface Props {
   price: number | null;
   image: string;
   position: number;
+  onDelete: (deletedId: string) => void;
 }
 
-const TableRow = ({ id, name, description, price, image, position }: Props) => {
-  const { fetchDatasetById } = useCatalogDetailContext();
+const TableRow = ({ id, name, description, price, image, position, onDelete }: Props) => {
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
+  const pathname = usePathname();
 
   const submitDelete = async () => {
     setLoading(true);
@@ -37,7 +39,7 @@ const TableRow = ({ id, name, description, price, image, position }: Props) => {
       setShowPopupDelete(false);
       notify(`${dict("toast.success_product_deleted")}`);
       setLoading(false);
-      fetchDatasetById();
+      onDelete(id);
     } else {
       notifyError(`${dict("toast.error_product_deleted")}`);
     }
