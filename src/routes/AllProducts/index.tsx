@@ -8,25 +8,33 @@ import LoadingSpinner from "@/components/Loading";
 import TableHead from "../CatalogDetail/TableHead";
 import TableRow from "../CatalogDetail/TableRow";
 import Breadcrumb from "@/components/Breadcrumb";
+import { AllProducts as AllProductsInterface } from "@/typescript/interfaces/catalog.interface";
 
 const AllProducts = () => {
-  const [products, setProducts] = useState<any | null>(null);
+  const [products, setProducts] = useState<AllProductsInterface[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const dict = useTranslations("dict.catalog");
 
   const fetchProducts = async () => {
     const data = await get(`dataitem/list/all`, ENV.BOX);
     if (data.statusCode === 200) {
-      const sortedItems = [...data.dataItems].sort((a, b) => a.order - b.order);
+      const sortedItems: AllProductsInterface[] = [...data.dataItems].sort((a, b) => a.order - b.order);
       setProducts(sortedItems);
+      setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   const handleDeleteItem = (deletedId: string) => {
     setProducts((prevItems: any) => prevItems.filter((item: any) => item._id !== deletedId));
   };
+
+  const handleUpdateItem = (updatedItem: AllProductsInterface) => {
+    setProducts(prevItems => prevItems.map(item => (item._id === updatedItem._id ? updatedItem : item)));
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className={styles.products_container}>
@@ -37,7 +45,7 @@ const AllProducts = () => {
 
       <div className={styles.table_container}>
         <TableHead />
-        {!products ? (
+        {loading ? (
           <LoadingSpinner />
         ) : products?.length ? (
           <div className={styles.content_container}>
@@ -50,7 +58,9 @@ const AllProducts = () => {
                 price={item.data.listprice}
                 image={item.data.listimage}
                 position={item.order}
+                allProducts={products}
                 onDelete={handleDeleteItem}
+                onUpdate={handleUpdateItem}
               />
             ))}
           </div>

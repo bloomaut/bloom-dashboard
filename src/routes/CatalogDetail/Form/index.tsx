@@ -8,6 +8,7 @@ import { PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.inter
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
+import { AllProducts } from "@/typescript/interfaces/catalog.interface";
 // Components
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
@@ -21,6 +22,8 @@ interface Form {
   title: string;
   action: "post" | "put";
   id?: string;
+  allProducts?: AllProducts[];
+  onUpdate: (editedProduct: AllProducts) => void;
 }
 
 interface InitialValuesProps {
@@ -51,7 +54,7 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id }: Form) => {
+const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
   const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const [formData, setFormData] = useState<any>(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
@@ -61,8 +64,6 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   const dict = useTranslations("dict");
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
-
-  console.log(datasetDetail);
 
   const imageUrl = action === "put" && formData.data?.listimage ? formData.data?.listimage : null;
 
@@ -75,6 +76,20 @@ const Form = ({ setShowPopup, action, id }: Form) => {
           order: product.order,
           visibility: product.visibility,
         });
+      } else if (allProducts) {
+        const product = allProducts.find((item: any) => item._id === id);
+        if (product) {
+          setFormData({
+            data: {
+              listname: product.data?.listname,
+              listdescr: product.data?.listdescr,
+              listprice: product.data?.listprice,
+              listimage: product.data?.listimage,
+            },
+            order: product.order,
+            visibility: product.visibility,
+          });
+        }
       }
     } else {
       setFormData(initialValues);
@@ -153,7 +168,7 @@ const Form = ({ setShowPopup, action, id }: Form) => {
       notify(dict("toast.success_edit"));
       setLoading(false);
       setShowPopup(false);
-      fetchDatasetById();
+      onUpdate(data.data);
     } else {
       notifyError(dict("toast.error_edit"));
     }

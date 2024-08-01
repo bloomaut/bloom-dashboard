@@ -8,11 +8,10 @@ import { useState } from "react";
 import { remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
-import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
-import { usePathname } from "next/navigation";
 import Form from "../Form";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import { AllProducts } from "@/typescript/interfaces/catalog.interface";
 
 interface Props {
   id: string;
@@ -22,15 +21,16 @@ interface Props {
   image: string;
   position: number;
   onDelete: (deletedId: string) => void;
+  onUpdate: (editedProduct: AllProducts) => void;
+  allProducts?: AllProducts[];
 }
 
-const TableRow = ({ id, name, description, price, image, position, onDelete }: Props) => {
+const TableRow = ({ id, name, description, price, image, position, onDelete, allProducts, onUpdate }: Props) => {
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
-  const pathname = usePathname();
 
   const submitDelete = async () => {
     setLoading(true);
@@ -96,7 +96,14 @@ const TableRow = ({ id, name, description, price, image, position, onDelete }: P
         />
       )}
       {showPopupEdit && (
-        <Form action='put' title={dict("popup.edit_product")} id={id} setShowPopup={setShowPopupEdit} />
+        <Form
+          action='put'
+          title={dict("popup.edit_product")}
+          id={id}
+          setShowPopup={setShowPopupEdit}
+          allProducts={allProducts}
+          onUpdate={onUpdate}
+        />
       )}
     </div>
   );
