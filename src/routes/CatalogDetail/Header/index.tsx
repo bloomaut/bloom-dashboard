@@ -12,9 +12,9 @@ import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 
 interface Header {
-  name: string;
+  name: string | undefined | null;
   id: string | string[];
-  quantity: number;
+  quantity: number | undefined | null;
 }
 
 const Header = ({ name, id, quantity }: Header) => {

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { get, post, update } from "@/services/fetch";
-import { DataItems, DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { get, update } from "@/services/fetch";
+import { DataItems, DatasetProps, DatasetDetailType } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -11,7 +11,7 @@ import { setCatalogComplete } from "@/store/features/userSlice";
 interface CatalogContextType {
   datasets: DatasetProps[];
   loading: boolean;
-  datasetDetail: any;
+  datasetDetail: DatasetDetailType | null | undefined;
   updateDataset: (id: string, newName: string) => Promise<void>;
   fetchDatasets: () => Promise<void>;
   fetchDatasetById: (id: string) => Promise<void>;
@@ -20,7 +20,7 @@ interface CatalogContextType {
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
   loading: true,
-  datasetDetail: false,
+  datasetDetail: null,
   updateDataset: async () => {
     throw new Error("updateDataset function not implemented");
   },
@@ -35,7 +35,7 @@ const CatalogContext = createContext<CatalogContextType>({
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
-  const [datasetDetail, setDatasetDetail] = useState(false);
+  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
   const dispatch = useAppDispatch();
@@ -44,7 +44,7 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     const data = await get("datasets/small/list", ENV.BOX);
     if (data.statusCode === 200) {
       setDatasets(data.data.datasets);
-      const isComplete = data.data.datasets.some((obj: DataItems) => obj.totalDataItems >= 1);
+      const isComplete = data.data.datasets.some((obj: DatasetProps) => obj.totalDataItems >= 1);
       dispatch(setCatalogComplete(isComplete));
     }
     setLoading(false);
@@ -69,8 +69,9 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
       notifyError(dict("toast.error_edit"));
     }
   };
+
   const fetchDatasetById = async (id: string) => {
-    setDatasetDetail(false);
+    setDatasetDetail(null);
     const data = await get(`datasets/${id}`, ENV.BOX);
     if (data.statusCode === 200) {
       setDatasetDetail(data.data);
