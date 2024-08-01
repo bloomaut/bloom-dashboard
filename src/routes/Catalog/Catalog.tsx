@@ -32,6 +32,7 @@ const Catalog = () => {
       return sum;
     }, 0);
   };
+
   const numberOfProducts = sumProducts(datasets);
 
   return (

@@ -1,25 +1,24 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { ENV } from "@/typescript/types/api";
+import { get } from "@/services/fetch";
+import { useEffect, useState } from "react";
 //Components
 import LoadingSpinner from "@/components/Loading";
 import TableHead from "../CatalogDetail/TableHead";
 import TableRow from "../CatalogDetail/TableRow";
 import Breadcrumb from "@/components/Breadcrumb";
-import { get } from "@/services/fetch";
-import { useEffect, useState } from "react";
 
 const AllProducts = () => {
   const [products, setProducts] = useState<any | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const dict = useTranslations("dict.catalog");
 
   const fetchProducts = async () => {
     const data = await get(`dataitem/list/all`, ENV.BOX);
     if (data.statusCode === 200) {
-      setProducts(data);
+      const sortedItems = [...data.dataItems].sort((a, b) => a.order - b.order);
+      setProducts(sortedItems);
     }
-    setLoading(false);
   };
   useEffect(() => {
     fetchProducts();
@@ -36,9 +35,9 @@ const AllProducts = () => {
         <TableHead />
         {!products ? (
           <LoadingSpinner />
-        ) : products?.dataItems.length ? (
+        ) : products?.length ? (
           <div className={styles.content_container}>
-            {products.dataItems.map((item: any, index: number) => (
+            {products.map((item: any, index: number) => (
               <TableRow
                 key={item._id}
                 id={item._id}
@@ -46,7 +45,7 @@ const AllProducts = () => {
                 description={item.data.listdescr}
                 price={item.data.listprice}
                 image={item.data.listimage}
-                position={index + 1}
+                position={item.order}
               />
             ))}
           </div>
