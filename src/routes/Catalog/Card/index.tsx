@@ -15,23 +15,25 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
   return (
     <article className={styles.container}>
       <div className={styles.card}>
-        <Link href={`/catalog/${_id}`} className={styles.image_container}>
+        <Link href={`${_id === "1" ? "all-products" : `/catalog/${_id}`}`} className={styles.image_container}>
           {image ? (
             <Image src={image} className={styles.image} alt={name} width={140} height={140} />
           ) : (
-            <div className={styles.icon_container}>
-              <Icon
-                name='dataset'
-                width={50}
-                height={50}
-                strokeWidth={1.3}
-                strokeColor={"#BEBEBE"}
-                viewBox='0 0 25 24'
-              />
-            </div>
+            _id !== "1" && (
+              <div className={styles.icon_container}>
+                <Icon
+                  name='dataset'
+                  width={50}
+                  height={50}
+                  strokeWidth={1.3}
+                  strokeColor={"#BEBEBE"}
+                  viewBox='0 0 25 24'
+                />
+              </div>
+            )
           )}
         </Link>
-        <Link href={`/catalog/${_id}`} className={styles.content}>
+        <Link href={`${_id === "1" ? "all-products" : `/catalog/${_id}`}`} className={styles.content}>
           <div className={styles.title_container}>
             <h2 className={styles.title} title={name}>
               {name}
@@ -52,14 +54,15 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
           />
         )}
       </div>
-      <div className={styles.btn_edit}>
-        <Button
-          title=''
-          styleName='bg_transparent'
-          icon={<Icon name='edit' width={25} height={25} strokeWidth={1.3} strokeColor='#fff' viewBox='0 0 20 22' />}
-          onclick={() => setShowPopup(true)}
-        />
-      </div>
+      {_id !== "1" && (
+        <div className={styles.btn_edit}>
+          <Button
+            styleName='bg_transparent'
+            icon={<Icon name='edit' width={25} height={25} strokeWidth={1.3} strokeColor='#fff' viewBox='0 0 20 22' />}
+            onclick={() => setShowPopup(true)}
+          />
+        </div>
+      )}
     </article>
   );
 };

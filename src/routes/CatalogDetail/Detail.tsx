@@ -4,7 +4,7 @@ import { putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 // Components
 import Button from "@/components/Button";
@@ -18,6 +18,7 @@ import Header from "./Header";
 const Detail = () => {
   const [massiveUpdatePopup, setMassiveUpdatePopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [sortedDataItems, setSortedDataItems] = useState<any[]>([]);
   const { loading, setLoading, datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const { notify, notifyError } = useMessageToast();
   const { id } = useParams();
@@ -39,16 +40,31 @@ const Detail = () => {
     }
   };
 
+  const handleDeleteItem = (deletedId: string) => {
+    setSortedDataItems(prevItems => prevItems.filter(item => item._id !== deletedId));
+  };
+
+  const handleUpdateItem = (updatedItem: any) => {
+    setSortedDataItems(prevItems => prevItems.map(item => (item._id === updatedItem._id ? updatedItem : item)));
+  };
+
+  useEffect(() => {
+    if (datasetDetail && datasetDetail.dataItems) {
+      const sortedItems = [...datasetDetail.dataItems].sort((a, b) => a.order - b.order);
+      setSortedDataItems(sortedItems);
+    }
+  }, [datasetDetail]);
+
   return (
     <section className={styles.catalog_detail_container}>
-      <Header name={datasetDetail?.dataSet.name} id={id} />
+      <Header name={datasetDetail?.dataSet.name} quantity={datasetDetail?.dataItems.length} id={id} />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (
           <LoadingSpinner />
-        ) : datasetDetail?.dataItems.length ? (
+        ) : sortedDataItems.length ? (
           <div className={styles.content_container}>
-            {datasetDetail.dataItems.map((item: any, index: number) => (
+            {sortedDataItems.map((item: any) => (
               <TableRow
                 key={item._id}
                 id={item._id}
@@ -56,7 +72,9 @@ const Detail = () => {
                 description={item.data.listdescr}
                 price={item.data.listprice}
                 image={item.data.listimage}
-                position={index + 1}
+                position={item.order}
+                onDelete={handleDeleteItem}
+                onUpdate={handleUpdateItem}
               />
             ))}
           </div>

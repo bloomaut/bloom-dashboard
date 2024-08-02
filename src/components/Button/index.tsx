@@ -3,7 +3,7 @@ import { Oval } from "react-loader-spinner";
 
 interface ButtonProps {
   onclick?: () => void;
-  title: string;
+  title?: string;
   icon?: JSX.Element;
   styleName?: string;
   isDisabled?: boolean;

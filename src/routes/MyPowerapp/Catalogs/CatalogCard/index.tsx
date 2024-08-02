@@ -17,6 +17,7 @@ const CatalogCard = ({ title, products, id, setShowModal }: Props) => {
     fetchDatasetById(id);
     setShowModal(true);
   };
+
   return (
     <div className={styles.container} onClick={handleClick}>
       <p>

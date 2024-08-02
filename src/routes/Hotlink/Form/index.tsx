@@ -43,6 +43,7 @@ const Form = () => {
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
 
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
+  console.log(formVariableData);
 
   useEffect(() => {
     if (formVariableData) {
@@ -170,7 +171,7 @@ const Form = () => {
                 formInfo.map((info, index) => (
                   <Input
                     key={info.key}
-                    type={info.target}
+                    type='text'
                     textLabel={info.description}
                     value={info.value!}
                     handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>

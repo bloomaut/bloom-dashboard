@@ -118,9 +118,6 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 value={formData.ClientFirstname}
                 handleChange={handleInputChange}
               />
-              {checkValidation && (
-                <p className={errors.ClientFirstname ? styles.error : styles.error_hidden}>{errors.ClientFirstname}</p>
-              )}
             </div>
             <div className={styles.form_control}>
               <Input
@@ -133,6 +130,9 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               />
             </div>
           </div>
+          <p className={errors.ClientFirstname && checkValidation ? styles.error : styles.error_hidden}>
+            {errors.ClientFirstname}
+          </p>
           <div className={styles.form_control}>
             <Input
               textLabel={dict("clients.form_label_03")}

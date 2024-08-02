@@ -9,7 +9,7 @@ interface Props {
 
 const Table = ({ products }: Props) => {
   const dict = useTranslations("dict.business.my-powerapp");
-  console.log(products, "AS");
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
