@@ -2,7 +2,6 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import Suite from "./Suite";
 import { useRef, useState } from "react";
-import { createPortal } from "react-dom";
 
 const SuiteComponent = () => {
   const [showModal, setShowModal] = useState(false);

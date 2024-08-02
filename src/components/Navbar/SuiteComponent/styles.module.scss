@@ -1,8 +1,11 @@
 .suite_container {
   @include flex(column, center, center);
   position: relative;
-  button {
+  .suite {
+    @include flex(row, center, center);
     border: none;
+    background: none;
+    outline: none;
     cursor: pointer;
   }
 }

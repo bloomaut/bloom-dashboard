@@ -5,15 +5,13 @@ import { Link } from "@/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
-
 //Icons
 import small from "@/../public/assets/logo_small_color.png";
-
 //Components
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
-import SuiteComponent from "../SuiteComponent";
+import SuiteComponent from "./SuiteComponent";
 
 const Navbar = () => {
   const { user, isLoading } = useUser();
