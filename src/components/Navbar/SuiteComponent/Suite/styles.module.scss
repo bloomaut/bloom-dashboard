@@ -1,14 +1,14 @@
 .modal {
   @include width-height(220px, 355px);
   @include flex(column, space-between, center, 5px);
-  position: fixed;
-  top: 70px;
-  right: 75px;
+  position: absolute;
+  top: 60px;
   border-radius: 15px;
   border: 8px solid rgba(207, 207, 207);
   background: rgba(207, 207, 207);
   box-sizing: border-box;
   animation: fadeIn 0.3s ease-in-out forwards;
+  z-index: 99;
   .container {
     @include width-height(100%, auto);
     @include flex(column, space-between, center, 15px);
@@ -92,7 +92,6 @@
 
 .modal_logged {
   @extend .modal;
-  right: 140px;
 }
 
 @keyframes fadeIn {

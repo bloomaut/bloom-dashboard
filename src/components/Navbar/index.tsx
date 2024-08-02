@@ -5,23 +5,17 @@ import { Link } from "@/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
-import { createPortal } from "react-dom";
-
 //Icons
 import small from "@/../public/assets/logo_small_color.png";
-
 //Components
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
-import Suite from "./Suite";
-import { useRef, useState } from "react";
+import SuiteComponent from "./SuiteComponent";
 
 const Navbar = () => {
   const { user, isLoading } = useUser();
   const dict = useTranslations("dict.login");
-  const [showModal, setShowModal] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <nav className={styles.container}>
@@ -33,9 +27,7 @@ const Navbar = () => {
       <div className={styles.inner_container}>
         {/* Language Dropdown */}
         <LangDrop />
-        <button className={styles.suite} ref={buttonRef} onClick={() => setShowModal(prev => !prev)}>
-          <Image src='/assets/suite.svg' alt='bars' width={30} height={30} />
-        </button>
+        <SuiteComponent />
         {/* User | Login */}
         {!isLoading ? (
           <>{user ? <UserDrop /> : <LinkComponent href='/api/auth/login' title={dict("register")} />}</>
@@ -51,7 +43,6 @@ const Navbar = () => {
           />
         )}
       </div>
-      {showModal && createPortal(<Suite setShowModal={setShowModal} buttonRef={buttonRef} />, document.body)}
     </nav>
   );
 };
