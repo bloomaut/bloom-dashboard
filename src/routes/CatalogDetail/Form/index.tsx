@@ -131,7 +131,6 @@ const Form = ({ setShowPopup, action, id }: Form) => {
   };
 
   const postDataItem = async (formData: PostDataItem) => {
-    console.log(formData);
     setLoading(true);
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {

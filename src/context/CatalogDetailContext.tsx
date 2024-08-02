@@ -14,7 +14,7 @@ interface CatalogDetailContextType {
 const CatalogDetailContext = createContext<CatalogDetailContextType>({
   datasetDetail: null,
   fetchDatasetById: async () => {
-    throw new Error("updateDataset function not implemented");
+    throw new Error("fetchDatasetById function not implemented");
   },
   setLoading: () => {
     throw new Error("setLoading function not implemented");
