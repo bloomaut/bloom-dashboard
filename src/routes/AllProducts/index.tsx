@@ -8,18 +8,30 @@ import LoadingSpinner from "@/components/Loading";
 import TableHead from "../CatalogDetail/TableHead";
 import TableRow from "../CatalogDetail/TableRow";
 import Breadcrumb from "@/components/Breadcrumb";
+import { AllProducts as AllProductsInterface } from "@/typescript/interfaces/catalog.interface";
 
 const AllProducts = () => {
-  const [products, setProducts] = useState<any | null>(null);
+  const [products, setProducts] = useState<AllProductsInterface[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const dict = useTranslations("dict.catalog");
 
   const fetchProducts = async () => {
     const data = await get(`dataitem/list/all`, ENV.BOX);
     if (data.statusCode === 200) {
-      const sortedItems = [...data.dataItems].sort((a, b) => a.order - b.order);
+      const sortedItems: AllProductsInterface[] = [...data.dataItems].sort((a, b) => a.order - b.order);
       setProducts(sortedItems);
+      setLoading(false);
     }
   };
+
+  const handleDeleteItem = (deletedId: string) => {
+    setProducts((prevItems: any) => prevItems.filter((item: any) => item._id !== deletedId));
+  };
+
+  const handleUpdateItem = (updatedItem: AllProductsInterface) => {
+    setProducts(prevItems => prevItems.map(item => (item._id === updatedItem._id ? updatedItem : item)));
+  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -28,16 +40,18 @@ const AllProducts = () => {
     <div className={styles.products_container}>
       <div className={styles.header_container}>
         <Breadcrumb />
-        <p>{dict("all_products")} </p>
+        <p>
+          {dict("all_products")} ({products?.length})
+        </p>
       </div>
 
       <div className={styles.table_container}>
         <TableHead />
-        {!products ? (
+        {loading ? (
           <LoadingSpinner />
         ) : products?.length ? (
           <div className={styles.content_container}>
-            {products.map((item: any, index: number) => (
+            {products.map((item: any) => (
               <TableRow
                 key={item._id}
                 id={item._id}
@@ -46,6 +60,9 @@ const AllProducts = () => {
                 price={item.data.listprice}
                 image={item.data.listimage}
                 position={item.order}
+                allProducts={products}
+                onDelete={handleDeleteItem}
+                onUpdate={handleUpdateItem}
               />
             ))}
           </div>

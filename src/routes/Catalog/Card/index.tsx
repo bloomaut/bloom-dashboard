@@ -19,16 +19,18 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
           {image ? (
             <Image src={image} className={styles.image} alt={name} width={140} height={140} />
           ) : (
-            <div className={styles.icon_container}>
-              <Icon
-                name='dataset'
-                width={50}
-                height={50}
-                strokeWidth={1.3}
-                strokeColor={"#BEBEBE"}
-                viewBox='0 0 25 24'
-              />
-            </div>
+            _id !== "1" && (
+              <div className={styles.icon_container}>
+                <Icon
+                  name='dataset'
+                  width={50}
+                  height={50}
+                  strokeWidth={1.3}
+                  strokeColor={"#BEBEBE"}
+                  viewBox='0 0 25 24'
+                />
+              </div>
+            )
           )}
         </Link>
         <Link href={`${_id === "1" ? "all-products" : `/catalog/${_id}`}`} className={styles.content}>
@@ -52,13 +54,15 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
           />
         )}
       </div>
-      <div className={styles.btn_edit}>
-        <Button
-          styleName='bg_transparent'
-          icon={<Icon name='edit' width={25} height={25} strokeWidth={1.3} strokeColor='#fff' viewBox='0 0 20 22' />}
-          onclick={() => setShowPopup(true)}
-        />
-      </div>
+      {_id !== "1" && (
+        <div className={styles.btn_edit}>
+          <Button
+            styleName='bg_transparent'
+            icon={<Icon name='edit' width={25} height={25} strokeWidth={1.3} strokeColor='#fff' viewBox='0 0 20 22' />}
+            onclick={() => setShowPopup(true)}
+          />
+        </div>
+      )}
     </article>
   );
 };
