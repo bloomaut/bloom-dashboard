@@ -23,7 +23,7 @@ interface Form {
   action: "post" | "put";
   id?: string;
   allProducts?: AllProducts[];
-  onUpdate: (editedProduct: AllProducts) => void;
+  onUpdate?: (editedProduct: AllProducts) => void;
 }
 
 interface InitialValuesProps {
@@ -167,7 +167,9 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
       notify(dict("toast.success_edit"));
       setLoading(false);
       setShowPopup(false);
-      onUpdate(data.data);
+      if (onUpdate) {
+        onUpdate(data.data);
+      }
     } else {
       notifyError(dict("toast.error_edit"));
     }
