@@ -11,6 +11,22 @@ export interface DataItems {
   updatedAt: string;
 }
 
+export interface AllProductsDataset {
+  visibility: boolean;
+  _id: string;
+  name: string;
+}
+
+export interface AllProducts {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  data: DataItemsList;
+  dataset: AllProductsDataset;
+  order: number;
+  visibility: boolean;
+}
+
 export interface DatasetProps {
   _id: string;
   name: string;

@@ -40,6 +40,14 @@ const Detail = () => {
     }
   };
 
+  const handleDeleteItem = (deletedId: string) => {
+    setSortedDataItems(prevItems => prevItems.filter(item => item._id !== deletedId));
+  };
+
+  const handleUpdateItem = (updatedItem: any) => {
+    setSortedDataItems(prevItems => prevItems.map(item => (item._id === updatedItem._id ? updatedItem : item)));
+  };
+
   useEffect(() => {
     if (datasetDetail && datasetDetail.dataItems) {
       const sortedItems = [...datasetDetail.dataItems].sort((a, b) => a.order - b.order);
@@ -56,7 +64,7 @@ const Detail = () => {
           <LoadingSpinner />
         ) : sortedDataItems.length ? (
           <div className={styles.content_container}>
-            {sortedDataItems.map((item: any, index: number) => (
+            {sortedDataItems.map((item: any) => (
               <TableRow
                 key={item._id}
                 id={item._id}
@@ -65,6 +73,8 @@ const Detail = () => {
                 price={item.data.listprice}
                 image={item.data.listimage}
                 position={item.order}
+                onDelete={handleDeleteItem}
+                onUpdate={handleUpdateItem}
               />
             ))}
           </div>
