@@ -363,7 +363,8 @@
       },
       "upload_excel_title": "Upload Excel Spreadsheet",
       "upload_excel": "Upload Excel",
-      "all_products": "All products"
+      "all_products": "All products",
+      "all_services": "All services"
     },
     "form_validation": {
       "ClientFirstname": "The name is required",
