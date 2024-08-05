@@ -1,8 +1,6 @@
-import { useMessageToast } from "@/hooks/useMessageToast";
 import { get } from "@/services/fetch";
 import { Template } from "@/typescript/interfaces/template.interface";
 import { ENV } from "@/typescript/types/api";
-import { useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface TemplateContext {
@@ -28,8 +26,6 @@ const TemplateContext = createContext<TemplateContext>({
 });
 
 export const TemplateProvider = ({ children }: { children: JSX.Element }) => {
-  const dict = useTranslations("dict.error");
-  const { notifyError } = useMessageToast();
   const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedTemplateId, setSelectedTemplateId] = useState("");

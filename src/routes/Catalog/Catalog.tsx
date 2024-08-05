@@ -48,7 +48,7 @@ const Catalog = () => {
               createdAt='10'
               dataschema={datasets[0].dataschema}
               description='All products'
-              image='https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?v=1614559651'
+              image=''
               name={dict("catalog.all_products")}
               order={1}
               totalDataItems={numberOfProducts}
