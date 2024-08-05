@@ -7,6 +7,7 @@ import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
+import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 
 interface Props {
   id: string | string[];
@@ -17,6 +18,7 @@ const PopupUpdatePrices = ({ id, closePopup }: Props) => {
   const dict = useTranslations("dict");
   const { dropdownRef } = useCloseDropdown(closePopup);
   const { notify, notifyError } = useMessageToast();
+  const { fetchDatasetById } = useCatalogDetailContext();
   const [closing, setClosing] = useState(false);
   const [percentageValue, setPercentageValue] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +36,7 @@ const PopupUpdatePrices = ({ id, closePopup }: Props) => {
       const response = await update("datasets", { percentage: numValue }, `${id}/pricing`, ENV.BOX);
       if (response.statusCode === 200) {
         notify(dict("catalog.price_success"));
+        await fetchDatasetById();
       } else {
         notifyError(dict("error.message"));
       }
