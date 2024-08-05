@@ -13,7 +13,7 @@ import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
 import { handleLogoBanner } from "@/utils/handleUploadBanner";
-import { categories } from "@/utils/categories";
+import { useRef } from "react";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -21,7 +21,7 @@ const initialFormData: UserBusiness = {
   client: {
     name: "",
     description: "",
-    category: categories[0].options[0].value,
+    category: "",
     logo: "",
     banner: "",
     palette: [{ color: "#ffffff" }],
@@ -39,13 +39,12 @@ const Business = () => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState<File | null>(null);
   const [banner, setBanner] = useState<File | null>(null);
-  const [category, setCategory] = useState<string>(categories[0].options[0].value);
   const [errorLogo, setErrorLogo] = useState(false);
   const { notify, notifyError } = useMessageToast();
   const fieldsToValidate = ["name", "lastname", "business_name", "business_category", "business_description"];
   const errors = useFormValidator(formData, fieldsToValidate);
   const dict = useTranslations("dict");
-
+  const formRef = useRef<HTMLFormElement>(null);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prevFormData => {
@@ -67,7 +66,6 @@ const Business = () => {
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.target.value);
     setFormData(prevFormData => ({
       ...prevFormData,
       client: {
@@ -85,7 +83,7 @@ const Business = () => {
     e.preventDefault();
     setCheckValidation(true);
     const logoExists = validateLogo();
-
+    //console.log(Object.keys(errors).length === 0, logoExists, "lll");
     if (Object.keys(errors).length === 0 && logoExists) {
       setLoading(true);
       setCheckValidation(false);
@@ -105,7 +103,7 @@ const Business = () => {
       };
 
       const response = await update("small-business", dataToSend);
-
+      console.log(response, "res");
       if (response.statusCode === 200) {
         notify(dict("toast.success_edit"));
         setLoading(false);
@@ -199,8 +197,8 @@ const Business = () => {
           validation={checkValidation}
           errors={errors}
           loading={loading}
-          category={category}
           onCategoryChange={handleCategoryChange}
+          formRef={formRef}
         />
         <SecondaryForm
           logo={logo}
@@ -213,6 +211,7 @@ const Business = () => {
           onChange={handleChange}
           formValidate={Object.keys(errors).length === 0}
           loading={loading}
+          formRef={formRef}
         />
       </div>
     </section>

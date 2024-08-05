@@ -20,6 +20,7 @@ interface SecondaryFormProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   formValidate: boolean;
   loading: boolean;
+  formRef: React.RefObject<HTMLFormElement>;
 }
 
 const SecondaryForm = ({
@@ -33,6 +34,7 @@ const SecondaryForm = ({
   onChange,
   formValidate,
   loading,
+  formRef,
 }: SecondaryFormProps) => {
   const { step_04 } = useStepValidation();
   const router = useRouter();
@@ -48,6 +50,13 @@ const SecondaryForm = ({
     }, 3500);
   }, [step_04, formValidate, handleNavigation]);
 
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+      if (formValidate) nextStep();
+    }
+  };
+  // console.log(step_04);
   return (
     <div className={styles.secondary_form}>
       <div className={styles.drag_container}>
@@ -69,9 +78,9 @@ const SecondaryForm = ({
         <Button
           title={step_04 ? "Update" : "Update and Next"}
           loading={loading}
-          type='submit'
+          type='button'
           onclick={() => {
-            if (!step_04 && formValidate) nextStep();
+            if (true) handleSubmit();
           }}
         />
       </div>

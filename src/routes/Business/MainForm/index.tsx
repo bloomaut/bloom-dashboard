@@ -12,11 +12,11 @@ interface FormProps {
   validation: boolean;
   errors: FormErrorsProps;
   loading: boolean;
-  category: string;
   onCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  formRef: React.RefObject<HTMLFormElement>;
 }
 
-const Form = ({ formData, onChange, onSubmit, validation, errors, loading, category, onCategoryChange }: FormProps) => {
+const Form = ({ formData, onChange, onSubmit, validation, errors, loading, onCategoryChange, formRef }: FormProps) => {
   const dict = useTranslations("dict.business");
 
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
@@ -24,7 +24,7 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
   );
 
   return (
-    <form className={styles.main_form} onSubmit={onSubmit}>
+    <form className={styles.main_form} onSubmit={onSubmit} ref={formRef}>
       <div className={styles.row_01}>
         <div className={styles.form_control}>
           <Input
@@ -62,7 +62,7 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
       </div>
       <div className={styles.row_03}>
         <label>{dict("form.type_business")}</label>
-        <Select name='business_category' value={formData.client.category || category} onChange={onCategoryChange} />
+        <Select name='business_category' value={formData.client.category || ""} onChange={onCategoryChange} />
         {validation && <ErrorMessage error={errors.business_category} />}
       </div>
       <div className={styles.row_04}>
