@@ -7,8 +7,11 @@ import { Slide } from "react-toastify";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import SideTrack from "@/components/SideTrack";
+import { clarity } from "react-microsoft-clarity";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
+  clarity.init(`${process.env.NEXT_CLARITY_ID}`);
+
   return (
     <div className={styles.container}>
       <Navbar />
