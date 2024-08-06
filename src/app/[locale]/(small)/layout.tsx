@@ -7,33 +7,33 @@ import { Slide } from "react-toastify";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import SideTrack from "@/components/SideTrack";
-import { clarity } from "react-microsoft-clarity";
+import ClarityWrapper from "@/components/ClarityWrapper";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
-  clarity.init(`${process.env.NEXT_CLARITY_ID}`);
-
   return (
-    <div className={styles.container}>
-      <Navbar />
-      <ToastContainer
-        position='bottom-right'
-        limit={2}
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Slide}
-      />
-      <div className={styles.inner_container}>
-        <Sidebar />
-        <SideTrack />
-        <div className={styles.children_container}>{children}</div>
+    <ClarityWrapper>
+      <div className={styles.container}>
+        <Navbar />
+        <ToastContainer
+          position='bottom-right'
+          limit={2}
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          transition={Slide}
+        />
+        <div className={styles.inner_container}>
+          <Sidebar />
+          <SideTrack />
+          <div className={styles.children_container}>{children}</div>
+        </div>
       </div>
-    </div>
+    </ClarityWrapper>
   );
 };
 
