@@ -33,27 +33,19 @@ const PopupExcel = ({
   submitFunction,
   loading,
 }: PopupExcelProps) => {
-  const [closing, setClosing] = useState(false);
   const dict = useTranslations("dict");
   const { dropdownRef } = useCloseDropdown(setFunction);
+  const [closing, setClosing] = useState(false);
 
   const handleExcelDownload = async (type: string) => {
     if (id) await getExcelCatalog(id, type, "getExcelCatalog");
-  };
-
-  const handleClose = () => {
-    setClosing(true);
-    setTimeout(() => {
-      setFunction(false);
-      setFile(null);
-    }, 300);
   };
 
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={submitFunction}>
       <div className={styles.inner_container} ref={dropdownRef}>
         <div className={styles.btn_close}>
-          <button onClick={handleClose} type='button'>
+          <button onClick={() => setClosing(true)} type='button'>
             <Icon name='close' width={30} height={30} strokeColor='#7f7f7f' />
           </button>
         </div>

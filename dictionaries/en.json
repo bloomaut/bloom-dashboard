@@ -337,6 +337,12 @@
       "massive_upload": "Massive upload",
       "massive_update": "Massive update",
       "update_changes": "Update changes",
+      "update_prices": "Update prices",
+      "price_title": "Update prices with percentages",
+      "price_subtitle": "Update all catalog prices by percentages. From -99% to 100%.",
+      "price_percentage": "Percentage",
+      "price_error": "The percentage is outside the allowed range.",
+      "price_success": "Prices updated correctly.",
       "form_actions": {
         "title": "Catalog information",
         "name": "Name",
