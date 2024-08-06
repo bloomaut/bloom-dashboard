@@ -83,7 +83,6 @@ const Business = () => {
     e.preventDefault();
     setCheckValidation(true);
     const logoExists = validateLogo();
-    //console.log(Object.keys(errors).length === 0, logoExists, "lll");
     if (Object.keys(errors).length === 0 && logoExists) {
       setLoading(true);
       setCheckValidation(false);

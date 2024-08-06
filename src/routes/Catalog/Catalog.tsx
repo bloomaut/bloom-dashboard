@@ -16,7 +16,7 @@ import { useTranslations } from "next-intl";
 const Catalog = () => {
   const { datasets, fetchDatasets, loading } = useCatalogContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const { step_03, step_04 } = useStepValidation();
+  const { step_03, step_04, currentStep } = useStepValidation();
   const router = useRouter();
   const dict = useTranslations("dict");
 
@@ -46,7 +46,7 @@ const Catalog = () => {
             <Card
               _id='1'
               createdAt='10'
-              dataschema={datasets[0].dataschema}
+              dataschema={datasets[0]?.dataschema || 0}
               description='All products'
               image=''
               name={dict("catalog.all_products")}
@@ -62,7 +62,7 @@ const Catalog = () => {
           </>
         )}
         <div className={styles.btn_next}>
-          {!step_04 && <Button title='Next' isDisabled={step_03} onclick={handleNavigation} />}
+          {!step_04 && <Button title='Next' isDisabled={datasets.length === 0} onclick={handleNavigation} />}
         </div>
         {showPopupCreate && (
           <FormActions action='post' setShowConfirmation={setShowPopupCreate} fetchDatasets={fetchDatasets} />

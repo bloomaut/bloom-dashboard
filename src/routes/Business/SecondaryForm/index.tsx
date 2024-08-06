@@ -36,7 +36,7 @@ const SecondaryForm = ({
   loading,
   formRef,
 }: SecondaryFormProps) => {
-  const { step_04 } = useStepValidation();
+  const { step_04, currentStep } = useStepValidation();
   const router = useRouter();
   const dict = useTranslations("dict.business");
 
@@ -56,7 +56,7 @@ const SecondaryForm = ({
       if (formValidate) nextStep();
     }
   };
-  // console.log(step_04);
+
   return (
     <div className={styles.secondary_form}>
       <div className={styles.drag_container}>
@@ -79,9 +79,7 @@ const SecondaryForm = ({
           title={step_04 ? "Update" : "Update and Next"}
           loading={loading}
           type='button'
-          onclick={() => {
-            if (true) handleSubmit();
-          }}
+          onclick={() => handleSubmit()}
         />
       </div>
     </div>
