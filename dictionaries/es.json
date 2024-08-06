@@ -337,6 +337,12 @@
       "massive_upload": "Carga masiva",
       "massive_update": "Actualización masiva",
       "update_changes": "Actualizar cambios",
+      "update_prices": "Actualizar precios",
+      "price_title": "Actualizar precios con porcentajes",
+      "price_subtitle": "Actualizar todos los precios del catálogo en porcentajes. Desde -99% hasta 100%.",
+      "price_percentage": "Porcentaje",
+      "price_error": "El porcentaje está fuera del rango permitido.",
+      "price_success": "Precios actualizados correctamente.",
       "form_actions": {
         "title": "Información del catálogo",
         "name": "Nombre",

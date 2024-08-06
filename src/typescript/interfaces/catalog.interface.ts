@@ -95,6 +95,10 @@ export interface PostOnboarding {
   onboarding_id: string;
 }
 
+export interface PutPorcentage {
+  percentage: string | number;
+}
+
 export interface DatasetDetailType {
   dataItems: Array<DataItemsType>;
   dataSet: DatasetProps;
