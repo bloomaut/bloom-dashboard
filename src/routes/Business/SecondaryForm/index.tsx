@@ -1,15 +1,15 @@
 import styles from "./styles.module.scss";
-import AddInfoForm from "./AddInfoForm";
-import Palette from "./Palette";
-import DragAndDrop from "@/components/DragAndDrop";
 import useStepValidation from "@/hooks/useStepValidation";
-import Button from "@/components/Button";
 import { useBusinessContext } from "@/context/BusinessContext";
 import { useTranslations } from "next-intl";
+// Components
+import DragAndDrop from "@/components/DragAndDrop";
+import AddInfoForm from "./AddInfoForm";
+import Palette from "./Palette";
+import Button from "@/components/Button";
 
 const SecondaryForm = () => {
-  const { formData, setFormData, handleChange, logo, setLogo, errorLogo, banner, setBanner, loading, handleSubmit } =
-    useBusinessContext();
+  const { logo, setLogo, errorLogo, banner, setBanner, loading, handleSubmit } = useBusinessContext();
   const { step_04 } = useStepValidation();
 
   const dict = useTranslations("dict.form_validation");
@@ -28,8 +28,8 @@ const SecondaryForm = () => {
         </div>
       </div>
       <section className={styles.second_row}>
-        <Palette palette={formData.client.palette} setFormData={setFormData} logo={logo} />
-        <AddInfoForm formData={formData} onChange={handleChange} />
+        <Palette />
+        <AddInfoForm />
       </section>
       <div className={styles.button}>
         <Button title={step_04 ? "Update" : "Update and Next"} loading={loading} type='button' onclick={handleSubmit} />
