@@ -101,8 +101,8 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
         let response;
         if (action === "post") {
           const response = await post("datasets", postDataschema, ENV.BOX);
-          handleAddDataset(response.data.data);
           if (response.data.statusCode === 201) {
+            handleAddDataset(response.data.data);
             notify(dict("toast.post_dataset"));
           } else {
             notifyError(dict("toast.error_dataset"));
@@ -125,8 +125,8 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
           };
 
           response = await update("datasets", updatedDataset, id, ENV.BOX);
-          handleUpdateDataset(response.data);
           if (response.statusCode === 200) {
+            handleUpdateDataset(response.data);
             notify(dict("toast.success_edit"));
           } else {
             notifyError(dict("toast.error_edit"));
@@ -137,7 +137,6 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
       } finally {
         setLoading(false);
         setShowConfirmation(false);
-        // fetchDatasets();
       }
     } else {
       setLoading(false);
@@ -152,7 +151,6 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
         setShowConfirmation(false);
         notify(dict("toast.success_delete"));
         setLoading(false);
-        // fetchDatasets();
         handleRemoveDataset(id);
       } else {
         notifyError(dict("toast.error_delete"));
