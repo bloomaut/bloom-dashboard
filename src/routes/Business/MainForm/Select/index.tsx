@@ -10,6 +10,9 @@ interface CategoriesPros {
 const Select = ({ name, value, onChange }: CategoriesPros) => {
   return (
     <select className={styles.select} name={name} value={value} onChange={onChange}>
+      <option value='' disabled>
+        Select
+      </option>
       {categories.map((category, index) => (
         <optgroup className={styles.option_group} key={index} label={category.label}>
           {category.options.map(option => (

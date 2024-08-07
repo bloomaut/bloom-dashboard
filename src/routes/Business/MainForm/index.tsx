@@ -1,22 +1,11 @@
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
 import { useTranslations } from "next-intl";
-import { UserBusiness } from "@/typescript/interfaces/business.interface";
-import { FormErrorsProps } from "@/hooks/useFormValidator";
+import { useBusinessContext } from "@/context/BusinessContext";
 import Select from "./Select";
 
-interface FormProps {
-  formData: UserBusiness;
-  onSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  validation: boolean;
-  errors: FormErrorsProps;
-  loading: boolean;
-  category: string;
-  onCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}
-
-const Form = ({ formData, onChange, onSubmit, validation, errors, loading, category, onCategoryChange }: FormProps) => {
+const Form = () => {
+  const { formData, handleChange, handleSubmit, checkValidation, errors, handleCategoryChange } = useBusinessContext();
   const dict = useTranslations("dict.business");
 
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
@@ -24,7 +13,7 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
   );
 
   return (
-    <form className={styles.main_form} onSubmit={onSubmit}>
+    <form className={styles.main_form} onSubmit={handleSubmit}>
       <div className={styles.row_01}>
         <div className={styles.form_control}>
           <Input
@@ -33,9 +22,9 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
             type='text'
             name='name'
             value={formData.name || ""}
-            handleChange={onChange}
+            handleChange={handleChange}
           />
-          {validation && <ErrorMessage error={errors.name} />}
+          {checkValidation && <ErrorMessage error={errors.name} />}
         </div>
         <div className={styles.form_control}>
           <Input
@@ -44,9 +33,9 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
             type='text'
             name='lastname'
             value={formData.lastname || ""}
-            handleChange={onChange}
+            handleChange={handleChange}
           />
-          {validation && <ErrorMessage error={errors.lastname} />}
+          {checkValidation && <ErrorMessage error={errors.lastname} />}
         </div>
       </div>
       <div className={styles.row_02}>
@@ -56,14 +45,14 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
           type='text'
           name='business_name'
           value={formData.client.name || ""}
-          handleChange={onChange}
+          handleChange={handleChange}
         />
-        {validation && <ErrorMessage error={errors.business_name} />}
+        {checkValidation && <ErrorMessage error={errors.business_name} />}
       </div>
       <div className={styles.row_03}>
         <label>{dict("form.type_business")}</label>
-        <Select name='business_category' value={formData.client.category || category} onChange={onCategoryChange} />
-        {validation && <ErrorMessage error={errors.business_category} />}
+        <Select name='business_category' value={formData.client.category || ""} onChange={handleCategoryChange} />
+        {checkValidation && <ErrorMessage error={errors.business_category} />}
       </div>
       <div className={styles.row_04}>
         <Input
@@ -72,9 +61,9 @@ const Form = ({ formData, onChange, onSubmit, validation, errors, loading, categ
           type='textarea'
           name='business_description'
           value={formData.client.description || ""}
-          handleChange={onChange}
+          handleChange={handleChange}
         />
-        {validation && <ErrorMessage error={errors.business_description} />}
+        {checkValidation && <ErrorMessage error={errors.business_description} />}
       </div>
     </form>
   );

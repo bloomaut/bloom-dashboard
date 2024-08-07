@@ -57,7 +57,7 @@ export interface PutBusiness {
   instagram: string | null;
   phone: string | null;
   logo: string | null;
-  palette: { color: string }[] | null;
+  palette: { color: string }[] | null | undefined;
 }
 
 export interface PutPalette {
