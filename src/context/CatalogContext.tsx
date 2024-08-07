@@ -83,9 +83,18 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   const handleUpdateDataset = (updatedDataset: DatasetProps) => {
-    setDatasets(prevDatasets =>
-      prevDatasets.map(dataset => (dataset._id === updatedDataset._id ? updatedDataset : dataset)),
-    );
+    setDatasets(prevDatasets => {
+      return prevDatasets.map(dataset => {
+        if (dataset._id === updatedDataset._id) {
+          return {
+            ...dataset,
+            ...updatedDataset,
+            totalDataItems: dataset.totalDataItems,
+          };
+        }
+        return dataset;
+      });
+    });
   };
 
   useEffect(() => {
