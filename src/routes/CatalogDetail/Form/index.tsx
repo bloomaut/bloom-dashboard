@@ -98,8 +98,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
 
   // Validación de campos
   const fieldsToValidate =
-    datasetDetail?.dataSet.dataschema.fields.filter((field: any) => field.required).map((field: any) => field.name) ||
-    [];
+    datasetDetail?.dataSet.dataschema?.filter((field: any) => field.required).map((field: any) => field.name) || [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
