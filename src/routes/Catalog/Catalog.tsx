@@ -12,6 +12,7 @@ import Icon from "@/components/Icon";
 import FormActions from "./FormActions";
 import Button from "@/components/Button";
 import { useTranslations } from "next-intl";
+import CardAll from "./CardAll";
 
 const Catalog = () => {
   const { datasets, fetchDatasets, loading } = useCatalogContext();
@@ -43,18 +44,14 @@ const Catalog = () => {
           <LoadingSpinner />
         ) : (
           <>
-            <Card
-              _id='1'
-              createdAt='10'
-              dataschema={datasets[0]?.dataschema || 0}
-              description='All products'
-              image=''
+            <CardAll
+              dataschema='uitool-products'
+
               name={dict("catalog.all_products")}
-              order={1}
               totalDataItems={numberOfProducts}
-              updatedAt='1'
-              visibility
+              image=''
             />
+            <CardAll dataschema='uitool-services' name={dict("catalog.all_services")} totalDataItems={0} image='' />
             {datasets.length > 0 && datasets.map(dataset => <Card key={dataset._id} {...dataset} />)}
             <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
               <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />

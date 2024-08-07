@@ -3,22 +3,21 @@ import { useTranslations } from "next-intl";
 import { ENV } from "@/typescript/types/api";
 import { get } from "@/services/fetch";
 import { useEffect, useState } from "react";
+import { AllProducts as AllProductsInterface } from "@/typescript/interfaces/catalog.interface";
 //Components
 import LoadingSpinner from "@/components/Loading";
 import TableHead from "../CatalogDetail/TableHead";
 import TableRow from "../CatalogDetail/TableRow";
 import Breadcrumb from "@/components/Breadcrumb";
-import { AllProducts as AllProductsInterface } from "@/typescript/interfaces/catalog.interface";
 
-const AllProducts = () => {
+const AllServices = () => {
   const [products, setProducts] = useState<AllProductsInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const dict = useTranslations("dict.catalog");
 
-  const fetchProducts = async () => {
-    const data = await get(`dataitem/list/products`, ENV.BOX);
+  const fetchServices = async () => {
+    const data = await get(`dataitem/list/services`, ENV.BOX);
     if (data.statusCode === 200) {
-      console.log(data);
       const sortedItems: AllProductsInterface[] = [...data.dataItems].sort((a, b) => a.order - b.order);
       setProducts(sortedItems);
       setLoading(false);
@@ -34,7 +33,7 @@ const AllProducts = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchServices();
   }, []);
 
   return (
@@ -42,7 +41,7 @@ const AllProducts = () => {
       <div className={styles.header_container}>
         <Breadcrumb />
         <p>
-          {dict("all_products")} ({products?.length})
+          {dict("all_services")} ({products?.length})
         </p>
       </div>
 
@@ -75,4 +74,4 @@ const AllProducts = () => {
   );
 };
 
-export default AllProducts;
+export default AllServices;
