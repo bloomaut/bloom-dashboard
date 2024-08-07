@@ -50,6 +50,10 @@ const Detail = () => {
     setSortedDataItems(prevItems => prevItems.map(item => (item._id === updatedItem._id ? updatedItem : item)));
   };
 
+  const handleAddItem = (newItem: any) => {
+    setSortedDataItems(prevItems => [...prevItems, newItem]);
+  };
+
   useEffect(() => {
     if (datasetDetail && datasetDetail.dataItems) {
       const sortedItems = [...datasetDetail.dataItems].sort((a, b) => a.order - b.order);
@@ -59,7 +63,12 @@ const Detail = () => {
 
   return (
     <section className={styles.catalog_detail_container}>
-      <Header name={datasetDetail?.dataSet.name} quantity={datasetDetail?.dataItems.length} id={id} />
+      <Header
+        name={datasetDetail?.dataSet.name}
+        quantity={datasetDetail?.dataItems.length}
+        id={id}
+        onCreate={handleAddItem}
+      />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (

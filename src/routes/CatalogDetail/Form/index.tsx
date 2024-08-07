@@ -24,6 +24,7 @@ interface Form {
   id?: string;
   allProducts?: AllProducts[];
   onUpdate?: (editedProduct: AllProducts) => void;
+  onCreate?: (newItem: any) => void;
 }
 
 interface InitialValuesProps {
@@ -54,8 +55,8 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
-  const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
+const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: Form) => {
+  const { datasetDetail } = useCatalogDetailContext();
   const [formData, setFormData] = useState<any>(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -154,7 +155,9 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
       setLoading(false);
       notify(dict("toast.success_item"));
       setShowPopup(false);
-      fetchDatasetById();
+      if (onCreate) {
+        onCreate(data.data.data);
+      }
     } else {
       notifyError(dict("toast.error_file"));
     }
