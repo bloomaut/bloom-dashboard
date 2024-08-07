@@ -45,10 +45,10 @@ const Header = ({ name, id, quantity }: Header) => {
     <div className={styles.header_container}>
       <div className={styles.title_container}>
         <Breadcrumb />
-        <p className={styles.catalog}>
-          {name}
-          {quantity && <span>({quantity})</span>}
-        </p>
+        <div className={styles.name_container}>
+          <p className={styles.name}>{name}</p>
+          {!loading && quantity !== null && <p className={styles.quantity}>({quantity})</p>}
+        </div>
       </div>
       <div className={styles.btn_container}>
         <Button

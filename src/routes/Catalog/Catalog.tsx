@@ -14,7 +14,7 @@ import Button from "@/components/Button";
 import { useTranslations } from "next-intl";
 
 const Catalog = () => {
-  const { datasets, fetchDatasets, loading } = useCatalogContext();
+  const { datasets, loading } = useCatalogContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const { step_03, step_04 } = useStepValidation();
   const router = useRouter();
@@ -64,9 +64,7 @@ const Catalog = () => {
         <div className={styles.btn_next}>
           {!step_04 && <Button title='Next' isDisabled={step_03} onclick={handleNavigation} />}
         </div>
-        {showPopupCreate && (
-          <FormActions action='post' setShowConfirmation={setShowPopupCreate} fetchDatasets={fetchDatasets} />
-        )}
+        {showPopupCreate && <FormActions action='post' setShowConfirmation={setShowPopupCreate} />}
       </div>
     </div>
   );

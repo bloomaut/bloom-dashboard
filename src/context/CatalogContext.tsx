@@ -9,27 +9,32 @@ import { setCatalogComplete } from "@/store/features/userSlice";
 interface CatalogContextType {
   datasets: DatasetProps[];
   loading: boolean;
-  datasetDetail: DatasetDetailType | null | undefined;
   fetchDatasets: () => Promise<void>;
-  fetchDatasetById: (id: string) => Promise<void>;
+  handleRemoveDataset: (id: string) => void;
+  handleAddDataset: (dataset: DatasetProps) => void;
+  handleUpdateDataset: (updatedDataset: DatasetProps) => void;
 }
 
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
   loading: true,
-  datasetDetail: null,
   fetchDatasets: async () => {
     throw new Error("fetchDatasets function not implemented");
   },
-  fetchDatasetById: async () => {
-    throw new Error("fetchDatasetById function not implemented");
+  handleRemoveDataset: () => {
+    throw new Error("handleDeleteDataset function not implemented");
+  },
+  handleAddDataset: () => {
+    throw new Error("handleAddDataset function not implemented");
+  },
+  handleUpdateDataset: () => {
+    throw new Error("handleUpdateDataset function not implemented");
   },
 });
 
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
-  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
   const dispatch = useAppDispatch();
 
   const fetchDatasets = async () => {
@@ -49,12 +54,23 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
-  const fetchDatasetById = async (id: string) => {
-    setDatasetDetail(null);
-    const data = await get(`datasets/${id}`, ENV.BOX);
-    if (data.statusCode === 200) {
-      setDatasetDetail(data.data);
-    }
+  const handleRemoveDataset = (deletedId: string) => {
+    setDatasets(datasets.filter(item => item._id !== deletedId));
+  };
+
+  const handleAddDataset = (newDataset: DatasetProps) => {
+    const datasetWithTotalItems = {
+      ...newDataset,
+      totalDataItems: 0,
+    };
+
+    setDatasets(prevDatasets => [...prevDatasets, datasetWithTotalItems]);
+  };
+
+  const handleUpdateDataset = (updatedDataset: DatasetProps) => {
+    setDatasets(prevDatasets =>
+      prevDatasets.map(dataset => (dataset._id === updatedDataset._id ? updatedDataset : dataset)),
+    );
   };
 
   useEffect(() => {
@@ -66,10 +82,11 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     <CatalogContext.Provider
       value={{
         datasets,
+        handleRemoveDataset,
+        handleAddDataset,
+        handleUpdateDataset,
         loading,
-        datasetDetail,
         fetchDatasets,
-        fetchDatasetById,
       }}
     >
       {children}

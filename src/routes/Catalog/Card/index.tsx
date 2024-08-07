@@ -3,13 +3,11 @@ import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { useState } from "react";
-import { useCatalogContext } from "@/context/CatalogContext";
 import { Link } from "@/navigation";
 import Image from "next/image";
 import FormActions from "../FormActions";
 
 const Card = ({ _id, name, description, image, visibility, totalDataItems }: DatasetProps) => {
-  const { fetchDatasets } = useCatalogContext();
   const [showPopup, setShowPopup] = useState(false);
 
   return (
@@ -49,7 +47,6 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems }: Dat
             description={description}
             image={image}
             visibility={visibility}
-            fetchDatasets={fetchDatasets}
             setShowConfirmation={setShowPopup}
           />
         )}
