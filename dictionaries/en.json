@@ -369,7 +369,8 @@
       },
       "upload_excel_title": "Upload Excel Spreadsheet",
       "upload_excel": "Upload Excel",
-      "all_products": "All products"
+      "all_products": "All products",
+      "all_services": "All services"
     },
     "form_validation": {
       "ClientFirstname": "The name is required",
@@ -384,7 +385,8 @@
       "lastname": "You must enter a last name",
       "business_name": "You must enter a business name",
       "business_category": "You must enter a business category",
-      "business_description": "You must enter a description for the business"
+      "business_description": "You must enter a description for the business",
+      "logo_required": "You must enter a logo"
     },
     "privacy": {
       "title": "Privacy policies",

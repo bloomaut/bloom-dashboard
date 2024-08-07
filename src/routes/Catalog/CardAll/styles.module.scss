@@ -21,13 +21,6 @@
         object-position: top;
       }
     }
-    .icon_container {
-      @include flex(row, center, center);
-      svg {
-        width: 100px;
-        height: 100px;
-      }
-    }
     .content {
       @include width-height(100%, 35%);
       @include flex(row, space-between, center);
@@ -55,15 +48,5 @@
   }
   .card_services {
     background-color: $purple;
-  }
-  .btn_edit {
-    @include width-height(auto, 65px);
-    @include flex(column, center, center);
-    position: absolute;
-    bottom: 0;
-    right: 10px;
-    padding-left: 5px;
-    border-left: 1px solid $border;
-    background: transparent;
   }
 }

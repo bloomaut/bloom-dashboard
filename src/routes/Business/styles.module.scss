@@ -1,5 +1,5 @@
 .container_business {
-  @include width-height(100%, calc(100vh - 110px));
+  @include width-height(100%, auto);
   max-width: 1200px;
   padding: 0px 40px;
   .container_columns {
