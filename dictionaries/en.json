@@ -385,7 +385,8 @@
       "lastname": "You must enter a last name",
       "business_name": "You must enter a business name",
       "business_category": "You must enter a business category",
-      "business_description": "You must enter a description for the business"
+      "business_description": "You must enter a description for the business",
+      "logo_required": "You must enter a logo"
     },
     "privacy": {
       "title": "Privacy policies",

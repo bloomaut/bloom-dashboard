@@ -385,7 +385,8 @@
       "lastname": "Debes ingresar un apellido",
       "business_name": "Debes ingresar el nombre del negocio",
       "business_category": "Debes ingresar la categoría del negocio",
-      "business_description": "Debes ingresar una descripción para el negocio"
+      "business_description": "Debes ingresar una descripción para el negocio",
+      "logo_required": "Debes ingresar un logo"
     },
     "privacy": {
       "title": "Políticas de privacidad",

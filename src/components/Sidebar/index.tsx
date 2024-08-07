@@ -76,9 +76,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div
-      className={`${styles.container} ${isOpen ? "" : styles.container_closed} ${currentStep === 5 ? styles.container_steps_finished : ""}`}
-    >
+    <div className={`${styles.container} ${!isOpen && styles.container_closed}`}>
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>

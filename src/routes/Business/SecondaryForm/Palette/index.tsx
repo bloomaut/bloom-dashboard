@@ -64,6 +64,8 @@ const Palette = ({ palette, setFormData, logo }: PaletteProps) => {
       palette: colors.map(color => ({ color })),
     };
 
+    console.log(updatePalette);
+
     const data = await update("small-business", updatePalette);
 
     if (data.statusCode === 200) {
