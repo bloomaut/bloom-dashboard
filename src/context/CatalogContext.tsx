@@ -8,8 +8,10 @@ import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
+  datasetDetail: DatasetDetailType | null | undefined;
   loading: boolean;
   fetchDatasets: () => Promise<void>;
+  fetchDatasetById: (id: string) => Promise<void>;
   handleRemoveDataset: (id: string) => void;
   handleAddDataset: (dataset: DatasetProps) => void;
   handleUpdateDataset: (updatedDataset: DatasetProps) => void;
@@ -17,9 +19,13 @@ interface CatalogContextType {
 
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
+  datasetDetail: null,
   loading: true,
   fetchDatasets: async () => {
     throw new Error("fetchDatasets function not implemented");
+  },
+  fetchDatasetById: async () => {
+    throw new Error("fetchDatasetById function not implemented");
   },
   handleRemoveDataset: () => {
     throw new Error("handleDeleteDataset function not implemented");
@@ -35,6 +41,7 @@ const CatalogContext = createContext<CatalogContextType>({
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
+  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
   const dispatch = useAppDispatch();
 
   const fetchDatasets = async () => {
@@ -51,6 +58,14 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     const data = await get("dataschemas/dataprovider/small", ENV.BOX);
     if (data.statusCode === 200) {
       dispatch(setDataschemaData(data.data));
+    }
+  };
+
+  const fetchDatasetById = async (id: string) => {
+    setDatasetDetail(null);
+    const data = await get(`datasets/${id}`, ENV.BOX);
+    if (data.statusCode === 200) {
+      setDatasetDetail(data.data);
     }
   };
 
@@ -82,6 +97,8 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     <CatalogContext.Provider
       value={{
         datasets,
+        fetchDatasetById,
+        datasetDetail,
         handleRemoveDataset,
         handleAddDataset,
         handleUpdateDataset,
