@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
+import Icon from "@/components/Icon";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { useClientsContext } from "@/context/ClientsContext";
-import Icon from "@/components/Icon";
 
 interface RowProps {
   client: ClientsProps;
@@ -16,10 +16,10 @@ const Row = ({ client, onDelete, onEdit }: RowProps) => {
     <div className={styles.row}>
       <div className={styles.names} onClick={() => setClientSelected(client)}>
         <p className={styles.last_name}>
-          {client.clientCode} {client.ClientFirstname}
+          {client.clientCode} {client.clientFirstname}
         </p>
-        {client.ClientLastname && <p className={styles.first_name}>{client.ClientLastname}</p>}
-        {client.ClientEmail && <p className={styles.email}>({client.ClientEmail})</p>}
+        {client.clientLastname && <p className={styles.first_name}>{client.clientLastname}</p>}
+        {client.clientEmail && <p className={styles.email}>({client.clientEmail})</p>}
       </div>
       <div className={styles.controls}>
         <button className={styles.btn} onClick={onEdit}>
