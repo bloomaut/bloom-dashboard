@@ -1,15 +1,12 @@
 import Input from "@/components/Input";
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
-import { UserBusiness } from "@/typescript/interfaces/business.interface";
+import { useBusinessContext } from "@/context/BusinessContext";
 
-interface AddInfoFormProps {
-  formData: UserBusiness;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
-
-const AddInfoForm = ({ formData, onChange }: AddInfoFormProps) => {
+const AddInfoForm = () => {
+  const { formData, handleChange } = useBusinessContext();
   const dict = useTranslations("dict.business");
+
   return (
     <form className={styles.add_info}>
       <h6 className={styles.subtitle}>{dict("data.add_info")}</h6>
@@ -20,7 +17,7 @@ const AddInfoForm = ({ formData, onChange }: AddInfoFormProps) => {
           type='text'
           name='business_company_web'
           value={formData.client.company_web || ""}
-          handleChange={onChange}
+          handleChange={handleChange}
         />
       </div>
       <div className={styles.input}>
@@ -30,17 +27,17 @@ const AddInfoForm = ({ formData, onChange }: AddInfoFormProps) => {
           type='text'
           name='business_instagram'
           value={formData.client.instagram || ""}
-          handleChange={onChange}
+          handleChange={handleChange}
         />
       </div>
       <div className={styles.input}>
         <label>{dict("data.phone")}</label>
         <Input
-          textHolder={"112155...."}
+          textHolder={"+54 9 11 15...."}
           type='text'
           name='phone'
           value={formData.phone || ""}
-          handleChange={onChange}
+          handleChange={handleChange}
         />
       </div>
     </form>
