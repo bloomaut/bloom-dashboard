@@ -1,7 +1,7 @@
 "use client";
 import Script from "next/script";
 
-const ClarityWrapper = () => {
+const ClarityScript = () => {
   return (
     <Script
       id='ms-clarity'
@@ -17,11 +17,11 @@ const ClarityWrapper = () => {
               t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];
               y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "nj3cgvg1pr");
+            })(window, document, "clarity", "script", "nk4fsei17x");
           `,
       }}
     />
   );
 };
 
-export default ClarityWrapper;
+export default ClarityScript;
