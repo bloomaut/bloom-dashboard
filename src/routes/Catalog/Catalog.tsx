@@ -5,6 +5,7 @@ import { useCatalogContext } from "@/context/CatalogContext";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import whiteImage from "@/../public/assets/blank.png";
 // Components
 import Header from "./Header";
 import Card from "./Card";
@@ -15,9 +16,9 @@ import Button from "@/components/Button";
 import CardAll from "./CardAll";
 
 const Catalog = () => {
-  const { datasets, fetchDatasets, loading } = useCatalogContext();
+  const { datasets, loading } = useCatalogContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const { step_04 } = useStepValidation();
+  const { step_04, step_03 } = useStepValidation();
   const router = useRouter();
   const dict = useTranslations("dict");
 
@@ -48,9 +49,14 @@ const Catalog = () => {
               dataschema='uitool-products'
               name={dict("catalog.all_products")}
               totalDataItems={numberOfProducts}
-              image=''
+              image={whiteImage}
             />
-            <CardAll dataschema='uitool-services' name={dict("catalog.all_services")} totalDataItems={0} image='' />
+            <CardAll
+              dataschema='uitool-services'
+              name={dict("catalog.all_services")}
+              totalDataItems={0}
+              image={whiteImage}
+            />
             {datasets.length > 0 && datasets.map(dataset => <Card key={dataset._id} {...dataset} />)}
             <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
               <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
@@ -60,9 +66,10 @@ const Catalog = () => {
             </div>
           </>
         )}
-        {showPopupCreate && (
-          <FormActions action='post' setShowConfirmation={setShowPopupCreate} fetchDatasets={fetchDatasets} />
-        )}
+        <div className={styles.btn_next}>
+          {!step_04 && <Button title='Next' isDisabled={step_03} onclick={handleNavigation} />}
+        </div>
+        {showPopupCreate && <FormActions action='post' setShowConfirmation={setShowPopupCreate} />}
       </div>
     </div>
   );

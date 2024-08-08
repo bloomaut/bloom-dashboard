@@ -4,7 +4,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
+import { DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
@@ -24,6 +24,7 @@ interface Form {
   id?: string;
   allProducts?: AllProducts[];
   onUpdate?: (editedProduct: AllProducts) => void;
+  onCreate?: (newItem: any) => void;
 }
 
 interface InitialValuesProps {
@@ -54,8 +55,8 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
-  const { datasetDetail, fetchDatasetById } = useCatalogDetailContext();
+const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: Form) => {
+  const { datasetDetail } = useCatalogDetailContext();
   const [formData, setFormData] = useState<any>(initialValues);
   const [checkValidation, setCheckValidation] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -98,7 +99,9 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
 
   // Validación de campos
   const fieldsToValidate =
-    datasetDetail?.dataSet.dataschema?.filter((field: any) => field.required).map((field: any) => field.name) || [];
+    datasetDetail?.dataSet?.dataschema?.[0].fields
+      .filter((field: DataschemaField) => field.required)
+      .map((field: any) => field.name) || [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -153,7 +156,9 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
       setLoading(false);
       notify(dict("toast.success_item"));
       setShowPopup(false);
-      fetchDatasetById();
+      if (onCreate) {
+        onCreate(data.data.data);
+      }
     } else {
       notifyError(dict("toast.error_file"));
     }

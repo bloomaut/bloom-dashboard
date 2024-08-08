@@ -1,11 +1,12 @@
 import styles from "./styles.module.scss";
 import { Link } from "@/navigation";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 
 interface CardAllProps {
   dataschema: string;
   name: string;
-  image: string;
+  image: string | StaticImport;
   totalDataItems: number;
 }
 
