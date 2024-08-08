@@ -4,7 +4,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
+import { DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
@@ -99,8 +99,9 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
 
   // Validación de campos
   const fieldsToValidate =
-    datasetDetail?.dataSet?.dataschema?.fields.filter((field: any) => field.required).map((field: any) => field.name) ||
-    [];
+    datasetDetail?.dataSet?.dataschema?.[0].fields
+      .filter((field: DataschemaField) => field.required)
+      .map((field: any) => field.name) || [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

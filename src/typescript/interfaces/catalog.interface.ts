@@ -33,7 +33,7 @@ export interface DatasetProps {
   description: string;
   image: string;
   visibility: boolean;
-  dataschema?: DataschemaProps;
+  dataschema?: Array<DataschemaProps>;
   createdAt: string;
   updatedAt: string;
   totalDataItems: number;
