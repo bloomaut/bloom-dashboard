@@ -2,25 +2,26 @@ import styles from "./styles.module.scss";
 import Icon from "../Icon";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, FileRejection } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 
 interface FileDragDropProps {
-  file?: any | null;
+  file?: File | null;
   setFile: Dispatch<SetStateAction<File | null>>;
   img?: "Logo" | "Banner" | "Excel";
 }
 
 const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
-  const { notifyError, notify } = useMessageToast();
-  const userData = useAppSelector(data => data.userData);
+  const { notifyError } = useMessageToast();
+  const userData = useAppSelector(state => state.userData);
   const pathname = usePathname();
   const dict = useTranslations("dict.drag");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
+  // Verificar la página actual para aplicar lógica específica
   const businessPage = pathname?.includes("business");
   const myCollectionPage = pathname?.includes("my-collection");
   const catalogPage = pathname?.match(/^\/\w{2}\/catalog\/?$/) !== null;
@@ -28,8 +29,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
   const logo = userData?.client.logo;
   const banner = userData?.client.banner;
 
-  const onDrop = (acceptedFiles: File[], fileRejections: any) => {
-    // Si hay errores, manejarlos acá
+  const onDrop = (acceptedFiles: File[], fileRejections: FileRejection[]) => {
     if (fileRejections.length) {
       const errorCode = fileRejections[0].errors[0].code;
       if (errorCode === "file-invalid-type") {
@@ -46,24 +46,22 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
         }
       }
 
-      // Lógica para controlar la carga en my-collection
       if (myCollectionPage) {
-        // Solo permitir la carga de planillas de excel
         if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
           notifyError("Debes seleccionar una planilla de excel");
         } else {
           setFile(acceptedFiles[0]);
         }
       }
-      //Logica para la pagina de detalle del catalogo
+
       if (catalogDetail) {
-        if (img === "Excel" && catalogDetail) {
+        if (img === "Excel") {
           if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("image")) {
             notifyError("Debes seleccionar una planilla de excel");
           } else {
             setFile(acceptedFiles[0]);
           }
-        } else if (img === "Logo" && catalogDetail) {
+        } else if (img === "Logo") {
           if (acceptedFiles[0].type.includes("pdf") || acceptedFiles[0].type.includes("excel")) {
             notifyError("Debes seleccionar una imagen");
           } else {
@@ -76,7 +74,6 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
         }
       }
 
-      // Lógica para controlar la carga en my-business
       if (businessPage) {
         if (!acceptedFiles[0].type.includes("image")) {
           notifyError(dict("error_image"));
@@ -137,7 +134,7 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       {file && imageUrl ? (
         <Image src={imageUrl} alt='Product image' width={100} height={100} />
       ) : file ? (
-        <Image src={file} alt='Product image' width={300} height={300} />
+        <Image src={file.name} alt='Product image' width={300} height={300} />
       ) : (
         <></>
       )}

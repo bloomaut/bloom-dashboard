@@ -52,7 +52,7 @@ const AllProducts = () => {
           <LoadingSpinner />
         ) : products?.length ? (
           <div className={styles.content_container}>
-            {products.map((item: any) => (
+            {products.map((item: AllProductsInterface) => (
               <TableRow
                 key={item._id}
                 id={item._id}

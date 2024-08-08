@@ -1,22 +1,27 @@
-interface ClientDataProps {
-  active: number | null;
+// Definición de tipos comunes
+type ID = number | null;
+type Timestamp = string;
+type Nullable<T> = T | null;
+
+export interface ClientDataProps {
+  active: Nullable<number>;
   company_web: string;
-  created_at: string;
+  created_at: Timestamp;
   cuit: string;
-  id: number | null;
+  id: ID;
   logo: string;
   name: string;
   razon_social: string;
 }
 
 export interface UserDataProps {
-  active: number | null;
+  active: Nullable<number>;
   auth0_id: string;
   client: ClientDataProps;
   company_position: string;
-  created_at: string;
+  created_at: Timestamp;
   email: string;
-  id: number | null;
+  id: ID;
   name: string;
   password: string;
   phone: string;

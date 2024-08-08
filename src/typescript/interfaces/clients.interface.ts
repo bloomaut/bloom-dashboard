@@ -1,21 +1,27 @@
+// Definición de tipos comunes
+type ID = string;
+type Timestamp = string;
+
 export interface ClientsProps {
-  _id?: string;
-  ClientFirstname: string;
-  ClientLastname: string;
-  ClientEmail: string;
-  ClientLocation: string;
-  ClientPhone: string;
+  _id?: ID;
+  clientFirstname: string;
+  clientLastname: string;
+  clientEmail: string;
+  clientLocation: string;
+  clientPhone: string;
   personalNote: string;
   clientCode?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
 }
 
 export interface UpdateClient {
-  ClientFirstname: string;
-  ClientLastname: string;
-  ClientEmail: string;
-  ClientPhone: string;
-  ClientLocation: string;
+  clientFirstname: string;
+  clientLastname: string;
+  clientEmail: string;
+  clientPhone: string;
+  clientLocation: string;
   personalNote: string;
 }
+
+export type PostClient = ClientsProps;
