@@ -22,11 +22,11 @@ interface PopupActionsProps {
 }
 
 const initialFormData: ClientsProps = {
-  ClientFirstname: "",
-  ClientLastname: "",
-  ClientEmail: "",
-  ClientPhone: "",
-  ClientLocation: "",
+  clientFirstname: "",
+  clientLastname: "",
+  clientEmail: "",
+  clientPhone: "",
+  clientLocation: "",
   personalNote: "",
   createdAt: "",
   updatedAt: "",
@@ -59,11 +59,11 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
       const newData = {
-        ClientFirstname: formData.ClientFirstname,
-        ClientLastname: formData.ClientLastname,
-        ClientEmail: formData.ClientEmail,
-        ClientPhone: formData.ClientPhone,
-        ClientLocation: formData.ClientLocation,
+        clientFirstname: formData.clientFirstname,
+        clientLastname: formData.clientLastname,
+        clientEmail: formData.clientEmail,
+        clientPhone: formData.clientPhone,
+        clientLocation: formData.clientLocation,
         personalNote: formData.personalNote,
       };
       if (requestType === "POST") {
@@ -115,7 +115,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 textHolder={dict("clients.form_label_01")}
                 type='text'
                 name='ClientFirstname'
-                value={formData.ClientFirstname}
+                value={formData.clientFirstname}
                 handleChange={handleInputChange}
               />
             </div>
@@ -125,7 +125,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 textHolder={dict("clients.form_label_02")}
                 type='text'
                 name='ClientLastname'
-                value={formData.ClientLastname || ""}
+                value={formData.clientLastname || ""}
                 handleChange={handleInputChange}
               />
             </div>
@@ -139,7 +139,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_03")}
               type='text'
               name='ClientEmail'
-              value={formData.ClientEmail || ""}
+              value={formData.clientEmail || ""}
               handleChange={handleInputChange}
             />
           </div>
@@ -149,7 +149,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_04")}
               type='text'
               name='ClientLocation'
-              value={formData.ClientLocation || ""}
+              value={formData.clientLocation || ""}
               handleChange={handleInputChange}
             />
           </div>
@@ -159,7 +159,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_05")}
               type='text'
               name='ClientPhone'
-              value={formData.ClientPhone || ""}
+              value={formData.clientPhone || ""}
               handleChange={handleInputChange}
             />
           </div>
