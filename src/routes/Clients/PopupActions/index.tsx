@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { ClientsProps } from "@/typescript/interfaces/clients.interface";
+import { ClientsProps, UpdateClient } from "@/typescript/interfaces/clients.interface";
 import { post, update } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
@@ -22,11 +22,11 @@ interface PopupActionsProps {
 }
 
 const initialFormData: ClientsProps = {
-  clientFirstname: "",
-  clientLastname: "",
-  clientEmail: "",
-  clientPhone: "",
-  clientLocation: "",
+  ClientFirstname: "",
+  ClientLastname: "",
+  ClientEmail: "",
+  ClientPhone: "",
+  ClientLocation: "",
   personalNote: "",
   createdAt: "",
   updatedAt: "",
@@ -59,11 +59,11 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
       const newData = {
-        clientFirstname: formData.clientFirstname,
-        clientLastname: formData.clientLastname,
-        clientEmail: formData.clientEmail,
-        clientPhone: formData.clientPhone,
-        clientLocation: formData.clientLocation,
+        ClientFirstname: formData.ClientFirstname!,
+        ClientLastname: formData.ClientLastname!,
+        ClientEmail: formData.ClientEmail,
+        ClientPhone: formData.ClientPhone,
+        ClientLocation: formData.ClientLocation,
         personalNote: formData.personalNote,
       };
       if (requestType === "POST") {
@@ -87,7 +87,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     }
   };
 
-  const editClient = async (newData: ClientsProps) => {
+  const editClient = async (newData: UpdateClient) => {
     const data = await update("client-customer", newData, clientId);
     if (data.statusCode === 200) {
       notify(dict("toast.client_edit"));
@@ -115,7 +115,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 textHolder={dict("clients.form_label_01")}
                 type='text'
                 name='ClientFirstname'
-                value={formData.clientFirstname}
+                value={formData.ClientFirstname || ""}
                 handleChange={handleInputChange}
               />
             </div>
@@ -125,7 +125,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 textHolder={dict("clients.form_label_02")}
                 type='text'
                 name='ClientLastname'
-                value={formData.clientLastname || ""}
+                value={formData.ClientLastname || ""}
                 handleChange={handleInputChange}
               />
             </div>
@@ -139,7 +139,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_03")}
               type='text'
               name='ClientEmail'
-              value={formData.clientEmail || ""}
+              value={formData.ClientEmail || ""}
               handleChange={handleInputChange}
             />
           </div>
@@ -149,7 +149,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_04")}
               type='text'
               name='ClientLocation'
-              value={formData.clientLocation || ""}
+              value={formData.ClientLocation || ""}
               handleChange={handleInputChange}
             />
           </div>
@@ -159,7 +159,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
               textHolder={dict("clients.form_label_05")}
               type='text'
               name='ClientPhone'
-              value={formData.clientPhone || ""}
+              value={formData.ClientPhone || ""}
               handleChange={handleInputChange}
             />
           </div>

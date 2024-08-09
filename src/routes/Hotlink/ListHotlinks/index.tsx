@@ -10,9 +10,9 @@ import LoadingSpinner from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 
 const ListHotlinks = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
   const dict = useTranslations("dict.hotlinks.list");
   const { hotlinksList, filteredHotlinks, setFilteredHotlinks, loading } = useFlakesContext();
+  const [searchValue, setSearchValue] = useState<string>("");
   const [currentItems, setCurrentItems] = useState<HotlinkList[]>([]);
   const [currentItemsFiltered, setCurrentItemsFiltered] = useState<HotlinkList[]>([]);
 

@@ -43,7 +43,6 @@ const Form = () => {
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
 
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
-  console.log(formVariableData);
 
   useEffect(() => {
     if (formVariableData) {

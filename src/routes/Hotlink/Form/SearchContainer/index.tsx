@@ -32,7 +32,7 @@ const SearchContainer = () => {
             >
               <div>
                 <p>
-                  {client.clientFirstname} {client.clientLastname}
+                  {client.ClientFirstname} {client.ClientLastname}
                 </p>
               </div>
             </div>
