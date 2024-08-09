@@ -256,7 +256,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: Form) => {
               textHolder=''
               textDescription={dict("catalog.form_actions.order_description")}
               name='order'
-              value={formData.order || 0}
+              value={formData.order || null}
               handleChange={handleChange}
             />
             <CheckBox text='Visible on my apps' active={formData.visibility} onChange={handleVisibility} />
