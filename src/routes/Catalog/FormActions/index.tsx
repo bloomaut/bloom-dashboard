@@ -14,10 +14,10 @@ import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useAppSelector } from "@/store/hooks";
 import PopupConfirm from "@/components/PopupConfirm";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import { useCatalogContext } from "@/context/CatalogContext";
 
 interface FormActionsProps {
   setShowConfirmation: (value: SetStateAction<boolean>) => void;
-  fetchDatasets: () => void;
   action: "post" | "put";
   id?: string;
   name?: string;
@@ -39,22 +39,14 @@ const initialValues: InitialValuesProps = {
   category_visibility: true,
 };
 
-const FormActions = ({
-  setShowConfirmation,
-  fetchDatasets,
-  action,
-  id,
-  name,
-  description,
-  visibility,
-  image,
-}: FormActionsProps) => {
+const FormActions = ({ setShowConfirmation, action, id, name, description, visibility, image }: FormActionsProps) => {
   const [formData, setFormData] = useState(initialValues);
   const [popupDelete, setPopupDelete] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checkValidation, setCheckValidation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState(false);
+  const { handleRemoveDataset, handleAddDataset, handleUpdateDataset } = useCatalogContext();
   const schema = useAppSelector(state => state.dataschema);
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
   const { notify, notifyError } = useMessageToast();
@@ -110,6 +102,7 @@ const FormActions = ({
         if (action === "post") {
           const response = await post("datasets", postDataschema, ENV.BOX);
           if (response.data.statusCode === 201) {
+            handleAddDataset(response.data.data);
             notify(dict("toast.post_dataset"));
           } else {
             notifyError(dict("toast.error_dataset"));
@@ -133,6 +126,7 @@ const FormActions = ({
 
           response = await update("datasets", updatedDataset, id, ENV.BOX);
           if (response.statusCode === 200) {
+            handleUpdateDataset(response.data);
             notify(dict("toast.success_edit"));
           } else {
             notifyError(dict("toast.error_edit"));
@@ -143,7 +137,6 @@ const FormActions = ({
       } finally {
         setLoading(false);
         setShowConfirmation(false);
-        fetchDatasets();
       }
     } else {
       setLoading(false);
@@ -158,7 +151,7 @@ const FormActions = ({
         setShowConfirmation(false);
         notify(dict("toast.success_delete"));
         setLoading(false);
-        fetchDatasets();
+        handleRemoveDataset(id);
       } else {
         notifyError(dict("toast.error_delete"));
         setLoading(false);
