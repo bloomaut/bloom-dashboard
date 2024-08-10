@@ -15,9 +15,10 @@ interface Header {
   name: string | undefined | null;
   id: string | string[];
   quantity: number | undefined | null;
+  onCreate: (newItem: any) => void;
 }
 
-const Header = ({ name, id, quantity }: Header) => {
+const Header = ({ name, id, quantity, onCreate }: Header) => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [bulkLoadPopup, setBulkLoadPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -45,10 +46,10 @@ const Header = ({ name, id, quantity }: Header) => {
     <div className={styles.header_container}>
       <div className={styles.title_container}>
         <Breadcrumb />
-        <p className={styles.catalog}>
-          {name}
-          {quantity && <span>({quantity})</span>}
-        </p>
+        <div className={styles.name_container}>
+          <p className={styles.name}>{name}</p>
+          {!loading && quantity !== null && <p className={styles.quantity}>({quantity})</p>}
+        </div>
       </div>
       <div className={styles.btn_container}>
         <Button
@@ -77,7 +78,14 @@ const Header = ({ name, id, quantity }: Header) => {
           submitFunction={handleBulkLoad}
         />
       )}
-      {showPopupCreate && <Form action='post' title={dict("popup.create_product")} setShowPopup={setShowPopupCreate} />}
+      {showPopupCreate && (
+        <Form
+          action='post'
+          title={dict("popup.create_product")}
+          setShowPopup={setShowPopupCreate}
+          onCreate={onCreate}
+        />
+      )}
     </div>
   );
 };

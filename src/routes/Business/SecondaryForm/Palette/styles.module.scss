@@ -4,7 +4,7 @@
   @include flex(column, flex-start, flex-start, 10px);
   .container {
     @include width-height(100%, auto);
-    @include flex(row, center, flex-start, 10px);
+    @include flex(row, flex-start, flex-start, 10px);
     position: relative;
     .column {
       @include width-height(auto, 75px);

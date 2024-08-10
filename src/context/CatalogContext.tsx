@@ -8,21 +8,33 @@ import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
-  loading: boolean;
   datasetDetail: DatasetDetailType | null | undefined;
+  loading: boolean;
   fetchDatasets: () => Promise<void>;
   fetchDatasetById: (id: string) => Promise<void>;
+  handleRemoveDataset: (id: string) => void;
+  handleAddDataset: (dataset: DatasetProps) => void;
+  handleUpdateDataset: (updatedDataset: DatasetProps) => void;
 }
 
 const CatalogContext = createContext<CatalogContextType>({
   datasets: [],
-  loading: true,
   datasetDetail: null,
+  loading: true,
   fetchDatasets: async () => {
     throw new Error("fetchDatasets function not implemented");
   },
   fetchDatasetById: async () => {
     throw new Error("fetchDatasetById function not implemented");
+  },
+  handleRemoveDataset: () => {
+    throw new Error("handleDeleteDataset function not implemented");
+  },
+  handleAddDataset: () => {
+    throw new Error("handleAddDataset function not implemented");
+  },
+  handleUpdateDataset: () => {
+    throw new Error("handleUpdateDataset function not implemented");
   },
 });
 
@@ -57,6 +69,34 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
+  const handleRemoveDataset = (deletedId: string) => {
+    setDatasets(datasets.filter(item => item._id !== deletedId));
+  };
+
+  const handleAddDataset = (newDataset: DatasetProps) => {
+    const datasetWithTotalItems = {
+      ...newDataset,
+      totalDataItems: 0,
+    };
+
+    setDatasets(prevDatasets => [...prevDatasets, datasetWithTotalItems]);
+  };
+
+  const handleUpdateDataset = (updatedDataset: DatasetProps) => {
+    setDatasets(prevDatasets => {
+      return prevDatasets.map(dataset => {
+        if (dataset._id === updatedDataset._id) {
+          return {
+            ...dataset,
+            ...updatedDataset,
+            totalDataItems: dataset.totalDataItems,
+          };
+        }
+        return dataset;
+      });
+    });
+  };
+
   useEffect(() => {
     fetchDatasets();
     fetchDataSchemas();
@@ -66,10 +106,13 @@ export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
     <CatalogContext.Provider
       value={{
         datasets,
-        loading,
-        datasetDetail,
-        fetchDatasets,
         fetchDatasetById,
+        datasetDetail,
+        handleRemoveDataset,
+        handleAddDataset,
+        handleUpdateDataset,
+        loading,
+        fetchDatasets,
       }}
     >
       {children}

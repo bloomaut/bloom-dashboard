@@ -7,7 +7,7 @@
     @include flex(row, space-between, flex-start);
     flex-wrap: nowrap;
     .children_container {
-      @include width-height(100%, calc(100vh - 65px));
+      @include width-height(100%, 100%);
       @include flex(column, flex-start, center);
       background-color: $generalBackground;
       overflow-y: auto;

@@ -33,9 +33,7 @@ export interface DatasetProps {
   description: string;
   image: string;
   visibility: boolean;
-  dataschema: {
-    fields: [];
-  };
+  dataschema?: Array<DataschemaProps>;
   createdAt: string;
   updatedAt: string;
   totalDataItems: number;
@@ -93,6 +91,10 @@ export interface PostDataSchema {
 export interface PostOnboarding {
   template_id: string;
   onboarding_id: string;
+}
+
+export interface PutPorcentage {
+  percentage: string | number;
 }
 
 export interface DatasetDetailType {

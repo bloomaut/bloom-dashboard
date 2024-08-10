@@ -337,6 +337,12 @@
       "massive_upload": "Carga masiva",
       "massive_update": "Actualización masiva",
       "update_changes": "Actualizar cambios",
+      "update_prices": "Actualizar precios",
+      "price_title": "Actualizar precios con porcentajes",
+      "price_subtitle": "Actualizar todos los precios del catálogo en porcentajes. Desde -99% hasta 100%.",
+      "price_percentage": "Porcentaje",
+      "price_error": "El porcentaje está fuera del rango permitido.",
+      "price_success": "Precios actualizados correctamente.",
       "form_actions": {
         "title": "Información del catálogo",
         "name": "Nombre",
@@ -363,7 +369,8 @@
       },
       "upload_excel_title": "Subir Planilla Excel",
       "upload_excel": "Subir Excel",
-      "all_products": "Productos"
+      "all_products": "Productos",
+      "all_services": "Servicios"
     },
     "form_validation": {
       "ClientFirstname": "El nombre es requerido",
@@ -378,7 +385,8 @@
       "lastname": "Debes ingresar un apellido",
       "business_name": "Debes ingresar el nombre del negocio",
       "business_category": "Debes ingresar la categoría del negocio",
-      "business_description": "Debes ingresar una descripción para el negocio"
+      "business_description": "Debes ingresar una descripción para el negocio",
+      "logo_required": "Debes ingresar un logo"
     },
     "privacy": {
       "title": "Políticas de privacidad",

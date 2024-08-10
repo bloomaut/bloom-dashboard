@@ -14,11 +14,14 @@ import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import PopupExcel from "./PopupExcel";
 import Header from "./Header";
+import PopupUpdatePrices from "./PopupUpdatePrices";
 
 const Detail = () => {
   const [massiveUpdatePopup, setMassiveUpdatePopup] = useState<boolean>(false);
+  const [updatePricePopup, setUpdatePricePopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [sortedDataItems, setSortedDataItems] = useState<any[]>([]);
+  const [dataItemsCount, setDataItemsCount] = useState<number>(0);
   const { loading, setLoading, datasetDetail, fetchDatasetById } = useCatalogDetailContext();
   const { notify, notifyError } = useMessageToast();
   const { id } = useParams();
@@ -41,23 +44,36 @@ const Detail = () => {
   };
 
   const handleDeleteItem = (deletedId: string) => {
-    setSortedDataItems(prevItems => prevItems.filter(item => item._id !== deletedId));
+    setSortedDataItems(prevItems => {
+      const updatedItems = prevItems.filter(item => item._id !== deletedId);
+      setDataItemsCount(updatedItems.length);
+      return updatedItems;
+    });
   };
 
   const handleUpdateItem = (updatedItem: any) => {
     setSortedDataItems(prevItems => prevItems.map(item => (item._id === updatedItem._id ? updatedItem : item)));
   };
 
+  const handleAddItem = (newItem: any) => {
+    setSortedDataItems(prevItems => {
+      const updatedItems = [...prevItems, newItem];
+      setDataItemsCount(updatedItems.length);
+      return updatedItems;
+    });
+  };
+
   useEffect(() => {
     if (datasetDetail && datasetDetail.dataItems) {
       const sortedItems = [...datasetDetail.dataItems].sort((a, b) => a.order - b.order);
       setSortedDataItems(sortedItems);
+      setDataItemsCount(sortedItems.length);
     }
   }, [datasetDetail]);
 
   return (
     <section className={styles.catalog_detail_container}>
-      <Header name={datasetDetail?.dataSet.name} quantity={datasetDetail?.dataItems.length} id={id} />
+      <Header name={datasetDetail?.dataSet.name} quantity={dataItemsCount} id={id} onCreate={handleAddItem} />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (
@@ -84,6 +100,11 @@ const Detail = () => {
       </div>
       <div className={styles.btn_container}>
         <Button
+          title={dict("catalog.update_prices")}
+          styleName='btn_update_prices'
+          onclick={() => setUpdatePricePopup(true)}
+        />
+        <Button
           title={dict("catalog.massive_update")}
           styleName='btn_upload'
           icon={<Icon name='reload' strokeColor='#7f7f7f' width={25} height={25} viewBox='0 0 22 15' />}
@@ -103,6 +124,7 @@ const Detail = () => {
           submitFunction={handleMassiveUpload}
         />
       )}
+      {updatePricePopup && <PopupUpdatePrices closePopup={setUpdatePricePopup} id={id} />}
     </section>
   );
 };

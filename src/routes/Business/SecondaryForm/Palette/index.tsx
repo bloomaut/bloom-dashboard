@@ -1,20 +1,15 @@
 import Button from "@/components/Button";
 import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
-import { UserBusiness } from "@/typescript/interfaces/business.interface";
 import { useTranslations } from "next-intl";
 import { useState, useEffect, useRef } from "react";
 import { update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { Oval } from "react-loader-spinner";
+import { useBusinessContext } from "@/context/BusinessContext";
 
-interface PaletteProps {
-  palette: { color: string }[] | null;
-  setFormData: React.Dispatch<React.SetStateAction<UserBusiness>>;
-  logo: File | null;
-}
-
-const Palette = ({ palette, setFormData, logo }: PaletteProps) => {
+const Palette = () => {
+  const { formData, setFormData, logo } = useBusinessContext();
   const [colors, setColors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showIcon, setShowIcon] = useState<boolean>(false);
@@ -24,12 +19,12 @@ const Palette = ({ palette, setFormData, logo }: PaletteProps) => {
   const newColorInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (palette && palette.length > 0) {
-      setColors(palette.map(({ color }) => color));
+    if (formData.client.palette && formData.client.palette.length > 0) {
+      setColors(formData.client.palette.map(({ color }) => color));
     } else {
       setColors(["#ffffff"]);
     }
-  }, [palette]);
+  }, [formData.client.palette]);
 
   const handleColorChange = (index: number, value: string) => {
     const updatedColors = [...colors];
@@ -138,12 +133,12 @@ const Palette = ({ palette, setFormData, logo }: PaletteProps) => {
           />
         </div>
       ) : (
-        logo &&
-        colors.length >= 1 && (
+        (logo && colors.length >= 1) ||
+        (formData.client.logo && (
           <p className={styles.submit} onClick={handleSaveColors}>
             Update palette
           </p>
-        )
+        ))
       )}
       <p className={styles.description}>{dict("data.description")}</p>
     </div>
