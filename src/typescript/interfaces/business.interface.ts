@@ -37,7 +37,7 @@ export interface Client {
   palette: ColorPalette;
   created_at?: string;
   updated_at?: string;
-  onboardings: Nullable<Onboardings[]>;
+  onboardings?: Nullable<Onboardings[]>;
 }
 
 // Interfaces relacionadas con Onboarding
