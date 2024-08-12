@@ -14,7 +14,7 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
     <article className={styles.container}>
       <div
         className={
-          dataschema && dataschema[0].category === "uitool-products"
+          dataschema && dataschema.category === "uitool-products"
             ? styles.card
             : `${styles.card} ${styles.card_services}`
         }
