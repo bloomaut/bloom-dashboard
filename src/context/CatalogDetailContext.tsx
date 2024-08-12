@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { DatasetDetailType } from "@/typescript/interfaces/catalog.interface";
 
 interface CatalogDetailContextType {
-  datasetDetail: DatasetDetailType | null | undefined;
+  datasetDetail: any | null | undefined;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
   loading: boolean;
@@ -23,7 +23,7 @@ const CatalogDetailContext = createContext<CatalogDetailContextType>({
 });
 
 export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) => {
-  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
+  const [datasetDetail, setDatasetDetail] = useState<any | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useParams();
 

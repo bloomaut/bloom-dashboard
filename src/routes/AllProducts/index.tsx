@@ -18,7 +18,6 @@ const AllProducts = () => {
   const fetchProducts = async () => {
     const data = await get(`dataitem/list/products`, ENV.BOX);
     if (data.statusCode === 200) {
-      console.log(data);
       const sortedItems: AllProductsInterface[] = [...data.dataItems].sort((a, b) => a.order - b.order);
       setProducts(sortedItems);
       setLoading(false);
@@ -52,7 +51,7 @@ const AllProducts = () => {
           <LoadingSpinner />
         ) : products?.length ? (
           <div className={styles.content_container}>
-            {products.map((item: any) => (
+            {products.map((item: AllProductsInterface) => (
               <TableRow
                 key={item._id}
                 id={item._id}

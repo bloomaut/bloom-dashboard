@@ -1,30 +1,35 @@
+// Definición de tipos comunes
+type ID = string;
+type Nullable<T> = T | null;
+
+// Interfaces principales
 export interface Powerapp {
-  _id: string;
+  _id: ID;
   title: string;
   thumbnail: string;
   skinx: Skinx;
   hog_related: HogRelated;
-  variables_in_use: Variablesinuse[];
+  variables_in_use: VariableInUse[];
 }
 
-export interface Variablesinuse {
+export interface VariableInUse {
   key: string;
   name: string;
   target: string;
   description: string;
   placeholder?: string;
-  tableColumns?: any[];
+  tableColumns?: string[];
   value?: string;
 }
 
 interface HogRelated {
-  _id: string;
+  _id: ID;
   title: string;
   thumbnail: string;
 }
 
 interface Skinx {
-  _id: string;
+  _id: ID;
   title: string;
   description?: string;
   category?: string;
@@ -34,8 +39,8 @@ interface Skinx {
 export interface Flake {
   typeFlake: string;
   flakeId: string;
-  collection_id?: string;
-  customer_id?: string;
+  collection_id?: ID;
+  customer_id?: ID;
   variables: Variable[];
 }
 
@@ -46,3 +51,5 @@ interface Variable {
   value: string;
   description: string;
 }
+
+export type PostFlake = Flake;

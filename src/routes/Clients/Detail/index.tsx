@@ -16,7 +16,7 @@ const Detail = () => {
   return (
     <section className={styles.container}>
       <p className={styles.detail_names}>
-        {clientSelected?.clientCode} {clientSelected?.ClientFirstname} {""}
+        {clientSelected?.ClientCode} {clientSelected?.ClientFirstname} {""}
         {clientSelected?.ClientLastname && clientSelected.ClientLastname}
       </p>
 
