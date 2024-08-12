@@ -18,6 +18,10 @@ export interface UserBusiness {
   isCatalogComplete: boolean;
 }
 
+export interface UserBusinessSelector {
+  userData: UserBusiness;
+}
+
 export interface Client {
   id?: number | null;
   name: Nullable<string>;
