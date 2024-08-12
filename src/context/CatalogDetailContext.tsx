@@ -33,7 +33,8 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
 
   const fetchDatasetById = async () => {
     const data = await get(`datasets/${id}`, ENV.BOX);
-    if (data.StatusCode === 200) {
+    console.log(data);
+    if (data.statusCode === 200) {
       setDatasetDetail(data.data);
     }
     setLoading(false);
