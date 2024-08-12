@@ -176,7 +176,6 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
       };
 
       const response = await update("small-business", dataToSend);
-      console.log(response);
       if (response.statusCode === 200) {
         notify(dict("toast.success_edit"));
         setLoading(false);

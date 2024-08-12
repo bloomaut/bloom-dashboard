@@ -18,7 +18,6 @@ const AllProducts = () => {
   const fetchProducts = async () => {
     const data = await get(`dataitem/list/products`, ENV.BOX);
     if (data.statusCode === 200) {
-      console.log(data);
       const sortedItems: AllProductsInterface[] = [...data.dataItems].sort((a, b) => a.order - b.order);
       setProducts(sortedItems);
       setLoading(false);
