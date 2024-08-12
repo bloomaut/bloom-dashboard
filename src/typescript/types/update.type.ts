@@ -1,4 +1,4 @@
-import { PutDataItem, PutPorcentage, UpdateDataset } from "../interfaces/catalog.interface";
+import { PutDataItem, PutPercentage, UpdateDataset } from "../interfaces/catalog.interface";
 import { UpdateClient } from "../interfaces/clients.interface";
 import { PutBusiness } from "../interfaces/business.interface";
 import { PutTemplate } from "../interfaces/template.interface";
@@ -11,4 +11,4 @@ export type UPDATE =
   | PutBusiness
   | PutTemplate
   | PutPalette
-  | PutPorcentage;
+  | PutPercentage;

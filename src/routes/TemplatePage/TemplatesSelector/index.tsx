@@ -8,7 +8,7 @@ import { Template } from "@/typescript/interfaces/template.interface";
 import { useSelector } from "react-redux";
 import { update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { UserBusiness } from "@/typescript/interfaces/business.interface";
+import { UserBusinessSelector } from "@/typescript/interfaces/business.interface";
 // Components
 import LoadingSpinner from "@/components/Loading";
 import flake_icon_01 from "/public/flake_icon_01.svg";
@@ -16,7 +16,7 @@ import flake_icon_02 from "/public/flake_icon_02.svg";
 
 const TemplatesSelector = () => {
   const dict = useTranslations("dict");
-  const onboardings = useSelector((state: UserBusiness) => state.userData?.client?.onboardings);
+  const onboardings = useSelector((state: UserBusinessSelector) => state.userData.client.onboardings);
   const [onboardingId, setOnboardingId] = useState("");
   const { templates, loading, selectedTemplateId, setSelectedTemplateId, setPreviewId, setPreviewLoading } =
     useTemplateContext();
@@ -41,8 +41,8 @@ const TemplatesSelector = () => {
     }
   }, [templates]);
 
-  const handleSubmitPut = async (skinx_id: string, template_id: string, powerapp_id: string) => {
-    const response = await update("small-template/onboarding", { skinx_id, template_id }, onboardingId);
+  const handleSubmitPut = async (template_id: string, powerapp_id: string) => {
+    const response = await update("small-template/onboarding", { template_id }, onboardingId);
     if (response.statusCode === 200) {
       notify(dict("toast.success_template"));
     } else {
@@ -107,7 +107,7 @@ const TemplatesSelector = () => {
                       onClick={() => {
                         setSelectedTemplateId(app._id);
                         window.localStorage.setItem("selectedTemplateId", app._id);
-                        handleSubmitPut(app.skinx_demo._id, app._id, app.skinx_demo.powerapp[0]._id);
+                        handleSubmitPut(app._id, app.skinx_demo.powerapp[0]._id);
                       }}
                     >
                       {dict("templates.select")}

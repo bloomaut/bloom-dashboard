@@ -1,3 +1,4 @@
+// Convierte un color hexadecimal a un array de valores RGB.
 const hexToRgb = (hex: string): number[] => {
   const bigint = parseInt(hex.slice(1), 16);
   const r = (bigint >> 16) & 255;
@@ -6,11 +7,13 @@ const hexToRgb = (hex: string): number[] => {
   return [r, g, b];
 };
 
+// Convierte un color RGB a un valor de tono (hue) en grados.
 const baseRGBToHue = (baseRGB: number[]): number => {
-  const [r, g, b]: number[] = baseRGB;
-  const max: number = Math.max(r, g, b);
-  const min: number = Math.min(r, g, b);
+  const [r, g, b] = baseRGB;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
   let hue: number;
+
   if (max === min) {
     hue = 0;
   } else if (max === r) {
@@ -20,10 +23,12 @@ const baseRGBToHue = (baseRGB: number[]): number => {
   } else {
     hue = 240 + (60 * (r - g)) / (max - min);
   }
+
   return hue;
 };
 
-export const colorPalleteGenerator = (colorBase: string): any[] => {
+// Genera una paleta de colores basada en un color base hexadecimal.
+export const colorPalleteGenerator = (colorBase: string): { color: string }[] => {
   const baseRGB = hexToRgb(colorBase);
 
   // Generar el primer color a partir del color base seleccionado por el usuario

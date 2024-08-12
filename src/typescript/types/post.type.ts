@@ -1,6 +1,6 @@
 import { PostDataSchema, PostDataItem, PostOnboarding } from "../interfaces/catalog.interface";
-import { ClientsProps } from "../interfaces/clients.interface";
-import { Collection } from "../interfaces/collection.interface";
-import { Flake } from "../interfaces/flakes.interface";
+import { PostClient } from "../interfaces/clients.interface";
+import { PostCollection } from "../interfaces/collection.interface";
+import { PostFlake } from "../interfaces/flakes.interface";
 
-export type POST = ClientsProps | Flake | Collection | PostDataSchema | PostDataItem | PostOnboarding | string;
+export type POST = PostClient | PostFlake | PostCollection | PostDataSchema | PostDataItem | PostOnboarding | string;

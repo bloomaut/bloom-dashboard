@@ -53,7 +53,7 @@ const TableRow = ({ hotlink }: TableRowProps) => {
         <div className={styles.column}>
           {hotlink.customer ? (
             <>
-              {hotlink.customer.clientCode} {hotlink.customer.ClientFirstname} {hotlink.customer.ClientLastname}
+              {hotlink.customer.clientCode} {hotlink.customer.clientFirstname} {hotlink.customer.clientLastname}
             </>
           ) : (
             <em>-</em>
