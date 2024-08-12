@@ -4,6 +4,8 @@ import { useAppSelector } from "@/store/hooks";
 const useStepValidation = () => {
   const userData = useAppSelector(state => state.userData);
 
+  console.log(userData);
+
   const step_01 = useMemo(() => {
     return Boolean(
       userData.name &&
@@ -25,12 +27,7 @@ const useStepValidation = () => {
 
   const step_04 = useMemo(() => {
     if (userData.client.onboardings)
-      return Boolean(
-        step_01 &&
-          step_02 &&
-          userData.client.onboardings[0].skinx_generated &&
-          userData.client.onboardings[0].skinx_generated !== null,
-      );
+      return Boolean(step_01 && step_02 && userData.client.onboardings[0].skinx_generated !== null);
   }, [step_01, step_02, step_03, userData]);
 
   const currentStep = useMemo(() => {
