@@ -14,11 +14,13 @@ import Icon from "@/components/Icon";
 import FormActions from "./FormActions";
 import Button from "@/components/Button";
 import CardAll from "./CardAll";
+import { useAppSelector } from "@/store/hooks";
 
 const Catalog = () => {
   const { datasets, loading } = useCatalogContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const { step_04, step_03 } = useStepValidation();
+  const userData = useAppSelector(state => state.userData);
   const router = useRouter();
   const dict = useTranslations("dict");
 
@@ -63,7 +65,7 @@ const Catalog = () => {
             </div>
             <div className={styles.btn_next}>
               {!step_04 && step_03 && (
-                <Button title='Next' isDisabled={datasets.length === 0} onclick={handleNavigation} />
+                <Button title='Next' isDisabled={!userData.isCatalogComplete} onclick={handleNavigation} />
               )}
             </div>
           </>

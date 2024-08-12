@@ -22,12 +22,14 @@ const useStepValidation = () => {
   }, [step_01, userData]);
 
   const step_03 = useMemo(() => {
-    return Boolean(step_01 && step_02 && userData.isCatalogComplete);
+    return Boolean(step_01 && step_02);
   }, [step_01, step_02, userData]);
 
   const step_04 = useMemo(() => {
     if (userData.client.onboardings)
-      return Boolean(step_01 && step_02 && userData.client.onboardings[0].skinx_generated !== null);
+      return Boolean(
+        step_01 && step_02 && userData.isCatalogComplete && userData.client.onboardings[0].skinx_generated !== null,
+      );
   }, [step_01, step_02, step_03, userData]);
 
   const currentStep = useMemo(() => {

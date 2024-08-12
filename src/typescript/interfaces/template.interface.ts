@@ -28,6 +28,5 @@ export interface HogRelated {
 }
 
 export interface PutTemplate {
-  skinx_id: ID;
   template_id: ID;
 }
