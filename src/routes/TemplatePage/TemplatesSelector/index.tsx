@@ -16,7 +16,7 @@ import flake_icon_02 from "/public/flake_icon_02.svg";
 
 const TemplatesSelector = () => {
   const dict = useTranslations("dict");
-  const onboardings = useSelector((state: UserBusiness) => state.userData?.client?.onboardings);
+  const onboardings = useSelector((state: UserBusiness) => state?.client?.onboardings);
   const [onboardingId, setOnboardingId] = useState("");
   const { templates, loading, selectedTemplateId, setSelectedTemplateId, setPreviewId, setPreviewLoading } =
     useTemplateContext();

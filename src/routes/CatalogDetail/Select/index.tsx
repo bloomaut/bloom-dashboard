@@ -1,8 +1,8 @@
-import { selectOptions } from "@/typescript/interfaces/catalog.interface";
+import { SelectOption } from "@/typescript/interfaces/catalog.interface";
 import styles from "./styles.module.scss";
 
 interface DetailProps {
-  options: Array<selectOptions>;
+  options: Array<SelectOption>;
   placeholder: string;
   onChange: (value: string) => void;
 }

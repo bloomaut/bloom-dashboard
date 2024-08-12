@@ -1,26 +1,32 @@
+// Definición de tipos comunes
+type ID = string;
+type Timestamp = string;
+type Nullable<T> = T | null;
+
+// Interfaces principales
 export interface DataItemsList {
   [key: string]: any;
 }
 
 export interface DataItems {
   order: number;
-  _id: string;
+  _id: ID;
   data: DataItemsList;
   totalDataItems: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
 }
 
 export interface AllProductsDataset {
   visibility: boolean;
-  _id: string;
+  _id: ID;
   name: string;
 }
 
 export interface AllProducts {
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
+  _id: ID;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
   data: DataItemsList;
   dataset: AllProductsDataset;
   order: number;
@@ -28,14 +34,14 @@ export interface AllProducts {
 }
 
 export interface DatasetProps {
-  _id: string;
+  _id: ID;
   name: string;
   description: string;
   image: string;
   visibility: boolean;
-  dataschema?: Array<DataschemaProps>;
-  createdAt: string;
-  updatedAt: string;
+  dataschema?: DataschemaProps[];
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
   totalDataItems: number;
   order: number;
 }
@@ -45,29 +51,30 @@ export interface UpdateDataset {
 }
 
 export interface PostDataItem {
-  dataset: string;
+  dataset: ID;
   data: DataItemsList | undefined;
-  order: number | null;
+  order: Nullable<number>;
   visibility: boolean;
 }
 
 export interface PutDataItem {
   data: DataItemsList | undefined;
-  order: number | null;
+  order: Nullable<number>;
   visibility: boolean;
 }
 
-export interface selectOptions {
+export interface SelectOption {
   title: string;
   value: string;
 }
 
+// Interfaces relacionadas con Dataschema
 export interface DataschemaProps {
-  _id: string;
+  _id: ID;
   name: string;
   fields: DataschemaField[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
   category: string;
 }
 
@@ -76,34 +83,35 @@ export interface DataschemaField {
   description: string;
   type: string;
   placeholder: string;
-  _id: string;
+  _id: ID;
   required: boolean;
 }
 
+// Interfaces para Onboarding y porcentaje
 export interface PostDataSchema {
   name: string;
   description: string;
-  dataschema: string;
+  dataschema: ID;
   order: number;
-  // image: string;
 }
 
 export interface PostOnboarding {
-  template_id: string;
-  onboarding_id: string;
+  template_id: ID;
+  onboarding_id: ID;
 }
 
-export interface PutPorcentage {
+export interface PutPercentage {
   percentage: string | number;
 }
 
+// Detalle de Dataset
 export interface DatasetDetailType {
-  dataItems: Array<DataItemsType>;
+  dataItems: DataItemsType[];
   dataSet: DatasetProps;
 }
 
-interface DataItemsType {
-  createdAt: string;
+export interface DataItemsType {
+  createdAt: Timestamp;
   data: {
     listdescr: string;
     listimage: string;
@@ -111,7 +119,7 @@ interface DataItemsType {
     listprice: string;
   };
   order: number;
-  updatedAt: string;
+  updatedAt: Timestamp;
   visibility: boolean;
-  _id: string;
+  _id: ID;
 }

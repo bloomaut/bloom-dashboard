@@ -1,29 +1,33 @@
+// Definición de tipos comunes
+type ID = string;
+type Nullable<T> = T | null;
+
 export interface Template {
-  _id: string;
+  _id: ID;
   category: string;
   active: boolean;
   skinx_demo: SkinxDemo;
 }
 
 export interface SkinxDemo {
-  _id: string;
+  _id: ID;
   title: string;
-  description: null | string;
+  description: Nullable<string>;
   powerapp: PowerApp[];
 }
 
 export interface PowerApp {
-  _id: string;
+  _id: ID;
   thumbnail: string;
   hog_related: HogRelated;
 }
 
 export interface HogRelated {
-  _id: string;
+  _id: ID;
   thumbnail: string;
 }
 
 export interface PutTemplate {
-  skinx_id: string;
-  template_id: string;
+  skinx_id: ID;
+  template_id: ID;
 }

@@ -11,6 +11,7 @@ const Checkbox = () => {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
   };
+
   return (
     <>
       <div className={styles.checkbox_container}>

@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import { useFlakesContext } from "@/context/FlakesContext";
 import { useEffect, useState } from "react";
-import { Flake, Variablesinuse } from "@/typescript/interfaces/flakes.interface";
+import { Flake, VariableInUse } from "@/typescript/interfaces/flakes.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { useOpenGraphContext } from "@/context/OpenGraphContext";
@@ -34,7 +34,7 @@ const Form = () => {
   const { notifyError } = useMessageToast();
   const { setTime, setShowPreview, setPaUrl, setLoadingDots, setPreviewData } = useOpenGraphContext();
   const { flakes, selectedFlakeId, loading } = useFlakesContext();
-  const [formInfo, setFormInfo] = useState<Variablesinuse[]>([]);
+  const [formInfo, setFormInfo] = useState<VariableInUse[]>([]);
   const [showButton, setShowButton] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
@@ -44,7 +44,7 @@ const Form = () => {
     if (formVariableData) {
       const { _id, variables_in_use } = formVariableData;
 
-      const variablesData = variables_in_use.map(({ key, name, description, target, value }: Variablesinuse) => ({
+      const variablesData = variables_in_use.map(({ key, name, description, target, value }: VariableInUse) => ({
         key,
         target,
         name,

@@ -4,3 +4,5 @@ export interface Collection {
   type_flake: string;
   flake_id: string;
 }
+
+export type PostCollection = Collection;

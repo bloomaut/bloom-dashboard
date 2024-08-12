@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { ClientsProps } from "@/typescript/interfaces/clients.interface";
+import { ClientsProps, UpdateClient } from "@/typescript/interfaces/clients.interface";
 import { post, update } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
@@ -59,8 +59,8 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
       const newData = {
-        ClientFirstname: formData.ClientFirstname,
-        ClientLastname: formData.ClientLastname,
+        ClientFirstname: formData.ClientFirstname!,
+        ClientLastname: formData.ClientLastname!,
         ClientEmail: formData.ClientEmail,
         ClientPhone: formData.ClientPhone,
         ClientLocation: formData.ClientLocation,
@@ -87,7 +87,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     }
   };
 
-  const editClient = async (newData: ClientsProps) => {
+  const editClient = async (newData: UpdateClient) => {
     const data = await update("client-customer", newData, clientId);
     if (data.statusCode === 200) {
       notify(dict("toast.client_edit"));
@@ -115,7 +115,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
                 textHolder={dict("clients.form_label_01")}
                 type='text'
                 name='ClientFirstname'
-                value={formData.ClientFirstname}
+                value={formData.ClientFirstname || ""}
                 handleChange={handleInputChange}
               />
             </div>

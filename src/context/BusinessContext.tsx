@@ -9,8 +9,8 @@ import { handleLogoUpload } from "@/utils/handleLogoUpload";
 import { update } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
 import { handleLogoBanner } from "@/utils/handleUploadBanner";
-import useStepValidation from "@/hooks/useStepValidation";
 import { useRouter } from "next/navigation";
+import useStepValidation from "@/hooks/useStepValidation";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -26,6 +26,7 @@ const initialFormData: UserBusiness = {
     instagram: "",
   },
   phone: "",
+  isCatalogComplete: false,
 };
 
 interface BusinessContextType {
@@ -193,6 +194,7 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
               instagram: dataToSend.instagram,
             },
             phone: dataToSend.phone,
+            isCatalogComplete: true,
           }),
         );
         if (!step_04) {

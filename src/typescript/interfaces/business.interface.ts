@@ -1,9 +1,13 @@
+// Definición de tipos comunes
+type Nullable<T> = T | null;
+type ColorPalette = Nullable<{ color: string }[]>;
+
+// Interfaces principales
 export interface UserBusiness {
-  [x: string]: any;
   id?: number | null;
   auth0_id?: string;
-  name: string | null;
-  lastname: string | null;
+  name: Nullable<string>;
+  lastname: Nullable<string>;
   email?: string;
   phone: string;
   company_position?: string;
@@ -11,26 +15,28 @@ export interface UserBusiness {
   created_at?: string;
   updated_at?: string;
   client: Client;
+  isCatalogComplete: boolean;
 }
 
 export interface Client {
   id?: number | null;
-  name: string | null;
+  name: Nullable<string>;
   cuit?: string;
-  banner: string | null;
+  banner: Nullable<string>;
   razon_social?: string;
   company_web: string;
   logo: string;
   active?: boolean;
-  instagram: string | null;
-  description: string | null;
-  category: string | null;
-  palette: { color: string }[] | null;
+  instagram: Nullable<string>;
+  description: Nullable<string>;
+  category: Nullable<string>;
+  palette: ColorPalette;
   created_at?: string;
   updated_at?: string;
-  onboardings?: Onboardings[] | null;
+  onboardings?: Nullable<Onboardings[]>;
 }
 
+// Interfaces relacionadas con Onboarding
 export interface Onboardings {
   _id: string;
   active: boolean;
@@ -48,18 +54,19 @@ interface SkinxGenerated {
   _id: string;
 }
 
+// Interfaces para actualización de datos
 export interface PutBusiness {
-  userName: string | null;
-  userLastname: string | null;
-  clientName: string | null;
-  description: string | null;
-  website: string | null;
-  instagram: string | null;
-  phone: string | null;
-  logo: string | null;
-  palette: { color: string }[] | null | undefined;
+  userName: Nullable<string>;
+  userLastname: Nullable<string>;
+  clientName: Nullable<string>;
+  description: Nullable<string>;
+  website: Nullable<string>;
+  instagram: Nullable<string>;
+  phone: Nullable<string>;
+  logo: Nullable<string>;
+  palette: ColorPalette | undefined;
 }
 
 export interface PutPalette {
-  palette: { color: string }[] | null;
+  palette: ColorPalette;
 }

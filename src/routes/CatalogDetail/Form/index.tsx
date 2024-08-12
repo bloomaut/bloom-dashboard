@@ -4,27 +4,28 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
+import { DataItemsType, DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
 import { AllProducts } from "@/typescript/interfaces/catalog.interface";
+import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 // Components
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
-import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Button from "@/components/Button";
 import CheckBox from "../../../components/Checkbox";
 import Icon from "@/components/Icon";
 
-interface Form {
+// Interfaces
+interface FormProps {
   setShowPopup: (value: SetStateAction<boolean>) => void;
   title: string;
   action: "post" | "put";
   id?: string;
   allProducts?: AllProducts[];
   onUpdate?: (editedProduct: AllProducts) => void;
-  onCreate?: (newItem: any) => void;
+  onCreate?: (newItem: AllProducts) => void;
 }
 
 interface InitialValuesProps {
@@ -55,37 +56,42 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: Form) => {
+const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: FormProps) => {
   const { datasetDetail } = useCatalogDetailContext();
-  const [formData, setFormData] = useState<any>(initialValues);
-  const [checkValidation, setCheckValidation] = useState(false);
+  const [formData, setFormData] = useState<InitialValuesProps>(initialValues);
+  const [checkValidation, setCheckValidation] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
-  const [closing, setClosing] = useState(false);
-  const dict = useTranslations("dict");
+  const [closing, setClosing] = useState<boolean>(false);
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { notify, notifyError } = useMessageToast();
+  const dict = useTranslations("dict");
 
   const imageUrl = action === "put" && formData.data?.listimage ? formData.data?.listimage : null;
 
   useEffect(() => {
     if (action === "put" && id) {
-      const product = datasetDetail?.dataItems.find((item: any) => item._id === id);
+      const product = datasetDetail?.dataItems.find((item: DataItemsType) => item._id === id);
       if (product) {
         setFormData({
-          data: product.data,
+          data: {
+            listname: product.data.listname,
+            listdescr: product.data.listdescr,
+            listprice: product.data.listprice ? parseFloat(product.data.listprice) : null,
+            listimage: product.data.listimage ? new File([], product.data.listimage) : null,
+          },
           order: product.order,
           visibility: product.visibility,
         });
       } else if (allProducts) {
-        const product = allProducts.find((item: any) => item._id === id);
+        const product = allProducts.find((item: AllProducts) => item._id === id);
         if (product) {
           setFormData({
             data: {
-              listname: product.data?.listname,
-              listdescr: product.data?.listdescr,
-              listprice: product.data?.listprice,
-              listimage: product.data?.listimage,
+              listname: product.data.listname,
+              listdescr: product.data.listdescr,
+              listprice: product.data.listprice,
+              listimage: product.data.listimage,
             },
             order: product.order,
             visibility: product.visibility,
@@ -95,13 +101,13 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
     } else {
       setFormData(initialValues);
     }
-  }, [action, id, datasetDetail, initialValues]);
+  }, [action, id, datasetDetail, allProducts]);
 
-  // Validación de campos
   const fieldsToValidate =
     datasetDetail?.dataSet?.dataschema?.[0].fields
       .filter((field: DataschemaField) => field.required)
-      .map((field: any) => field.name) || [];
+      .map((field: DataschemaField) => field.name) || [];
+
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -117,7 +123,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
           visibility: formData.visibility,
         };
 
-        // UPLOAD IMAGE
         if (file) {
           const uploadedImageUrl = await handleFileUpload(file);
           if (uploadedImageUrl) {
@@ -127,7 +132,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
           }
         }
 
-        // METHOD VERIFICATION
         if (action === "post") {
           await postDataItem(dataToSend);
         } else if (action === "put" && id) {
@@ -182,7 +186,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name in formData.data) {
-      setFormData((prevState: any) => ({
+      setFormData((prevState: InitialValuesProps) => ({
         ...prevState,
         data: {
           ...prevState.data,
@@ -190,7 +194,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
         },
       }));
     } else if (name === "order") {
-      setFormData((prevState: any) => ({
+      setFormData((prevState: InitialValuesProps) => ({
         ...prevState,
         order: Number(value) || null,
       }));
@@ -199,7 +203,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
 
   const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isVisible = e.target.checked;
-    setFormData((prevState: any) => ({
+    setFormData((prevState: InitialValuesProps) => ({
       ...prevState,
       visibility: isVisible,
     }));
@@ -242,7 +246,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
               textLabel='Product name'
               textHolder=''
               name='listname'
-              value={formData.data?.listname}
+              value={formData.data?.listname || ""}
               handleChange={handleChange}
             />
             {checkValidation && <ErrorMessage error={errors.listname} />}
@@ -251,7 +255,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
               textLabel='Description'
               textHolder=''
               name='listdescr'
-              value={formData.data?.listdescr}
+              value={formData.data?.listdescr || ""}
               handleChange={handleChange}
             />
             <Input
@@ -271,7 +275,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
               textLabel='Price'
               textHolder=''
               name='listprice'
-              value={formData.data?.listprice || ""}
+              value={formData.data?.listprice ?? ""}
               handleChange={handleChange}
               inputPrice
             />
