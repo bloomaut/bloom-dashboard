@@ -99,7 +99,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
 
   // Validación de campos
   const fieldsToValidate =
-    datasetDetail?.dataSet?.dataschema?.[0].fields
+    datasetDetail?.dataSet?.dataschema?.fields
       .filter((field: DataschemaField) => field.required)
       .map((field: any) => field.name) || [];
   const errors = useFormValidator(formData, fieldsToValidate, file);
@@ -113,8 +113,8 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
         const dataToSend = {
           dataset: datasetDetail?.dataSet._id ?? "",
           data: formData.data,
-          order: formData.order,
           visibility: formData.visibility,
+          ...(formData.order !== null && { order: formData.order }),
         };
 
         // UPLOAD IMAGE

@@ -33,11 +33,18 @@ export interface DatasetProps {
   description: string;
   image: string;
   visibility: boolean;
-  dataschema?: Array<DataschemaProps>;
+  dataschema?: DataSchemaProps;
   createdAt: string;
   updatedAt: string;
   totalDataItems: number;
   order: number;
+}
+
+export interface DataSchemaProps {
+  category: string;
+  fields: Array<DataschemaField>;
+  name: string;
+  _id: string;
 }
 
 export interface UpdateDataset {
@@ -47,7 +54,7 @@ export interface UpdateDataset {
 export interface PostDataItem {
   dataset: string;
   data: DataItemsList | undefined;
-  order: number | null;
+  order?: number | null;
   visibility: boolean;
 }
 
