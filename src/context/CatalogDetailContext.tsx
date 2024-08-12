@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { DatasetDetailType } from "@/typescript/interfaces/catalog.interface";
 
 interface CatalogDetailContextType {
-  datasetDetail: any | null | undefined;
+  datasetDetail: DatasetDetailType | null | undefined;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
   loading: boolean;

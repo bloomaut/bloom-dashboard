@@ -39,7 +39,7 @@ export interface DatasetProps {
   description: string;
   image: string;
   visibility: boolean;
-  dataschema: DataschemaProps[];
+  dataschema: DataschemaPropsArray[] | DataschemaProps;
   createdAt: Timestamp;
   updatedAt: Timestamp;
   totalDataItems: number;
@@ -70,6 +70,15 @@ export interface SelectOption {
 
 // Interfaces relacionadas con Dataschema
 export interface DataschemaProps {
+  _id: ID;
+  name: string;
+  fields: DataschemaField[];
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  category: string;
+}
+
+export interface DataschemaPropsArray {
   _id: ID;
   name: string;
   fields: DataschemaField[];

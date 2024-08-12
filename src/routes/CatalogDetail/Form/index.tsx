@@ -4,7 +4,14 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsType, DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
+import {
+  DataItemsType,
+  DataschemaField,
+  DataschemaProps,
+  DataschemaPropsArray,
+  PostDataItem,
+  PutDataItem,
+} from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
@@ -103,10 +110,25 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
     }
   }, [action, id, datasetDetail, allProducts]);
 
-  const fieldsToValidate =
-    datasetDetail?.dataSet.dataschema.fields
-      .filter((field: DataschemaField) => field.required)
-      .map((field: DataschemaField) => field.name) || [];
+  const fieldsToValidate: string[] = [];
+
+  if (Array.isArray(datasetDetail?.dataSet.dataschema)) {
+    // Caso cuando dataschema es un arreglo de DataschemaPropsArray
+    datasetDetail?.dataSet.dataschema.forEach((schema: DataschemaPropsArray) => {
+      schema.fields.forEach((field: DataschemaField) => {
+        if (field.required) {
+          fieldsToValidate.push(field.name);
+        }
+      });
+    });
+  } else if (datasetDetail?.dataSet.dataschema) {
+    // Caso cuando dataschema es un objeto DataschemaProps
+    (datasetDetail.dataSet.dataschema as DataschemaProps).fields.forEach((field: DataschemaField) => {
+      if (field.required) {
+        fieldsToValidate.push(field.name);
+      }
+    });
+  }
 
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
