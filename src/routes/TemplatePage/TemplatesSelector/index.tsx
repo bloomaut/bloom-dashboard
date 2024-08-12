@@ -8,7 +8,7 @@ import { Template } from "@/typescript/interfaces/template.interface";
 import { useSelector } from "react-redux";
 import { update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { UserBusiness } from "@/typescript/interfaces/business.interface";
+import { UserBusinessSelector } from "@/typescript/interfaces/business.interface";
 // Components
 import LoadingSpinner from "@/components/Loading";
 import flake_icon_01 from "/public/flake_icon_01.svg";
@@ -16,7 +16,7 @@ import flake_icon_02 from "/public/flake_icon_02.svg";
 
 const TemplatesSelector = () => {
   const dict = useTranslations("dict");
-  const onboardings = useSelector((state: UserBusiness) => state?.client?.onboardings);
+  const onboardings = useSelector((state: UserBusinessSelector) => state.userData.client.onboardings);
   const [onboardingId, setOnboardingId] = useState("");
   const { templates, loading, selectedTemplateId, setSelectedTemplateId, setPreviewId, setPreviewLoading } =
     useTemplateContext();

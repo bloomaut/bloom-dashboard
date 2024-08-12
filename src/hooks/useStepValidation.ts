@@ -18,7 +18,7 @@ const useStepValidation = () => {
   }, [userData]);
 
   const step_02 = useMemo(() => {
-    return Boolean(step_01 && userData.client.onboardings !== null);
+    return Boolean(step_01 && userData.client.onboardings && userData.client.onboardings[0].skinx_template !== null);
   }, [step_01, userData]);
 
   const step_03 = useMemo(() => {

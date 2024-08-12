@@ -18,6 +18,10 @@ export interface UserBusiness {
   isCatalogComplete: boolean;
 }
 
+export interface UserBusinessSelector {
+  userData: UserBusiness;
+}
+
 export interface Client {
   id?: number | null;
   name: Nullable<string>;
@@ -33,7 +37,7 @@ export interface Client {
   palette: ColorPalette;
   created_at?: string;
   updated_at?: string;
-  onboardings?: Nullable<Onboardings[]>;
+  onboardings: Nullable<Onboardings[]>;
 }
 
 // Interfaces relacionadas con Onboarding
