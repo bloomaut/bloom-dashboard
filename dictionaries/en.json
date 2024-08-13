@@ -351,7 +351,11 @@
         "visibility": "Visible on my apps",
         "delete": "Delete catalog",
         "save": "Save catalog",
-        "order_description": "It will be generated automatically"
+        "order_description": "It will be generated automatically",
+        "catalog_type": "Catalog type",
+        "select_type": "Select type",
+        "products": "Products",
+        "services": "Services"
       },
       "popup_excel": {
         "massive_upload_title": "Massive upload from Excel",

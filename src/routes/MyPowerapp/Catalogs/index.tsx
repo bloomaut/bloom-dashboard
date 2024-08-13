@@ -19,6 +19,8 @@ const Catalogs = ({ datasets, loading }: Props) => {
   const { datasetDetail } = useCatalogContext();
   const dict = useTranslations("dict.business.my-powerapp");
 
+  console.log(datasetDetail);
+
   return (
     <div className={styles.container}>
       <div className={styles.inner_container}>
