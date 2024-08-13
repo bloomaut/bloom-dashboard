@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
-import { DatasetDetailType } from "@/typescript/interfaces/catalog.interface";
 
 interface CatalogDetailContextType {
   datasetDetail: any | null | undefined;

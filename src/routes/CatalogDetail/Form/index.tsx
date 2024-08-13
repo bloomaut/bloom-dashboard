@@ -119,8 +119,8 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
         const dataToSend = {
           dataset: datasetDetail?.dataSet._id ?? "",
           data: formData.data,
-          order: formData.order,
           visibility: formData.visibility,
+          ...(formData.order !== null && { order: formData.order }),
         };
 
         if (file) {
@@ -170,6 +170,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
 
   const putDataItem = async (formData: PutDataItem, id: string) => {
     setLoading(true);
+    console.log(formData);
     const data = await update("dataitem", formData, id, ENV.BOX);
     if (data.statusCode === 200) {
       notify(dict("toast.success_edit"));
@@ -264,7 +265,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
               textHolder=''
               textDescription={dict("catalog.form_actions.order_description")}
               name='order'
-              value={formData.order || 0}
+              value={formData.order ?? ""}
               handleChange={handleChange}
             />
             <CheckBox text='Visible on my apps' active={formData.visibility} onChange={handleVisibility} />

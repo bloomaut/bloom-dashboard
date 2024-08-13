@@ -46,6 +46,13 @@ export interface DatasetProps {
   order: number;
 }
 
+export interface DataSchemaProps {
+  category: string;
+  fields: Array<DataschemaField>;
+  name: string;
+  _id: string;
+}
+
 export interface UpdateDataset {
   name: string;
 }
@@ -53,13 +60,13 @@ export interface UpdateDataset {
 export interface PostDataItem {
   dataset: ID;
   data: DataItemsList | undefined;
-  order: Nullable<number>;
+  order?: number;
   visibility: boolean;
 }
 
 export interface PutDataItem {
   data: DataItemsList | undefined;
-  order: Nullable<number>;
+  order?: number;
   visibility: boolean;
 }
 
