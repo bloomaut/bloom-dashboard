@@ -1,12 +1,13 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useCatalogContext } from "@/context/CatalogContext";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Link from "next/link";
 import { ENV } from "@/typescript/types/api";
 import { get, post } from "@/services/fetch";
 import { useEffect, useState } from "react";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { setUserData } from "@/store/features/userSlice";
 //Components
 import Button from "@/components/Button";
 import Title from "@/components/Title";
@@ -28,6 +29,7 @@ const MyPowerapp = () => {
   const [popupSuccess, setPopupSuccess] = useState(false);
   const [loadingPopup, setLoadingPopup] = useState<boolean>(false);
   const { notifyError } = useMessageToast();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const { notifyError } = useMessageToast();
@@ -69,6 +71,7 @@ const MyPowerapp = () => {
         notifyError(dict("error_generate"));
         setPopupSuccess(false);
       } else {
+        dispatch(setUserData(response.data.result.data.user));
         setPopupSuccess(true);
       }
       setLoadingPopup(false);

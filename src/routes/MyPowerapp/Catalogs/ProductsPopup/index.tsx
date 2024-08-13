@@ -9,7 +9,7 @@ import Title from "@/components/Title";
 import Link from "next/link";
 
 interface Props {
-  title: string;
+  title: string | undefined;
   products: any;
   setShowConfirmation: (value: SetStateAction<boolean>) => void;
 }

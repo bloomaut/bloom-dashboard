@@ -4,14 +4,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import {
-  DataItemsType,
-  DataschemaField,
-  DataschemaProps,
-  DataschemaPropsArray,
-  PostDataItem,
-  PutDataItem,
-} from "@/typescript/interfaces/catalog.interface";
+import { DataItemsType, DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
@@ -77,6 +70,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
   const imageUrl = action === "put" && formData.data?.listimage ? formData.data?.listimage : null;
 
   useEffect(() => {
+    console.log(datasetDetail);
     if (action === "put" && id) {
       const product = datasetDetail?.dataItems.find((item: DataItemsType) => item._id === id);
       if (product) {
@@ -110,25 +104,10 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
     }
   }, [action, id, datasetDetail, allProducts]);
 
-  const fieldsToValidate: string[] = [];
-
-  if (Array.isArray(datasetDetail?.dataSet.dataschema)) {
-    // Caso cuando dataschema es un arreglo de DataschemaPropsArray
-    datasetDetail?.dataSet.dataschema.forEach((schema: DataschemaPropsArray) => {
-      schema.fields.forEach((field: DataschemaField) => {
-        if (field.required) {
-          fieldsToValidate.push(field.name);
-        }
-      });
-    });
-  } else if (datasetDetail?.dataSet.dataschema) {
-    // Caso cuando dataschema es un objeto DataschemaProps
-    (datasetDetail.dataSet.dataschema as DataschemaProps).fields.forEach((field: DataschemaField) => {
-      if (field.required) {
-        fieldsToValidate.push(field.name);
-      }
-    });
-  }
+  const fieldsToValidate =
+    datasetDetail?.dataSet?.dataschema?.fields
+      .filter((field: DataschemaField) => field.required)
+      .map((field: DataschemaField) => field.name) || [];
 
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
@@ -141,8 +120,8 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
         const dataToSend = {
           dataset: datasetDetail?.dataSet._id ?? "",
           data: formData.data,
-          order: formData.order,
           visibility: formData.visibility,
+          ...(formData.order !== null && { order: formData.order }),
         };
 
         if (file) {
@@ -286,7 +265,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
               textHolder=''
               textDescription={dict("catalog.form_actions.order_description")}
               name='order'
-              value={formData.order || 0}
+              value={formData.order ?? ""}
               handleChange={handleChange}
             />
             <CheckBox text='Visible on my apps' active={formData.visibility} onChange={handleVisibility} />

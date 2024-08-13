@@ -3,7 +3,7 @@ import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import Image from "next/image";
 import success from "/public/assets/success.png";
 import Title from "@/components/Title";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import Button from "@/components/Button";
 import { Link } from "@/navigation";
 
@@ -14,7 +14,6 @@ interface Props {
 const PopupSuccess = ({ setShowConfirmation }: Props) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
   const dict = useTranslations("dict.business.my-powerapp");
-  const locale = useLocale();
 
   return (
     <section className={styles.popup_container}>

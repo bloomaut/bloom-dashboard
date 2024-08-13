@@ -351,7 +351,11 @@
         "visibility": "Visibile en mis aplicaciones",
         "delete": "Eliminar catálogo",
         "save": "Guardar catálogo",
-        "order_description": "El mismo será generado automáticamente"
+        "order_description": "El mismo será generado automáticamente",
+        "catalog_type": "Tipo de catálogo",
+        "select_type": "Seleccionar tipo",
+        "products": "Productos",
+        "services": "Servicios"
       },
       "popup_excel": {
         "massive_upload_title": "Carga masiva desde Excel",

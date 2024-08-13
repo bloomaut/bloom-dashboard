@@ -46,6 +46,24 @@
       }
       .products_information {
         @include flex(column, center, flex-start, 15px);
+        .select_type {
+          @include width-height(100%, auto);
+          @include flex(column, flex-start, flex-start, 5px);
+          padding: 5px 0;
+          .label {
+            @include fontSize-fontWeight(14px, 400);
+            color: $lightGrey;
+          }
+          .select {
+            @include width-height(100%, 30px);
+            padding: 5px 10px;
+            outline: none;
+            border: 1px solid $lighterGrey;
+            border-radius: 4px;
+            background-color: #fff;
+            color: $text;
+          }
+        }
       }
       .media {
         @include flex(column, flex-start, flex-start, 10px);
