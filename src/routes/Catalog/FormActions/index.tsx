@@ -24,6 +24,7 @@ interface FormActionsProps {
   description?: string;
   visibility?: boolean;
   image?: string;
+  dataschema?: string;
 }
 
 interface InitialValuesProps {
@@ -41,7 +42,16 @@ const initialValues: InitialValuesProps = {
   category_visibility: true,
 };
 
-const FormActions = ({ setShowConfirmation, action, id, name, description, visibility, image }: FormActionsProps) => {
+const FormActions = ({
+  setShowConfirmation,
+  action,
+  id,
+  name,
+  description,
+  visibility,
+  image,
+  dataschema,
+}: FormActionsProps) => {
   const [formData, setFormData] = useState(initialValues);
   const [popupDelete, setPopupDelete] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -85,7 +95,7 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
         const postDataschema = {
           name: formData.category_name,
           description: formData.category_description,
-          dataschema: formData.type_catalog === "products" ? schema[0]._id : schema[1]._id,
+          dataschema: formData.type_catalog === "Products" || "Productos" ? schema[0]._id : schema[1]._id,
           order: 0,
           image: null,
         };
@@ -172,7 +182,7 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
   useEffect(() => {
     if (action === "put") {
       setFormData({
-        type_catalog: formData.type_catalog,
+        type_catalog: dataschema || "",
         category_name: name || "",
         category_description: description || "",
         category_image: image as unknown as File | null,
@@ -180,13 +190,22 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
       });
       setFile(null);
     }
-  }, [action, name, description, image, visibility]);
+  }, [action, name, description, image, visibility, dataschema]);
 
   useEffect(() => {
     if (checkValidation && Object.keys(errors).length === 0) {
       setCheckValidation(false);
     }
   }, [errors]);
+
+  console.log(dataschema);
+
+  const selectValue =
+    dataschema && dataschema === "uitool-products"
+      ? dict("catalog.form_actions.products")
+      : dict("catalog.form_actions.services");
+
+  console.log(selectValue);
 
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
@@ -202,9 +221,23 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
             <div className={styles.select_type}>
               <label className={styles.label}>{dict("catalog.form_actions.catalog_type")}</label>
               <select className={styles.select} onChange={handleChange} name='type_catalog'>
-                <option>{dict("catalog.form_actions.select_type")}</option>
-                <option>{dict("catalog.form_actions.products")}</option>
-                <option>{dict("catalog.form_actions.services")}</option>
+                {action === "post" && (
+                  <>
+                    <option>{dict("catalog.form_actions.select_type")}</option>
+                    <option>{dict("catalog.form_actions.products")}</option>
+                    <option>{dict("catalog.form_actions.services")}</option>
+                  </>
+                )}
+                {action === "put" && (
+                  <>
+                    <option>{selectValue}</option>
+                    <option>
+                      {selectValue === "Products" || selectValue === "Productos"
+                        ? dict("catalog.form_actions.services")
+                        : dict("catalog.form_actions.products")}
+                    </option>
+                  </>
+                )}
               </select>
             </div>
             <Input

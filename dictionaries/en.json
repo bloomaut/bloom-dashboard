@@ -354,8 +354,8 @@
         "order_description": "It will be generated automatically",
         "catalog_type": "Catalog type",
         "select_type": "Select type",
-        "products": "products",
-        "services": "services"
+        "products": "Products",
+        "services": "Services"
       },
       "popup_excel": {
         "massive_upload_title": "Massive upload from Excel",

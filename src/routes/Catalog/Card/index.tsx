@@ -10,11 +10,13 @@ import FormActions from "../FormActions";
 const Card = ({ _id, name, description, image, visibility, totalDataItems, dataschema }: DatasetProps) => {
   const [showPopup, setShowPopup] = useState(false);
 
+  console.log(dataschema);
+
   return (
     <article className={styles.container}>
       <div
         className={
-          dataschema && dataschema[0].category === "uitool-products"
+          dataschema && dataschema[0]?.category === "uitool-products"
             ? styles.card
             : `${styles.card} ${styles.card_services}`
         }
@@ -52,6 +54,7 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
             image={image}
             visibility={visibility}
             setShowConfirmation={setShowPopup}
+            dataschema={dataschema![0].category}
           />
         )}
       </div>
