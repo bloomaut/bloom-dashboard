@@ -10,8 +10,6 @@ import FormActions from "../FormActions";
 const Card = ({ _id, name, description, image, visibility, totalDataItems, dataschema }: DatasetProps) => {
   const [showPopup, setShowPopup] = useState(false);
 
-  console.log(dataschema);
-
   return (
     <article className={styles.container}>
       <div

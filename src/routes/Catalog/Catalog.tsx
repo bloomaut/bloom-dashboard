@@ -14,11 +14,13 @@ import Icon from "@/components/Icon";
 import FormActions from "./FormActions";
 import Button from "@/components/Button";
 import CardAll from "./CardAll";
+import { useAppSelector } from "@/store/hooks";
 
 const Catalog = () => {
   const { datasets, loading } = useCatalogContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const { step_04, step_03 } = useStepValidation();
+  const userData = useAppSelector(state => state.userData);
   const router = useRouter();
   const dict = useTranslations("dict");
 
@@ -62,13 +64,12 @@ const Catalog = () => {
               <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
             </div>
             <div className={styles.btn_next}>
-              {!step_04 && <Button title='Next' isDisabled={datasets.length === 0} onclick={handleNavigation} />}
+              {!step_04 && step_03 && (
+                <Button title='Next' isDisabled={!userData.isCatalogComplete} onclick={handleNavigation} />
+              )}
             </div>
           </>
         )}
-        <div className={styles.btn_next}>
-          {!step_04 && <Button title='Next' isDisabled={step_03} onclick={handleNavigation} />}
-        </div>
         {showPopupCreate && <FormActions action='post' setShowConfirmation={setShowPopupCreate} />}
       </div>
     </div>

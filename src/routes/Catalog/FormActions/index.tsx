@@ -198,14 +198,10 @@ const FormActions = ({
     }
   }, [errors]);
 
-  console.log(dataschema);
-
   const selectValue =
     dataschema && dataschema === "uitool-products"
       ? dict("catalog.form_actions.products")
       : dict("catalog.form_actions.services");
-
-  console.log(selectValue);
 
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
