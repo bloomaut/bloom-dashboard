@@ -39,7 +39,7 @@ export interface DatasetProps {
   description: string;
   image: string;
   visibility: boolean;
-  dataschema: DataschemaProps[];
+  dataschema: DataschemaProps;
   createdAt: Timestamp;
   updatedAt: Timestamp;
   totalDataItems: number;
@@ -90,6 +90,7 @@ export interface DataschemaField {
 interface DatasetProp {
   _id: string;
   dataschema?: DataschemaProps;
+  name?: string;
 }
 
 // Interfaces para Onboarding y porcentaje

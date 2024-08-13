@@ -103,8 +103,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
     }
   }, [action, id, datasetDetail, allProducts]);
 
-  console.log(datasetDetail);
-
   const fieldsToValidate =
     datasetDetail?.dataSet?.dataschema?.fields
       .filter((field: DataschemaField) => field.required)

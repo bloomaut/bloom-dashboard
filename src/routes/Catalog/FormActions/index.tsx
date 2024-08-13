@@ -95,7 +95,7 @@ const FormActions = ({
         const postDataschema = {
           name: formData.category_name,
           description: formData.category_description,
-          dataschema: formData.type_catalog === "Products" || "Productos" ? schema[0]._id : schema[1]._id,
+          dataschema: formData.type_catalog === "uitool-products" ? schema[0]._id : schema[1]._id,
           order: 0,
           image: null,
         };
@@ -198,11 +198,6 @@ const FormActions = ({
     }
   }, [errors]);
 
-  const selectValue =
-    dataschema && dataschema === "uitool-products"
-      ? dict("catalog.form_actions.products")
-      : dict("catalog.form_actions.services");
-
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
       <div className={styles.inner_container} ref={!popupDelete ? dropdownRef : null}>
@@ -216,24 +211,18 @@ const FormActions = ({
           <div className={styles.products_information}>
             <div className={styles.select_type}>
               <label className={styles.label}>{dict("catalog.form_actions.catalog_type")}</label>
-              <select className={styles.select} onChange={handleChange} name='type_catalog'>
-                {action === "post" && (
-                  <>
-                    <option>{dict("catalog.form_actions.select_type")}</option>
-                    <option>{dict("catalog.form_actions.products")}</option>
-                    <option>{dict("catalog.form_actions.services")}</option>
-                  </>
-                )}
-                {action === "put" && (
-                  <>
-                    <option>{selectValue}</option>
-                    <option>
-                      {selectValue === "Products" || selectValue === "Productos"
-                        ? dict("catalog.form_actions.services")
-                        : dict("catalog.form_actions.products")}
-                    </option>
-                  </>
-                )}
+              <select
+                className={styles.select}
+                onChange={handleChange}
+                name='type_catalog'
+                value={formData.type_catalog}
+                disabled={action === "put"}
+              >
+                <option value='' hidden>
+                  {dict("catalog.form_actions.select_type")}
+                </option>
+                <option value={schema[0].category}>{dict("catalog.form_actions.products")}</option>
+                <option value={schema[1].category}>{dict("catalog.form_actions.services")}</option>
               </select>
             </div>
             <Input
