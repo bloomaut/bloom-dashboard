@@ -39,7 +39,7 @@ export interface DatasetProps {
   description: string;
   image: string;
   visibility: boolean;
-  dataschema: DataschemaProps[];
+  dataschema: DataschemaProps;
   createdAt: Timestamp;
   updatedAt: Timestamp;
   totalDataItems: number;
@@ -70,11 +70,11 @@ export interface SelectOption {
 
 // Interfaces relacionadas con Dataschema
 export interface DataschemaProps {
-  _id: ID;
+  _id: string;
   name: string;
   fields: DataschemaField[];
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: string;
+  updatedAt: string;
   category: string;
 }
 
@@ -83,8 +83,14 @@ export interface DataschemaField {
   description: string;
   type: string;
   placeholder: string;
-  _id: ID;
+  _id: string;
   required: boolean;
+}
+
+interface DatasetProp {
+  _id: string;
+  dataschema?: DataschemaProps;
+  name?: string;
 }
 
 // Interfaces para Onboarding y porcentaje
@@ -107,7 +113,7 @@ export interface PutPercentage {
 // Detalle de Dataset
 export interface DatasetDetailType {
   dataItems: DataItemsType[];
-  dataSet: DatasetProps;
+  dataSet: DatasetProp;
 }
 
 export interface DataItemsType {

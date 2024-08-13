@@ -1,6 +1,5 @@
 import styles from "./styles.module.scss";
 import Icon from "../Icon";
-import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -129,8 +128,8 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
           </>
         )}
       </p>
-      {logo && img === "Logo" && <Image src={logo} alt={img ? img : ""} width={300} height={100} />}
-      {banner && img === "Banner" && <Image src={banner} alt={img ? img : ""} width={300} height={100} />}
+      {logo && img === "Logo" && <img src={logo} alt={img ? img : ""} width={300} height={100} />}
+      {banner && img === "Banner" && <img src={banner} alt={img ? img : ""} width={300} height={100} />}
       {file && imageUrl ? (
         <img src={imageUrl} alt='Product image' width={100} height={100} />
       ) : file ? (

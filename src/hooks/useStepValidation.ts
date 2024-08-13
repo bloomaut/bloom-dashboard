@@ -4,8 +4,6 @@ import { useAppSelector } from "@/store/hooks";
 const useStepValidation = () => {
   const userData = useAppSelector(state => state.userData);
 
-  console.log(userData);
-
   const step_01 = useMemo(() => {
     return Boolean(
       userData.name &&
