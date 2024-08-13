@@ -170,6 +170,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
 
   const putDataItem = async (formData: PutDataItem, id: string) => {
     setLoading(true);
+    console.log(formData);
     const data = await update("dataitem", formData, id, ENV.BOX);
     if (data.statusCode === 200) {
       notify(dict("toast.success_edit"));
