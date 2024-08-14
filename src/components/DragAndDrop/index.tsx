@@ -4,7 +4,7 @@ import PdfDropzone from "./PdfDropzone";
 import ImageDropzone from "./ImageDropzone";
 
 interface FileDragDropProps {
-  file?: File | null;
+  file: File | null;
   setFile: Dispatch<SetStateAction<File | null>>;
   type: "excel" | "image" | "pdf";
   currentImage?: string | null;
