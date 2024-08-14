@@ -22,9 +22,11 @@ interface Props {
   image: string;
   position: number;
   allProducts?: AllProducts[];
+  onDelete?: (id: string) => void;
+  onUpdate?: (updatedItem: AllProducts) => void;
 }
 
-const TableRow = ({ id, name, description, price, image, position, allProducts }: Props) => {
+const TableRow = ({ id, name, description, price, image, position, allProducts, onDelete, onUpdate }: Props) => {
   const { handleRemoveDataset } = useCatalogDetailContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,7 +39,11 @@ const TableRow = ({ id, name, description, price, image, position, allProducts }
     const response = await remove("dataitem", id, ENV.BOX);
     if (response.statusCode === 200) {
       setShowPopupDelete(false);
-      handleRemoveDataset(id);
+      if (onDelete) {
+        onDelete(id);
+      } else {
+        handleRemoveDataset(id);
+      }
       notify(`${dict("toast.success_product_deleted")}`);
       setLoading(false);
     } else {
@@ -102,6 +108,7 @@ const TableRow = ({ id, name, description, price, image, position, allProducts }
           id={id}
           setShowPopup={setShowPopupEdit}
           allProducts={allProducts}
+          onUpdate={onUpdate}
         />
       )}
     </div>

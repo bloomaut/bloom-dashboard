@@ -56,7 +56,7 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id, allProducts }: FormProps) => {
+const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) => {
   const { datasetDetail, handleAddDataset, handleUpdateDataset } = useCatalogDetailContext();
   const [formData, setFormData] = useState<InitialValuesProps>(initialValues);
   const [checkValidation, setCheckValidation] = useState<boolean>(false);
@@ -172,8 +172,12 @@ const Form = ({ setShowPopup, action, id, allProducts }: FormProps) => {
     if (data.statusCode === 200) {
       setShowPopup(false);
       notify(dict("toast.success_edit"));
-      handleUpdateDataset(data.data);
       setLoading(false);
+      if (onUpdate) {
+        onUpdate(data.data);
+      } else {
+        handleUpdateDataset(data.data);
+      }
     } else {
       notifyError(dict("toast.error_edit"));
     }
