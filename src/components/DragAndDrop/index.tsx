@@ -107,6 +107,10 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
     isDragActive ? styles.isActive : ""
   }`;
 
+  const isFile = (file: any): file is File => {
+    return file instanceof File || file instanceof Blob;
+  };
+
   return (
     <div {...getRootProps()} className={containerClass}>
       <input {...getInputProps()} />
@@ -132,10 +136,10 @@ const DragAndDrop = ({ file, setFile, img }: FileDragDropProps) => {
       {banner && img === "Banner" && <img src={banner} alt={img ? img : ""} width={300} height={100} />}
       {file && imageUrl ? (
         <img src={imageUrl} alt='Product image' width={100} height={100} />
-      ) : file ? (
+      ) : isFile(file) ? (
         <img src={URL.createObjectURL(file)} alt='Product image' width={300} height={300} />
       ) : (
-        <></>
+        <img src={file as unknown as string} alt='Product image' width={300} height={300} />
       )}
     </div>
   );
