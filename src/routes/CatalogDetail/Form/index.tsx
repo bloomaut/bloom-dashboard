@@ -56,8 +56,8 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: FormProps) => {
-  const { datasetDetail } = useCatalogDetailContext();
+const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) => {
+  const { datasetDetail, handleAddDataset, handleUpdateDataset } = useCatalogDetailContext();
   const [formData, setFormData] = useState<InitialValuesProps>(initialValues);
   const [checkValidation, setCheckValidation] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -70,7 +70,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
   const imageUrl = action === "put" && formData.data?.listimage ? formData.data?.listimage : null;
 
   useEffect(() => {
-    console.log(datasetDetail);
     if (action === "put" && id) {
       const product = datasetDetail?.dataItems.find((item: DataItemsType) => item._id === id);
       if (product) {
@@ -159,11 +158,9 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {
       setLoading(false);
+      handleAddDataset(data.data.data);
       notify(dict("toast.success_item"));
       setShowPopup(false);
-      if (onCreate) {
-        onCreate(data.data.data);
-      }
     } else {
       notifyError(dict("toast.error_file"));
     }
@@ -173,11 +170,13 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
     setLoading(true);
     const data = await update("dataitem", formData, id, ENV.BOX);
     if (data.statusCode === 200) {
+      setShowPopup(false);
       notify(dict("toast.success_edit"));
       setLoading(false);
-      setShowPopup(false);
       if (onUpdate) {
         onUpdate(data.data);
+      } else {
+        handleUpdateDataset(data.data);
       }
     } else {
       notifyError(dict("toast.error_edit"));

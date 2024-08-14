@@ -12,6 +12,7 @@ import Form from "../Form";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { AllProducts } from "@/typescript/interfaces/catalog.interface";
+import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 
 interface Props {
   id: string;
@@ -20,12 +21,13 @@ interface Props {
   price: number | null;
   image: string;
   position: number;
-  onDelete: (deletedId: string) => void;
-  onUpdate: (editedProduct: AllProducts) => void;
   allProducts?: AllProducts[];
+  onDelete?: (id: string) => void;
+  onUpdate?: (updatedItem: AllProducts) => void;
 }
 
-const TableRow = ({ id, name, description, price, image, position, onDelete, allProducts, onUpdate }: Props) => {
+const TableRow = ({ id, name, description, price, image, position, allProducts, onDelete, onUpdate }: Props) => {
+  const { handleRemoveDataset } = useCatalogDetailContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dict = useTranslations("dict");
@@ -37,9 +39,13 @@ const TableRow = ({ id, name, description, price, image, position, onDelete, all
     const response = await remove("dataitem", id, ENV.BOX);
     if (response.statusCode === 200) {
       setShowPopupDelete(false);
+      if (onDelete) {
+        onDelete(id);
+      } else {
+        handleRemoveDataset(id);
+      }
       notify(`${dict("toast.success_product_deleted")}`);
       setLoading(false);
-      onDelete(id);
     } else {
       notifyError(`${dict("toast.error_product_deleted")}`);
     }

@@ -43,26 +43,6 @@ const Detail = () => {
     }
   };
 
-  const handleDeleteItem = (deletedId: string) => {
-    setSortedDataItems(prevItems => {
-      const updatedItems = prevItems.filter(item => item._id !== deletedId);
-      setDataItemsCount(updatedItems.length);
-      return updatedItems;
-    });
-  };
-
-  const handleUpdateItem = (updatedItem: any) => {
-    setSortedDataItems(prevItems => prevItems.map(item => (item._id === updatedItem._id ? updatedItem : item)));
-  };
-
-  const handleAddItem = (newItem: any) => {
-    setSortedDataItems(prevItems => {
-      const updatedItems = [...prevItems, newItem];
-      setDataItemsCount(updatedItems.length);
-      return updatedItems;
-    });
-  };
-
   useEffect(() => {
     if (datasetDetail && datasetDetail.dataItems) {
       const sortedItems = [...datasetDetail.dataItems].sort((a, b) => a.order - b.order);
@@ -73,7 +53,7 @@ const Detail = () => {
 
   return (
     <section className={styles.catalog_detail_container}>
-      <Header name={datasetDetail?.dataSet.name} quantity={dataItemsCount} id={id} onCreate={handleAddItem} />
+      <Header name={datasetDetail?.dataSet.name} quantity={dataItemsCount} id={id} />
       <div className={styles.table_container}>
         <TableHead />
         {!datasetDetail ? (
@@ -89,8 +69,6 @@ const Detail = () => {
                 price={item.data.listprice}
                 image={item.data.listimage}
                 position={item.order}
-                onDelete={handleDeleteItem}
-                onUpdate={handleUpdateItem}
               />
             ))}
           </div>
