@@ -8,7 +8,6 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import Title from "@/components/Title";
 import Search from "@/components/Search";
 import Button from "@/components/Button";
-import PopupConfirm from "@/components/PopupConfirm";
 import Icon from "@/components/Icon";
 import PopupChildren from "@/components/PopupChildren";
 import DragAndDrop from "@/components/DragAndDrop";
@@ -76,7 +75,7 @@ const Header = () => {
           onConfirm={handleConfirm}
           setShowConfirmation={setShowPopupExcel}
         >
-          <DragAndDrop file={file} setFile={setFile} />
+          <DragAndDrop type='excel' file={file} setFile={setFile} />
           {file !== null && (
             <button className={styles.reset} onClick={() => setFile(null)}>
               Resetear

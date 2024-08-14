@@ -31,7 +31,7 @@ interface InitialValuesProps {
   type_catalog: string;
   category_name: string;
   category_description: string;
-  category_image: File | null;
+  category_image: string | null;
   category_visibility: boolean;
 }
 const initialValues: InitialValuesProps = {
@@ -185,7 +185,7 @@ const FormActions = ({
         type_catalog: dataschema || "",
         category_name: name || "",
         category_description: description || "",
-        category_image: image as unknown as File | null,
+        category_image: image || null,
         category_visibility: visibility ?? true,
       });
       setFile(null);
@@ -250,7 +250,7 @@ const FormActions = ({
           </div>
           <div className={styles.media}>
             <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
-            <DragAndDrop file={file || formData.category_image} setFile={setFile} />
+            <DragAndDrop type='image' file={file} setFile={setFile} currentImage={formData.category_image} />
           </div>
         </div>
         <div className={action === "put" ? styles.button_container : styles.button}>

@@ -415,6 +415,16 @@
       "select": "Select",
       "empty": "There are no templates available. Try again in a few minutes",
       "next": "Next"
+    },
+    "draganddrop": {
+      "invalid_file": "The file type you are selecting is not allowed",
+      "file_length": "Only one file is allowed to be uploaded",
+      "error_excel": "You must select an Excel spreadsheet",
+      "error_image": "You must select an image",
+      "error_pdf": "You must select a PDF file",
+      "text_excel": "Upload or drag an Excel file",
+      "text_image": "Upload or drag an image",
+      "text_pdf": "Upload or drag a PDF file"
     }
   }
 }
