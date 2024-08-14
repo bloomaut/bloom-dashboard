@@ -9,7 +9,7 @@ import Palette from "./Palette";
 import Button from "@/components/Button";
 
 const SecondaryForm = () => {
-  const { logo, setLogo, errorLogo, banner, setBanner, loading, handleSubmit } = useBusinessContext();
+  const { formData, logo, setLogo, errorLogo, banner, setBanner, loading, handleSubmit } = useBusinessContext();
   const { step_04 } = useStepValidation();
 
   const dict = useTranslations("dict.form_validation");
@@ -19,12 +19,12 @@ const SecondaryForm = () => {
       <div className={styles.drag_container}>
         <div className={styles.logo}>
           <h6>Logo</h6>
-          <DragAndDrop file={logo} setFile={setLogo} img='Logo' />
+          <DragAndDrop type='image' file={logo} setFile={setLogo} currentImage={formData.client?.logo} />
           {errorLogo && <span className={styles.error}>{dict("logo_required")}</span>}
         </div>
         <div className={styles.banner}>
           <h6>Banner</h6>
-          <DragAndDrop file={banner} setFile={setBanner} img='Banner' />
+          <DragAndDrop type='image' file={banner} setFile={setBanner} currentImage={formData.client?.banner} />
         </div>
       </div>
       <section className={styles.second_row}>

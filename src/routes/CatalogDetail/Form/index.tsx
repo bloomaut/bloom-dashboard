@@ -33,7 +33,7 @@ interface InitialValuesProps {
     listname: string;
     listdescr: string;
     listprice: number | null;
-    listimage: File | null;
+    listimage: string | null;
   };
   order: number | null;
   visibility: boolean;
@@ -79,7 +79,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
             listname: product.data.listname,
             listdescr: product.data.listdescr,
             listprice: product.data.listprice ? parseFloat(product.data.listprice) : null,
-            listimage: product.data.listimage ? new File([], product.data.listimage) : null,
+            listimage: product.data.listimage,
           },
           order: product.order,
           visibility: product.visibility,
@@ -284,7 +284,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
           </div>
           <div className={styles.media}>
             <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
-            <DragAndDrop file={file || imageUrl} setFile={setFile} />
+            <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
           </div>
         </div>
         <div className={styles.button_container}>
