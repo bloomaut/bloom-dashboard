@@ -3,6 +3,7 @@ import { useDropzone, FileRejection } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import styles from "./styles.module.scss";
 import Icon from "../Icon";
+import { useTranslations } from "next-intl";
 
 interface ImageDropzoneProps {
   file?: File | null;
@@ -13,19 +14,20 @@ interface ImageDropzoneProps {
 const ImageDropzone = ({ file, setFile, currentImage }: ImageDropzoneProps) => {
   const { notifyError } = useMessageToast();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const dict = useTranslations("dict.draganddrop");
 
   const onDrop = (acceptedFiles: File[], fileRejections: FileRejection[]) => {
     if (fileRejections.length) {
       const errorCode = fileRejections[0].errors[0].code;
       if (errorCode === "file-invalid-type") {
-        notifyError("El tipo de archivo que estas seleccionando no está permitido");
+        notifyError(dict("invalid_file"));
       } else if (errorCode === "too-many-files") {
-        notifyError("Solo se permite subir un archivo");
+        notifyError(dict("file_length"));
       }
     } else if (acceptedFiles[0].type.includes("image")) {
       setFile(acceptedFiles[0]);
     } else {
-      notifyError("Debes seleccionar una imagen");
+      notifyError(dict("error_image"));
     }
   };
 
@@ -57,7 +59,7 @@ const ImageDropzone = ({ file, setFile, currentImage }: ImageDropzoneProps) => {
       ) : (
         <Icon name='cloud' viewBox='0 0 33 30' width={30} height={30} strokeWidth={3.18493} strokeColor='#1616a5' />
       )}
-      <p className={styles.text}>{!imageUrl && <span>Subir o arrastrar una imagen</span>}</p>
+      <p className={styles.text}>{!imageUrl && <span>{dict("text_image")}</span>}</p>
     </div>
   );
 };

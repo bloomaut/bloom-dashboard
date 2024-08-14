@@ -3,6 +3,7 @@ import { useDropzone, FileRejection } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import styles from "./styles.module.scss";
 import Icon from "../Icon";
+import { useTranslations } from "next-intl";
 
 interface ExcelDropzoneProps {
   file?: File | null;
@@ -11,14 +12,15 @@ interface ExcelDropzoneProps {
 
 const ExcelDropzone = ({ file, setFile }: ExcelDropzoneProps) => {
   const { notifyError } = useMessageToast();
+  const dict = useTranslations("dict.draganddrop");
 
   const onDrop = (acceptedFiles: File[], fileRejections: FileRejection[]) => {
     if (fileRejections.length) {
       const errorCode = fileRejections[0].errors[0].code;
       if (errorCode === "file-invalid-type") {
-        notifyError("El tipo de archivo que estás seleccionando no está permitido");
+        notifyError(dict("invalid_file"));
       } else if (errorCode === "too-many-files") {
-        notifyError("Solo se permite subir un archivo");
+        notifyError(dict("file_length"));
       }
     } else if (acceptedFiles.length > 0) {
       const fileType = acceptedFiles[0].type;
@@ -28,7 +30,7 @@ const ExcelDropzone = ({ file, setFile }: ExcelDropzoneProps) => {
       ) {
         setFile(acceptedFiles[0]);
       } else {
-        notifyError("Debes seleccionar una planilla de Excel");
+        notifyError(dict("error_excel"));
       }
     }
   };
@@ -47,9 +49,7 @@ const ExcelDropzone = ({ file, setFile }: ExcelDropzoneProps) => {
     <div {...getRootProps()} className={containerClass}>
       <input {...getInputProps()} />
       <Icon name='excel' width={35} height={35} viewBox='0 0 25 30' />
-      <p className={styles.text_excel}>
-        {file ? <span>{file.name}</span> : <span>Subir o arrastrar un archivo Excel</span>}
-      </p>
+      <p className={styles.text_excel}>{file ? <span>{file.name}</span> : <span>{dict("text_excel")}</span>}</p>
     </div>
   );
 };
