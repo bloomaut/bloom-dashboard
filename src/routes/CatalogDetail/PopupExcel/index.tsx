@@ -61,7 +61,7 @@ const PopupExcel = ({
             onclick={() => handleExcelDownload(type === "upload" ? "template" : "download")}
           />
         </div>
-        <DragAndDrop file={file} setFile={setFile} img='Excel' />
+        <DragAndDrop type='excel' file={file} setFile={setFile} />
         <div className={styles.btn_upload}>
           <Button title={type === "upload" ? "Upload" : "Update"} type='submit' loading={loading} />
         </div>
