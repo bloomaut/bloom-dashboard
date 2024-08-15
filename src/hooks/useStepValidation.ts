@@ -20,7 +20,7 @@ const useStepValidation = () => {
   }, [step_01, userData]);
 
   const step_03 = useMemo(() => {
-    return Boolean(step_01 && step_02);
+    return Boolean(step_01 && step_02 && userData.isCatalogComplete);
   }, [step_01, step_02, userData]);
 
   const step_04 = useMemo(() => {

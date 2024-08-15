@@ -7,9 +7,11 @@ import Icon from "@/components/Icon";
 import Link from "next/link";
 import Setup from "./Setup";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setUserData } from "@/store/features/userSlice";
+import { setCatalogComplete, setUserData } from "@/store/features/userSlice";
 import { get } from "@/services/fetch";
 import useStepValidation from "@/hooks/useStepValidation";
+import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { ENV } from "@/typescript/types/api";
 
 interface SidebarCard {
   title: string;
@@ -69,6 +71,11 @@ const Sidebar = () => {
     if (res.statusCode === 200) {
       dispatch(setUserData(res.result.user));
     }
+    const data = await get("datasets/small/list", ENV.BOX);
+    if (data.statusCode === 200) {
+      const isComplete = data.data.datasets.some((obj: DatasetProps) => obj.totalDataItems >= 1);
+      dispatch(setCatalogComplete(isComplete));
+    }
   };
 
   useEffect(() => {
@@ -80,7 +87,7 @@ const Sidebar = () => {
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
-      {isOpen && userData.id && !step_04 && <Setup value={currentStep} />}
+      {isOpen && userData.id && !step_04 && <Setup value={currentStep - 1} />}
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >

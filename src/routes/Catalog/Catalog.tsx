@@ -19,7 +19,7 @@ import { useAppSelector } from "@/store/hooks";
 const Catalog = () => {
   const { datasets, loading } = useCatalogContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const { step_04, step_03 } = useStepValidation();
+  const { step_04, step_02 } = useStepValidation();
   const userData = useAppSelector(state => state.userData);
   const router = useRouter();
   const dict = useTranslations("dict");
@@ -64,7 +64,7 @@ const Catalog = () => {
               <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
             </div>
             <div className={styles.btn_next}>
-              {!step_04 && step_03 && (
+              {!step_04 && step_02 && (
                 <Button title='Next' isDisabled={!userData.isCatalogComplete} onclick={handleNavigation} />
               )}
             </div>
