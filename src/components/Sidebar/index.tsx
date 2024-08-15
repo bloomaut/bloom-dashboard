@@ -7,9 +7,11 @@ import Icon from "@/components/Icon";
 import Link from "next/link";
 import Setup from "./Setup";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setUserData } from "@/store/features/userSlice";
+import { setCatalogComplete, setUserData } from "@/store/features/userSlice";
 import { get } from "@/services/fetch";
 import useStepValidation from "@/hooks/useStepValidation";
+import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
+import { ENV } from "@/typescript/types/api";
 
 interface SidebarCard {
   title: string;
@@ -68,6 +70,11 @@ const Sidebar = () => {
     const res = await get("user/me");
     if (res.statusCode === 200) {
       dispatch(setUserData(res.result.user));
+    }
+    const data = await get("datasets/small/list", ENV.BOX);
+    if (data.statusCode === 200) {
+      const isComplete = data.data.datasets.some((obj: DatasetProps) => obj.totalDataItems >= 1);
+      dispatch(setCatalogComplete(isComplete));
     }
   };
 

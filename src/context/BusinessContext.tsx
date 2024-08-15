@@ -26,7 +26,6 @@ const initialFormData: UserBusiness = {
     instagram: "",
   },
   phone: "",
-  isCatalogComplete: false,
 };
 
 interface BusinessContextType {
@@ -194,7 +193,6 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
               instagram: dataToSend.instagram,
             },
             phone: dataToSend.phone,
-            isCatalogComplete: true,
           }),
         );
         if (!step_04) {
