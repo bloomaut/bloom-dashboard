@@ -3,6 +3,8 @@ import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
 import { DatasetDetailType, DataItemsType } from "@/typescript/interfaces/catalog.interface";
+import { useAppDispatch } from "@/store/hooks";
+import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogDetailContextType {
   datasetDetail: DatasetDetailType | null | undefined;
@@ -38,6 +40,7 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
   const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useParams();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) fetchDatasetById();
@@ -61,6 +64,9 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
   const handleAddDataset = (dataset: DataItemsType) => {
     if (datasetDetail) {
       setDatasetDetail({ ...datasetDetail, dataItems: [...datasetDetail.dataItems, dataset] });
+    }
+    if (datasetDetail?.dataItems.length === 0) {
+      dispatch(setCatalogComplete(true));
     }
   };
 

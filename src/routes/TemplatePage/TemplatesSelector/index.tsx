@@ -47,7 +47,7 @@ const TemplatesSelector = () => {
   const handleSubmitPut = async (template_id: string, powerapp_id: string) => {
     const response = await update("small-template/onboarding", { template_id }, onboardingId);
     if (response.statusCode === 200) {
-      dispatch(setUserData(response.data));
+      dispatch(setUserData(response.result.data));
       notify(dict("toast.success_template"));
     } else {
       notifyError(dict("toast.error_template"));

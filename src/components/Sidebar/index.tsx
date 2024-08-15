@@ -87,7 +87,7 @@ const Sidebar = () => {
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
-      {isOpen && userData.id && !step_04 && <Setup value={currentStep} />}
+      {isOpen && userData.id && !step_04 && <Setup value={currentStep - 1} />}
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >
