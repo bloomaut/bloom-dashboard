@@ -15,7 +15,7 @@ export interface UserBusiness {
   created_at?: string;
   updated_at?: string;
   client: Client;
-  isCatalogComplete: boolean;
+  isCatalogComplete?: boolean;
 }
 
 export interface UserBusinessSelector {

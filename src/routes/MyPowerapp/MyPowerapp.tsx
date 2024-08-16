@@ -71,7 +71,10 @@ const MyPowerapp = () => {
         notifyError(dict("error_generate"));
         setPopupSuccess(false);
       } else {
-        dispatch(setUserData(response.data.result.data.user));
+        const res = await get("user/me");
+        if (res.statusCode === 200) {
+          dispatch(setUserData(res.result.user));
+        }
         setPopupSuccess(true);
       }
       setLoadingPopup(false);

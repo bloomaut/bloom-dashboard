@@ -110,7 +110,7 @@ export interface PostDataSchema {
 
 export interface PostOnboarding {
   template_id: ID;
-  onboarding_id: ID;
+  onboarding_id?: ID;
 }
 
 export interface PutPercentage {
