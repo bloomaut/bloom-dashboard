@@ -6,13 +6,13 @@ import CheckBox from "@/components/Checkbox";
 import DragAndDrop from "@/components/DragAndDrop";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
+import PopupConfirm from "@/components/PopupConfirm";
 import { post, remove, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useAppSelector } from "@/store/hooks";
-import PopupConfirm from "@/components/PopupConfirm";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useCatalogContext } from "@/context/CatalogContext";
 
@@ -24,22 +24,34 @@ interface FormActionsProps {
   description?: string;
   visibility?: boolean;
   image?: string;
+  dataschema?: string;
 }
 
 interface InitialValuesProps {
+  type_catalog: string;
   category_name: string;
   category_description: string;
-  category_image: File | null;
+  category_image: string | null;
   category_visibility: boolean;
 }
 const initialValues: InitialValuesProps = {
+  type_catalog: "",
   category_name: "",
   category_description: "",
   category_image: null,
   category_visibility: true,
 };
 
-const FormActions = ({ setShowConfirmation, action, id, name, description, visibility, image }: FormActionsProps) => {
+const FormActions = ({
+  setShowConfirmation,
+  action,
+  id,
+  name,
+  description,
+  visibility,
+  image,
+  dataschema,
+}: FormActionsProps) => {
   const [formData, setFormData] = useState(initialValues);
   const [popupDelete, setPopupDelete] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -47,15 +59,15 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState(false);
   const { handleRemoveDataset, handleAddDataset, handleUpdateDataset } = useCatalogContext();
-  const schema = useAppSelector(state => state.dataschema);
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
   const { notify, notifyError } = useMessageToast();
+  const schema = useAppSelector(state => state.dataschema);
   const dict = useTranslations("dict");
 
   const fieldsToValidate = ["category_name"];
   const errors = useFormValidator(formData, fieldsToValidate, file);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevState: InitialValuesProps) => ({
       ...prevState,
@@ -83,7 +95,7 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
         const postDataschema = {
           name: formData.category_name,
           description: formData.category_description,
-          dataschema: schema[0]._id,
+          dataschema: formData.type_catalog === "uitool-products" ? schema[0]._id : schema[1]._id,
           order: 0,
           image: null,
         };
@@ -116,6 +128,7 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
               throw new Error("File upload failed");
             }
           }
+
           const updatedDataset = {
             name: formData.category_name,
             order: 0,
@@ -169,14 +182,15 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
   useEffect(() => {
     if (action === "put") {
       setFormData({
+        type_catalog: dataschema || "",
         category_name: name || "",
         category_description: description || "",
-        category_image: image as unknown as File | null,
+        category_image: image || null,
         category_visibility: visibility ?? true,
       });
       setFile(null);
     }
-  }, [action, name, description, image, visibility]);
+  }, [action, name, description, image, visibility, dataschema]);
 
   useEffect(() => {
     if (checkValidation && Object.keys(errors).length === 0) {
@@ -195,6 +209,22 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
         </div>
         <div className={styles.inputs_container}>
           <div className={styles.products_information}>
+            <div className={styles.select_type}>
+              <label className={styles.label}>{dict("catalog.form_actions.catalog_type")}</label>
+              <select
+                className={styles.select}
+                onChange={handleChange}
+                name='type_catalog'
+                value={formData.type_catalog}
+                disabled={action === "put"}
+              >
+                <option value='' hidden>
+                  {dict("catalog.form_actions.select_type")}
+                </option>
+                <option value={schema[0].category}>{dict("catalog.form_actions.products")}</option>
+                <option value={schema[1].category}>{dict("catalog.form_actions.services")}</option>
+              </select>
+            </div>
             <Input
               type='text'
               textLabel={dict("catalog.form_actions.name")}
@@ -220,7 +250,7 @@ const FormActions = ({ setShowConfirmation, action, id, name, description, visib
           </div>
           <div className={styles.media}>
             <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
-            <DragAndDrop file={file || formData.category_image} setFile={setFile} />
+            <DragAndDrop type='image' file={file} setFile={setFile} currentImage={formData.category_image} />
           </div>
         </div>
         <div className={action === "put" ? styles.button_container : styles.button}>

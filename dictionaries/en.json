@@ -351,7 +351,11 @@
         "visibility": "Visible on my apps",
         "delete": "Delete catalog",
         "save": "Save catalog",
-        "order_description": "It will be generated automatically"
+        "order_description": "It will be generated automatically",
+        "catalog_type": "Catalog type",
+        "select_type": "Select type",
+        "products": "Products",
+        "services": "Services"
       },
       "popup_excel": {
         "massive_upload_title": "Massive upload from Excel",
@@ -411,6 +415,16 @@
       "select": "Select",
       "empty": "There are no templates available. Try again in a few minutes",
       "next": "Next"
+    },
+    "draganddrop": {
+      "invalid_file": "The file type you are selecting is not allowed",
+      "file_length": "Only one file is allowed to be uploaded",
+      "error_excel": "You must select an Excel spreadsheet",
+      "error_image": "You must select an image",
+      "error_pdf": "You must select a PDF file",
+      "text_excel": "Upload or drag an Excel file",
+      "text_image": "Upload or drag an image",
+      "text_pdf": "Upload or drag a PDF file"
     }
   }
 }

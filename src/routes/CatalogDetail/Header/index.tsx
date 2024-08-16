@@ -15,10 +15,9 @@ interface Header {
   name: string | undefined | null;
   id: string | string[];
   quantity: number | undefined | null;
-  onCreate: (newItem: any) => void;
 }
 
-const Header = ({ name, id, quantity, onCreate }: Header) => {
+const Header = ({ name, id, quantity }: Header) => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [bulkLoadPopup, setBulkLoadPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -78,14 +77,7 @@ const Header = ({ name, id, quantity, onCreate }: Header) => {
           submitFunction={handleBulkLoad}
         />
       )}
-      {showPopupCreate && (
-        <Form
-          action='post'
-          title={dict("popup.create_product")}
-          setShowPopup={setShowPopupCreate}
-          onCreate={onCreate}
-        />
-      )}
+      {showPopupCreate && <Form action='post' title={dict("popup.create_product")} setShowPopup={setShowPopupCreate} />}
     </div>
   );
 };

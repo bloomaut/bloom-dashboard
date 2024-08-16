@@ -351,7 +351,11 @@
         "visibility": "Visibile en mis aplicaciones",
         "delete": "Eliminar catálogo",
         "save": "Guardar catálogo",
-        "order_description": "El mismo será generado automáticamente"
+        "order_description": "El mismo será generado automáticamente",
+        "catalog_type": "Tipo de catálogo",
+        "select_type": "Seleccionar tipo",
+        "products": "Productos",
+        "services": "Servicios"
       },
       "popup_excel": {
         "massive_upload_title": "Carga masiva desde Excel",
@@ -411,6 +415,16 @@
       "select": "Seleccionar",
       "empty": "No hay plantillas disponibles. Vuelve a intentarlo en unos minutos.",
       "next": "Siguiente"
+    },
+    "draganddrop": {
+      "invalid_file": "El tipo de archivo que estás seleccionando no está permitido",
+      "file_length": "Solo se permite subir un archivo",
+      "error_excel": "Debes seleccionar una planilla de Excel",
+      "error_image": "Debes seleccionar una imagen",
+      "error_pdf": "Debes seleccionar un PDF",
+      "text_excel": "Subir o arrastrar un archivo Excel",
+      "text_image": "Subir o arrastrar una imagen",
+      "text_pdf": "Subir o arrastrar un PDF"
     }
   }
 }

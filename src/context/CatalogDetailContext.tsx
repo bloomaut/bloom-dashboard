@@ -2,13 +2,18 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
-import { DatasetDetailType } from "@/typescript/interfaces/catalog.interface";
+import { DatasetDetailType, DataItemsType } from "@/typescript/interfaces/catalog.interface";
+import { useAppDispatch } from "@/store/hooks";
+import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogDetailContextType {
-  datasetDetail: any | null | undefined;
+  datasetDetail: DatasetDetailType | null | undefined;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
   loading: boolean;
+  handleRemoveDataset: (deletedId: string) => void;
+  handleAddDataset: (dataset: DataItemsType) => void;
+  handleUpdateDataset: (updatedDataset: DataItemsType) => void;
 }
 
 const CatalogDetailContext = createContext<CatalogDetailContextType>({
@@ -20,12 +25,22 @@ const CatalogDetailContext = createContext<CatalogDetailContextType>({
     throw new Error("setLoading function not implemented");
   },
   loading: true,
+  handleRemoveDataset: () => {
+    throw new Error("handleRemoveDataset function not implemented");
+  },
+  handleAddDataset: () => {
+    throw new Error("handleAddDataset function not implemented");
+  },
+  handleUpdateDataset: () => {
+    throw new Error("handleUpdateDataset function not implemented");
+  },
 });
 
 export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) => {
-  const [datasetDetail, setDatasetDetail] = useState<any | null | undefined>(null);
+  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useParams();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) fetchDatasetById();
@@ -39,11 +54,39 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
     setLoading(false);
   };
 
+  const handleRemoveDataset = (deletedId: string) => {
+    if (datasetDetail) {
+      const filteredDataItems = datasetDetail.dataItems.filter(item => item._id !== deletedId);
+      setDatasetDetail({ ...datasetDetail, dataItems: filteredDataItems });
+    }
+  };
+
+  const handleAddDataset = (dataset: DataItemsType) => {
+    if (datasetDetail) {
+      setDatasetDetail({ ...datasetDetail, dataItems: [...datasetDetail.dataItems, dataset] });
+    }
+    if (datasetDetail?.dataItems.length === 0) {
+      dispatch(setCatalogComplete(true));
+    }
+  };
+
+  const handleUpdateDataset = (updatedDataset: DataItemsType) => {
+    if (datasetDetail) {
+      const updatedDataItems = datasetDetail.dataItems.map(item =>
+        item._id === updatedDataset._id ? { ...item, ...updatedDataset } : item,
+      );
+      setDatasetDetail({ ...datasetDetail, dataItems: updatedDataItems });
+    }
+  };
+
   return (
     <CatalogDetailContext.Provider
       value={{
         datasetDetail,
         fetchDatasetById,
+        handleRemoveDataset,
+        handleAddDataset,
+        handleUpdateDataset,
         setLoading,
         loading,
       }}

@@ -6,13 +6,15 @@ import { useEffect, useState } from "react";
 import { useTemplateContext } from "@/context/TemplatesContext";
 import { Template } from "@/typescript/interfaces/template.interface";
 import { useSelector } from "react-redux";
-import { update } from "@/services/fetch";
+import { get, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { UserBusinessSelector } from "@/typescript/interfaces/business.interface";
-// Components
-import LoadingSpinner from "@/components/Loading";
 import flake_icon_01 from "/public/flake_icon_01.svg";
 import flake_icon_02 from "/public/flake_icon_02.svg";
+// Components
+import LoadingSpinner from "@/components/Loading";
+import { setUserData } from "@/store/features/userSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 const TemplatesSelector = () => {
   const dict = useTranslations("dict");
@@ -21,6 +23,7 @@ const TemplatesSelector = () => {
   const { templates, loading, selectedTemplateId, setSelectedTemplateId, setPreviewId, setPreviewLoading } =
     useTemplateContext();
   const { notify, notifyError } = useMessageToast();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (onboardings && onboardings.length > 0) {
@@ -44,6 +47,7 @@ const TemplatesSelector = () => {
   const handleSubmitPut = async (template_id: string, powerapp_id: string) => {
     const response = await update("small-template/onboarding", { template_id }, onboardingId);
     if (response.statusCode === 200) {
+      dispatch(setUserData(response.result.data));
       notify(dict("toast.success_template"));
     } else {
       notifyError(dict("toast.error_template"));

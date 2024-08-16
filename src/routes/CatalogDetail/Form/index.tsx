@@ -33,7 +33,7 @@ interface InitialValuesProps {
     listname: string;
     listdescr: string;
     listprice: number | null;
-    listimage: File | null;
+    listimage: string | null;
   };
   order: number | null;
   visibility: boolean;
@@ -56,8 +56,8 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: FormProps) => {
-  const { datasetDetail } = useCatalogDetailContext();
+const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) => {
+  const { datasetDetail, handleAddDataset, handleUpdateDataset } = useCatalogDetailContext();
   const [formData, setFormData] = useState<InitialValuesProps>(initialValues);
   const [checkValidation, setCheckValidation] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -78,7 +78,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
             listname: product.data.listname,
             listdescr: product.data.listdescr,
             listprice: product.data.listprice ? parseFloat(product.data.listprice) : null,
-            listimage: product.data.listimage ? new File([], product.data.listimage) : null,
+            listimage: product.data.listimage,
           },
           order: product.order,
           visibility: product.visibility,
@@ -104,7 +104,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
   }, [action, id, datasetDetail, allProducts]);
 
   const fieldsToValidate =
-    datasetDetail?.dataSet.dataschema.fields
+    datasetDetail?.dataSet?.dataschema?.fields
       .filter((field: DataschemaField) => field.required)
       .map((field: DataschemaField) => field.name) || [];
 
@@ -119,8 +119,8 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
         const dataToSend = {
           dataset: datasetDetail?.dataSet._id ?? "",
           data: formData.data,
-          order: formData.order,
           visibility: formData.visibility,
+          ...(formData.order !== null && { order: formData.order }),
         };
 
         if (file) {
@@ -158,11 +158,9 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
     const data = await post("dataitem", formData, ENV.BOX);
     if (data.data.statusCode === 201) {
       setLoading(false);
+      handleAddDataset(data.data.data);
       notify(dict("toast.success_item"));
       setShowPopup(false);
-      if (onCreate) {
-        onCreate(data.data.data);
-      }
     } else {
       notifyError(dict("toast.error_file"));
     }
@@ -172,11 +170,13 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
     setLoading(true);
     const data = await update("dataitem", formData, id, ENV.BOX);
     if (data.statusCode === 200) {
+      setShowPopup(false);
       notify(dict("toast.success_edit"));
       setLoading(false);
-      setShowPopup(false);
       if (onUpdate) {
         onUpdate(data.data);
+      } else {
+        handleUpdateDataset(data.data);
       }
     } else {
       notifyError(dict("toast.error_edit"));
@@ -264,7 +264,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
               textHolder=''
               textDescription={dict("catalog.form_actions.order_description")}
               name='order'
-              value={formData.order || 0}
+              value={formData.order ?? ""}
               handleChange={handleChange}
             />
             <CheckBox text='Visible on my apps' active={formData.visibility} onChange={handleVisibility} />
@@ -283,7 +283,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate, onCreate }: For
           </div>
           <div className={styles.media}>
             <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
-            <DragAndDrop file={file || imageUrl} setFile={setFile} />
+            <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
           </div>
         </div>
         <div className={styles.button_container}>

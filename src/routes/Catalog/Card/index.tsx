@@ -14,12 +14,15 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
     <article className={styles.container}>
       <div
         className={
-          dataschema && dataschema[0].category === "uitool-products"
+          dataschema && dataschema?.category === "uitool-products"
             ? styles.card
             : `${styles.card} ${styles.card_services}`
         }
       >
-        <Link href={`/catalog/${_id}`} className={styles.image_container}>
+        <Link
+          href={dataschema?.category === "uitool-products" ? `/catalog/${_id}` : `/catalog/services/${_id}`}
+          className={styles.image_container}
+        >
           {image ? (
             <Image src={image} className={styles.image} alt={name} width={140} height={140} />
           ) : (
@@ -52,6 +55,7 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
             image={image}
             visibility={visibility}
             setShowConfirmation={setShowPopup}
+            dataschema={dataschema?.category}
           />
         )}
       </div>
