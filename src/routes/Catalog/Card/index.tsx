@@ -9,7 +9,7 @@ import FormActions from "../FormActions";
 
 const Card = ({ _id, name, description, image, visibility, totalDataItems, dataschema }: DatasetProps) => {
   const [showPopup, setShowPopup] = useState(false);
-
+  console.log(dataschema);
   return (
     <article className={styles.container}>
       <div
@@ -19,7 +19,10 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
             : `${styles.card} ${styles.card_services}`
         }
       >
-        <Link href={`/catalog/${_id}`} className={styles.image_container}>
+        <Link
+          href={dataschema?.category === "uitool-products" ? `/catalog/${_id}` : `/catalog/services/${_id}`}
+          className={styles.image_container}
+        >
           {image ? (
             <Image src={image} className={styles.image} alt={name} width={140} height={140} />
           ) : (
