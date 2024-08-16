@@ -28,8 +28,9 @@ const Catalog = () => {
     router.push("/my-powerapp");
   };
 
-  const sumProducts = (array: DatasetProps[]) => {
-    return array.reduce((sum: number, obj: DatasetProps) => {
+  const sumCategories = (array: DatasetProps[], category: string) => {
+    const newArray = array.filter((obj: DatasetProps) => obj.dataschema?.category === category);
+    return newArray.reduce((sum: number, obj: DatasetProps) => {
       if (obj.hasOwnProperty("totalDataItems")) {
         return sum + obj.totalDataItems;
       }
@@ -37,7 +38,8 @@ const Catalog = () => {
     }, 0);
   };
 
-  const numberOfProducts = sumProducts(datasets);
+  const numberOfProducts = sumCategories(datasets, "uitool-products");
+  const numberOfServices = sumCategories(datasets, "uitool-services");
 
   return (
     <div className={styles.catalog_container}>
@@ -56,7 +58,7 @@ const Catalog = () => {
             <CardAll
               dataschema='uitool-services'
               name={dict("catalog.all_services")}
-              totalDataItems={0}
+              totalDataItems={numberOfServices}
               image={whiteImage}
             />
             {datasets.length > 0 && datasets.map(dataset => <Card key={dataset._id} {...dataset} />)}
