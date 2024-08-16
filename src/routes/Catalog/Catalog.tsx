@@ -29,9 +29,10 @@ const Catalog = () => {
   };
 
   const sumCategories = (array: DatasetProps[], category: string) => {
-    return array.reduce((sum: number, obj: DatasetProps) => {
-      if (obj.dataschema?.category === category) {
-        return ++sum;
+    const newArray = array.filter((obj: DatasetProps) => obj.dataschema?.category === category);
+    return newArray.reduce((sum: number, obj: DatasetProps) => {
+      if (obj.hasOwnProperty("totalDataItems")) {
+        return sum + obj.totalDataItems;
       }
       return sum;
     }, 0);
