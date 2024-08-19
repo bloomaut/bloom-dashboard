@@ -1,0 +1,6 @@
+.catalog_services_container {
+  @include flex(column, flex-start, flex-start, 35px);
+  @include width-height(100%, auto);
+  color: $text;
+  padding: 0 40px;
+}

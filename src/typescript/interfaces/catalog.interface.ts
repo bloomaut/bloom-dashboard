@@ -46,6 +46,18 @@ export interface DatasetProps {
   order: number;
 }
 
+export interface ServicesProps {
+  _id: ID;
+  name: string;
+  description: string;
+  image: string;
+  visibility: boolean;
+  dataschema: DataschemaProps;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  order: number;
+}
+
 export interface DataSchemaProps {
   category: string;
   fields: Array<DataschemaField>;
