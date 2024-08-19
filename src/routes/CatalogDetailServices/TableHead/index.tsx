@@ -10,7 +10,7 @@ const TableHead = () => {
       <h2 className={styles.name}>{dict("name")}</h2>
       <h2 className={styles.description}>{dict("description")}</h2>
       <h2 className={styles.price}>{dict("price")}</h2>
-      <h2 className={styles.price}>{dict("days")}</h2>
+      <h2 className={styles.price}>{dict("available_days")}</h2>
     </div>
   );
 };

@@ -26,16 +26,12 @@ const TableRow = ({
   serviceDescr,
   serviceImage,
   servicePrice,
-  duration,
   fridayFrom,
   fridayTo,
-  lunchFrom,
-  lunchTo,
   mondayFrom,
   mondayTo,
   saturdayFrom,
   saturdayTo,
-  simultaneous,
   sundayFrom,
   sundayTo,
   thursdayFrom,
@@ -48,9 +44,9 @@ const TableRow = ({
   const { handleRemoveService } = useCatalogServiceContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
+  const dict = useTranslations("dict");
 
   const submitDelete = async () => {
     setLoading(true);
@@ -111,7 +107,7 @@ const TableRow = ({
           <div
             key={day}
             className={`${styles.dayBox} ${from ? styles.activeDay : ""}`}
-            title={from ? `Available` : `Not available`}
+            title={from ? `${dict("catalog.available")}` : `${dict("catalog.not_available")}`}
           >
             {day}
             {index < days.length - 1 && <span className={styles.separator}> - </span>}

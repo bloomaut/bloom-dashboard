@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 interface DayData {
@@ -39,15 +40,17 @@ export const useDaysRenderer = ({
   sundayFrom,
   sundayTo,
 }: UseDaysRendererProps) => {
+  const dict = useTranslations("dict.catalog");
+
   return useMemo(() => {
     const days: DayData[] = [
-      { day: "L", from: mondayFrom, to: mondayTo },
-      { day: "M", from: tuesdayFrom, to: tuesdayTo },
-      { day: "X", from: wednesdayFrom, to: wednesdayTo },
-      { day: "J", from: thursdayFrom, to: thursdayTo },
-      { day: "V", from: fridayFrom, to: fridayTo },
-      { day: "S", from: saturdayFrom, to: saturdayTo },
-      { day: "D", from: sundayFrom, to: sundayTo },
+      { day: dict("days.monday"), from: mondayFrom, to: mondayTo },
+      { day: dict("days.tuesday"), from: tuesdayFrom, to: tuesdayTo },
+      { day: dict("days.wednesday"), from: wednesdayFrom, to: wednesdayTo },
+      { day: dict("days.thursday"), from: thursdayFrom, to: thursdayTo },
+      { day: dict("days.friday"), from: fridayFrom, to: fridayTo },
+      { day: dict("days.saturday"), from: saturdayFrom, to: saturdayTo },
+      { day: dict("days.sunday"), from: sundayFrom, to: sundayTo },
     ];
 
     return days;
@@ -66,5 +69,6 @@ export const useDaysRenderer = ({
     saturdayTo,
     sundayFrom,
     sundayTo,
+    dict,
   ]);
 };
