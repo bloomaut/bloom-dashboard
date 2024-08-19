@@ -28,6 +28,22 @@
     padding-left: 10px;
     @include fontSize-fontWeight(14px, 400);
   }
+  .days_container {
+    @include flex(row, flex-start, center);
+    padding-left: 10px;
+    .dayBox {
+      @include fontSize-fontWeight(14px, 400);
+      color: $lighterGrey;
+    }
+    .activeDay {
+      font-weight: 500;
+      color: $blueBackground;
+    }
+    .separator {
+      margin-right: 2px;
+      color: $lighterGrey;
+    }
+  }
   .icons {
     @include flex(row, center, center, 5px);
     border-left: none;

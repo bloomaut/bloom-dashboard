@@ -12,6 +12,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { ServiceData } from "@/typescript/interfaces/catalog.interface";
 import { useCatalogServiceContext } from "@/context/CatalogServicesContext";
+import { useDaysRenderer } from "@/hooks/useDaysRenderer";
 
 interface Props extends ServiceData {
   id: string;
@@ -51,27 +52,6 @@ const TableRow = ({
   const { notify, notifyError } = useMessageToast();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
 
-  console.log(
-    duration,
-    fridayFrom,
-    fridayTo,
-    lunchFrom,
-    lunchTo,
-    mondayFrom,
-    mondayTo,
-    saturdayFrom,
-    saturdayTo,
-    simultaneous,
-    sundayFrom,
-    sundayTo,
-    thursdayFrom,
-    thursdayTo,
-    tuesdayFrom,
-    tuesdayTo,
-    wednesdayFrom,
-    wednesdayTo,
-  );
-
   const submitDelete = async () => {
     setLoading(true);
     const response = await remove("dataitem", id, ENV.BOX);
@@ -89,6 +69,23 @@ const TableRow = ({
     const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
     return urlRegex.test(url);
   };
+
+  const days = useDaysRenderer({
+    mondayFrom,
+    mondayTo,
+    tuesdayFrom,
+    tuesdayTo,
+    wednesdayFrom,
+    wednesdayTo,
+    thursdayFrom,
+    thursdayTo,
+    fridayFrom,
+    fridayTo,
+    saturdayFrom,
+    saturdayTo,
+    sundayFrom,
+    sundayTo,
+  });
 
   return (
     <div className={styles.container}>
@@ -109,7 +106,18 @@ const TableRow = ({
       <div className={styles.box}>
         <p>$ {servicePrice}</p>
       </div>
-      <div className={styles.box}>DIASSSSSSSS</div>
+      <div className={styles.days_container}>
+        {days.map(({ day, from }, index) => (
+          <div
+            key={day}
+            className={`${styles.dayBox} ${from ? styles.activeDay : ""}`}
+            title={from ? `Available` : `Not available`}
+          >
+            {day}
+            {index < days.length - 1 && <span className={styles.separator}> - </span>}
+          </div>
+        ))}
+      </div>
       <div className={`${styles.icons} ${styles.box}`}>
         <Button
           title=''
