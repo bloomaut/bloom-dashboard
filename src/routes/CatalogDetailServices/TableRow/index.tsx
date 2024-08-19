@@ -105,7 +105,7 @@ const TableRow = ({
       <div className={styles.days_container}>
         {days.map(({ day, from }, index) => (
           <div
-            key={day}
+            key={index}
             className={`${styles.dayBox} ${from ? styles.activeDay : ""}`}
             title={from ? `${dict("catalog.available")}` : `${dict("catalog.not_available")}`}
           >
