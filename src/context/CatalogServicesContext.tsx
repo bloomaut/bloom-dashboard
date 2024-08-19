@@ -2,16 +2,16 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
-import { DatasetDetailType, DataItemsType } from "@/typescript/interfaces/catalog.interface";
+import { DatasetDetailServicesType, DataItemsServiceType } from "@/typescript/interfaces/catalog.interface";
 
 interface CatalogServiceContextType {
-  service: DatasetDetailType | null | undefined;
+  service: DatasetDetailServicesType | null | undefined;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
   loading: boolean;
   handleRemoveService: (deletedId: string) => void;
-  handleAddService: (dataset: DataItemsType) => void;
-  handleUpdateService: (updatedDataset: DataItemsType) => void;
+  handleAddService: (dataset: DataItemsServiceType) => void;
+  handleUpdateService: (updatedDataset: DataItemsServiceType) => void;
 }
 
 const CatalogServiceContext = createContext<CatalogServiceContextType>({
@@ -35,7 +35,7 @@ const CatalogServiceContext = createContext<CatalogServiceContextType>({
 });
 
 export const CatalogServicesProvider = ({ children }: { children: JSX.Element }) => {
-  const [service, setService] = useState<DatasetDetailType | null | undefined>(null);
+  const [service, setService] = useState<DatasetDetailServicesType | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useParams();
 
@@ -58,13 +58,13 @@ export const CatalogServicesProvider = ({ children }: { children: JSX.Element })
     }
   };
 
-  const handleAddService = (dataset: DataItemsType) => {
+  const handleAddService = (dataset: DataItemsServiceType) => {
     if (service) {
       setService({ ...service, dataItems: [...service.dataItems, dataset] });
     }
   };
 
-  const handleUpdateService = (updatedDataset: DataItemsType) => {
+  const handleUpdateService = (updatedDataset: DataItemsServiceType) => {
     if (service) {
       const updatedDataItems = service.dataItems.map(item =>
         item._id === updatedDataset._id ? { ...item, ...updatedDataset } : item,

@@ -3,4 +3,8 @@
   @include width-height(100%, auto);
   color: $text;
   padding: 0 40px;
+  .table_container {
+    @include width-height(100%, auto);
+    @include flex(column, flex-start, flex-start, 5px);
+  }
 }
