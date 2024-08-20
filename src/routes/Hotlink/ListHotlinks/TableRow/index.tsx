@@ -14,7 +14,6 @@ interface TableRowProps {
 
 const TableRow = ({ hotlink }: TableRowProps) => {
   const { id, setId } = useFlakesContext();
-  const [selected, setSelected] = useState(false);
   const [openInfoPopup, setOpenInfoPopup] = useState(false);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.playground.popup");
@@ -23,7 +22,6 @@ const TableRow = ({ hotlink }: TableRowProps) => {
 
   const handleClick = () => {
     setId(hotlink.id);
-    setSelected(true);
   };
 
   const handleCopyClick = () => {
@@ -33,7 +31,6 @@ const TableRow = ({ hotlink }: TableRowProps) => {
       },
       function (err) {
         notifyError(`${dict("copy_error")}`);
-        console.error("Error al copiar al portapapeles", err);
       },
     );
   };
@@ -53,7 +50,7 @@ const TableRow = ({ hotlink }: TableRowProps) => {
         <div className={styles.column}>
           {hotlink.customer ? (
             <>
-              {hotlink.customer.clientCode} {hotlink.customer.clientFirstname} {hotlink.customer.clientLastname}
+              {hotlink.customer.clientCode} {hotlink.customer.ClientFirstname} {hotlink.customer.ClientLastname}
             </>
           ) : (
             <em>-</em>
