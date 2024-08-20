@@ -21,7 +21,7 @@ const ListHotlinks = () => {
       setFilteredHotlinks([]);
       hotlinksList.forEach(hotlink => {
         if (
-          hotlink.customer?.clientFirstname?.toLowerCase().includes(searchValue.toLowerCase()) ||
+          hotlink.customer?.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase()) ||
           hotlink.flake_power_app.skinx.title.toLowerCase().includes(searchValue.toLowerCase())
         ) {
           setFilteredHotlinks(prevItems => {

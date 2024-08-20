@@ -46,6 +46,18 @@ export interface DatasetProps {
   order: number;
 }
 
+export interface ServicesProps {
+  _id: ID;
+  name: string;
+  description: string;
+  image: string;
+  visibility: boolean;
+  dataschema: DataschemaProps;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  order: number;
+}
+
 export interface DataSchemaProps {
   category: string;
   fields: Array<DataschemaField>;
@@ -131,6 +143,46 @@ export interface DataItemsType {
     listname: string;
     listprice: string;
   };
+  order: number;
+  updatedAt: Timestamp;
+  visibility: boolean;
+  _id: ID;
+}
+
+// Detalle de Servicios
+export interface DatasetDetailServicesType {
+  dataItems: DataItemsServiceType[];
+  dataSet: DatasetProp;
+}
+
+export interface ServiceData {
+  serviceName: string;
+  serviceDescr: string;
+  servicePrice: number;
+  serviceImage: string;
+  duration: number;
+  simultaneous: number;
+  lunchFrom: string;
+  lunchTo: string;
+  mondayFrom: string;
+  mondayTo: string;
+  tuesdayFrom: string;
+  tuesdayTo: string;
+  wednesdayFrom: string;
+  wednesdayTo: string;
+  thursdayFrom: string;
+  thursdayTo: string;
+  fridayFrom: string;
+  fridayTo: string;
+  saturdayFrom: string;
+  saturdayTo: string;
+  sundayFrom: string;
+  sundayTo: string;
+}
+
+export interface DataItemsServiceType {
+  createdAt: Timestamp;
+  data: ServiceData;
   order: number;
   updatedAt: Timestamp;
   visibility: boolean;

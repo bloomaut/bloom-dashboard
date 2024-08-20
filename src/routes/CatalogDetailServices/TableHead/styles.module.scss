@@ -1,0 +1,13 @@
+.container {
+  @include width-height(100%, auto);
+  display: grid;
+  grid-template-columns: 0.4fr 1fr 1.3fr 1fr 1.3fr;
+  align-items: center;
+  padding: 15px;
+  background: $sweetBlue;
+  border-bottom: 1px solid $blue;
+  h2 {
+    color: $blue;
+    @include fontSize-fontWeight(20px, 600);
+  }
+}
