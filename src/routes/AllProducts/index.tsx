@@ -46,7 +46,7 @@ const AllProducts = () => {
       </div>
 
       <div className={styles.table_container}>
-        <TableHead />
+        <TableHead allProducts={true} />
         {loading ? (
           <LoadingSpinner />
         ) : products?.length ? (
@@ -56,6 +56,7 @@ const AllProducts = () => {
                 key={item._id}
                 id={item._id}
                 name={item.data.listname}
+                catalog={item.dataset.name}
                 description={item.data.listdescr}
                 price={item.data.listprice}
                 image={item.data.listimage}
