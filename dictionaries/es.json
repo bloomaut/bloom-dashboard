@@ -326,7 +326,7 @@
       "name": "Nombre",
       "description": "Descripción",
       "price": "Precio",
-      "available_days": "Dias disponibles",
+      "available_days": "Días disponibles",
       "clean_bot": "Limpiar",
       "train_bot": "Entrenar",
       "cancel": "Cancelar",
