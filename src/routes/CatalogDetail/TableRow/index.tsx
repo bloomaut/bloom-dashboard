@@ -17,6 +17,7 @@ import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
 interface Props {
   id: string;
   name: string;
+  catalog?: string;
   description: string;
   price: number | null;
   image: string;
@@ -26,7 +27,18 @@ interface Props {
   onUpdate?: (updatedItem: AllProducts) => void;
 }
 
-const TableRow = ({ id, name, description, price, image, position, allProducts, onDelete, onUpdate }: Props) => {
+const TableRow = ({
+  id,
+  name,
+  catalog,
+  description,
+  price,
+  image,
+  position,
+  allProducts,
+  onDelete,
+  onUpdate,
+}: Props) => {
   const { handleRemoveDataset } = useCatalogDetailContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -58,7 +70,13 @@ const TableRow = ({ id, name, description, price, image, position, allProducts, 
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{
+        display: "grid",
+        gridTemplateColumns: allProducts ? "0.2fr 1.5fr 1fr 2.5fr 0.5fr 1fr" : "0.2fr 1fr 2.5fr 0.5fr 1fr",
+      }}
+    >
       <div className={styles.order}>{position}</div>
       <div className={styles.name_container}>
         {isValidImageUrl(image) ? (
@@ -72,6 +90,7 @@ const TableRow = ({ id, name, description, price, image, position, allProducts, 
         )}
         <p className={styles.box}>{name}</p>
       </div>
+      {allProducts && <p className={styles.box}>{catalog}</p>}
       <p className={styles.box}>{description}</p>
       <div className={styles.box}>
         <p>$ {price}</p>
