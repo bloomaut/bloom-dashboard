@@ -42,12 +42,12 @@ export interface Customer {
   _id?: ID;
   client_id: string;
   auth0_id: string;
-  clientEmail?: string;
-  clientFirstname?: string;
-  clientLastname?: string;
-  clientPhone?: string;
-  clientLocation?: string;
-  clientAvatar?: Nullable<string>;
+  ClientEmail?: string;
+  ClientFirstname?: string;
+  ClientLastname?: string;
+  ClientPhone?: string;
+  ClientLocation?: string;
+  ClientAvatar?: Nullable<string>;
   personalNote?: string;
   phoneContactId?: Nullable<string>;
   clientCode?: string;

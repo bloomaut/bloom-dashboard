@@ -1,7 +1,13 @@
 "use client";
+import { CatalogServicesProvider } from "@/context/CatalogServicesContext";
+import Service from "./Service";
 
 const CatalogDetailServices = () => {
-  return <div></div>;
+  return (
+    <CatalogServicesProvider>
+      <Service />
+    </CatalogServicesProvider>
+  );
 };
 
 export default CatalogDetailServices;
