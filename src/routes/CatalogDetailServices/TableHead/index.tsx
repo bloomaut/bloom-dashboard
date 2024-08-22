@@ -13,7 +13,9 @@ const TableHead = ({ allServices }: Props) => {
       className={styles.container}
       style={{
         display: "grid",
-        gridTemplateColumns: allServices ? "0.10fr 0.79fr 0.51fr 1.30fr 0.30fr 1.20fr" : "0.2fr 1fr 2.5fr 0.5fr 1fr",
+        gridTemplateColumns: allServices
+          ? "0.10fr 0.79fr 0.51fr 1.30fr 0.30fr 1.20fr"
+          : "0.2fr 1fr 2fr 0.5fr 0.64fr 0.7fr",
       }}
     >
       <h2 className={styles.name}></h2>
