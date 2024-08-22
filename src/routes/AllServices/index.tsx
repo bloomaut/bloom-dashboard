@@ -24,14 +24,6 @@ const AllServices = () => {
     }
   };
 
-  const handleDeleteItem = (deletedId: string) => {
-    setServices((prevItems: any) => prevItems.filter((item: any) => item._id !== deletedId));
-  };
-
-  const handleUpdateItem = (updatedItem: DataItemsServiceType) => {
-    setServices(prevItems => prevItems.map(item => (item._id === updatedItem._id ? updatedItem : item)));
-  };
-
   useEffect(() => {
     fetchServices();
   }, []);
