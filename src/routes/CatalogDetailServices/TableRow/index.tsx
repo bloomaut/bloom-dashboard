@@ -18,7 +18,7 @@ interface Props extends ServiceData {
   id: string;
   position: number;
   catalog?: string;
-  allServices: boolean;
+  allServices?: boolean;
 }
 
 const TableRow = ({
