@@ -160,10 +160,10 @@ export interface ServiceData {
   serviceDescr: string;
   servicePrice: number;
   serviceImage: string;
-  duration: number;
-  simultaneous: number;
-  lunchFrom: string;
-  lunchTo: string;
+  duration?: number;
+  simultaneous?: number;
+  lunchFrom?: string;
+  lunchTo?: string;
   mondayFrom: string;
   mondayTo: string;
   tuesdayFrom: string;
@@ -183,6 +183,7 @@ export interface ServiceData {
 export interface DataItemsServiceType {
   createdAt: Timestamp;
   data: ServiceData;
+  dataset?: AllProductsDataset;
   order: number;
   updatedAt: Timestamp;
   visibility: boolean;
