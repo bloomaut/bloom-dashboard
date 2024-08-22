@@ -7,6 +7,7 @@
 
 - [] Este PR cumple con todo lo pedido en la issue
 - [] Todas las traducciones están aplicadas
+- [] Hice un npm run build para verificar que no haya errores
 - [] Probé la interfaz en pantallas más chicas (1280x720)
 
 <!-- Etiquetar compañeros -->
