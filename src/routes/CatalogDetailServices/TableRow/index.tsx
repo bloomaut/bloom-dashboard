@@ -17,6 +17,8 @@ import { useDaysRenderer } from "@/hooks/useDaysRenderer";
 interface Props extends ServiceData {
   id: string;
   position: number;
+  catalog?: string;
+  allServices?: boolean;
 }
 
 const TableRow = ({
@@ -40,6 +42,8 @@ const TableRow = ({
   tuesdayTo,
   wednesdayFrom,
   wednesdayTo,
+  catalog,
+  allServices,
 }: Props) => {
   const { handleRemoveService } = useCatalogServiceContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
@@ -84,7 +88,13 @@ const TableRow = ({
   });
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{
+        display: "grid",
+        gridTemplateColumns: allServices ? "0.2fr 1.5fr 1fr 2.5fr 0.6fr 1.4fr 1fr" : "0.2fr 1fr 2fr 0.5fr 0.7fr 0.7fr",
+      }}
+    >
       <div className={styles.order}>{position}</div>
       <div className={styles.image_container}>
         {isValidImageUrl(serviceImage) ? (
@@ -98,6 +108,7 @@ const TableRow = ({
         )}
         <p className={styles.box}>{serviceName}</p>
       </div>
+      {allServices && <p className={styles.box}>{catalog}</p>}
       <p className={styles.box}>{serviceDescr}</p>
       <div className={styles.box}>
         <p>$ {servicePrice}</p>
