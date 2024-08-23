@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
-import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 import { useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { get } from "@/services/fetch";
+import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 
 interface Context {
   flakes: Powerapp[];
@@ -16,6 +16,9 @@ interface Context {
   id: string;
   setId: (i: string) => void;
   getDiffusionLink: (flakeId: string) => Promise<string | null>;
+  getHotlinkList: (offset: number, limit: number) => void;
+  totalHotlinks: number;
+  hotlinkList: HotlinkList[] | [];
 }
 
 const FlakesContext = createContext<Context>({
@@ -27,6 +30,9 @@ const FlakesContext = createContext<Context>({
   id: "",
   setId: () => "",
   getDiffusionLink: () => Promise.resolve(null),
+  getHotlinkList: async () => [],
+  totalHotlinks: 0,
+  hotlinkList: [],
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -39,6 +45,8 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const path = usePathname();
 
   const [id, setId] = useState<string>("");
+  const [hotlinkList, setHotlinkList] = useState<HotlinkList[]>([]);
+  const [totalHotlinks, setTotalHotlinks] = useState(0);
 
   //Fetch sin necesidad de estar logueado
   const fetchData = async () => {
@@ -52,6 +60,17 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
       notifyError(dict("error_tryagain"));
       setLoading(false);
     }
+  };
+
+  const getHotlinkList = async (offset: number, limit: number) => {
+    const response = await get(`hotlinks/list?limit=${limit}&offset=${offset}`);
+    if (response.statusCode === 200) {
+      setTotalHotlinks(response.result.hotlinks.total);
+      setHotlinkList(response.result.hotlinks.hotlinks);
+    } else {
+      notifyError(dict("error_tryagain"));
+    }
+    setLoading(false);
   };
 
   const fetchDataHotlink = async () => {
@@ -100,6 +119,9 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         id,
         setId,
         getDiffusionLink,
+        getHotlinkList,
+        totalHotlinks,
+        hotlinkList,
       }}
     >
       {children}

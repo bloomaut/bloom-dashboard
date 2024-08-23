@@ -37,7 +37,7 @@ const Form = () => {
   const dict = useTranslations("dict");
   const { clientSelected } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
-  const { flakes, difussionLink, selectedFlakeId, loading, getList, totalHotlinks, getDiffusionLink } =
+  const { flakes, difussionLink, selectedFlakeId, loading, getHotlinkList, totalHotlinks, getDiffusionLink } =
     useFlakesContext();
   const [formInfo, setFormInfo] = useState<VariableInUse[]>([]);
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
@@ -103,7 +103,7 @@ const Form = () => {
     const response = await post("hotlinks/user", formDataPost);
     if (response.data.statusCode === 200) {
       setFormInfo(formInfo.map(info => ({ ...info, value: "" })));
-      getList(0, totalHotlinks);
+      getHotlinkList(0, totalHotlinks);
       notify(`${dict("toast.success_hotlink")}`);
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);

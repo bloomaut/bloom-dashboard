@@ -1,35 +1,19 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 // Components
 /* import Search from "@/components/Search"; */
 import TableRow from "./TableRow";
 import LoadingSpinner from "@/components/Loading";
 import Pagination from "@/components/Pagination";
-import { get } from "@/services/fetch";
-import { useMessageToast } from "@/hooks/useMessageToast";
+import { useFlakesContext } from "@/context/FlakesContext";
 
 const ListHotlinks = () => {
   const dict = useTranslations("dict.hotlinks.list");
+  const { getHotlinkList, loading, hotlinkList, totalHotlinks } = useFlakesContext();
   /*   const [searchValue, setSearchValue] = useState<string>(""); */
   /*   const [currentItemsFiltered, setCurrentItemsFiltered] = useState<HotlinkList[]>([]); */
   /*   const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList[]>([]); */
-  const [hotlinkList, setHotlinkList] = useState<HotlinkList[]>([]);
-  const [totalHotlinks, setTotalHotlinks] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const { notifyError } = useMessageToast();
-
-  const getHotlinkList = async (offset: number, limit: number) => {
-    const response = await get(`hotlinks/list?limit=${limit}&offset=${offset}`);
-    if (response.statusCode === 200) {
-      setTotalHotlinks(response.result.hotlinks.total);
-      setHotlinkList(response.result.hotlinks.hotlinks);
-    } else {
-      notifyError(dict("error_tryagain"));
-    }
-    setLoading(false);
-  };
 
   /*  useEffect(() => {
      let hotlinksList;
