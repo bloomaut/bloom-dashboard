@@ -15,11 +15,7 @@ interface Context {
   difussionLink: string | null;
   id: string;
   setId: (i: string) => void;
-  filteredHotlinks: HotlinkList[];
-  setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
-  getList: (offset: number, limit: number) => Promise<HotlinkList[]>;
   getDiffusionLink: (flakeId: string) => Promise<string | null>;
-  totalHotlinks: number;
 }
 
 const FlakesContext = createContext<Context>({
@@ -30,11 +26,7 @@ const FlakesContext = createContext<Context>({
   difussionLink: null,
   id: "",
   setId: () => "",
-  filteredHotlinks: [],
-  setFilteredHotlinks: () => [],
-  getList: async () => [],
   getDiffusionLink: () => Promise.resolve(null),
-  totalHotlinks: 0,
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -47,8 +39,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const path = usePathname();
 
   const [id, setId] = useState<string>("");
-  const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList[]>([]);
-  const [totalHotlinks, setTotalHotlinks] = useState(0);
 
   //Fetch sin necesidad de estar logueado
   const fetchData = async () => {
@@ -87,19 +77,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
-  //Función para acceder a la lista de hotlinks sin colección
-  const getList = async (offset: number, limit: number) => {
-    const response = await get(`hotlinks/list?limit=${limit}&offset=${offset}`);
-    if (response.statusCode === 200) {
-      setTotalHotlinks(response.result.hotlinks.total);
-      setLoading(false);
-      return response.result.hotlinks.hotlinks;
-    } else {
-      notifyError(dict("error_tryagain"));
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     // Para no tener que volver a copiar un Context igual
     // en la página de hotlink, vamos a reusar este.
@@ -122,11 +99,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         difussionLink,
         id,
         setId,
-        filteredHotlinks,
-        setFilteredHotlinks,
-        getList,
         getDiffusionLink,
-        totalHotlinks,
       }}
     >
       {children}
