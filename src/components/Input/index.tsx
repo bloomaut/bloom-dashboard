@@ -1,5 +1,6 @@
 import styles from "./styles.module.scss";
 import Icon from "../Icon";
+import { usePathname } from "next/navigation";
 
 interface Props {
   textLabel?: string;
@@ -31,13 +32,20 @@ const Input = ({
   inputPrice = false,
 }: Props) => {
   const inputType = type === "textarea" ? `${styles.input} ${styles.textarea}` : styles.input;
+  const pathname = usePathname();
 
   return (
     <div className={styles.input_container}>
       {textLabel && <label className={styles.label}>{textLabel}</label>}
       {textLabel === "Order number" && <p className={styles.order}>({textDescription})</p>}
       {type === "textarea" ? (
-        <textarea className={inputType} placeholder={textHolder} name={name} value={value} onChange={handleChange} />
+        <textarea
+          className={pathname.includes("services") ? styles.textarea_services : inputType}
+          placeholder={textHolder}
+          name={name}
+          value={value}
+          onChange={handleChange}
+        />
       ) : (
         <>
           <input

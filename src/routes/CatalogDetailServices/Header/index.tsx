@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import Form from "@/routes/CatalogDetail/Form";
+import Form from "../Form";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { postFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";

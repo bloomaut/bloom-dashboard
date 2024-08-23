@@ -1,0 +1,161 @@
+.form_container {
+  @include flex(row, center, center);
+  @include width-height(100vw, 100vh);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in-out forwards;
+  .inner_container {
+    @include flex(column, center, center, 20px);
+    @include width-height(1150px, auto);
+    @include fontSize-fontWeight(24px, 500);
+    padding: 20px 25px 20px 25px;
+    background-color: $white;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    animation: scaleIn 0.3s ease-in-out forwards;
+    .btn_close {
+      @include width-height(100%, auto);
+      button {
+        position: absolute;
+        top: 8px;
+        right: 5px;
+        border: none;
+        outline: none;
+        background: none;
+        cursor: pointer;
+      }
+    }
+    .header {
+      @include width-height(100%, auto);
+      display: grid;
+      grid-template-columns: 40% 20% 30%;
+      gap: 4%;
+      p {
+        @include fontSize-fontWeight(24px, 600);
+        text-align: start;
+        color: $text;
+      }
+    }
+    .inputs_container {
+      @include width-height(100%, auto);
+      display: grid;
+      gap: 4%;
+      grid-template-columns: 40% 20% 30%;
+      position: relative;
+      .column_one {
+        @include flex(column, center, flex-start, 20px);
+      }
+      .column_two {
+        height: 90%;
+        @include flex(column, space-between, flex-start);
+        .extra_config {
+          @include flex(column, center, flex-start, 10px);
+          .extra_config_title {
+            @include fontSize-fontWeight(24px, 600);
+            text-align: start;
+            color: $text;
+          }
+          .extra_config_row {
+            @include flex(row, center, center, 5px);
+          }
+        }
+      }
+      .column_three {
+        @include flex(column, flex-start, flex-start, 10px);
+        .label {
+          @include fontSize-fontWeight(14px, 400);
+          color: $lightGrey;
+          padding: 5px 0;
+        }
+      }
+    }
+    .available_days_container {
+      @include width-height(100%, auto);
+      @include flex(column, flex-start, flex-start, 20px);
+      .available_days_title {
+        @include fontSize-fontWeight(24px, 600);
+        color: $text;
+      }
+      .days_container {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+        .box {
+          @include flex(column, center, center, 20px);
+          .day_container {
+            @include width-height(100%, auto);
+            border-right: 1px solid $text;
+            .day {
+              @include fontSize-fontWeight(16px, 500);
+              padding: 10px 15px;
+              border-radius: 5px;
+              color: $blueBackground;
+              background: $blueishBackground;
+            }
+          }
+          .availability {
+            @include width-height(100%, auto);
+            @include flex(row, center, center, 10px);
+            .from,
+            .to {
+              @include flex(column, flex-start, flex-start);
+              input {
+                @include width-height(100%, auto);
+              }
+            }
+          }
+        }
+      }
+    }
+    .button_container {
+      @include width-height(100%, auto);
+      @include flex(row, flex-end, center);
+    }
+    .error {
+      @include width-height(200px, auto);
+      text-align: start;
+      position: absolute;
+      top: 60px;
+      @include fontSize-fontWeight(12px, 400);
+      color: red;
+    }
+    .error_hidden {
+      display: none;
+    }
+  }
+}
+
+.closing {
+  animation: fadeOutPopup 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutPopup {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

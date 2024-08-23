@@ -55,6 +55,16 @@
     font-family: inherit;
     resize: none;
   }
+  .textarea_services {
+    @include width-height(100%, 150px);
+    outline: none;
+    border: 1px solid $lighterGrey;
+    color: $text;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: inherit;
+    resize: none;
+  }
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
