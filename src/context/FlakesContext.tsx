@@ -15,12 +15,11 @@ interface Context {
   difussionLink: string | null;
   id: string;
   setId: (i: string) => void;
-  hotlinksList: HotlinkList[];
-  setHotlinksList: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
   filteredHotlinks: HotlinkList[];
   setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
-  getList: () => Promise<void>;
+  getList: (offset: number, limit: number) => Promise<HotlinkList[]>;
   getDiffusionLink: (flakeId: string) => Promise<string | null>;
+  totalHotlinks: number;
 }
 
 const FlakesContext = createContext<Context>({
@@ -31,12 +30,11 @@ const FlakesContext = createContext<Context>({
   difussionLink: null,
   id: "",
   setId: () => "",
-  hotlinksList: [],
-  setHotlinksList: () => [],
   filteredHotlinks: [],
   setFilteredHotlinks: () => [],
-  getList: () => Promise.resolve(),
+  getList: async () => [],
   getDiffusionLink: () => Promise.resolve(null),
+  totalHotlinks: 0,
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -49,8 +47,8 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const path = usePathname();
 
   const [id, setId] = useState<string>("");
-  const [hotlinksList, setHotlinksList] = useState<HotlinkList[]>([]);
   const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList[]>([]);
+  const [totalHotlinks, setTotalHotlinks] = useState(0);
 
   //Fetch sin necesidad de estar logueado
   const fetchData = async () => {
@@ -90,11 +88,12 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   //Función para acceder a la lista de hotlinks sin colección
-  const getList = async () => {
-    const response = await get("hotlinks/list");
+  const getList = async (offset: number, limit: number) => {
+    const response = await get(`hotlinks/list?limit=${limit}&offset=${offset}`);
     if (response.statusCode === 200) {
-      setHotlinksList(response.result.hotlinks.hotlinks);
+      setTotalHotlinks(response.result.hotlinks.total);
       setLoading(false);
+      return response.result.hotlinks.hotlinks;
     } else {
       notifyError(dict("error_tryagain"));
       setLoading(false);
@@ -108,7 +107,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     // si venis de Playground sin usuario logueado
     if (path.includes("hotlink")) {
       fetchDataHotlink();
-      getList();
     } else {
       fetchData();
     }
@@ -124,12 +122,11 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         difussionLink,
         id,
         setId,
-        hotlinksList,
-        setHotlinksList,
         filteredHotlinks,
         setFilteredHotlinks,
         getList,
         getDiffusionLink,
+        totalHotlinks,
       }}
     >
       {children}

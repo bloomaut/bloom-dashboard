@@ -3,15 +3,15 @@ import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
 
 interface Props {
-  itemsPerPage: number;
+  limit: number;
   totalItems: number;
   onPageChange: (page: number) => void;
 }
 
-const Pagination = ({ totalItems, itemsPerPage, onPageChange }: Props) => {
+const Pagination = ({ totalItems, limit, onPageChange }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const totalPages = Math.ceil(totalItems / limit);
 
   const prevClick = () => {
     if (currentPage > 1) {

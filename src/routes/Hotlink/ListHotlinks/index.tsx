@@ -11,14 +11,20 @@ import Pagination from "@/components/Pagination";
 
 const ListHotlinks = () => {
   const dict = useTranslations("dict.hotlinks.list");
-  const { hotlinksList, filteredHotlinks, setFilteredHotlinks, loading } = useFlakesContext();
+  const { getList, filteredHotlinks, setFilteredHotlinks, totalHotlinks, loading } = useFlakesContext();
   const [searchValue, setSearchValue] = useState<string>("");
   const [currentItems, setCurrentItems] = useState<HotlinkList[]>([]);
   const [currentItemsFiltered, setCurrentItemsFiltered] = useState<HotlinkList[]>([]);
+  const [hotlinksList, setHotlinksList] = useState<HotlinkList[]>([]);
 
   useEffect(() => {
     if (searchValue) {
       setFilteredHotlinks([]);
+      const fetchAllHotlinks = async () => {
+        const response = await getList(0, totalHotlinks);
+        setHotlinksList(response);
+      };
+      fetchAllHotlinks();
       hotlinksList.forEach(hotlink => {
         if (
           hotlink.customer?.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -38,15 +44,15 @@ const ListHotlinks = () => {
     }
   }, [searchValue]);
 
-  const handlePageChange = (page: number = 1, itemsPerPage: number = 5) => {
+  const handlePageChange = async (page: number = 1) => {
     //Cantidad por default de items = 5 y pagina default= 1
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    setCurrentItems(hotlinksList.slice(startIndex, endIndex));
+    const startIndex = (page - 1) * 5;
+    const hotlinksInPage = await getList(startIndex, 5);
+    setCurrentItems(hotlinksInPage);
   };
-  const handlePageChangeFilter = (page: number = 1, itemsPerPage: number = 5) => {
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+  const handlePageChangeFilter = (page: number = 1) => {
+    const startIndex = (page - 1) * 5;
+    const endIndex = startIndex + 5;
     setCurrentItemsFiltered(filteredHotlinks.slice(startIndex, endIndex));
   };
 
@@ -77,7 +83,7 @@ const ListHotlinks = () => {
           <LoadingSpinner /> // Si está cargando, mostramos el spinner
         ) : filteredHotlinks.length > 0 ? (
           currentItemsFiltered.map((hotlink, index) => <TableRow key={index} hotlink={hotlink} />) // Si existe un hotlink filtrado, se muestra
-        ) : !hotlinksList || hotlinksList.length === 0 ? (
+        ) : currentItems.length === 0 ? (
           <p className={styles.text}>{dict("empty")}</p> // Si la lista está vacía o no existe, mostramos el texto "empty"
         ) : (
           // Si hay una lista de hotlinks, la mostramos
@@ -86,12 +92,10 @@ const ListHotlinks = () => {
       </div>
 
       {filteredHotlinks.length === 0 && //Paginacion inicial
-        hotlinksList.length > 5 && (
-          <Pagination totalItems={hotlinksList.length} itemsPerPage={5} onPageChange={handlePageChange} />
-        )}
+        totalHotlinks > 5 && <Pagination totalItems={totalHotlinks} limit={5} onPageChange={handlePageChange} />}
       {filteredHotlinks.length > 0 && //Paginacion al filtrar
         filteredHotlinks.length > 5 && (
-          <Pagination totalItems={filteredHotlinks.length} itemsPerPage={5} onPageChange={handlePageChangeFilter} />
+          <Pagination totalItems={filteredHotlinks.length} limit={5} onPageChange={handlePageChangeFilter} />
         )}
     </div>
   );
