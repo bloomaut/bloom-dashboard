@@ -13,6 +13,7 @@ import "react-medium-image-zoom/dist/styles.css";
 import { ServiceData } from "@/typescript/interfaces/catalog.interface";
 import { useCatalogServiceContext } from "@/context/CatalogServicesContext";
 import { useDaysRenderer } from "@/hooks/useDaysRenderer";
+import Form from "../Form";
 
 interface Props extends ServiceData {
   id: string;
@@ -152,16 +153,9 @@ const TableRow = ({
           textAccept={dict("popup.confirm")}
         />
       )}
-      {/* {showPopupEdit && (
-        <Form
-          action='put'
-          title={dict("popup.edit_product")}
-          id={id}
-          setShowPopup={setShowPopupEdit}
-          allProducts={allProducts}
-          onUpdate={onUpdate}
-        />
-      )} */}
+      {showPopupEdit && (
+        <Form action='put' title={dict("popup.edit_product")} id={id} setShowPopup={setShowPopupEdit} />
+      )}
     </div>
   );
 };

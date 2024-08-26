@@ -9,9 +9,11 @@
   animation: fadeIn 0.3s ease-in-out forwards;
   .inner_container {
     @include flex(column, center, center, 20px);
-    @include width-height(1150px, auto);
+    @include width-height(1150px, 100%);
     @include fontSize-fontWeight(24px, 500);
     padding: 20px 25px 20px 25px;
+    overflow-y: auto;
+    max-height: 800px;
     background-color: $white;
     border-radius: 15px;
     text-align: center;
@@ -64,6 +66,12 @@
           }
         }
       }
+      .column_two_errors {
+        height: 96%;
+        .extra_config {
+          gap: 25px;
+        }
+      }
       .column_three {
         @include flex(column, flex-start, flex-start, 10px);
         .label {
@@ -73,6 +81,11 @@
         }
       }
     }
+    .form_control {
+      @include width-height(100%, auto);
+      @include flex(column, center, flex-start, 20px);
+      position: relative;
+    }
     .available_days_container {
       @include width-height(100%, auto);
       @include flex(column, flex-start, flex-start, 20px);
@@ -80,40 +93,14 @@
         @include fontSize-fontWeight(24px, 600);
         color: $text;
       }
-      .days_container {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 10px;
-        .box {
-          @include flex(column, center, center, 20px);
-          .day_container {
-            @include width-height(100%, auto);
-            border-right: 1px solid $text;
-            .day {
-              @include fontSize-fontWeight(16px, 500);
-              padding: 10px 15px;
-              border-radius: 5px;
-              color: $blueBackground;
-              background: $blueishBackground;
-            }
-          }
-          .availability {
-            @include width-height(100%, auto);
-            @include flex(row, center, center, 10px);
-            .from,
-            .to {
-              @include flex(column, flex-start, flex-start);
-              input {
-                @include width-height(100%, auto);
-              }
-            }
-          }
-        }
-      }
     }
     .button_container {
       @include width-height(100%, auto);
       @include flex(row, flex-end, center);
+    }
+    .button_container_errors {
+      @extend .button_container;
+      padding-top: 35px;
     }
     .error {
       @include width-height(200px, auto);
@@ -126,11 +113,34 @@
     .error_hidden {
       display: none;
     }
+    .error_lunchFrom {
+      @extend .error;
+      width: 110px;
+    }
+    .error_textarea {
+      @extend .error;
+      width: 250px;
+      top: 182px;
+    }
+    .error_image {
+      @extend .error;
+      top: 170px;
+    }
   }
 }
 
 .closing {
   animation: fadeOutPopup 0.3s ease-in-out forwards;
+}
+
+.inner_container::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.inner_container::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
 }
 
 @keyframes fadeIn {

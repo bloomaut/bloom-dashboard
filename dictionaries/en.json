@@ -223,7 +223,7 @@
         "create": "Create",
         "congratulation": "Congratulation!",
         "success_subtitle": "Your app has been created successfully.",
-        "success_text": "Now, it’s time to create your first link and share with your clients.",
+        "success_text": "Now, it’s to create your first link and share with your clients.",
         "button_first_link": "Generate my first link",
         "error_generate": "There was an error generating the app"
       }
@@ -327,6 +327,7 @@
       "description": "Description",
       "price": "Price",
       "available_days": "Available days",
+      "available_days_form": "Available days for service",
       "clean_bot": "Clean",
       "train_bot": "Train",
       "cancel": "Cancel",
@@ -348,7 +349,8 @@
       "price_percentage": "Percentage",
       "price_error": "The percentage is outside the allowed range.",
       "price_success": "Prices updated correctly.",
-      "days": {
+      "order": "Order",
+      "days_letter": {
         "monday": "M",
         "tuesday": "T",
         "wednesday": "W",
@@ -356,6 +358,38 @@
         "friday": "F",
         "saturday": "S",
         "sunday": "S"
+      },
+      "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      },
+      "services": {
+        "serviceName": "Service Name",
+        "serviceDescr": "Service Description",
+        "servicePrice": "Service Price",
+        "serviceImage": "Service Image",
+        "duration": "Duration",
+        "simultaneous": "Simultaneous",
+        "from": "From",
+        "to": "To",
+        "lunchFrom": "Lunch Start",
+        "lunchTo": "Lunch End",
+        "required": {
+          "serviceName": "Service name is required.",
+          "serviceDescr": "Service description is required.",
+          "servicePrice": "Service price is required.",
+          "serviceImage": "Service image is required.",
+          "lunchFrom": "Lunch start time is required.",
+          "lunchTo": "Lunch end time is required.",
+          "duration": "Duration is required.",
+          "simultaneous": "Simultaneous value is required.",
+          "from_error": "You must fill in the end time."
+        }
       },
       "form_actions": {
         "title": "Catalog information",
@@ -365,6 +399,7 @@
         "visibility": "Visible on my apps",
         "delete": "Delete catalog",
         "save": "Save catalog",
+        "save_service": "Save service",
         "order_description": "It will be generated automatically",
         "catalog_type": "Catalog type",
         "select_type": "Select type",

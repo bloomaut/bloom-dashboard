@@ -44,13 +44,13 @@ export const useDaysRenderer = ({
 
   return useMemo(() => {
     const days: DayData[] = [
-      { day: dict("days.monday"), from: mondayFrom, to: mondayTo },
-      { day: dict("days.tuesday"), from: tuesdayFrom, to: tuesdayTo },
-      { day: dict("days.wednesday"), from: wednesdayFrom, to: wednesdayTo },
-      { day: dict("days.thursday"), from: thursdayFrom, to: thursdayTo },
-      { day: dict("days.friday"), from: fridayFrom, to: fridayTo },
-      { day: dict("days.saturday"), from: saturdayFrom, to: saturdayTo },
-      { day: dict("days.sunday"), from: sundayFrom, to: sundayTo },
+      { day: dict("days_letter.monday"), from: mondayFrom, to: mondayTo },
+      { day: dict("days_letter.tuesday"), from: tuesdayFrom, to: tuesdayTo },
+      { day: dict("days_letter.wednesday"), from: wednesdayFrom, to: wednesdayTo },
+      { day: dict("days_letter.thursday"), from: thursdayFrom, to: thursdayTo },
+      { day: dict("days_letter.friday"), from: fridayFrom, to: fridayTo },
+      { day: dict("days_letter.saturday"), from: saturdayFrom, to: saturdayTo },
+      { day: dict("days_letter.sunday"), from: sundayFrom, to: sundayTo },
     ];
 
     return days;

@@ -4,7 +4,12 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsServiceType } from "@/typescript/interfaces/catalog.interface";
+import {
+  DataItemsServiceType,
+  DataschemaField,
+  PostDataItem,
+  PutDataItem,
+} from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogServiceContext } from "@/context/CatalogServicesContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
@@ -16,6 +21,7 @@ import DragAndDrop from "@/components/DragAndDrop";
 import Button from "@/components/Button";
 import CheckBox from "../../../components/Checkbox";
 import Icon from "@/components/Icon";
+import DayInput from "./DayInput";
 
 // Interfaces
 interface FormProps {
@@ -30,10 +36,28 @@ interface FormProps {
 
 interface InitialValuesProps {
   data: {
-    listname: string;
-    listdescr: string;
-    listprice: number | null;
-    listimage: string | null;
+    serviceName: string;
+    serviceDescr: string;
+    servicePrice: number | null;
+    serviceImage: string;
+    duration: number | null;
+    simultaneous: number | null;
+    lunchFrom: string;
+    lunchTo: string;
+    mondayFrom: string;
+    mondayTo: string;
+    tuesdayFrom: string;
+    tuesdayTo: string;
+    wednesdayFrom: string;
+    wednesdayTo: string;
+    thursdayFrom: string;
+    thursdayTo: string;
+    fridayFrom: string;
+    fridayTo: string;
+    saturdayFrom: string;
+    saturdayTo: string;
+    sundayFrom: string;
+    sundayTo: string;
   };
   order: number | null;
   visibility: boolean;
@@ -47,10 +71,28 @@ const headers = [
 
 const initialValues: InitialValuesProps = {
   data: {
-    listname: "",
-    listdescr: "",
-    listprice: null,
-    listimage: null,
+    serviceName: "",
+    serviceDescr: "",
+    servicePrice: null,
+    serviceImage: "",
+    duration: null,
+    simultaneous: null,
+    lunchFrom: "",
+    lunchTo: "",
+    mondayFrom: "",
+    mondayTo: "",
+    tuesdayFrom: "",
+    tuesdayTo: "",
+    wednesdayFrom: "",
+    wednesdayTo: "",
+    thursdayFrom: "",
+    thursdayTo: "",
+    fridayFrom: "",
+    fridayTo: "",
+    saturdayFrom: "",
+    saturdayTo: "",
+    sundayFrom: "",
+    sundayTo: "",
   },
   order: null,
   visibility: true,
@@ -67,31 +109,67 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
-  const imageUrl = action === "put" && formData.data?.listimage ? formData.data?.listimage : null;
+  const imageUrl = action === "put" && formData.data?.serviceImage ? formData.data?.serviceImage : null;
 
   useEffect(() => {
     if (action === "put" && id) {
       const service = services?.dataItems.find((item: DataItemsServiceType) => item._id === id);
       if (service) {
-        // setFormData({
-        //   data: {
-        //     listname: service.data.listname,
-        //     listdescr: service.data.listdescr,
-        //     listprice: service.data.listprice ? parseFloat(service.data.listprice) : null,
-        //     listimage: service.data.listimage,
-        //   },
-        //   order: service.order,
-        //   visibility: service.visibility,
-        // });
+        setFormData({
+          data: {
+            serviceName: service.data.serviceName,
+            serviceDescr: service.data.serviceDescr,
+            servicePrice: service.data.servicePrice,
+            serviceImage: service.data.serviceImage,
+            duration: service.data.duration || null,
+            simultaneous: service.data.simultaneous || null,
+            lunchFrom: service.data.lunchFrom || "",
+            lunchTo: service.data.lunchTo || "",
+            mondayFrom: service.data.mondayFrom,
+            mondayTo: service.data.mondayTo,
+            tuesdayFrom: service.data.tuesdayFrom,
+            tuesdayTo: service.data.tuesdayTo,
+            wednesdayFrom: service.data.wednesdayFrom,
+            wednesdayTo: service.data.wednesdayTo,
+            thursdayFrom: service.data.thursdayFrom,
+            thursdayTo: service.data.thursdayTo,
+            fridayFrom: service.data.fridayFrom,
+            fridayTo: service.data.fridayTo,
+            saturdayFrom: service.data.saturdayFrom,
+            saturdayTo: service.data.saturdayTo,
+            sundayFrom: service.data.sundayFrom,
+            sundayTo: service.data.sundayTo,
+          },
+          order: service.order,
+          visibility: service.visibility,
+        });
       } else if (allProducts) {
         const service = allProducts.find((item: AllProducts) => item._id === id);
         if (service) {
           setFormData({
             data: {
-              listname: service.data.listname,
-              listdescr: service.data.listdescr,
-              listprice: service.data.listprice,
-              listimage: service.data.listimage,
+              serviceName: service.data.serviceName,
+              serviceDescr: service.data.serviceDescr,
+              servicePrice: service.data.servicePrice,
+              serviceImage: service.data.serviceImage,
+              duration: service.data.duration || null,
+              simultaneous: service.data.simultaneous || null,
+              lunchFrom: service.data.lunchFrom || "",
+              lunchTo: service.data.lunchTo || "",
+              mondayFrom: service.data.mondayFrom,
+              mondayTo: service.data.mondayTo,
+              tuesdayFrom: service.data.tuesdayFrom,
+              tuesdayTo: service.data.tuesdayTo,
+              wednesdayFrom: service.data.wednesdayFrom,
+              wednesdayTo: service.data.wednesdayTo,
+              thursdayFrom: service.data.thursdayFrom,
+              thursdayTo: service.data.thursdayTo,
+              fridayFrom: service.data.fridayFrom,
+              fridayTo: service.data.fridayTo,
+              saturdayFrom: service.data.saturdayFrom,
+              saturdayTo: service.data.saturdayTo,
+              sundayFrom: service.data.sundayFrom,
+              sundayTo: service.data.sundayTo,
             },
             order: service.order,
             visibility: service.visibility,
@@ -103,85 +181,51 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
     }
   }, [action, id, services, allProducts]);
 
-  //   const fieldsToValidate =
-  //     datasetDetail?.dataSet?.dataschema?.fields
-  //       .filter((field: DataschemaField) => field.required)
-  //       .map((field: DataschemaField) => field.name) || [];
+  const fieldsToValidate = services?.dataSet?.dataschema?.fields.map((field: DataschemaField) => field.name) || [];
 
-  //   const errors = useFormValidator(formData, fieldsToValidate, file);
+  const errors = useFormValidator(formData, fieldsToValidate, file);
 
-  //   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     setCheckValidation(true);
-  //     if (Object.keys(errors).length === 0) {
-  //       setLoading(true);
-  //       try {
-  //         const dataToSend = {
-  //           dataset: datasetDetail?.dataSet._id ?? "",
-  //           data: formData.data,
-  //           visibility: formData.visibility,
-  //           ...(formData.order !== null && { order: formData.order }),
-  //         };
+  const ErrorMessage = ({ error, name }: { error: string | undefined; name?: string }) => {
+    const errorClass = name?.startsWith("lunch")
+      ? styles.error_lunchFrom
+      : name?.startsWith("description")
+        ? styles.error_textarea
+        : name?.startsWith("image")
+          ? styles.error_image
+          : styles.error;
 
-  //         if (file) {
-  //           const uploadedImageUrl = await handleFileUpload(file);
-  //           if (uploadedImageUrl) {
-  //             dataToSend.data.listimage = uploadedImageUrl;
-  //           } else {
-  //             throw new Error(dict("toast.error_uploading"));
-  //           }
-  //         }
+    return <p className={errorClass ? errorClass : styles.error_hidden}>{error}</p>;
+  };
 
-  //         if (action === "post") {
-  //           await postDataItem(dataToSend);
-  //         } else if (action === "put" && id) {
-  //           const data = {
-  //             data: dataToSend.data,
-  //             order: dataToSend.order,
-  //             visibility: dataToSend.visibility,
-  //           };
-  //           await putDataItem(data, id);
-  //         }
+  const postDataItem = async (formData: PostDataItem) => {
+    setLoading(true);
+    const data = await post("dataitem", formData, ENV.BOX);
+    if (data.data.statusCode === 201) {
+      setLoading(false);
+      handleAddService(data.data.data);
+      notify(dict("toast.success_item"));
+      setShowPopup(false);
+    } else {
+      notifyError(dict("toast.error_file"));
+    }
+  };
 
-  //         setFormData(initialValues);
-  //         setFile(null);
-  //         setCheckValidation(false);
-  //       } catch (error) {
-  //         notifyError(dict("toast.error_item"));
-  //         console.error("Error updating dataset:", error);
-  //       }
-  //     }
-  //   };
-
-  //   const postDataItem = async (formData: PostDataItem) => {
-  //     setLoading(true);
-  //     const data = await post("dataitem", formData, ENV.BOX);
-  //     if (data.data.statusCode === 201) {
-  //       setLoading(false);
-  //       handleAddDataset(data.data.data);
-  //       notify(dict("toast.success_item"));
-  //       setShowPopup(false);
-  //     } else {
-  //       notifyError(dict("toast.error_file"));
-  //     }
-  //   };
-
-  //   const putDataItem = async (formData: PutDataItem, id: string) => {
-  //     setLoading(true);
-  //     const data = await update("dataitem", formData, id, ENV.BOX);
-  //     if (data.statusCode === 200) {
-  //       setShowPopup(false);
-  //       notify(dict("toast.success_edit"));
-  //       setLoading(false);
-  //       if (onUpdate) {
-  //         onUpdate(data.data);
-  //       } else {
-  //         handleUpdateDataset(data.data);
-  //       }
-  //     } else {
-  //       notifyError(dict("toast.error_edit"));
-  //     }
-  //   };
+  const putDataItem = async (formData: PutDataItem, id: string) => {
+    setLoading(true);
+    const data = await update("dataitem", formData, id, ENV.BOX);
+    if (data.statusCode === 200) {
+      setShowPopup(false);
+      notify(dict("toast.success_edit"));
+      setLoading(false);
+      if (onUpdate) {
+        onUpdate(data.data);
+      } else {
+        handleUpdateService(data.data);
+      }
+    } else {
+      notifyError(dict("toast.error_edit"));
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -209,10 +253,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
     }));
   };
 
-  const ErrorMessage = ({ error }: { error: string | undefined }) => (
-    <p className={error ? styles.error : styles.error_hidden}>{error}</p>
-  );
-
   const handleClose = () => {
     setClosing(true);
     setTimeout(() => {
@@ -220,16 +260,54 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
     }, 300);
   };
 
-  //   useEffect(() => {
-  //     if (checkValidation && Object.keys(errors).length === 0) {
-  //       setCheckValidation(false);
-  //     }
-  //   }, [errors]);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setCheckValidation(true);
+    if (Object.keys(errors).length === 0) {
+      setLoading(true);
+      try {
+        const dataToSend = {
+          dataset: services?.dataSet._id ?? "",
+          data: formData.data,
+          visibility: formData.visibility,
+          ...(formData.order !== null && { order: formData.order }),
+        };
+        if (file) {
+          const uploadedImageUrl = await handleFileUpload(file);
+          if (uploadedImageUrl) {
+            dataToSend.data.serviceImage = uploadedImageUrl;
+          } else {
+            throw new Error(dict("toast.error_uploading"));
+          }
+        }
+        if (action === "post") {
+          await postDataItem(dataToSend);
+        } else if (action === "put" && id) {
+          const data = {
+            data: dataToSend.data,
+            order: dataToSend.order,
+            visibility: dataToSend.visibility,
+          };
+          await putDataItem(data, id);
+        }
+        setFormData(initialValues);
+        setFile(null);
+        setCheckValidation(false);
+      } catch (error) {
+        notifyError(dict("toast.error_item"));
+        console.error("Error updating dataset:", error);
+      }
+    }
+  };
 
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  useEffect(() => {
+    if (checkValidation && Object.keys(errors).length === 0) {
+      setCheckValidation(false);
+    }
+  }, [errors]);
 
   return (
-    <form className={`${styles.form_container} ${closing && styles.closing}`}>
+    <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
       <div className={styles.inner_container} ref={dropdownRef}>
         <div className={styles.btn_close}>
           <button onClick={handleClose} type='button'>
@@ -243,26 +321,33 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
         </header>
         <div className={styles.inputs_container}>
           <div className={styles.column_one}>
+            <div className={styles.form_control}>
+              <Input
+                type='text'
+                textLabel={dict("catalog.services.serviceName")}
+                textHolder='My business name'
+                name='serviceName'
+                value={formData.data?.serviceName || ""}
+                handleChange={handleChange}
+              />
+              {checkValidation && <ErrorMessage error={errors.serviceName} />}
+            </div>
+
+            <div className={styles.form_control}>
+              <Input
+                type='textarea'
+                textLabel={dict("catalog.services.serviceDescr")}
+                textHolder=' My business description'
+                name='serviceDescr'
+                value={formData.data?.serviceDescr || ""}
+                handleChange={handleChange}
+              />
+              {checkValidation && <ErrorMessage error={errors.serviceDescr} name='description' />}
+            </div>
+
             <Input
               type='text'
-              textLabel='Service name'
-              textHolder=''
-              name='listname'
-              value={formData.data?.listname || ""}
-              handleChange={handleChange}
-            />
-            {/* {checkValidation && <ErrorMessage error={errors.listname} />} */}
-            <Input
-              type='textarea'
-              textLabel='Description'
-              textHolder=''
-              name='listdescr'
-              value={formData.data?.listdescr || ""}
-              handleChange={handleChange}
-            />
-            <Input
-              type='text'
-              textLabel='Order number'
+              textLabel={dict("catalog.order")}
               textHolder=''
               textDescription={dict("catalog.form_actions.order_description")}
               name='order'
@@ -271,97 +356,97 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
             />
             <CheckBox text='Visible on my apps' active={formData.visibility} onChange={handleVisibility} />
           </div>
-          <div className={styles.column_two}>
-            <Input
-              type='number'
-              textLabel='Price'
-              textHolder=''
-              name='listprice'
-              value={formData.data?.listprice ?? ""}
-              handleChange={handleChange}
-            />
-            {/* {checkValidation && <ErrorMessage error={errors.listprice} />} */}
+          <div className={checkValidation ? `${styles.column_two} ${styles.column_two_errors}` : styles.column_two}>
+            <div className={styles.form_control}>
+              <Input
+                type='number'
+                textLabel={dict("catalog.services.servicePrice")}
+                textHolder=''
+                name='servicePrice'
+                inputPrice
+                value={formData.data?.servicePrice ?? ""}
+                handleChange={handleChange}
+              />
+              {checkValidation && <ErrorMessage error={errors.servicePrice} />}
+            </div>
+
             <div className={styles.extra_config}>
               <p className={styles.extra_config_title}>Extra Config</p>
               <div className={styles.extra_config_row}>
-                <Input
-                  type='number'
-                  textLabel='Lunch from'
-                  textHolder='- am'
-                  name='lunchFrom'
-                  value={formData.data?.listprice ?? ""}
-                  handleChange={handleChange}
-                />
-                <Input
-                  type='number'
-                  textLabel='Lunch to'
-                  textHolder='- pm'
-                  name='lunchTo'
-                  value={formData.data?.listprice ?? ""}
-                  handleChange={handleChange}
-                />
+                <div className={styles.form_control}>
+                  <Input
+                    type='number'
+                    textLabel={dict("catalog.services.lunchFrom")}
+                    textHolder='- am'
+                    name='lunchFrom'
+                    value={formData.data?.lunchFrom ?? ""}
+                    handleChange={handleChange}
+                  />
+                  {checkValidation && <ErrorMessage error={errors.lunchFrom} name='lunch' />}
+                </div>
+
+                <div className={styles.form_control}>
+                  <Input
+                    type='number'
+                    textLabel={dict("catalog.services.lunchTo")}
+                    textHolder='- pm'
+                    name='lunchTo'
+                    value={formData.data?.lunchTo ?? ""}
+                    handleChange={handleChange}
+                  />
+                  {checkValidation && <ErrorMessage error={errors.lunchTo} name='lunch' />}
+                </div>
               </div>
-              <Input
-                type='number'
-                textLabel='Service duration'
-                textHolder='60'
-                name='serviceDuration'
-                value={formData.data?.listprice ?? ""}
-                handleChange={handleChange}
-              />
-              <Input
-                type='number'
-                textLabel='Simultaneous Services'
-                textHolder='#'
-                name='simultaneousServices'
-                value={formData.data?.listprice ?? ""}
-                handleChange={handleChange}
-              />
+              <div className={styles.form_control}>
+                <Input
+                  type='number'
+                  textLabel={dict("catalog.services.duration")}
+                  textHolder='60'
+                  name='duration'
+                  value={formData.data?.duration ?? ""}
+                  handleChange={handleChange}
+                />
+                {checkValidation && <ErrorMessage error={errors.duration} />}
+              </div>
+
+              <div className={styles.form_control}>
+                <Input
+                  type='number'
+                  textLabel={dict("catalog.services.simultaneous")}
+                  textHolder='#'
+                  name='simultaneous'
+                  value={formData.data?.simultaneous ?? ""}
+                  handleChange={handleChange}
+                />
+                {checkValidation && <ErrorMessage error={errors.simultaneous} />}
+              </div>
             </div>
           </div>
           <div className={styles.column_three}>
             <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
-            <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
+            <div className={styles.form_control}>
+              <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
+              {checkValidation && <ErrorMessage error={errors.serviceImage} name='image' />}
+            </div>
           </div>
         </div>
         <div className={styles.available_days_container}>
-          <p className={styles.available_days_title}>Available days for service</p>
+          <p className={styles.available_days_title}>{dict("catalog.available_days_form")}</p>
           <div className={styles.days_container}>
-            {days.map((day, index) => (
-              <div className={styles.box}>
-                <div className={styles.day_container}>
-                  <span key={day} className={styles.day}>
-                    {day}
-                  </span>
-                </div>
-                <div className={styles.availability}>
-                  <div className={styles.from}>
-                    <Input
-                      type='number'
-                      textLabel='From'
-                      textHolder='00:00'
-                      name='from'
-                      value={formData.data?.listprice ?? ""}
-                      handleChange={handleChange}
-                    />
-                  </div>
-                  <div className={styles.to}>
-                    <Input
-                      type='number'
-                      textLabel='To'
-                      textHolder='00:00'
-                      name='to'
-                      value={formData.data?.listprice ?? ""}
-                      handleChange={handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
+            <DayInput
+              formData={formData}
+              handleChange={handleChange}
+              errors={errors}
+              checkValidation={checkValidation}
+            />
           </div>
         </div>
-        <div className={styles.button_container}>
-          <Button title='Save service' type='submit' loading={loading} />
+        <div
+          className={
+            checkValidation ? `${styles.button_container} ${styles.button_container_errors}` : styles.button_container
+          }
+        >
+          <Button title={dict("catalog.form_actions.save_service")} type='submit' loading={loading} />
         </div>
       </div>
     </form>
