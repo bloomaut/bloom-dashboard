@@ -29,9 +29,8 @@ interface FormProps {
   title: string;
   action: "post" | "put";
   id?: string;
-  allProducts?: AllProducts[];
-  onUpdate?: (editedProduct: AllProducts) => void;
-  onCreate?: (newItem: AllProducts) => void;
+  allServices?: DataItemsServiceType[];
+  onUpdate?: (editedProduct: DataItemsServiceType) => void;
 }
 
 interface InitialValuesProps {
@@ -98,7 +97,7 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) => {
+const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) => {
   const { services, handleAddService, handleUpdateService } = useCatalogServiceContext();
   const [formData, setFormData] = useState<InitialValuesProps>(initialValues);
   const [checkValidation, setCheckValidation] = useState<boolean>(false);
@@ -143,8 +142,8 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
           order: service.order,
           visibility: service.visibility,
         });
-      } else if (allProducts) {
-        const service = allProducts.find((item: AllProducts) => item._id === id);
+      } else if (allServices) {
+        const service = allServices.find((item: DataItemsServiceType) => item._id === id);
         if (service) {
           setFormData({
             data: {
@@ -179,7 +178,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
     } else {
       setFormData(initialValues);
     }
-  }, [action, id, services, allProducts]);
+  }, [action, id, services, allServices]);
 
   const fieldsToValidate = services?.dataSet?.dataschema?.fields.map((field: DataschemaField) => field.name) || [];
 
@@ -442,9 +441,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
           </div>
         </div>
         <div
-          className={
-            checkValidation ? `${styles.button_container} ${styles.button_container_errors}` : styles.button_container
-          }
+          className={errors ? `${styles.button_container} ${styles.button_container_errors}` : styles.button_container}
         >
           <Button title={dict("catalog.form_actions.save_service")} type='submit' loading={loading} />
         </div>
