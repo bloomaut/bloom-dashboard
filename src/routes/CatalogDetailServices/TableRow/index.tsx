@@ -92,7 +92,9 @@ const TableRow = ({
       className={styles.container}
       style={{
         display: "grid",
-        gridTemplateColumns: allServices ? "0.2fr 1.5fr 1fr 2.5fr 0.6fr 1.4fr 1fr" : "0.2fr 1fr 2fr 0.5fr 0.7fr 0.7fr",
+        gridTemplateColumns: allServices
+          ? "0.2fr 1.5fr 1fr 2.5fr 0.6fr 1.4fr 1fr"
+          : "0.65fr 3.3fr 6.6fr 1.72fr 3fr 0.5fr",
       }}
     >
       <div className={styles.order}>{position}</div>
