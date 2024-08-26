@@ -326,6 +326,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                 textLabel={dict("catalog.services.serviceName")}
                 textHolder='My business name'
                 name='serviceName'
+                required
                 value={formData.data?.serviceName || ""}
                 handleChange={handleChange}
               />
@@ -338,6 +339,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                 textLabel={dict("catalog.services.serviceDescr")}
                 textHolder=' My business description'
                 name='serviceDescr'
+                required
                 value={formData.data?.serviceDescr || ""}
                 handleChange={handleChange}
               />
@@ -362,6 +364,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                 textLabel={dict("catalog.services.servicePrice")}
                 textHolder=''
                 name='servicePrice'
+                required
                 inputPrice
                 value={formData.data?.servicePrice ?? ""}
                 handleChange={handleChange}
@@ -378,6 +381,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                     textLabel={dict("catalog.services.lunchFrom")}
                     textHolder='- am'
                     name='lunchFrom'
+                    required
                     value={formData.data?.lunchFrom ?? ""}
                     handleChange={handleChange}
                   />
@@ -390,6 +394,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                     textLabel={dict("catalog.services.lunchTo")}
                     textHolder='- pm'
                     name='lunchTo'
+                    required
                     value={formData.data?.lunchTo ?? ""}
                     handleChange={handleChange}
                   />
@@ -402,6 +407,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                   textLabel={dict("catalog.services.duration")}
                   textHolder='60'
                   name='duration'
+                  required
                   value={formData.data?.duration ?? ""}
                   handleChange={handleChange}
                 />
@@ -414,6 +420,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                   textLabel={dict("catalog.services.simultaneous")}
                   textHolder='#'
                   name='simultaneous'
+                  required
                   value={formData.data?.simultaneous ?? ""}
                   handleChange={handleChange}
                 />
@@ -422,7 +429,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
             </div>
           </div>
           <div className={styles.column_three}>
-            <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
+            <label className={styles.label}>{dict("catalog.form_actions.image")} *</label>
             <div className={styles.form_control}>
               <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
               {checkValidation && <ErrorMessage error={errors.serviceImage} name='image' />}

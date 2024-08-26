@@ -15,6 +15,7 @@ interface Props {
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => void;
   ErrorMessage?: JSX.Element;
   inputPrice?: boolean;
+  required?: boolean;
 }
 
 const Input = ({
@@ -30,13 +31,19 @@ const Input = ({
   iconSearch = false,
   ErrorMessage,
   inputPrice = false,
+  required = false,
 }: Props) => {
   const inputType = type === "textarea" ? `${styles.input} ${styles.textarea}` : styles.input;
   const pathname = usePathname();
 
   return (
     <div className={styles.input_container}>
-      {textLabel && <label className={styles.label}>{textLabel}</label>}
+      {textLabel && (
+        <label className={styles.label}>
+          {textLabel}
+          {required && <span> *</span>}
+        </label>
+      )}
       {textLabel === "Order number" && <p className={styles.order}>({textDescription})</p>}
       {type === "textarea" ? (
         <textarea
