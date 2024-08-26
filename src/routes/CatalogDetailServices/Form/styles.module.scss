@@ -81,6 +81,9 @@
           @include fontSize-fontWeight(14px, 400);
           color: $lightGrey;
           padding: 5px 0;
+          span {
+            color: $orange;
+          }
         }
       }
     }
