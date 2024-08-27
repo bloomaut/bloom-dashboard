@@ -1,11 +1,11 @@
 import Button from "@/components/Button";
 import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
+import Image from "next/image";
+import FormActions from "../FormActions";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { useState } from "react";
 import { Link } from "@/navigation";
-import Image from "next/image";
-import FormActions from "../FormActions";
 
 const Card = ({ _id, name, description, image, visibility, totalDataItems, dataschema }: DatasetProps) => {
   const [showPopup, setShowPopup] = useState(false);

@@ -1,10 +1,10 @@
 import styles from "./styles.module.scss";
-import { useState } from "react";
+import whiteImage from "@/../public/assets/blank.png";
 import useStepValidation from "@/hooks/useStepValidation";
+import { useState } from "react";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
-import whiteImage from "@/../public/assets/blank.png";
 import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "@/navigation";
 // Components
@@ -49,18 +49,20 @@ const Catalog = () => {
           <LoadingSpinner />
         ) : (
           <>
-            <CardAll
-              dataschema='uitool-products'
-              name={dict("catalog.all_products")}
-              totalDataItems={numberOfProducts}
-              image={whiteImage}
-            />
-            <CardAll
-              dataschema='uitool-services'
-              name={dict("catalog.all_services")}
-              totalDataItems={numberOfServices}
-              image={whiteImage}
-            />
+            <div className={styles.products_services}>
+              <CardAll
+                dataschema='uitool-products'
+                name={dict("catalog.all_products")}
+                totalDataItems={numberOfProducts}
+                image={whiteImage}
+              />
+              <CardAll
+                dataschema='uitool-services'
+                name={dict("catalog.all_services")}
+                totalDataItems={numberOfServices}
+                image={whiteImage}
+              />
+            </div>
             {datasets.length > 0 && datasets.map(dataset => <Card key={dataset._id} {...dataset} />)}
             <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
               <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />

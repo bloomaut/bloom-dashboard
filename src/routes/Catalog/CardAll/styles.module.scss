@@ -1,13 +1,12 @@
 .container {
   position: relative;
   .card {
-    @include width-height(275px, 200px);
+    @include width-height(310px, 45px);
     @include flex(column, space-between, center);
-    background: $blue;
+    border: 4px solid $blue;
     border-radius: 10px;
-    padding: 10px 10px 0 10px;
+    padding: 5px 0;
     cursor: pointer;
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
     transition: all 100ms ease-in;
     .image_container {
       @include width-height(100%, 65%);
@@ -22,31 +21,36 @@
       }
     }
     .content {
-      @include width-height(100%, 35%);
       @include flex(row, space-between, center);
       .title_container {
         @include width-height(100%, 100%);
         @include flex(row, flex-start, center, 10px);
         .title {
-          @include fontSize-fontWeight(20px, 300);
-          max-width: 150px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          color: $white;
-          padding-left: 10px;
+          @include fontSize-fontWeight(20px, 500);
+          color: $blue;
+          text-align: center;
         }
         span {
-          @include fontSize-fontWeight(20px, 300);
-          color: $white;
+          @include fontSize-fontWeight(20px, 500);
+          color: $blue;
         }
       }
     }
     &:hover {
-      box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.75);
+      box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
     }
   }
   .card_services {
-    background-color: $purple;
+    border: 4px solid $purple;
+    .content {
+      .title_container {
+        .title {
+          color: $purple;
+        }
+        span {
+          color: $purple;
+        }
+      }
+    }
   }
 }
