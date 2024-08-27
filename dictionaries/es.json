@@ -388,7 +388,8 @@
           "lunchTo": "El horario de finalización del almuerzo es obligatorio.",
           "duration": "La duración es obligatoria.",
           "simultaneous": "El valor simultáneo es obligatorio.",
-          "from_error": "Debes completar el horario de finalización."
+          "from_error": "Debes completar el horario de finalización.",
+          "to_error": "Debes completar el horario de inicio."
         }
       },
       "form_actions": {

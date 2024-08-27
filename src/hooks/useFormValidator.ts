@@ -160,6 +160,8 @@ const useFormValidator = (
 
         if (formData?.data[fromField] && !formData?.data[toField]) {
           errors[toField] = dict("catalog.services.required.from_error");
+        } else if (!formData?.data[fromField] && formData?.data[toField]) {
+          errors[fromField] = dict("catalog.services.required.to_error");
         }
       });
 

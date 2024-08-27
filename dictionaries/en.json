@@ -388,7 +388,8 @@
           "lunchTo": "Lunch end time is required.",
           "duration": "Duration is required.",
           "simultaneous": "Simultaneous value is required.",
-          "from_error": "You must fill in the end time."
+          "from_error": "You must fill in the end time.",
+          "to_error": "You must fill the start time"
         }
       },
       "form_actions": {
