@@ -9,7 +9,7 @@
   animation: fadeIn 0.3s ease-in-out forwards;
   .inner_container {
     @include flex(column, flex-start, center, 20px);
-    @include width-height(1150px, 100%);
+    @include width-height(1150px, 90%);
     @include fontSize-fontWeight(24px, 500);
     padding: 20px 25px 20px 25px;
     overflow-y: auto;
