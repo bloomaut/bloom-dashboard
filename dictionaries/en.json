@@ -18,7 +18,6 @@
       "gallery": "Gallery",
       "hotlink": "Hotlink",
       "inbox": "Inbox",
-      "collections": "Collections",
       "catalog": "Catalog",
       "clients": "Clients",
       "templates": "Templates",
@@ -244,51 +243,6 @@
       "form_label_07": "Register",
       "form_label_08": "Update",
       "search_holder": "Search customer ...."
-    },
-    "collections": {
-      "template": "empty",
-      "header": {
-        "title": "Hotlinks Collections",
-        "search": "Search Collections...",
-        "period_btn": "Period",
-        "new_btn": "New Collection",
-        "empty_collections": "You don't have collections yet",
-        "add_collection": "Add Collection",
-        "name": "Name",
-        "description": "Description",
-        "required": "Required field *"
-      },
-      "titles": {
-        "title_one": "Name",
-        "title_two": "Design Used",
-        "title_three": "Statistics",
-        "column_one": "Date",
-        "column_two": "Skin Name",
-        "column_three": "Template",
-        "column_four": "Total",
-        "column_five": "Open"
-      },
-      "btn": "View Collection",
-      "new_collection": {
-        "title": "Create collection",
-        "input": "Name",
-        "select": "Design",
-        "cancel": "Cancel",
-        "generate_btn": "Generate Collection",
-        "colection_created": "Successfully created collection",
-        "colection_error": "Error creating collection"
-      }
-    },
-    "my-collection": {
-      "breadcrumb": "Hotlinks List",
-      "search_holder": "Search for client",
-      "btn": "Get Hotlink",
-      "share": "Share",
-      "client": "Client",
-      "btn2": "Import from Excel",
-      "btn3": "Excel import example",
-      "empty_list": "Empty Hotlink list",
-      "loading": "Loading"
     },
     "gallery": {
       "title": "Gallery",

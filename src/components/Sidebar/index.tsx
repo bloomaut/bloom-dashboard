@@ -54,11 +54,6 @@ const Sidebar = () => {
       icon: <Icon name='catalog' width={25} height={30} viewBox='1 0 35 35' />,
       path: "/catalog",
     },
-    // {
-    //   title: `${dict("collections")}`,
-    //   icon: <Icon name='collection' />,
-    //   path: "/collections",
-    // },
     {
       title: `${dict("clients")}`,
       icon: <Icon name='clients' />,
