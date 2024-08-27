@@ -143,26 +143,6 @@
   }
 }
 
-.btn_my_collection {
-  img {
-    filter: brightness(10);
-  }
-}
-
-.btn_collections {
-  @extend .btn_outline;
-  align-self: flex-end;
-  &:hover {
-    img {
-      filter: brightness(10);
-    }
-    svg {
-      path {
-        fill: #fff;
-      }
-    }
-  }
-}
 .btn_orange {
   @include flex(row, center, center, 5px);
   @include fontSize-fontWeight(16px, 300);
