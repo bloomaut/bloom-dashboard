@@ -281,6 +281,7 @@
       "description": "Descripción",
       "price": "Precio",
       "available_days": "Días disponibles",
+      "available_days_form": "Días disponibles del Servicio",
       "clean_bot": "Limpiar",
       "train_bot": "Entrenar",
       "cancel": "Cancelar",
@@ -302,7 +303,8 @@
       "price_percentage": "Porcentaje",
       "price_error": "El porcentaje está fuera del rango permitido.",
       "price_success": "Precios actualizados correctamente.",
-      "days": {
+      "order": "Orden",
+      "days_letter": {
         "monday": "L",
         "tuesday": "M",
         "wednesday": "M",
@@ -310,6 +312,39 @@
         "friday": "V",
         "saturday": "S",
         "sunday": "D"
+      },
+      "days": {
+        "monday": "Lunes",
+        "tuesday": "Martes",
+        "wednesday": "Miércoles",
+        "thursday": "Jueves",
+        "friday": "Viernes",
+        "saturday": "Sábado",
+        "sunday": "Domingo"
+      },
+      "services": {
+        "serviceName": "Nombre del servicio",
+        "serviceDescr": "Descripción del servicio",
+        "servicePrice": "Precio del servicio",
+        "serviceImage": "Imagen del servicio",
+        "duration": "Duración",
+        "simultaneous": "Simultáneo",
+        "from": "Desde",
+        "to": "Hasta",
+        "lunchFrom": "Almuerzo inicio",
+        "lunchTo": "Almuerzo fin",
+        "required": {
+          "serviceName": "El nombre del servicio es obligatorio.",
+          "serviceDescr": "La descripción del servicio es obligatoria.",
+          "servicePrice": "El precio del servicio es obligatorio.",
+          "serviceImage": "La imagen del servicio es obligatoria.",
+          "lunchFrom": "El horario de inicio del almuerzo es obligatorio.",
+          "lunchTo": "El horario de finalización del almuerzo es obligatorio.",
+          "duration": "La duración es obligatoria.",
+          "simultaneous": "El valor simultáneo es obligatorio.",
+          "from_error": "Debes completar el horario de finalización.",
+          "to_error": "Debes completar el horario de inicio."
+        }
       },
       "form_actions": {
         "title": "Información del catálogo",
@@ -319,6 +354,7 @@
         "visibility": "Visibile en mis aplicaciones",
         "delete": "Eliminar catálogo",
         "save": "Guardar catálogo",
+        "save_service": "Guardar servicio",
         "order_description": "El mismo será generado automáticamente",
         "catalog_type": "Tipo de catálogo",
         "select_type": "Seleccionar tipo",

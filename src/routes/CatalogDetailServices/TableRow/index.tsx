@@ -10,15 +10,18 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { ServiceData } from "@/typescript/interfaces/catalog.interface";
+import { DataItemsServiceType, ServiceData } from "@/typescript/interfaces/catalog.interface";
 import { useCatalogServiceContext } from "@/context/CatalogServicesContext";
 import { useDaysRenderer } from "@/hooks/useDaysRenderer";
+import Form from "../Form";
 
 interface Props extends ServiceData {
   id: string;
   position: number;
   catalog?: string;
-  allServices?: boolean;
+  allServices?: DataItemsServiceType[];
+  onDelete?: (id: string) => void;
+  onUpdate?: (updatedItem: DataItemsServiceType) => void;
 }
 
 const TableRow = ({
@@ -44,6 +47,8 @@ const TableRow = ({
   wednesdayTo,
   catalog,
   allServices,
+  onUpdate,
+  onDelete,
 }: Props) => {
   const { handleRemoveService } = useCatalogServiceContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
@@ -57,7 +62,11 @@ const TableRow = ({
     const response = await remove("dataitem", id, ENV.BOX);
     if (response.statusCode === 200) {
       setShowPopupDelete(false);
-      handleRemoveService(id);
+      if (onDelete) {
+        onDelete(id);
+      } else {
+        handleRemoveService(id);
+      }
       notify(`${dict("toast.success_product_deleted")}`);
       setLoading(false);
     } else {
@@ -92,7 +101,9 @@ const TableRow = ({
       className={styles.container}
       style={{
         display: "grid",
-        gridTemplateColumns: allServices ? "0.2fr 1.5fr 1fr 2.5fr 0.6fr 1.4fr 1fr" : "0.2fr 1fr 2fr 0.5fr 0.7fr 0.7fr",
+        gridTemplateColumns: allServices
+          ? "0.2fr 1.5fr 1fr 2.5fr 0.6fr 1.4fr 1fr"
+          : "0.65fr 3.3fr 6.6fr 1.72fr 3fr 0.5fr",
       }}
     >
       <div className={styles.order}>{position}</div>
@@ -150,16 +161,16 @@ const TableRow = ({
           textAccept={dict("popup.confirm")}
         />
       )}
-      {/* {showPopupEdit && (
+      {showPopupEdit && (
         <Form
           action='put'
           title={dict("popup.edit_product")}
           id={id}
           setShowPopup={setShowPopupEdit}
-          allProducts={allProducts}
+          allServices={allServices}
           onUpdate={onUpdate}
         />
-      )} */}
+      )}
     </div>
   );
 };
