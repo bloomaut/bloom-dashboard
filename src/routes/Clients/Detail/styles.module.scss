@@ -15,22 +15,29 @@
       align-items: flex-start;
       gap: 20px;
       color: $text;
-      .label {
-        @include fontSize-fontWeight(15px, 600);
-        color: $text;
-        span {
-          @include fontSize-fontWeight(14px, 400);
-        }
+    }
+    .label {
+      @include fontSize-fontWeight(15px, 600);
+      color: $text;
+      span {
+        @include fontSize-fontWeight(14px, 400);
       }
-      .personal_note {
-        max-height: 130px;
-        overflow-y: auto;
-        @include fontSize-fontWeight(15px, 600);
-        color: $text;
-        span {
-          @include fontSize-fontWeight(14px, 400);
-        }
+    }
+    .personal_note {
+      max-height: 130px;
+      overflow-y: auto;
+      @include fontSize-fontWeight(15px, 600);
+      color: $text;
+      span {
+        @include fontSize-fontWeight(14px, 400);
       }
+    }
+    hr {
+      width: 100%;
+      margin: 0px 10px;
+    }
+    .date {
+      @include flex(row, space-between, flex-start, 15px);
     }
   }
 }
