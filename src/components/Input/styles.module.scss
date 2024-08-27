@@ -8,6 +8,9 @@
   .label {
     @include fontSize-fontWeight(14px, 400);
     color: $lightGrey;
+    span {
+      color: $orange;
+    }
   }
   .input {
     @include fontSize-fontWeight(14px, 400);
@@ -52,6 +55,16 @@
   }
   .textarea {
     @include width-height(100%, 90px);
+    font-family: inherit;
+    resize: none;
+  }
+  .textarea_services {
+    @include width-height(100%, 150px);
+    outline: none;
+    border: 1px solid $lighterGrey;
+    color: $text;
+    padding: 10px 5px;
+    border-radius: 5px;
     font-family: inherit;
     resize: none;
   }

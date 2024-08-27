@@ -91,6 +91,80 @@ const useFormValidator = (
         }
       }
 
+      if (fieldsToValidate?.includes("serviceName")) {
+        if (!formData?.data?.serviceName || !formData?.data?.serviceName.trim()) {
+          errors.serviceName = dict("catalog.services.required.serviceName");
+        }
+      }
+
+      if (fieldsToValidate?.includes("serviceDescr")) {
+        if (!formData?.data?.serviceDescr || !formData?.data?.serviceDescr.trim()) {
+          errors.serviceDescr = dict("catalog.services.required.serviceDescr");
+        }
+      }
+
+      if (fieldsToValidate?.includes("servicePrice")) {
+        if (formData?.data?.servicePrice === null || formData?.data?.servicePrice <= 0) {
+          errors.servicePrice = dict("catalog.services.required.servicePrice");
+        }
+      }
+
+      if (fieldsToValidate?.includes("serviceImage")) {
+        if (!file && !formData?.data?.serviceImage) {
+          errors.serviceImage = dict("catalog.services.required.serviceImage");
+        }
+      }
+
+      if (fieldsToValidate?.includes("lunchFrom") && fieldsToValidate?.includes("lunchTo")) {
+        const lunchFrom = formData?.data?.lunchFrom;
+        const lunchTo = formData?.data?.lunchTo;
+
+        if (lunchFrom && !lunchTo) {
+          errors.lunchTo = dict("catalog.services.required.lunchTo");
+        } else if (!lunchFrom && lunchTo) {
+          errors.lunchFrom = dict("catalog.services.required.lunchFrom");
+        } else if (!lunchFrom && !lunchTo) {
+          errors.lunchFrom = dict("catalog.services.required.lunchFrom");
+          errors.lunchTo = dict("catalog.services.required.lunchTo");
+        }
+      }
+
+      if (fieldsToValidate?.includes("duration")) {
+        const duration = formData?.data?.duration;
+        if (duration === null || duration === "" || duration <= 0) {
+          errors.duration = dict("catalog.services.required.duration");
+        }
+      }
+
+      if (fieldsToValidate?.includes("simultaneous")) {
+        const simultaneous = formData?.data?.simultaneous;
+        if (simultaneous === null || simultaneous === "" || simultaneous <= 0) {
+          errors.simultaneous = dict("catalog.services.required.simultaneous");
+        }
+      }
+
+      const daysAndLunchFields = [
+        "lunch",
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+      ];
+
+      daysAndLunchFields.forEach(day => {
+        const fromField = `${day}From`;
+        const toField = `${day}To`;
+
+        if (formData?.data[fromField] && !formData?.data[toField]) {
+          errors[toField] = dict("catalog.services.required.from_error");
+        } else if (!formData?.data[fromField] && formData?.data[toField]) {
+          errors[fromField] = dict("catalog.services.required.to_error");
+        }
+      });
+
       setErrors(errors);
     };
 

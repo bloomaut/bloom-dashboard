@@ -9,7 +9,7 @@ const intlMiddleware = createMiddleware({
   defaultLocale: "en",
 });
 
-const protectedRoutes = ["/", "catalog", "clients", "collections", "hotlink", "my-business", "my-collection"];
+const protectedRoutes = ["/", "catalog", "clients", "hotlink", "my-business"];
 const publicRoutes = ["/playground", "/policy", "/login"];
 
 function isProtectedRoute(pathname: string) {

@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { DatasetDetailServicesType, DataItemsServiceType } from "@/typescript/interfaces/catalog.interface";
 
 interface CatalogServiceContextType {
-  service: DatasetDetailServicesType | null | undefined;
+  services: DatasetDetailServicesType | null | undefined;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
   loading: boolean;
@@ -15,7 +15,7 @@ interface CatalogServiceContextType {
 }
 
 const CatalogServiceContext = createContext<CatalogServiceContextType>({
-  service: null,
+  services: null,
   fetchDatasetById: async () => {
     throw new Error("fetchDatasetById function not implemented");
   },
@@ -35,7 +35,7 @@ const CatalogServiceContext = createContext<CatalogServiceContextType>({
 });
 
 export const CatalogServicesProvider = ({ children }: { children: JSX.Element }) => {
-  const [service, setService] = useState<DatasetDetailServicesType | null | undefined>(null);
+  const [services, setServices] = useState<DatasetDetailServicesType | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useParams();
 
@@ -46,37 +46,37 @@ export const CatalogServicesProvider = ({ children }: { children: JSX.Element })
   const fetchDatasetById = async () => {
     const data = await get(`datasets/${id}`, ENV.BOX);
     if (data.statusCode === 200) {
-      setService(data.data);
+      setServices(data.data);
     }
     setLoading(false);
   };
 
   const handleRemoveService = (deletedId: string) => {
-    if (service) {
-      const filteredDataItems = service.dataItems.filter(item => item._id !== deletedId);
-      setService({ ...service, dataItems: filteredDataItems });
+    if (services) {
+      const filteredDataItems = services.dataItems.filter(item => item._id !== deletedId);
+      setServices({ ...services, dataItems: filteredDataItems });
     }
   };
 
   const handleAddService = (dataset: DataItemsServiceType) => {
-    if (service) {
-      setService({ ...service, dataItems: [...service.dataItems, dataset] });
+    if (services) {
+      setServices({ ...services, dataItems: [...services.dataItems, dataset] });
     }
   };
 
   const handleUpdateService = (updatedDataset: DataItemsServiceType) => {
-    if (service) {
-      const updatedDataItems = service.dataItems.map(item =>
+    if (services) {
+      const updatedDataItems = services.dataItems.map(item =>
         item._id === updatedDataset._id ? { ...item, ...updatedDataset } : item,
       );
-      setService({ ...service, dataItems: updatedDataItems });
+      setServices({ ...services, dataItems: updatedDataItems });
     }
   };
 
   return (
     <CatalogServiceContext.Provider
       value={{
-        service,
+        services,
         fetchDatasetById,
         handleRemoveService,
         handleAddService,
