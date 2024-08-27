@@ -11,26 +11,26 @@ import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 
 const Service = () => {
-  const { service } = useCatalogServiceContext();
+  const { services } = useCatalogServiceContext();
   const [dataItemsCount, setDataItemsCount] = useState<number>(0);
   const [sortedDataItems, setSortedDataItems] = useState<DataItemsServiceType[]>([]);
   const { id } = useParams();
   const dict = useTranslations("dict");
 
   useEffect(() => {
-    if (service && service.dataItems) {
-      const sortedItems = [...service.dataItems].sort((a, b) => a.order - b.order);
+    if (services && services.dataItems) {
+      const sortedItems = [...services.dataItems].sort((a, b) => a.order - b.order);
       setSortedDataItems(sortedItems);
       setDataItemsCount(sortedItems.length);
     }
-  }, [service]);
+  }, [services]);
 
   return (
     <section className={styles.catalog_services_container}>
-      <Header name={service?.dataSet.name} quantity={dataItemsCount} id={id} />
+      <Header name={services?.dataSet.name} quantity={dataItemsCount} id={id} />
       <div className={styles.table_container}>
         <TableHead />
-        {!service ? (
+        {!services ? (
           <LoadingSpinner />
         ) : sortedDataItems.length ? (
           <div className={styles.content_container}>

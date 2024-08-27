@@ -1,0 +1,46 @@
+.days_container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  .box {
+    @include flex(column, center, center, 20px);
+    position: relative;
+    .day_container {
+      @include width-height(100%, auto);
+      border-right: 1px solid $text;
+      .day {
+        @include fontSize-fontWeight(16px, 500);
+        padding: 10px 15px;
+        border-radius: 5px;
+        color: $blueBackground;
+        background: $blueishBackground;
+      }
+    }
+    .availability {
+      @include width-height(100%, auto);
+      @include flex(row, center, center, 10px);
+      .from,
+      .to {
+        @include flex(column, flex-start, flex-start);
+        input {
+          @include width-height(100%, auto);
+        }
+      }
+    }
+    .error {
+      @include width-height(70px, auto);
+      @include fontSize-fontWeight(12px, 400);
+      text-align: start;
+      position: absolute;
+      top: 120px;
+      color: red;
+    }
+    .error_hidden {
+      display: none;
+    }
+    .error_lunchFrom {
+      @extend .error;
+      top: 110px;
+    }
+  }
+}
