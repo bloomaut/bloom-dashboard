@@ -438,7 +438,8 @@
       "error_pdf": "Debes seleccionar un PDF",
       "text_excel": "Subir o arrastrar un archivo Excel",
       "text_image": "Subir o arrastrar una imagen",
-      "text_pdf": "Subir o arrastrar un PDF"
+      "text_pdf": "Subir o arrastrar un PDF",
+      "file_size_error": "El tamaño máximo de la imágen debe ser de 10MB"
     }
   }
 }
