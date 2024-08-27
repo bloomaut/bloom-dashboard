@@ -13,7 +13,6 @@ const Pagination = ({ totalItems, limit, onPageChange }: Props) => {
 
   const totalPages = Math.ceil(totalItems / limit);
   const siblingsCount = 1; // Número de páginas mostradas al lado de la página actual
-  const siblingsCountOp = 3;
 
   const generatePagesArray = (from: number, to: number) => {
     return [...new Array(to - from)]
@@ -23,20 +22,14 @@ const Pagination = ({ totalItems, limit, onPageChange }: Props) => {
       .filter(page => page > 0);
   };
 
+  /* Esta función te trae la fracción de página desde-hasta */
   const paginationArray = (() => {
-    let previousPages = currentPage > 1 ? generatePagesArray(currentPage - 1 - siblingsCount, currentPage - 1) : [];
-    let nextPages =
+    const previousPages = currentPage > 1 ? generatePagesArray(currentPage - 1 - siblingsCount, currentPage - 1) : [];
+    const nextPages =
       currentPage < totalPages
         ? generatePagesArray(currentPage, Math.min(currentPage + siblingsCount, totalPages))
         : [];
 
-    if (currentPage > 16) {
-      previousPages = generatePagesArray(currentPage - 1 - siblingsCountOp, currentPage - 1);
-    }
-
-    if (currentPage < 4) {
-      nextPages = generatePagesArray(currentPage, Math.min(currentPage, totalPages));
-    }
     return [...previousPages, currentPage, ...nextPages];
   })();
 
@@ -67,7 +60,6 @@ const Pagination = ({ totalItems, limit, onPageChange }: Props) => {
         <Icon name='arrow_left_pagination' strokeColor='#7f7f7f' viewBox='-2 -3 15 15' className='cursor_pointer' />
       </div>
 
-      {/* Se muestra cuando la currentPage es 4 */}
       {currentPage > 1 + siblingsCount && (
         <>
           <button onClick={() => handlePageClick(1)} className={styles.inactive}>
@@ -77,6 +69,7 @@ const Pagination = ({ totalItems, limit, onPageChange }: Props) => {
         </>
       )}
 
+      {/* Este siempre se muestra */}
       {paginationArray.map(page => (
         <button
           key={page}
@@ -87,7 +80,6 @@ const Pagination = ({ totalItems, limit, onPageChange }: Props) => {
         </button>
       ))}
 
-      {/* Se muestra cuando la currentPage es min 16 */}
       {currentPage < totalPages - siblingsCount && (
         <>
           {currentPage < totalPages - 1 - siblingsCount && <span className={styles.dots}>...</span>}
