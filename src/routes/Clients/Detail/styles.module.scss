@@ -32,12 +32,10 @@
         @include fontSize-fontWeight(14px, 400);
       }
     }
-    hr {
-      width: 100%;
-      margin: 0px 10px;
-    }
     .date {
       @include flex(row, space-between, flex-start, 15px);
+      border-top: 1px solid $lighterGrey;
+      padding-top: 10px;
     }
   }
 }

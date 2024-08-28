@@ -1,7 +1,6 @@
 .row {
   @include width-height(100%, auto);
   @include flex(row, space-between, center, 20px);
-  padding: 6px;
   cursor: pointer;
   border-bottom: 1px solid $blueishBackground;
   transition: all 200ms ease-in-out;
@@ -13,6 +12,7 @@
   .names {
     @include width-height(100%, auto);
     @include flex(row, flex-start, center, 5px);
+    padding: 6px;
     .first_name,
     .last_name {
       @include fontSize-fontWeight(18px, 600);

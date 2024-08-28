@@ -46,7 +46,6 @@ const Detail = () => {
             </p>
           )}
         </div>
-        <hr />
         <div className={styles.date}>
           {clientSelected?.createdAt && (
             <p className={styles.personal_note}>
