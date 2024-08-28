@@ -11,20 +11,16 @@ interface CardAllProps {
 }
 
 const CardAll = ({ name, totalDataItems, dataschema }: CardAllProps) => {
-  console.log(name);
-
   return (
-    <article className={styles.container}>
-      <div className={dataschema === "uitool-products" ? styles.card : `${styles.card} ${styles.card_services}`}>
-        <Link href={dataschema === "uitool-products" ? "all-products" : "all-services"} className={styles.content}>
-          <div className={styles.title_container}>
-            <h2 className={styles.title} title={name}>
-              {name}
-            </h2>
-            <span>({totalDataItems})</span>
-          </div>
-        </Link>
-      </div>
+    <article className={dataschema === "uitool-products" ? styles.card : `${styles.card} ${styles.card_services}`}>
+      <Link href={dataschema === "uitool-products" ? "all-products" : "all-services"} className={styles.content}>
+        <div className={styles.title_container}>
+          <h2 className={styles.title} title={name}>
+            {name}
+          </h2>
+          <span>({totalDataItems})</span>
+        </div>
+      </Link>
     </article>
   );
 };
