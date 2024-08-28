@@ -428,7 +428,8 @@
       "error_pdf": "You must select a PDF file",
       "text_excel": "Upload or drag an Excel file",
       "text_image": "Upload or drag an image",
-      "text_pdf": "Upload or drag a PDF file"
+      "text_pdf": "Upload or drag a PDF file",
+      "file_size_error": "The maximum image size must be 10MB"
     }
   }
 }
