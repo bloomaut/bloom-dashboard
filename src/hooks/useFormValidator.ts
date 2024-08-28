@@ -158,10 +158,15 @@ const useFormValidator = (
         const fromField = `${day}From`;
         const toField = `${day}To`;
 
-        if (formData?.data[fromField] && !formData?.data[toField]) {
-          errors[toField] = dict("catalog.services.required.from_error");
-        } else if (!formData?.data[fromField] && formData?.data[toField]) {
-          errors[fromField] = dict("catalog.services.required.to_error");
+        if (
+          fieldsToValidate?.includes(fromField as keyof FormDataProps) ||
+          fieldsToValidate?.includes(toField as keyof FormDataProps)
+        ) {
+          if (formData?.data[fromField] && !formData?.data[toField]) {
+            errors[toField] = dict("catalog.services.required.from_error");
+          } else if (!formData?.data[fromField] && formData?.data[toField]) {
+            errors[fromField] = dict("catalog.services.required.to_error");
+          }
         }
       });
 
