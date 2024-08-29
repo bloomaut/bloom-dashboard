@@ -43,6 +43,11 @@ const Header = () => {
     }
   };
 
+  const handleClose = () => {
+    setPopupIA(false);
+    setFile(null);
+  };
+
   return (
     <div className={styles.header}>
       <Title text={dict("catalog.title")} />
@@ -61,7 +66,7 @@ const Header = () => {
               text={dict("popup.excel.text")}
               file={file}
               setFile={setFile}
-              onCancel={() => setPopupIA(false)}
+              onCancel={handleClose}
               onReset={() => setFile(null)}
               onConfirm={handleCreate}
               loading={loadingPopup}
