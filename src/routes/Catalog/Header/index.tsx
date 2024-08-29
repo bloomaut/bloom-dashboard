@@ -32,6 +32,7 @@ const Header = () => {
           });
           setPopupIA(false);
           setLoadingPopup(false);
+          setFile(null);
           notify(dict("toast.success_datasets"));
         }
       } catch (error) {

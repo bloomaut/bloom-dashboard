@@ -1,5 +1,5 @@
 import { getAccessToken, withApiAuthRequired } from "@auth0/nextjs-auth0";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import axios from "axios";
 
 const handleRequest = withApiAuthRequired(async function handleFetch(req) {
