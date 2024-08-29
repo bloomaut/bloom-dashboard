@@ -52,12 +52,21 @@
       "edit": "Editar",
       "upload": "Subir",
       "required": "* Todos los campos son requeridos",
-      "introduction": "¡Aprende todo lo que Small tiene para ofrecerte!"
+      "introduction": "¡Aprende todo lo que Small tiene para ofrecerte!",
+      "excel": {
+        "title": "Cargar desde Excel con IA",
+        "subtitle": "Carga tu Excel con productos y lo procesaremos con ChatGPT para extraer catálogos y productos con inteligencia artificial.",
+        "text": "Este proceso puede tardar hasta 60 segundos",
+        "loading_msg": " está trabajando en tus catálogos. Vuelve en 1 minuto.",
+        "upload": "Subir",
+        "reset": "Limpiar"
+      }
     },
     "toast": {
       "success_img": "Imágen subida correctamente",
       "success_item": "Producto añadido correctamente",
       "success_file": "Archivo subido correctamente",
+      "success_datasets": "Catalogos creados correctamente",
       "success_edit": "Información actualizada correctamente",
       "success_delete": "Archivo eliminado correctamente",
       "success_delete_catalog": "Catálogo eliminado correctamente",
@@ -68,6 +77,7 @@
       "error_edit": "Error al actualizar información",
       "error_img": "Error al subir la imágen",
       "error_item": "Error al subir el producto",
+      "error_datasets": "Error al crear los catálogos",
       "error_file": "Error al eliminar el archivo",
       "error_catalog": "Error al eliminar el catálogo",
       "error_palette": "Error al subir la paleta",

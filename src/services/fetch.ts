@@ -102,6 +102,32 @@ export const postFile = async (url: string, file: File, api?: EnvironmentApi) =>
     throw error;
   }
 };
+
+export const postExcel = async (file: File) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch(`/api/generator-ai`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
 export const putFile = async (url: string, file: File, api?: EnvironmentApi) => {
   try {
     const formData = new FormData();
