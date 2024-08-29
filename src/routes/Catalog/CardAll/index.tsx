@@ -1,5 +1,4 @@
 import styles from "./styles.module.scss";
-import Image from "next/image";
 import { Link } from "@/navigation";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
@@ -13,7 +12,7 @@ interface CardAllProps {
 const CardAll = ({ name, totalDataItems, dataschema }: CardAllProps) => {
   return (
     <article className={dataschema === "uitool-products" ? styles.card : `${styles.card} ${styles.card_services}`}>
-      <Link href={dataschema === "uitool-products" ? "all-products" : "all-services"} className={styles.content}>
+      <Link href={dataschema === "uitool-products" ? "all-products" : "all-services"}>
         <div className={styles.title_container}>
           <h2 className={styles.title} title={name}>
             {name}
