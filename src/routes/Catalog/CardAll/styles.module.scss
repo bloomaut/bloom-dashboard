@@ -8,7 +8,7 @@
   transition: all 100ms ease-in;
   .title_container {
     @include width-height(100%, 100%);
-    @include flex(row, flex-start, center, 10px);
+    @include flex(row, center, center, 10px);
     .title {
       @include fontSize-fontWeight(20px, 500);
       color: $blue;

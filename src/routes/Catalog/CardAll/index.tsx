@@ -12,13 +12,14 @@ interface CardAllProps {
 const CardAll = ({ name, totalDataItems, dataschema }: CardAllProps) => {
   return (
     <article className={dataschema === "uitool-products" ? styles.card : `${styles.card} ${styles.card_services}`}>
-      <Link href={dataschema === "uitool-products" ? "all-products" : "all-services"}>
-        <div className={styles.title_container}>
-          <h2 className={styles.title} title={name}>
-            {name}
-          </h2>
-          <span>({totalDataItems})</span>
-        </div>
+      <Link
+        href={dataschema === "uitool-products" ? "all-products" : "all-services"}
+        className={styles.title_container}
+      >
+        <h2 className={styles.title} title={name}>
+          {name}
+        </h2>
+        <span>({totalDataItems})</span>
       </Link>
     </article>
   );
