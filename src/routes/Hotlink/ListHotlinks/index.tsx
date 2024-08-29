@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 // Components
 /* import Search from "@/components/Search"; */
 import TableRow from "./TableRow";
@@ -49,10 +50,10 @@ const ListHotlinks = () => {
     setCurrentItemsFiltered(filteredHotlinks.slice(startIndex, endIndex));
   }; */
 
-  const handlePageChange = async (page: number = 1) => {
+  const handlePageChange = useDebouncedCallback(async (page: number = 1) => {
     const startIndex = (page - 1) * 5;
     await getHotlinkList(startIndex, 5);
-  };
+  }, 500);
 
   useEffect(() => {
     handlePageChange();
