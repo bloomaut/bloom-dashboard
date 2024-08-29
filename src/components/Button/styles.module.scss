@@ -243,6 +243,17 @@
     background: $darkOrange;
   }
 }
+
+.btn_reset {
+  @extend .btn_add;
+  background: none;
+  border: 1px solid $lightGrey;
+  color: $lightGrey;
+  &:hover {
+    border: 1px solid $white;
+  }
+}
+
 .btn_edit {
   background: transparent;
   color: $lightGrey;
