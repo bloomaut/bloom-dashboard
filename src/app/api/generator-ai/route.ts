@@ -18,15 +18,16 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req) {
       return NextResponse.json({ error: "File not found" }, { status: 400 });
     }
 
-    const data = new FormData();
-    data.append("file", file);
-
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_CONVERSATION}/api/datasets/generator-ai`, data, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "multipart/form-data",
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_CONVERSATION}/api/datasets/generator-ai`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
+        },
       },
-    });
+    );
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error) {
