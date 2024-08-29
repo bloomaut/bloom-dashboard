@@ -242,6 +242,12 @@
     border: none;
     background: $darkOrange;
   }
+  &:disabled {
+    background: $white;
+    border: 1px solid $lighterGrey;
+    color: $lighterGrey;
+    cursor: no-drop;
+  }
 }
 
 .btn_reset {

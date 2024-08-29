@@ -7,17 +7,39 @@ import Icon from "@/components/Icon";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import PopupIA from "./PopupIA";
+import { postExcel } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { useCatalogContext } from "@/context/CatalogContext";
+import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 
 const Header = () => {
   const [popupIA, setPopupIA] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [loadingPopup, setLoadingPopup] = useState(false);
-
+  const { notify, notifyError } = useMessageToast();
+  const { handleAddDataset } = useCatalogContext();
   const dict = useTranslations("dict");
 
-  const handleCreate = () => {
-    setLoadingPopup(false);
-    setPopupIA(false);
+  const handleCreate = async () => {
+    if (file) {
+      try {
+        setLoadingPopup(true);
+        const data = await postExcel(file);
+        if (data.statusCode === 201) {
+          const datasets = data.result;
+          datasets.forEach((dataset: DatasetProps) => {
+            handleAddDataset(dataset);
+          });
+          setPopupIA(false);
+          setLoadingPopup(false);
+          notify(dict("toast.success_datasets"));
+        }
+      } catch (error) {
+        notifyError(dict("toast.error_datasets"));
+        console.error("Error uploading Excel file:", error);
+        setLoadingPopup(false);
+      }
+    }
   };
 
   return (
@@ -33,9 +55,9 @@ const Header = () => {
         {popupIA &&
           createPortal(
             <PopupIA
-              title='Upload from Excel with AI'
-              subtitle='Load your excel with products and we will process it with ChatGPT to extract catalogs and products with artificial intelligence.'
-              text='This process can take up to 60 seconds.'
+              title={dict("popup.excel.title")}
+              subtitle={dict("popup.excel.subtitle")}
+              text={dict("popup.excel.text")}
               file={file}
               setFile={setFile}
               onCancel={() => setPopupIA(false)}

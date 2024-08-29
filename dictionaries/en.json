@@ -53,12 +53,21 @@
       "edit": "Edit",
       "upload": "Upload",
       "required": "* All fields are required",
-      "introduction": "Learn everything Small has to offer you!"
+      "introduction": "Learn everything Small has to offer you!",
+      "excel": {
+        "title": "Upload from Excel with AI",
+        "subtitle": "Upload your Excel with products and we will process it with ChatGPT to extract catalogs and products with artificial intelligence.",
+        "text": "This process can take up to 60 seconds",
+        "loading_msg": " is working on your catalogs. Check back in 1 minute.",
+        "upload": "Upload",
+        "reset": "Clear"
+      }
     },
     "toast": {
       "success_img": "Image uploaded successfully",
       "success_item": "Product upload successfully",
       "success_file": "File uploaded successfully",
+      "success_datasets": "Datasets created successfully",
       "success_edit": "Information updated successfully",
       "success_delete": "File deleted successfully",
       "success_delete_catalog": "Catalog deleted successfully",
@@ -69,6 +78,7 @@
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
       "error_item": "Error uploading product",
+      "error_datasets": "Error creating datasets",
       "error_file": "Error deleting file",
       "error_catalog": "Error deleting catalog",
       "error_palette": "Error updating palette",
