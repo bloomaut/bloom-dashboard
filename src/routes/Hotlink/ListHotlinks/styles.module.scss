@@ -3,7 +3,7 @@
 .container {
   @include flex(column, flex-start, flex-start, 20px);
   @include width-height(100%, 100%);
-  min-height: 450px;
+  min-height: 420px;
   .title_container {
     @include width-height(50%, auto);
     display: grid;
