@@ -1,52 +1,37 @@
-.container {
-  position: relative;
-  .card {
-    @include width-height(275px, 200px);
-    @include flex(column, space-between, center);
-    background: $blue;
-    border-radius: 10px;
-    padding: 10px 10px 0 10px;
-    cursor: pointer;
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
-    transition: all 100ms ease-in;
-    .image_container {
-      @include width-height(100%, 65%);
-      @include flex(row, center, center);
-      overflow: hidden;
-      border-radius: 10px;
-      color: $white;
-      background: white;
-      .image {
-        @include width-height(100%, auto);
-        object-position: top;
-      }
+.card {
+  @include width-height(410px, 45px);
+  @include flex(column, space-between, center);
+  border: 3px solid $blue;
+  border-radius: 10px;
+  padding: 5px 0;
+  cursor: pointer;
+  transition: all 100ms ease-in;
+  .title_container {
+    @include width-height(100%, 100%);
+    @include flex(row, center, center, 10px);
+    .title {
+      @include fontSize-fontWeight(20px, 500);
+      color: $blue;
+      text-align: center;
     }
-    .content {
-      @include width-height(100%, 35%);
-      @include flex(row, space-between, center);
-      .title_container {
-        @include width-height(100%, 100%);
-        @include flex(row, flex-start, center, 10px);
-        .title {
-          @include fontSize-fontWeight(20px, 300);
-          max-width: 150px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          color: $white;
-          padding-left: 10px;
-        }
-        span {
-          @include fontSize-fontWeight(20px, 300);
-          color: $white;
-        }
-      }
-    }
-    &:hover {
-      box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.75);
+    span {
+      @include fontSize-fontWeight(20px, 500);
+      color: $blue;
     }
   }
-  .card_services {
-    background-color: $purple;
+
+  &:hover {
+    box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
+  }
+}
+.card_services {
+  border: 3px solid $purple;
+  .title_container {
+    .title {
+      color: $purple;
+    }
+    span {
+      color: $purple;
+    }
   }
 }
