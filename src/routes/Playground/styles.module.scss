@@ -11,7 +11,7 @@
   .inner_container {
     @include width-height(100%, 100%);
     display: grid;
-    grid-template-columns: 55% 19% 22%;
+    grid-template-columns: 45% 23% 32%;
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
@@ -28,4 +28,14 @@
   .container {
     max-width: 1600px;
   }
+}
+
+.container::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
 }
