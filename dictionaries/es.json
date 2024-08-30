@@ -106,7 +106,8 @@
       "breadcrumb_link": "Volver"
     },
     "login": {
-      "description": "tiene la eficiencia que su negocio necesita",
+      "description_one": "tiene la",
+      "description_two": "que su negocio necesita",
       "login": "Iniciar sesión",
       "register": "Registrarse",
       "account": "No tienes una cuenta?",
