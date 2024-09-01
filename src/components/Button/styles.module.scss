@@ -143,26 +143,6 @@
   }
 }
 
-.btn_my_collection {
-  img {
-    filter: brightness(10);
-  }
-}
-
-.btn_collections {
-  @extend .btn_outline;
-  align-self: flex-end;
-  &:hover {
-    img {
-      filter: brightness(10);
-    }
-    svg {
-      path {
-        fill: #fff;
-      }
-    }
-  }
-}
 .btn_orange {
   @include flex(row, center, center, 5px);
   @include fontSize-fontWeight(16px, 300);
@@ -262,7 +242,24 @@
     border: none;
     background: $darkOrange;
   }
+  &:disabled {
+    background: $white;
+    border: 1px solid $lighterGrey;
+    color: $lighterGrey;
+    cursor: no-drop;
+  }
 }
+
+.btn_reset {
+  @extend .btn_add;
+  background: none;
+  border: 1px solid $lightGrey;
+  color: $lightGrey;
+  &:hover {
+    border: 1px solid $white;
+  }
+}
+
 .btn_edit {
   background: transparent;
   color: $lightGrey;

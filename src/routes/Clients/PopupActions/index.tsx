@@ -35,6 +35,7 @@ const initialFormData: ClientsProps = {
 const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, clientId }: PopupActionsProps) => {
   const [formData, setFormData] = useState<ClientsProps>(initialFormData);
   const [checkValidation, setCheckValidation] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { dropdownRef } = useCloseDropdown(setShowPopup);
   const { clients, setClientSelected, updateClients } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
@@ -54,10 +55,11 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setCheckValidation(true);
     if (Object.keys(errors).length === 0) {
+      setLoading(true);
       const newData = {
         ClientFirstname: formData.ClientFirstname!,
         ClientLastname: formData.ClientLastname!,
@@ -67,10 +69,11 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
         personalNote: formData.personalNote,
       };
       if (requestType === "POST") {
-        postClient(newData);
+        await postClient(newData);
       } else {
-        editClient(newData);
+        await editClient(newData);
       }
+      setLoading(false);
     }
   };
 
@@ -174,7 +177,7 @@ const PopupActions = ({ onCancel, setShowPopup, title, buttonText, requestType, 
             />
           </div>
           <div className={styles.btn_container}>
-            <Button title={buttonText} type='submit' styleName='btn' />
+            <Button title={buttonText} type='submit' styleName='btn' loading={loading} />
           </div>
         </form>
       </div>

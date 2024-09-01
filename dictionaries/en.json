@@ -18,7 +18,6 @@
       "gallery": "Gallery",
       "hotlink": "Hotlink",
       "inbox": "Inbox",
-      "collections": "Collections",
       "catalog": "Catalog",
       "clients": "Clients",
       "templates": "Templates",
@@ -54,12 +53,21 @@
       "edit": "Edit",
       "upload": "Upload",
       "required": "* All fields are required",
-      "introduction": "Learn everything Small has to offer you!"
+      "introduction": "Learn everything Small has to offer you!",
+      "excel": {
+        "title": "Upload from Excel with AI",
+        "subtitle": "Upload your Excel with products and we will process it with ChatGPT to extract catalogs and products with artificial intelligence.",
+        "text": "This process can take up to 60 seconds",
+        "loading_msg": " is working on your catalogs. Check back in 1 minute.",
+        "upload": "Upload",
+        "reset": "Clear"
+      }
     },
     "toast": {
       "success_img": "Image uploaded successfully",
       "success_item": "Product upload successfully",
       "success_file": "File uploaded successfully",
+      "success_datasets": "Datasets created successfully",
       "success_edit": "Information updated successfully",
       "success_delete": "File deleted successfully",
       "success_delete_catalog": "Catalog deleted successfully",
@@ -70,6 +78,7 @@
       "error_edit": "Error updating information",
       "error_img": "Error uploading image",
       "error_item": "Error uploading product",
+      "error_datasets": "Error creating datasets",
       "error_file": "Error deleting file",
       "error_catalog": "Error deleting catalog",
       "error_palette": "Error updating palette",
@@ -223,7 +232,7 @@
         "create": "Create",
         "congratulation": "Congratulation!",
         "success_subtitle": "Your app has been created successfully.",
-        "success_text": "Now, it’s time to create your first link and share with your clients.",
+        "success_text": "Now, it’s to create your first link and share with your clients.",
         "button_first_link": "Generate my first link",
         "error_generate": "There was an error generating the app"
       }
@@ -244,51 +253,6 @@
       "form_label_07": "Register",
       "form_label_08": "Update",
       "search_holder": "Search customer ...."
-    },
-    "collections": {
-      "template": "empty",
-      "header": {
-        "title": "Hotlinks Collections",
-        "search": "Search Collections...",
-        "period_btn": "Period",
-        "new_btn": "New Collection",
-        "empty_collections": "You don't have collections yet",
-        "add_collection": "Add Collection",
-        "name": "Name",
-        "description": "Description",
-        "required": "Required field *"
-      },
-      "titles": {
-        "title_one": "Name",
-        "title_two": "Design Used",
-        "title_three": "Statistics",
-        "column_one": "Date",
-        "column_two": "Skin Name",
-        "column_three": "Template",
-        "column_four": "Total",
-        "column_five": "Open"
-      },
-      "btn": "View Collection",
-      "new_collection": {
-        "title": "Create collection",
-        "input": "Name",
-        "select": "Design",
-        "cancel": "Cancel",
-        "generate_btn": "Generate Collection",
-        "colection_created": "Successfully created collection",
-        "colection_error": "Error creating collection"
-      }
-    },
-    "my-collection": {
-      "breadcrumb": "Hotlinks List",
-      "search_holder": "Search for client",
-      "btn": "Get Hotlink",
-      "share": "Share",
-      "client": "Client",
-      "btn2": "Import from Excel",
-      "btn3": "Excel import example",
-      "empty_list": "Empty Hotlink list",
-      "loading": "Loading"
     },
     "gallery": {
       "title": "Gallery",
@@ -327,6 +291,7 @@
       "description": "Description",
       "price": "Price",
       "available_days": "Available days",
+      "available_days_form": "Available days for service",
       "clean_bot": "Clean",
       "train_bot": "Train",
       "cancel": "Cancel",
@@ -348,7 +313,8 @@
       "price_percentage": "Percentage",
       "price_error": "The percentage is outside the allowed range.",
       "price_success": "Prices updated correctly.",
-      "days": {
+      "order": "Order",
+      "days_letter": {
         "monday": "M",
         "tuesday": "T",
         "wednesday": "W",
@@ -356,6 +322,39 @@
         "friday": "F",
         "saturday": "S",
         "sunday": "S"
+      },
+      "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      },
+      "services": {
+        "serviceName": "Service Name",
+        "serviceDescr": "Service Description",
+        "servicePrice": "Service Price",
+        "serviceImage": "Service Image",
+        "duration": "Duration",
+        "simultaneous": "Simultaneous",
+        "from": "From",
+        "to": "To",
+        "lunchFrom": "Lunch Start",
+        "lunchTo": "Lunch End",
+        "required": {
+          "serviceName": "Service name is required.",
+          "serviceDescr": "Service description is required.",
+          "servicePrice": "Service price is required.",
+          "serviceImage": "Service image is required.",
+          "lunchFrom": "Lunch start time is required.",
+          "lunchTo": "Lunch end time is required.",
+          "duration": "Duration is required.",
+          "simultaneous": "Simultaneous value is required.",
+          "from_error": "You must fill in the end time.",
+          "to_error": "You must fill the start time"
+        }
       },
       "form_actions": {
         "title": "Catalog information",
@@ -365,6 +364,7 @@
         "visibility": "Visible on my apps",
         "delete": "Delete catalog",
         "save": "Save catalog",
+        "save_service": "Save service",
         "order_description": "It will be generated automatically",
         "catalog_type": "Catalog type",
         "select_type": "Select type",
@@ -387,8 +387,8 @@
       },
       "upload_excel_title": "Upload Excel Spreadsheet",
       "upload_excel": "Upload Excel",
-      "all_products": "All products",
-      "all_services": "All services"
+      "all_products": "See all products",
+      "all_services": "See all services"
     },
     "form_validation": {
       "ClientFirstname": "The name is required",
@@ -438,7 +438,8 @@
       "error_pdf": "You must select a PDF file",
       "text_excel": "Upload or drag an Excel file",
       "text_image": "Upload or drag an image",
-      "text_pdf": "Upload or drag a PDF file"
+      "text_pdf": "Upload or drag a PDF file",
+      "file_size_error": "The maximum image size must be 10MB"
     }
   }
 }

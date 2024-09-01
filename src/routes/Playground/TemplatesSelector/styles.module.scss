@@ -1,5 +1,8 @@
 .container {
   height: inherit;
+  h3 {
+    margin-left: 20px;
+  }
   .flakes {
     @include width-height(100%, 100%);
     @include flex(row, space-evenly, flex-start, 10px);

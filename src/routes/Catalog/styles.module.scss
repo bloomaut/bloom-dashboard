@@ -6,6 +6,11 @@
     @include width-height(100%, auto);
     @include flex(row, flex-start, flex-start, 25px);
     flex-wrap: wrap;
+    .products_services {
+      @include width-height(100%, auto);
+      @include flex(row, space-evenly, flex-start, 25px);
+      margin-bottom: 25px;
+    }
     .add {
       @include width-height(275px, 200px);
       @include flex(column, center, center);

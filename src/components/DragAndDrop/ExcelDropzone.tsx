@@ -49,7 +49,11 @@ const ExcelDropzone = ({ file, setFile }: ExcelDropzoneProps) => {
     <div {...getRootProps()} className={containerClass}>
       <input {...getInputProps()} />
       <Icon name='excel' width={35} height={35} viewBox='0 0 25 30' />
-      <p className={styles.text_excel}>{file ? <span>{file.name}</span> : <span>{dict("text_excel")}</span>}</p>
+      {file ? (
+        <p className={styles.excel_name}>{file.name}</p>
+      ) : (
+        <p className={styles.text_default}>{dict("text_excel")}</p>
+      )}
     </div>
   );
 };

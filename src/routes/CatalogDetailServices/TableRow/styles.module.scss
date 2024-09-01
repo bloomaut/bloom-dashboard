@@ -1,7 +1,5 @@
 .container {
   @include width-height(100%, auto);
-  display: grid;
-  grid-template-columns: 0.35fr 3.2fr 3.3fr 2.6fr 2.5fr 0.1fr;
   grid-template-rows: auto;
   padding: 5px 10px;
   .order {

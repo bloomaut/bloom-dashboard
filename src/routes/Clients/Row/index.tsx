@@ -10,10 +10,10 @@ interface RowProps {
 }
 
 const Row = ({ client, onDelete, onEdit }: RowProps) => {
-  const { setClientSelected } = useClientsContext();
+  const { setClientSelected, clientSelected } = useClientsContext();
 
   return (
-    <div className={styles.row}>
+    <div className={`${styles.row} ${clientSelected?._id === client._id && styles.select}`}>
       <div className={styles.names} onClick={() => setClientSelected(client)}>
         <p className={styles.last_name}>
           {client.ClientCode} {client.ClientFirstname}

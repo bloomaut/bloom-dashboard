@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { useTranslations } from "next-intl";
 import styles from "./styles.module.scss";
 import Icon from "../Icon";
-import { useTranslations } from "next-intl";
 
 interface ImageDropzoneProps {
   file?: File | null;
@@ -23,6 +23,8 @@ const ImageDropzone = ({ file, setFile, currentImage }: ImageDropzoneProps) => {
         notifyError(dict("invalid_file"));
       } else if (errorCode === "too-many-files") {
         notifyError(dict("file_length"));
+      } else if (errorCode === "file-too-large") {
+        notifyError(dict("file_size_error"));
       }
     } else if (acceptedFiles[0].type.includes("image")) {
       setFile(acceptedFiles[0]);
@@ -37,6 +39,7 @@ const ImageDropzone = ({ file, setFile, currentImage }: ImageDropzoneProps) => {
       "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp", ".svg"],
     },
     maxFiles: 1,
+    maxSize: 10 * 1024 * 1024,
   });
 
   useEffect(() => {

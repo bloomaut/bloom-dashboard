@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
-import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 import { useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { get } from "@/services/fetch";
+import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
 
 interface Context {
   flakes: Powerapp[];
@@ -15,12 +15,10 @@ interface Context {
   difussionLink: string | null;
   id: string;
   setId: (i: string) => void;
-  hotlinksList: HotlinkList[];
-  setHotlinksList: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
-  filteredHotlinks: HotlinkList[];
-  setFilteredHotlinks: React.Dispatch<React.SetStateAction<HotlinkList[]>>;
-  getList: () => Promise<void>;
   getDiffusionLink: (flakeId: string) => Promise<string | null>;
+  getHotlinkList: (offset: number, limit: number) => void;
+  totalHotlinks: number;
+  hotlinkList: HotlinkList[] | [];
 }
 
 const FlakesContext = createContext<Context>({
@@ -31,12 +29,10 @@ const FlakesContext = createContext<Context>({
   difussionLink: null,
   id: "",
   setId: () => "",
-  hotlinksList: [],
-  setHotlinksList: () => [],
-  filteredHotlinks: [],
-  setFilteredHotlinks: () => [],
-  getList: () => Promise.resolve(),
   getDiffusionLink: () => Promise.resolve(null),
+  getHotlinkList: async () => [],
+  totalHotlinks: 0,
+  hotlinkList: [],
 });
 
 export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
@@ -49,8 +45,8 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const path = usePathname();
 
   const [id, setId] = useState<string>("");
-  const [hotlinksList, setHotlinksList] = useState<HotlinkList[]>([]);
-  const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList[]>([]);
+  const [hotlinkList, setHotlinkList] = useState<HotlinkList[]>([]);
+  const [totalHotlinks, setTotalHotlinks] = useState(0);
 
   //Fetch sin necesidad de estar logueado
   const fetchData = async () => {
@@ -64,6 +60,17 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
       notifyError(dict("error_tryagain"));
       setLoading(false);
     }
+  };
+
+  const getHotlinkList = async (offset: number, limit: number) => {
+    const response = await get(`hotlinks/list?limit=${limit}&offset=${offset}`);
+    if (response.statusCode === 200) {
+      setTotalHotlinks(response.result.hotlinks.total);
+      setHotlinkList(response.result.hotlinks.hotlinks);
+    } else {
+      notifyError(dict("error_tryagain"));
+    }
+    setLoading(false);
   };
 
   const fetchDataHotlink = async () => {
@@ -89,18 +96,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     }
   };
 
-  //Función para acceder a la lista de hotlinks sin colección
-  const getList = async () => {
-    const response = await get("hotlinks/list");
-    if (response.statusCode === 200) {
-      setHotlinksList(response.result.hotlinks.hotlinks);
-      setLoading(false);
-    } else {
-      notifyError(dict("error_tryagain"));
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     // Para no tener que volver a copiar un Context igual
     // en la página de hotlink, vamos a reusar este.
@@ -108,7 +103,6 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
     // si venis de Playground sin usuario logueado
     if (path.includes("hotlink")) {
       fetchDataHotlink();
-      getList();
     } else {
       fetchData();
     }
@@ -124,12 +118,10 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
         difussionLink,
         id,
         setId,
-        hotlinksList,
-        setHotlinksList,
-        filteredHotlinks,
-        setFilteredHotlinks,
-        getList,
         getDiffusionLink,
+        getHotlinkList,
+        totalHotlinks,
+        hotlinkList,
       }}
     >
       {children}

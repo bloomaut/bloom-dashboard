@@ -71,6 +71,9 @@ dependencies:
   sass:
     specifier: 1.71.1
     version: 1.71.1
+  use-debounce:
+    specifier: ^10.0.3
+    version: 10.0.3(react@18.2.0)
 
 devDependencies:
   '@types/auth0-lock':
@@ -5392,6 +5395,7 @@ packages:
   /puppeteer@22.6.1(typescript@5.4.3):
     resolution: {integrity: sha512-736QHNKtPD4tPeFbIn73E4l0CWsLzvRFlm0JsLG/VsyM8Eh0FRFNmMp+M3+GSMwdmYxqOVpTgzB6VQDxWxu8xQ==}
     engines: {node: '>=18'}
+    deprecated: < 22.8.2 is no longer supported
     hasBin: true
     requiresBuild: true
     dependencies:
@@ -6532,6 +6536,15 @@ packages:
 
   /urlpattern-polyfill@10.0.0:
     resolution: {integrity: sha512-H/A06tKD7sS1O1X2SshBVeA5FLycRpjqiBeqGKmBwBDBy28EnRjORxTNe269KSSr5un5qyWi1iL61wLxpd+ZOg==}
+    dev: false
+
+  /use-debounce@10.0.3(react@18.2.0):
+    resolution: {integrity: sha512-DxQSI9ZKso689WM1mjgGU3ozcxU1TJElBJ3X6S4SMzMNcm2lVH0AHmyXB+K7ewjz2BSUKJTDqTcwtSMRfB89dg==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /use-intl@3.9.2(react@18.2.0):

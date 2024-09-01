@@ -1,11 +1,11 @@
 import Button from "@/components/Button";
 import styles from "./styles.module.scss";
 import Icon from "@/components/Icon";
+import Image from "next/image";
+import FormActions from "../FormActions";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { useState } from "react";
 import { Link } from "@/navigation";
-import Image from "next/image";
-import FormActions from "../FormActions";
 
 const Card = ({ _id, name, description, image, visibility, totalDataItems, dataschema }: DatasetProps) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -20,7 +20,7 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
         }
       >
         <Link
-          href={dataschema?.category === "uitool-products" ? `/catalog/${_id}` : `/catalog/services/${_id}`}
+          href={dataschema?.category === "uitool-products" ? `/catalog/products/${_id}` : `/catalog/services/${_id}`}
           className={styles.image_container}
         >
           {image ? (
@@ -38,7 +38,10 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
             </div>
           )}
         </Link>
-        <Link href={`/catalog/${_id}`} className={styles.content}>
+        <Link
+          href={dataschema?.category === "uitool-products" ? `/catalog/products/${_id}` : `/catalog/services/${_id}`}
+          className={styles.content}
+        >
           <div className={styles.title_container}>
             <h2 className={styles.title} title={name}>
               {name}

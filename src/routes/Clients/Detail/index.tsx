@@ -45,6 +45,8 @@ const Detail = () => {
               <span>{clientSelected?.personalNote}</span>
             </p>
           )}
+        </div>
+        <div className={styles.date}>
           {clientSelected?.createdAt && (
             <p className={styles.personal_note}>
               {dict("form_label_07")}: <br />
