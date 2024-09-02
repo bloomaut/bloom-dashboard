@@ -107,8 +107,6 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
   const [closing, setClosing] = useState<boolean>(false);
   const dict = useTranslations("dict");
 
-  console.log(action);
-
   const imageUrl = action === "put" && formData.data?.serviceImage ? formData.data?.serviceImage : null;
 
   useEffect(() => {
