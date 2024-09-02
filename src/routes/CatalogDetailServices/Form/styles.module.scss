@@ -59,13 +59,15 @@
         @include flex(column, space-between, flex-start);
         .extra_config {
           @include flex(column, center, flex-start, 10px);
+
           .extra_config_title {
             @include fontSize-fontWeight(24px, 600);
             text-align: start;
             color: $text;
           }
           .extra_config_row {
-            @include flex(row, center, center, 5px);
+            height: 40px;
+            @include flex(row, flex-start, flex-start, 5px);
           }
         }
       }

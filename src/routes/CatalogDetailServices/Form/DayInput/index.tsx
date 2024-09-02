@@ -94,7 +94,7 @@ const DayInput = ({ formData, handleChange, errors, checkValidation }: DayInputP
                   timeIntervals={15}
                   timeCaption='Time'
                   dateFormat='HH:mm:ss'
-                  placeholderText={dict("services.from")}
+                  placeholderText={dict("services.to")}
                 />
                 {checkValidation && <ErrorMessage error={errors[day.to]} name='lunch' />}
               </div>

@@ -451,9 +451,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
             </div>
           </div>
           <div className={styles.column_three}>
-            <label className={styles.label}>
-              {dict("catalog.form_actions.image")} <span>*</span>
-            </label>
+            <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
             <div className={styles.form_control}>
               <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
             </div>
