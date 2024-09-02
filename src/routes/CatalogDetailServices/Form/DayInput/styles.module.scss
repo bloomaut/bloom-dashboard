@@ -3,12 +3,15 @@
   grid-template-columns: repeat(7, 1fr);
   gap: 10px;
   .box {
-    @include flex(column, center, center, 20px);
+    @include flex(column, flex-start, center, 20px);
     position: relative;
+    &.box_disabled {
+      // background: red;
+    }
     .day_container {
       @include width-height(100%, auto);
       border-right: 1px solid $text;
-      .day {
+      .day_active {
         @include fontSize-fontWeight(16px, 500);
         padding: 10px 15px;
         border-radius: 5px;
@@ -18,8 +21,6 @@
       .day_disabled {
         background-color: transparent;
         color: $lightGrey;
-      }
-      &:nth-last-child(1) {
         margin-bottom: 55px;
       }
     }

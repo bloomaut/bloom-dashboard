@@ -461,6 +461,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
           <p className={styles.available_days_title}>{dict("catalog.available_days_form")}</p>
           <div className={styles.days_container}>
             <DayInput
+              action={action}
               formData={formData}
               handleChange={handleTimePickerChange}
               errors={errors}

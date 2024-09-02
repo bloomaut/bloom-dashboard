@@ -2,7 +2,8 @@ import styles from "./styles.module.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTranslations } from "next-intl";
-import moment from "moment";
+import { useState } from "react";
+import { useEffect } from "react";
 
 interface FormData {
   data: {
@@ -24,13 +25,14 @@ interface FormData {
 }
 
 interface DayInputProps {
+  action: "post" | "put";
   formData: FormData;
   handleChange: (name: string, value: Date | null) => void;
   errors: { [key: string]: string | undefined };
   checkValidation: boolean;
 }
 
-const DayInput = ({ formData, handleChange, errors, checkValidation }: DayInputProps) => {
+const DayInput = ({ formData, handleChange, errors, checkValidation, action }: DayInputProps) => {
   const dict = useTranslations("dict.catalog");
 
   const days: { label: string; from: keyof FormData["data"]; to: keyof FormData["data"] }[] = [
@@ -43,8 +45,25 @@ const DayInput = ({ formData, handleChange, errors, checkValidation }: DayInputP
     { label: dict("days.sunday"), from: "sundayFrom", to: "sundayTo" },
   ];
 
-  const isDayDisabled = (dayFrom: keyof FormData["data"], dayTo: keyof FormData["data"]) => {
-    return !formData.data[dayFrom] && !formData.data[dayTo];
+  const initializeActiveDays = () => {
+    return days.reduce<{ [key: string]: boolean }>((acc, day) => {
+      const hasData = formData.data[day.from] || formData.data[day.to];
+      acc[day.label.toLowerCase()] = action === "put" ? Boolean(hasData) : true;
+      return acc;
+    }, {});
+  };
+
+  const [activeDays, setActiveDays] = useState<{ [key: string]: boolean }>(initializeActiveDays);
+
+  const toggleDay = (day: string) => {
+    setActiveDays(prevState => {
+      const isActive = !prevState[day];
+      if (!isActive) {
+        handleChange(day + "From", null);
+        handleChange(day + "To", null);
+      }
+      return { ...prevState, [day]: isActive };
+    });
   };
 
   const ErrorMessage = ({ error, name }: { error: string | undefined; name?: string }) => {
@@ -59,49 +78,61 @@ const DayInput = ({ formData, handleChange, errors, checkValidation }: DayInputP
     return new Date(1970, 0, 1, hours, minutes, seconds);
   };
 
+  useEffect(() => {
+    setActiveDays(initializeActiveDays());
+  }, [formData, action]);
+
   return (
     <div className={styles.days_container}>
-      {days.map((day, index) => (
-        <div key={index} className={styles.box}>
-          <div className={styles.day_container}>
-            <span className={`${styles.day} ${isDayDisabled(day.from, day.to) ? styles.day_disabled : ""}`}>
-              {day.label}
-            </span>
-          </div>
-          {day.label !== dict("days.sunday") && (
-            <div className={styles.availability}>
-              <div className={styles.from}>
-                <DatePicker
-                  selected={parseTime(formData.data[day.from]) || null}
-                  onChange={(date: Date | null) => handleChange(day.from, date)}
-                  className={styles["custom-datepicker"]}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={15}
-                  timeCaption='Time'
-                  dateFormat='HH:mm:ss'
-                  placeholderText={dict("services.from")}
-                />
-                {checkValidation && <ErrorMessage error={errors[day.from]} name='lunch' />}
-              </div>
-              <div className={styles.to}>
-                <DatePicker
-                  selected={parseTime(formData.data[day.to]) || null}
-                  onChange={(date: Date | null) => handleChange(day.to, date)}
-                  className={styles["custom-datepicker"]}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={15}
-                  timeCaption='Time'
-                  dateFormat='HH:mm:ss'
-                  placeholderText={dict("services.to")}
-                />
-                {checkValidation && <ErrorMessage error={errors[day.to]} name='lunch' />}
-              </div>
+      {days.map((day, index) => {
+        const dayKey = day.label.toLowerCase();
+        const isActive = activeDays[dayKey];
+        const isSunday = day.label === dict("days.sunday");
+
+        return (
+          <div
+            key={index}
+            className={`${styles.box} ${!isActive ? `${styles.box} ${styles.box_disabled}` : ""}`}
+            onClick={() => !isSunday && toggleDay(dayKey)}
+          >
+            <div className={styles.day_container}>
+              <span className={`${styles.day_active} ${!isActive ? styles.day_disabled : ""}`}>{day.label}</span>
             </div>
-          )}
-        </div>
-      ))}
+            {isActive && !isSunday && (
+              <div className={styles.availability}>
+                <div className={styles.from}>
+                  <DatePicker
+                    selected={parseTime(formData.data[day.from]) || null}
+                    onChange={(date: Date | null) => handleChange(day.from, date)}
+                    className={styles["custom-datepicker"]}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption='Time'
+                    dateFormat='HH:mm:ss'
+                    placeholderText={dict("services.from")}
+                  />
+                  {checkValidation && <ErrorMessage error={errors[day.from]} name='lunch' />}
+                </div>
+                <div className={styles.to}>
+                  <DatePicker
+                    selected={parseTime(formData.data[day.to]) || null}
+                    onChange={(date: Date | null) => handleChange(day.to, date)}
+                    className={styles["custom-datepicker"]}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption='Time'
+                    dateFormat='HH:mm:ss'
+                    placeholderText={dict("services.to")}
+                  />
+                  {checkValidation && <ErrorMessage error={errors[day.to]} name='lunch' />}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
