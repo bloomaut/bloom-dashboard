@@ -100,6 +100,14 @@
       .available_days_title {
         @include fontSize-fontWeight(24px, 600);
         color: $text;
+        span {
+          @include fontSize-fontWeight(14px, 400);
+          color: $lightGrey;
+          margin-left: 10px;
+        }
+      }
+      .days_container {
+        @include width-height(100%, auto);
       }
     }
     .button_container {

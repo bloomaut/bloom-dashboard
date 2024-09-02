@@ -5,8 +5,16 @@
   .box {
     @include flex(column, flex-start, center, 20px);
     position: relative;
-    &.box_disabled {
-      // background: red;
+    cursor: pointer;
+    transition: all 300ms ease-in;
+    &:hover {
+      .day_container > .day_active {
+        color: $blueBackground;
+        text-decoration: underline;
+        transition:
+          color 0.3s ease,
+          text-decoration 0.3s ease;
+      }
     }
     .day_container {
       @include width-height(100%, auto);
@@ -17,6 +25,9 @@
         border-radius: 5px;
         color: $blueBackground;
         background: $blueishBackground;
+        transition:
+          color 0.3s ease,
+          text-decoration 0.3s ease;
       }
       .day_disabled {
         background-color: transparent;

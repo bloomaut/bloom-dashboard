@@ -458,7 +458,10 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
           </div>
         </div>
         <div className={styles.available_days_container}>
-          <p className={styles.available_days_title}>{dict("catalog.available_days_form")}</p>
+          <p className={styles.available_days_title}>
+            {dict("catalog.available_days_form")}
+            <span>(Click para activar dias)</span>
+          </p>
           <div className={styles.days_container}>
             <DayInput
               action={action}

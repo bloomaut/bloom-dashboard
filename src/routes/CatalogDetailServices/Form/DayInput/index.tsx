@@ -90,12 +90,8 @@ const DayInput = ({ formData, handleChange, errors, checkValidation, action }: D
         const isSunday = day.label === dict("days.sunday");
 
         return (
-          <div
-            key={index}
-            className={`${styles.box} ${!isActive ? `${styles.box} ${styles.box_disabled}` : ""}`}
-            onClick={() => !isSunday && toggleDay(dayKey)}
-          >
-            <div className={styles.day_container}>
+          <div key={index} className={`${styles.box} ${!isActive ? `${styles.box} ${styles.box_disabled}` : ""}`}>
+            <div className={styles.day_container} onClick={() => !isSunday && toggleDay(dayKey)}>
               <span className={`${styles.day_active} ${!isActive ? styles.day_disabled : ""}`}>{day.label}</span>
             </div>
             {isActive && !isSunday && (
