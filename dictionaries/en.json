@@ -103,7 +103,8 @@
       "error_template": "Error selecting template"
     },
     "login": {
-      "description": "has the efficiency your business needs",
+      "description_one": "has the",
+      "description_two": "your business needs",
       "login": "Login",
       "register": "Register",
       "account": "Don't have an account?",
