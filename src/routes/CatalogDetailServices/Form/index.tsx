@@ -13,8 +13,9 @@ import {
 import { ENV } from "@/typescript/types/api";
 import { useCatalogServiceContext } from "@/context/CatalogServicesContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
-import { AllProducts } from "@/typescript/interfaces/catalog.interface";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 // Components
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
@@ -22,6 +23,7 @@ import Button from "@/components/Button";
 import CheckBox from "../../../components/Checkbox";
 import Icon from "@/components/Icon";
 import DayInput from "./DayInput";
+import moment from "moment";
 
 // Interfaces
 interface FormProps {
@@ -182,7 +184,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
 
   const fieldsToValidate = services?.dataSet?.dataschema?.fields.map((field: DataschemaField) => field.name) || [];
 
-  const errors = useFormValidator(formData, fieldsToValidate, file);
+  const errors = useFormValidator(formData, fieldsToValidate);
 
   const ErrorMessage = ({ error, name }: { error: string | undefined; name?: string }) => {
     const errorClass = name?.startsWith("lunch")
@@ -242,6 +244,22 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
         order: Number(value) || null,
       }));
     }
+  };
+
+  const handleTimePickerChange = (name: string, value: Date | null) => {
+    setFormData((prevState: InitialValuesProps) => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        [name]: value ? moment(value).format("HH:mm:ss") : "",
+      },
+    }));
+  };
+
+  const parseTime = (value: string | undefined) => {
+    if (!value || value.trim() === "") return null;
+    const [hours, minutes, seconds] = value.split(":").map(num => parseInt(num, 10));
+    return new Date(1970, 0, 1, hours, minutes, seconds);
   };
 
   const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -376,27 +394,31 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
               <p className={styles.extra_config_title}>Extra Config</p>
               <div className={styles.extra_config_row}>
                 <div className={styles.form_control}>
-                  <Input
-                    type='number'
-                    textLabel={dict("catalog.services.lunchFrom")}
-                    textHolder='- am'
-                    name='lunchFrom'
-                    required
-                    value={formData.data?.lunchFrom ?? ""}
-                    handleChange={handleChange}
+                  <DatePicker
+                    selected={parseTime(formData.data.lunchFrom) || null}
+                    onChange={(date: Date | null) => handleTimePickerChange("lunchFrom", date)}
+                    className={styles["custom-datepicker"]}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption='Time'
+                    dateFormat='HH:mm:ss'
+                    placeholderText={dict("catalog.services.from")}
                   />
                   {checkValidation && <ErrorMessage error={errors.lunchFrom} name='lunch' />}
                 </div>
 
                 <div className={styles.form_control}>
-                  <Input
-                    type='number'
-                    textLabel={dict("catalog.services.lunchTo")}
-                    textHolder='- pm'
-                    name='lunchTo'
-                    required
-                    value={formData.data?.lunchTo ?? ""}
-                    handleChange={handleChange}
+                  <DatePicker
+                    selected={parseTime(formData.data.lunchTo) || null}
+                    onChange={(date: Date | null) => handleTimePickerChange("lunchTo", date)}
+                    className={styles["custom-datepicker"]}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption='Time'
+                    dateFormat='HH:mm:ss'
+                    placeholderText={dict("catalog.services.to")}
                   />
                   {checkValidation && <ErrorMessage error={errors.lunchTo} name='lunch' />}
                 </div>
@@ -434,7 +456,6 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
             </label>
             <div className={styles.form_control}>
               <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
-              {checkValidation && <ErrorMessage error={errors.serviceImage} name='image' />}
             </div>
           </div>
         </div>
@@ -443,7 +464,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
           <div className={styles.days_container}>
             <DayInput
               formData={formData}
-              handleChange={handleChange}
+              handleChange={handleTimePickerChange}
               errors={errors}
               checkValidation={checkValidation}
             />

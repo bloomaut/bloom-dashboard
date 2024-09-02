@@ -1,6 +1,8 @@
-import Input from "@/components/Input";
 import styles from "./styles.module.scss";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useTranslations } from "next-intl";
+import moment from "moment";
 
 interface FormData {
   data: {
@@ -23,7 +25,7 @@ interface FormData {
 
 interface DayInputProps {
   formData: FormData;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleChange: (name: string, value: Date | null) => void;
   errors: { [key: string]: string | undefined };
   checkValidation: boolean;
 }
@@ -41,10 +43,20 @@ const DayInput = ({ formData, handleChange, errors, checkValidation }: DayInputP
     { label: dict("days.sunday"), from: "sundayFrom", to: "sundayTo" },
   ];
 
+  const isDayDisabled = (dayFrom: keyof FormData["data"], dayTo: keyof FormData["data"]) => {
+    return !formData.data[dayFrom] && !formData.data[dayTo];
+  };
+
   const ErrorMessage = ({ error, name }: { error: string | undefined; name?: string }) => {
     const errorClass = name?.startsWith("lunch") ? styles.error_lunchFrom : styles.error;
 
     return <p className={errorClass ? errorClass : styles.error_hidden}>{error}</p>;
+  };
+
+  const parseTime = (value: string | undefined) => {
+    if (!value || value.trim() === "") return null;
+    const [hours, minutes, seconds] = value.split(":").map(num => parseInt(num, 10));
+    return new Date(1970, 0, 1, hours, minutes, seconds);
   };
 
   return (
@@ -52,32 +64,42 @@ const DayInput = ({ formData, handleChange, errors, checkValidation }: DayInputP
       {days.map((day, index) => (
         <div key={index} className={styles.box}>
           <div className={styles.day_container}>
-            <span className={styles.day}>{day.label}</span>
+            <span className={`${styles.day} ${isDayDisabled(day.from, day.to) ? styles.day_disabled : ""}`}>
+              {day.label}
+            </span>
           </div>
-          <div className={styles.availability}>
-            <div className={styles.from}>
-              <Input
-                type='number'
-                textLabel={dict("services.from")}
-                textHolder='00:00'
-                name={day.from}
-                value={formData.data?.[day.from] ?? ""}
-                handleChange={handleChange}
-              />
-              {checkValidation && <ErrorMessage error={errors[day.from]} name='lunch' />}
+          {day.label !== dict("days.sunday") && (
+            <div className={styles.availability}>
+              <div className={styles.from}>
+                <DatePicker
+                  selected={parseTime(formData.data[day.from]) || null}
+                  onChange={(date: Date | null) => handleChange(day.from, date)}
+                  className={styles["custom-datepicker"]}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  timeCaption='Time'
+                  dateFormat='HH:mm:ss'
+                  placeholderText={dict("services.from")}
+                />
+                {checkValidation && <ErrorMessage error={errors[day.from]} name='lunch' />}
+              </div>
+              <div className={styles.to}>
+                <DatePicker
+                  selected={parseTime(formData.data[day.to]) || null}
+                  onChange={(date: Date | null) => handleChange(day.to, date)}
+                  className={styles["custom-datepicker"]}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  timeCaption='Time'
+                  dateFormat='HH:mm:ss'
+                  placeholderText={dict("services.from")}
+                />
+                {checkValidation && <ErrorMessage error={errors[day.to]} name='lunch' />}
+              </div>
             </div>
-            <div className={styles.to}>
-              <Input
-                type='number'
-                textLabel={dict("services.to")}
-                textHolder='00:00'
-                name={day.to}
-                value={formData.data?.[day.to] ?? ""}
-                handleChange={handleChange}
-              />
-              {checkValidation && <ErrorMessage error={errors[day.to]} name='lunch' />}
-            </div>
-          </div>
+          )}
         </div>
       ))}
     </div>
