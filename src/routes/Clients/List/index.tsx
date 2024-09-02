@@ -43,8 +43,8 @@ const List = () => {
   };
 
   const handlePageChange = useDebouncedCallback(async (page: number = 1) => {
-    const startIndex = (page - 1) * 5;
-    await fetchClients(startIndex, 5);
+    const startIndex = (page - 1) * 8;
+    fetchClients(startIndex, 8);
   }, 500);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const List = () => {
       {loading ? (
         <LoadingSpinner />
       ) : clients.length ? (
-        <Fade cascade damping={0.1} className={styles.fade} triggerOnce>
+        <Fade cascade damping={0.05} className={styles.fade} triggerOnce>
           {clients.map((client: ClientsProps) => (
             <Row
               key={client._id}
@@ -70,7 +70,7 @@ const List = () => {
             />
           ))}
           {!searchValue && //Cuando uso el Search se esconde la paginacion
-            totalClients > 5 && <Pagination totalItems={totalClients} limit={5} onPageChange={handlePageChange} />}
+            totalClients > 8 && <Pagination totalItems={totalClients} limit={8} onPageChange={handlePageChange} />}
         </Fade>
       ) : (
         <p className={styles.empty}>{dict("clients.empty")}</p>

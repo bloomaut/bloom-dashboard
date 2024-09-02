@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-/* import { useAppDispatch } from "@/store/hooks"; */
 import { useDebouncedCallback } from "use-debounce";
 
 interface ClientsContextType {
@@ -37,7 +36,6 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [clientSelected, setClientSelected] = useState<ClientsProps | null>(null);
   const [totalClients, setTotalClients] = useState(0);
-  /*  const dispatch = useAppDispatch(); */
   /* Para buscador */
   const [searchValue, setSearchValue] = useState<string>("");
   const [filteredClients, setFilteredClients] = useState<ClientsProps[]>(clients);
@@ -45,15 +43,12 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const fetchClients = async (offset: number, limit: number, search: string = "") => {
     const data = await get(`client-customer?limit=${limit}&offset=${offset}&search=${search}`);
     if (data.statusCode === 200) {
+      console.log(data.result);
       setTotalClients(data.result.total);
       setClients(data.result.data);
     }
     setLoading(false);
   };
-
-  /*  useEffect(() => {
-    fetchClients();
-  }, [dispatch]); */
 
   const updateClients = (newClient: ClientsProps) => {
     setClients(prevClients => {
@@ -63,13 +58,13 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
         return prevClients.map((client, i) => (i === index ? newClient : client));
       } else {
         // Cliente no existe, agregar el nuevo cliente al array
-        return [...prevClients, newClient];
+        return [newClient, ...prevClients];
       }
     });
   };
 
   const debouncedFetchClients = useDebouncedCallback((searchValue: string) => {
-    fetchClients(0, totalClients, searchValue);
+    fetchClients(0, 8, searchValue);
   }, 500);
 
   useEffect(() => {
@@ -78,19 +73,10 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
     } else if (totalClients) {
       //Esta condicion para que no se hagan fetch de mas la primera vez
       setTimeout(() => {
-        fetchClients(0, 5, ""); //Contemplando caso luego de borrar una busqueda
+        fetchClients(0, 8, ""); //Contemplando caso luego de borrar una busqueda
       }, 600);
     }
-    /* if (clients) {
-      const filteredData = clients.filter(
-        client =>
-          client.ClientCode?.toLowerCase().includes(searchValue.toLowerCase()) ||
-          client.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase()) ||
-          client.ClientEmail?.toLowerCase().includes(searchValue.toLowerCase()),
-      );
-      setFilteredClients(filteredData);
-    } */
-  }, [searchValue /* , clients, setClients */]);
+  }, [searchValue]);
 
   return (
     <ClientsContext.Provider
