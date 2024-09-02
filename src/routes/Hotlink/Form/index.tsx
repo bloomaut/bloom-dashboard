@@ -12,10 +12,8 @@ import { post } from "@/services/fetch";
 import Input from "@/components/Input";
 import SectionTitle from "@/components/SectionTitle";
 import Checkbox from "./Checkbox";
-import { Fade } from "react-awesome-reveal";
 import Icon from "@/components/Icon";
 import Button from "@/components/Button";
-import LoadingSpinner from "@/components/Loading";
 
 const EmptyFormData = {
   typeFlake: "",
@@ -37,8 +35,7 @@ const Form = () => {
   const dict = useTranslations("dict");
   const { clientSelected } = useClientsContext();
   const { notify, notifyError } = useMessageToast();
-  const { flakes, difussionLink, selectedFlakeId, loading, getHotlinkList, totalHotlinks, getDiffusionLink } =
-    useFlakesContext();
+  const { flakes, selectedFlakeId, getHotlinkList, totalHotlinks, getDiffusionLink } = useFlakesContext();
   const [formInfo, setFormInfo] = useState<VariableInUse[]>([]);
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
@@ -160,15 +157,14 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <SectionTitle text={dict("hotlinks.form_title")} />
-      {loading ? (
-        <LoadingSpinner />
-      ) : flakes.length ? (
-        <Fade triggerOnce>
-          <form className={styles.form_container} onSubmit={handleSubmit}>
-            <div className={styles.form}>
-              {formInfo &&
-                formInfo.map((info, index) => (
+      {formInfo.length !== 0 && <SectionTitle text={dict("hotlinks.form_title")} />}
+
+      {flakes.length ? (
+        <form className={styles.form_container} onSubmit={handleSubmit}>
+          {formInfo.length !== 0 && (
+            <>
+              <div className={styles.form}>
+                {formInfo.map((info, index) => (
                   <Input
                     key={info.key}
                     type='text'
@@ -181,24 +177,26 @@ const Form = () => {
                     name={info.name}
                   />
                 ))}
-            </div>
-            <Checkbox />
-            <div className={styles.btn_container}>
-              <Button
-                title={dict("hotlinks.form_btn")}
-                styleName='btn_reverse'
-                icon={<Icon name='hotlink' width={22} height={22} viewBox='0 0 30 34' className='hotlink_light' />}
-                type='submit'
-              />
-              <Button
-                title={dict("hotlinks.diffusion_link")}
-                styleName='btn_outline'
-                loading={loadingButton}
-                onclick={handleCopyClick}
-              />
-            </div>
-          </form>
-        </Fade>
+              </div>
+              <Checkbox />
+            </>
+          )}
+
+          <div className={styles.btn_container}>
+            <Button
+              title={dict("hotlinks.form_btn")}
+              styleName='btn_reverse'
+              icon={<Icon name='hotlink' width={22} height={22} viewBox='0 0 30 34' className='hotlink_light' />}
+              type='submit'
+            />
+            <Button
+              title={dict("hotlinks.diffusion_link")}
+              styleName='btn_outline'
+              loading={loadingButton}
+              onclick={handleCopyClick}
+            />
+          </div>
+        </form>
       ) : null}
     </div>
   );
