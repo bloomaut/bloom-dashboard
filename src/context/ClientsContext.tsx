@@ -10,7 +10,6 @@ interface ClientsContextType {
   setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
   searchValue: string;
   setSearchValue: (i: string) => void;
-  filteredClients: ClientsProps[];
   fetchClients: (offset: number, limit: number, search?: string) => void;
   totalClients: number;
   updateClients: (newClient: ClientsProps) => void;
@@ -24,7 +23,6 @@ const ClientsContext = createContext<ClientsContextType>({
   setClientSelected: () => null,
   searchValue: "",
   setSearchValue: () => "",
-  filteredClients: [],
   fetchClients: async () => [],
   totalClients: 0,
   updateClients: () => null,
@@ -38,7 +36,6 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const [totalClients, setTotalClients] = useState(0);
   /* Para buscador */
   const [searchValue, setSearchValue] = useState<string>("");
-  const [filteredClients, setFilteredClients] = useState<ClientsProps[]>(clients);
 
   const fetchClients = async (offset: number, limit: number, search: string = "") => {
     const data = await get(`client-customer?limit=${limit}&offset=${offset}&search=${search}`);
@@ -87,7 +84,6 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
         setClientSelected,
         searchValue,
         setSearchValue,
-        filteredClients,
         fetchClients,
         totalClients,
         updateClients,

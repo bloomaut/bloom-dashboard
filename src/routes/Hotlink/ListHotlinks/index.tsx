@@ -5,13 +5,12 @@ import { useDebouncedCallback } from "use-debounce";
 // Components
 /* import Search from "@/components/Search"; */
 import TableRow from "./TableRow";
-import LoadingSpinner from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import { useFlakesContext } from "@/context/FlakesContext";
 
 const ListHotlinks = () => {
   const dict = useTranslations("dict.hotlinks.list");
-  const { getHotlinkList, loading, hotlinkList, totalHotlinks } = useFlakesContext();
+  const { getHotlinkList, hotlinkList, totalHotlinks, loading } = useFlakesContext();
   /*   const [searchValue, setSearchValue] = useState<string>(""); */
   /*   const [currentItemsFiltered, setCurrentItemsFiltered] = useState<HotlinkList[]>([]); */
   /*   const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList[]>([]); */
@@ -52,7 +51,7 @@ const ListHotlinks = () => {
 
   const handlePageChange = useDebouncedCallback(async (page: number = 1) => {
     const startIndex = (page - 1) * 5;
-    await getHotlinkList(startIndex, 5);
+    getHotlinkList(startIndex, 5);
   }, 500);
 
   useEffect(() => {
@@ -79,15 +78,10 @@ const ListHotlinks = () => {
         <h4></h4>
       </div>
       <div className={styles.rows_container}>
-        {loading ? (
-          <LoadingSpinner />
-        ) : /* filteredHotlinks.length > 0 ? (
-          currentItemsFiltered.map((hotlink, index) => <TableRow key={index} hotlink={hotlink} />) // Si existe un hotlink filtrado, se muestra
-        ) : */ hotlinkList.length === 0 ? (
-          <p className={styles.text}>{dict("empty")}</p> // Si la lista está vacía o no existe, mostramos el texto "empty"
-        ) : (
-          // Si hay una lista de hotlinks, la mostramos
+        {!loading ? (
           hotlinkList.map(hotlink => <TableRow key={hotlink.id} hotlink={hotlink} />)
+        ) : (
+          <p className={styles.text}>{dict("empty")}</p>
         )}
       </div>
 

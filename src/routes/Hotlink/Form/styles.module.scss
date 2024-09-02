@@ -1,16 +1,18 @@
 @import "@/styles/theme";
 
 .container {
-  @include width-height(100%, auto);
-  position: relative;
+  @include width-height(100%, inherit);
   .form_container {
+    @include width-height(100%, inherit);
     @include flex(column, flex-start, flex-start, 10px);
+
     .form {
       @include width-height(100%, auto);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0 20px;
     }
+
     .btn_container {
       @include width-height(100%, auto);
       @include flex(column, flex-end, flex-end, 5px);
