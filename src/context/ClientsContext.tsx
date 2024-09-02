@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { useAppDispatch } from "@/store/hooks";
+import { useDebouncedCallback } from "use-debounce";
 
 interface ClientsContextType {
   clients: ClientsProps[];
@@ -10,7 +10,8 @@ interface ClientsContextType {
   setClientSelected: Dispatch<SetStateAction<ClientsProps | null>>;
   searchValue: string;
   setSearchValue: (i: string) => void;
-  filteredClients: ClientsProps[];
+  fetchClients: (offset: number, limit: number, search?: string) => void;
+  totalClients: number;
   updateClients: (newClient: ClientsProps) => void;
   setClients: Dispatch<SetStateAction<ClientsProps[]>>;
 }
@@ -22,7 +23,8 @@ const ClientsContext = createContext<ClientsContextType>({
   setClientSelected: () => null,
   searchValue: "",
   setSearchValue: () => "",
-  filteredClients: [],
+  fetchClients: async () => [],
+  totalClients: 0,
   updateClients: () => null,
   setClients: () => null,
 });
@@ -31,22 +33,19 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const [clients, setClients] = useState<ClientsProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [clientSelected, setClientSelected] = useState<ClientsProps | null>(null);
-  const dispatch = useAppDispatch();
+  const [totalClients, setTotalClients] = useState(0);
   /* Para buscador */
   const [searchValue, setSearchValue] = useState<string>("");
-  const [filteredClients, setFilteredClients] = useState<ClientsProps[]>(clients);
 
-  const fetchClients = async () => {
-    const data = await get("client-customer");
+  const fetchClients = async (offset: number, limit: number, search: string = "") => {
+    const data = await get(`client-customer?limit=${limit}&offset=${offset}&search=${search}`);
     if (data.statusCode === 200) {
+      console.log(data.result);
+      setTotalClients(data.result.total);
       setClients(data.result.data);
     }
     setLoading(false);
   };
-
-  useEffect(() => {
-    fetchClients();
-  }, [dispatch]);
 
   const updateClients = (newClient: ClientsProps) => {
     setClients(prevClients => {
@@ -56,22 +55,25 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
         return prevClients.map((client, i) => (i === index ? newClient : client));
       } else {
         // Cliente no existe, agregar el nuevo cliente al array
-        return [...prevClients, newClient];
+        return [newClient, ...prevClients];
       }
     });
   };
 
+  const debouncedFetchClients = useDebouncedCallback((searchValue: string) => {
+    fetchClients(0, 8, searchValue);
+  }, 500);
+
   useEffect(() => {
-    if (clients) {
-      const filteredData = clients.filter(
-        client =>
-          client.ClientCode?.toLowerCase().includes(searchValue.toLowerCase()) ||
-          client.ClientFirstname?.toLowerCase().includes(searchValue.toLowerCase()) ||
-          client.ClientEmail?.toLowerCase().includes(searchValue.toLowerCase()),
-      );
-      setFilteredClients(filteredData);
+    if (searchValue.length) {
+      debouncedFetchClients(searchValue);
+    } else if (totalClients) {
+      //Esta condicion para que no se hagan fetch de mas la primera vez
+      setTimeout(() => {
+        fetchClients(0, 8, ""); //Contemplando caso luego de borrar una busqueda
+      }, 600);
     }
-  }, [searchValue, clients, setClients]);
+  }, [searchValue]);
 
   return (
     <ClientsContext.Provider
@@ -82,7 +84,8 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
         setClientSelected,
         searchValue,
         setSearchValue,
-        filteredClients,
+        fetchClients,
+        totalClients,
         updateClients,
         setClients,
       }}

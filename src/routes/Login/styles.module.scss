@@ -1,18 +1,55 @@
 .login_container {
   @include width-height(100%, 100%);
   @include flex(row, space-around, flex-start);
-  background-color: $softPink;
+  background: radial-gradient(circle at top right, #ffffff, transparent 50%),
+    radial-gradient(circle at bottom left, #ffffff, transparent 50%),
+    linear-gradient(135deg, #fff3ef 0%, #fff3ef 25%, #ffd7ca 50%, #fff3ef 75%, #fff3ef 100%);
+  background-blend-mode: normal;
   min-height: calc(100vh - 65px);
-  .description {
+  .column_one {
     @include width-height(75%, 100%);
-    .text {
-      @include fontSize-fontWeight(25px, 600);
-      max-width: 325px;
-      margin: 100px 0 0 100px;
-      border-left: 5px solid $darkOrange;
-      padding: 10px 5px;
-      .small {
-        color: $orange;
+    @include flex(row, flex-start, center);
+    margin: 160px 0 0 112px;
+    .bar {
+      @include width-height(8px, 150px);
+      background-color: $orange;
+      animation: bar_animation 0.8s forwards ease-out;
+    }
+    .wrapper {
+      @include width-height(100%, auto);
+      overflow: hidden;
+      .text_container {
+        @include flex(column, center, flex-start);
+        animation: text_animation 1s 0.8s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateX(-100%);
+        padding-left: 16px;
+        .text_animation_en {
+          @include fontSize-fontWeight(47px, 600);
+          &::after {
+            animation: span_animation_en 12.5s 1.6s infinite ease-in-out;
+            content: "efficiency";
+            display: inline-block;
+            font-weight: 800;
+          }
+          .small {
+            color: $orange;
+          }
+        }
+        .text_animation_es {
+          @include fontSize-fontWeight(47px, 600);
+          &::after {
+            animation: span_animation_es 12.5s 1.6s infinite ease-in-out;
+            content: "eficiencia";
+            display: inline-block;
+            font-weight: 800;
+          }
+          .small {
+            color: $orange;
+          }
+        }
+        .text {
+          @include fontSize-fontWeight(40px, 600);
+        }
       }
     }
   }
@@ -63,5 +100,196 @@
         margin-top: 15px;
       }
     }
+  }
+}
+
+@keyframes bar_animation {
+  0% {
+    opacity: 0;
+    transform: translateY(-150%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes text_animation {
+  80% {
+    transform: translateX(1.5%);
+  }
+  90% {
+    transform: translateX(1%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes span_animation_en {
+  0% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "efficiency";
+  }
+  5%,
+  15% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "efficiency";
+  }
+  20% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "efficiency";
+  }
+  21% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "solutions";
+  }
+  25%,
+  35% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "solutions";
+  }
+  40% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "solutions";
+  }
+  41% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "innovation";
+  }
+  45%,
+  55% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "innovation";
+  }
+  60% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "innovation";
+  }
+  61% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "tools";
+  }
+  65%,
+  75% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "tools";
+  }
+  80% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "tools";
+  }
+  81% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "solutions";
+  }
+  85%,
+  95% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "solutions";
+  }
+  100% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "solutions";
+  }
+}
+
+@keyframes span_animation_es {
+  0% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "eficiencia";
+  }
+  5%,
+  15% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "eficiencia";
+  }
+  20% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "eficiencia";
+  }
+  21% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "solución";
+  }
+  25%,
+  35% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "solución";
+  }
+  40% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "solución";
+  }
+  41% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "innovación";
+  }
+  45%,
+  55% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "innovación";
+  }
+  60% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "innovación";
+  }
+  61% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "herramienta";
+  }
+  65%,
+  75% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "herramienta";
+  }
+  80% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "herramienta";
+  }
+  81% {
+    transform: translateY(-50%);
+    opacity: 0;
+    content: "solución";
+  }
+  85%,
+  95% {
+    transform: translateY(0);
+    opacity: 1;
+    content: "solución";
+  }
+  100% {
+    transform: translateY(50%);
+    opacity: 0;
+    content: "solución";
   }
 }
