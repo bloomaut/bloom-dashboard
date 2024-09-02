@@ -36,11 +36,15 @@ const Login = () => {
           </div>
           <div className={styles.account}>
             {dict("account")} <br />
-            <p>{dict("signup")}</p>
+            <Link href='/api/auth/login'>
+              <p>{dict("signup")}</p>
+            </Link>
           </div>
           <div className={styles.notimation}>
             <p>Power by</p>
-            <Image src={notimation} alt='Small' className={styles.logo} width={100} height={20} priority />
+            <Link href='https://www.notimation.com' target='_blank'>
+              <Image src={notimation} alt='Small' className={styles.logo} width={100} height={20} priority />
+            </Link>
             <Link href='/policy' className={styles.policy}>
               {dict("policy")}
             </Link>
