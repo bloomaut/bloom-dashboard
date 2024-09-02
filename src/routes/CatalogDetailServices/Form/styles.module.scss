@@ -58,7 +58,7 @@
         height: 90%;
         @include flex(column, space-between, flex-start);
         .extra_config {
-          @include flex(column, center, flex-start, 10px);
+          @include flex(column, center, flex-start, 15px);
 
           .extra_config_title {
             @include fontSize-fontWeight(24px, 600);
@@ -66,8 +66,29 @@
             color: $text;
           }
           .extra_config_row {
-            height: 40px;
-            @include flex(row, flex-start, flex-start, 5px);
+            height: 60px;
+            @include flex(row, flex-start, center, 10px);
+            .form_control {
+              @include width-height(100%, 50px);
+              position: relative;
+              @include flex(column, center, center);
+              p {
+                width: 110px;
+                position: absolute;
+                top: -10px;
+                left: 2px;
+                @include fontSize-fontWeight(14px, 400);
+                color: $lightGrey;
+                text-align: start;
+                span {
+                  margin-left: 5px;
+                  color: $orange;
+                }
+              }
+              .error {
+                top: 35px;
+              }
+            }
           }
         }
       }
@@ -120,10 +141,11 @@
     }
     .error {
       @include width-height(200px, auto);
+      @include fontSize-fontWeight(12px, 400);
       text-align: start;
       position: absolute;
       top: 60px;
-      @include fontSize-fontWeight(12px, 400);
+
       color: red;
     }
     .error_hidden {

@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useEffect } from "react";
 
 interface FormData {
@@ -45,13 +45,20 @@ const DayInput = ({ formData, handleChange, errors, checkValidation, action }: D
     { label: dict("days.sunday"), from: "sundayFrom", to: "sundayTo" },
   ];
 
-  const initializeActiveDays = () => {
+  const initializeActiveDays = useCallback(() => {
     return days.reduce<{ [key: string]: boolean }>((acc, day) => {
-      const hasData = formData.data[day.from] || formData.data[day.to];
-      acc[day.label.toLowerCase()] = action === "put" ? Boolean(hasData) : true;
+      if (day.label.toLowerCase() === "sunday") {
+        acc[day.label.toLowerCase()] = false;
+      } else {
+        if (action === "post") {
+          acc[day.label.toLowerCase()] = true;
+        } else {
+          acc[day.label.toLowerCase()] = Boolean(formData.data[day.from] || formData.data[day.to]);
+        }
+      }
       return acc;
     }, {});
-  };
+  }, [days, formData, action]);
 
   const [activeDays, setActiveDays] = useState<{ [key: string]: boolean }>(initializeActiveDays);
 
@@ -79,7 +86,7 @@ const DayInput = ({ formData, handleChange, errors, checkValidation, action }: D
   };
 
   useEffect(() => {
-    setActiveDays(initializeActiveDays());
+    if (action === "put") setActiveDays(initializeActiveDays());
   }, [formData, action]);
 
   return (

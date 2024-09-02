@@ -405,6 +405,10 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                     dateFormat='HH:mm:ss'
                     placeholderText={dict("catalog.services.from")}
                   />
+                  <p>
+                    {dict("catalog.services.lunchFrom")}
+                    <span>*</span>
+                  </p>
                   {checkValidation && <ErrorMessage error={errors.lunchFrom} name='lunch' />}
                 </div>
 
@@ -420,6 +424,10 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                     dateFormat='HH:mm:ss'
                     placeholderText={dict("catalog.services.to")}
                   />
+                  <p>
+                    {dict("catalog.services.lunchTo")}
+                    <span>*</span>
+                  </p>
                   {checkValidation && <ErrorMessage error={errors.lunchTo} name='lunch' />}
                 </div>
               </div>
@@ -460,7 +468,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
         <div className={styles.available_days_container}>
           <p className={styles.available_days_title}>
             {dict("catalog.available_days_form")}
-            <span>(Click para activar dias)</span>
+            <span>({dict("catalog.services.active_days")})</span>
           </p>
           <div className={styles.days_container}>
             <DayInput

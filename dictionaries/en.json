@@ -344,6 +344,7 @@
         "to": "To",
         "lunchFrom": "Lunch Start",
         "lunchTo": "Lunch End",
+        "active_days": "Click to show days",
         "required": {
           "serviceName": "Service name is required.",
           "serviceDescr": "Service description is required.",
