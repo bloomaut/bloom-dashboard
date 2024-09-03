@@ -295,7 +295,6 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
   };
 
   useEffect(() => {
-    console.log(errors);
     if (checkValidation) {
       if (Object.keys(errors).length === 0) {
         setCheckValidation(false);
