@@ -40,7 +40,6 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const fetchClients = async (offset: number, limit: number, search: string = "") => {
     const data = await get(`client-customer?limit=${limit}&offset=${offset}&search=${search}`);
     if (data.statusCode === 200) {
-      console.log(data.result);
       setTotalClients(data.result.total);
       setClients(data.result.data);
     }

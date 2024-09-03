@@ -101,13 +101,13 @@ const initialValues: InitialValuesProps = {
 
 const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) => {
   const { services, handleAddService, handleUpdateService } = useCatalogServiceContext();
+  const { dropdownRef } = useCloseDropdown(setShowPopup);
+  const { notify, notifyError } = useMessageToast();
   const [formData, setFormData] = useState<InitialValuesProps>(initialValues);
   const [checkValidation, setCheckValidation] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [closing, setClosing] = useState<boolean>(false);
-  const { dropdownRef } = useCloseDropdown(setShowPopup);
-  const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
   const imageUrl = action === "put" && formData.data?.serviceImage ? formData.data?.serviceImage : null;
@@ -272,9 +272,6 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
 
   const handleClose = () => {
     setClosing(true);
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 300);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -318,10 +315,12 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
   };
 
   useEffect(() => {
-    if (checkValidation && Object.keys(errors).length === 0) {
-      setCheckValidation(false);
+    if (checkValidation) {
+      if (Object.keys(errors).length === 0) {
+        setCheckValidation(false);
+      }
     }
-  }, [errors]);
+  }, [errors, checkValidation]);
 
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>

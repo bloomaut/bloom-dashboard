@@ -1,4 +1,3 @@
-import { SetStateAction, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import useFormValidator from "@/hooks/useFormValidator";
 import Input from "@/components/Input";
@@ -7,6 +6,7 @@ import DragAndDrop from "@/components/DragAndDrop";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import PopupConfirm from "@/components/PopupConfirm";
+import { SetStateAction, useEffect, useState } from "react";
 import { post, remove, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
@@ -34,6 +34,7 @@ interface InitialValuesProps {
   category_image: string | null;
   category_visibility: boolean;
 }
+
 const initialValues: InitialValuesProps = {
   type_catalog: "",
   category_name: "",
@@ -69,7 +70,7 @@ const FormActions = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prevState: InitialValuesProps) => ({
+    setFormData(prevState => ({
       ...prevState,
       [name]: value,
     }));
@@ -82,13 +83,23 @@ const FormActions = ({
     }));
   };
 
-  const ErrorMessage = ({ error }: { error: string | undefined }) => (
-    <p className={error ? styles.error : styles.error_hidden}>{error}</p>
-  );
+  useEffect(() => {
+    if (action === "put") {
+      setFormData({
+        type_catalog: dataschema || "",
+        category_name: name || "",
+        category_description: description || "",
+        category_image: image || null,
+        category_visibility: visibility ?? true,
+      });
+      setFile(null);
+    }
+  }, [name, description, image, visibility, dataschema]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCheckValidation(true);
+
     if (Object.keys(errors).length === 0) {
       setLoading(true);
       try {
@@ -112,7 +123,7 @@ const FormActions = ({
 
         let response;
         if (action === "post") {
-          const response = await post("datasets", postDataschema, ENV.BOX);
+          response = await post("datasets", postDataschema, ENV.BOX);
           if (response.data.statusCode === 201) {
             handleAddDataset(response.data.data);
             notify(dict("toast.post_dataset"));
@@ -120,15 +131,6 @@ const FormActions = ({
             notifyError(dict("toast.error_dataset"));
           }
         } else if (action === "put" && id) {
-          if (file) {
-            const uploadedImageUrl = await handleFileUpload(file);
-            if (uploadedImageUrl) {
-              postDataschema.image = uploadedImageUrl;
-            } else {
-              throw new Error("File upload failed");
-            }
-          }
-
           const updatedDataset = {
             name: formData.category_name,
             order: 0,
@@ -173,30 +175,18 @@ const FormActions = ({
   };
 
   const handleClose = () => {
-    setClosing(true);
-    setTimeout(() => {
-      setShowConfirmation(false);
-    }, 300);
+    setShowConfirmation(false);
   };
-
-  useEffect(() => {
-    if (action === "put") {
-      setFormData({
-        type_catalog: dataschema || "",
-        category_name: name || "",
-        category_description: description || "",
-        category_image: image || null,
-        category_visibility: visibility ?? true,
-      });
-      setFile(null);
-    }
-  }, [action, name, description, image, visibility, dataschema]);
 
   useEffect(() => {
     if (checkValidation && Object.keys(errors).length === 0) {
       setCheckValidation(false);
     }
   }, [errors]);
+
+  const ErrorMessage = ({ error }: { error: string | undefined }) => (
+    <p className={error ? styles.error : styles.error_hidden}>{error}</p>
+  );
 
   return (
     <form className={`${styles.form_container} ${closing && styles.closing}`} onSubmit={handleSubmit}>
