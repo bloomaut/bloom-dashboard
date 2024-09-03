@@ -4,14 +4,14 @@ import { useClientsContext } from "@/context/ClientsContext";
 import { useEffect } from "react";
 
 const Detail = () => {
-  const { clientSelected, setClientSelected, filteredClients } = useClientsContext();
+  const { clientSelected, setClientSelected, clients } = useClientsContext();
   const dict = useTranslations("dict.clients");
 
   useEffect(() => {
-    if (!clientSelected && filteredClients.length > 0) {
-      setClientSelected(filteredClients[0]);
+    if (!clientSelected && clients.length > 0) {
+      setClientSelected(clients[0]);
     }
-  }, [clientSelected, filteredClients]);
+  }, [clients, clientSelected]);
 
   return (
     <section className={styles.container}>
