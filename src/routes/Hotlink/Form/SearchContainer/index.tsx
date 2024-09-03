@@ -5,11 +5,16 @@ import { useTranslations } from "next-intl";
 // Components
 import Search from "@/components/Search";
 import LoadingSpinner from "@/components/Loading";
+import { useEffect } from "react";
 
 const SearchContainer = () => {
-  const { searchValue, setSearchValue, loading, clientSelected, setClientSelected, filteredClients } =
+  const { searchValue, setSearchValue, loading, clientSelected, setClientSelected, clients, fetchClients } =
     useClientsContext();
   const dict = useTranslations("dict.hotlinks");
+
+  useEffect(() => {
+    fetchClients(0, 1000, "");
+  }, []);
 
   return (
     <div className={styles.search_container}>
@@ -21,8 +26,8 @@ const SearchContainer = () => {
       <div className={styles.clients_container}>
         {loading ? (
           <LoadingSpinner />
-        ) : filteredClients.length ? (
-          filteredClients.map((client: ClientsProps) => (
+        ) : clients.length ? (
+          clients.map((client: ClientsProps) => (
             <div
               className={`${styles.row} ${clientSelected && clientSelected._id === client._id ? styles.selected : ""}`}
               key={client._id}
