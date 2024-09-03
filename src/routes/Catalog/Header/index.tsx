@@ -37,7 +37,6 @@ const Header = () => {
         }
       } catch (error) {
         notifyError(dict("toast.error_datasets"));
-        console.error("Error uploading Excel file:", error);
         setLoadingPopup(false);
       }
     }

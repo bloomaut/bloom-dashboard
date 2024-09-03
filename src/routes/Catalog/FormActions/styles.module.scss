@@ -84,10 +84,11 @@
     }
     .error {
       @include width-height(300px, auto);
+      @include fontSize-fontWeight(12px, 400);
       text-align: start;
       position: absolute;
-      top: 60px;
-      @include fontSize-fontWeight(12px, 400);
+      top: 135px;
+      left: 3px;
       color: red;
     }
     .error_hidden {
