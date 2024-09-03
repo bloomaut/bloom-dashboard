@@ -98,10 +98,10 @@ const DayInput = ({ formData, handleChange, errors, checkValidation, action }: D
 
         return (
           <div key={index} className={`${styles.box} ${!isActive ? `${styles.box} ${styles.box_disabled}` : ""}`}>
-            <div className={styles.day_container} onClick={() => !isSunday && toggleDay(dayKey)}>
+            <div className={styles.day_container} onClick={() => toggleDay(dayKey)}>
               <span className={`${styles.day_active} ${!isActive ? styles.day_disabled : ""}`}>{day.label}</span>
             </div>
-            {isActive && !isSunday && (
+            {isActive && (
               <div className={styles.availability}>
                 <div className={styles.from}>
                   <DatePicker

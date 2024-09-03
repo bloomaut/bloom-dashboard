@@ -86,7 +86,9 @@
                 }
               }
               .error {
-                top: 35px;
+                @include fontSize-fontWeight(12px, 400);
+                top: 43px;
+                color: red;
               }
             }
           }
