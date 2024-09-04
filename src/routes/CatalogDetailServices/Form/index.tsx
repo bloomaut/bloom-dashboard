@@ -14,6 +14,8 @@ import { ENV } from "@/typescript/types/api";
 import { useCatalogServiceContext } from "@/context/CatalogServicesContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 // Components
 import Input from "@/components/Input";
 import DragAndDrop from "@/components/DragAndDrop";
@@ -21,6 +23,7 @@ import Button from "@/components/Button";
 import CheckBox from "../../../components/Checkbox";
 import Icon from "@/components/Icon";
 import DayInput from "./DayInput";
+import moment from "moment";
 
 // Interfaces
 interface FormProps {
@@ -107,8 +110,6 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
   const [closing, setClosing] = useState<boolean>(false);
   const dict = useTranslations("dict");
 
-  console.log(action);
-
   const imageUrl = action === "put" && formData.data?.serviceImage ? formData.data?.serviceImage : null;
 
   useEffect(() => {
@@ -182,7 +183,8 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
   }, [action, id, services, allServices]);
 
   const fieldsToValidate = services?.dataSet?.dataschema?.fields.map((field: DataschemaField) => field.name) || [];
-  const errors = useFormValidator(formData, fieldsToValidate, file);
+
+  const errors = useFormValidator(formData, fieldsToValidate);
 
   const ErrorMessage = ({ error, name }: { error: string | undefined; name?: string }) => {
     const errorClass = name?.startsWith("lunch")
@@ -244,6 +246,22 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
     }
   };
 
+  const handleTimePickerChange = (name: string, value: Date | null) => {
+    setFormData((prevState: InitialValuesProps) => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        [name]: value ? moment(value).format("HH:mm:ss") : "",
+      },
+    }));
+  };
+
+  const parseTime = (value: string | undefined) => {
+    if (!value || value.trim() === "") return null;
+    const [hours, minutes, seconds] = value.split(":").map(num => parseInt(num, 10));
+    return new Date(1970, 0, 1, hours, minutes, seconds);
+  };
+
   const handleVisibility = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isVisible = e.target.checked;
     setFormData((prevState: InitialValuesProps) => ({
@@ -297,7 +315,6 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
   };
 
   useEffect(() => {
-    console.log(errors);
     if (checkValidation) {
       if (Object.keys(errors).length === 0) {
         setCheckValidation(false);
@@ -376,28 +393,40 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
               <p className={styles.extra_config_title}>Extra Config</p>
               <div className={styles.extra_config_row}>
                 <div className={styles.form_control}>
-                  <Input
-                    type='number'
-                    textLabel={dict("catalog.services.lunchFrom")}
-                    textHolder='- am'
-                    name='lunchFrom'
-                    required
-                    value={formData.data?.lunchFrom ?? ""}
-                    handleChange={handleChange}
+                  <DatePicker
+                    selected={parseTime(formData.data.lunchFrom) || null}
+                    onChange={(date: Date | null) => handleTimePickerChange("lunchFrom", date)}
+                    className={styles["custom-datepicker"]}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption='Time'
+                    dateFormat='HH:mm:ss'
+                    placeholderText={dict("catalog.services.from")}
                   />
+                  <p>
+                    {dict("catalog.services.lunchFrom")}
+                    <span>*</span>
+                  </p>
                   {checkValidation && <ErrorMessage error={errors.lunchFrom} name='lunch' />}
                 </div>
 
                 <div className={styles.form_control}>
-                  <Input
-                    type='number'
-                    textLabel={dict("catalog.services.lunchTo")}
-                    textHolder='- pm'
-                    name='lunchTo'
-                    required
-                    value={formData.data?.lunchTo ?? ""}
-                    handleChange={handleChange}
+                  <DatePicker
+                    selected={parseTime(formData.data.lunchTo) || null}
+                    onChange={(date: Date | null) => handleTimePickerChange("lunchTo", date)}
+                    className={styles["custom-datepicker"]}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption='Time'
+                    dateFormat='HH:mm:ss'
+                    placeholderText={dict("catalog.services.to")}
                   />
+                  <p>
+                    {dict("catalog.services.lunchTo")}
+                    <span>*</span>
+                  </p>
                   {checkValidation && <ErrorMessage error={errors.lunchTo} name='lunch' />}
                 </div>
               </div>
@@ -429,21 +458,22 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
             </div>
           </div>
           <div className={styles.column_three}>
-            <label className={styles.label}>
-              {dict("catalog.form_actions.image")} <span>*</span>
-            </label>
+            <label className={styles.label}>{dict("catalog.form_actions.image")}</label>
             <div className={styles.form_control}>
               <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
-              {checkValidation && <ErrorMessage error={errors.serviceImage} name='image' />}
             </div>
           </div>
         </div>
         <div className={styles.available_days_container}>
-          <p className={styles.available_days_title}>{dict("catalog.available_days_form")}</p>
+          <p className={styles.available_days_title}>
+            {dict("catalog.available_days_form")}
+            <span>({dict("catalog.services.active_days")})</span>
+          </p>
           <div className={styles.days_container}>
             <DayInput
+              action={action}
               formData={formData}
-              handleChange={handleChange}
+              handleChange={handleTimePickerChange}
               errors={errors}
               checkValidation={checkValidation}
             />

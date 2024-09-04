@@ -23,7 +23,7 @@ const Card = ({ text, path, icon }: CardProps) => {
       }
       href={path}
       title={text}
-      target={path.includes("agents") || path.includes("inbox") ? "_blank" : "_self"}
+      target={path.includes("inbox") ? "_blank" : "_self"}
     >
       {icon}
       <p className={styles.text}>{text}</p>

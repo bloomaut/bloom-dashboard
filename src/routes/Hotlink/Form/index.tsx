@@ -18,7 +18,6 @@ import Button from "@/components/Button";
 const EmptyFormData = {
   typeFlake: "",
   flakeId: "",
-  collection_id: "",
   customer_id: "",
   variables: [
     {

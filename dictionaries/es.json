@@ -344,6 +344,7 @@
         "to": "Hasta",
         "lunchFrom": "Almuerzo inicio",
         "lunchTo": "Almuerzo fin",
+        "active_days": "Click para activar días",
         "required": {
           "serviceName": "El nombre del servicio es obligatorio.",
           "serviceDescr": "La descripción del servicio es obligatoria.",

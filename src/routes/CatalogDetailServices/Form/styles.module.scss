@@ -8,7 +8,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   animation: fadeIn 0.3s ease-in-out forwards;
   .inner_container {
-    @include flex(column, flex-start, center, 20px);
+    @include flex(column, flex-start, center, 22px);
     @include width-height(1150px, 90%);
     @include fontSize-fontWeight(24px, 500);
     padding: 20px 25px 20px 25px;
@@ -58,14 +58,39 @@
         height: 90%;
         @include flex(column, space-between, flex-start);
         .extra_config {
-          @include flex(column, center, flex-start, 10px);
+          @include flex(column, center, flex-start, 15px);
+
           .extra_config_title {
             @include fontSize-fontWeight(24px, 600);
             text-align: start;
             color: $text;
           }
           .extra_config_row {
-            @include flex(row, center, center, 5px);
+            height: 60px;
+            @include flex(row, flex-start, center, 10px);
+            .form_control {
+              @include width-height(100%, 50px);
+              position: relative;
+              @include flex(column, center, center);
+              p {
+                width: 110px;
+                position: absolute;
+                top: -10px;
+                left: 2px;
+                @include fontSize-fontWeight(14px, 400);
+                color: $lightGrey;
+                text-align: start;
+                span {
+                  margin-left: 5px;
+                  color: $orange;
+                }
+              }
+              .error {
+                @include fontSize-fontWeight(12px, 400);
+                top: 43px;
+                color: red;
+              }
+            }
           }
         }
       }
@@ -94,10 +119,18 @@
     }
     .available_days_container {
       @include width-height(100%, auto);
-      @include flex(column, flex-start, flex-start, 20px);
+      @include flex(column, flex-start, flex-start, 45px);
       .available_days_title {
         @include fontSize-fontWeight(24px, 600);
         color: $text;
+        span {
+          @include fontSize-fontWeight(14px, 400);
+          color: $lightGrey;
+          margin-left: 10px;
+        }
+      }
+      .days_container {
+        @include width-height(100%, auto);
       }
     }
     .button_container {
@@ -110,10 +143,11 @@
     }
     .error {
       @include width-height(200px, auto);
+      @include fontSize-fontWeight(12px, 400);
       text-align: start;
       position: absolute;
       top: 60px;
-      @include fontSize-fontWeight(12px, 400);
+
       color: red;
     }
     .error_hidden {
@@ -173,5 +207,20 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+.custom-datepicker {
+  width: 100px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  color: $blueBackground;
+  input {
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
   }
 }
