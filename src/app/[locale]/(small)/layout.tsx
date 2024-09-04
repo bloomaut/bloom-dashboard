@@ -1,6 +1,7 @@
 import "@/styles/globals.scss";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
+import "./styles.css";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 // Components
@@ -28,7 +29,9 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
       <div className={styles.inner_container}>
         <Sidebar />
         <SideTrack />
-        <div className={styles.children_container}>{children}</div>
+        <div className={styles.children_container} id='children_container'>
+          {children}
+        </div>
       </div>
     </div>
   );
