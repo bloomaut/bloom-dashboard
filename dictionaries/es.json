@@ -442,6 +442,15 @@
       "text_image": "Subir o arrastrar una imagen",
       "text_pdf": "Subir o arrastrar un PDF",
       "file_size_error": "El tamaño máximo de la imágen debe ser de 10MB"
+    },
+    "designs": {
+      "header": {
+        "title": "Diseños",
+        "my_designs": "Mis diseños",
+        "diffusion": "Difusión",
+        "more": "Más",
+        "search_placeholder": "Buscar en tus diseños o en small..."
+      }
     }
   }
 }
