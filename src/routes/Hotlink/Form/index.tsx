@@ -6,7 +6,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { post } from "@/services/fetch";
+import { post, postFile } from "@/services/fetch";
 
 // Components
 import Input from "@/components/Input";
@@ -104,6 +104,25 @@ const Form = () => {
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
     }
+
+    const imageVariable = formDataPost.variables.filter(e => e.target === "image");
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement | null;
+    const fileExists = fileInput?.files?.[0];
+
+    if (imageVariable.length && fileExists) {
+      const response = await postFile("files/upload/file", fileExists);
+
+      if (response.data.statusCode === 201) {
+        const updatedFormInfo = [...formInfo];
+        updatedFormInfo.map(e => {
+          e.target === "image" ? (e.value = response.data.result.file.url) : e;
+        });
+        setFormInfo(updatedFormInfo);
+        notify(`${dict("toast.success_hotlink")}`);
+      } else {
+        notifyError(`${dict("toast.error_tryagain")}`);
+      }
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
@@ -166,7 +185,7 @@ const Form = () => {
                 {formInfo.map((info, index) => (
                   <Input
                     key={info.key}
-                    type='text'
+                    type={info.target === "image" ? "file" : "text"}
                     textLabel={info.description}
                     value={info.value!}
                     handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
