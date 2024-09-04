@@ -23,7 +23,7 @@ const Header = () => {
       label: dict("my_designs"),
     },
     {
-      icon: <Icon name='diffusion' width={25} height={25} viewBox='0 0 30 35' strokeWidth={1.5} />,
+      icon: <Icon name='diffusion' width={25} height={25} viewBox='0 0 32 35' strokeWidth={1.5} />,
       label: dict("diffusion"),
     },
     {
