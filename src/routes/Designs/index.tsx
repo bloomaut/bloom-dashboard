@@ -1,9 +1,14 @@
+import Header from "./Header";
+import styles from "./styles.module.scss";
+
 const Designs = () => {
   return (
-    <section>
-      <p>Banner azul</p>
+    <div className={styles.design_container}>
+      <header className={styles.header}>
+        <Header />
+      </header>
       <p>Lista de filtros y caruseles</p>
-    </section>
+    </div>
   );
 };
 
