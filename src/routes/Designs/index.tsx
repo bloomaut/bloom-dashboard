@@ -1,13 +1,15 @@
-import styles from "./styles.module.scss";
+import Header from "./Header";
 import PowerApp from "./PowerApp";
+import styles from "./styles.module.scss";
 
 const Designs = () => {
   return (
-    <section className={styles.design_container}>
-      <p>Banner azul</p>
-      <p>Lista de filtros y caruseles</p>
+    <div className={styles.design_container} id='design_container'>
+      <header className={styles.header}>
+        <Header />
+      </header>
       <PowerApp />
-    </section>
+    </div>
   );
 };
 
