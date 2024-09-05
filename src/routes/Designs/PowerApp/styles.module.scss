@@ -1,13 +1,15 @@
 .powerapp_container {
   @include width-height(100%, auto);
-  margin-top: 50px;
+  @include flex(column, center, center);
   .hog_container {
     @include flex(row, flex-start, center, 20px);
     flex-wrap: wrap;
   }
   .subtitle {
     @include fontSize-fontWeight(18px, 600);
+    min-width: 85%;
     color: $text;
     margin-bottom: 20px;
+    text-align: start;
   }
 }

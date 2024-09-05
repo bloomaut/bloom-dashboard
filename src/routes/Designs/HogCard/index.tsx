@@ -1,17 +1,17 @@
-import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import Icon from "@/components/Icon";
 import { useState } from "react";
+import { HogRelated } from "@/typescript/interfaces/flakes.interface";
+import { useTranslations } from "next-intl";
 
 const HogCard = ({ _id, title, thumbnail }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState(false);
+  const dict = useTranslations("dict.designs.diffusion");
 
   const handleClick = () => {
     setOpenPopup(!openPopup);
   };
-
-  console.log(openPopup);
 
   return (
     <div className={styles.hog}>
@@ -23,7 +23,7 @@ const HogCard = ({ _id, title, thumbnail }: HogRelated) => {
             <p className={styles.create}>
               <button onClick={() => alert("holi")}>
                 <Icon name='add' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                Create design
+                {dict("create_design")}
               </button>
             </p>
           )}
