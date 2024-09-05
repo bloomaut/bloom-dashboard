@@ -7,6 +7,7 @@
     @include flex(column, center, center, 20px);
     .menus {
       @include flex(row, center, center, 20px);
+      list-style: none;
       .menu_item {
         position: relative;
         padding-right: 20px;

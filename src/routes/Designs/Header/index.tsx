@@ -6,6 +6,7 @@ import Icon from "@/components/Icon";
 import uitrade_logo from "/public/assets/logo_uitrade.svg";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import Link from "next/link";
 
 interface MenusProps {
   icon?: JSX.Element;
@@ -14,7 +15,7 @@ interface MenusProps {
 }
 
 const Header = () => {
-  const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
+  const [selectedMenu, setSelectedMenu] = useState<number | null>(1);
   const dict = useTranslations("dict.designs.header");
 
   const menus: MenusProps[] = [
@@ -48,7 +49,7 @@ const Header = () => {
 
   return (
     <div className={styles.header}>
-      <Title text={dict("title")} />
+      <Title text={dict("my_designs")} />
       <div className={styles.inner_container}>
         <Search
           handleSearchChange={() => {
@@ -57,9 +58,9 @@ const Header = () => {
           placeholder={dict("search_placeholder")}
           searchValue=''
         />
-        <div className={styles.menus}>
-          {menus.map((menu, index) => (
-            <div
+        <ul className={styles.menus}>
+          {menus.slice(0, 4).map((menu, index) => (
+            <li
               className={`${styles.menu_item} ${selectedMenu === index ? styles.selected : ""}`}
               key={index}
               onClick={() => handleMenuClick(index)}
@@ -69,9 +70,18 @@ const Header = () => {
                 {menu.image && <Image src={menu.image.src} width={30} height={30} alt={menu.label} />}
                 <p>{menu.label}</p>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+
+          <li className={styles.menu_item}>
+            <Link href={"https://uitrade.com"} target='_blank'>
+              <div className={styles.menu}>
+                <Image src={uitrade_logo.src} width={30} height={30} alt={dict("more")} />
+                <p>{dict("more")}</p>
+              </div>
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   );
