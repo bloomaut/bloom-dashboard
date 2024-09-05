@@ -451,9 +451,9 @@
         "search_placeholder": "Search in your designs or in small..."
       },
       "diffusion": {
-        "title": "Plantillas de Difusión",
-        "empty": "No hay plantillas de difusión disponibles.",
-        "create_design": "Crear diseño"
+        "title": "Diffusion Templates",
+        "empty": "No diffusion templates available.",
+        "create_design": "Create design"
       }
     }
   }
