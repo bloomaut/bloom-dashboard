@@ -90,7 +90,7 @@ const Form = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Si hay un campo vacio arrojar error y salir
-    const anyEmpty = formInfo.some(info => info.value?.trim() === "");
+    const anyEmpty = formInfo.filter(i => i.target !== "image").some(info => info.value?.trim() === "");
     if (anyEmpty) {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
@@ -132,6 +132,11 @@ const Form = () => {
       const response = await postFile("files/upload/file", fileExists);
 
       if (response.data.statusCode === 201) {
+        // Actualizo el formPost
+        const updatedForm = [...formInfo];
+        updatedForm[index].value = e.target.value;
+        setFormInfo(updatedForm);
+        // Actualizo el formPost
         const updatedFormInfo = formInfo.map(e =>
           e.target === "image" ? { ...e, value: response.data.result.file.url } : e,
         );
@@ -146,6 +151,8 @@ const Form = () => {
             description,
           })),
         };
+
+        console.log(updatedFormDataPost);
         setFormDataPost(updatedFormDataPost);
         notify(`${dict("toast.success_img")}`);
       } else {
