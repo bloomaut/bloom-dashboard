@@ -1,12 +1,12 @@
 import Title from "@/components/Title";
 import styles from "./styles.module.scss";
 import Search from "@/components/Search";
-import Image, { StaticImageData } from "next/image";
 import Icon from "@/components/Icon";
 import uitrade_logo from "/public/assets/logo_uitrade.svg";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
 import Link from "next/link";
+import Image, { StaticImageData } from "next/image";
+import { useTranslations } from "next-intl";
+import { useDesignContext } from "@/context/DesignContext";
 
 interface MenusProps {
   icon?: JSX.Element;
@@ -15,7 +15,7 @@ interface MenusProps {
 }
 
 const Header = () => {
-  const [selectedMenu, setSelectedMenu] = useState<number | null>(1);
+  const { selectedList, setSelectedList } = useDesignContext();
   const dict = useTranslations("dict.designs.header");
 
   const menus: MenusProps[] = [
@@ -43,7 +43,7 @@ const Header = () => {
 
   const handleMenuClick = (index: number) => {
     if (index !== 4) {
-      setSelectedMenu(index);
+      setSelectedList(index);
     }
   };
 
@@ -61,7 +61,7 @@ const Header = () => {
         <ul className={styles.menus}>
           {menus.slice(0, 4).map((menu, index) => (
             <li
-              className={`${styles.menu_item} ${selectedMenu === index ? styles.selected : ""}`}
+              className={`${styles.menu_item} ${selectedList === index ? styles.selected : ""}`}
               key={index}
               onClick={() => handleMenuClick(index)}
             >

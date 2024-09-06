@@ -1,3 +1,5 @@
+import { HogRelated } from "./flakes.interface";
+
 // Definición de tipos comunes
 type ID = string;
 type Nullable<T> = T | null;
@@ -20,11 +22,6 @@ export interface PowerApp {
   _id: ID;
   thumbnail: string;
   hog_related: HogRelated;
-}
-
-export interface HogRelated {
-  _id: ID;
-  thumbnail: string;
 }
 
 export interface PutTemplate {

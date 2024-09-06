@@ -450,6 +450,11 @@
         "diffusion": "Difusión",
         "more": "Más",
         "search_placeholder": "Buscar en tus diseños o en small..."
+      },
+      "diffusion": {
+        "title": "Plantillas de Difusión",
+        "empty": "No hay plantillas de difusión disponibles.",
+        "create_design": "Crear diseño"
       }
     }
   }

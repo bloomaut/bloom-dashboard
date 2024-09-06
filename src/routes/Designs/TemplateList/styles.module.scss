@@ -1,0 +1,15 @@
+.powerapp_container {
+  @include width-height(100%, auto);
+  @include flex(column, center, center);
+  .card_container {
+    @include flex(row, center, center, 20px);
+    flex-wrap: wrap;
+  }
+  .subtitle {
+    @include fontSize-fontWeight(18px, 600);
+    min-width: 85%;
+    color: $text;
+    margin-bottom: 20px;
+    text-align: start;
+  }
+}
