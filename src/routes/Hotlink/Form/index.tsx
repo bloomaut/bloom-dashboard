@@ -104,25 +104,6 @@ const Form = () => {
     } else {
       notifyError(`${dict("toast.error_tryagain")}`);
     }
-
-    const imageVariable = formDataPost.variables.filter(e => e.target === "image");
-    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement | null;
-    const fileExists = fileInput?.files?.[0];
-
-    if (imageVariable.length && fileExists) {
-      const response = await postFile("files/upload/file", fileExists);
-
-      if (response.data.statusCode === 201) {
-        const updatedFormInfo = [...formInfo];
-        updatedFormInfo.map(e => {
-          e.target === "image" ? (e.value = response.data.result.file.url) : e;
-        });
-        setFormInfo(updatedFormInfo);
-        notify(`${dict("toast.success_hotlink")}`);
-      } else {
-        notifyError(`${dict("toast.error_tryagain")}`);
-      }
-    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
@@ -141,6 +122,40 @@ const Form = () => {
       })),
     };
     setFormDataPost(updatedFormDataPost);
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+    // const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement | null;
+    // const fileExists = fileInput?.files?.[0];
+    const fileInput = e.target as HTMLInputElement;
+    const fileExists = fileInput?.files?.[0];
+
+    if (fileExists) {
+      const response = await postFile("files/upload/file", fileExists);
+
+      if (response.data.statusCode === 201) {
+        //const updatedFormInfo = [...formInfo];
+        const updatedFormInfo = formInfo.map(e =>
+          e.target === "image" ? { ...e, value: response.data.result.file.url } : e,
+        );
+        setFormInfo(updatedFormInfo);
+
+        const updatedFormDataPost = {
+          ...formDataPost,
+          variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
+            key,
+            target,
+            name,
+            value: value || "",
+            description,
+          })),
+        };
+        setFormDataPost(updatedFormDataPost);
+        notify(`${dict("toast.success_img")}`);
+      } else {
+        notifyError(`${dict("toast.error_img")}`);
+      }
+    }
   };
 
   const handleCopyClick = async () => {
@@ -189,7 +204,7 @@ const Form = () => {
                     textLabel={info.description}
                     value={info.value!}
                     handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                      handleChange(e, index)
+                      info.target === "image" ? handleImageChange(e, index) : handleChange(e, index)
                     }
                     textHolder={info.placeholder!}
                     name={info.name}
