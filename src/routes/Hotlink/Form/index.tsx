@@ -38,6 +38,7 @@ const Form = () => {
   const [formInfo, setFormInfo] = useState<VariableInUse[]>([]);
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
+  const [fileImage, setFileImage] = useState<string>("");
 
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
@@ -129,6 +130,7 @@ const Form = () => {
     const fileExists = fileInput?.files?.[0];
 
     if (fileExists) {
+      setFileImage(fileExists.name);
       const response = await postFile("files/upload/file", fileExists);
 
       if (response.data.statusCode === 201) {
@@ -152,7 +154,6 @@ const Form = () => {
           })),
         };
 
-        console.log(updatedFormDataPost);
         setFormDataPost(updatedFormDataPost);
         notify(`${dict("toast.success_img")}`);
       } else {
@@ -200,19 +201,29 @@ const Form = () => {
           {formInfo.length !== 0 && (
             <>
               <div className={styles.form}>
-                {formInfo.map((info, index) => (
-                  <Input
-                    key={info.key}
-                    type={info.target === "image" ? "file" : "text"}
-                    textLabel={info.description}
-                    value={info.value!}
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                      info.target === "image" ? handleImageChange(e, index) : handleChange(e, index)
-                    }
-                    textHolder={info.placeholder!}
-                    name={info.name}
-                  />
-                ))}
+                <div className={fileImage ? styles.image_input : ""}>
+                  {formInfo.map((info, index) => (
+                    <Input
+                      key={info.key}
+                      type={info.target === "image" ? "file" : "text"}
+                      textLabel={info.description}
+                      value={info.value!}
+                      handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                        info.target === "image" ? handleImageChange(e, index) : handleChange(e, index)
+                      }
+                      textHolder={info.placeholder!}
+                      name={info.name}
+                    />
+                  ))}
+                </div>
+                {fileImage && (
+                  <>
+                    <span className={styles.file_selected}>{`${dict("hotlinks.file_selected")} ${fileImage}`}</span>
+                    <div className={styles.icon_add}>
+                      <Icon name='add' strokeColor='#ff3d02' strokeWidth={2.5} />
+                    </div>
+                  </>
+                )}
               </div>
               <Checkbox />
             </>

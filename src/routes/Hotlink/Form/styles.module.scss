@@ -8,9 +8,34 @@
 
     .form {
       @include width-height(100%, auto);
+      position: relative;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0 20px;
+
+      .image_input {
+        z-index: 1;
+        opacity: 0;
+        input {
+          cursor: pointer;
+        }
+      }
+      .file_selected {
+        @include width-height(43%, 20px);
+        @include fontSize-fontWeight(12px, 400);
+        position: absolute;
+        top: 12px;
+        left: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        z-index: 0;
+      }
+      .icon_add {
+        position: absolute;
+        top: 5px;
+        left: 45%;
+      }
     }
 
     .btn_container {
