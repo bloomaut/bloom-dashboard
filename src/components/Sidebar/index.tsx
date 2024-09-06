@@ -59,6 +59,11 @@ const Sidebar = () => {
       icon: <Icon name='clients' />,
       path: "/clients",
     },
+    {
+      title: `${dict("designs")}`,
+      icon: <Icon name='designs' width={30} viewBox='0 -5 35 35' />,
+      path: "/designs",
+    },
   ];
 
   const getUserData = async () => {
