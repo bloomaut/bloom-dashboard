@@ -51,6 +51,14 @@ const useFormValidator = (
         errors.listprice = dict("form_validation.listprice");
       }
 
+      if (fieldsToValidate?.includes("listdescr")) {
+        if (!formData?.data?.listdescr || !formData?.data?.listdescr.trim()) {
+          errors.listdescr = dict("form_validation.listdescr");
+        } else if (formData.data.listdescr.length > 150) {
+          errors.listdescr = dict("form_validation.listdescr_length");
+        }
+      }
+
       if (fieldsToValidate?.includes("category_name")) {
         if (!formData?.category_name || !formData?.category_name.trim()) {
           errors.category_name = dict("form_validation.category_name");
