@@ -125,8 +125,6 @@ const Form = () => {
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
-    // const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement | null;
-    // const fileExists = fileInput?.files?.[0];
     const fileInput = e.target as HTMLInputElement;
     const fileExists = fileInput?.files?.[0];
 
@@ -134,11 +132,9 @@ const Form = () => {
       const response = await postFile("files/upload/file", fileExists);
 
       if (response.data.statusCode === 201) {
-        //const updatedFormInfo = [...formInfo];
         const updatedFormInfo = formInfo.map(e =>
           e.target === "image" ? { ...e, value: response.data.result.file.url } : e,
         );
-        setFormInfo(updatedFormInfo);
 
         const updatedFormDataPost = {
           ...formDataPost,
