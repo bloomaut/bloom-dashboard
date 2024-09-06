@@ -6,7 +6,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { post } from "@/services/fetch";
+import { post, postFile } from "@/services/fetch";
 
 // Components
 import Input from "@/components/Input";
@@ -90,7 +90,7 @@ const Form = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Si hay un campo vacio arrojar error y salir
-    const anyEmpty = formInfo.some(info => info.value?.trim() === "");
+    const anyEmpty = formInfo.filter(i => i.target !== "image").some(info => info.value?.trim() === "");
     if (anyEmpty) {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
@@ -122,6 +122,43 @@ const Form = () => {
       })),
     };
     setFormDataPost(updatedFormDataPost);
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+    const fileInput = e.target as HTMLInputElement;
+    const fileExists = fileInput?.files?.[0];
+
+    if (fileExists) {
+      const response = await postFile("files/upload/file", fileExists);
+
+      if (response.data.statusCode === 201) {
+        // Actualizo el formPost
+        const updatedForm = [...formInfo];
+        updatedForm[index].value = e.target.value;
+        setFormInfo(updatedForm);
+        // Actualizo el formPost
+        const updatedFormInfo = formInfo.map(e =>
+          e.target === "image" ? { ...e, value: response.data.result.file.url } : e,
+        );
+
+        const updatedFormDataPost = {
+          ...formDataPost,
+          variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
+            key,
+            target,
+            name,
+            value: value || "",
+            description,
+          })),
+        };
+
+        console.log(updatedFormDataPost);
+        setFormDataPost(updatedFormDataPost);
+        notify(`${dict("toast.success_img")}`);
+      } else {
+        notifyError(`${dict("toast.error_img")}`);
+      }
+    }
   };
 
   const handleCopyClick = async () => {
@@ -166,11 +203,11 @@ const Form = () => {
                 {formInfo.map((info, index) => (
                   <Input
                     key={info.key}
-                    type='text'
+                    type={info.target === "image" ? "file" : "text"}
                     textLabel={info.description}
                     value={info.value!}
                     handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                      handleChange(e, index)
+                      info.target === "image" ? handleImageChange(e, index) : handleChange(e, index)
                     }
                     textHolder={info.placeholder!}
                     name={info.name}
