@@ -1,6 +1,6 @@
 import { DesignProvider } from "@/context/DesignContext";
 import Header from "./Header";
-import PowerApp from "./PowerApp";
+import TemplateList from "./TemplateList";
 import styles from "./styles.module.scss";
 
 const Designs = () => {
@@ -10,7 +10,7 @@ const Designs = () => {
         <header className={styles.header}>
           <Header />
         </header>
-        <PowerApp />
+        <TemplateList />
       </div>
     </DesignProvider>
   );

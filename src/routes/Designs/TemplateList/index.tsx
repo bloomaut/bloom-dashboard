@@ -1,11 +1,11 @@
 import styles from "./styles.module.scss";
-import HogCard from "../HogCard";
+import TemplateCard from "../TemplateCard";
 import LoadingSpinner from "@/components/Loading";
 import { useDesignContext } from "@/context/DesignContext";
 import { useTranslations } from "next-intl";
 
-const PowerApp = () => {
-  const { powerapps, loading } = useDesignContext();
+const TemplateList = () => {
+  const { listTemplates, loading } = useDesignContext();
   const dict = useTranslations("dict.designs.diffusion");
 
   return (
@@ -16,12 +16,16 @@ const PowerApp = () => {
           <LoadingSpinner />
         </div>
       ) : (
-        <div className={styles.hog_container}>
-          {powerapps.length > 0 ? powerapps.map(hog => <HogCard key={hog._id} {...hog} />) : <p>{dict("empty")}</p>}
+        <div className={styles.card_container}>
+          {listTemplates.length > 0 ? (
+            listTemplates.map(i => <TemplateCard key={i._id} {...i} />)
+          ) : (
+            <p>{dict("empty")}</p>
+          )}
         </div>
       )}
     </section>
   );
 };
 
-export default PowerApp;
+export default TemplateList;

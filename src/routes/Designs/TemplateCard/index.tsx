@@ -5,7 +5,7 @@ import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 
-const HogCard = ({ _id, title, thumbnail }: HogRelated) => {
+const TemplateCard = ({ _id, title, thumbnail }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState(false);
   const dict = useTranslations("dict.designs.diffusion");
 
@@ -36,4 +36,4 @@ const HogCard = ({ _id, title, thumbnail }: HogRelated) => {
   );
 };
 
-export default HogCard;
+export default TemplateCard;
