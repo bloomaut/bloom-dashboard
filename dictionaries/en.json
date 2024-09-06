@@ -443,6 +443,14 @@
       "text_image": "Upload or drag an image",
       "text_pdf": "Upload or drag a PDF file",
       "file_size_error": "The maximum image size must be 10MB"
+    },
+    "designs": {
+      "header": {
+        "my_designs": "My designs",
+        "diffusion": "Diffusion",
+        "more": "More",
+        "search_placeholder": "Search in your designs or in small..."
+      }
     }
   }
 }

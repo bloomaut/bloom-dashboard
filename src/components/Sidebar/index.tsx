@@ -61,7 +61,7 @@ const Sidebar = () => {
     },
     {
       title: `${dict("designs")}`,
-      icon: <Icon name='designs' width={30} viewBox='0 -5 35 35' />,
+      icon: <Icon name='design_2' width={30} viewBox='0 -5 35 35' />,
       path: "/designs",
     },
   ];
