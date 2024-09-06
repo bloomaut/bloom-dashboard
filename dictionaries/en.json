@@ -399,6 +399,7 @@
       "ClientEmail_02": "Invalid email format",
       "listname": "The product name is required",
       "listdescr": "Product description is required",
+      "listdescr_length": "The description must not exceed 150 characters",
       "listprice": "The price of the product must be greater than 0",
       "listimage": "The product must contain an image",
       "category_name": "You must enter a name for the catalog",

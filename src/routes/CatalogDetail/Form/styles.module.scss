@@ -48,6 +48,18 @@
       position: relative;
       .products_information {
         @include flex(column, center, flex-start, 15px);
+        .product_description {
+          @include width-height(100%, auto);
+          position: relative;
+          .error {
+            @include width-height(250px, auto);
+            @include fontSize-fontWeight(12px, 400);
+            text-align: start;
+            position: absolute;
+            top: 120px;
+            color: red;
+          }
+        }
       }
       .media {
         @include flex(column, flex-start, flex-start, 10px);

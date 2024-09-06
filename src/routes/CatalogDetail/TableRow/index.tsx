@@ -91,7 +91,7 @@ const TableRow = ({
         <p className={styles.box}>{name}</p>
       </div>
       {allProducts && <p className={styles.box}>{catalog}</p>}
-      <p className={styles.box}>{description}</p>
+      <p className={`${styles.box} ${styles.description}`}>{description}</p>
       <div className={styles.box}>
         <p>$ {price}</p>
       </div>
