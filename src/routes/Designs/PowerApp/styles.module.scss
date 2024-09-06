@@ -2,7 +2,7 @@
   @include width-height(100%, auto);
   @include flex(column, center, center);
   .hog_container {
-    @include flex(row, flex-start, center, 20px);
+    @include flex(row, center, center, 20px);
     flex-wrap: wrap;
   }
   .subtitle {

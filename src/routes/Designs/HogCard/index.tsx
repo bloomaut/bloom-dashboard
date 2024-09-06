@@ -30,7 +30,7 @@ const HogCard = ({ _id, title, thumbnail }: HogRelated) => {
         </p>
       </div>
       <div className={styles.imageWrapper}>
-        <Image src={thumbnail} alt='Hog' layout='fill' />
+        <Image src={thumbnail || ""} alt='Hog' layout='fill' />
       </div>
     </div>
   );
