@@ -6,7 +6,7 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
 import { useClientsContext } from "@/context/ClientsContext";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
-import { post } from "@/services/fetch";
+import { post, postFile } from "@/services/fetch";
 
 // Components
 import Input from "@/components/Input";
@@ -18,7 +18,6 @@ import Button from "@/components/Button";
 const EmptyFormData = {
   typeFlake: "",
   flakeId: "",
-  collection_id: "",
   customer_id: "",
   variables: [
     {
@@ -39,6 +38,7 @@ const Form = () => {
   const [formInfo, setFormInfo] = useState<VariableInUse[]>([]);
   const [formDataPost, setFormDataPost] = useState<Flake>(EmptyFormData);
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
+  const [fileImage, setFileImage] = useState<string>("");
 
   const formVariableData = flakes.find(item => item._id === selectedFlakeId);
 
@@ -63,6 +63,7 @@ const Form = () => {
 
       setFormInfo(variablesData);
     }
+    setFileImage(""); //reset de input de imagen al cambiar el design
   }, [formVariableData]);
 
   useEffect(() => {
@@ -91,7 +92,7 @@ const Form = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Si hay un campo vacio arrojar error y salir
-    const anyEmpty = formInfo.some(info => info.value?.trim() === "");
+    const anyEmpty = formInfo.filter(i => i.target !== "image").some(info => info.value?.trim() === "");
     if (anyEmpty) {
       notifyError(`${dict("toast.empty_fields")}`);
       return;
@@ -123,6 +124,43 @@ const Form = () => {
       })),
     };
     setFormDataPost(updatedFormDataPost);
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+    const fileInput = e.target as HTMLInputElement;
+    const fileExists = fileInput?.files?.[0];
+
+    if (fileExists) {
+      setFileImage(fileExists.name);
+      const response = await postFile("files/upload/file", fileExists);
+
+      if (response.data.statusCode === 201) {
+        // Actualizo el formPost
+        const updatedForm = [...formInfo];
+        updatedForm[index].value = e.target.value;
+        setFormInfo(updatedForm);
+        // Actualizo el formPost
+        const updatedFormInfo = formInfo.map(e =>
+          e.target === "image" ? { ...e, value: response.data.result.file.url } : e,
+        );
+
+        const updatedFormDataPost = {
+          ...formDataPost,
+          variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
+            key,
+            target,
+            name,
+            value: value || "",
+            description,
+          })),
+        };
+
+        setFormDataPost(updatedFormDataPost);
+        notify(`${dict("toast.success_img")}`);
+      } else {
+        notifyError(`${dict("toast.error_img")}`);
+      }
+    }
   };
 
   const handleCopyClick = async () => {
@@ -164,19 +202,45 @@ const Form = () => {
           {formInfo.length !== 0 && (
             <>
               <div className={styles.form}>
-                {formInfo.map((info, index) => (
-                  <Input
-                    key={info.key}
-                    type='text'
-                    textLabel={info.description}
-                    value={info.value!}
-                    handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                      handleChange(e, index)
-                    }
-                    textHolder={info.placeholder!}
-                    name={info.name}
-                  />
-                ))}
+                {formInfo.map((info, index) =>
+                  info.target === "image" ? (
+                    <div className={styles.input_box} key={info.key}>
+                      <div className={styles.input_real}>
+                        <Input
+                          key={info.key}
+                          type='file'
+                          textLabel={info.description}
+                          value={info.value!}
+                          handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                            handleImageChange(e, index)
+                          }
+                          textHolder={info.placeholder!}
+                          name={info.name}
+                        />
+                      </div>
+
+                      <div className={styles.input_custom}>
+                        {info.description && <label className={styles.label}>{info.description}</label>}
+                        <input type='text' className={styles.input} defaultValue={fileImage || ""} />
+                        <div className={styles.icon_add}>
+                          <Icon name='add' strokeColor='#ff3d02' strokeWidth={2.5} />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <Input
+                      key={info.key}
+                      type='text'
+                      textLabel={info.description}
+                      value={info.value!}
+                      handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                        handleChange(e, index)
+                      }
+                      textHolder={info.placeholder!}
+                      name={info.name}
+                    />
+                  ),
+                )}
               </div>
               <Checkbox />
             </>

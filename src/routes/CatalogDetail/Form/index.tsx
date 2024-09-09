@@ -250,14 +250,17 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
               handleChange={handleChange}
             />
             {checkValidation && <ErrorMessage error={errors.listname} />}
-            <Input
-              type='textarea'
-              textLabel='Description'
-              textHolder=''
-              name='listdescr'
-              value={formData.data?.listdescr || ""}
-              handleChange={handleChange}
-            />
+            <div className={styles.product_description}>
+              <Input
+                type='textarea'
+                textLabel='Description'
+                textHolder=''
+                name='listdescr'
+                value={formData.data?.listdescr || ""}
+                handleChange={handleChange}
+              />
+              {checkValidation && <ErrorMessage error={errors.listdescr} />}
+            </div>
             <Input
               type='text'
               textLabel='Order number'

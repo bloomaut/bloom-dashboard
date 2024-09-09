@@ -20,6 +20,7 @@
       "inbox": "Inbox",
       "catalog": "Catalog",
       "clients": "Clients",
+      "designs": "Designs",
       "templates": "Templates",
       "link_inbox": "Go to Inbox",
       "setup": {
@@ -344,6 +345,7 @@
         "to": "To",
         "lunchFrom": "Lunch Start",
         "lunchTo": "Lunch End",
+        "active_days": "Click to show days",
         "required": {
           "serviceName": "Service name is required.",
           "serviceDescr": "Service description is required.",
@@ -397,6 +399,7 @@
       "ClientEmail_02": "Invalid email format",
       "listname": "The product name is required",
       "listdescr": "Product description is required",
+      "listdescr_length": "The description must not exceed 150 characters",
       "listprice": "The price of the product must be greater than 0",
       "listimage": "The product must contain an image",
       "category_name": "You must enter a name for the catalog",
@@ -441,6 +444,19 @@
       "text_image": "Upload or drag an image",
       "text_pdf": "Upload or drag a PDF file",
       "file_size_error": "The maximum image size must be 10MB"
+    },
+    "designs": {
+      "header": {
+        "my_designs": "My designs",
+        "diffusion": "Diffusion",
+        "more": "More",
+        "search_placeholder": "Search in your designs or in small..."
+      },
+      "diffusion": {
+        "title": "Templates",
+        "empty": "You don't have",
+        "create_design": "Create design"
+      }
     }
   }
 }

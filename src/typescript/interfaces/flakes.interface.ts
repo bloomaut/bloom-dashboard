@@ -22,7 +22,7 @@ export interface VariableInUse {
   value?: string;
 }
 
-interface HogRelated {
+export interface HogRelated {
   _id: ID;
   title: string;
   thumbnail: string;
@@ -39,7 +39,6 @@ interface Skinx {
 export interface Flake {
   typeFlake: string;
   flakeId: string;
-  collection_id?: ID;
   customer_id?: ID;
   variables: Variable[];
 }

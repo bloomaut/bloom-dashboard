@@ -26,6 +26,15 @@
     padding-left: 10px;
     @include fontSize-fontWeight(14px, 400);
   }
+  .description {
+    @include fontSize-fontWeight(14px, 400);
+    max-width: 450px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    padding-top: 17px;
+  }
   .icons {
     @include flex(row, center, center, 5px);
     border-left: none;

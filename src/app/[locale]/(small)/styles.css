@@ -1,0 +1,4 @@
+/* Si estás en la página de designs no hay padding */
+#children_container:has(#design_container) {
+  padding: 0px;
+}
