@@ -22,7 +22,7 @@ const TemplateCard = ({ _id, title, thumbnail }: HogRelated) => {
           {openPopup && (
             <p className={styles.create}>
               <button onClick={() => alert("holi")}>
-                <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
+                <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#381d2a' />
                 {dict("create_design")}
               </button>
             </p>

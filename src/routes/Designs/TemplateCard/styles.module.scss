@@ -60,10 +60,10 @@
         right: 30px;
         border-radius: 8px;
         background-color: $white;
-
         button {
-          @include flex(row, center, center);
+          @include flex(row, center, center, 5px);
           @include fontSize-fontWeight(12px, 600);
+          color: $text;
           min-width: 115px;
           background-color: $white;
           border: 1px solid #ccc;
