@@ -8,7 +8,7 @@ import LoadingSpinner from "@/components/Loading";
 import Button from "@/components/Button";
 
 const PowerappList = () => {
-  /*  const {} = useDesignContext(); */
+  const { listTemplates } = useDesignContext();
   const [powerApps, setPowerApps] = useState<HogRelated[]>();
   const [powerAppSelected, setPowerAppSelected] = useState<string>("");
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ const PowerappList = () => {
     const dataToSend = {
       pwa_id: powerAppSelected,
       flake_id: "string",
-      type_design: "string",
+      type_design: listTemplates?.type || "",
     };
     const response = await post("designs/prepare", dataToSend);
     if (response.statusCode === 200) {

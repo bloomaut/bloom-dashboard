@@ -1,36 +1,59 @@
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
+import { DesignsProps } from "@/typescript/interfaces/designs.interface";
 
 interface Context {
-  listTemplates: HogRelated[];
+  listTemplates: DesignsProps | undefined;
   loading: boolean;
   selectedList: number;
   setSelectedList: (id: number) => void;
 }
 
 const DesignContext = createContext<Context>({
-  listTemplates: [],
+  listTemplates: undefined,
   loading: true,
   selectedList: 1,
   setSelectedList: () => undefined,
 });
 
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
-  const [listTemplates, setListTemplates] = useState<HogRelated[]>([]);
+  const [listTemplates, setListTemplates] = useState<DesignsProps>();
   const [loading, setLoading] = useState(true);
   const [selectedList, setSelectedList] = useState<number>(1);
 
   useEffect(() => {
     const fetchPowerApps = async () => {
+      setLoading(true);
+
+      let type = "";
+      let data: HogRelated[] = [];
+
+      // SI EL INDEX SELECCIONADO ES 1, SE HACE EL GET DE HOGS
       if (selectedList === 1) {
-        setLoading(true);
         const response = await get("designs/hogs");
         if (response.statusCode === 200) {
-          setListTemplates(response.result.hogs);
+          type = "Hog";
+          data = response.result.hogs;
         }
-        setLoading(false);
+        // SI EL INDEX SELECCIONADO ES 2, SE HACE EL GET DE EMAILS
+      } else if (selectedList === 2) {
+        const response = await get("designs/emails");
+        if (response.statusCode === 200) {
+          type = "Email";
+          data = response.result.emails;
+        }
+        // SI EL INDEX SELECCIONADO ES 3, SE HACE EL GET DE POSTS
+      } else if (selectedList === 3) {
+        const response = await get("designs/posts");
+        if (response.statusCode === 200) {
+          type = "Post";
+          data = response.result.posts;
+        }
       }
+
+      setListTemplates({ type, data });
+      setLoading(false);
     };
 
     fetchPowerApps();

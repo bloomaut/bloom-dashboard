@@ -7,13 +7,13 @@ import PowerappList from "./PowerappList";
 const Designs = () => {
   return (
     <DesignProvider>
-      {/*   <div className={styles.design_container} id='design_container'>
+      <div className={styles.design_container} id='design_container'>
         <header className={styles.header}>
           <Header />
         </header>
         <TemplateList />
-      </div> */}
-      <PowerappList />
+      </div>
+      {/*       <PowerappList /> */}
     </DesignProvider>
   );
 };
