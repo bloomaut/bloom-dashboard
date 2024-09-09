@@ -18,7 +18,7 @@ const PowerappCard = ({ powerApp }: { powerApp: HogRelated }) => {
     >
       <div className={styles.image_wrapper}>
         {powerApp.thumbnail ? (
-          <Image src={powerApp.thumbnail} alt='Hog' width={200} height={300} />
+          <Image src={powerApp.thumbnail} className={styles.thumbnail} alt='Hog' width={200} height={300} />
         ) : (
           <div className={styles.empty_powerapp}>
             <Image src={flake_icon_02} alt='Icon' />
