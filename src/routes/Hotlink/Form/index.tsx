@@ -63,6 +63,7 @@ const Form = () => {
 
       setFormInfo(variablesData);
     }
+    setFileImage(""); //reset de input de imagen al cambiar el design
   }, [formVariableData]);
 
   useEffect(() => {
@@ -201,28 +202,44 @@ const Form = () => {
           {formInfo.length !== 0 && (
             <>
               <div className={styles.form}>
-                <div className={fileImage ? styles.image_input : ""}>
-                  {formInfo.map((info, index) => (
+                {formInfo.map((info, index) =>
+                  info.target === "image" ? (
+                    <div className={styles.input_box} key={info.key}>
+                      <div className={styles.input_real}>
+                        <Input
+                          key={info.key}
+                          type='file'
+                          textLabel={info.description}
+                          value={info.value!}
+                          handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                            handleImageChange(e, index)
+                          }
+                          textHolder={info.placeholder!}
+                          name={info.name}
+                        />
+                      </div>
+
+                      <div className={styles.input_custom}>
+                        {info.description && <label className={styles.label}>{info.description}</label>}
+                        <input type='text' className={styles.input} defaultValue={fileImage || ""} />
+                        <div className={styles.icon_add}>
+                          <Icon name='add' strokeColor='#ff3d02' strokeWidth={2.5} />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
                     <Input
                       key={info.key}
-                      type={info.target === "image" ? "file" : "text"}
+                      type='text'
                       textLabel={info.description}
                       value={info.value!}
                       handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                        info.target === "image" ? handleImageChange(e, index) : handleChange(e, index)
+                        handleChange(e, index)
                       }
                       textHolder={info.placeholder!}
                       name={info.name}
                     />
-                  ))}
-                </div>
-                {fileImage && (
-                  <>
-                    <span className={styles.file_selected}>{`${dict("hotlinks.file_selected")} ${fileImage}`}</span>
-                    <div className={styles.icon_add}>
-                      <Icon name='add' strokeColor='#ff3d02' strokeWidth={2.5} />
-                    </div>
-                  </>
+                  ),
                 )}
               </div>
               <Checkbox />

@@ -281,8 +281,7 @@
         "title_three": "Hotlink URL",
         "title_four": "Compartir",
         "empty": "Aún no tenés hotlinks"
-      },
-      "file_selected": "Archivo Seleccionado: "
+      }
     },
     "catalog": {
       "title": "Catálogo",
