@@ -1,6 +1,9 @@
 .powerapp_container {
   @include width-height(100%, auto);
   @include flex(column, center, center);
+  margin-top: 300px;
+  position: relative;
+  z-index: 10;
   .card_container {
     @include flex(row, center, center, 20px);
     flex-wrap: wrap;
