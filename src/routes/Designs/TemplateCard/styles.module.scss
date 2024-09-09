@@ -61,7 +61,7 @@
         border-radius: 8px;
         background-color: $white;
 
-        button {
+        a {
           @include flex(row, center, center);
           @include fontSize-fontWeight(12px, 600);
           min-width: 115px;
@@ -70,6 +70,7 @@
           border-radius: 8px;
           cursor: pointer;
           margin: 4px;
+          color: $text;
         }
       }
     }
