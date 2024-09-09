@@ -29,18 +29,21 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       let type = "";
       let data: HogRelated[] = [];
 
+      // SI EL INDEX SELECCIONADO ES 1, SE HACE EL GET DE HOGS
       if (selectedList === 1) {
         const response = await get("designs/hogs");
         if (response.statusCode === 200) {
           type = "Hog";
           data = response.result.hogs;
         }
+        // SI EL INDEX SELECCIONADO ES 2, SE HACE EL GET DE EMAILS
       } else if (selectedList === 2) {
         const response = await get("designs/emails");
         if (response.statusCode === 200) {
           type = "Email";
           data = response.result.emails;
         }
+        // SI EL INDEX SELECCIONADO ES 3, SE HACE EL GET DE POSTS
       } else if (selectedList === 3) {
         const response = await get("designs/posts");
         if (response.statusCode === 200) {
