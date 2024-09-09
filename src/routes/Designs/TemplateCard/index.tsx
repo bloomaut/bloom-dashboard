@@ -1,11 +1,12 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import Icon from "@/components/Icon";
+import default_image from "/public/assets/default_image.png";
 import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 
-const TemplateCard = ({ _id, title, thumbnail }: HogRelated) => {
+const TemplateCard = ({ title, thumbnail }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState(false);
   const dict = useTranslations("dict.designs.diffusion");
 
@@ -30,7 +31,7 @@ const TemplateCard = ({ _id, title, thumbnail }: HogRelated) => {
         </p>
       </div>
       <div className={styles.imageWrapper}>
-        <Image src={thumbnail || ""} alt='Hog' layout='fill' />
+        <Image src={thumbnail || default_image} fill sizes='500px' priority alt='Hog' />
       </div>
     </div>
   );
