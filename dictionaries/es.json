@@ -453,8 +453,8 @@
         "search_placeholder": "Buscar en tus diseños o en small..."
       },
       "diffusion": {
-        "title": "Plantillas de Difusión",
-        "empty": "No hay plantillas de difusión disponibles.",
+        "title": "Plantillas de",
+        "empty": "No tienes",
         "create_design": "Crear diseño"
       }
     }
