@@ -7,25 +7,25 @@ import { useLocale } from "next-intl";
 
 const TemplateList = () => {
   const { listTemplates, loading } = useDesignContext();
-  const dict = useTranslations("dict.designs.diffusion");
+  const dict = useTranslations("dict.designs");
   const locale = useLocale();
 
   const templateTitle = () => {
     if (listTemplates.length > 0 && listTemplates[0].type !== "") {
       const type = listTemplates[0]?.type || "";
-      return locale === "en" ? `${type} ${dict("title")}` : `${dict("title")} ${type}`;
+      return locale === "en" ? `${type} ${dict("diffusion.title")}` : `${dict("diffusion.title")} ${type}`;
+    } else {
+      return dict("header.my_designs");
     }
-    return "";
   };
 
   const templateError = () => {
     if (listTemplates && listTemplates[0].type !== "") {
       const type = listTemplates[0]?.type || "";
       return locale === "en"
-        ? `${dict("empty")} ${type} ${dict("title")} `
-        : `${dict("empty")} ${dict("title")} ${type}  `;
-    }
-    return "";
+        ? `${dict("diffusion.empty")} ${type} ${dict("diffusion.title")} `
+        : `${dict("diffusion.empty")} ${dict("diffusion.title")} ${type}  `;
+    } else return locale === "en" ? `${dict("diffusion.empty")} designs` : `${dict("diffusion.empty")} Diseños`;
   };
 
   return (
