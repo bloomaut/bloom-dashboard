@@ -2,19 +2,22 @@ import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import flake_icon_02 from "/public/flake_icon_02.svg";
-import { useDesignContext } from "@/context/DesignContext";
 
-const PowerappCard = ({ powerApp }: { powerApp: HogRelated }) => {
-  const { setTemplateIdSelected, templateIdSelected } = useDesignContext();
+interface PowerappCardProp {
+  powerApp: HogRelated;
+  setPowerAppSelected: (powerApp: string) => void;
+  powerAppSelected: string;
+}
 
+const PowerappCard = ({ powerApp, setPowerAppSelected, powerAppSelected }: PowerappCardProp) => {
   return (
     <section
       className={
-        powerApp._id === templateIdSelected
+        powerApp._id === powerAppSelected
           ? `${styles.powerapp_container} ${styles.powerapp_container_active}`
           : styles.powerapp_container
       }
-      onClick={() => setTemplateIdSelected(powerApp._id)}
+      onClick={() => setPowerAppSelected(powerApp._id)}
     >
       <div className={styles.image_wrapper}>
         {powerApp.thumbnail ? (

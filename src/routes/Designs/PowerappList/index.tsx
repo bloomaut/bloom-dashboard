@@ -1,15 +1,16 @@
 import { useDesignContext } from "@/context/DesignContext";
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
-import { get } from "@/services/fetch";
+import { get, post } from "@/services/fetch";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import PowerappCard from "./PowerappCard";
 import LoadingSpinner from "@/components/Loading";
 import Button from "@/components/Button";
 
 const PowerappList = () => {
-  const { templateIdSelected } = useDesignContext();
+  /*  const {} = useDesignContext(); */
   const [powerApps, setPowerApps] = useState<HogRelated[]>();
+  const [powerAppSelected, setPowerAppSelected] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,6 +24,18 @@ const PowerappList = () => {
     getPowerapps();
   }, []);
 
+  const preparePowerapp = async () => {
+    const dataToSend = {
+      pwa_id: powerAppSelected,
+      flake_id: "string",
+      type_design: "string",
+    };
+    const response = await post("designs/prepare", dataToSend);
+    if (response.statusCode === 200) {
+      console.log(response.result);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -31,9 +44,16 @@ const PowerappList = () => {
         <section className={styles.powerapp_list_container}>
           <h2 className={styles.title}>Select the Power App to Diffuse</h2>
           <div className={styles.powerapp_list}>
-            {powerApps?.map(powerApp => <PowerappCard key={powerApp._id} powerApp={powerApp} />)}
+            {powerApps?.map(powerApp => (
+              <PowerappCard
+                key={powerApp._id}
+                powerApp={powerApp}
+                setPowerAppSelected={setPowerAppSelected}
+                powerAppSelected={powerAppSelected}
+              />
+            ))}
           </div>
-          <Button title='Next Step' onclick={() => null} isDisabled={!templateIdSelected.length} />
+          <Button title='Next Step' onclick={preparePowerapp} isDisabled={!powerAppSelected.length} />
         </section>
       )}
     </>
