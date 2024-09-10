@@ -16,7 +16,6 @@ import Icon from "@/components/Icon";
 import Button from "@/components/Button";
 
 const EmptyFormData = {
-  typeFlake: "",
   flakeId: "",
   customer_id: "",
   variables: [
@@ -57,7 +56,6 @@ const Form = () => {
       setFormDataPost({
         ...formDataPost,
         flakeId: _id,
-        typeFlake: "flake_power_apps",
         variables: variablesData,
       });
 

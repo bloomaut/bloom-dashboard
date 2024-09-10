@@ -2,7 +2,6 @@ import { DesignProvider } from "@/context/DesignContext";
 import Header from "./Header";
 import TemplateList from "./TemplateList";
 import styles from "./styles.module.scss";
-import PowerappList from "./PowerappList";
 
 const Designs = () => {
   return (
@@ -13,7 +12,6 @@ const Designs = () => {
         </header>
         <TemplateList />
       </div>
-      {/*       <PowerappList /> */}
     </DesignProvider>
   );
 };
