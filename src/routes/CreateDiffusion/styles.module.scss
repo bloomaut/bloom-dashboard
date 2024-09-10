@@ -1,13 +1,15 @@
 .create_diffusion {
   @include width-height(100%, auto);
-
+  @include flex(column, center, flex-start, 40px);
   .wizard {
-    @include flex(row, center, center, 286px);
-    margin-top: 40px;
+    @include flex(row, center, center, 300px);
+    align-self: center;
     position: relative;
     .step {
-      @include width-height(26px, 26px);
+      @include width-height(35px, 35px);
+      @include flex(column, center, center);
       border: 2px solid $text;
+      background-color: $generalBackground;
       border-radius: 50%;
       position: relative;
       cursor: pointer;
@@ -16,12 +18,12 @@
         background-color 0.3s ease,
         border-color 0.3s ease;
       p {
-        @include fontSize-fontWeight(14px, 600);
+        @include fontSize-fontWeight(18px, 600);
         text-align: center;
         line-height: 22px;
       }
       .text {
-        @include fontSize-fontWeight(12px, 600);
+        @include fontSize-fontWeight(14px, 600);
         min-width: 100px;
         position: absolute;
         bottom: -23px;
@@ -38,12 +40,11 @@
         p {
           color: $border;
         }
-        cursor: not-allowed;
       }
     }
 
     .line {
-      @include width-height(29%, 1px);
+      @include width-height(100%, 1px);
       border: 1px solid $border;
       position: absolute;
     }
