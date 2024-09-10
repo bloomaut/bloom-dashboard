@@ -16,7 +16,6 @@ import Icon from "@/components/Icon";
 import LoadingSpinner from "@/components/Loading";
 
 const EmptyFormData = {
-  typeFlake: "",
   flakeId: "",
   variables: [
     {
@@ -55,7 +54,6 @@ const Form = () => {
       setFormDataPost({
         ...formDataPost,
         flakeId: _id,
-        typeFlake: "flake_power_apps",
         variables: variablesData,
       });
 
