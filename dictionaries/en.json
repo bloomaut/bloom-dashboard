@@ -455,7 +455,10 @@
       "diffusion": {
         "title": "Templates",
         "empty": "You don't have",
-        "create_design": "Create design"
+        "create_design": "Create design",
+        "back_design": "Back to my designs",
+        "select_pwa": "Select PWA",
+        "fill_fields": "Complete fields"
       }
     }
   }

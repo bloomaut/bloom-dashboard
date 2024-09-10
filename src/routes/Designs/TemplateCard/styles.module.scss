@@ -60,8 +60,9 @@
         right: 30px;
         border-radius: 8px;
         background-color: $white;
-        button {
-          @include flex(row, center, center, 5px);
+
+        a {
+          @include flex(row, center, center);
           @include fontSize-fontWeight(12px, 600);
           color: $text;
           min-width: 115px;
@@ -70,6 +71,7 @@
           border-radius: 8px;
           cursor: pointer;
           margin: 4px;
+          color: $text;
         }
       }
     }
