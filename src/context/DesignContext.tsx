@@ -1,26 +1,29 @@
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { DesignsProps } from "@/typescript/interfaces/designs.interface";
+import { DesignSelected, DesignsProps } from "@/typescript/interfaces/designs.interface";
 
 interface Context {
-  listTemplates: DesignsProps[];
+  listTemplates: DesignsProps | undefined;
   loading: boolean;
   selectedList: number;
   setSelectedList: (id: number) => void;
+  setDesignSelected: (design: DesignSelected) => void;
 }
 
 const DesignContext = createContext<Context>({
-  listTemplates: [],
+  listTemplates: undefined,
   loading: true,
   selectedList: 1,
   setSelectedList: () => undefined,
+  setDesignSelected: () => undefined,
 });
 
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
-  const [listTemplates, setListTemplates] = useState<DesignsProps[]>([]);
+  const [listTemplates, setListTemplates] = useState<DesignsProps>();
   const [loading, setLoading] = useState(true);
   const [selectedList, setSelectedList] = useState<number>(1);
+  const [designSelected, setDesignSelected] = useState<DesignSelected>();
 
   useEffect(() => {
     const fetchPowerApps = async () => {
@@ -59,7 +62,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         }
       }
 
-      setListTemplates([{ type, data }]);
+      setListTemplates({ type, data });
       setLoading(false);
     };
 
@@ -67,7 +70,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
   }, [selectedList]);
 
   return (
-    <DesignContext.Provider value={{ listTemplates, loading, selectedList, setSelectedList }}>
+    <DesignContext.Provider value={{ listTemplates, loading, selectedList, setSelectedList, setDesignSelected }}>
       {children}
     </DesignContext.Provider>
   );

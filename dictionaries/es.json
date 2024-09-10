@@ -453,12 +453,15 @@
         "search_placeholder": "Buscar en tus diseños o en small..."
       },
       "diffusion": {
+        "empty_pwa": "No tiene powerapps disponibles",
         "title": "Plantillas de",
         "empty": "No tienes",
         "create_design": "Crear diseño",
         "back_design": "Volver a mis diseños",
         "select_pwa": "Seleccionar PWA",
-        "fill_fields": "Completar campos"
+        "fill_fields": "Completar campos",
+        "step_one_title": "Selecciona la PowerApp para difundir",
+        "btn_next": "Siguiente"
       }
     }
   }

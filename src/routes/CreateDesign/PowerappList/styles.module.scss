@@ -1,0 +1,37 @@
+.powerapp_list_container {
+  @include width-height(100%, 70%);
+  @include flex(column, center, flex-end, 30px);
+  .title {
+    align-self: center;
+    @include fontSize-fontWeight(18px, 500);
+    color: $text;
+  }
+  .powerapp_list {
+    @include width-height(100%, auto);
+    overflow-y: auto;
+    @include flex(row, space-evenly, center, 30px);
+    flex-wrap: wrap;
+    padding-right: 5px;
+    .empty_text {
+      @include fontSize-fontWeight(16px, 400);
+      color: $lightGrey;
+      text-align: center;
+    }
+  }
+}
+
+@media (min-width: $queryXl) {
+  .powerapp_list_container {
+    @include width-height(100%, 78%);
+  }
+}
+
+.powerapp_list::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.powerapp_list::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
+}

@@ -453,12 +453,15 @@
         "search_placeholder": "Search in your designs or in small..."
       },
       "diffusion": {
+        "empty_pwa": "There are not powerapps avaliable",
         "title": "Templates",
         "empty": "You don't have",
         "create_design": "Create design",
         "back_design": "Back to my designs",
         "select_pwa": "Select PWA",
-        "fill_fields": "Complete fields"
+        "fill_fields": "Complete fields",
+        "step_one_title": "Select the PowerApp to diffuse",
+        "btn_next": "Next step"
       }
     }
   }

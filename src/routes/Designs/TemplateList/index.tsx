@@ -11,8 +11,8 @@ const TemplateList = () => {
   const locale = useLocale();
 
   const templateTitle = () => {
-    if (listTemplates.length > 0 && listTemplates[0].type !== "") {
-      const type = listTemplates[0]?.type || "";
+    if (listTemplates && listTemplates.type !== "") {
+      const type = listTemplates?.type || "";
       return locale === "en" ? `${type} ${dict("diffusion.title")}` : `${dict("diffusion.title")} ${type}`;
     } else {
       return dict("header.my_designs");
@@ -20,8 +20,8 @@ const TemplateList = () => {
   };
 
   const templateError = () => {
-    if (listTemplates && listTemplates[0].type !== "") {
-      const type = listTemplates[0]?.type || "";
+    if (listTemplates?.type !== "") {
+      const type = listTemplates?.type || "";
       return locale === "en"
         ? `${dict("diffusion.empty")} ${type} ${dict("diffusion.title")} `
         : `${dict("diffusion.empty")} ${dict("diffusion.title")} ${type}  `;
@@ -38,10 +38,10 @@ const TemplateList = () => {
         <>
           <h3 className={styles.subtitle}>{templateTitle()}</h3>
           <div className={styles.card_container}>
-            {listTemplates.length > 0 && listTemplates[0].data.length > 0 ? (
-              listTemplates.map(template => template.data.map(item => <TemplateCard key={item._id} {...item} />))
+            {listTemplates && listTemplates.data.length > 0 ? (
+              listTemplates.data.map(item => <TemplateCard key={item._id} {...item} />)
             ) : (
-              <p>{templateError()}</p>
+              <p className={styles.empty_text}>{templateError()}</p>
             )}
           </div>
         </>

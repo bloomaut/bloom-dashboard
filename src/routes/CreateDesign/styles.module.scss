@@ -1,10 +1,12 @@
 .create_diffusion {
   @include width-height(100%, auto);
-  @include flex(column, center, flex-start, 40px);
+  @include flex(column, flex-start, flex-start);
+  overflow-y: hidden;
   .wizard {
     @include flex(row, center, center, 300px);
     align-self: center;
     position: relative;
+    margin: 30px 0 50px 0;
     .step {
       @include width-height(35px, 35px);
       @include flex(column, center, center);
@@ -24,10 +26,9 @@
       }
       .text {
         @include fontSize-fontWeight(14px, 600);
-        min-width: 100px;
+        min-width: 200px;
         position: absolute;
         bottom: -23px;
-        left: -35px;
       }
       &.active {
         border-color: $darkBlue;
