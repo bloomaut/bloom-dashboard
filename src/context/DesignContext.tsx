@@ -29,8 +29,15 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       let type = "";
       let data: HogRelated[] = [];
 
-      // SI EL INDEX SELECCIONADO ES 1, SE HACE EL GET DE HOGS
-      if (selectedList === 1) {
+      // SI EL INDEX SELECCIONADO ES 0, SE HACE EL GET DE TODOS LOS DISEÑOS
+      if (selectedList === 0) {
+        const response = await get("design-small/list");
+        if (response.statusCode === 200) {
+          type = "";
+          data = response.result.designs;
+        }
+        // SI EL INDEX SELECCIONADO ES 1, SE HACE EL GET DE HOGS
+      } else if (selectedList === 1) {
         const response = await get("design-small/hogs");
         if (response.statusCode === 200) {
           type = "Hog";
