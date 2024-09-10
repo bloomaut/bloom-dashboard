@@ -22,7 +22,7 @@ const CreateDiffusion = () => {
           onClick={() => handleStepChange(1)}
         >
           <p>1</p>
-          <p className={styles.text}>Select PWA</p>
+          <p className={styles.text}>{dict("select_pwa")}</p>
         </div>
 
         <div className={styles.line}></div>
@@ -31,7 +31,7 @@ const CreateDiffusion = () => {
           onClick={() => handleStepChange(2)}
         >
           <p>2</p>
-          <p className={styles.text}>Fill fields</p>
+          <p className={styles.text}>{dict("fill_fields")}</p>
         </div>
       </div>
     </section>

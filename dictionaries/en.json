@@ -456,7 +456,9 @@
         "title": "Templates",
         "empty": "You don't have",
         "create_design": "Create design",
-        "back_design": "Back to my designs"
+        "back_design": "Back to my designs",
+        "select_pwa": "Select PWA",
+        "fill_fields": "Fill fields"
       }
     }
   }
