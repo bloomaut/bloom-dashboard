@@ -37,7 +37,6 @@ interface Skinx {
 }
 
 export interface Flake {
-  typeFlake: string;
   flakeId: string;
   customer_id?: ID;
   variables: Variable[];

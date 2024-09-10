@@ -455,7 +455,10 @@
       "diffusion": {
         "title": "Plantillas de",
         "empty": "No tienes",
-        "create_design": "Crear diseño"
+        "create_design": "Crear diseño",
+        "back_design": "Volver a mis diseños",
+        "select_pwa": "Seleccionar PWA",
+        "fill_fields": "Completar campos"
       }
     }
   }
