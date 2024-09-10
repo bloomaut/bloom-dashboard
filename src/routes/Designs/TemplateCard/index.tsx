@@ -4,7 +4,7 @@ import Icon from "@/components/Icon";
 import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 const TemplateCard = ({ _id, title, thumbnail }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState(false);
@@ -22,7 +22,7 @@ const TemplateCard = ({ _id, title, thumbnail }: HogRelated) => {
           <Icon name='ellipsis' width={20} height={20} viewBox='0 3 30 30' />
           {openPopup && (
             <p className={styles.create}>
-              <Link href='/designs/create/diffussion'>
+              <Link href='/designs/create'>
                 <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
                 {dict("create_design")}
               </Link>

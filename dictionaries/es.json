@@ -455,7 +455,8 @@
       "diffusion": {
         "title": "Plantillas de Difusión",
         "empty": "No hay plantillas de difusión disponibles.",
-        "create_design": "Crear diseño"
+        "create_design": "Crear diseño",
+        "back_design": "Volver a mis diseños"
       }
     }
   }

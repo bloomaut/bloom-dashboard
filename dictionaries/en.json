@@ -455,7 +455,8 @@
       "diffusion": {
         "title": "Diffusion Templates",
         "empty": "No diffusion templates available.",
-        "create_design": "Create design"
+        "create_design": "Create design",
+        "back_design": "Back to my designs"
       }
     }
   }
