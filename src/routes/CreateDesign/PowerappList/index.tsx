@@ -47,7 +47,6 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
     const response = await post("design-small/prepare", dataToSend);
     if (response.data.statusCode === 201) {
       setActiveStep(2);
-      console.log(response.data.result.design);
       setDesignSelected(response.data.result.design);
     } else {
       notifyError(dict("toast.error_template"));

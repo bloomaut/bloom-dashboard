@@ -20,6 +20,12 @@
   }
 }
 
+@media (min-width: $queryXl) {
+  .powerapp_list_container {
+    @include width-height(100%, 78%);
+  }
+}
+
 .powerapp_list::-webkit-scrollbar {
   width: 5px;
   background-color: $greyBackground;
