@@ -453,8 +453,8 @@
         "search_placeholder": "Search in your designs or in small..."
       },
       "diffusion": {
-        "title": "Diffusion Templates",
-        "empty": "No diffusion templates available.",
+        "title": "Templates",
+        "empty": "You don't have",
         "create_design": "Create design",
         "back_design": "Back to my designs"
       }
