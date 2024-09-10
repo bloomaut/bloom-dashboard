@@ -1,5 +1,5 @@
-import CreateDiffussionPage from "@/routes/CreateDiffusion";
+import CreateDesignPage from "@/routes/CreateDesign";
 
 export default function Page() {
-  return <CreateDiffussionPage />;
+  return <CreateDesignPage />;
 }

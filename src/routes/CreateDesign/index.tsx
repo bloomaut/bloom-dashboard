@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-const CreateDiffusion = () => {
+const CreateDesign = () => {
   const dict = useTranslations("dict.designs.diffusion");
   const [activeStep, setActiveStep] = useState(1);
 
@@ -38,4 +38,4 @@ const CreateDiffusion = () => {
   );
 };
 
-export default CreateDiffusion;
+export default CreateDesign;
