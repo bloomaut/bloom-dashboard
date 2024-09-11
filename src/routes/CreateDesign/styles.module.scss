@@ -1,7 +1,6 @@
 .create_diffusion {
   @include width-height(100%, auto);
   @include flex(column, flex-start, flex-start);
-  overflow-y: hidden;
   .wizard {
     @include flex(row, center, center, 300px);
     align-self: center;

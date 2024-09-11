@@ -16,13 +16,13 @@ interface PowerappListProps {
 
 const PowerappList = ({ setActiveStep }: PowerappListProps) => {
   const { listTemplates, setDesignSelected } = useDesignContext();
+  const { notifyError } = useMessageToast();
   const [powerApps, setPowerApps] = useState<HogRelated[]>();
   const [powerAppSelected, setPowerAppSelected] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
   const dict = useTranslations("dict");
   const params = useParams();
-  const { notifyError } = useMessageToast();
 
   useEffect(() => {
     const getPowerapps = async () => {

@@ -1,5 +1,5 @@
 .powerapp_list_container {
-  @include width-height(100%, 70%);
+  @include width-height(100%, 80%);
   @include flex(column, center, flex-end, 30px);
   .title {
     align-self: center;
@@ -7,7 +7,7 @@
     color: $text;
   }
   .powerapp_list {
-    @include width-height(100%, auto);
+    @include width-height(100%, 500px);
     overflow-y: auto;
     @include flex(row, space-evenly, center, 30px);
     flex-wrap: wrap;

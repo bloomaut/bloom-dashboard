@@ -8,6 +8,7 @@ interface Context {
   loading: boolean;
   selectedList: number;
   setSelectedList: (id: number) => void;
+  designSelected: DesignSelected | undefined;
   setDesignSelected: (design: DesignSelected) => void;
 }
 
@@ -16,6 +17,7 @@ const DesignContext = createContext<Context>({
   loading: true,
   selectedList: 1,
   setSelectedList: () => undefined,
+  designSelected: undefined,
   setDesignSelected: () => undefined,
 });
 
@@ -24,6 +26,8 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState(true);
   const [selectedList, setSelectedList] = useState<number>(1);
   const [designSelected, setDesignSelected] = useState<DesignSelected>();
+
+  console.log(designSelected);
 
   useEffect(() => {
     const fetchPowerApps = async () => {
@@ -70,7 +74,9 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
   }, [selectedList]);
 
   return (
-    <DesignContext.Provider value={{ listTemplates, loading, selectedList, setSelectedList, setDesignSelected }}>
+    <DesignContext.Provider
+      value={{ listTemplates, loading, selectedList, setSelectedList, designSelected, setDesignSelected }}
+    >
       {children}
     </DesignContext.Provider>
   );
