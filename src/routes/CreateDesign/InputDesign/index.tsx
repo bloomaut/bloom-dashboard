@@ -1,4 +1,6 @@
+import { Dispatch, SetStateAction } from "react";
 import styles from "./styles.module.scss";
+import DragAndDrop from "@/components/DragAndDrop";
 
 interface Props {
   description: string;
@@ -7,17 +9,25 @@ interface Props {
   value: string;
   disabled?: boolean;
   onChange: (name: string, value: string) => void;
+  file?: File | null;
+  setFile?: Dispatch<SetStateAction<File | null>>;
 }
 
-const InputDesign = ({ description, target, name, value, disabled = false, onChange }: Props) => {
+const InputDesign = ({ description, target, name, value, disabled = false, onChange, file, setFile }: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(name, e.target.value);
+    if (target === "text") {
+      onChange(name, e.target.value);
+    }
   };
 
   return (
     <div className={styles.input}>
       <label>{description}</label>
-      <input type={target} name={name} value={value} disabled={disabled} onChange={handleChange} />
+      {target === "image" ? (
+        <DragAndDrop type='image' file={file || null} setFile={setFile!} />
+      ) : (
+        <input type={target} name={name} value={value} disabled={disabled} onChange={handleChange} />
+      )}
     </div>
   );
 };

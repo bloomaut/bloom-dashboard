@@ -2,7 +2,6 @@ import { useDesignContext } from "@/context/DesignContext";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import InputDesign from "../InputDesign";
-import DragAndDrop from "@/components/DragAndDrop";
 import Button from "@/components/Button";
 import { post } from "@/services/fetch";
 import { useTranslations } from "next-intl";
@@ -10,6 +9,7 @@ import { useState } from "react";
 import { VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { handleFileUpload } from "@/utils/handleFileUpload";
 
 type FormValues = {
   title: string;
@@ -20,6 +20,7 @@ type FormValues = {
 const DesignForm = () => {
   const { designSelected } = useDesignContext();
   const [loading, setLoading] = useState<boolean>(false);
+  const [file, setFile] = useState<File | null>(null);
   const [formValues, setFormValues] = useState<FormValues>(() => {
     const initialValues: FormValues = {
       title: "",
@@ -57,6 +58,21 @@ const DesignForm = () => {
     e.preventDefault();
     setLoading(true);
 
+    let imageUrl: string | null = null;
+
+    if (file) {
+      try {
+        imageUrl = await handleFileUpload(file);
+        if (!imageUrl) {
+          throw new Error("File upload failed");
+        }
+      } catch (error) {
+        notifyError("Error uploading file: " + error);
+        setLoading(false);
+        return;
+      }
+    }
+
     const payload = {
       title: formValues.title,
       description: formValues.description,
@@ -64,8 +80,8 @@ const DesignForm = () => {
         key: variable.key,
         name: variable.name,
         description: variable.description,
-        value: variable.value,
         target: variable.target,
+        value: variable.target === "image" ? imageUrl || "" : variable.value,
       })),
       pwa_id: designSelected?.powerapp._id || "",
       flake_id: designSelected?.flake._id || "",
@@ -131,11 +147,12 @@ const DesignForm = () => {
                 name={variable.name}
                 value={variable.value}
                 onChange={(name, value) => handleInputChange(name, value)}
+                file={file}
+                setFile={variable.target === "image" ? setFile : undefined}
               />
             ))}
           </form>
         </div>
-        {/* <DragAndDrop type='image' file={null} setFile={null} currentImage={null} /> */}
         <div className={styles.user_variables}>
           <h6 className={styles.title}>
             {dict("designs.create_design.user_variables")}{" "}
