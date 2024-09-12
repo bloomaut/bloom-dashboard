@@ -19,24 +19,23 @@ type FormValues = {
 
 const DesignForm = () => {
   const { designSelected } = useDesignContext();
+
+  const initialValues: FormValues = {
+    title: "",
+    description: "",
+    variables:
+      designSelected?.variables.map(field => ({
+        key: field.name,
+        name: field.name,
+        description: field.description,
+        value: field.value || "",
+        target: field.target,
+      })) || [],
+  };
+
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
-  const [formValues, setFormValues] = useState<FormValues>(() => {
-    const initialValues: FormValues = {
-      title: "",
-      description: "",
-      variables:
-        designSelected?.variables.map(field => ({
-          key: field.name,
-          name: field.name,
-          description: field.description,
-          value: field.value || "",
-          target: field.target,
-        })) || [],
-    };
-
-    return initialValues;
-  });
+  const [formValues, setFormValues] = useState<FormValues>(initialValues);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
@@ -89,7 +88,7 @@ const DesignForm = () => {
     };
 
     const response = await post("design-small/create", payload, ENV.DASHBOARD);
-    console.log("Valores del formulario a enviar:", response);
+    console.log("Data del formulario que envío:", response);
     if (response.data.statusCode === 201) {
       notify(dict("toast.success_design"));
       setLoading(false);
