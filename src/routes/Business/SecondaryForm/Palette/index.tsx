@@ -7,22 +7,23 @@ import { update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { Oval } from "react-loader-spinner";
 import { useBusinessContext } from "@/context/BusinessContext";
+import CheckBox from "@/components/Checkbox";
 
 const Palette = () => {
   const { formData, setFormData, logo } = useBusinessContext();
   const [colors, setColors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showIcon, setShowIcon] = useState<boolean>(false);
+  const [checkbox, setCheckbox] = useState<boolean>(true);
+  const [updateActive, setUpdateActive] = useState<boolean>(false);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.business");
 
   const newColorInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (formData.client.palette && formData.client.palette.length > 0) {
+    if (formData.client.palette && formData.client.palette.length > 0 && checkbox) {
       setColors(formData.client.palette.map(({ color }) => color));
-    } else {
-      setColors(["#ffffff"]);
     }
   }, [formData.client.palette]);
 
@@ -34,8 +35,8 @@ const Palette = () => {
 
   const handleRemoveColor = (index: number) => {
     const updatedColors = colors.filter((_, i) => i !== index);
-    if (updatedColors.length < 1) return;
     setColors(updatedColors);
+    setUpdateActive(true);
   };
 
   const handleAddColor = () => {
@@ -47,13 +48,15 @@ const Palette = () => {
           if (newColorInputRef.current) {
             newColorInputRef.current.click();
           }
-        }, 0);
+        }, 10);
+        setUpdateActive(true);
         return updatedColors;
       });
     }
   };
 
   const handleSaveColors = async () => {
+    if (!updateActive) return;
     setLoading(true);
     const updatePalette = {
       palette: colors.map(color => ({ color })),
@@ -63,6 +66,7 @@ const Palette = () => {
 
     if (data.statusCode === 200) {
       setLoading(false);
+      setUpdateActive(false);
       notify("Paleta actualizada correctamente");
       setFormData(prevFormData => ({
         ...prevFormData,
@@ -77,45 +81,58 @@ const Palette = () => {
     }
   };
 
+  const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckbox(prevState => !prevState);
+  };
+
   useEffect(() => {
-    if (colors.length > 1) {
+    if (colors.length > 0) {
       setShowIcon(true);
     } else {
       setShowIcon(false);
     }
-  }, [colors.length]);
+  }, [colors.length, updateActive]);
 
   return (
     <div className={styles.colors}>
       <h6>{dict("data.colors")}</h6>
       <div className={styles.container}>
-        {colors.map((color, index) => (
-          <div key={index} className={styles.column}>
-            <div className={styles.additional_color_container}>
-              <input
-                type='color'
-                value={color}
-                onChange={e => handleColorChange(index, e.target.value)}
-                className={styles.color_input}
-                disabled={colors.length === 1}
-                ref={index === colors.length - 1 ? newColorInputRef : null}
-              />
+        <div className={styles.colors_container}>
+          {colors.length > 0 &&
+            colors.map((color, index) => (
+              <div key={index} className={styles.column}>
+                <div className={styles.additional_color_container}>
+                  <input
+                    type='color'
+                    value={color}
+                    onChange={e => handleColorChange(index, e.target.value)}
+                    className={styles.color_input}
+                    disabled={colors.length === 0}
+                    ref={index === colors.length - 1 ? newColorInputRef : null}
+                  />
+                </div>
+                {showIcon && (
+                  <Button
+                    title={""}
+                    icon={<Icon name='delete' width={20} height={20} strokeColor='#7f7f7f' viewBox='0 0 23 26' />}
+                    styleName='btn_delete_business'
+                    onclick={() => handleRemoveColor(index)}
+                  />
+                )}
+              </div>
+            ))}
+          {colors.length < 5 && (
+            <div className={styles.add_btn_container}>
+              <button className={styles.circle} onClick={handleAddColor}>
+                <Icon name='add' viewBox='0 0 20 20' width={16} height={16} strokeWidth={1} />
+              </button>
             </div>
-            {showIcon && (
-              <Button
-                title={""}
-                icon={<Icon name='delete' width={20} height={20} strokeColor='#7f7f7f' viewBox='0 0 23 26' />}
-                styleName='btn_delete_business'
-                onclick={() => handleRemoveColor(index)}
-              />
-            )}
-          </div>
-        ))}
-        {colors.length < 5 && (
-          <button className={styles.circle} onClick={handleAddColor}>
-            <Icon name='add' viewBox='0 0 20 20' width={16} height={16} strokeWidth={1} />
-          </button>
-        )}
+          )}
+        </div>
+        <div className={styles.checkbox_container}>
+          <CheckBox active={checkbox} onChange={handleCheckbox} />
+          <p>{dict("data.ia")}</p>
+        </div>
       </div>
       {loading ? (
         <div className={styles.loading_container}>
@@ -135,8 +152,8 @@ const Palette = () => {
       ) : (
         (logo && colors.length >= 1) ||
         (formData.client.logo && (
-          <p className={styles.submit} onClick={handleSaveColors}>
-            Update palette
+          <p className={updateActive ? styles.update_active : styles.submit} onClick={handleSaveColors}>
+            {dict("data.update_palette")}
           </p>
         ))
       )}

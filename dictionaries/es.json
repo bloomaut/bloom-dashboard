@@ -200,6 +200,8 @@
       },
       "data": {
         "colors": "Colores",
+        "ia": "Generar colores con IA",
+        "update_palette": "Actualizar paleta",
         "description": "A partir del logotipo generamos automáticamente una paleta de colores que podrás modificar posteriormente",
         "add_info": "Información Adicional",
         "website": "Sitio web",
