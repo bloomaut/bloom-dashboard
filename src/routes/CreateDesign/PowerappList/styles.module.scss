@@ -1,13 +1,13 @@
 .powerapp_list_container {
   @include width-height(100%, 80%);
-  @include flex(column, center, flex-end, 30px);
+  @include flex(column, center, flex-end, 20px);
   .title {
     align-self: center;
     @include fontSize-fontWeight(18px, 500);
     color: $text;
   }
   .powerapp_list {
-    @include width-height(100%, 500px);
+    @include width-height(100%, 300px);
     overflow-y: auto;
     @include flex(row, space-evenly, center, 30px);
     flex-wrap: wrap;
@@ -22,7 +22,7 @@
 
 @media (min-width: $queryXl) {
   .powerapp_list_container {
-    @include width-height(100%, 78%);
+    @include width-height(100%, 500px);
   }
 }
 

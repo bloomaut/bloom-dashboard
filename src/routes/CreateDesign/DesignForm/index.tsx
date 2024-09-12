@@ -10,6 +10,8 @@ const DesignForm = () => {
   const { designSelected } = useDesignContext();
   const dict = useTranslations("dict.designs.create_design");
 
+  console.log(designSelected);
+
   return (
     <section className={styles.step_two}>
       <div className={styles.design_preview}>
@@ -27,25 +29,25 @@ const DesignForm = () => {
           <InputDesign description={dict("input_description")} target='text' name='description' value='' />
           <div className={styles.pwa_text}>
             <p className={styles.pwa}>{dict("pwa_diffusion")}</p>
-            <p className={styles.name}>Name - Diffuse</p>
+            <p className={styles.name}>{designSelected?.powerapp.title}</p>
           </div>
         </div>
       </div>
       <div className={styles.design_form}>
         <h3 className={styles.title}>
-          <span>Post:</span> {dict("promotion")}
+          <span>{designSelected?.type_design}:</span> {dict("promotion")}
         </h3>
         <div className={styles.form_container}>
           <p className={styles.field}>{dict("fields")}</p>
           <form>{designSelected?.variables.map(field => <InputDesign {...field} />)}</form>
         </div>
-        <DragAndDrop type='image' file={null} setFile={null} currentImage={null} />
+        {/* <DragAndDrop type='image' file={null} setFile={null} currentImage={null} /> */}
         <div className={styles.user_variables}>
           <h6 className={styles.title}>
             {dict("user_variables")} <span>*These fields will be completed during user registration.</span>
           </h6>
-          <InputDesign description='User name' target='text' name='name' value='' />
-          <InputDesign description='User phone' target='text' name='phone' value='' />
+          <InputDesign description='User name' target='text' name='name' value='' disabled={true} />
+          <InputDesign description='User phone' target='text' name='phone' value='' disabled={true} />
         </div>
       </div>
       <div className={styles.button}>
