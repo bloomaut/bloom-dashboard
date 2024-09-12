@@ -7,9 +7,10 @@
     color: $text;
   }
   .powerapp_list {
-    @include width-height(100%, 300px);
-    overflow-y: auto;
+    @include width-height(100%, auto);
     @include flex(row, space-evenly, center, 30px);
+    max-height: 400px;
+    overflow-y: auto;
     flex-wrap: wrap;
     padding-right: 5px;
     .empty_text {
