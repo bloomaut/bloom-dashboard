@@ -1,0 +1,74 @@
+.step_two {
+  @include width-height(100%, auto);
+  @include flex(row, center, flex-start, 50px);
+  min-height: 615px;
+  overflow-y: auto;
+  position: relative;
+  .design_preview {
+    .img_title {
+      @include fontSize-fontWeight(14px, 500);
+      color: $text;
+    }
+    .img_container {
+      @include width-height(300px, 300px);
+      margin: 10px 0;
+      img {
+        @include width-height(100%, 100%);
+        object-fit: cover;
+      }
+    }
+    .img_form {
+      @include flex(column, flex-start, flex-start, 10px);
+      .pwa_text {
+        .pwa,
+        .name {
+          @include fontSize-fontWeight(14px, 700);
+          color: $text;
+        }
+        .name {
+          @include fontSize-fontWeight(14px, 400);
+        }
+      }
+    }
+  }
+  .design_form {
+    @include width-height(50%, 100%);
+    border-left: 1px solid $border;
+    padding: 0 45px;
+    .title {
+      @include fontSize-fontWeight(20px, 400);
+      color: $text;
+      span {
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+    }
+    .form_container {
+      max-width: 400px;
+      margin: 15px 0;
+      .field {
+        @include fontSize-fontWeight(16px, 500);
+      }
+      form {
+        @include flex(column, flex-start, flex-end, 10px);
+        margin: 10px 0;
+      }
+    }
+    .user_variables {
+      @include flex(column, flex-start, flex-start, 10px);
+      margin-top: 10px;
+      .title {
+        @include fontSize-fontWeight(16px, 500);
+        color: $text;
+        span {
+          @include fontSize-fontWeight(12px, 400);
+        }
+      }
+    }
+  }
+  .button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}

@@ -462,6 +462,16 @@
         "fill_fields": "Complete fields",
         "step_one_title": "Select the PowerApp to diffuse",
         "btn_next": "Next step"
+      },
+      "create_design": {
+        "title": "Design preview",
+        "input_title": "Design title",
+        "input_description": "Design description",
+        "pwa_diffusion": "PowerApp to Diffuse",
+        "promotion": "Summer Promotion",
+        "fields": "Fields",
+        "user_variables": "User variables",
+        "create": "Create Design"
       }
     }
   }
