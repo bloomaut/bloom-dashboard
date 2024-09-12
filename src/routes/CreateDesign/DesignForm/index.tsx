@@ -15,6 +15,9 @@ type FormValues = {
   title: string;
   description: string;
   variables: VariablesFormDesign[];
+  pwa_id: string;
+  flake_id: string;
+  type_design: string;
 };
 
 const DesignForm = () => {
@@ -31,6 +34,9 @@ const DesignForm = () => {
         value: field.value || "",
         target: field.target,
       })) || [],
+    pwa_id: designSelected?.powerapp._id || "",
+    flake_id: designSelected?.flake._id || "",
+    type_design: designSelected?.type_design || "",
   };
 
   const [loading, setLoading] = useState<boolean>(false);
