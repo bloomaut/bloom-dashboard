@@ -27,8 +27,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
   const [selectedList, setSelectedList] = useState<number>(1);
   const [designSelected, setDesignSelected] = useState<DesignSelected>();
 
-  console.log(designSelected);
-
   useEffect(() => {
     const fetchPowerApps = async () => {
       setLoading(true);

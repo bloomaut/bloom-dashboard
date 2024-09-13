@@ -1,10 +1,20 @@
 import { HogRelated } from "./flakes.interface";
 
 export interface PostPowerAppDesign {
+  title: string;
+  description: string;
+  variables: VariablesFormDesign[];
   pwa_id: string;
   flake_id: string;
   type_design: string;
 }
+
+export interface PostPowerAppPre {
+  pwa_id: string;
+  flake_id: string;
+  type_design: string;
+}
+
 export interface DesignsProps {
   type: string;
   data: HogRelated[];
@@ -17,7 +27,7 @@ export interface DesignSelected {
   variables: VariablesFormDesign[];
 }
 
-interface VariablesFormDesign {
+export interface VariablesFormDesign {
   description: string;
   key: string;
   name: string;
