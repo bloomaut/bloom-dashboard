@@ -26,6 +26,7 @@ export interface HogRelated {
   _id: ID;
   title: string;
   thumbnail: string;
+  type: "";
 }
 
 interface Skinx {

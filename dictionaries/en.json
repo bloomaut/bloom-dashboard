@@ -458,7 +458,10 @@
         "empty_pwa": "There are not powerapps avaliable",
         "title": "Templates",
         "empty": "You don't have",
-        "create_design": "Create design",
+        "create_design": "Create",
+        "view_design": "View",
+        "edit_design": "Edit",
+        "delete_design": "Delete",
         "back_design": "Back to my designs",
         "select_pwa": "Select PWA",
         "fill_fields": "Complete fields",
@@ -473,7 +476,8 @@
         "promotion": "Summer Promotion",
         "fields": "Fields",
         "user_variables": "User variables",
-        "create": "Create Design"
+        "create": "Create Design",
+        "create_diffusion": "Created Diffusion Desings"
       }
     }
   }

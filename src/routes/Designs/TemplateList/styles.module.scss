@@ -7,6 +7,7 @@
   .card_container {
     @include flex(row, center, center, 20px);
     flex-wrap: wrap;
+    padding: 10px 0;
     .empty_text {
       @include fontSize-fontWeight(16px, 400);
       color: $lightGrey;
@@ -15,7 +16,7 @@
   }
   .subtitle {
     @include fontSize-fontWeight(18px, 600);
-    min-width: 85%;
+    margin: 0 0 20px 40px;
     color: $text;
     margin-bottom: 20px;
     text-align: start;
