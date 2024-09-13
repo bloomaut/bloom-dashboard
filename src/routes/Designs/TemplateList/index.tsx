@@ -19,12 +19,12 @@ const TemplateList = () => {
     }
   };
 
-  const templateError = () => {
+  const templateError = (typedata?: string) => {
     if (listTemplates?.type !== "") {
       const type = listTemplates?.type || "";
       return locale === "en"
-        ? `${dict("diffusion.empty")} ${type} ${dict("diffusion.title")} `
-        : `${dict("diffusion.empty")} ${dict("diffusion.title")} ${type}  `;
+        ? `${dict("diffusion.empty")} ${type} ${typedata === "designs" ? dict("diffusion.designs") : dict("diffusion.title")} `
+        : `${dict("diffusion.empty")} ${typedata === "designs" ? dict("diffusion.designs") : dict("diffusion.title")} ${type}  `;
     } else return locale === "en" ? `${dict("diffusion.empty")} designs` : `${dict("diffusion.empty")} Diseños`;
   };
 
@@ -36,7 +36,7 @@ const TemplateList = () => {
         </div>
       ) : (
         <>
-          <div>
+          <div className={styles.cards}>
             <h3 className={styles.subtitle}>{templateTitle()}</h3>
             <div className={styles.card_container}>
               {listTemplates && listTemplates.data.length > 0 ? (
@@ -46,18 +46,18 @@ const TemplateList = () => {
               )}
             </div>
           </div>
-          {listTemplates?.type === "" && (
-            <div>
-              <h3 className={styles.subtitle}>{dict("create_design.create_diffusion")}</h3>
-              <div className={styles.card_container}>
-                {listTemplates && listTemplates.designs.length > 0 ? (
-                  listTemplates.designs.map(item => <TemplateCard key={item._id} {...item} />)
-                ) : (
-                  <p className={styles.empty_text}>{templateError()}</p>
-                )}
-              </div>
+          {/* {listTemplates?.type === "" && ( */}
+          <div className={styles.cards}>
+            <h3 className={styles.subtitle}>{dict("create_design.create_diffusion")}</h3>
+            <div className={styles.card_container}>
+              {listTemplates && listTemplates.designs.length > 0 ? (
+                listTemplates.designs.map(item => <TemplateCard key={item._id} {...item} datatype='designs' />)
+              ) : (
+                <p className={styles.empty_text}>{templateError("designs")}</p>
+              )}
             </div>
-          )}
+          </div>
+          {/* )} */}
         </>
       )}
     </section>

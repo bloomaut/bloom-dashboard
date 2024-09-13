@@ -33,7 +33,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
 
       let type = "";
       let data: HogRelated[] = [];
-      const designs: any[] = [];
+      let designs: any[] = [];
 
       // SI EL INDEX SELECCIONADO ES 0, SE HACE EL GET DE TODOS LOS DISEÑOS
       if (selectedList === 0) {
@@ -46,26 +46,29 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         // SI EL INDEX SELECCIONADO ES 1, SE HACE EL GET DE HOGS
       } else if (selectedList === 1) {
         const response = await get("design-small/hogs");
+        console.log(response);
         if (response.statusCode === 200) {
           type = "Hog";
           data = response.result.hogs;
-          designs: response.result.designs;
+          designs = response.result.designs;
         }
         // SI EL INDEX SELECCIONADO ES 2, SE HACE EL GET DE EMAILS
       } else if (selectedList === 2) {
         const response = await get("design-small/emails");
+        console.log(response);
         if (response.statusCode === 200) {
           type = "Email";
           data = response.result.emails;
-          designs: response.result.designs;
+          designs = response.result.designs;
         }
         // SI EL INDEX SELECCIONADO ES 3, SE HACE EL GET DE POSTS
       } else if (selectedList === 3) {
         const response = await get("design-small/posts");
+        console.log(response);
         if (response.statusCode === 200) {
           type = "Post";
           data = response.result.posts;
-          designs: response.result.designs;
+          designs = response.result.designs;
         }
       }
 

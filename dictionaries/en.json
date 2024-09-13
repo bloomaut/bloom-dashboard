@@ -457,6 +457,7 @@
       "diffusion": {
         "empty_pwa": "There are not powerapps avaliable",
         "title": "Templates",
+        "designs": "Designs",
         "empty": "You don't have",
         "create_design": "Create",
         "view_design": "View",

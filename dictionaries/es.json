@@ -457,6 +457,7 @@
       "diffusion": {
         "empty_pwa": "No tiene powerapps disponibles",
         "title": "Plantillas de",
+        "designs": "Diseños",
         "empty": "No tienes",
         "create_design": "Crear",
         "view_design": "Ver",

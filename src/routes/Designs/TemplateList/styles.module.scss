@@ -4,21 +4,25 @@
   margin-top: 300px;
   position: relative;
   z-index: 10;
-  .card_container {
-    @include flex(row, center, center, 20px);
-    flex-wrap: wrap;
-    padding: 10px 0;
-    .empty_text {
-      @include fontSize-fontWeight(16px, 400);
-      color: $lightGrey;
-      text-align: center;
+  .cards {
+    min-width: 280px;
+    margin-bottom: 40px;
+    .card_container {
+      @include flex(row, center, center, 20px);
+      flex-wrap: wrap;
+      padding: 10px 0;
+      .empty_text {
+        @include fontSize-fontWeight(16px, 400);
+        color: $lightGrey;
+        text-align: center;
+      }
     }
-  }
-  .subtitle {
-    @include fontSize-fontWeight(18px, 600);
-    margin: 0 0 20px 40px;
-    color: $text;
-    margin-bottom: 20px;
-    text-align: start;
+    .subtitle {
+      @include fontSize-fontWeight(18px, 600);
+      max-width: 85%;
+      color: $text;
+      margin: auto auto 20px auto;
+      text-align: start;
+    }
   }
 }
