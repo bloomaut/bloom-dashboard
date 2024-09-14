@@ -5,8 +5,9 @@ import default_image from "/public/assets/default_image.png";
 import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
 
-const TemplateCard = ({ title, thumbnail }: HogRelated) => {
+const TemplateCard = ({ title, thumbnail, _id }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState(false);
   const dict = useTranslations("dict.designs.diffusion");
 
@@ -22,10 +23,10 @@ const TemplateCard = ({ title, thumbnail }: HogRelated) => {
           <Icon name='ellipsis' width={20} height={20} viewBox='0 3 30 30' />
           {openPopup && (
             <p className={styles.create}>
-              <button onClick={() => alert("holi")}>
-                <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#381d2a' />
+              <Link href={`/designs/create/${_id}`}>
+                <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
                 {dict("create_design")}
-              </button>
+              </Link>
             </p>
           )}
         </p>

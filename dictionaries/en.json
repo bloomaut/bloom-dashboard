@@ -74,6 +74,7 @@
       "success_delete_catalog": "Catalog deleted successfully",
       "success_palette": "Palette updated successfully",
       "success_product_deleted": "Product deleted successfully",
+      "success_design": "Design created successfully",
       "error_product_deleted": "Error when deleting a product",
       "error_name": "Name is required",
       "error_edit": "Error updating information",
@@ -83,6 +84,7 @@
       "error_file": "Error deleting file",
       "error_catalog": "Error deleting catalog",
       "error_palette": "Error updating palette",
+      "error_design": "Error creating design",
       "empty_fields": "All fields are required",
       "success_hotlink": "Hotlink created successfully",
       "error_tryagain": "There was a problem, try again later",
@@ -453,9 +455,25 @@
         "search_placeholder": "Search in your designs or in small..."
       },
       "diffusion": {
+        "empty_pwa": "There are not powerapps avaliable",
         "title": "Templates",
         "empty": "You don't have",
-        "create_design": "Create design"
+        "create_design": "Create design",
+        "back_design": "Back to my designs",
+        "select_pwa": "Select PWA",
+        "fill_fields": "Complete fields",
+        "step_one_title": "Select the PowerApp to diffuse",
+        "btn_next": "Next step"
+      },
+      "create_design": {
+        "title": "Design preview",
+        "input_title": "Design title",
+        "input_description": "Design description",
+        "pwa_diffusion": "PowerApp to Diffuse",
+        "promotion": "Summer Promotion",
+        "fields": "Fields",
+        "user_variables": "User variables",
+        "create": "Create Design"
       }
     }
   }

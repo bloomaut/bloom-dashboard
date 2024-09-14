@@ -1,0 +1,41 @@
+.powerapp_container {
+  @include flex(column, center, center, 10px);
+  padding: 20px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.7s;
+  &:hover {
+    border: 2px solid $orangeBackground;
+  }
+  .image_wrapper {
+    @include width-height(100%, 100%);
+    @include flex(column, center, center);
+    position: relative;
+    z-index: 1;
+    .empty_powerapp {
+      @include width-height(200px, 300px);
+      @include flex(column, center, center);
+      background-color: $border;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
+    }
+    .thumbnail {
+      object-position: top;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.15);
+    }
+  }
+  .title {
+    @include fontSize-fontWeight(14px, 400);
+    color: $text;
+    text-align: center;
+  }
+}
+.powerapp_container_active {
+  border: 2px solid $orange;
+  &:hover {
+    border: 2px solid $orange;
+  }
+}
