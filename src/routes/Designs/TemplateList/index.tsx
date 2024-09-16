@@ -28,6 +28,8 @@ const TemplateList = () => {
     } else return locale === "en" ? `${dict("diffusion.empty")} designs` : `${dict("diffusion.empty")} Diseños`;
   };
 
+  console.log(listTemplates);
+
   return (
     <section className={styles.powerapp_container}>
       {loading ? (
@@ -46,18 +48,18 @@ const TemplateList = () => {
               )}
             </div>
           </div>
-          {/* {listTemplates?.type === "" && ( */}
-          <div className={styles.cards}>
-            <h3 className={styles.subtitle}>{dict("create_design.create_diffusion")}</h3>
-            <div className={styles.card_container}>
-              {listTemplates && listTemplates.designs.length > 0 ? (
-                listTemplates.designs.map(item => <TemplateCard key={item._id} {...item} datatype='designs' />)
-              ) : (
-                <p className={styles.empty_text}>{templateError("designs")}</p>
-              )}
+          {listTemplates?.type !== "" && (
+            <div className={styles.cards}>
+              <h3 className={styles.subtitle}>{dict("create_design.create_diffusion")}</h3>
+              <div className={styles.card_container}>
+                {listTemplates && listTemplates.designs.length > 0 ? (
+                  listTemplates.designs.map(item => <TemplateCard key={item._id} {...item} datatype='designs' />)
+                ) : (
+                  <p className={styles.empty_text}>{templateError("designs")}</p>
+                )}
+              </div>
             </div>
-          </div>
-          {/* )} */}
+          )}
         </>
       )}
     </section>
