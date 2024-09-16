@@ -457,8 +457,12 @@
       "diffusion": {
         "empty_pwa": "No tiene powerapps disponibles",
         "title": "Plantillas de",
+        "designs": "Diseños",
         "empty": "No tienes",
-        "create_design": "Crear diseño",
+        "create_design": "Crear",
+        "view_design": "Ver",
+        "edit_design": "Editar",
+        "delete_design": "Eliminar",
         "back_design": "Volver a mis diseños",
         "select_pwa": "Seleccionar PWA",
         "fill_fields": "Completar campos",
@@ -473,7 +477,8 @@
         "promotion": "Promoción de verano",
         "fields": "Campos",
         "user_variables": "Variables del Usuario",
-        "create": "Crear Diseño"
+        "create": "Crear Diseño",
+        "create_diffusion": "Diseños de difusión creados"
       }
     }
   }

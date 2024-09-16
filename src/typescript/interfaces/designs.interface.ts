@@ -18,6 +18,7 @@ export interface PostPowerAppPre {
 export interface DesignsProps {
   type: string;
   data: HogRelated[];
+  designs: any[];
 }
 
 export interface DesignSelected {
