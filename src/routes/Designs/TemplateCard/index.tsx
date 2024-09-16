@@ -6,13 +6,34 @@ import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
+import PopupConfirm from "@/components/PopupConfirm";
+import { remove } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
 
 const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
-  const [openPopup, setOpenPopup] = useState(false);
-  const dict = useTranslations("dict.designs.diffusion");
+  const [openPopup, setOpenPopup] = useState<boolean>(false);
+  const [popupDelete, setPopupDelete] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { notify, notifyError } = useMessageToast();
+  const dict = useTranslations("dict");
 
   const handleClick = () => {
     setOpenPopup(!openPopup);
+  };
+
+  const handleDelete = async () => {
+    setLoading(true);
+    if (_id) {
+      const data = await remove("design-small", _id);
+      if (data.statusCode === 200) {
+        notify(dict("toast.success_delete"));
+      } else {
+        notifyError(dict("toast.error_design_delete"));
+      }
+      setPopupDelete(false);
+      setOpenPopup(false);
+      setLoading(false);
+    }
   };
 
   return (
@@ -28,31 +49,42 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                   <p className={styles.create}>
                     <Link href={`/designs/create/${_id}`}>
                       <Icon name='eye' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                      {dict("view_design")}
+                      {dict("designs.diffusion.view_design")}
                     </Link>
                   </p>
                   <p className={styles.create}>
                     <Link href={`/designs/create/${_id}`}>
                       <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                      {dict("edit_design")}
+                      {dict("designs.diffusion.edit_design")}
                     </Link>
                   </p>
                   <p className={styles.create}>
-                    <Link href={`/designs/create/${_id}`}>
+                    <button onClick={() => setPopupDelete(true)}>
                       <Icon name='delete' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                      {dict("delete_design")}
-                    </Link>
+                      {dict("designs.diffusion.delete_design")}
+                    </button>
                   </p>
                 </>
               ) : (
                 <p className={styles.create}>
                   <Link href={`/designs/create/${_id}`}>
                     <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                    {dict("create_design")}
+                    {dict("designs.diffusion.create_design")}
                   </Link>
                 </p>
               )}
             </div>
+          )}
+          {popupDelete && (
+            <PopupConfirm
+              onConfirm={handleDelete}
+              onCancel={() => setPopupDelete(false)}
+              setShowConfirmation={setPopupDelete}
+              title={dict("popup.delete")}
+              loading={loading}
+              textCancel={dict("popup.cancel")}
+              textAccept={dict("popup.confirm")}
+            />
           )}
         </div>
       </div>

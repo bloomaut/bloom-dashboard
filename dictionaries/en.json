@@ -85,6 +85,7 @@
       "error_catalog": "Error deleting catalog",
       "error_palette": "Error updating palette",
       "error_design": "Error creating design",
+      "error_design_delete": "Error deleting design",
       "empty_fields": "All fields are required",
       "success_hotlink": "Hotlink created successfully",
       "error_tryagain": "There was a problem, try again later",

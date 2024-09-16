@@ -84,6 +84,7 @@
       "error_catalog": "Error al eliminar el catálogo",
       "error_palette": "Error al subir la paleta",
       "error_design": "Error al crear el diseño",
+      "error_design_delete": "Error al eliminar el diseño",
       "empty_fields": "Todos los campos son requeridos",
       "success_hotlink": "Hotlink creado correctamente",
       "error_tryagain": "Hubo un problema, intente más tarde",
