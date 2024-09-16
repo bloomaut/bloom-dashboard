@@ -478,6 +478,7 @@
         "fields": "Fields",
         "user_variables": "User variables",
         "create": "Create Design",
+        "edit": "Edit Design",
         "create_diffusion": "Created Diffusion Desings"
       }
     }

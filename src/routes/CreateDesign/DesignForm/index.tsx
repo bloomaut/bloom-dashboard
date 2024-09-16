@@ -3,13 +3,14 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import InputDesign from "../InputDesign";
 import Button from "@/components/Button";
-import { post } from "@/services/fetch";
+import { get, post } from "@/services/fetch";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
+import { useEffect, useState } from "react";
+import { DesignProps, VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { handleFileUpload } from "@/utils/handleFileUpload";
+import { useParams } from "next/navigation";
 
 type FormValues = {
   title: string;
@@ -21,7 +22,8 @@ type FormValues = {
 };
 
 const DesignForm = () => {
-  const { designSelected } = useDesignContext();
+  const { listTemplates, designSelected } = useDesignContext();
+  const params = useParams();
 
   const initialValues: FormValues = {
     title: "",
@@ -104,6 +106,35 @@ const DesignForm = () => {
     }
   };
 
+  const designExist = listTemplates && listTemplates.designs.some(design => design._id === params.id);
+
+  const getDesign = async () => {
+    if (designExist) {
+      const response = await get(`design-small/${params.id}`);
+      if (response.statusCode === 200 && response.result.design) {
+        const design: DesignProps = response.result.design;
+        setFormValues({
+          title: design.title || "",
+          description: design.description || "",
+          variables: design.variables.map((field: any) => ({
+            key: field.name,
+            name: field.name,
+            description: field.description,
+            value: field.value || "",
+            target: field.target,
+          })),
+          pwa_id: designSelected?.powerapp._id || "",
+          flake_id: designSelected?.flake._id || "",
+          type_design: designSelected?.type_design || "",
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    getDesign();
+  }, []);
+
   return (
     <section className={styles.step_two}>
       <div className={styles.design_preview}>
@@ -182,7 +213,10 @@ const DesignForm = () => {
         </div>
       </div>
       <div className={styles.button} onClick={handleSubmit}>
-        <Button title={dict("designs.create_design.create")} loading={loading} />
+        <Button
+          title={designExist ? dict("designs.create_design.edit") : dict("designs.create_design.create")}
+          loading={loading}
+        />
       </div>
     </section>
   );
