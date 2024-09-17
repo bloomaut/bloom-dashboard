@@ -1,0 +1,92 @@
+@import "@/styles/theme";
+
+.popup_container {
+  @include flex(row, center, center);
+  @include width-height(100vw, 100vh);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  color: $text;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in-out forwards;
+  .container {
+    @include flex(column, center, flex-start, 10px);
+    @include width-height(532px, auto);
+    @include fontSize-fontWeight(18px, 400);
+    position: relative;
+    background-color: $white;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    animation: scaleIn 0.3s ease-in-out forwards;
+    padding: 20px;
+    .content {
+      @include flex(row, flex-start, flex-start, 15px);
+      @include width-height(100%, auto);
+
+      .info {
+        @include flex(column, center, flex-start, 13px);
+        h2 {
+          @include fontSize-fontWeight(24px, 500);
+        }
+        .post_container {
+          @include flex(row, center, flex-start, 15px);
+        }
+        .fields {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 13px;
+        }
+      }
+    }
+    .btn_close {
+      @include width-height(100%, auto);
+      button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border: none;
+        outline: none;
+        background: none;
+        cursor: pointer;
+      }
+    }
+
+    .buttons {
+      @include width-height(100%, auto);
+      @include flex(column, center, flex-start);
+      .share {
+        @include fontSize-fontWeight(14px, 400);
+        text-align: start;
+      }
+      .copy_container {
+        @include flex(row, center, center, 13px);
+        @include width-height(100%, auto);
+      }
+      .download {
+        @include flex(row, flex-end, center);
+        @include width-height(100%, auto);
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}

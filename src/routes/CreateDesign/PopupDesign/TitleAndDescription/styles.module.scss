@@ -1,0 +1,12 @@
+.container {
+  @include flex(column, flex-start, flex-start);
+
+  h3 {
+    @include fontSize-fontWeight(13px, 500);
+  }
+  p {
+    @include width-height(100px, auto);
+    @include fontSize-fontWeight(13px, 400);
+    text-align: left;
+  }
+}

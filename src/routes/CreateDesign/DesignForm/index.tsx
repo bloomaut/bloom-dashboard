@@ -11,6 +11,7 @@ import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useParams } from "next/navigation";
+import PopupDesign from "../PopupDesign";
 
 type FormValues = {
   title: string;
@@ -44,6 +45,7 @@ const DesignForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [formValues, setFormValues] = useState<FormValues>(initialValues);
+  const [activePopup, setActivePopup] = useState<boolean>(true);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
@@ -151,6 +153,7 @@ const DesignForm = () => {
         });
       }
     }
+    setActivePopup(true);
   };
 
   useEffect(() => {
@@ -240,6 +243,24 @@ const DesignForm = () => {
           loading={loading}
         />
       </div>
+      {activePopup && (
+        <PopupDesign
+          onCancel={() => setActivePopup(false)}
+          setShowConfirmation={setActivePopup}
+          thumbnail={designSelected?.flake.thumbnail || ""}
+          title='Sorteo!'
+          description='SORTEO!'
+          post='Hog de promos'
+          pwa='Juancho PWA'
+          url='https://app.small.ar'
+          loading={loading}
+          fields={[
+            { title: "Var 1", description: "Participa y gana!" },
+            { title: "Var 2", description: "Sorteo!" },
+            { title: "Var 3", description: "$7600" },
+          ]}
+        />
+      )}
     </section>
   );
 };

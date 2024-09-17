@@ -480,7 +480,20 @@
         "user_variables": "Variables del Usuario",
         "create": "Crear Diseño",
         "edit": "Editar Diseño",
-        "create_diffusion": "Diseños de difusión creados"
+        "create_diffusion": "Diseños de difusión creados",
+        "popup": {
+          "design": "Diseño",
+          "info": "Información del diseño",
+          "title": "Título",
+          "description": "Descripción",
+          "post": "Publicar",
+          "pwa": "PWA para difundir",
+          "fields": "Campos",
+          "share": "¡Comparte este diseño para convertirlo en una campaña!",
+          "copy": "Copiar",
+          "copied": "Copiado",
+          "download": "Descargar"
+        }
       }
     }
   }
