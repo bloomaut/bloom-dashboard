@@ -9,12 +9,15 @@ import { Link } from "@/navigation";
 import PopupConfirm from "@/components/PopupConfirm";
 import { remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { createPortal } from "react-dom";
+import { useDesignContext } from "@/context/DesignContext";
 
 const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [popupDelete, setPopupDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { notify, notifyError } = useMessageToast();
+  const { handleRemoveDesign } = useDesignContext();
   const dict = useTranslations("dict");
 
   const handleClick = () => {
@@ -27,6 +30,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
       const data = await remove("design-small", _id);
       if (data.statusCode === 200) {
         notify(dict("toast.success_delete"));
+        handleRemoveDesign(_id);
       } else {
         notifyError(dict("toast.error_design_delete"));
       }
@@ -75,17 +79,19 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
               )}
             </div>
           )}
-          {popupDelete && (
-            <PopupConfirm
-              onConfirm={handleDelete}
-              onCancel={() => setPopupDelete(false)}
-              setShowConfirmation={setPopupDelete}
-              title={dict("popup.delete")}
-              loading={loading}
-              textCancel={dict("popup.cancel")}
-              textAccept={dict("popup.confirm")}
-            />
-          )}
+          {popupDelete &&
+            createPortal(
+              <PopupConfirm
+                onConfirm={handleDelete}
+                onCancel={() => setPopupDelete(false)}
+                setShowConfirmation={setPopupDelete}
+                title={dict("popup.delete")}
+                loading={loading}
+                textCancel={dict("popup.cancel")}
+                textAccept={dict("popup.confirm")}
+              />,
+              document.body,
+            )}
         </div>
       </div>
       <div className={styles.imageWrapper}>

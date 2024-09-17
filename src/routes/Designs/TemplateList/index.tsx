@@ -28,8 +28,6 @@ const TemplateList = () => {
     } else return locale === "en" ? `${dict("diffusion.empty")} designs` : `${dict("diffusion.empty")} Diseños`;
   };
 
-  console.log(listTemplates);
-
   return (
     <section className={styles.powerapp_container}>
       {loading ? (

@@ -10,6 +10,7 @@ interface Context {
   setSelectedList: (id: number) => void;
   designSelected: DesignSelected | undefined;
   setDesignSelected: (design: DesignSelected) => void;
+  handleRemoveDesign: (deletedId: string) => void;
 }
 
 const DesignContext = createContext<Context>({
@@ -19,6 +20,9 @@ const DesignContext = createContext<Context>({
   setSelectedList: () => undefined,
   designSelected: undefined,
   setDesignSelected: () => undefined,
+  handleRemoveDesign: () => {
+    throw new Error("handleRemoveDesign function not implemented");
+  },
 });
 
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
@@ -79,9 +83,24 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
     fetchPowerApps();
   }, [selectedList]);
 
+  const handleRemoveDesign = (deletedId: string) => {
+    if (listTemplates) {
+      const filteredDesigns = listTemplates.designs.filter(item => item._id !== deletedId);
+      setListTemplates({ ...listTemplates, designs: filteredDesigns });
+    }
+  };
+
   return (
     <DesignContext.Provider
-      value={{ listTemplates, loading, selectedList, setSelectedList, designSelected, setDesignSelected }}
+      value={{
+        listTemplates,
+        loading,
+        selectedList,
+        setSelectedList,
+        designSelected,
+        setDesignSelected,
+        handleRemoveDesign,
+      }}
     >
       {children}
     </DesignContext.Provider>
