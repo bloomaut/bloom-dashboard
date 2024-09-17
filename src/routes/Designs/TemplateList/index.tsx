@@ -41,8 +41,8 @@ const TemplateList = () => {
           <div className={styles.cards}>
             <h3 className={styles.subtitle}>{templateTitle()}</h3>
             <div className={styles.card_container}>
-              {listTemplates && listTemplates.data.length > 0 ? (
-                listTemplates.data.map(item => <TemplateCard key={item._id} {...item} />)
+              {listTemplates && listTemplates.hogs.length > 0 ? (
+                listTemplates.hogs.map(item => <TemplateCard key={item._id} {...item} />)
               ) : (
                 <p className={styles.empty_text}>{templateError()}</p>
               )}

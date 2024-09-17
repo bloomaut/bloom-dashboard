@@ -1,10 +1,10 @@
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { DesignSelected, DesignsProps } from "@/typescript/interfaces/designs.interface";
+import { DesignSelected, DiffusionProps } from "@/typescript/interfaces/designs.interface";
 
 interface Context {
-  listTemplates: DesignsProps | undefined;
+  listTemplates: DiffusionProps | undefined;
   loading: boolean;
   selectedList: number;
   setSelectedList: (id: number) => void;
@@ -22,7 +22,7 @@ const DesignContext = createContext<Context>({
 });
 
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
-  const [listTemplates, setListTemplates] = useState<DesignsProps>();
+  const [listTemplates, setListTemplates] = useState<DiffusionProps>();
   const [loading, setLoading] = useState(true);
   const [selectedList, setSelectedList] = useState<number>(1);
   const [designSelected, setDesignSelected] = useState<DesignSelected>();
@@ -32,7 +32,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       setLoading(true);
 
       let type = "";
-      let data: HogRelated[] = [];
+      let hogs: HogRelated[] = [];
       let designs: any[] = [];
 
       // SI EL INDEX SELECCIONADO ES 0, SE HACE EL GET DE TODOS LOS DISEÑOS
@@ -41,7 +41,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         console.log(response);
         if (response.statusCode === 200) {
           type = "";
-          data = response.result.designs;
+          hogs = response.result.designs;
         }
         // SI EL INDEX SELECCIONADO ES 1, SE HACE EL GET DE HOGS
       } else if (selectedList === 1) {
@@ -49,7 +49,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         console.log(response);
         if (response.statusCode === 200) {
           type = "Hog";
-          data = response.result.hogs;
+          hogs = response.result.hogs;
           designs = response.result.designs;
         }
         // SI EL INDEX SELECCIONADO ES 2, SE HACE EL GET DE EMAILS
@@ -58,7 +58,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         console.log(response);
         if (response.statusCode === 200) {
           type = "Email";
-          data = response.result.emails;
+          hogs = response.result.emails;
           designs = response.result.designs;
         }
         // SI EL INDEX SELECCIONADO ES 3, SE HACE EL GET DE POSTS
@@ -67,12 +67,12 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         console.log(response);
         if (response.statusCode === 200) {
           type = "Post";
-          data = response.result.posts;
+          hogs = response.result.posts;
           designs = response.result.designs;
         }
       }
 
-      setListTemplates({ type, data, designs });
+      setListTemplates({ type, hogs, designs });
       setLoading(false);
     };
 

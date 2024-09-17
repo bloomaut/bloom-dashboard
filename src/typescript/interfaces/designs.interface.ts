@@ -15,10 +15,26 @@ export interface PostPowerAppPre {
   type_design: string;
 }
 
-export interface DesignsProps {
+export interface DesignProps {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  thumbnail: string | null;
+  type_design: string | null;
+  data: any;
+  variables: VariablesFormDesign[];
+  active: boolean;
+  created_at: string;
+  email: any;
+  post: any;
+  power_app: HogRelated;
+  hog: HogRelated;
+}
+
+export interface DiffusionProps {
   type: string;
-  data: HogRelated[];
-  designs: any[];
+  hogs: HogRelated[];
+  designs: DesignProps[];
 }
 
 export interface DesignSelected {
