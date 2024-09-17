@@ -42,7 +42,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       // SI EL INDEX SELECCIONADO ES 0, SE HACE EL GET DE TODOS LOS DISEÑOS
       if (selectedList === 0) {
         const response = await get("design-small/list");
-        console.log(response);
         if (response.statusCode === 200) {
           type = "";
           hogs = response.result.designs;
@@ -50,7 +49,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         // SI EL INDEX SELECCIONADO ES 1, SE HACE EL GET DE HOGS
       } else if (selectedList === 1) {
         const response = await get("design-small/hogs");
-        console.log(response);
         if (response.statusCode === 200) {
           type = "Hog";
           hogs = response.result.hogs;
@@ -59,7 +57,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         // SI EL INDEX SELECCIONADO ES 2, SE HACE EL GET DE EMAILS
       } else if (selectedList === 2) {
         const response = await get("design-small/emails");
-        console.log(response);
         if (response.statusCode === 200) {
           type = "Email";
           hogs = response.result.emails;
@@ -68,7 +65,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
         // SI EL INDEX SELECCIONADO ES 3, SE HACE EL GET DE POSTS
       } else if (selectedList === 3) {
         const response = await get("design-small/posts");
-        console.log(response);
         if (response.statusCode === 200) {
           type = "Post";
           hogs = response.result.posts;

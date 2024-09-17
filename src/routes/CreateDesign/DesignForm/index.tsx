@@ -81,8 +81,12 @@ const DesignForm = () => {
         pwa_id: designSelected?.powerapp._id || "",
       };
       const updatedData = await update(`design-small/${params.id}`, dataToSend);
-
-      console.log(updatedData);
+      if (updatedData.statusCode === 200) {
+        notify("Diseño actualizado correctamente");
+      } else {
+        notifyError(dict("toast.error_design"));
+      }
+      setLoading(false);
     } else {
       if (file) {
         try {
