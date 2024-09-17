@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import InputDesign from "../InputDesign";
 import Button from "@/components/Button";
-import { get, post } from "@/services/fetch";
+import { get, post, update } from "@/services/fetch";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { DesignProps, VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
@@ -67,42 +67,60 @@ const DesignForm = () => {
 
     let imageUrl: string | null = null;
 
-    if (file) {
-      try {
-        imageUrl = await handleFileUpload(file);
-        if (!imageUrl) {
-          throw new Error("File upload failed");
-        }
-      } catch (error) {
-        notifyError("Error uploading file: " + error);
-        setLoading(false);
-        return;
-      }
-    }
+    if (designExist) {
+      const dataToSend = {
+        title: formValues.title,
+        description: formValues.description,
+        variables: formValues.variables.map(variable => ({
+          key: variable.key,
+          name: variable.name,
+          description: variable.description,
+          target: variable.target,
+          value: variable.target === "image" ? imageUrl || "" : variable.value,
+        })),
+        pwa_id: designSelected?.powerapp._id || "",
+      };
+      const updatedData = await update(`design-small/${params.id}`, dataToSend);
 
-    const payload = {
-      title: formValues.title,
-      description: formValues.description,
-      variables: formValues.variables.map(variable => ({
-        key: variable.key,
-        name: variable.name,
-        description: variable.description,
-        target: variable.target,
-        value: variable.target === "image" ? imageUrl || "" : variable.value,
-      })),
-      pwa_id: designSelected?.powerapp._id || "",
-      flake_id: designSelected?.flake._id || "",
-      type_design: designSelected?.type_design || "",
-    };
-
-    const response = await post("design-small/create", payload, ENV.DASHBOARD);
-    console.log("Data del formulario que envío:", response);
-    if (response.data.statusCode === 201) {
-      notify(dict("toast.success_design"));
-      setLoading(false);
+      console.log(updatedData);
     } else {
-      notifyError(dict("toast.error_design"));
-      setLoading(false);
+      if (file) {
+        try {
+          imageUrl = await handleFileUpload(file);
+          if (!imageUrl) {
+            throw new Error("File upload failed");
+          }
+        } catch (error) {
+          notifyError("Error uploading file: " + error);
+          setLoading(false);
+          return;
+        }
+      }
+
+      const payload = {
+        title: formValues.title,
+        description: formValues.description,
+        variables: formValues.variables.map(variable => ({
+          key: variable.key,
+          name: variable.name,
+          description: variable.description,
+          target: variable.target,
+          value: variable.target === "image" ? imageUrl || "" : variable.value,
+        })),
+        pwa_id: designSelected?.powerapp._id || "",
+        flake_id: designSelected?.flake._id || "",
+        type_design: designSelected?.type_design || "",
+      };
+
+      const response = await post("design-small/create", payload, ENV.DASHBOARD);
+      console.log("Data del formulario que envío:", response);
+      if (response.data.statusCode === 201) {
+        notify(dict("toast.success_design"));
+        setLoading(false);
+      } else {
+        notifyError(dict("toast.error_design"));
+        setLoading(false);
+      }
     }
   };
 

@@ -15,6 +15,13 @@ export interface PostPowerAppPre {
   type_design: string;
 }
 
+export interface PutPowerAppDesign {
+  title: string;
+  description: string;
+  variables: VariablesFormDesign[];
+  pwa_id: string;
+}
+
 export interface DesignProps {
   _id: string;
   title: string | null;
