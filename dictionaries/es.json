@@ -43,6 +43,7 @@
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
       "delete_product": "¿Estás seguro que desea eliminar este producto?",
       "delete": "¿Seguro que deseas eliminar este catálogo?",
+      "delete_design": "¿Seguro que deseas eliminar este diseño?",
       "name": "Nombre",
       "confirm": "Eliminar",
       "create": "Crear",

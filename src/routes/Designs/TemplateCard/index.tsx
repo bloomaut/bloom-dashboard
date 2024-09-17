@@ -85,7 +85,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 onConfirm={handleDelete}
                 onCancel={() => setPopupDelete(false)}
                 setShowConfirmation={setPopupDelete}
-                title={dict("popup.delete")}
+                title={dict("popup.delete_design")}
                 loading={loading}
                 textCancel={dict("popup.cancel")}
                 textAccept={dict("popup.confirm")}
