@@ -58,13 +58,14 @@
         position: absolute;
         right: 30px;
         top: 0;
+        @include flex(column, center, center, 5px);
         background: $white;
         padding: 4px;
         border-radius: 8px;
         .create {
           border-radius: 8px;
           background-color: $white;
-
+          padding: 2px;
           a {
             @include flex(row, center, center, 3px);
             @include fontSize-fontWeight(12px, 600);
@@ -73,7 +74,19 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             cursor: pointer;
-            margin: 4px;
+            color: $text;
+          }
+          button {
+            @include flex(row, center, center, 3px);
+            @include fontSize-fontWeight(12px, 600);
+            cursor: pointer;
+            outline: none;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 2px 6px;
+            margin-bottom: 3px;
             color: $text;
           }
         }

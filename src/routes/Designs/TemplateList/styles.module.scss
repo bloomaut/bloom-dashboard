@@ -19,10 +19,10 @@
     }
     .subtitle {
       @include fontSize-fontWeight(18px, 600);
-      max-width: 85%;
+      @include width-height(100%, auto);
+      @include flex(row, flex-start, center);
       color: $text;
       margin: auto auto 20px auto;
-      text-align: start;
     }
   }
 }

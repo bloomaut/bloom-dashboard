@@ -3,13 +3,14 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import InputDesign from "../InputDesign";
 import Button from "@/components/Button";
-import { post } from "@/services/fetch";
+import { get, post, update } from "@/services/fetch";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
+import { useEffect, useState } from "react";
+import { DesignProps, VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { handleFileUpload } from "@/utils/handleFileUpload";
+import { useParams } from "next/navigation";
 import PopupDesign from "../PopupDesign";
 
 type FormValues = {
@@ -22,7 +23,8 @@ type FormValues = {
 };
 
 const DesignForm = () => {
-  const { designSelected } = useDesignContext();
+  const { listTemplates, designSelected } = useDesignContext();
+  const params = useParams();
 
   const initialValues: FormValues = {
     title: "",
@@ -67,45 +69,96 @@ const DesignForm = () => {
 
     let imageUrl: string | null = null;
 
-    if (file) {
-      try {
-        imageUrl = await handleFileUpload(file);
-        if (!imageUrl) {
-          throw new Error("File upload failed");
-        }
-      } catch (error) {
-        notifyError("Error uploading file: " + error);
-        setLoading(false);
-        return;
+    if (designExist) {
+      const dataToSend = {
+        title: formValues.title,
+        description: formValues.description,
+        variables: formValues.variables.map(variable => ({
+          key: variable.key,
+          name: variable.name,
+          description: variable.description,
+          target: variable.target,
+          value: variable.target === "image" ? imageUrl || "" : variable.value,
+        })),
+        pwa_id: designSelected?.powerapp._id || "",
+      };
+      const updatedData = await update(`design-small/${params.id}`, dataToSend);
+      if (updatedData.statusCode === 200) {
+        notify("Diseño actualizado correctamente");
+      } else {
+        notifyError(dict("toast.error_design"));
       }
-    }
-
-    const payload = {
-      title: formValues.title,
-      description: formValues.description,
-      variables: formValues.variables.map(variable => ({
-        key: variable.key,
-        name: variable.name,
-        description: variable.description,
-        target: variable.target,
-        value: variable.target === "image" ? imageUrl || "" : variable.value,
-      })),
-      pwa_id: designSelected?.powerapp._id || "",
-      flake_id: designSelected?.flake._id || "",
-      type_design: designSelected?.type_design || "",
-    };
-
-    const response = await post("design-small/create", payload, ENV.DASHBOARD);
-    console.log("Data del formulario que envío:", response);
-    if (response.data.statusCode === 201) {
-      notify(dict("toast.success_design"));
       setLoading(false);
     } else {
-      notifyError(dict("toast.error_design"));
-      setLoading(false);
+      if (file) {
+        try {
+          imageUrl = await handleFileUpload(file);
+          if (!imageUrl) {
+            throw new Error("File upload failed");
+          }
+        } catch (error) {
+          notifyError("Error uploading file: " + error);
+          setLoading(false);
+          return;
+        }
+      }
+
+      const payload = {
+        title: formValues.title,
+        description: formValues.description,
+        variables: formValues.variables.map(variable => ({
+          key: variable.key,
+          name: variable.name,
+          description: variable.description,
+          target: variable.target,
+          value: variable.target === "image" ? imageUrl || "" : variable.value,
+        })),
+        pwa_id: designSelected?.powerapp._id || "",
+        flake_id: designSelected?.flake._id || "",
+        type_design: designSelected?.type_design || "",
+      };
+
+      const response = await post("design-small/create", payload, ENV.DASHBOARD);
+      console.log("Data del formulario que envío:", response);
+      if (response.data.statusCode === 201) {
+        notify(dict("toast.success_design"));
+        setLoading(false);
+      } else {
+        notifyError(dict("toast.error_design"));
+        setLoading(false);
+      }
+    }
+  };
+
+  const designExist = listTemplates && listTemplates.designs.some(design => design._id === params.id);
+
+  const getDesign = async () => {
+    if (designExist) {
+      const response = await get(`design-small/${params.id}`);
+      if (response.statusCode === 200 && response.result.design) {
+        const design: DesignProps = response.result.design;
+        setFormValues({
+          title: design.title || "",
+          description: design.description || "",
+          variables: design.variables.map((field: any) => ({
+            key: field.name,
+            name: field.name,
+            description: field.description,
+            value: field.value || "",
+            target: field.target,
+          })),
+          pwa_id: designSelected?.powerapp._id || "",
+          flake_id: designSelected?.flake._id || "",
+          type_design: designSelected?.type_design || "",
+        });
+      }
     }
     setActivePopup(true);
   };
+
+  useEffect(() => {
+    getDesign();
+  }, []);
 
   return (
     <section className={styles.step_two}>
@@ -185,7 +238,10 @@ const DesignForm = () => {
         </div>
       </div>
       <div className={styles.button} onClick={handleSubmit}>
-        <Button title={dict("designs.create_design.create")} loading={loading} />
+        <Button
+          title={designExist ? dict("designs.create_design.edit") : dict("designs.create_design.create")}
+          loading={loading}
+        />
       </div>
       {activePopup && (
         <PopupDesign

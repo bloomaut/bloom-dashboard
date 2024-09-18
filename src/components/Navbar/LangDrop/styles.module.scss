@@ -2,6 +2,7 @@
   @include width-height(50px, auto);
   @include flex(row, center, center, 10px);
   position: relative;
+  z-index: 9999;
   .lang_button {
     @include flex(row, center, center, 10px);
     cursor: pointer;

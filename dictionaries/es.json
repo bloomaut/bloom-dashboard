@@ -43,6 +43,7 @@
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
       "delete_product": "¿Estás seguro que desea eliminar este producto?",
       "delete": "¿Seguro que deseas eliminar este catálogo?",
+      "delete_design": "¿Seguro que deseas eliminar este diseño?",
       "name": "Nombre",
       "confirm": "Eliminar",
       "create": "Crear",
@@ -84,6 +85,7 @@
       "error_catalog": "Error al eliminar el catálogo",
       "error_palette": "Error al subir la paleta",
       "error_design": "Error al crear el diseño",
+      "error_design_delete": "Error al eliminar el diseño",
       "empty_fields": "Todos los campos son requeridos",
       "success_hotlink": "Hotlink creado correctamente",
       "error_tryagain": "Hubo un problema, intente más tarde",
@@ -478,6 +480,7 @@
         "fields": "Campos",
         "user_variables": "Variables del Usuario",
         "create": "Crear Diseño",
+        "edit": "Editar Diseño",
         "create_diffusion": "Diseños de difusión creados",
         "popup": {
           "design": "Diseño",

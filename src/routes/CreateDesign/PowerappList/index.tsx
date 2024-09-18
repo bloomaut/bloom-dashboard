@@ -19,10 +19,20 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
   const { notifyError } = useMessageToast();
   const [powerApps, setPowerApps] = useState<HogRelated[]>();
   const [powerAppSelected, setPowerAppSelected] = useState<string>("");
+  const [flakeId, setFlakeId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
   const dict = useTranslations("dict");
   const params = useParams();
+
+  useEffect(() => {
+    if (listTemplates?.designs) {
+      const matchingDesign = listTemplates.designs.find(template => template._id === params.id);
+      if (matchingDesign) {
+        setFlakeId(matchingDesign.hog._id);
+      }
+    }
+  }, [listTemplates, params.id]);
 
   useEffect(() => {
     const getPowerapps = async () => {
@@ -41,7 +51,7 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
     setLoadingNextPage(true);
     const dataToSend = {
       pwa_id: powerAppSelected,
-      flake_id: String(params.id),
+      flake_id: flakeId || String(params.id),
       type_design: listTemplates?.type.toLowerCase() || "",
     };
     const response = await post("design-small/prepare", dataToSend);
