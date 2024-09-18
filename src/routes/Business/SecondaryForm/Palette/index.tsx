@@ -61,7 +61,7 @@ const Palette = () => {
     const updatePalette = {
       palette: colors.map(color => ({ color })),
     };
-    console.log(updatePalette, "up");
+
     const data = await update("small-business", updatePalette);
 
     if (data.statusCode === 200) {
@@ -92,8 +92,9 @@ const Palette = () => {
     } else {
       setShowIcon(false);
     }
-  }, [colors.length, updateActive]);
-  /*   console.log("logo", logo, colors.length, formData.client.logo, "ASDASD"); */
+    setUpdateActive(true);
+  }, [colors.length, updateActive, colors]);
+
   return (
     <div className={styles.colors}>
       <h6>{dict("data.colors")}</h6>
@@ -151,7 +152,6 @@ const Palette = () => {
           />
         </div>
       ) : (
-        /*    (logo && colors.length >= 1) || */
         formData.client.logo && (
           <p className={updateActive ? styles.update_active : styles.submit} onClick={handleSaveColors}>
             {dict("data.update_palette")}
