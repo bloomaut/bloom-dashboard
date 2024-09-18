@@ -10,7 +10,7 @@ import { useBusinessContext } from "@/context/BusinessContext";
 import CheckBox from "@/components/Checkbox";
 
 const Palette = () => {
-  const { formData, setFormData, logo } = useBusinessContext();
+  const { formData, setFormData } = useBusinessContext();
   const [colors, setColors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showIcon, setShowIcon] = useState<boolean>(false);
@@ -61,7 +61,7 @@ const Palette = () => {
     const updatePalette = {
       palette: colors.map(color => ({ color })),
     };
-
+    console.log(updatePalette, "up");
     const data = await update("small-business", updatePalette);
 
     if (data.statusCode === 200) {
@@ -82,6 +82,7 @@ const Palette = () => {
   };
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (checkbox) setColors([]);
     setCheckbox(prevState => !prevState);
   };
 
@@ -92,7 +93,7 @@ const Palette = () => {
       setShowIcon(false);
     }
   }, [colors.length, updateActive]);
-
+  /*   console.log("logo", logo, colors.length, formData.client.logo, "ASDASD"); */
   return (
     <div className={styles.colors}>
       <h6>{dict("data.colors")}</h6>
@@ -150,12 +151,12 @@ const Palette = () => {
           />
         </div>
       ) : (
-        (logo && colors.length >= 1) ||
-        (formData.client.logo && (
+        /*    (logo && colors.length >= 1) || */
+        formData.client.logo && (
           <p className={updateActive ? styles.update_active : styles.submit} onClick={handleSaveColors}>
             {dict("data.update_palette")}
           </p>
-        ))
+        )
       )}
       <p className={styles.description}>{dict("data.description")}</p>
     </div>
