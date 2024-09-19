@@ -21,7 +21,7 @@ const initialFormData: UserBusiness = {
     category: "",
     logo: "",
     banner: "",
-    palette: [{ color: "#ffffff" }],
+    palette: [],
     company_web: "",
     instagram: "",
   },

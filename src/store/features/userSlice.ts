@@ -25,7 +25,7 @@ export const userInitialState: UserBusiness = {
     instagram: null,
     description: null,
     category: null,
-    palette: [{ color: "#ffffff" }],
+    palette: [],
     created_at: "",
     updated_at: "",
     onboardings: null,

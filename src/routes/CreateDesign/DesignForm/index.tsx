@@ -100,7 +100,6 @@ const DesignForm = () => {
         const updatedData = await update(`design-small/${params.id}`, dataToSend);
         if (updatedData.statusCode === 200) {
           notify("Diseño actualizado correctamente");
-          console.log(updatedData.result);
           setPopupData(updatedData.result.design);
           setActivePopup(true);
         } else {
