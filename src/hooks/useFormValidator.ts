@@ -24,6 +24,8 @@ const useFormValidator = (
 
       if (
         fieldsToValidate?.includes("ClientFirstname") &&
+        !fieldsToValidate?.includes("title") &&
+        !fieldsToValidate?.includes("description") &&
         (!formData?.ClientFirstname || !formData?.ClientFirstname.trim())
       ) {
         errors.ClientFirstname = dict("form_validation.ClientFirstname");
@@ -171,6 +173,29 @@ const useFormValidator = (
           }
         }
       });
+
+      if (fieldsToValidate) {
+        fieldsToValidate.forEach(field => {
+          if (!formData?.variables || !formData?.variables.length) return;
+
+          const variable = formData.variables.find((v: any) => v.name === field);
+          if (variable && !variable.value.trim()) {
+            errors[field] = dict("designs.create_design.error_validation");
+          }
+        });
+      }
+
+      if (fieldsToValidate?.includes("title")) {
+        if (!formData?.title || !formData?.title.trim()) {
+          errors.title = dict("designs.create_design.error_validation");
+        }
+      }
+
+      if (fieldsToValidate?.includes("description")) {
+        if (!formData?.description || !formData?.description.trim()) {
+          errors.description = dict("designs.create_design.error_validation");
+        }
+      }
 
       setErrors(errors);
     };

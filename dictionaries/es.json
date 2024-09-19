@@ -483,7 +483,7 @@
         "user_variables": "Variables del Usuario",
         "create": "Crear Diseño",
         "edit": "Editar Diseño",
-        "create_diffusion": "Diseños de difusión creados",
+        "create_diffusion": "Diseños creados",
         "popup": {
           "design": "Diseño",
           "info": "Información del diseño",
@@ -496,7 +496,8 @@
           "copy": "Copiar",
           "copied": "Copiado",
           "download": "Descargar"
-        }
+        },
+        "error_validation": "Debes ingresar un valor"
       }
     }
   }

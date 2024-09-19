@@ -31,7 +31,7 @@ const TemplateList = () => {
   return (
     <section className={styles.powerapp_container}>
       {loading ? (
-        <div>
+        <div className={styles.spinner_container}>
           <LoadingSpinner />
         </div>
       ) : (

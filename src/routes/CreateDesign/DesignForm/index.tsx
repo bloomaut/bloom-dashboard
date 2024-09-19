@@ -4,14 +4,15 @@ import Image from "next/image";
 import InputDesign from "../InputDesign";
 import Button from "@/components/Button";
 import { get, post, update } from "@/services/fetch";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { DesignProps, VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { handleFileUpload } from "@/utils/handleFileUpload";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import PopupDesign from "../PopupDesign";
+import useFormValidator from "@/hooks/useFormValidator";
 
 type FormValues = {
   title: string;
@@ -24,7 +25,6 @@ type FormValues = {
 
 const DesignForm = () => {
   const { listTemplates, designSelected } = useDesignContext();
-  const params = useParams();
 
   const initialValues: FormValues = {
     title: "",
@@ -45,9 +45,21 @@ const DesignForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [formValues, setFormValues] = useState<FormValues>(initialValues);
-  const [activePopup, setActivePopup] = useState<boolean>(true);
+  const [activePopup, setActivePopup] = useState<boolean>(false);
+  const [popupData, setPopupData] = useState<any>(null);
+  const [checkValidation, setCheckValidation] = useState<boolean>(false);
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
+  const params = useParams();
+  const router = useRouter();
+  const locale = useLocale();
+
+  const fieldsToValidate = [
+    "title",
+    "description",
+    ...formValues.variables.map((field: VariablesFormDesign) => field.name),
+  ];
+  const errors = useFormValidator(formValues, fieldsToValidate, file);
 
   const handleInputChange = (name: string, value: string) => {
     if (name === "title" || name === "description") {
@@ -65,69 +77,75 @@ const DesignForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setCheckValidation(true);
     setLoading(true);
 
     let imageUrl: string | null = null;
+    const isUpdate = designExist;
 
-    if (designExist) {
-      const dataToSend = {
-        title: formValues.title,
-        description: formValues.description,
-        variables: formValues.variables.map(variable => ({
-          key: variable.key,
-          name: variable.name,
-          description: variable.description,
-          target: variable.target,
-          value: variable.target === "image" ? imageUrl || "" : variable.value,
-        })),
-        pwa_id: designSelected?.powerapp._id || "",
-      };
-      const updatedData = await update(`design-small/${params.id}`, dataToSend);
-      if (updatedData.statusCode === 200) {
-        notify("Diseño actualizado correctamente");
+    if (Object.keys(errors).length === 0) {
+      if (isUpdate) {
+        const dataToSend = {
+          title: formValues.title,
+          description: formValues.description,
+          variables: formValues.variables.map(variable => ({
+            key: variable.key,
+            name: variable.name,
+            description: variable.description,
+            target: variable.target,
+            value: variable.target === "image" ? imageUrl || "" : variable.value,
+          })),
+          pwa_id: designSelected?.powerapp._id || "",
+        };
+        const updatedData = await update(`design-small/${params.id}`, dataToSend);
+        if (updatedData.statusCode === 200) {
+          notify("Diseño actualizado correctamente");
+          setPopupData(updatedData.result.design);
+          setActivePopup(true);
+        } else {
+          notifyError(dict("toast.error_design"));
+        }
       } else {
-        notifyError(dict("toast.error_design"));
-      }
-      setLoading(false);
-    } else {
-      if (file) {
-        try {
-          imageUrl = await handleFileUpload(file);
-          if (!imageUrl) {
-            throw new Error("File upload failed");
+        if (file) {
+          try {
+            imageUrl = await handleFileUpload(file);
+            if (!imageUrl) {
+              throw new Error("File upload failed");
+            }
+          } catch (error) {
+            notifyError("Error uploading file: " + error);
+            setLoading(false);
+            return;
           }
-        } catch (error) {
-          notifyError("Error uploading file: " + error);
-          setLoading(false);
-          return;
+        }
+
+        const payload = {
+          title: formValues.title,
+          description: formValues.description,
+          variables: formValues.variables.map(variable => ({
+            key: variable.key,
+            name: variable.name,
+            description: variable.description,
+            target: variable.target,
+            value: variable.target === "image" ? imageUrl || "" : variable.value,
+          })),
+          pwa_id: designSelected?.powerapp._id || "",
+          flake_id: designSelected?.flake._id || "",
+          type_design: designSelected?.type_design || "",
+        };
+
+        const response = await post("design-small/create", payload);
+        if (response.data.statusCode === 201) {
+          notify(dict("toast.success_design"));
+          setPopupData(response.data.result.design);
+          setActivePopup(true);
+        } else {
+          notifyError(dict("toast.error_design"));
         }
       }
-
-      const payload = {
-        title: formValues.title,
-        description: formValues.description,
-        variables: formValues.variables.map(variable => ({
-          key: variable.key,
-          name: variable.name,
-          description: variable.description,
-          target: variable.target,
-          value: variable.target === "image" ? imageUrl || "" : variable.value,
-        })),
-        pwa_id: designSelected?.powerapp._id || "",
-        flake_id: designSelected?.flake._id || "",
-        type_design: designSelected?.type_design || "",
-      };
-
-      const response = await post("design-small/create", payload, ENV.DASHBOARD);
-      console.log("Data del formulario que envío:", response);
-      if (response.data.statusCode === 201) {
-        notify(dict("toast.success_design"));
-        setLoading(false);
-      } else {
-        notifyError(dict("toast.error_design"));
-        setLoading(false);
-      }
     }
+
+    setLoading(false);
   };
 
   const designExist = listTemplates && listTemplates.designs.some(design => design._id === params.id);
@@ -153,12 +171,21 @@ const DesignForm = () => {
         });
       }
     }
-    setActivePopup(true);
   };
 
   useEffect(() => {
     getDesign();
   }, []);
+
+  useEffect(() => {
+    if (checkValidation && Object.keys(errors).length === 0) {
+      setCheckValidation(false);
+    }
+  }, [errors]);
+
+  const ErrorMessage = ({ error }: { error: string | undefined }) => (
+    <p className={error ? styles.error : styles.error_hidden}>{error}</p>
+  );
 
   return (
     <section className={styles.step_two}>
@@ -173,20 +200,26 @@ const DesignForm = () => {
           />
         </div>
         <div className={styles.img_form}>
-          <InputDesign
-            description={dict("designs.create_design.input_title")}
-            target='text'
-            name='title'
-            value={formValues.title || ""}
-            onChange={handleInputChange}
-          />
-          <InputDesign
-            description={dict("designs.create_design.input_description")}
-            target='text'
-            name='description'
-            value={formValues.description || ""}
-            onChange={handleInputChange}
-          />
+          <div className={styles.form_control}>
+            <InputDesign
+              description={dict("designs.create_design.input_title")}
+              target='text'
+              name='title'
+              value={formValues.title || ""}
+              onChange={handleInputChange}
+            />
+            {checkValidation && <ErrorMessage error={errors.title} />}
+          </div>
+          <div className={styles.form_control}>
+            <InputDesign
+              description={dict("designs.create_design.input_description")}
+              target='text'
+              name='description'
+              value={formValues.description || ""}
+              onChange={handleInputChange}
+            />
+            {checkValidation && <ErrorMessage error={errors.description} />}
+          </div>
           <div className={styles.pwa_text}>
             <p className={styles.pwa}>{dict("designs.create_design.pwa_diffusion")}</p>
             <p className={styles.name}>{designSelected?.powerapp.title}</p>
@@ -200,17 +233,20 @@ const DesignForm = () => {
         <div className={styles.form_container}>
           <p className={styles.field}>{dict("designs.create_design.fields")}</p>
           <form onSubmit={handleSubmit}>
-            {formValues.variables.map(variable => (
-              <InputDesign
-                key={variable.name}
-                description={variable.description}
-                target={variable.target}
-                name={variable.name}
-                value={variable.value}
-                onChange={(name, value) => handleInputChange(name, value)}
-                file={file}
-                setFile={variable.target === "image" ? setFile : undefined}
-              />
+            {formValues.variables.map((variable, index) => (
+              <div className={styles.form_control} key={index}>
+                <InputDesign
+                  key={variable.name}
+                  description={variable.description}
+                  target={variable.target}
+                  name={variable.name}
+                  value={variable.value}
+                  onChange={(name, value) => handleInputChange(name, value)}
+                  file={file}
+                  setFile={variable.target === "image" ? setFile : undefined}
+                />
+                {checkValidation && <ErrorMessage error={errors[variable.name]} />}
+              </div>
             ))}
           </form>
         </div>
@@ -245,20 +281,17 @@ const DesignForm = () => {
       </div>
       {activePopup && (
         <PopupDesign
-          onCancel={() => setActivePopup(false)}
+          onCancel={() => router.push(`/${locale}/designs`)}
           setShowConfirmation={setActivePopup}
           thumbnail={designSelected?.flake.thumbnail || ""}
-          title='Sorteo!'
-          description='SORTEO!'
-          post='Hog de promos'
-          pwa='Juancho PWA'
-          url='https://app.small.ar'
+          title={popupData.title || ""}
+          description={popupData.description || ""}
+          typeDesign={popupData.type_design || null}
+          hog={popupData.hog.title || ""}
+          pwa={popupData.power_app.title || ""}
+          url={`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${popupData._id}`}
           loading={loading}
-          fields={[
-            { title: "Var 1", description: "Participa y gana!" },
-            { title: "Var 2", description: "Sorteo!" },
-            { title: "Var 3", description: "$7600" },
-          ]}
+          fields={popupData.variables || []}
         />
       )}
     </section>

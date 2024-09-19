@@ -483,7 +483,7 @@
         "user_variables": "User variables",
         "create": "Create Design",
         "edit": "Edit Design",
-        "create_diffusion": "Created Diffusion Desings",
+        "create_diffusion": "Created Desings",
         "popup": {
           "design": "Design",
           "info": "Design info",
@@ -496,7 +496,8 @@
           "copy": "Copy",
           "copied": "Copied",
           "download": "Download"
-        }
+        },
+        "error_validation": "You must enter a value"
       }
     }
   }
