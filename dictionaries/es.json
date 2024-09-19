@@ -494,7 +494,8 @@
           "copy": "Copiar",
           "copied": "Copiado",
           "download": "Descargar"
-        }
+        },
+        "error_validation": "Debes ingresar un valor"
       }
     }
   }

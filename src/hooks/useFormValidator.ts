@@ -172,6 +172,17 @@ const useFormValidator = (
         }
       });
 
+      if (fieldsToValidate) {
+        fieldsToValidate.forEach(field => {
+          if (!formData?.variables || !formData?.variables.length) return;
+
+          const variable = formData.variables.find((v: any) => v.name === field);
+          if (variable && (!variable.value || typeof variable.value !== "string" || !variable.value.trim())) {
+            errors[field] = dict("designs.create_design.error_validation");
+          }
+        });
+      }
+
       setErrors(errors);
     };
 

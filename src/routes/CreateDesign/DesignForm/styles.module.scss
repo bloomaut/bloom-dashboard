@@ -50,13 +50,25 @@
         @include fontSize-fontWeight(16px, 500);
       }
       form {
-        @include flex(column, flex-start, flex-end, 10px);
+        @include flex(column, flex-start, flex-end, 20px);
         margin: 10px 0;
+        .form_control {
+          @include width-height(100%, auto);
+          position: relative;
+          .error {
+            @include width-height(250px, auto);
+            @include fontSize-fontWeight(12px, 400);
+            text-align: start;
+            position: absolute;
+            top: 50px;
+            color: red;
+          }
+        }
       }
     }
     .user_variables {
       @include flex(column, flex-start, flex-start, 10px);
-      margin-top: 10px;
+      margin-top: 30px;
       .title {
         @include fontSize-fontWeight(16px, 500);
         color: $text;

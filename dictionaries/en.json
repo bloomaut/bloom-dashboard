@@ -494,7 +494,8 @@
           "copy": "Copy",
           "copied": "Copied",
           "download": "Download"
-        }
+        },
+        "error_validation": "You must enter a value"
       }
     }
   }

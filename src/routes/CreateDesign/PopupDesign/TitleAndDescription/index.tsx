@@ -7,8 +7,8 @@ interface Props {
 const TitleAndDescription = ({ title, description }: Props) => {
   return (
     <div className={styles.container}>
-      <h3>{title}</h3>
-      <p>{description}</p>
+      <h3 title={title}>{title}</h3>
+      <p title={description}>{description}</p>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { Dispatch, SetStateAction, useState } from "react";
+import { SetStateAction, useState } from "react";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 // Components
 import Button from "@/components/Button";
@@ -9,11 +9,7 @@ import Icon from "@/components/Icon";
 import Image from "next/image";
 import TitleAndDescription from "./TitleAndDescription";
 import Input from "@/components/Input";
-
-interface Fields {
-  title: string;
-  description: string;
-}
+import { VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
 
 interface PopupDesignProps {
   onConfirm?: () => void;
@@ -22,9 +18,10 @@ interface PopupDesignProps {
   thumbnail: string;
   title: string;
   description: string;
-  post: string;
+  typeDesign: "post" | "hog" | "email";
+  hog: string;
   pwa: string;
-  fields?: Fields[];
+  fields?: VariablesFormDesign[];
   url: string;
   loading?: boolean;
 }
@@ -36,7 +33,8 @@ const PopupDesign = ({
   thumbnail,
   title,
   description,
-  post,
+  hog,
+  typeDesign,
   pwa,
   fields,
   url,
@@ -53,6 +51,19 @@ const PopupDesign = ({
     await navigator.clipboard.writeText(url);
     setCopy(true);
   };
+
+  const typeDesignTitle = (() => {
+    switch (typeDesign) {
+      case "post":
+        return "Post";
+      case "hog":
+        return "Hog";
+      case "email":
+        return "Email";
+      default:
+        return "";
+    }
+  })();
 
   return (
     <section className={styles.popup_container}>
@@ -72,14 +83,14 @@ const PopupDesign = ({
             <TitleAndDescription title={dict("title")} description={title} />
             <TitleAndDescription title={dict("description")} description={description} />
             <div className={styles.post_container}>
-              <TitleAndDescription title={dict("post")} description={post} />
+              <TitleAndDescription title={typeDesignTitle} description={hog} />
               <TitleAndDescription title={dict("pwa")} description={pwa} />
             </div>
             <h2>{dict("fields")}</h2>
             {fields && (
               <div className={styles.fields}>
                 {fields.map((field, index) => (
-                  <TitleAndDescription key={index} title={field.title} description={field.description} />
+                  <TitleAndDescription key={index} title={field.name} description={field.value} />
                 ))}
               </div>
             )}
