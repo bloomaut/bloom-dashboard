@@ -17,7 +17,7 @@ const ClarityScript = () => {
               t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];
               y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "nk4fsei17x");
+            })(window, document, "clarity", "script", "o5scff0msm");
           `,
       }}
     />
