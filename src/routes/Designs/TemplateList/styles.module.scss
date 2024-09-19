@@ -3,6 +3,11 @@
   @include flex(column, flex-start, flex-start);
   overflow-y: auto;
   padding: 20px;
+  .spinner_container {
+    @include width-height(100%, auto);
+    @include flex(column, center, center);
+    margin-top: 40px;
+  }
   .cards {
     min-width: 280px;
     margin-bottom: 40px;
