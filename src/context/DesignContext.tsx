@@ -1,7 +1,7 @@
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { DesignSelected, DiffusionProps } from "@/typescript/interfaces/designs.interface";
+import { DesignProps, DesignSelected, DiffusionProps } from "@/typescript/interfaces/designs.interface";
 
 interface Context {
   listTemplates: DiffusionProps | undefined;
@@ -26,7 +26,11 @@ const DesignContext = createContext<Context>({
 });
 
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
-  const [listTemplates, setListTemplates] = useState<DiffusionProps>();
+  const [listTemplates, setListTemplates] = useState<DiffusionProps>({
+    type: "",
+    hogs: [],
+    designs: [],
+  });
   const [loading, setLoading] = useState(true);
   const [selectedList, setSelectedList] = useState<number>(1);
   const [designSelected, setDesignSelected] = useState<DesignSelected>();
@@ -37,7 +41,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
 
       let type = "";
       let hogs: HogRelated[] = [];
-      let designs: any[] = [];
+      let designs: DesignProps[] = [];
 
       // SI EL INDEX SELECCIONADO ES 0, SE HACE EL GET DE TODOS LOS DISEÑOS
       if (selectedList === 0) {
@@ -80,9 +84,12 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
   }, [selectedList]);
 
   const handleRemoveDesign = (deletedId: string) => {
-    if (listTemplates) {
+    if (listTemplates?.designs.length) {
       const filteredDesigns = listTemplates.designs.filter(item => item._id !== deletedId);
       setListTemplates({ ...listTemplates, designs: filteredDesigns });
+    } else {
+      const filteredDesigns = listTemplates?.hogs.filter(item => item._id !== deletedId);
+      setListTemplates({ ...listTemplates, hogs: filteredDesigns });
     }
   };
 
