@@ -1,12 +1,11 @@
 .design_container {
   @include width-height(100%, 100%);
-  @include flex(column, flex-start, center, 20px);
+  @include flex(column, flex-start, cente);
+  overflow-y: hidden;
   .header {
-    @include width-height(calc(100% - 264px), auto);
+    @include width-height(100%, auto);
     background: $blueishBackground;
     padding: 20px 0;
-    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
-    position: fixed;
-    z-index: 50;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
   }
 }
