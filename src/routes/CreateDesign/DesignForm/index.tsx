@@ -130,7 +130,7 @@ const DesignForm = () => {
           type_design: designSelected?.type_design || "",
         };
 
-        const response = await post("design-small/create", payload, ENV.DASHBOARD);
+        const response = await post("design-small/create", payload);
         if (response.data.statusCode === 201) {
           notify(dict("toast.success_design"));
           setPopupData(response.data.result.design);
