@@ -1,6 +1,6 @@
 .powerapp_container {
   @include width-height(100%, auto);
-  @include flex(column, flex-start, center);
+  @include flex(column, flex-start, flex-start);
   overflow-y: auto;
   padding: 20px;
   .cards {
