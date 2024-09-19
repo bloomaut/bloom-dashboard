@@ -54,7 +54,11 @@ const DesignForm = () => {
   const router = useRouter();
   const locale = useLocale();
 
-  const fieldsToValidate = formValues.variables.map((field: VariablesFormDesign) => field.name) || [];
+  const fieldsToValidate = [
+    "title",
+    "description",
+    ...formValues.variables.map((field: VariablesFormDesign) => field.name),
+  ];
   const errors = useFormValidator(formValues, fieldsToValidate, file);
 
   const handleInputChange = (name: string, value: string) => {
@@ -196,20 +200,26 @@ const DesignForm = () => {
           />
         </div>
         <div className={styles.img_form}>
-          <InputDesign
-            description={dict("designs.create_design.input_title")}
-            target='text'
-            name='title'
-            value={formValues.title || ""}
-            onChange={handleInputChange}
-          />
-          <InputDesign
-            description={dict("designs.create_design.input_description")}
-            target='text'
-            name='description'
-            value={formValues.description || ""}
-            onChange={handleInputChange}
-          />
+          <div className={styles.form_control}>
+            <InputDesign
+              description={dict("designs.create_design.input_title")}
+              target='text'
+              name='title'
+              value={formValues.title || ""}
+              onChange={handleInputChange}
+            />
+            {checkValidation && <ErrorMessage error={errors.title} />}
+          </div>
+          <div className={styles.form_control}>
+            <InputDesign
+              description={dict("designs.create_design.input_description")}
+              target='text'
+              name='description'
+              value={formValues.description || ""}
+              onChange={handleInputChange}
+            />
+            {checkValidation && <ErrorMessage error={errors.description} />}
+          </div>
           <div className={styles.pwa_text}>
             <p className={styles.pwa}>{dict("designs.create_design.pwa_diffusion")}</p>
             <p className={styles.name}>{designSelected?.powerapp.title}</p>
