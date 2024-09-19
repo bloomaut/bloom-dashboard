@@ -204,6 +204,8 @@
       },
       "data": {
         "colors": "Colors",
+        "ia": "Generate colors with IA",
+        "update_palette": "Update palette",
         "description": "From the logo, we automatically generate a color palette that you can subsequently modify",
         "add_info": "Additional Information",
         "website": "Website",
