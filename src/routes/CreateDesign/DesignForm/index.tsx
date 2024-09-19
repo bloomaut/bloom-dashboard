@@ -100,6 +100,7 @@ const DesignForm = () => {
         const updatedData = await update(`design-small/${params.id}`, dataToSend);
         if (updatedData.statusCode === 200) {
           notify("Diseño actualizado correctamente");
+          console.log(updatedData.result);
           setPopupData(updatedData.result.design);
           setActivePopup(true);
         } else {
@@ -289,7 +290,7 @@ const DesignForm = () => {
           typeDesign={popupData.type_design || null}
           hog={popupData.hog.title || ""}
           pwa={popupData.power_app.title || ""}
-          url='https://app.small.ar'
+          url={`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${popupData._id}`}
           loading={loading}
           fields={popupData.variables || []}
         />
