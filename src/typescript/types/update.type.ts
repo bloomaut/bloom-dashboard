@@ -3,6 +3,7 @@ import { UpdateClient } from "../interfaces/clients.interface";
 import { PutBusiness } from "../interfaces/business.interface";
 import { PutTemplate } from "../interfaces/template.interface";
 import { PutPalette } from "../interfaces/business.interface";
+import { PutPowerAppDesign } from "../interfaces/designs.interface";
 
 export type UPDATE =
   | UpdateClient
@@ -11,4 +12,5 @@ export type UPDATE =
   | PutBusiness
   | PutTemplate
   | PutPalette
-  | PutPercentage;
+  | PutPercentage
+  | PutPowerAppDesign;

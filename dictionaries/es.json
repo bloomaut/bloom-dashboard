@@ -43,6 +43,7 @@
       "delete_title": "¿Seguro que deseas eliminar este cliente?",
       "delete_product": "¿Estás seguro que desea eliminar este producto?",
       "delete": "¿Seguro que deseas eliminar este catálogo?",
+      "delete_design": "¿Seguro que deseas eliminar este diseño?",
       "name": "Nombre",
       "confirm": "Eliminar",
       "create": "Crear",
@@ -84,6 +85,7 @@
       "error_catalog": "Error al eliminar el catálogo",
       "error_palette": "Error al subir la paleta",
       "error_design": "Error al crear el diseño",
+      "error_design_delete": "Error al eliminar el diseño",
       "empty_fields": "Todos los campos son requeridos",
       "success_hotlink": "Hotlink creado correctamente",
       "error_tryagain": "Hubo un problema, intente más tarde",
@@ -202,6 +204,8 @@
       },
       "data": {
         "colors": "Colores",
+        "ia": "Generar colores con IA",
+        "update_palette": "Actualizar paleta",
         "description": "A partir del logotipo generamos automáticamente una paleta de colores que podrás modificar posteriormente",
         "add_info": "Información Adicional",
         "website": "Sitio web",
@@ -457,8 +461,12 @@
       "diffusion": {
         "empty_pwa": "No tiene powerapps disponibles",
         "title": "Plantillas de",
+        "designs": "Diseños",
         "empty": "No tienes",
-        "create_design": "Crear diseño",
+        "create_design": "Crear",
+        "view_design": "Ver",
+        "edit_design": "Editar",
+        "delete_design": "Eliminar",
         "back_design": "Volver a mis diseños",
         "select_pwa": "Seleccionar PWA",
         "fill_fields": "Completar campos",
@@ -473,7 +481,23 @@
         "promotion": "Promoción de verano",
         "fields": "Campos",
         "user_variables": "Variables del Usuario",
-        "create": "Crear Diseño"
+        "create": "Crear Diseño",
+        "edit": "Editar Diseño",
+        "create_diffusion": "Diseños creados",
+        "popup": {
+          "design": "Diseño",
+          "info": "Información del diseño",
+          "title": "Título",
+          "description": "Descripción",
+          "post": "Publicar",
+          "pwa": "PWA para difundir",
+          "fields": "Campos",
+          "share": "¡Comparte este diseño para convertirlo en una campaña!",
+          "copy": "Copiar",
+          "copied": "Copiado",
+          "download": "Descargar"
+        },
+        "error_validation": "Debes ingresar un valor"
       }
     }
   }

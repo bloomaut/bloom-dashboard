@@ -1,23 +1,42 @@
 .powerapp_container {
   @include width-height(100%, auto);
-  @include flex(column, center, center);
-  margin-top: 300px;
-  position: relative;
-  z-index: 10;
-  .card_container {
-    @include flex(row, center, center, 20px);
-    flex-wrap: wrap;
-    .empty_text {
-      @include fontSize-fontWeight(16px, 400);
-      color: $lightGrey;
-      text-align: center;
+  @include flex(column, flex-start, flex-start);
+  overflow-y: auto;
+  padding: 20px;
+  .spinner_container {
+    @include width-height(100%, auto);
+    @include flex(column, center, center);
+    margin-top: 40px;
+  }
+  .cards {
+    min-width: 280px;
+    margin-bottom: 40px;
+    .card_container {
+      @include flex(row, center, center, 20px);
+      flex-wrap: wrap;
+      padding: 10px 0;
+      .empty_text {
+        @include fontSize-fontWeight(16px, 400);
+        color: $lightGrey;
+        text-align: center;
+      }
+    }
+    .subtitle {
+      @include fontSize-fontWeight(18px, 600);
+      @include width-height(100%, auto);
+      @include flex(row, flex-start, center);
+      color: $text;
+      margin: auto auto 20px auto;
     }
   }
-  .subtitle {
-    @include fontSize-fontWeight(18px, 600);
-    min-width: 85%;
-    color: $text;
-    margin-bottom: 20px;
-    text-align: start;
-  }
+}
+
+.powerapp_container::-webkit-scrollbar {
+  width: 5px;
+  background-color: $greyBackground;
+}
+
+.powerapp_container::-webkit-scrollbar-thumb {
+  background-color: $orange;
+  border-radius: 10px;
 }

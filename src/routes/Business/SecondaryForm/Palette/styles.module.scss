@@ -4,31 +4,42 @@
   @include flex(column, flex-start, flex-start, 10px);
   .container {
     @include width-height(100%, auto);
-    @include flex(row, flex-start, flex-start, 10px);
-    position: relative;
-    .column {
-      @include width-height(auto, 75px);
-      @include flex(column, flex-start, flex-start);
-      .additional_color_container {
-        width: 35px;
-        height: 35px;
-        border-radius: 99%;
-        position: relative;
-        overflow: hidden;
-        border: 1px solid $lighterGrey;
-        .color_input {
-          width: 45px;
-          height: 45px;
-          padding: 0;
-          cursor: pointer;
-          position: absolute;
-          top: -6px;
-          left: -5px;
-          &:disabled {
-            cursor: default;
+    @include flex(column, flex-start, flex-start);
+    .colors_container {
+      @include width-height(100%, auto);
+      @include flex(row, flex-start, flex-start, 10px);
+      position: relative;
+      .column {
+        @include width-height(auto, 75px);
+        @include flex(column, flex-start, flex-start);
+        .additional_color_container {
+          width: 35px;
+          height: 35px;
+          border-radius: 99%;
+          position: relative;
+          overflow: hidden;
+          border: 1px solid $lighterGrey;
+          .color_input {
+            width: 45px;
+            height: 45px;
+            padding: 0;
+            cursor: pointer;
+            position: absolute;
+            top: -6px;
+            left: -5px;
+            &:disabled {
+              cursor: default;
+            }
           }
         }
       }
+      .add_btn_container {
+        @include width-height(auto, 50px);
+      }
+    }
+    .checkbox_container {
+      @include flex(row, center, flex-start, 5px);
+      @include fontSize-fontWeight(12px, 400);
     }
     .circle {
       @include width-height(35px, 35px);
@@ -45,9 +56,14 @@
   }
   .submit {
     @include fontSize-fontWeight(14px, 600);
+    border-bottom: 1px solid $lighterGrey;
+  }
+  .update_active {
+    @extend .submit;
     color: $blue;
     cursor: pointer;
     border-bottom: 1px solid $blue;
+    transition: 500ms;
   }
   .description {
     @include fontSize-fontWeight(12px, 500);

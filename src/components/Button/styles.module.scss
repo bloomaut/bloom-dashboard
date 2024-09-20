@@ -279,3 +279,37 @@
     background: none;
   }
 }
+
+.popup_design_btn {
+  @extend .btn;
+  @include width-height(100px, 30px);
+  background-color: #ff2a38;
+  &:hover {
+    background-color: #fc4f5a;
+  }
+}
+
+.popup_design_btn_copied {
+  @extend .popup_design_download;
+  max-width: 100px;
+  max-height: 30px;
+}
+
+.popup_design_download {
+  @include flex(row, center, center, 5px);
+  @include width-height(150px, 40px);
+  @include fontSize-fontWeight(16px, 600);
+  background-color: #fff;
+  color: #ff2a38;
+  border: 1px solid #ff2a38;
+  svg {
+    stroke: #ff2a38;
+  }
+  &:hover {
+    background-color: #ff2a38;
+    color: #fff;
+    svg {
+      stroke: #fff;
+    }
+  }
+}

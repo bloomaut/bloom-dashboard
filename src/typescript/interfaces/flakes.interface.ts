@@ -24,8 +24,9 @@ export interface VariableInUse {
 
 export interface HogRelated {
   _id: ID;
-  title: string;
-  thumbnail: string;
+  title: string | null;
+  thumbnail: string | null;
+  datatype?: "" | "designs";
 }
 
 interface Skinx {
