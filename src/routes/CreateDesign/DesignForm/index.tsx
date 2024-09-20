@@ -228,7 +228,7 @@ const DesignForm = () => {
       </div>
       <div className={styles.design_form}>
         <h3 className={styles.title}>
-          <span>{designSelected?.type_design}:</span> {dict("designs.create_design.promotion")}
+          <span>{designSelected?.type_design}:</span> {designSelected?.flake.title || ""}
         </h3>
         <div className={styles.form_container}>
           <p className={styles.field}>{dict("designs.create_design.fields")}</p>
