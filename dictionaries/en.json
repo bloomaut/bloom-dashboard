@@ -497,7 +497,9 @@
           "copied": "Copied",
           "download": "Download"
         },
-        "error_validation": "You must enter a value"
+        "error_validation": "You must enter a value",
+        "empty_variables": "This PWA does not contain any variables",
+        "user_variables_message": "These fields will be completed during user registration"
       }
     }
   }

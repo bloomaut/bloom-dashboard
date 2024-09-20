@@ -26,6 +26,8 @@ type FormValues = {
 const DesignForm = () => {
   const { listTemplates, designSelected } = useDesignContext();
 
+  console.log(designSelected);
+
   const initialValues: FormValues = {
     title: "",
     description: "",
@@ -231,46 +233,54 @@ const DesignForm = () => {
           <span>{designSelected?.type_design}:</span> {dict("designs.create_design.promotion")}
         </h3>
         <div className={styles.form_container}>
-          <p className={styles.field}>{dict("designs.create_design.fields")}</p>
-          <form onSubmit={handleSubmit}>
-            {formValues.variables.map((variable, index) => (
-              <div className={styles.form_control} key={index}>
+          {formValues.variables
+            .filter(variable => !variable.name.startsWith("Client"))
+            .map((variable, index) => (
+              <>
+                <p className={styles.field}>{dict("designs.create_design.fields")}</p>
+                <form onSubmit={handleSubmit}>
+                  <div className={styles.form_control} key={index}>
+                    <InputDesign
+                      description={variable.description}
+                      target={variable.target}
+                      name={variable.name}
+                      value={variable.value}
+                      onChange={(name, value) => handleInputChange(name, value)}
+                      file={file}
+                      setFile={variable.target === "image" ? setFile : undefined}
+                    />
+                    {checkValidation && <ErrorMessage error={errors[variable.name]} />}
+                  </div>
+                </form>
+              </>
+            ))}
+          {formValues.variables.filter(variable => !variable.name.startsWith("Client")).length === 0 && (
+            <p className={styles.no_variables_message}>{dict("designs.create_design.empty_variables")}</p>
+          )}
+        </div>
+
+        <div className={styles.user_variables}>
+          <h6 className={styles.title}>
+            {dict("designs.create_design.user_variables")}{" "}
+            <span>*{dict("designs.create_design.user_variables_message")}.</span>
+          </h6>
+          {formValues.variables.filter(variable => variable.name.startsWith("Client")).length === 0 ? (
+            <p className={styles.no_variables_message}>{dict("designs.create_design.empty_variables")}</p>
+          ) : (
+            formValues.variables
+              .filter(variable => variable.name.startsWith("Client"))
+              .map((variable, index) => (
                 <InputDesign
-                  key={variable.name}
+                  key={index}
                   description={variable.description}
                   target={variable.target}
                   name={variable.name}
                   value={variable.value}
-                  onChange={(name, value) => handleInputChange(name, value)}
-                  file={file}
-                  setFile={variable.target === "image" ? setFile : undefined}
+                  disabled={true}
+                  onChange={handleInputChange}
                 />
-                {checkValidation && <ErrorMessage error={errors[variable.name]} />}
-              </div>
-            ))}
-          </form>
-        </div>
-        <div className={styles.user_variables}>
-          <h6 className={styles.title}>
-            {dict("designs.create_design.user_variables")}{" "}
-            <span>*These fields will be completed during user registration.</span>
-          </h6>
-          <InputDesign
-            description='User name'
-            target='text'
-            name='name'
-            value=''
-            disabled={true}
-            onChange={handleInputChange}
-          />
-          <InputDesign
-            description='User phone'
-            target='text'
-            name='phone'
-            value=''
-            disabled={true}
-            onChange={handleInputChange}
-          />
+              ))
+          )}
         </div>
       </div>
       <div className={styles.button} onClick={handleSubmit}>
