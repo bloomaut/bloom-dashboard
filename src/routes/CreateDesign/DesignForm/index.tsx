@@ -60,8 +60,6 @@ const DesignForm = () => {
   ];
   const errors = useFormValidator(formValues, fieldsToValidate, file, "designs");
 
-  console.log(formValues);
-
   const handleInputChange = (name: string, value: string) => {
     if (name === "title" || name === "description") {
       setFormValues(prevValues => ({
@@ -187,8 +185,6 @@ const DesignForm = () => {
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
-
-  console.log(formValues);
 
   return (
     <section className={styles.step_two}>
