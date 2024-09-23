@@ -22,13 +22,18 @@
     .variable_info {
       @include width-height(100%, auto);
       .info_container {
-        @include flex(row, space-between, center);
+        @include flex(row, space-between, flex-start);
       }
       .name,
       .value {
         @include flex(row, flex-start, flex-start, 5px);
         @include fontSize-fontWeight(16px, 500);
         color: $text;
+      }
+      .value {
+        @include width-height(140px, auto);
+        text-align: left;
+        word-break: break-word;
       }
     }
   }
