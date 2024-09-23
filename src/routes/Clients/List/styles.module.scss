@@ -5,6 +5,9 @@
   overflow-y: auto;
   .fade {
     @include width-height(100%, auto);
+    .pagination_container {
+      margin-top: 20px;
+    }
   }
   .empty {
     color: $text;

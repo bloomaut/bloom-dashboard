@@ -43,8 +43,8 @@ const List = () => {
   };
 
   const handlePageChange = useDebouncedCallback(async (page: number = 1) => {
-    const startIndex = (page - 1) * 8;
-    fetchClients(startIndex, 8);
+    const startIndex = (page - 1) * 15;
+    fetchClients(startIndex, 15);
   }, 500);
 
   useEffect(() => {
@@ -70,7 +70,11 @@ const List = () => {
             />
           ))}
           {!searchValue && //Cuando uso el Search se esconde la paginacion
-            totalClients > 8 && <Pagination totalItems={totalClients} limit={8} onPageChange={handlePageChange} />}
+            totalClients > 15 && (
+              <div className={styles.pagination_container}>
+                <Pagination totalItems={totalClients} limit={15} onPageChange={handlePageChange} />
+              </div>
+            )}
         </Fade>
       ) : (
         <p className={styles.empty}>{dict("clients.empty")}</p>
