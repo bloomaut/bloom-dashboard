@@ -2,6 +2,13 @@
   @include width-height(100%, auto);
   @include flex(column, flex-start, flex-start, 3px);
   @include fontSize-fontWeight(14px, 400);
+  label {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+  }
   input {
     @include width-height(100%, 25px);
     outline: none;
@@ -10,5 +17,8 @@
     border-radius: 2px;
     color: $text;
     padding: 0 5px;
+    &:disabled {
+      background: $lighterGrey;
+    }
   }
 }
