@@ -22,7 +22,7 @@ const InputDesign = ({ description, target, name, value, disabled = false, onCha
 
   return (
     <div className={styles.input}>
-      <label>{description}</label>
+      <label title={description}>{description}</label>
       {target === "image" ? (
         <DragAndDrop type='image' file={file || null} setFile={setFile!} />
       ) : (
