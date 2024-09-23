@@ -25,8 +25,6 @@ type FormValues = {
 const DesignForm = () => {
   const { listTemplates, designSelected } = useDesignContext();
 
-  console.log(designSelected);
-
   const initialValues: FormValues = {
     title: "",
     description: "",
@@ -235,22 +233,27 @@ const DesignForm = () => {
           <p className={styles.field}>{dict("designs.create_design.fields")}</p>
           <form onSubmit={handleSubmit}>
             <div className={styles.input_grid}>
-              {formValues.variables.map((variable, index) => (
-                <div className={styles.form_control} key={index}>
-                  <InputDesign
-                    description={variable.description}
-                    target={variable.target}
-                    name={variable.name}
-                    value={variable.value}
-                    onChange={(name, value) => handleInputChange(name, value)}
-                    file={file}
-                    setFile={variable.target === "image" ? setFile : undefined}
-                  />
-                  {checkValidation && <ErrorMessage error={errors[variable.name]} />}
-                </div>
-              ))}
+              {formValues.variables
+                .filter(variable => !variable.name.startsWith("Client"))
+                .map((variable, index) => (
+                  <div className={styles.form_control} key={index}>
+                    <InputDesign
+                      description={variable.description}
+                      target={variable.target}
+                      name={variable.name}
+                      value={variable.value}
+                      onChange={(name, value) => handleInputChange(name, value)}
+                      file={file}
+                      setFile={variable.target === "image" ? setFile : undefined}
+                    />
+                    {checkValidation && <ErrorMessage error={errors[variable.name]} />}
+                  </div>
+                ))}
             </div>
           </form>
+          {formValues.variables.filter(variable => !variable.name.startsWith("Client")).length === 0 && (
+            <p className={styles.no_variables_message}>{dict("designs.create_design.empty_variables")}</p>
+          )}
         </div>
 
         <div className={styles.user_variables}>
