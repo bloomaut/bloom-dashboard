@@ -87,6 +87,7 @@
       "error_palette": "Error updating palette",
       "error_design": "Error creating design",
       "error_design_delete": "Error deleting design",
+      "error_design_selected": "You must select a design before proceeding",
       "empty_fields": "All fields are required",
       "success_hotlink": "Hotlink created successfully",
       "error_tryagain": "There was a problem, try again later",
@@ -478,7 +479,6 @@
         "input_title": "Design title",
         "input_description": "Design description",
         "pwa_diffusion": "PowerApp to Diffuse",
-        "promotion": "Summer Promotion",
         "fields": "Fields",
         "user_variables": "User variables",
         "create": "Create Design",
@@ -497,7 +497,9 @@
           "copied": "Copied",
           "download": "Download"
         },
-        "error_validation": "You must enter a value"
+        "error_validation": "You must enter a value",
+        "empty_variables": "This PWA does not contain any variables",
+        "user_variables_message": "These fields will be completed during user registration"
       }
     }
   }

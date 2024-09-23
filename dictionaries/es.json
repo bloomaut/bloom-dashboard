@@ -86,6 +86,7 @@
       "error_palette": "Error al subir la paleta",
       "error_design": "Error al crear el diseño",
       "error_design_delete": "Error al eliminar el diseño",
+      "error_design_selected": "Debes seleccionar un diseño antes de avanzar",
       "empty_fields": "Todos los campos son requeridos",
       "success_hotlink": "Hotlink creado correctamente",
       "error_tryagain": "Hubo un problema, intente más tarde",
@@ -478,7 +479,6 @@
         "input_title": "Título del diselo",
         "input_description": "Descripción del diseñp",
         "pwa_diffusion": "PowerApp para Difundir",
-        "promotion": "Promoción de verano",
         "fields": "Campos",
         "user_variables": "Variables del Usuario",
         "create": "Crear Diseño",
@@ -497,7 +497,9 @@
           "copied": "Copiado",
           "download": "Descargar"
         },
-        "error_validation": "Debes ingresar un valor"
+        "error_validation": "Debes ingresar un valor",
+        "empty_variables": "Esta PWA no contiene ninguna variable",
+        "user_variables_message": "Estos campos se completarán durante el registro del usuario"
       }
     }
   }
