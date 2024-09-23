@@ -65,6 +65,15 @@ const PopupDesign = ({
     }
   })();
 
+  const downloadImage = async () => {
+    const link = document.createElement("a");
+
+    link.href = thumbnail;
+    link.download = `${title}.jpg`;
+    link.target = "_blank";
+    link.click();
+  };
+
   return (
     <section className={styles.popup_container}>
       <div className={styles.container} ref={dropdownRef}>
@@ -114,7 +123,12 @@ const PopupDesign = ({
             />
           </div>
           <div className={styles.download}>
-            <Button title={dict("download")} icon={<Icon name='arrow_download' />} styleName='popup_design_download' />
+            <Button
+              title={dict("download")}
+              icon={<Icon name='arrow_download' />}
+              styleName='popup_design_download'
+              onclick={downloadImage}
+            />
           </div>
         </div>
       </div>
