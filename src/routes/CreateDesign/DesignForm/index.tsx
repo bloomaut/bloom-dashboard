@@ -56,8 +56,9 @@ const DesignForm = () => {
   const fieldsToValidate = [
     "title",
     "description",
-    ...formValues.variables.map((field: VariablesFormDesign) => field.name),
+    ...formValues.variables.map((field: VariablesFormDesign) => field.name).filter(name => !name.startsWith("Client")),
   ];
+
   const errors = useFormValidator(formValues, fieldsToValidate, file, "designs");
 
   const handleInputChange = (name: string, value: string) => {
