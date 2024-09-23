@@ -7,7 +7,6 @@ import { get, post, update } from "@/services/fetch";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { DesignProps, VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
-import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useParams, useRouter } from "next/navigation";
@@ -228,26 +227,27 @@ const DesignForm = () => {
       </div>
       <div className={styles.design_form}>
         <h3 className={styles.title}>
-          <span>{designSelected?.type_design}:</span> {dict("designs.create_design.promotion")}
+          <span>{designSelected?.type_design}:</span> {designSelected?.flake.title || ""}
         </h3>
         <div className={styles.form_container}>
           <p className={styles.field}>{dict("designs.create_design.fields")}</p>
           <form onSubmit={handleSubmit}>
-            {formValues.variables.map((variable, index) => (
-              <div className={styles.form_control} key={index}>
-                <InputDesign
-                  key={variable.name}
-                  description={variable.description}
-                  target={variable.target}
-                  name={variable.name}
-                  value={variable.value}
-                  onChange={(name, value) => handleInputChange(name, value)}
-                  file={file}
-                  setFile={variable.target === "image" ? setFile : undefined}
-                />
-                {checkValidation && <ErrorMessage error={errors[variable.name]} />}
-              </div>
-            ))}
+            <div className={styles.input_grid}>
+              {formValues.variables.map((variable, index) => (
+                <div className={styles.form_control} key={index}>
+                  <InputDesign
+                    description={variable.description}
+                    target={variable.target}
+                    name={variable.name}
+                    value={variable.value}
+                    onChange={(name, value) => handleInputChange(name, value)}
+                    file={file}
+                    setFile={variable.target === "image" ? setFile : undefined}
+                  />
+                  {checkValidation && <ErrorMessage error={errors[variable.name]} />}
+                </div>
+              ))}
+            </div>
           </form>
         </div>
         <div className={styles.user_variables}>

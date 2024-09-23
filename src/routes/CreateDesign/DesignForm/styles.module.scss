@@ -65,21 +65,26 @@
         @include fontSize-fontWeight(16px, 500);
       }
       form {
-        @include flex(column, flex-start, flex-end, 20px);
+        @include flex(column, flex-start, flex-start, 20px);
         margin: 10px 0;
-        .form_control {
-          @include width-height(100%, auto);
-          position: relative;
-          .error {
-            @include width-height(250px, auto);
-            @include fontSize-fontWeight(12px, 400);
-            text-align: start;
-            position: absolute;
-            top: 50px;
-            color: red;
-          }
-          .error_hidden {
-            display: none;
+        .input_grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+          .form_control {
+            @include width-height(100%, auto);
+            position: relative;
+            .error {
+              @include width-height(250px, auto);
+              @include fontSize-fontWeight(12px, 400);
+              text-align: start;
+              position: absolute;
+              top: 50px;
+              color: red;
+            }
+            .error_hidden {
+              display: none;
+            }
           }
         }
       }
