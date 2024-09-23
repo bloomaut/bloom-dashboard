@@ -59,7 +59,9 @@ const DesignForm = () => {
     "description",
     ...formValues.variables.map((field: VariablesFormDesign) => field.name),
   ];
-  const errors = useFormValidator(formValues, fieldsToValidate, file);
+  const errors = useFormValidator(formValues, fieldsToValidate, file, "designs");
+
+  console.log(formValues);
 
   const handleInputChange = (name: string, value: string) => {
     if (name === "title" || name === "description") {
@@ -186,6 +188,8 @@ const DesignForm = () => {
   const ErrorMessage = ({ error }: { error: string | undefined }) => (
     <p className={error ? styles.error : styles.error_hidden}>{error}</p>
   );
+
+  console.log(formValues);
 
   return (
     <section className={styles.step_two}>
