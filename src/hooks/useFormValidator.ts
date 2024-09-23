@@ -14,6 +14,7 @@ const useFormValidator = (
   formData: DataItemsList | undefined,
   fieldsToValidate?: (keyof FormDataProps)[],
   file?: File | null,
+  path?: string,
 ) => {
   const [errors, setErrors] = useState<FormErrorsProps>({});
   const dict = useTranslations("dict");
@@ -22,22 +23,22 @@ const useFormValidator = (
     const validateFormData = () => {
       const errors: FormErrorsProps = {};
 
-      if (
-        fieldsToValidate?.includes("ClientFirstname") &&
-        !fieldsToValidate?.includes("title") &&
-        !fieldsToValidate?.includes("description") &&
-        (!formData?.ClientFirstname || !formData?.ClientFirstname.trim())
-      ) {
-        errors.ClientFirstname = dict("form_validation.ClientFirstname");
-      }
+      if (path !== "designs") {
+        if (
+          fieldsToValidate?.includes("ClientFirstname") &&
+          (!formData?.ClientFirstname || !formData?.ClientFirstname.trim())
+        ) {
+          errors.ClientFirstname = dict("form_validation.ClientFirstname");
+        }
 
-      if (fieldsToValidate?.includes("ClientEmail")) {
-        if (!formData?.ClientEmail || !formData?.ClientEmail.trim()) {
-          errors.ClientEmail = dict("form_validation.ClientEmail_01");
-        } else {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(formData.ClientEmail)) {
-            errors.ClientEmail = dict("form_validation.ClientEmail_02");
+        if (fieldsToValidate?.includes("ClientEmail")) {
+          if (!formData?.ClientEmail || !formData?.ClientEmail.trim()) {
+            errors.ClientEmail = dict("form_validation.ClientEmail_01");
+          } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.ClientEmail)) {
+              errors.ClientEmail = dict("form_validation.ClientEmail_02");
+            }
           }
         }
       }
@@ -73,9 +74,11 @@ const useFormValidator = (
         }
       }
 
-      if (fieldsToValidate?.includes("lastname")) {
-        if (!formData?.lastname || !formData?.lastname.trim()) {
-          errors.lastname = dict("form_validation.lastname");
+      if (path !== "designs") {
+        if (fieldsToValidate?.includes("lastname")) {
+          if (!formData?.lastname || !formData?.lastname.trim()) {
+            errors.lastname = dict("form_validation.lastname");
+          }
         }
       }
 
