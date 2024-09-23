@@ -497,7 +497,9 @@
           "copied": "Copiado",
           "download": "Descargar"
         },
-        "error_validation": "Debes ingresar un valor"
+        "error_validation": "Debes ingresar un valor",
+        "empty_variables": "Esta PWA no contiene ninguna variable",
+        "user_variables_message": "Estos campos se completarán durante el registro del usuario"
       }
     }
   }
