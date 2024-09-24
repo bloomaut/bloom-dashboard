@@ -124,7 +124,7 @@ const Form = () => {
     setFormDataPost(updatedFormDataPost);
   };
 
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const fileInput = e.target as HTMLInputElement;
     const fileExists = fileInput?.files?.[0];
 
@@ -133,18 +133,13 @@ const Form = () => {
       const response = await postFile("files/upload/file", fileExists);
 
       if (response.data.statusCode === 201) {
-        // Actualizo el formPost
         const updatedForm = [...formInfo];
-        updatedForm[index].value = e.target.value;
+        updatedForm[index].value = response.data.result.file.url;
         setFormInfo(updatedForm);
-        // Actualizo el formPost
-        const updatedFormInfo = formInfo.map(e =>
-          e.target === "image" ? { ...e, value: response.data.result.file.url } : e,
-        );
 
         const updatedFormDataPost = {
           ...formDataPost,
-          variables: updatedFormInfo.map(({ key, target, name, value, description }) => ({
+          variables: updatedForm.map(({ key, target, name, value, description }) => ({
             key,
             target,
             name,
@@ -152,7 +147,6 @@ const Form = () => {
             description,
           })),
         };
-
         setFormDataPost(updatedFormDataPost);
         notify(`${dict("toast.success_img")}`);
       } else {
@@ -208,10 +202,7 @@ const Form = () => {
                           key={info.key}
                           type='file'
                           textLabel={info.description}
-                          value={info.value!}
-                          handleChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                            handleImageChange(e, index)
-                          }
+                          handleChange={(e: any) => handleImageChange(e, index)}
                           textHolder={info.placeholder!}
                           name={info.name}
                         />
