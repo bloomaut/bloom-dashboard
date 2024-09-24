@@ -57,18 +57,20 @@ const List = () => {
         <LoadingSpinner />
       ) : clients.length ? (
         <Fade cascade damping={0.05} className={styles.fade} triggerOnce>
-          {clients.map((client: ClientsProps) => (
-            <Row
-              key={client._id}
-              client={client}
-              onDelete={() => {
-                setShowPopupDelete(true), setClientId(client._id);
-              }}
-              onEdit={() => {
-                setShowPopupEdit(true), setClientId(client._id);
-              }}
-            />
-          ))}
+          <div className={styles.list_container}>
+            {clients.map((client: ClientsProps) => (
+              <Row
+                key={client._id}
+                client={client}
+                onDelete={() => {
+                  setShowPopupDelete(true), setClientId(client._id);
+                }}
+                onEdit={() => {
+                  setShowPopupEdit(true), setClientId(client._id);
+                }}
+              />
+            ))}
+          </div>
           {!searchValue && //Cuando uso el Search se esconde la paginacion
             totalClients > 15 && (
               <div className={styles.pagination_container}>
