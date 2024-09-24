@@ -2,21 +2,28 @@
   @include width-height(100%, 100%);
   max-height: 500px;
   @include flex(column, flex-start, center);
-  overflow-y: auto;
+  overflow-y: hidden;
   .fade {
-    @include width-height(100%, auto);
+    @include width-height(100%, 100%);
+    .list_container {
+      @include width-height(100%, 100%);
+      overflow-y: auto;
+    }
+    .pagination_container {
+      margin-top: 20px;
+    }
   }
   .empty {
     color: $text;
   }
 }
 
-.clients::-webkit-scrollbar {
+.list_container::-webkit-scrollbar {
   width: 5px;
   background-color: $greyBackground;
 }
 
-.clients::-webkit-scrollbar-thumb {
+.list_container::-webkit-scrollbar-thumb {
   background-color: $orange;
   border-radius: 10px;
 }

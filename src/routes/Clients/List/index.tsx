@@ -43,8 +43,8 @@ const List = () => {
   };
 
   const handlePageChange = useDebouncedCallback(async (page: number = 1) => {
-    const startIndex = (page - 1) * 8;
-    fetchClients(startIndex, 8);
+    const startIndex = (page - 1) * 15;
+    fetchClients(startIndex, 15);
   }, 500);
 
   useEffect(() => {
@@ -57,20 +57,26 @@ const List = () => {
         <LoadingSpinner />
       ) : clients.length ? (
         <Fade cascade damping={0.05} className={styles.fade} triggerOnce>
-          {clients.map((client: ClientsProps) => (
-            <Row
-              key={client._id}
-              client={client}
-              onDelete={() => {
-                setShowPopupDelete(true), setClientId(client._id);
-              }}
-              onEdit={() => {
-                setShowPopupEdit(true), setClientId(client._id);
-              }}
-            />
-          ))}
+          <div className={styles.list_container}>
+            {clients.map((client: ClientsProps) => (
+              <Row
+                key={client._id}
+                client={client}
+                onDelete={() => {
+                  setShowPopupDelete(true), setClientId(client._id);
+                }}
+                onEdit={() => {
+                  setShowPopupEdit(true), setClientId(client._id);
+                }}
+              />
+            ))}
+          </div>
           {!searchValue && //Cuando uso el Search se esconde la paginacion
-            totalClients > 8 && <Pagination totalItems={totalClients} limit={8} onPageChange={handlePageChange} />}
+            totalClients > 15 && (
+              <div className={styles.pagination_container}>
+                <Pagination totalItems={totalClients} limit={15} onPageChange={handlePageChange} />
+              </div>
+            )}
         </Fade>
       ) : (
         <p className={styles.empty}>{dict("clients.empty")}</p>
