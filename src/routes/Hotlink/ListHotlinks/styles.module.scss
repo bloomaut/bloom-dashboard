@@ -28,4 +28,8 @@
       }
     }
   }
+  .rows_container {
+    @include flex(column, flex-start, flex-start);
+    @include width-height(100%, 100%);
+  }
 }

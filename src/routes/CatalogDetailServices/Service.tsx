@@ -3,10 +3,10 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
+import { DataItemsServiceType } from "@/typescript/interfaces/catalog.interface";
 // Components
 import LoadingSpinner from "@/components/Loading";
 import Header from "./Header";
-import { DataItemsServiceType } from "@/typescript/interfaces/catalog.interface";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 

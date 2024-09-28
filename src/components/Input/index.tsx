@@ -8,7 +8,7 @@ interface Props {
   textDescription?: string;
   type: string;
   name: string;
-  value: string | number;
+  value?: string | number;
   isDescription?: boolean;
   className?: string;
   iconSearch?: boolean;
