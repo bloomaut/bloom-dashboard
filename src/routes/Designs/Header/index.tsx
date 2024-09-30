@@ -18,8 +18,6 @@ const Header = () => {
   const { selectedList, setSelectedList } = useDesignContext();
   const dict = useTranslations("dict.designs.header");
 
-  console.log(selectedList);
-
   const menus: MenusProps[] = [
     {
       icon: <Icon name='design_2' width={25} height={25} viewBox='0 0 23 25' strokeWidth={1.5} />,
@@ -44,7 +42,6 @@ const Header = () => {
   ];
 
   const handleMenuClick = (index: number) => {
-    console.log("Menu clicked, index:", index); // Log para verificar qué opción se está seleccionando
     if (index !== 4) {
       setSelectedList(index);
     }
