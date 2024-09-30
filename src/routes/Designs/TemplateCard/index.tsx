@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import Icon from "@/components/Icon";
-import default_image from "/public/assets/default_image.png";
+import default_image from "/public/assets/default_image.jpg";
 import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
