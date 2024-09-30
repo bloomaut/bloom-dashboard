@@ -15,7 +15,7 @@ interface PowerappListProps {
 }
 
 const PowerappList = ({ setActiveStep }: PowerappListProps) => {
-  const { listTemplates, setDesignSelected } = useDesignContext();
+  const { listTemplates, setDesignSelected, selectedList, setSelectedList } = useDesignContext();
   const { notifyError } = useMessageToast();
   const [powerApps, setPowerApps] = useState<HogRelated[]>();
   const [powerAppSelected, setPowerAppSelected] = useState<string>("");
@@ -26,13 +26,26 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
   const params = useParams();
 
   useEffect(() => {
+    const storedSelectedList = localStorage.getItem("selectedList");
+    if (storedSelectedList) {
+      setSelectedList(JSON.parse(storedSelectedList));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedList) {
+      localStorage.setItem("selectedList", JSON.stringify(selectedList));
+    }
+  }, [selectedList]);
+
+  useEffect(() => {
     if (listTemplates?.designs) {
       const matchingDesign = listTemplates.designs.find(template => template._id === params.id);
       if (matchingDesign) {
         setFlakeId(matchingDesign.hog._id);
       }
     }
-  }, [listTemplates, params.id]);
+  }, [listTemplates, params.id, selectedList]);
 
   useEffect(() => {
     const getPowerapps = async () => {
@@ -54,6 +67,7 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
       flake_id: flakeId || String(params.id),
       type_design: listTemplates?.type.toLowerCase() || "",
     };
+
     const response = await post("design-small/prepare", dataToSend);
     if (response.data.statusCode === 201) {
       setActiveStep(2);
