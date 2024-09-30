@@ -62,6 +62,19 @@
         background: $white;
         padding: 4px;
         border-radius: 8px;
+        .btn_container {
+          @include flex(row-reverse, center, center, 5px);
+          border: 1px solid #ccc;
+          min-width: 75px;
+          border-radius: 8px;
+          cursor: pointer;
+          .view_button {
+            background: none;
+            outline: none;
+            border: none;
+            cursor: pointer;
+          }
+        }
         .create {
           border-radius: 8px;
           background-color: $white;

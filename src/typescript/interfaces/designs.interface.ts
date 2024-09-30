@@ -27,7 +27,7 @@ export interface DesignProps {
   title: string | null;
   description: string | null;
   thumbnail: string | null;
-  type_design: string | null;
+  type_design: "post" | "hog" | "email";
   data: any;
   variables: VariablesFormDesign[];
   active: boolean;

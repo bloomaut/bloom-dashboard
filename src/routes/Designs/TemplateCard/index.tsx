@@ -7,15 +7,19 @@ import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import PopupConfirm from "@/components/PopupConfirm";
-import { remove } from "@/services/fetch";
+import { get, remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { createPortal } from "react-dom";
 import { useDesignContext } from "@/context/DesignContext";
+import PopupDesign from "@/routes/CreateDesign/PopupDesign";
+import { DesignProps } from "@/typescript/interfaces/designs.interface";
 
 const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [popupDelete, setPopupDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [popupData, setPopupData] = useState<DesignProps | null>(null);
+  const [activePopup, setActivePopup] = useState<boolean>(false);
   const { notify, notifyError } = useMessageToast();
   const { handleRemoveDesign } = useDesignContext();
   const dict = useTranslations("dict");
@@ -40,6 +44,14 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
     }
   };
 
+  const getDesignById = async (id: string) => {
+    const response = await get(`design-small/${id}`);
+    if (response?.statusCode === 200) {
+      setPopupData(response.result.design);
+      setActivePopup(true);
+    }
+  };
+
   return (
     <div className={styles.hog}>
       <div className={styles.head}>
@@ -50,12 +62,10 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
             <div className={styles.popup}>
               {datatype === "designs" ? (
                 <>
-                  <p className={styles.create}>
-                    <Link href={`/designs/create/${_id}`}>
-                      <Icon name='eye' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                      {dict("designs.diffusion.view_design")}
-                    </Link>
-                  </p>
+                  <button className={styles.btn_container} onClick={() => getDesignById(_id)}>
+                    {dict("designs.diffusion.view_design")}
+                    <Icon name='eye' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
+                  </button>
                   <p className={styles.create}>
                     <Link href={`/designs/create/${_id}`}>
                       <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
@@ -89,6 +99,23 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 loading={loading}
                 textCancel={dict("popup.cancel")}
                 textAccept={dict("popup.confirm")}
+              />,
+              document.body,
+            )}
+          {activePopup &&
+            createPortal(
+              <PopupDesign
+                onCancel={() => setActivePopup(false)}
+                setShowConfirmation={setActivePopup}
+                thumbnail={popupData?.hog.thumbnail || ""}
+                title={popupData?.title || ""}
+                description={popupData?.description || ""}
+                typeDesign={popupData?.type_design || "hog"}
+                hog={popupData?.hog.title || ""}
+                pwa={popupData?.power_app.title || ""}
+                url={`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${popupData?._id}`}
+                loading={loading}
+                fields={popupData?.variables || []}
               />,
               document.body,
             )}
