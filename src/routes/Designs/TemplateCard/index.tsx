@@ -67,7 +67,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                     <Icon name='eye' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
                   </button>
                   <p className={styles.create}>
-                    <Link href={`/designs/create/${_id}`}>
+                    <Link href={`/designs/update/${_id}`}>
                       <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
                       {dict("designs.diffusion.edit_design")}
                     </Link>
