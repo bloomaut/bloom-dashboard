@@ -25,7 +25,7 @@ const Header = () => {
     },
     {
       icon: <Icon name='diffusion' width={25} height={25} viewBox='0 0 32 35' strokeWidth={1.5} />,
-      label: dict("diffusion"),
+      label: "Hog",
     },
     {
       icon: <Icon name='mail' width={28} height={28} viewBox='0 0 37 30' strokeWidth={2.2} />,
