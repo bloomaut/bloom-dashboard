@@ -57,27 +57,29 @@
         position: absolute;
         right: 30px;
         top: 0;
-        @include flex(column, center, center, 5px);
+        @include flex(column, center, center, 10px);
         background: $white;
-        padding: 4px;
+        padding: 10px 5px;
         border-radius: 8px;
         .btn_container {
           @include flex(row-reverse, center, center, 5px);
+          @include fontSize-fontWeight(12px, 600);
           border: 1px solid #ccc;
+          background: none;
           min-width: 75px;
           border-radius: 8px;
           cursor: pointer;
-          .view_button {
-            background: none;
-            outline: none;
-            border: none;
-            cursor: pointer;
+          &:hover {
+            color: $orange;
+            box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.25);
+            svg {
+              stroke: $orange;
+            }
           }
         }
         .create {
           border-radius: 8px;
           background-color: $white;
-          padding: 2px;
           a {
             @include flex(row, center, center, 3px);
             @include fontSize-fontWeight(12px, 600);
@@ -98,8 +100,18 @@
             border-radius: 8px;
             border: 1px solid #ccc;
             padding: 2px 6px;
-            margin-bottom: 3px;
             color: $text;
+          }
+          &:hover {
+            color: $orange;
+            box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.25);
+            a,
+            button {
+              color: $orange;
+              svg {
+                stroke: $orange;
+              }
+            }
           }
         }
       }

@@ -19,7 +19,9 @@ interface PopupDesignProps {
   title: string;
   description: string;
   typeDesign: "post" | "hog" | "email";
-  hog: string;
+  post?: string;
+  hog?: string;
+  email?: string;
   pwa: string;
   fields?: VariablesFormDesign[];
   url: string;
@@ -34,6 +36,8 @@ const PopupDesign = ({
   title,
   description,
   hog,
+  post,
+  email,
   typeDesign,
   pwa,
   fields,
@@ -92,7 +96,7 @@ const PopupDesign = ({
             <TitleAndDescription title={dict("title")} description={title} />
             <TitleAndDescription title={dict("description")} description={description} />
             <div className={styles.post_container}>
-              <TitleAndDescription title={typeDesignTitle} description={hog} />
+              <TitleAndDescription title={typeDesignTitle} description={hog ? hog : post ? post : email ? email : ""} />
               <TitleAndDescription title={dict("pwa")} description={pwa} />
             </div>
             <h2>{dict("fields")}</h2>
