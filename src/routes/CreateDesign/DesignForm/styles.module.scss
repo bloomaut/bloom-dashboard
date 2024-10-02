@@ -99,6 +99,11 @@
           @include fontSize-fontWeight(12px, 400);
         }
       }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
     }
   }
   .button {

@@ -41,8 +41,12 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
   useEffect(() => {
     if (listTemplates?.designs) {
       const matchingDesign = listTemplates.designs.find(template => template._id === params.id);
-      if (matchingDesign) {
-        setFlakeId(matchingDesign.hog._id);
+      if (matchingDesign?.type_design === "hog") {
+        setFlakeId(matchingDesign?.hog?._id);
+      } else if (matchingDesign?.type_design === "post") {
+        setFlakeId(matchingDesign?.post?._id);
+      } else {
+        setFlakeId(matchingDesign?.email?._id);
       }
     }
   }, [listTemplates, params.id, selectedList]);

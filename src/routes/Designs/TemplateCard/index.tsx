@@ -64,7 +64,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 <>
                   <button className={styles.btn_container} onClick={() => getDesignById(_id)}>
                     {dict("designs.diffusion.view_design")}
-                    <Icon name='eye' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
+                    <Icon name='eye' viewBox='0 0 25 24' strokeColor='#7f7f7f' />
                   </button>
                   <p className={styles.create}>
                     <Link href={`/designs/update/${_id}`}>
@@ -107,11 +107,13 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
               <PopupDesign
                 onCancel={() => setActivePopup(false)}
                 setShowConfirmation={setActivePopup}
-                thumbnail={popupData?.hog.thumbnail || ""}
+                thumbnail={popupData?.thumbnail || ""}
                 title={popupData?.title || ""}
                 description={popupData?.description || ""}
                 typeDesign={popupData?.type_design || "hog"}
-                hog={popupData?.hog.title || ""}
+                hog={popupData?.hog?.title || ""}
+                post={popupData?.post?.title || ""}
+                email={popupData?.email?.title || ""}
                 pwa={popupData?.power_app.title || ""}
                 url={`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${popupData?._id}`}
                 loading={loading}
