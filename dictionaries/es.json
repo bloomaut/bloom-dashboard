@@ -211,7 +211,8 @@
         "add_info": "Información Adicional",
         "website": "Sitio web",
         "instagram": "Instagram",
-        "phone": "Teléfono"
+        "phone": "Teléfono",
+        "address": "Dirección"
       },
       "my-powerapp": {
         "title": "Tu aplicación está casi lista",

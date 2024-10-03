@@ -40,6 +40,16 @@ const AddInfoForm = () => {
           handleChange={handleChange}
         />
       </div>
+      <div className={styles.input}>
+        <label>{dict("data.address")}</label>
+        <Input
+          textHolder={"Av. Corrientes 2000..."}
+          type='text'
+          name='business_address'
+          value={formData.client.address || ""}
+          handleChange={handleChange}
+        />
+      </div>
     </form>
   );
 };

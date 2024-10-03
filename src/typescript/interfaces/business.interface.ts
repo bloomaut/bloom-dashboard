@@ -38,6 +38,7 @@ export interface Client {
   created_at?: string;
   updated_at?: string;
   onboardings?: Nullable<Onboardings[]>;
+  address: string;
 }
 
 // Interfaces relacionadas con Onboarding
