@@ -24,6 +24,22 @@
     .content {
       @include flex(row, flex-start, flex-start, 15px);
       @include width-height(100%, auto);
+      position: relative;
+
+      .update {
+        position: absolute;
+        right: 54%;
+        bottom: 58px;
+        background-color: #cb202bde;
+        padding: 0 10px;
+        border-radius: 4px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      .loading {
+        padding: 10px;
+      }
 
       .info {
         @include flex(column, center, flex-start, 13px);

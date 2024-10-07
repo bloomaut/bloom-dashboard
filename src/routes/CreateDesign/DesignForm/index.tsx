@@ -12,6 +12,7 @@ import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useParams, useRouter } from "next/navigation";
 import PopupDesign from "../PopupDesign";
 import useFormValidator from "@/hooks/useFormValidator";
+import Icon from "@/components/Icon";
 
 type FormValues = {
   title: string;
