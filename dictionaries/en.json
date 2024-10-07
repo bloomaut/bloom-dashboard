@@ -211,7 +211,8 @@
         "add_info": "Additional Information",
         "website": "Website",
         "instagram": "Instagram",
-        "phone": "Phone"
+        "phone": "Phone",
+        "address": "Address"
       },
       "my-powerapp": {
         "title": "Your app is almost ready",

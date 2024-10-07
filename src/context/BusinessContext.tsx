@@ -24,6 +24,7 @@ const initialFormData: UserBusiness = {
     palette: [],
     company_web: "",
     instagram: "",
+    address: "",
   },
   phone: "",
 };
@@ -170,6 +171,7 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
         website: formData.client.company_web,
         instagram: formData.client.instagram,
         phone: formData.phone,
+        address: formData.client.address,
         logo: formData.client.logo,
         palette: formData.client.palette,
       };
@@ -191,6 +193,7 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
               palette: dataToSend.palette,
               company_web: dataToSend.website,
               instagram: dataToSend.instagram,
+              address: dataToSend.address,
             },
             phone: dataToSend.phone,
           }),
