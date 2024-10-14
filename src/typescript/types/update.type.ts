@@ -13,4 +13,5 @@ export type UPDATE =
   | PutTemplate
   | PutPalette
   | PutPercentage
-  | PutPowerAppDesign;
+  | PutPowerAppDesign
+  | object;

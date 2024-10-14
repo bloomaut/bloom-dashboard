@@ -12,6 +12,7 @@ import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useParams, useRouter } from "next/navigation";
 import PopupDesign from "../PopupDesign";
 import useFormValidator from "@/hooks/useFormValidator";
+import Icon from "@/components/Icon";
 
 type FormValues = {
   title: string;
@@ -304,6 +305,7 @@ const DesignForm = () => {
           url={`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${popupData._id}`}
           loading={loading}
           fields={popupData.variables || []}
+          setPopupData={undefined}
         />
       )}
     </section>

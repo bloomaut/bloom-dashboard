@@ -496,7 +496,9 @@
           "share": "Share this design to turn it into a campaign!",
           "copy": "Copy",
           "copied": "Copied",
-          "download": "Download"
+          "download": "Download",
+          "update_img": "Image updated successfully",
+          "update_img_error": "Error updating image"
         },
         "error_validation": "You must enter a value",
         "empty_variables": "This PWA does not contain any variables",

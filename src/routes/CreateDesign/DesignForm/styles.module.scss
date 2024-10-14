@@ -12,6 +12,7 @@
     .img_container {
       @include width-height(300px, 300px);
       margin: 10px 0;
+
       img {
         @include width-height(100%, 100%);
         object-fit: cover;

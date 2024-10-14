@@ -118,6 +118,8 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 url={`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${popupData?._id}`}
                 loading={loading}
                 fields={popupData?.variables || []}
+                id={popupData?._id}
+                setPopupData={setPopupData}
               />,
               document.body,
             )}

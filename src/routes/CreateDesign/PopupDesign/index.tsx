@@ -10,6 +10,9 @@ import Image from "next/image";
 import TitleAndDescription from "./TitleAndDescription";
 import Input from "@/components/Input";
 import { VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
+import { update } from "@/services/fetch";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { Oval } from "react-loader-spinner";
 
 interface PopupDesignProps {
   onConfirm?: () => void;
@@ -26,6 +29,8 @@ interface PopupDesignProps {
   fields?: VariablesFormDesign[];
   url: string;
   loading?: boolean;
+  id?: string;
+  setPopupData: any;
 }
 
 const PopupDesign = ({
@@ -42,10 +47,14 @@ const PopupDesign = ({
   pwa,
   fields,
   url,
+  id,
+  setPopupData,
 }: PopupDesignProps) => {
   const { dropdownRef } = useCloseDropdown(setShowConfirmation);
+  const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict.designs.create_design.popup");
   const [copy, setCopy] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleInput = () => {
     //En caso de poderse editar el input
@@ -78,6 +87,21 @@ const PopupDesign = ({
     link.click();
   };
 
+  const updateImage = async () => {
+    setLoading(true);
+    const response = await update(`design-small/${id}/thumbnail`, {});
+
+    if (response?.statusCode === 200) {
+      notify(dict("update_img"));
+      setPopupData(response.result.design);
+    } else {
+      notifyError(dict("update_img_error"));
+    }
+
+    setShowConfirmation(false);
+    setLoading(false);
+  };
+
   return (
     <section className={styles.popup_container}>
       <div className={styles.container} ref={dropdownRef}>
@@ -90,6 +114,24 @@ const PopupDesign = ({
 
         <div className={styles.content}>
           <Image src={thumbnail} alt={title} width={240} height={240} />
+          <div className={`${styles.update} ${loading ? styles.loading : ""}`} onClick={updateImage}>
+            {loading ? (
+              <Oval
+                height={20}
+                width={20}
+                color='#ff5722'
+                wrapperStyle={{}}
+                wrapperClass=''
+                visible={true}
+                ariaLabel='oval-loading'
+                secondaryColor='#fff'
+                strokeWidth={3.5}
+                strokeWidthSecondary={3.5}
+              />
+            ) : (
+              <Icon name='camera' viewBox='0 0 25 20' strokeColor='#fff' />
+            )}
+          </div>
 
           <div className={styles.info}>
             <h2>{dict("info")}</h2>
