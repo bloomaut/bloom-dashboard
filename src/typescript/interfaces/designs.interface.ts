@@ -40,7 +40,7 @@ export interface DesignProps {
 
 export interface DiffusionProps {
   type: string;
-  hogs: HogRelated[];
+  flakes: HogRelated[];
   designs: DesignProps[];
 }
 

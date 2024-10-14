@@ -1,11 +1,12 @@
 .hog {
-  @include width-height(280px, 200px);
+  @include width-height(280px, 280px);
   background-color: $border;
-  border-radius: 6.2px;
+  border-radius: 25px;
   position: relative;
   overflow: hidden;
   transition: background-color 500ms linear;
   z-index: 1;
+  box-shadow: 0 3px 6px #00000040;
 
   &::before {
     content: "";

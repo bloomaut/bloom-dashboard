@@ -6,8 +6,8 @@ import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 interface Context {
   listTemplates: DiffusionProps | undefined;
   loading: boolean;
-  selectedList: number;
-  setSelectedList: (id: number) => void;
+  selectedList: string;
+  setSelectedList: (type: string) => void;
   designSelected: DesignSelected | undefined;
   setDesignSelected: (design: DesignSelected) => void;
   handleRemoveDesign: (deletedId: string) => void;
@@ -16,7 +16,7 @@ interface Context {
 const DesignContext = createContext<Context>({
   listTemplates: undefined,
   loading: true,
-  selectedList: 1,
+  selectedList: "hog",
   setSelectedList: () => undefined,
   designSelected: undefined,
   setDesignSelected: () => undefined,
@@ -28,14 +28,14 @@ const DesignContext = createContext<Context>({
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
   const [listTemplates, setListTemplates] = useState<DiffusionProps>({
     type: "",
-    hogs: [],
+    flakes: [],
     designs: [],
   });
   const [loading, setLoading] = useState(true);
 
   // Recuperamos el `selectedList` desde el localStorage (si existe)
-  const savedSelectedList = typeof window !== "undefined" ? localStorage.getItem("selectedList") : "1";
-  const [selectedList, setSelectedList] = useState<number>(parseInt(savedSelectedList || "1"));
+  const savedSelectedList = typeof window !== "undefined" ? localStorage.getItem("selectedList") : "hog";
+  const [selectedList, setSelectedList] = useState<string>(savedSelectedList || "hog");
 
   const [designSelected, setDesignSelected] = useState<DesignSelected>();
 
@@ -44,38 +44,29 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       setLoading(true);
 
       let type = "";
-      let hogs: HogRelated[] = [];
+      let flakes: HogRelated[] = [];
       let designs: DesignProps[] = [];
 
-      if (selectedList === 0) {
-        const response = await get("design-small/list");
-        if (response.statusCode === 200) {
-          hogs = response.result.designs;
-        }
-      } else if (selectedList === 1) {
+      if (selectedList === "landing") {
+        console.log("GET LANDINGS");
+        
+      } else if (selectedList === "hog") {
         const response = await get("design-small/hogs");
         if (response.statusCode === 200) {
           type = "Hog";
-          hogs = response.result.hogs;
+          flakes = response.result.hogs;
           designs = response.result.designs;
         }
-      } else if (selectedList === 2) {
-        const response = await get("design-small/emails");
-        if (response.statusCode === 200) {
-          type = "Email";
-          hogs = response.result.emails;
-          designs = response.result.designs;
-        }
-      } else if (selectedList === 3) {
+      } else if (selectedList === "post") {
         const response = await get("design-small/posts");
         if (response.statusCode === 200) {
           type = "Post";
-          hogs = response.result.posts;
+          flakes = response.result.posts;
           designs = response.result.designs;
         }
       }
 
-      setListTemplates({ type, hogs, designs });
+      setListTemplates({ type, flakes, designs });
       setLoading(false);
     };
 
@@ -91,8 +82,8 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       const filteredDesigns = listTemplates.designs.filter(item => item._id !== deletedId);
       setListTemplates({ ...listTemplates, designs: filteredDesigns });
     } else {
-      const filteredDesigns = listTemplates?.hogs.filter(item => item._id !== deletedId);
-      setListTemplates({ ...listTemplates, hogs: filteredDesigns });
+      const filteredDesigns = listTemplates?.flakes.filter(item => item._id !== deletedId);
+      setListTemplates({ ...listTemplates, flakes: filteredDesigns });
     }
   };
 
