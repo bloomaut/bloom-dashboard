@@ -33,7 +33,7 @@ const TemplateList = () => {
 
   const switchTemplateMode = (mode: string) => {
     setTemplateMode(mode);
-  }
+  };
 
   return (
     <section className={styles.powerapp_container}>
@@ -43,12 +43,10 @@ const TemplateList = () => {
         </div>
       ) : (
         <>
-
-          {templateMode == "designs" && listTemplates?.type !== "" && (
+          {templateMode === "designs" && listTemplates?.type !== "" && (
             <div className={styles.cards}>
               <h3 className={styles.subtitle}>{dict("create_design.create_diffusion")}</h3>
               <div className={styles.card_container}>
-
                 <div className={styles.switch_card} onClick={() => switchTemplateMode("flakes")}>
                   <Icon name='add' viewBox='0 0 25 20' strokeColor='#282d7e' />
                   <p>Create new</p>
@@ -63,11 +61,10 @@ const TemplateList = () => {
             </div>
           )}
 
-          {templateMode == "flakes" && (
+          {templateMode === "flakes" && (
             <div className={styles.cards}>
               <h3 className={styles.subtitle}>{templateTitle()}</h3>
               <div className={styles.card_container}>
-
                 <div className={styles.switch_card_v2} onClick={() => switchTemplateMode("designs")}>
                   <Icon name='arrow_left' viewBox='0 0 25 20' strokeColor='#282d7e' />
                 </div>
@@ -86,7 +83,6 @@ const TemplateList = () => {
               </div>
             </div>
           )}
-
         </>
       )}
     </section>

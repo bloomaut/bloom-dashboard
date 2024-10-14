@@ -20,18 +20,18 @@ const Header = () => {
     {
       icon: <Icon name='landing' width={25} height={25} viewBox='0 0 32 35' strokeWidth={1.5} />,
       label: "Web pages",
-      type: "landing"
+      type: "landing",
     },
     {
       icon: <Icon name='hog' width={25} height={25} viewBox='0 0 32 35' strokeWidth={1.5} />,
       label: "Apps",
-      type: "hog"
+      type: "hog",
     },
     {
       icon: <Icon name='post' width={25} height={25} viewBox='0 0 35 27' strokeWidth={0.5} fillColor='#381D2A' />,
       label: "Social Media",
-      type: "post"
-    }
+      type: "post",
+    },
   ];
 
   const handleMenuClick = (type: string) => {
