@@ -55,7 +55,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       if (selectedList === "landing") {
         console.log("GET LANDINGS");
         type = "Landing";
-
       } else if (selectedList === "hog") {
         const response = await get("design-small/hogs");
         if (response.statusCode === 200) {

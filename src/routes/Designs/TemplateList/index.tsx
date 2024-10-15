@@ -49,17 +49,10 @@ const TemplateList = () => {
               <div className={styles.card_container}>
                 {listTemplates && listTemplates.difussionHogs.length > 0 ? (
                   listTemplates.difussionHogs.map(hog => (
-                    <TemplateCard
-                      key={hog._id}
-                      {...hog}
-                      datatype='diffusion'
-                      selectedList={selectedList}
-                    />
+                    <TemplateCard key={hog._id} {...hog} datatype='diffusion' selectedList={selectedList} />
                   ))
                 ) : (
-                  <p className={styles.empty_text}>
-                    You do not have diffusion links to share yet  
-                  </p>
+                  <p className={styles.empty_text}>You do not have diffusion links to share yet</p>
                 )}
               </div>
             </div>
@@ -71,17 +64,10 @@ const TemplateList = () => {
               <div className={styles.card_container}>
                 {listTemplates && listTemplates.genericPosts.length > 0 ? (
                   listTemplates.genericPosts.map(post => (
-                    <TemplateCard
-                      key={post._id}
-                      {...post}
-                      datatype='genericPost'
-                      selectedList={selectedList}
-                    />
+                    <TemplateCard key={post._id} {...post} datatype='genericPost' selectedList={selectedList} />
                   ))
                 ) : (
-                  <p className={styles.empty_text}>
-                    You do not have generic posts to download yet  
-                  </p>
+                  <p className={styles.empty_text}>You do not have generic posts to download yet</p>
                 )}
               </div>
             </div>
@@ -98,12 +84,7 @@ const TemplateList = () => {
 
                 {listTemplates && listTemplates.designs.length > 0 ? (
                   listTemplates.designs.map(item => (
-                    <TemplateCard
-                      key={item._id}
-                      {...item}
-                      datatype='designs'
-                      selectedList={selectedList}
-                    />
+                    <TemplateCard key={item._id} {...item} datatype='designs' selectedList={selectedList} />
                   ))
                 ) : (
                   <p className={styles.empty_text}>{templateError("designs")}</p>
