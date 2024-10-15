@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { DesignProps, DesignSelected, DiffusionProps } from "@/typescript/interfaces/designs.interface";
+import { DesignProps, DesignSelected, FlakesAndDesignProps } from "@/typescript/interfaces/designs.interface";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 
 interface Context {
-  listTemplates: DiffusionProps | undefined;
+  listTemplates: FlakesAndDesignProps | undefined;
   loading: boolean;
   selectedList: string;
   setSelectedList: (type: string) => void;
@@ -26,10 +26,12 @@ const DesignContext = createContext<Context>({
 });
 
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
-  const [listTemplates, setListTemplates] = useState<DiffusionProps>({
+  const [listTemplates, setListTemplates] = useState<FlakesAndDesignProps>({
     type: "",
     flakes: [],
     designs: [],
+    difussionHogs: [],
+    genericPosts: [],
   });
   const [loading, setLoading] = useState(true);
 
@@ -47,25 +49,34 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       let flakes: HogRelated[] = [];
       let designs: DesignProps[] = [];
 
+      let difussionHogs = [];
+      let postsWithoutVariables = [];
+
       if (selectedList === "landing") {
         console.log("GET LANDINGS");
+        type = "Landing";
+
       } else if (selectedList === "hog") {
         const response = await get("design-small/hogs");
         if (response.statusCode === 200) {
+          console.log(response.result);
           type = "Hog";
           flakes = response.result.hogs;
           designs = response.result.designs;
+          difussionHogs = response.result?.difussionHogs;
         }
       } else if (selectedList === "post") {
         const response = await get("design-small/posts");
         if (response.statusCode === 200) {
+          console.log(response.result);
           type = "Post";
           flakes = response.result.posts;
           designs = response.result.designs;
+          postsWithoutVariables = response.result?.postsWithoutVariables;
         }
       }
 
-      setListTemplates({ type, flakes, designs });
+      setListTemplates({ type, flakes, designs, difussionHogs, genericPosts: postsWithoutVariables });
       setLoading(false);
     };
 

@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 
 const TemplateList = () => {
-  const { listTemplates, loading } = useDesignContext();
+  const { listTemplates, selectedList, loading } = useDesignContext();
   const [templateMode, setTemplateMode] = useState<string>("designs");
   const dict = useTranslations("dict.designs");
   const locale = useLocale();
@@ -43,9 +43,53 @@ const TemplateList = () => {
         </div>
       ) : (
         <>
+          {templateMode === "designs" && selectedList === "hog" && listTemplates?.difussionHogs && (
+            <div className={styles.cards}>
+              <h3 className={styles.subtitle}>Share now!</h3>
+              <div className={styles.card_container}>
+                {listTemplates && listTemplates.difussionHogs.length > 0 ? (
+                  listTemplates.difussionHogs.map(hog => (
+                    <TemplateCard
+                      key={hog._id}
+                      {...hog}
+                      datatype='diffusion'
+                      selectedList={selectedList}
+                    />
+                  ))
+                ) : (
+                  <p className={styles.empty_text}>
+                    You do not have diffusion links to share yet  
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {templateMode === "designs" && selectedList === "post" && listTemplates?.genericPosts && (
+            <div className={styles.cards}>
+              <h3 className={styles.subtitle}>Share now!</h3>
+              <div className={styles.card_container}>
+                {listTemplates && listTemplates.genericPosts.length > 0 ? (
+                  listTemplates.genericPosts.map(post => (
+                    <TemplateCard
+                      key={post._id}
+                      {...post}
+                      datatype='genericPost'
+                      selectedList={selectedList}
+                    />
+                  ))
+                ) : (
+                  <p className={styles.empty_text}>
+                    You do not have generic posts to download yet  
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
           {templateMode === "designs" && listTemplates?.type !== "" && (
             <div className={styles.cards}>
-              <h3 className={styles.subtitle}>{dict("create_design.create_diffusion")}</h3>
+              <h3 className={styles.subtitle}>Custom designs</h3>
               <div className={styles.card_container}>
                 <div className={styles.switch_card} onClick={() => switchTemplateMode("flakes")}>
                   <Icon name='add' viewBox='0 0 25 20' strokeColor='#282d7e' />
@@ -53,7 +97,14 @@ const TemplateList = () => {
                 </div>
 
                 {listTemplates && listTemplates.designs.length > 0 ? (
-                  listTemplates.designs.map(item => <TemplateCard key={item._id} {...item} datatype='designs' />)
+                  listTemplates.designs.map(item => (
+                    <TemplateCard
+                      key={item._id}
+                      {...item}
+                      datatype='designs'
+                      selectedList={selectedList}
+                    />
+                  ))
                 ) : (
                   <p className={styles.empty_text}>{templateError("designs")}</p>
                 )}
@@ -63,7 +114,7 @@ const TemplateList = () => {
 
           {templateMode === "flakes" && (
             <div className={styles.cards}>
-              <h3 className={styles.subtitle}>{templateTitle()}</h3>
+              <h3 className={styles.subtitle}>Select template to create a new design</h3>
               <div className={styles.card_container}>
                 <div className={styles.switch_card_v2} onClick={() => switchTemplateMode("designs")}>
                   <Icon name='arrow_left' viewBox='0 0 25 20' strokeColor='#282d7e' />
@@ -74,7 +125,8 @@ const TemplateList = () => {
                     <TemplateCard
                       key={item._id}
                       {...item}
-                      datatype={listTemplates?.type !== "" ? undefined : "designs"}
+                      datatype={listTemplates?.type !== "" ? "flakes" : "designs"}
+                      selectedList={selectedList}
                     />
                   ))
                 ) : (

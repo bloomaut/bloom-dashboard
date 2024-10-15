@@ -2,6 +2,7 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import Icon from "@/components/Icon";
 import default_image from "/public/assets/default_image.jpg";
+import Button from "@/components/Button";
 import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
@@ -14,7 +15,7 @@ import { useDesignContext } from "@/context/DesignContext";
 import PopupDesign from "@/routes/CreateDesign/PopupDesign";
 import { DesignProps } from "@/typescript/interfaces/designs.interface";
 
-const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
+const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [popupDelete, setPopupDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,9 +56,33 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
   return (
     <div className={styles.hog}>
       <div className={styles.head}>
-
         <div className={styles.title_wrap}>
           <p className={styles.title}>{title}</p>
+        </div>
+        <Image src={thumbnail || default_image} fill sizes='500px' priority alt='Hog' />
+
+        <div className={styles.card_action}>
+          <div className={styles.card_icon}>
+            {datatype === "designs" && selectedList === "hog" && (
+              <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+            )}
+            {datatype === "diffusion" && selectedList === "hog" && (
+              <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+            )}
+
+            {datatype === "designs" && selectedList === "post" && (
+              <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+            )}
+            {datatype === "genericPost" && selectedList === "post" && (
+              <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+            )}
+
+            {datatype === "flakes" && (
+              <Link href={`/designs/create/${_id}`}>
+                <Icon name='design_2' viewBox='0 0 22 22' strokeWidth={1.5} strokeColor='#282d7e' />
+              </Link>
+            )}
+          </div>
         </div>
 
         {/* <div className={styles.option} onClick={handleClick}>
@@ -135,10 +160,6 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
           }
 
         </div> */}
-
-      </div>
-      <div className={styles.imageWrapper}>
-        <Image src={thumbnail || default_image} fill sizes='500px' priority alt='Hog' />
       </div>
     </div>
   );
