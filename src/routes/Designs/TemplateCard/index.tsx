@@ -57,12 +57,12 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
     // c = campaign
     await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${_id}`);
     notify("Design link copied on clipboard!");
-  }
+  };
 
   const copyDiffusionLink = async (_id: string) => {
     await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/d/${_id}`);
     notify("Diffusion link copied on clipboard!");
-  }
+  };
 
   const downloadPostImage = async (thumbnail: string | null) => {
     if (!thumbnail) {
@@ -75,7 +75,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
     link.download = `${title}.jpg`;
     link.target = "_blank";
     link.click();
-  }
+  };
 
   return (
     <div className={styles.hog}>
@@ -83,28 +83,38 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
         <div className={styles.title_wrap}>
           <p className={styles.title}>{title}</p>
         </div>
-        <Image src={thumbnail || default_image} fill sizes='500px' priority alt='Hog' />
+        <Image src={thumbnail || default_image} fill sizes='500px' priority alt='Design thumbnail' />
 
         <div className={styles.card_action}>
-          <div className={styles.card_icon}>
+          <div className={styles.card_icons}>
             {datatype === "designs" && selectedList === "hog" && (
-              <button onClick={() => copyDesignLink(_id)}>
-                <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
-              </button>
+              <>
+                <button className={styles.main_actions} onClick={() => copyDesignLink(_id)}>
+                  <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+                </button>
+                <button className={styles.other_actions} onClick={() => setPopupDelete(true)}>
+                  <Icon name='delete' viewBox='0 0 25 25' strokeWidth={2} strokeColor='#282d7e' />
+                </button>
+              </>
             )}
             {datatype === "diffusion" && selectedList === "hog" && (
-              <button onClick={() => copyDiffusionLink(_id)}>
+              <button className={styles.main_actions} onClick={() => copyDiffusionLink(_id)}>
                 <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
               </button>
             )}
 
             {datatype === "designs" && selectedList === "post" && (
-              <button onClick={() => downloadPostImage(thumbnail || null)}>
-                <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
-              </button>
+              <>
+                <button className={styles.main_actions} onClick={() => downloadPostImage(thumbnail || null)}>
+                  <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+                </button>
+                <button className={styles.other_actions} onClick={() => setPopupDelete(true)}>
+                  <Icon name='delete' viewBox='0 0 25 25' strokeWidth={2} strokeColor='#282d7e' />
+                </button>
+              </>
             )}
             {datatype === "genericPost" && selectedList === "post" && (
-              <button onClick={() => downloadPostImage(thumbnail || null)}>
+              <button className={styles.main_actions} onClick={() => downloadPostImage(thumbnail || null)}>
                 <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
               </button>
             )}
@@ -151,7 +161,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
                 </p>
               )}
             </div>
-          )}
+          )} */}
 
           {popupDelete &&
             createPortal(
@@ -168,7 +178,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
             )
           }
 
-          {activePopup &&
+          {/* {activePopup &&
             createPortal(
               <PopupDesign
                 onCancel={() => setActivePopup(false)}
