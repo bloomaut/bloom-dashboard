@@ -58,7 +58,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       } else if (selectedList === "hog") {
         const response = await get("design-small/hogs");
         if (response.statusCode === 200) {
-          console.log(response.result);
           type = "Hog";
           flakes = response.result.hogs;
           designs = response.result.designs;
@@ -67,7 +66,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       } else if (selectedList === "post") {
         const response = await get("design-small/posts");
         if (response.statusCode === 200) {
-          console.log(response.result);
           type = "Post";
           flakes = response.result.posts;
           designs = response.result.designs;

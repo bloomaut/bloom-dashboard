@@ -1,7 +1,9 @@
 import Title from "@/components/Title";
 import styles from "./styles.module.scss";
-import Icon from "@/components/Icon";
 import Image, { StaticImageData } from "next/image";
+import hog_logo from "/public/assets/hog_logo.png";
+import post_logo from "/public/assets/post_logo.png";
+import landing_logo from "/public/assets/landing_logo.png";
 import { useTranslations } from "next-intl";
 import { useDesignContext } from "@/context/DesignContext";
 
@@ -18,17 +20,17 @@ const Header = () => {
 
   const menus: MenusProps[] = [
     {
-      icon: <Icon name='landing' width={25} height={25} viewBox='0 0 32 35' strokeWidth={1.5} />,
+      icon: <Image src={landing_logo} width={28} height={30} alt='Landing Icon' />,
       label: "Web pages",
       type: "landing",
     },
     {
-      icon: <Icon name='hog' width={25} height={25} viewBox='0 0 32 35' strokeWidth={1.5} />,
+      icon: <Image src={hog_logo} width={22} height={30} alt='Hog Icon' />,
       label: "Apps",
       type: "hog",
     },
     {
-      icon: <Icon name='post' width={25} height={25} viewBox='0 0 35 27' strokeWidth={0.5} fillColor='#381D2A' />,
+      icon: <Image src={post_logo} width={28} height={26} alt='Post Icon' />,
       label: "Social Media",
       type: "post",
     },

@@ -3,17 +3,17 @@ import Image from "next/image";
 import Icon from "@/components/Icon";
 import default_image from "/public/assets/default_image.jpg";
 import Button from "@/components/Button";
+import PopupConfirm from "@/components/PopupConfirm";
+import PopupDesign from "@/routes/CreateDesign/PopupDesign";
 import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
-import PopupConfirm from "@/components/PopupConfirm";
 import { get, remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { createPortal } from "react-dom";
 import { useDesignContext } from "@/context/DesignContext";
-import PopupDesign from "@/routes/CreateDesign/PopupDesign";
 import { DesignProps } from "@/typescript/interfaces/designs.interface";
+import { createPortal } from "react-dom";
 
 const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState<boolean>(false);
@@ -53,6 +53,30 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
     }
   };
 
+  const copyDesignLink = async (_id: string) => {
+    // c = campaign
+    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${_id}`);
+    notify("Design link copied on clipboard!");
+  }
+
+  const copyDiffusionLink = async (_id: string) => {
+    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/d/${_id}`);
+    notify("Diffusion link copied on clipboard!");
+  }
+
+  const downloadPostImage = async (thumbnail: string | null) => {
+    if (!thumbnail) {
+      notifyError("No image available to download.");
+      return false;
+    }
+
+    const link = document.createElement("a");
+    link.href = thumbnail;
+    link.download = `${title}.jpg`;
+    link.target = "_blank";
+    link.click();
+  }
+
   return (
     <div className={styles.hog}>
       <div className={styles.head}>
@@ -64,17 +88,25 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
         <div className={styles.card_action}>
           <div className={styles.card_icon}>
             {datatype === "designs" && selectedList === "hog" && (
-              <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+              <button onClick={() => copyDesignLink(_id)}>
+                <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+              </button>
             )}
             {datatype === "diffusion" && selectedList === "hog" && (
-              <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+              <button onClick={() => copyDiffusionLink(_id)}>
+                <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+              </button>
             )}
 
             {datatype === "designs" && selectedList === "post" && (
-              <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+              <button onClick={() => downloadPostImage(thumbnail || null)}>
+                <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+              </button>
             )}
             {datatype === "genericPost" && selectedList === "post" && (
-              <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+              <button onClick={() => downloadPostImage(thumbnail || null)}>
+                <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+              </button>
             )}
 
             {datatype === "flakes" && (

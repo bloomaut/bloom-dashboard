@@ -63,7 +63,19 @@
         justify-content: center;
         align-items: center;
 
+        button {
+          cursor: pointer;
+          height: 100%;
+          width: 100%;
+          background-color: transparent;
+          border: none;
+          z-index: 3;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
         a {
+          cursor: pointer;
           height: 100%;
           width: 100%;
           z-index: 3;
