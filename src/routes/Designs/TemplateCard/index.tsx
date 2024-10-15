@@ -55,9 +55,15 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
   return (
     <div className={styles.hog}>
       <div className={styles.head}>
-        <p className={styles.title}>{title}</p>
-        <div className={styles.option} onClick={handleClick}>
+
+        <div className={styles.title_wrap}>
+          <p className={styles.title}>{title}</p>
+        </div>
+
+        {/* <div className={styles.option} onClick={handleClick}>
+
           <Icon name='ellipsis' width={20} height={20} viewBox='0 3 30 30' />
+
           {openPopup && (
             <div className={styles.popup}>
               {datatype === "designs" ? (
@@ -89,6 +95,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
               )}
             </div>
           )}
+
           {popupDelete &&
             createPortal(
               <PopupConfirm
@@ -101,7 +108,9 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 textAccept={dict("popup.confirm")}
               />,
               document.body,
-            )}
+            )
+          }
+
           {activePopup &&
             createPortal(
               <PopupDesign
@@ -122,8 +131,11 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 setPopupData={setPopupData}
               />,
               document.body,
-            )}
-        </div>
+            )
+          }
+
+        </div> */}
+
       </div>
       <div className={styles.imageWrapper}>
         <Image src={thumbnail || default_image} fill sizes='500px' priority alt='Hog' />
