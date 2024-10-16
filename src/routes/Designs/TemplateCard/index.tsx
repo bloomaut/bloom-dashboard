@@ -64,6 +64,11 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
     notify("Diffusion link copied on clipboard!");
   };
 
+  const copyLandingURL = async (_id: string) => {
+    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/preview/landing/${_id}`);
+    notify("Website link copied on clipboard!");
+  };
+
   const downloadPostImage = async (thumbnail: string | null) => {
     if (!thumbnail) {
       notifyError("No image available to download.");
@@ -87,6 +92,12 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
 
         <div className={styles.card_action}>
           <div className={styles.card_icons}>
+            {selectedList === "landing" && (
+              <button className={styles.actions} onClick={() => copyLandingURL(_id)}>
+                <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+              </button>
+            )}
+
             {datatype === "designs" && selectedList === "hog" && (
               <>
                 <button className={styles.actions} onClick={() => copyDesignLink(_id)}>
@@ -133,42 +144,6 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
           </div>
         </div>
 
-        {/* <div className={styles.option} onClick={handleClick}>
-
-          <Icon name='ellipsis' width={20} height={20} viewBox='0 3 30 30' />
-
-          {openPopup && (
-            <div className={styles.popup}>
-              {datatype === "designs" ? (
-                <>
-                  <button className={styles.btn_container} onClick={() => getDesignById(_id)}>
-                    {dict("designs.diffusion.view_design")}
-                    <Icon name='eye' viewBox='0 0 25 24' strokeColor='#7f7f7f' />
-                  </button>
-                  <p className={styles.create}>
-                    <Link href={`/designs/update/${_id}`}>
-                      <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                      {dict("designs.diffusion.edit_design")}
-                    </Link>
-                  </p>
-                  <p className={styles.create}>
-                    <button onClick={() => setPopupDelete(true)}>
-                      <Icon name='delete' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                      {dict("designs.diffusion.delete_design")}
-                    </button>
-                  </p>
-                </>
-              ) : (
-                <p className={styles.create}>
-                  <Link href={`/designs/create/${_id}`}>
-                    <Icon name='design_2' viewBox='0 0 25 20' strokeColor='#7f7f7f' />
-                    {dict("designs.diffusion.create_design")}
-                  </Link>
-                </p>
-              )}
-            </div>
-          )} */}
-
         {popupDelete &&
           createPortal(
             <PopupConfirm
@@ -204,9 +179,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
               />,
               document.body,
             )
-          }
-
-        </div> */}
+          }*/}
       </div>
     </div>
   );
