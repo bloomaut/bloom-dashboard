@@ -69,7 +69,7 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
     const dataToSend = {
       pwa_id: powerAppSelected,
       flake_id: flakeId || String(params.id),
-      type_design: listTemplates?.type.toLowerCase() || "",
+      type_design: selectedList,
     };
 
     const response = await post("design-small/prepare", dataToSend);
