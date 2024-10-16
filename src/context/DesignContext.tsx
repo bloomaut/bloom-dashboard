@@ -53,12 +53,17 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       let postsWithoutVariables = [];
 
       if (selectedList === "landing") {
-        console.log("GET LANDINGS");
-        type = "Landing";
+        const response = await get("design-small/landings");
+        console.log(response.result);
+        if (response.statusCode === 200) {
+          type = "landing";
+          flakes = response.result.landings;
+        }
       } else if (selectedList === "hog") {
         const response = await get("design-small/hogs");
+        console.log(response.result);
         if (response.statusCode === 200) {
-          type = "Hog";
+          type = "hog";
           flakes = response.result.hogs;
           designs = response.result.designs;
           difussionHogs = response.result?.difussionHogs;
@@ -66,7 +71,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       } else if (selectedList === "post") {
         const response = await get("design-small/posts");
         if (response.statusCode === 200) {
-          type = "Post";
+          type = "post";
           flakes = response.result.posts;
           designs = response.result.designs;
           postsWithoutVariables = response.result?.postsWithoutVariables;

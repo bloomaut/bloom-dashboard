@@ -87,6 +87,13 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
 
         <div className={styles.card_action}>
           <div className={styles.card_icons}>
+            
+            {/* {datatype === "flakes" && selectedList === "landing" && (
+              <button className={styles.actions} onClick={() => copyDiffusionLink(_id)}>
+                <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+              </button>
+            )} */}
+
             {datatype === "designs" && selectedList === "hog" && (
               <>
                 <button className={styles.actions} onClick={() => copyDesignLink(_id)}>

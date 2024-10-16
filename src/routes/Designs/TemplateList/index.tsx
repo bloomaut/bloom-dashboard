@@ -73,7 +73,7 @@ const TemplateList = () => {
             </div>
           )}
 
-          {templateMode === "designs" && listTemplates?.type !== "" && (
+          {templateMode === "designs" && listTemplates?.type && selectedList !== "landing" && (
             <div className={styles.cards}>
               <h3 className={styles.subtitle}>Custom designs</h3>
               <div className={styles.card_container}>
@@ -91,6 +91,26 @@ const TemplateList = () => {
                   ))
                 ) : (
                   <p className={styles.empty_text}>{templateError("designs")}</p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {selectedList === "landing" && (
+            <div className={styles.cards}>
+              <h3 className={styles.subtitle}>You websites</h3>
+              <div className={styles.card_container}>
+                {listTemplates && listTemplates.flakes.length > 0 ? (
+                  listTemplates.flakes.map(item => (
+                    <TemplateCard
+                      key={item._id}
+                      {...item}
+                      datatype={"designs"}
+                      selectedList={selectedList}
+                    />
+                  ))
+                ) : (
+                  <p className={styles.empty_text}>{templateError()}</p>
                 )}
               </div>
             </div>
