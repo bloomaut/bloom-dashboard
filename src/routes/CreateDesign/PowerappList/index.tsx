@@ -28,7 +28,7 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
   useEffect(() => {
     const storedSelectedList = localStorage.getItem("selectedList");
     if (storedSelectedList) {
-      setSelectedList(JSON.parse(storedSelectedList));
+      setSelectedList(storedSelectedList);
     }
   }, []);
 

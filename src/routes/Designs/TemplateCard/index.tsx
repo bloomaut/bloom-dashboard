@@ -2,19 +2,20 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import Icon from "@/components/Icon";
 import default_image from "/public/assets/default_image.jpg";
+import Button from "@/components/Button";
+import PopupConfirm from "@/components/PopupConfirm";
+import PopupDesign from "@/routes/CreateDesign/PopupDesign";
 import { useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
-import PopupConfirm from "@/components/PopupConfirm";
 import { get, remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { createPortal } from "react-dom";
 import { useDesignContext } from "@/context/DesignContext";
-import PopupDesign from "@/routes/CreateDesign/PopupDesign";
 import { DesignProps } from "@/typescript/interfaces/designs.interface";
+import { createPortal } from "react-dom";
 
-const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
+const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRelated) => {
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [popupDelete, setPopupDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -52,12 +53,84 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
     }
   };
 
+  const copyDesignLink = async (_id: string) => {
+    // c = campaign
+    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${_id}`);
+    notify("Design link copied on clipboard!");
+  };
+
+  const copyDiffusionLink = async (_id: string) => {
+    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/d/${_id}`);
+    notify("Diffusion link copied on clipboard!");
+  };
+
+  const downloadPostImage = async (thumbnail: string | null) => {
+    if (!thumbnail) {
+      notifyError("No image available to download.");
+      return false;
+    }
+
+    const link = document.createElement("a");
+    link.href = thumbnail;
+    link.download = `${title}.jpg`;
+    link.target = "_blank";
+    link.click();
+  };
+
   return (
     <div className={styles.hog}>
       <div className={styles.head}>
-        <p className={styles.title}>{title}</p>
-        <div className={styles.option} onClick={handleClick}>
+        <div className={styles.title_wrap}>
+          <p className={styles.title}>{title}</p>
+        </div>
+        <Image src={thumbnail || default_image} fill sizes='500px' priority alt='Design thumbnail' />
+
+        <div className={styles.card_action}>
+          <div className={styles.card_icons}>
+            {datatype === "designs" && selectedList === "hog" && (
+              <>
+                <button className={styles.main_actions} onClick={() => copyDesignLink(_id)}>
+                  <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+                </button>
+                <button className={styles.other_actions} onClick={() => setPopupDelete(true)}>
+                  <Icon name='delete' viewBox='0 0 25 25' strokeWidth={2} strokeColor='#282d7e' />
+                </button>
+              </>
+            )}
+            {datatype === "diffusion" && selectedList === "hog" && (
+              <button className={styles.main_actions} onClick={() => copyDiffusionLink(_id)}>
+                <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
+              </button>
+            )}
+
+            {datatype === "designs" && selectedList === "post" && (
+              <>
+                <button className={styles.main_actions} onClick={() => downloadPostImage(thumbnail || null)}>
+                  <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+                </button>
+                <button className={styles.other_actions} onClick={() => setPopupDelete(true)}>
+                  <Icon name='delete' viewBox='0 0 25 25' strokeWidth={2} strokeColor='#282d7e' />
+                </button>
+              </>
+            )}
+            {datatype === "genericPost" && selectedList === "post" && (
+              <button className={styles.main_actions} onClick={() => downloadPostImage(thumbnail || null)}>
+                <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
+              </button>
+            )}
+
+            {datatype === "flakes" && (
+              <Link href={`/designs/create/${_id}`}>
+                <Icon name='design_2' viewBox='0 0 22 22' strokeWidth={1.5} strokeColor='#282d7e' />
+              </Link>
+            )}
+          </div>
+        </div>
+
+        {/* <div className={styles.option} onClick={handleClick}>
+
           <Icon name='ellipsis' width={20} height={20} viewBox='0 3 30 30' />
+
           {openPopup && (
             <div className={styles.popup}>
               {datatype === "designs" ? (
@@ -88,7 +161,8 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 </p>
               )}
             </div>
-          )}
+          )} */}
+
           {popupDelete &&
             createPortal(
               <PopupConfirm
@@ -101,8 +175,10 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 textAccept={dict("popup.confirm")}
               />,
               document.body,
-            )}
-          {activePopup &&
+            )
+          }
+
+          {/* {activePopup &&
             createPortal(
               <PopupDesign
                 onCancel={() => setActivePopup(false)}
@@ -122,11 +198,10 @@ const TemplateCard = ({ title, thumbnail, _id, datatype }: HogRelated) => {
                 setPopupData={setPopupData}
               />,
               document.body,
-            )}
-        </div>
-      </div>
-      <div className={styles.imageWrapper}>
-        <Image src={thumbnail || default_image} fill sizes='500px' priority alt='Hog' />
+            )
+          }
+
+        </div> */}
       </div>
     </div>
   );
