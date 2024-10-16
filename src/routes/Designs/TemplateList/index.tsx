@@ -77,7 +77,8 @@ const TemplateList = () => {
             <div className={styles.cards}>
               <h3 className={styles.subtitle}>Custom designs</h3>
               <div className={styles.card_container}>
-                <div className={styles.switch_card} onClick={() => switchTemplateMode("flakes")}>
+                
+                <div className={`${styles.switch_card} ${selectedList === "landing" ? styles.disable_switch : ""}`} onClick={() => switchTemplateMode("flakes")}>
                   <Icon name='add' viewBox='0 0 25 20' strokeColor='#282d7e' />
                   <p>Create new</p>
                 </div>

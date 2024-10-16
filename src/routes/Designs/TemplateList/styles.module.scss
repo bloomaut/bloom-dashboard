@@ -90,6 +90,9 @@
     transition: 200ms;
   }
 }
+.disable_switch {
+  display: none;
+}
 
 .powerapp_container::-webkit-scrollbar {
   width: 5px;
