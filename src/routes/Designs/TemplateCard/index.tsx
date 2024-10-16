@@ -78,7 +78,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
   };
 
   return (
-    <div className={styles.hog}>
+    <div className={`${styles.design_card} ${datatype === "flakes" ? styles.design_create : ""}`}>
       <div className={styles.head}>
         <div className={styles.title_wrap}>
           <p className={styles.title}>{title}</p>
@@ -89,38 +89,44 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
           <div className={styles.card_icons}>
             {datatype === "designs" && selectedList === "hog" && (
               <>
-                <button className={styles.main_actions} onClick={() => copyDesignLink(_id)}>
+                <button className={styles.actions} onClick={() => copyDesignLink(_id)}>
                   <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
                 </button>
-                <button className={styles.other_actions} onClick={() => setPopupDelete(true)}>
+                <button className={styles.bottom_actions} onClick={() => setPopupDelete(true)}>
                   <Icon name='delete' viewBox='0 0 25 25' strokeWidth={2} strokeColor='#282d7e' />
                 </button>
+                <Link className={`${styles.bottom_actions} ${styles.edit_action}`} href={`/designs/update/${_id}`}>
+                  <Icon name='design_2' viewBox='0 0 23 23' strokeWidth={1.5} strokeColor='#282d7e' />
+                </Link>
               </>
             )}
             {datatype === "diffusion" && selectedList === "hog" && (
-              <button className={styles.main_actions} onClick={() => copyDiffusionLink(_id)}>
+              <button className={styles.actions} onClick={() => copyDiffusionLink(_id)}>
                 <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
               </button>
             )}
 
             {datatype === "designs" && selectedList === "post" && (
               <>
-                <button className={styles.main_actions} onClick={() => downloadPostImage(thumbnail || null)}>
+                <button className={styles.actions} onClick={() => downloadPostImage(thumbnail || null)}>
                   <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
                 </button>
-                <button className={styles.other_actions} onClick={() => setPopupDelete(true)}>
+                <button className={styles.bottom_actions} onClick={() => setPopupDelete(true)}>
                   <Icon name='delete' viewBox='0 0 25 25' strokeWidth={2} strokeColor='#282d7e' />
                 </button>
+                <Link className={`${styles.bottom_actions} ${styles.edit_action}`} href={`/designs/update/${_id}`}>
+                  <Icon name='design_2' viewBox='0 0 23 23' strokeWidth={1.5} strokeColor='#282d7e' />
+                </Link>
               </>
             )}
             {datatype === "genericPost" && selectedList === "post" && (
-              <button className={styles.main_actions} onClick={() => downloadPostImage(thumbnail || null)}>
+              <button className={styles.actions} onClick={() => downloadPostImage(thumbnail || null)}>
                 <Icon name='arrow_download' viewBox='0 0 25 25' strokeWidth={1.5} strokeColor='#282d7e' />
               </button>
             )}
 
             {datatype === "flakes" && (
-              <Link href={`/designs/create/${_id}`}>
+              <Link className={styles.create_link} href={`/designs/create/${_id}`}>
                 <Icon name='design_2' viewBox='0 0 22 22' strokeWidth={1.5} strokeColor='#282d7e' />
               </Link>
             )}

@@ -1,4 +1,4 @@
-.hog {
+.design_card {
   @include width-height(280px, 280px);
   background-color: $border;
   border-radius: 25px;
@@ -63,7 +63,7 @@
         justify-content: center;
         align-items: center;
 
-        .main_actions {
+        .actions {
           cursor: pointer;
           height: 100%;
           width: 100%;
@@ -74,7 +74,7 @@
           justify-content: center;
           align-items: center;
         }
-        a {
+        .create_link {
           cursor: pointer;
           height: 100%;
           width: 100%;
@@ -92,7 +92,7 @@
           background: linear-gradient(180deg, rgba(250, 250, 250, .4), rgba(250, 250, 250, .4));
         }
 
-        .other_actions {
+        .bottom_actions {
           cursor: pointer;
           position: absolute;
           bottom: 10px;
@@ -108,9 +108,13 @@
             height: 40px;
           }
         }
-        .other_actions:hover {
+        .bottom_actions:hover {
           transform: scale(1.10);
           transition: 200ms;
+        }
+
+        .edit_action {
+          left: 60px;
         }
       }
     }
@@ -119,85 +123,6 @@
       position: relative;
       object-fit: cover;
     }
-
-    /* .option {
-      @include width-height(25px, 20px);
-      background-color: $white;
-      padding: 4px;
-      margin-top: 4px;
-      border-radius: 4px;
-      cursor: pointer;
-      z-index: 4;
-      transition: background 300ms ease;
-      position: relative;
-
-      &:hover {
-        background-color: $border;
-      }
-
-      .popup {
-        position: absolute;
-        right: 30px;
-        top: 0;
-        @include flex(column, center, center, 10px);
-        background: $white;
-        padding: 10px 5px;
-        border-radius: 8px;
-        .btn_container {
-          @include flex(row-reverse, center, center, 5px);
-          @include fontSize-fontWeight(12px, 600);
-          border: 1px solid #ccc;
-          background: none;
-          min-width: 75px;
-          border-radius: 8px;
-          cursor: pointer;
-          &:hover {
-            color: $orange;
-            box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.25);
-            svg {
-              stroke: $orange;
-            }
-          }
-        }
-        .create {
-          border-radius: 8px;
-          background-color: $white;
-          a {
-            @include flex(row, center, center, 3px);
-            @include fontSize-fontWeight(12px, 600);
-            min-width: 75px;
-            background-color: $white;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            cursor: pointer;
-            color: $text;
-          }
-          button {
-            @include flex(row, center, center, 3px);
-            @include fontSize-fontWeight(12px, 600);
-            cursor: pointer;
-            outline: none;
-            background: none;
-            border: none;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            padding: 2px 6px;
-            color: $text;
-          }
-          &:hover {
-            color: $orange;
-            box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.25);
-            a,
-            button {
-              color: $orange;
-              svg {
-                stroke: $orange;
-              }
-            }
-          }
-        }
-      }
-    } */
   }
 
   &:hover {
@@ -214,5 +139,35 @@
         display: block;
       }
     }
+  }
+}
+
+.design_create {
+  border: 5px solid #282d7e;
+  background: #FBFAFE;
+  border-style: dashed;
+  padding: 20px;
+
+  img {
+    border-radius: 25px;
+  }
+
+  .head {
+    .title_wrap {
+      @include width-height(200px, auto);  
+      .title {
+        @include fontSize-fontWeight(13px, 600);
+      }
+    }
+    .card_action {
+      .card_icons {
+        @include width-height(240px, 230px);
+      }
+    }
+  }
+
+  &:hover {
+    background-color: transparent;
+    border-style: dashed;
   }
 }
