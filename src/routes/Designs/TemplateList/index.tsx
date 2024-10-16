@@ -103,12 +103,7 @@ const TemplateList = () => {
 
                 {listTemplates && listTemplates.flakes.length > 0 ? (
                   listTemplates.flakes.map(item => (
-                    <TemplateCard
-                      key={item._id}
-                      {...item}
-                      datatype={"flakes"}
-                      selectedList={selectedList}
-                    />
+                    <TemplateCard key={item._id} {...item} datatype={"flakes"} selectedList={selectedList} />
                   ))
                 ) : (
                   <p className={styles.empty_text}>Yo do not have templates to create designs yet</p>
