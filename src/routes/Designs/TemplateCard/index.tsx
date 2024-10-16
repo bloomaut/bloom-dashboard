@@ -163,22 +163,21 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
             </div>
           )} */}
 
-          {popupDelete &&
-            createPortal(
-              <PopupConfirm
-                onConfirm={handleDelete}
-                onCancel={() => setPopupDelete(false)}
-                setShowConfirmation={setPopupDelete}
-                title={dict("popup.delete_design")}
-                loading={loading}
-                textCancel={dict("popup.cancel")}
-                textAccept={dict("popup.confirm")}
-              />,
-              document.body,
-            )
-          }
+        {popupDelete &&
+          createPortal(
+            <PopupConfirm
+              onConfirm={handleDelete}
+              onCancel={() => setPopupDelete(false)}
+              setShowConfirmation={setPopupDelete}
+              title={dict("popup.delete_design")}
+              loading={loading}
+              textCancel={dict("popup.cancel")}
+              textAccept={dict("popup.confirm")}
+            />,
+            document.body,
+          )}
 
-          {/* {activePopup &&
+        {/* {activePopup &&
             createPortal(
               <PopupDesign
                 onCancel={() => setActivePopup(false)}
