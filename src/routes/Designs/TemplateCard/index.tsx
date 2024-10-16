@@ -64,6 +64,11 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
     notify("Diffusion link copied on clipboard!");
   };
 
+  const copyLandingURL = async (_id: string) => {
+    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/preview/landing/${_id}`);
+    notify("Website link copied on clipboard!");
+  };
+
   const downloadPostImage = async (thumbnail: string | null) => {
     if (!thumbnail) {
       notifyError("No image available to download.");
@@ -87,12 +92,11 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
 
         <div className={styles.card_action}>
           <div className={styles.card_icons}>
-            
-            {/* {datatype === "flakes" && selectedList === "landing" && (
-              <button className={styles.actions} onClick={() => copyDiffusionLink(_id)}>
+            {selectedList === "landing" && (
+              <button className={styles.actions} onClick={() => copyLandingURL(_id)}>
                 <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
               </button>
-            )} */}
+            )}
 
             {datatype === "designs" && selectedList === "hog" && (
               <>

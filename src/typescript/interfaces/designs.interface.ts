@@ -45,7 +45,6 @@ export interface GenericDesigns {
 }
 
 export interface FlakesAndDesignProps {
-  type: string;
   flakes: HogRelated[];
   designs: DesignProps[];
   difussionHogs?: GenericDesigns[];

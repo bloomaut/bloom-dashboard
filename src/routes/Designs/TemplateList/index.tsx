@@ -13,24 +13,6 @@ const TemplateList = () => {
   const dict = useTranslations("dict.designs");
   const locale = useLocale();
 
-  const templateTitle = () => {
-    if (listTemplates && listTemplates.type !== "") {
-      const type = listTemplates?.type || "";
-      return locale === "en" ? `${type} ${dict("diffusion.title")}` : `${dict("diffusion.title")} ${type}`;
-    } else {
-      return dict("header.my_designs");
-    }
-  };
-
-  const templateError = (typedata?: string) => {
-    if (listTemplates?.type !== "") {
-      const type = listTemplates?.type || "";
-      return locale === "en"
-        ? `${dict("diffusion.empty")} ${type} ${typedata === "designs" ? dict("diffusion.designs") : dict("diffusion.title")} `
-        : `${dict("diffusion.empty")} ${typedata === "designs" ? dict("diffusion.designs") : dict("diffusion.title")} ${type}  `;
-    } else return locale === "en" ? `${dict("diffusion.empty")} designs` : `${dict("diffusion.empty")} Diseños`;
-  };
-
   const switchTemplateMode = (mode: string) => {
     setTemplateMode(mode);
   };
@@ -73,7 +55,7 @@ const TemplateList = () => {
             </div>
           )}
 
-          {templateMode === "designs" && listTemplates?.type && selectedList !== "landing" && (
+          {templateMode === "designs" && selectedList !== "landing" && (
             <div className={styles.cards}>
               <h3 className={styles.subtitle}>Custom designs</h3>
               <div className={styles.card_container}>
@@ -90,7 +72,7 @@ const TemplateList = () => {
                     <TemplateCard key={item._id} {...item} datatype='designs' selectedList={selectedList} />
                   ))
                 ) : (
-                  <p className={styles.empty_text}>{templateError("designs")}</p>
+                  <p className={styles.empty_text}>You do not have designs created yet</p>
                 )}
               </div>
             </div>
@@ -102,15 +84,10 @@ const TemplateList = () => {
               <div className={styles.card_container}>
                 {listTemplates && listTemplates.flakes.length > 0 ? (
                   listTemplates.flakes.map(item => (
-                    <TemplateCard
-                      key={item._id}
-                      {...item}
-                      datatype={"designs"}
-                      selectedList={selectedList}
-                    />
+                    <TemplateCard key={item._id} {...item} datatype={"designs"} selectedList={selectedList} />
                   ))
                 ) : (
-                  <p className={styles.empty_text}>{templateError()}</p>
+                  <p className={styles.empty_text}>Yo do not have websites yet</p>
                 )}
               </div>
             </div>
@@ -129,12 +106,12 @@ const TemplateList = () => {
                     <TemplateCard
                       key={item._id}
                       {...item}
-                      datatype={listTemplates?.type !== "" ? "flakes" : "designs"}
+                      datatype={"flakes"}
                       selectedList={selectedList}
                     />
                   ))
                 ) : (
-                  <p className={styles.empty_text}>{templateError()}</p>
+                  <p className={styles.empty_text}>Yo do not have templates to create designs yet</p>
                 )}
               </div>
             </div>

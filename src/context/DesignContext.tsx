@@ -27,7 +27,6 @@ const DesignContext = createContext<Context>({
 
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
   const [listTemplates, setListTemplates] = useState<FlakesAndDesignProps>({
-    type: "",
     flakes: [],
     designs: [],
     difussionHogs: [],
@@ -45,7 +44,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
     const fetchPowerApps = async () => {
       setLoading(true);
 
-      let type = "";
       let flakes: HogRelated[] = [];
       let designs: DesignProps[] = [];
 
@@ -54,16 +52,12 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
 
       if (selectedList === "landing") {
         const response = await get("design-small/landings");
-        console.log(response.result);
         if (response.statusCode === 200) {
-          type = "landing";
           flakes = response.result.landings;
         }
       } else if (selectedList === "hog") {
         const response = await get("design-small/hogs");
-        console.log(response.result);
         if (response.statusCode === 200) {
-          type = "hog";
           flakes = response.result.hogs;
           designs = response.result.designs;
           difussionHogs = response.result?.difussionHogs;
@@ -71,14 +65,13 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       } else if (selectedList === "post") {
         const response = await get("design-small/posts");
         if (response.statusCode === 200) {
-          type = "post";
           flakes = response.result.posts;
           designs = response.result.designs;
           postsWithoutVariables = response.result?.postsWithoutVariables;
         }
       }
 
-      setListTemplates({ type, flakes, designs, difussionHogs, genericPosts: postsWithoutVariables });
+      setListTemplates({ flakes, designs, difussionHogs, genericPosts: postsWithoutVariables });
       setLoading(false);
     };
 
