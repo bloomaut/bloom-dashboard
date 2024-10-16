@@ -169,7 +169,6 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
               document.body,
             )
           }*/}
-
       </div>
     </div>
   );
