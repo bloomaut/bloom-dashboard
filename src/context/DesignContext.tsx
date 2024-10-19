@@ -1,13 +1,13 @@
-import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { DesignProps, DesignSelected, DiffusionProps } from "@/typescript/interfaces/designs.interface";
+import { DesignProps, DesignSelected, FlakesAndDesignProps } from "@/typescript/interfaces/designs.interface";
+import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 
 interface Context {
-  listTemplates: DiffusionProps | undefined;
+  listTemplates: FlakesAndDesignProps | undefined;
   loading: boolean;
-  selectedList: number;
-  setSelectedList: (id: number) => void;
+  selectedList: string;
+  setSelectedList: (type: string) => void;
   designSelected: DesignSelected | undefined;
   setDesignSelected: (design: DesignSelected) => void;
   handleRemoveDesign: (deletedId: string) => void;
@@ -16,7 +16,7 @@ interface Context {
 const DesignContext = createContext<Context>({
   listTemplates: undefined,
   loading: true,
-  selectedList: 1,
+  selectedList: "hog",
   setSelectedList: () => undefined,
   designSelected: undefined,
   setDesignSelected: () => undefined,
@@ -26,61 +26,60 @@ const DesignContext = createContext<Context>({
 });
 
 export const DesignProvider = ({ children }: { children: JSX.Element }) => {
-  const [listTemplates, setListTemplates] = useState<DiffusionProps>({
-    type: "",
-    hogs: [],
+  const [listTemplates, setListTemplates] = useState<FlakesAndDesignProps>({
+    flakes: [],
     designs: [],
+    difussionHogs: [],
+    genericPosts: [],
   });
   const [loading, setLoading] = useState(true);
-  const [selectedList, setSelectedList] = useState<number>(1);
+
+  // Recuperamos el `selectedList` desde el localStorage (si existe)
+  const savedSelectedList = typeof window !== "undefined" ? localStorage.getItem("selectedList") : "hog";
+  const [selectedList, setSelectedList] = useState<string>(savedSelectedList || "hog");
+
   const [designSelected, setDesignSelected] = useState<DesignSelected>();
 
   useEffect(() => {
     const fetchPowerApps = async () => {
       setLoading(true);
 
-      let type = "";
-      let hogs: HogRelated[] = [];
+      let flakes: HogRelated[] = [];
       let designs: DesignProps[] = [];
 
-      // SI EL INDEX SELECCIONADO ES 0, SE HACE EL GET DE TODOS LOS DISEÑOS
-      if (selectedList === 0) {
-        const response = await get("design-small/list");
+      let difussionHogs = [];
+      let postsWithoutVariables = [];
+
+      if (selectedList === "landing") {
+        const response = await get("design-small/landings");
         if (response.statusCode === 200) {
-          type = "";
-          hogs = response.result.designs;
+          flakes = response.result.landings;
         }
-        // SI EL INDEX SELECCIONADO ES 1, SE HACE EL GET DE HOGS
-      } else if (selectedList === 1) {
+      } else if (selectedList === "hog") {
         const response = await get("design-small/hogs");
         if (response.statusCode === 200) {
-          type = "Hog";
-          hogs = response.result.hogs;
+          flakes = response.result.hogs;
           designs = response.result.designs;
+          difussionHogs = response.result?.difussionHogs;
         }
-        // SI EL INDEX SELECCIONADO ES 2, SE HACE EL GET DE EMAILS
-      } else if (selectedList === 2) {
-        const response = await get("design-small/emails");
-        if (response.statusCode === 200) {
-          type = "Email";
-          hogs = response.result.emails;
-          designs = response.result.designs;
-        }
-        // SI EL INDEX SELECCIONADO ES 3, SE HACE EL GET DE POSTS
-      } else if (selectedList === 3) {
+      } else if (selectedList === "post") {
         const response = await get("design-small/posts");
         if (response.statusCode === 200) {
-          type = "Post";
-          hogs = response.result.posts;
+          flakes = response.result.posts;
           designs = response.result.designs;
+          postsWithoutVariables = response.result?.postsWithoutVariables;
         }
       }
 
-      setListTemplates({ type, hogs, designs });
+      setListTemplates({ flakes, designs, difussionHogs, genericPosts: postsWithoutVariables });
       setLoading(false);
     };
 
     fetchPowerApps();
+  }, [selectedList]);
+
+  useEffect(() => {
+    localStorage.setItem("selectedList", selectedList.toString());
   }, [selectedList]);
 
   const handleRemoveDesign = (deletedId: string) => {
@@ -88,8 +87,8 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
       const filteredDesigns = listTemplates.designs.filter(item => item._id !== deletedId);
       setListTemplates({ ...listTemplates, designs: filteredDesigns });
     } else {
-      const filteredDesigns = listTemplates?.hogs.filter(item => item._id !== deletedId);
-      setListTemplates({ ...listTemplates, hogs: filteredDesigns });
+      const filteredDesigns = listTemplates?.flakes.filter(item => item._id !== deletedId);
+      setListTemplates({ ...listTemplates, flakes: filteredDesigns });
     }
   };
 

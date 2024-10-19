@@ -27,7 +27,7 @@ export interface DesignProps {
   title: string | null;
   description: string | null;
   thumbnail: string | null;
-  type_design: string | null;
+  type_design: "post" | "hog" | "email";
   data: any;
   variables: VariablesFormDesign[];
   active: boolean;
@@ -38,10 +38,17 @@ export interface DesignProps {
   hog: HogRelated;
 }
 
-export interface DiffusionProps {
-  type: string;
-  hogs: HogRelated[];
+export interface GenericDesigns {
+  _id: string;
+  title: string;
+  thumbnail: string | null;
+}
+
+export interface FlakesAndDesignProps {
+  flakes: HogRelated[];
   designs: DesignProps[];
+  difussionHogs?: GenericDesigns[];
+  genericPosts?: GenericDesigns[];
 }
 
 export interface DesignSelected {

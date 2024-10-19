@@ -12,6 +12,7 @@ import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useParams, useRouter } from "next/navigation";
 import PopupDesign from "../PopupDesign";
 import useFormValidator from "@/hooks/useFormValidator";
+import Icon from "@/components/Icon";
 
 type FormValues = {
   title: string;
@@ -262,23 +263,25 @@ const DesignForm = () => {
             {dict("designs.create_design.user_variables")}{" "}
             <span>*{dict("designs.create_design.user_variables_message")}.</span>
           </h6>
-          {formValues.variables.filter(variable => variable.name.startsWith("Client")).length === 0 ? (
-            <p className={styles.no_variables_message}>{dict("designs.create_design.empty_variables")}</p>
-          ) : (
-            formValues.variables
-              .filter(variable => variable.name.startsWith("Client"))
-              .map((variable, index) => (
-                <InputDesign
-                  key={index}
-                  description={variable.description}
-                  target={variable.target}
-                  name={variable.name}
-                  value={variable.value}
-                  disabled={true}
-                  onChange={handleInputChange}
-                />
-              ))
-          )}
+          <div className={styles.grid}>
+            {formValues.variables.filter(variable => variable.name.startsWith("Client")).length === 0 ? (
+              <p className={styles.no_variables_message}>{dict("designs.create_design.empty_variables")}</p>
+            ) : (
+              formValues.variables
+                .filter(variable => variable.name.startsWith("Client"))
+                .map((variable, index) => (
+                  <InputDesign
+                    key={index}
+                    description={variable.description}
+                    target={variable.target}
+                    name={variable.name}
+                    value={variable.value}
+                    disabled={true}
+                    onChange={handleInputChange}
+                  />
+                ))
+            )}
+          </div>
         </div>
       </div>
       <div className={styles.button} onClick={handleSubmit}>
@@ -291,15 +294,18 @@ const DesignForm = () => {
         <PopupDesign
           onCancel={() => router.push(`/${locale}/designs`)}
           setShowConfirmation={setActivePopup}
-          thumbnail={designSelected?.flake.thumbnail || ""}
+          thumbnail={popupData.thumbnail || ""}
           title={popupData.title || ""}
           description={popupData.description || ""}
           typeDesign={popupData.type_design || null}
-          hog={popupData.hog.title || ""}
+          hog={popupData.hog?.title || ""}
+          post={popupData.post?.title || ""}
+          email={popupData.email?.title || ""}
           pwa={popupData.power_app.title || ""}
           url={`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${popupData._id}`}
           loading={loading}
           fields={popupData.variables || []}
+          setPopupData={undefined}
         />
       )}
     </section>

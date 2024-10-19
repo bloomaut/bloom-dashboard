@@ -26,7 +26,8 @@ export interface HogRelated {
   _id: ID;
   title: string | null;
   thumbnail: string | null;
-  datatype?: "" | "designs";
+  datatype?: "flakes" | "designs" | "diffusion" | "genericPost";
+  selectedList?: string | null;
 }
 
 interface Skinx {

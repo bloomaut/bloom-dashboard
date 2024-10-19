@@ -23,6 +23,7 @@ export const userInitialState: UserBusiness = {
     active: true,
     banner: null,
     instagram: null,
+    address: "",
     description: null,
     category: null,
     palette: [],
