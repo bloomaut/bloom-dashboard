@@ -26,15 +26,15 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
   const params = useParams();
 
   useEffect(() => {
-    const storedSelectedList = localStorage.getItem("selectedList");
+    const storedSelectedList = localStorage.getItem("selectedList") || "hog";
     if (storedSelectedList) {
-      setSelectedList(JSON.parse(storedSelectedList));
+      setSelectedList(storedSelectedList);
     }
   }, []);
 
   useEffect(() => {
     if (selectedList) {
-      localStorage.setItem("selectedList", JSON.stringify(selectedList));
+      localStorage.setItem("selectedList", selectedList);
     }
   }, [selectedList]);
 
@@ -69,7 +69,7 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
     const dataToSend = {
       pwa_id: powerAppSelected,
       flake_id: flakeId || String(params.id),
-      type_design: listTemplates?.type.toLowerCase() || "",
+      type_design: selectedList,
     };
 
     const response = await post("design-small/prepare", dataToSend);

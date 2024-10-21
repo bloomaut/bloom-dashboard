@@ -38,10 +38,17 @@ export interface DesignProps {
   hog: HogRelated;
 }
 
-export interface DiffusionProps {
-  type: string;
-  hogs: HogRelated[];
+export interface GenericDesigns {
+  _id: string;
+  title: string;
+  thumbnail: string | null;
+}
+
+export interface FlakesAndDesignProps {
+  flakes: HogRelated[];
   designs: DesignProps[];
+  difussionHogs?: GenericDesigns[];
+  genericPosts?: GenericDesigns[];
 }
 
 export interface DesignSelected {
