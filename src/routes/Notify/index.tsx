@@ -3,79 +3,91 @@ import styles from "./styles.module.scss";
 import Title from "@/components/Title";
 import UserInfo from "./UserInfo";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import { useDebouncedCallback } from "use-debounce";
+import { get } from "@/services/fetch";
+import { ENV } from "@/typescript/types/api";
+import LoadingSpinner from "@/components/Loading";
+import { formatTime } from "@/utils/formatTime";
+import { INotify } from "@/typescript/interfaces/notify.interface";
 
 const Notify = () => {
-  const dict = useTranslations("dict");
-  const [notificationSelected, setNotificationSelected] = useState<number>();
+  const dict = useTranslations("dict.notifications");
+  const [notifications, setNotifications] = useState<INotify[]>([]);
+  const [notificationSelected, setNotificationSelected] = useState<INotify>();
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
-  const handleNotificationSelected = (index: number) => {
-    setNotificationSelected(index);
+  useEffect(() => {
+    const getNotifications = async () => {
+      try {
+        setLoading(true);
+        const response = await get("notifications", ENV.BOX);
+        if (response.statusCode === 200) {
+          setNotifications(response.result.notifications || []);
+          setNotificationSelected(response.result.notifications[0]);
+        } else {
+          setNotifications([]);
+        }
+      } catch (error) {
+        setNotifications([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getNotifications();
+  }, []);
+
+  const handleNotificationSelected = (notify: INotify) => {
+    setNotificationSelected(notify);
   };
 
-  const handlePageChange = useDebouncedCallback(async (page: number = 1) => {
-    const startIndex = (page - 1) * 5;
-    // getHotlinkList(startIndex, 5);
-  }, 500);
+  const handlePageChange = useDebouncedCallback((page: number) => {
+    setCurrentPage(page);
+  }, 300);
 
-  // Cambiar a datos de la API
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentNotifications = notifications.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <section className={styles.notify_container}>
-      <Title text='Notificación' />
+      <Title text={dict("title")} />
       <div className={styles.inner_container}>
         <div className={styles.notification}>
-          <div
-            className={`${styles.card} ${notificationSelected === 1 && styles.selected}`}
-            onClick={() => handleNotificationSelected(1)}
-          >
-            <h4 className={styles.title}>Notification title</h4>
-            <p className={styles.description}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nulla earum numquam reprehenderit eum,
-              fugit quas culpa magnam explicabo rem?
-            </p>
-            <UserInfo name='Simon Peres' hour='16:30' />
-          </div>
-          <div
-            className={`${styles.card} ${notificationSelected === 2 && styles.selected}`}
-            onClick={() => handleNotificationSelected(2)}
-          >
-            <h4 className={styles.title}>Notification title</h4>
-            <p className={styles.description}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nulla earum numquam reprehenderit eum,
-              fugit quas culpa magnam explicabo rem?
-            </p>
-            <UserInfo name='Simon Peres' hour='16:30' />
-          </div>
-          <div className={styles.card}>
-            <h4 className={styles.title}>Notification title</h4>
-            <p className={styles.description}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nulla earum numquam reprehenderit eum,
-              fugit quas culpa magnam explicabo rem?
-            </p>
-            <UserInfo name='Simon Peres' hour='16:30' />
-          </div>
-          <div className={styles.card}>
-            <h4 className={styles.title}>Notification title</h4>
-            <p className={styles.description}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nulla earum numquam reprehenderit eum,
-              fugit quas culpa magnam explicabo rem?
-            </p>
-            <UserInfo name='Simon Peres' hour='16:30' />
-          </div>
-          {5 > 4 && <Pagination totalItems={10} limit={4} onPageChange={handlePageChange} />}
+          {loading ? (
+            <LoadingSpinner />
+          ) : currentNotifications.length > 0 ? (
+            currentNotifications.map((notification: any) => (
+              <div
+                className={`${styles.card} ${notificationSelected === notification._id && styles.selected}`}
+                onClick={() => handleNotificationSelected(notification)}
+                key={notification._id}
+              >
+                <h4 className={styles.title}>{notification.title}</h4>
+                <p className={styles.description}>{notification.message}</p>
+                <UserInfo name={notification.title} hour={formatTime(notification.created_at)} />
+              </div>
+            ))
+          ) : (
+            <p className={styles.no_notifications}>{dict("no_notifications")}</p>
+          )}
+          {notifications.length > itemsPerPage && (
+            <Pagination totalItems={notifications.length} limit={itemsPerPage} onPageChange={handlePageChange} />
+          )}
         </div>
-        <div className={styles.notification_detail}>
-          <h3 className={styles.title}>Notification title</h3>
-          <span>Hello Ricardo</span>
-          <p className={styles.description}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nulla earum numquam reprehenderit eum,
-            fugit quas culpa magnam explicabo rem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-            nulla earum numquam reprehenderit eum, fugit quas culpa magnam explicabo rem?
-          </p>
-          <UserInfo name='Simon Peres' hour='16:30' />
-        </div>
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <div className={styles.notification_detail}>
+            <h3 className={styles.title}>Notification title</h3>
+            <span>Hello {notificationSelected?.title}</span>
+            <p className={styles.description}>{notificationSelected?.message}</p>
+            <UserInfo name={notificationSelected!.title} hour={formatTime(notificationSelected!.created_at)} />
+          </div>
+        )}
       </div>
     </section>
   );

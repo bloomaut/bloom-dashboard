@@ -504,6 +504,10 @@
         "empty_variables": "Esta PWA no contiene ninguna variable",
         "user_variables_message": "Estos campos se completarán durante el registro del usuario"
       }
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "no_notifications": "No tienes notificaciones"
     }
   }
 }

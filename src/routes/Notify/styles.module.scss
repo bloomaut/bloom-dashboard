@@ -13,6 +13,7 @@
       @include flex(column, flex-start, flex-start, 15px);
       padding: 0 10px;
       .card {
+        @include width-height(100%, 126px);
         @include flex(column, flex-start, flex-start, 10px);
         max-width: 500px;
         padding: 5px 10px;
@@ -40,6 +41,11 @@
         &::before {
           background-color: $orange;
         }
+      }
+      .no_notifications {
+        @include fontSize-fontWeight(16px, 500);
+        color: $opacityGrey;
+        margin-left: 10px;
       }
     }
     .notification_detail {
