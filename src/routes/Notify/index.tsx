@@ -56,37 +56,41 @@ const Notify = () => {
     <section className={styles.notify_container}>
       <Title text={dict("title")} />
       <div className={styles.inner_container}>
-        <div className={styles.notification}>
-          {loading ? (
-            <LoadingSpinner />
-          ) : currentNotifications.length > 0 ? (
-            currentNotifications.map((notification: any) => (
-              <div
-                className={`${styles.card} ${notificationSelected === notification._id && styles.selected}`}
-                onClick={() => handleNotificationSelected(notification)}
-                key={notification._id}
-              >
-                <h4 className={styles.title}>{notification.title}</h4>
-                <p className={styles.description}>{notification.message}</p>
-                <UserInfo name={notification.title} hour={formatTime(notification.created_at)} />
-              </div>
-            ))
-          ) : (
-            <p className={styles.no_notifications}>{dict("no_notifications")}</p>
-          )}
-          {notifications.length > itemsPerPage && (
-            <Pagination totalItems={notifications.length} limit={itemsPerPage} onPageChange={handlePageChange} />
-          )}
-        </div>
         {loading ? (
           <LoadingSpinner />
+        ) : notifications.length === 0 ? (
+          <p className={styles.no_notifications}>{dict("no_notifications")}</p>
         ) : (
-          <div className={styles.notification_detail}>
-            <h3 className={styles.title}>Notification title</h3>
-            <span>Hello {notificationSelected?.title}</span>
-            <p className={styles.description}>{notificationSelected?.message}</p>
-            <UserInfo name={notificationSelected!.title} hour={formatTime(notificationSelected!.created_at)} />
-          </div>
+          <>
+            <div className={styles.notification}>
+              {currentNotifications.map((notification: any) => (
+                <div
+                  className={`${styles.card} ${notificationSelected?._id === notification._id && styles.selected}`}
+                  onClick={() => handleNotificationSelected(notification)}
+                  key={notification._id}
+                >
+                  <h4 className={styles.title}>{notification.title}</h4>
+                  <p className={styles.description}>{notification.message}</p>
+                  <UserInfo name={notification.title} hour={formatTime(notification.created_at)} />
+                </div>
+              ))}
+              {notifications.length > itemsPerPage && (
+                <Pagination totalItems={notifications.length} limit={itemsPerPage} onPageChange={handlePageChange} />
+              )}
+            </div>
+            <div className={styles.notification_detail}>
+              {notificationSelected ? (
+                <>
+                  <h3 className={styles.title}>{notificationSelected.title}</h3>
+                  <span>Hello {notificationSelected.title}</span>
+                  <p className={styles.description}>{notificationSelected.message}</p>
+                  <UserInfo name={notificationSelected.title} hour={formatTime(notificationSelected.created_at)} />
+                </>
+              ) : (
+                <p className={styles.no_notification_selected}>{dict("no_notification_selected")}</p>
+              )}
+            </div>
+          </>
         )}
       </div>
     </section>
