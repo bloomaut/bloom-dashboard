@@ -20,6 +20,49 @@
       right: 45px;
       bottom: 5px;
     }
+    .role_container {
+      &:hover {
+        cursor: pointer;
+      }
+      .dropdown {
+        @include flex(column, flex-end, flex-start);
+        position: absolute;
+        left: -11%;
+        bottom: -100px;
+        z-index: 99;
+        padding: 20px;
+        background-color: $white;
+        border: 2px solid $border;
+        min-height: 100px;
+        display: none;
+        .title {
+          @include fontSize-fontWeight(16px, 600);
+          color: $text;
+          position: absolute;
+          top: 15px;
+          left: 20px;
+        }
+        .roles {
+          @include flex(row, flex-start, flex-start, 25px);
+          margin-bottom: -5px;
+          position: relative;
+          z-index: 999;
+          .role {
+            @include flex(row, flex-start, flex-start);
+            border: 1px solid $border;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+          button {
+            max-height: 32px;
+          }
+        }
+      }
+      .showdrop {
+        display: flex;
+      }
+    }
   }
   .inner_container {
     @include flex(row, center, center, 50px);
