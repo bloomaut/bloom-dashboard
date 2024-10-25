@@ -12,7 +12,6 @@ import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useParams, useRouter } from "next/navigation";
 import PopupDesign from "../PopupDesign";
 import useFormValidator from "@/hooks/useFormValidator";
-import Icon from "@/components/Icon";
 
 type FormValues = {
   title: string;
@@ -44,6 +43,7 @@ const DesignForm = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const [variableName, setVariableName] = useState<string | null>(null); // State auxiliar para saber en qué variable imagen setear la URL
   const [formValues, setFormValues] = useState<FormValues>(initialValues);
   const [activePopup, setActivePopup] = useState<boolean>(false);
   const [popupData, setPopupData] = useState<any>(null);
@@ -76,12 +76,29 @@ const DesignForm = () => {
     }
   };
 
+  useEffect(() => {
+    const uploadVarImage = async () => {
+      if (variableName && file) {
+        setLoading(true);
+        const imageUrl = await handleFileUpload(file);
+        setFormValues(prevValues => ({
+          ...prevValues,
+          variables: prevValues.variables.map(variable =>
+            variable.name === variableName ? { ...variable, value: imageUrl } : variable,
+          ),
+        }));
+        setLoading(false);
+      }
+    };
+    uploadVarImage();
+  }, [file]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setCheckValidation(true);
     setLoading(true);
 
-    let imageUrl: string | null = null;
+    const imageUrl: string | null = null;
     const isUpdate = designExist;
 
     if (Object.keys(errors).length === 0) {
@@ -107,19 +124,6 @@ const DesignForm = () => {
           notifyError(dict("toast.error_design"));
         }
       } else {
-        if (file) {
-          try {
-            imageUrl = await handleFileUpload(file);
-            if (!imageUrl) {
-              throw new Error("File upload failed");
-            }
-          } catch (error) {
-            notifyError("Error uploading file: " + error);
-            setLoading(false);
-            return;
-          }
-        }
-
         const payload = {
           title: formValues.title,
           description: formValues.description,
@@ -128,7 +132,7 @@ const DesignForm = () => {
             name: variable.name,
             description: variable.description,
             target: variable.target,
-            value: variable.target === "image" ? imageUrl || "" : variable.value,
+            value: variable.value,
           })),
           pwa_id: designSelected?.powerapp._id || "",
           flake_id: designSelected?.flake._id || "",
@@ -247,6 +251,8 @@ const DesignForm = () => {
                       onChange={(name, value) => handleInputChange(name, value)}
                       file={file}
                       setFile={variable.target === "image" ? setFile : undefined}
+                      variableName={variable.target === "image" ? variableName : undefined}
+                      setVariableName={variable.target === "image" ? setVariableName : undefined}
                     />
                     {checkValidation && <ErrorMessage error={errors[variable.name]} />}
                   </div>
