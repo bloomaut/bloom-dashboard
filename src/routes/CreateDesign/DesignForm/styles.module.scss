@@ -75,6 +75,7 @@
           .form_control {
             @include width-height(100%, auto);
             position: relative;
+            min-width: 160px;
             .error {
               @include width-height(250px, auto);
               @include fontSize-fontWeight(12px, 400);
@@ -82,6 +83,7 @@
               position: absolute;
               top: 50px;
               color: red;
+              z-index: 500;
             }
             .error_hidden {
               display: none;

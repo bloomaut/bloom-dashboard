@@ -1,10 +1,10 @@
 "use client";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { Link } from "@/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
+import { Link } from "@/navigation";
 //Icons
 import small from "@/../public/assets/logo_small_color.png";
 //Components
@@ -13,6 +13,7 @@ import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
 import SuiteComponent from "./SuiteComponent";
 import RoleComponent from "./RoleComponent";
+import Icon from "../Icon";
 
 const Navbar = () => {
   const dict = useTranslations("dict.login");
@@ -27,6 +28,9 @@ const Navbar = () => {
         <RoleComponent />
       </div>
       <div className={styles.inner_container}>
+        <Link href='/notify' className={styles.bell}>
+          <Icon name='bell' viewBox='0 0 25 20' strokeColor='#381d2a' />
+        </Link>
         {/* Language Dropdown */}
         <LangDrop />
         <SuiteComponent />

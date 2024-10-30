@@ -512,6 +512,10 @@
         "empty_variables": "This PWA does not contain any variables",
         "user_variables_message": "These fields will be completed during user registration"
       }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "no_notifications": "You have no notifications"
     }
   }
 }

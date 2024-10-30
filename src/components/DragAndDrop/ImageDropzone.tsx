@@ -9,9 +9,12 @@ interface ImageDropzoneProps {
   file?: File | null;
   setFile: Dispatch<SetStateAction<File | null>>;
   currentImage: string | null;
+  name?: string | null;
+  variableName?: string | null;
+  setVariableName?: Dispatch<SetStateAction<string | null>> | null;
 }
 
-const ImageDropzone = ({ file, setFile, currentImage }: ImageDropzoneProps) => {
+const ImageDropzone = ({ file, setFile, currentImage, name, variableName, setVariableName }: ImageDropzoneProps) => {
   const { notifyError } = useMessageToast();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const dict = useTranslations("dict.draganddrop");
@@ -28,6 +31,9 @@ const ImageDropzone = ({ file, setFile, currentImage }: ImageDropzoneProps) => {
       }
     } else if (acceptedFiles[0].type.includes("image")) {
       setFile(acceptedFiles[0]);
+      if (name && setVariableName) {
+        setVariableName(name);
+      }
     } else {
       notifyError(dict("error_image"));
     }
@@ -36,7 +42,7 @@ const ImageDropzone = ({ file, setFile, currentImage }: ImageDropzoneProps) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp", ".svg"],
+      "image/*": [".png", ".gif", ".jpeg", ".jpg", ".webp"],
     },
     maxFiles: 1,
     maxSize: 10 * 1024 * 1024,
@@ -45,7 +51,12 @@ const ImageDropzone = ({ file, setFile, currentImage }: ImageDropzoneProps) => {
   useEffect(() => {
     if (file instanceof File && file.type.includes("image")) {
       const url = URL.createObjectURL(file);
-      setImageUrl(url);
+      if (!variableName) {
+        setImageUrl(url);
+      } else if (name === variableName) {
+        // Condición para setear la imagen solo en el fileinput correspondiente, para que no aparezca la misma imagen en todos (kev)
+        setImageUrl(url);
+      }
       return () => URL.revokeObjectURL(url);
     } else {
       setImageUrl(currentImage || null);

@@ -24,6 +24,9 @@
   .inner_container {
     @include flex(row, center, center, 50px);
     padding: 0 20px;
+    .bell {
+      cursor: pointer;
+    }
     .knowledge {
       @include flex(row, space-around, center, 10px);
       cursor: pointer;

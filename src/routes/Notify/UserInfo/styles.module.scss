@@ -1,0 +1,9 @@
+.info {
+  @include width-height(100%, 50%);
+  @include flex(row, space-between, flex-end);
+  .name,
+  .hour {
+    @include fontSize-fontWeight(16px, 500);
+    color: $opacityGrey;
+  }
+}
