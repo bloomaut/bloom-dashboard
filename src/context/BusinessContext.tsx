@@ -90,9 +90,10 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict");
   const router = useRouter();
+  const locale = useLocale();
   const { notify, notifyError } = useMessageToast();
   const { step_04 } = useStepValidation();
-  const locale = useLocale();
+  const { clientId } = useAppSelector(state => state.ricardosData);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData(prevFormData => ({
@@ -106,10 +107,13 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
 
   const validateLogo = () => Boolean(logo || formData.client.logo);
 
+  console.log(userData);
+  console.log(formData);
+
   // Inicializar el form con los datos que llegan de la API o mostrarlo vacío
   useEffect(() => {
     setFormData(userData.name !== "" ? userData : initialFormData);
-  }, [userData]);
+  }, [userData, clientId]);
 
   // Si el logo existe, agregarlo al FormData
   useEffect(() => {

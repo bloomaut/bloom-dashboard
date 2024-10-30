@@ -124,7 +124,8 @@
         "mentor": "Mentor",
         "breadmaster": "Breadmaster",
         "trade": "Comercio",
-        "button": "Aplicar"
+        "button": "Aplicar",
+        "reset": "Resetear"
       }
     },
     "home": {

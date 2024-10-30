@@ -121,7 +121,8 @@
         "mentor": "Mentor",
         "breadmaster": "Breadmaster",
         "trade": "Trade",
-        "button": "Apply"
+        "button": "Apply",
+        "reset": "Reset"
       }
     },
     "home": {

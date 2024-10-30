@@ -12,22 +12,11 @@ import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
 import SuiteComponent from "./SuiteComponent";
-import Icon from "../Icon";
-import Button from "../Button";
-import { useAppSelector } from "@/store/hooks";
-import { useState } from "react";
-import { useCloseDropdown } from "@/hooks/useCloseDropdown";
+import RoleComponent from "./RoleComponent";
 
 const Navbar = () => {
-  const { user, isLoading } = useUser();
   const dict = useTranslations("dict.login");
-  const state = useAppSelector(state => state.userData);
-  const [openDrop, setOpenDrop] = useState(false);
-  const { dropdownRef } = useCloseDropdown(setOpenDrop);
-
-  const handleOpenDrop = () => {
-    setOpenDrop(!openDrop);
-  };
+  const { user, isLoading } = useUser();
 
   return (
     <nav className={styles.container}>
@@ -35,28 +24,7 @@ const Navbar = () => {
         <Link href='/'>
           <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
         </Link>
-        <div className={styles.role_container} onClick={handleOpenDrop}>
-          <Icon name='users' viewBox='0 0 25 20' strokeColor='#381d2a' width={25} />
-          <Icon name='arrow_down_chevron' viewBox='-5 0 25 1' strokeColor='#381d2a' />
-          <div className={`${styles.dropdown} ${openDrop ? styles.showdrop : ""}`} ref={dropdownRef}>
-            <p className={styles.title}>{dict("role.title")}</p>
-            <div className={styles.roles}>
-              <div className={styles.role} onClick={() => alert("holi")}>
-                {dict("role.mentor")}{" "}
-                <Icon name='arrow_down_chevron' height={20} viewBox='-5 0 25 1' strokeColor='#381d2a' />
-              </div>
-              <div className={styles.role}>
-                {dict("role.breadmaster")}{" "}
-                <Icon name='arrow_down_chevron' height={20} viewBox='-5 0 25 1' strokeColor='#381d2a' />
-              </div>
-              <div className={styles.role}>
-                {dict("role.trade")}{" "}
-                <Icon name='arrow_down_chevron' height={20} viewBox='-5 0 25 1' strokeColor='#381d2a' />
-              </div>
-              <Button title={dict("role.button")} />
-            </div>
-          </div>
-        </div>
+        <RoleComponent />
       </div>
       <div className={styles.inner_container}>
         {/* Language Dropdown */}
