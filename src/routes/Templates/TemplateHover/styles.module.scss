@@ -1,0 +1,11 @@
+@import "@/styles/theme.scss";
+
+.hover {
+  @include width-height(100%, 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $blueHoverBackground;
+  border-radius: 2.495px;
+  display: none;
+}

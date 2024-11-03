@@ -1,14 +1,12 @@
 import { get } from "@/services/fetch";
+import { useAppSelector } from "@/store/hooks";
 import { Powerapp } from "@/typescript/interfaces/flakes.interface";
 import { useEffect, useState } from "react";
-import { useMessageToast } from "./useMessageToast";
-import { useTranslations } from "next-intl";
 
 export const useFlakeData = () => {
   const [flakes, setFlakes] = useState<Powerapp[]>([]);
   const [loading, setLoading] = useState(true);
-  const { notifyError } = useMessageToast();
-  const dict = useTranslations("dict.toast");
+  const { clientId } = useAppSelector(state => state.ricardosData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +18,7 @@ export const useFlakeData = () => {
     };
 
     fetchData();
-  }, []);
+  }, [clientId]);
 
   return { flakes, loading };
 };

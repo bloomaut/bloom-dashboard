@@ -7,10 +7,12 @@ import { useDebouncedCallback } from "use-debounce";
 import TableRow from "./TableRow";
 import Pagination from "@/components/Pagination";
 import { useFlakesContext } from "@/context/FlakesContext";
+import { useAppSelector } from "@/store/hooks";
 
 const ListHotlinks = () => {
   const dict = useTranslations("dict.hotlinks.list");
   const { getHotlinkList, hotlinkList, totalHotlinks, loading } = useFlakesContext();
+  const { clientId } = useAppSelector(state => state.ricardosData);
   /*   const [searchValue, setSearchValue] = useState<string>(""); */
   /*   const [currentItemsFiltered, setCurrentItemsFiltered] = useState<HotlinkList[]>([]); */
   /*   const [filteredHotlinks, setFilteredHotlinks] = useState<HotlinkList[]>([]); */
@@ -56,7 +58,7 @@ const ListHotlinks = () => {
 
   useEffect(() => {
     handlePageChange();
-  }, []);
+  }, [clientId]);
 
   return (
     <div className={styles.container}>

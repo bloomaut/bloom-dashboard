@@ -3,6 +3,7 @@ import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
 import { DatasetDetailServicesType, DataItemsServiceType } from "@/typescript/interfaces/catalog.interface";
+import { useAppSelector } from "@/store/hooks";
 
 interface CatalogServiceContextType {
   services: DatasetDetailServicesType | null | undefined;
@@ -38,10 +39,11 @@ export const CatalogServicesProvider = ({ children }: { children: JSX.Element })
   const [services, setServices] = useState<DatasetDetailServicesType | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useParams();
+  const { clientId } = useAppSelector(state => state.ricardosData);
 
   useEffect(() => {
     if (id) fetchDatasetById();
-  }, [id]);
+  }, [id, clientId]);
 
   const fetchDatasetById = async () => {
     const data = await get(`datasets/${id}`, ENV.BOX);

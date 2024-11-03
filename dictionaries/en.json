@@ -115,7 +115,14 @@
       "register": "Register",
       "account": "Don't have an account?",
       "signup": "Sign up now",
-      "policy": "Policy privacy"
+      "policy": "Policy privacy",
+      "role": {
+        "title": "Change user display:",
+        "mentor": "Mentor",
+        "breadmaster": "Breadmaster",
+        "my_account": "My account",
+        "button": "Apply"
+      }
     },
     "home": {
       "welcome": "Welcome to Small",

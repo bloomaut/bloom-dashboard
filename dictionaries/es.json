@@ -118,7 +118,14 @@
       "register": "Registrarse",
       "account": "No tienes una cuenta?",
       "signup": "Regístrate ahora",
-      "policy": "Política de privacidad"
+      "policy": "Política de privacidad",
+      "role": {
+        "title": "Cambiar visualización de usuario:",
+        "mentor": "Mentor",
+        "breadmaster": "Breadmaster",
+        "my_account": "Mi cuenta",
+        "button": "Aplicar"
+      }
     },
     "home": {
       "welcome": "Bienvenido a Small",
