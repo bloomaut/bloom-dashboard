@@ -2,7 +2,7 @@ import { getAccessToken, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextRequest, NextResponse } from "next/server";
 import axios, { AxiosRequestConfig } from "axios";
 
-export const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRequest) {
+const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRequest) {
   try {
     const res = new NextResponse();
     const { accessToken } = await getAccessToken(req, res);
