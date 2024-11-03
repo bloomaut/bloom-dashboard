@@ -69,7 +69,6 @@ const Sidebar = () => {
 
   const getUserData = async () => {
     const res = await get("user/me");
-    console.log(res);
     if (res.statusCode === 200) {
       dispatch(setUserData(res.result.user));
     }
@@ -89,8 +88,11 @@ const Sidebar = () => {
 
   useEffect(() => {
     getUserData();
-    getDataFromRicardos();
   }, [clientId]);
+
+  useEffect(() => {
+    getDataFromRicardos();
+  }, []);
 
   return (
     <div className={`${styles.container} ${!isOpen && styles.container_closed}`}>

@@ -123,9 +123,8 @@
         "title": "Cambiar visualización de usuario:",
         "mentor": "Mentor",
         "breadmaster": "Breadmaster",
-        "trade": "Comercio",
-        "button": "Aplicar",
-        "reset": "Resetear"
+        "my_account": "Mi cuenta",
+        "button": "Aplicar"
       }
     },
     "home": {

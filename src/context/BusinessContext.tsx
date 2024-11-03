@@ -107,9 +107,6 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
 
   const validateLogo = () => Boolean(logo || formData.client.logo);
 
-  console.log(userData);
-  console.log(formData);
-
   // Inicializar el form con los datos que llegan de la API o mostrarlo vacío
   useEffect(() => {
     setFormData(userData.name !== "" ? userData : initialFormData);

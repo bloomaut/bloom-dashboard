@@ -120,9 +120,8 @@
         "title": "Change user display:",
         "mentor": "Mentor",
         "breadmaster": "Breadmaster",
-        "trade": "Trade",
-        "button": "Apply",
-        "reset": "Reset"
+        "my_account": "My account",
+        "button": "Apply"
       }
     },
     "home": {

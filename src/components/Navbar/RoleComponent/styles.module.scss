@@ -2,6 +2,14 @@
   &:hover {
     cursor: pointer;
   }
+  .drop_icon {
+    @include flex(row, center, center);
+    p {
+      @include fontSize-fontWeight(14px, 400);
+      color: $text;
+      margin: 0 5px;
+    }
+  }
   .dropdown {
     @include flex(column, flex-end, flex-start);
     min-width: 305px;
@@ -22,7 +30,7 @@
       left: 20px;
     }
     .roles {
-      @include flex(row, flex-start, flex-start, 25px);
+      @include flex(row, flex-start, flex-start, 10px);
       margin-bottom: -5px;
       position: relative;
       z-index: 999;
