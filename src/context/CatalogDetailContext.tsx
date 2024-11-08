@@ -3,7 +3,7 @@ import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
 import { DatasetDetailType, DataItemsType } from "@/typescript/interfaces/catalog.interface";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogDetailContextType {
@@ -39,12 +39,13 @@ const CatalogDetailContext = createContext<CatalogDetailContextType>({
 export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) => {
   const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const { clientId } = useAppSelector(state => state.ricardosData);
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) fetchDatasetById();
-  }, [id]);
+  }, [id, clientId]);
 
   const fetchDatasetById = async () => {
     const data = await get(`datasets/${id}`, ENV.BOX);

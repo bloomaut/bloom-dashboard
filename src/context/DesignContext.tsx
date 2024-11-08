@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { DesignProps, DesignSelected, FlakesAndDesignProps } from "@/typescript/interfaces/designs.interface";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
+import { useAppSelector } from "@/store/hooks";
 
 interface Context {
   listTemplates: FlakesAndDesignProps | undefined;
@@ -33,12 +34,11 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
     genericPosts: [],
   });
   const [loading, setLoading] = useState(true);
-
   // Recuperamos el `selectedList` desde el localStorage (si existe)
   const savedSelectedList = typeof window !== "undefined" ? localStorage.getItem("selectedList") : "hog";
   const [selectedList, setSelectedList] = useState<string>(savedSelectedList || "hog");
-
   const [designSelected, setDesignSelected] = useState<DesignSelected>();
+  const { clientId } = useAppSelector(state => state.ricardosData);
 
   useEffect(() => {
     const fetchPowerApps = async () => {
@@ -76,7 +76,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
     };
 
     fetchPowerApps();
-  }, [selectedList]);
+  }, [selectedList, clientId]);
 
   useEffect(() => {
     localStorage.setItem("selectedList", selectedList.toString());

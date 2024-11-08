@@ -11,7 +11,6 @@ import Button from "@/components/Button";
 const SecondaryForm = () => {
   const { formData, logo, setLogo, errorLogo, banner, setBanner, loading, handleSubmit } = useBusinessContext();
   const { step_04 } = useStepValidation();
-
   const dict = useTranslations("dict.form_validation");
 
   return (

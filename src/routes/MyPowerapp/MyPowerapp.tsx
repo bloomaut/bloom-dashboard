@@ -21,6 +21,7 @@ import PhoneCase from "@/components/PhoneCase";
 
 const MyPowerapp = () => {
   const userData = useAppSelector(state => state.userData);
+  const { clientId } = useAppSelector(state => state.ricardosData);
   const dict = useTranslations("dict.business.my-powerapp");
   const { datasets, loading } = useCatalogContext();
   const [url, setUrl] = useState("");
@@ -50,7 +51,7 @@ const MyPowerapp = () => {
       const id = userData.client.onboardings[0].skinx_template?._id;
       getTemplate(id);
     }
-  }, [userData]);
+  }, [userData, clientId]);
 
   const handleFinalPost = async (e: React.FormEvent) => {
     e.preventDefault();

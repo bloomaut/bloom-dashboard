@@ -12,11 +12,12 @@ import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
 import LinkComponent from "../LinkComponent";
 import SuiteComponent from "./SuiteComponent";
+import RoleComponent from "./RoleComponent";
 import Icon from "../Icon";
 
 const Navbar = () => {
-  const { user, isLoading } = useUser();
   const dict = useTranslations("dict.login");
+  const { user, isLoading } = useUser();
 
   return (
     <nav className={styles.container}>
@@ -24,6 +25,7 @@ const Navbar = () => {
         <Link href='/'>
           <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
         </Link>
+        <RoleComponent />
       </div>
       <div className={styles.inner_container}>
         <Link href='/notify' className={styles.bell}>

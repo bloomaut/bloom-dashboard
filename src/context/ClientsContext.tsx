@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, createContext, useContext, useEffect, useStat
 import { get } from "@/services/fetch";
 import { ClientsProps } from "@/typescript/interfaces/clients.interface";
 import { useDebouncedCallback } from "use-debounce";
+import { useAppSelector } from "@/store/hooks";
 
 interface ClientsContextType {
   clients: ClientsProps[];
@@ -36,6 +37,9 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
   const [totalClients, setTotalClients] = useState(0);
   /* Para buscador */
   const [searchValue, setSearchValue] = useState<string>("");
+  const { clientId } = useAppSelector(state => state.ricardosData);
+
+  console.log(clientId);
 
   const fetchClients = async (offset: number, limit: number, search: string = "") => {
     const data = await get(`client-customer?limit=${limit}&offset=${offset}&search=${search}`);
@@ -72,7 +76,7 @@ export const ClientsProvider = ({ children }: { children: JSX.Element }) => {
         fetchClients(0, 8, ""); //Contemplando caso luego de borrar una busqueda
       }, 600);
     }
-  }, [searchValue]);
+  }, [searchValue, clientId]);
 
   return (
     <ClientsContext.Provider

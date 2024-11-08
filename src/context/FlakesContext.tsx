@@ -6,6 +6,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { get } from "@/services/fetch";
 import { HotlinkList } from "@/typescript/interfaces/hotlink.interface";
+import { useAppSelector } from "@/store/hooks";
 
 interface Context {
   flakes: Powerapp[];
@@ -41,6 +42,7 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   const [selectedFlakeId, setSelectedFlakeId] = useState("");
   const [difussionLink, setDifussionLink] = useState<string | null>("");
   const { notifyError } = useMessageToast();
+  const { clientId } = useAppSelector(state => state.ricardosData);
   const dict = useTranslations("dict.toast");
   const path = usePathname();
 
@@ -97,16 +99,12 @@ export const FlakesProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   useEffect(() => {
-    // Para no tener que volver a copiar un Context igual
-    // en la página de hotlink, vamos a reusar este.
-    // Si venis de hotlink haces el fecth con logueado
-    // si venis de Playground sin usuario logueado
     if (path.includes("hotlink")) {
       fetchDataHotlink();
     } else {
       fetchData();
     }
-  }, []);
+  }, [clientId]);
 
   return (
     <FlakesContext.Provider

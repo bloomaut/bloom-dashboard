@@ -18,9 +18,21 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
       throw new Error("No API base found");
     }
 
+    // Inyectamos el client_id
+    const clientId = req.headers.get("X-Client-ID");
+    const searchParams = new URLSearchParams(req.nextUrl.search);
+
+    // Verificamos que no haya un client_id en los params existentes y lo agregamos si no está
+    if (clientId && !searchParams.has("client_id")) {
+      searchParams.set("client_id", clientId);
+    }
+
+    // Reconstruimos la URL con el query param inyectado
+    const fullUrl = `${EXTERNAL_API_URL}${path}?${searchParams.toString()}`;
+
     const fetchOptions: AxiosRequestConfig = {
       method: req.method.toLowerCase(),
-      url: `${EXTERNAL_API_URL}${path}${req.nextUrl.search}`,
+      url: fullUrl,
       headers: { Authorization: `Bearer ${accessToken}` },
     };
 

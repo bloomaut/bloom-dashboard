@@ -1,0 +1,6 @@
+@import "@/styles/theme.scss";
+
+.subtitle {
+  @include fontSize-fontWeight(16px, 400);
+  color: $lightGrey;
+}

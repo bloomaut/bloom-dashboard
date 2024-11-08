@@ -12,6 +12,7 @@ import { get } from "@/services/fetch";
 import useStepValidation from "@/hooks/useStepValidation";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
+import { setDataRicardos } from "@/store/features/ricardoSlice";
 
 interface SidebarCard {
   title: string;
@@ -20,12 +21,12 @@ interface SidebarCard {
 }
 
 const Sidebar = () => {
-  const userData = useAppSelector(state => state.userData);
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const userData = useAppSelector(state => state.userData);
   const dict = useTranslations("dict.sidebar");
   const dispatch = useAppDispatch();
   const INBOX_URL = process.env.NEXT_PUBLIC_INBOX_URL;
-
+  const { clientId } = useAppSelector(state => state.ricardosData);
   const { currentStep, step_04 } = useStepValidation();
 
   const handleMenu = () => {
@@ -78,8 +79,19 @@ const Sidebar = () => {
     }
   };
 
+  const getDataFromRicardos = async () => {
+    const res = await get("client-permissions/role");
+    if (res.statusCode === 200) {
+      dispatch(setDataRicardos(res.result.clients.ricardos));
+    }
+  };
+
   useEffect(() => {
     getUserData();
+  }, [clientId]);
+
+  useEffect(() => {
+    getDataFromRicardos();
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import { get } from "@/services/fetch";
+import { useAppSelector } from "@/store/hooks";
 import { Template } from "@/typescript/interfaces/template.interface";
 import { ENV } from "@/typescript/types/api";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -31,6 +32,7 @@ export const TemplateProvider = ({ children }: { children: JSX.Element }) => {
   const [selectedTemplateId, setSelectedTemplateId] = useState("");
   const [previewId, setPreviewId] = useState("");
   const [previewLoading, setPreviewLoading] = useState(false);
+  const { clientId } = useAppSelector(state => state.ricardosData);
 
   const fetchDataHotlink = async () => {
     const response = await get("skinx-generator/category", ENV.TOOL);
@@ -48,7 +50,7 @@ export const TemplateProvider = ({ children }: { children: JSX.Element }) => {
     if (selectedTemplateId) {
       window.localStorage.setItem("selectedTemplateId", selectedTemplateId);
     }
-  }, [selectedTemplateId]);
+  }, [selectedTemplateId, clientId]);
 
   return (
     <TemplateContext.Provider
