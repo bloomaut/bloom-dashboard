@@ -131,20 +131,7 @@
       "welcome": "Bienvenido a Small",
       "templates": "Mis plantillas",
       "find_designs": "Encuentra más diseños en",
-      "link_uitool": "Abrir en UiTool",
-      "empty_templates": "Aún no posees ningun Template",
-      "introduction": {
-        "title": "Introducción",
-        "description": "¡Aprende todo lo que Small tiene para ofrecerte!"
-      },
-      "business": {
-        "title": "Mi negocio",
-        "description": "Completa el perfil de tu negocio y obtén tu primera plantilla."
-      },
-      "hotlink": {
-        "title": "Simulador de Hotlink",
-        "description": "Crea tu primer hotlink y aprende a compartirlo."
-      }
+      "empty_templates": "Aún no posees ningun Template"
     },
     "introduction": {
       "title": "Introducción",
