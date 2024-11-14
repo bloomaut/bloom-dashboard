@@ -31,9 +31,7 @@
     "sidetrack": {
       "title": "Step",
       "step_1": "Business information",
-      "step_2": "Select template",
-      "step_3": "Catalog",
-      "step_4": "Generate PowerApp"
+      "step_2": "Catalog"
     },
     "navbar": {
       "login": "Login",
@@ -158,38 +156,6 @@
         "instagram": "Instagram",
         "phone": "Phone",
         "address": "Address"
-      },
-      "my-powerapp": {
-        "title": "Your app is almost ready",
-        "subtitle": "Check your information validate it before creating your app",
-        "uploaded_catalogs": "Uploaded Catalogs",
-        "chosen_templates": "Chosen Templates",
-        "empty_dataset": "There are no catalogs uploaded",
-        "product": "product",
-        "products": "products",
-        "button_generate": "Generate my app!",
-        "business_title": "Business information",
-        "name": "Name",
-        "last_name": "Last name",
-        "business_name": "Business name",
-        "category": "Category",
-        "business_description": "Business description",
-        "colors": "Colors",
-        "button": "Continue editing",
-        "button_go_edit": "Go to edit",
-        "description": "Description",
-        "price": "Price",
-        "catalog": "Catalog: ",
-        "empty_products": "This catalog doesn't have products yet",
-        "generate_popup_title": "Do you want to generate your app?",
-        "generate_popup_subtitle": "This process can take some minutes.",
-        "cancel": "Cancel",
-        "create": "Create",
-        "congratulation": "Congratulation!",
-        "success_subtitle": "Your app has been created successfully.",
-        "success_text": "Now, it’s to create your first link and share with your clients.",
-        "button_first_link": "Generate my first link",
-        "error_generate": "There was an error generating the app"
       }
     },
     "clients": {
@@ -379,13 +345,6 @@
       "description_05": "We strive to continually improve Small. This may include feature updates and changes to services. We will inform you of any significant changes to the platform.",
       "title_06": "Contact and Support",
       "description_06": "If you have questions, comments, or need assistance, please feel free to contact our support team. We are here to help you every step of the way."
-    },
-    "templates": {
-      "title": "Templates",
-      "subtitle": "Select the template that best suits your business",
-      "select": "Select",
-      "empty": "There are no templates available. Try again in a few minutes",
-      "next": "Next"
     },
     "draganddrop": {
       "invalid_file": "The file type you are selecting is not allowed",

@@ -1,32 +1,21 @@
 import styles from "./styles.module.scss";
 import whiteImage from "@/../public/assets/blank.png";
-import useStepValidation from "@/hooks/useStepValidation";
 import { useState } from "react";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { useTranslations } from "next-intl";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
-import { useAppSelector } from "@/store/hooks";
-import { useRouter } from "@/navigation";
 // Components
 import Header from "./Header";
 import Card from "./Card";
 import LoadingSpinner from "@/components/Loading";
 import Icon from "@/components/Icon";
 import FormActions from "./FormActions";
-import Button from "@/components/Button";
 import CardAll from "./CardAll";
 
 const Catalog = () => {
   const { datasets, loading } = useCatalogContext();
   const [showPopupCreate, setShowPopupCreate] = useState(false);
-  const { step_04, step_02 } = useStepValidation();
-  const userData = useAppSelector(state => state.userData);
-  const router = useRouter();
   const dict = useTranslations("dict");
-
-  const handleNavigation = () => {
-    router.push("/my-powerapp");
-  };
 
   const sumCategories = (array: DatasetProps[], category: string) => {
     const newArray = array.filter((obj: DatasetProps) => obj.dataschema?.category === category);
@@ -66,11 +55,6 @@ const Catalog = () => {
             {datasets.length > 0 && datasets.map(dataset => <Card key={dataset._id} {...dataset} />)}
             <div className={styles.add} onClick={() => setShowPopupCreate(true)}>
               <Icon name='add' viewBox='0 0 20 22' width={50} height={50} strokeWidth={1.5} strokeColor='#282E7E' />
-            </div>
-            <div className={styles.btn_next}>
-              {!step_04 && step_02 && (
-                <Button title='Next' isDisabled={!userData.isCatalogComplete} onclick={handleNavigation} />
-              )}
             </div>
           </>
         )}
