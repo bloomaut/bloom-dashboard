@@ -161,12 +161,12 @@ const Form = () => {
 
     if (link) {
       navigator.clipboard.writeText(link).then(function () {
-        notify(`${dict("playground.popup.copy_success")}`);
+        console.log("SUCCESS"); // TODOKEV: Reemplazar por alert component
       });
       setLoadingButton(false);
     } else {
-      notifyError(dict("playground.popup.no_diffusion_link"));
-      setLoadingButton(false);
+      console.log("ERROR");
+      setLoadingButton(false); // TODOKEV: Idem
     }
   };
 

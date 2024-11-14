@@ -14,7 +14,7 @@ const Breadcrumb = ({ title }: BreadcrumbProps) => {
   const pathname = usePathname();
 
   const handleBack = () => {
-    if (user && (pathname.includes("my-business") || pathname.includes("playground"))) {
+    if (user && pathname.includes("my-business")) {
       router.push("/");
     } else {
       router.back();
