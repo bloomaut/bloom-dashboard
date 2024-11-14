@@ -6,7 +6,6 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Providers } from "@/store/provider";
 import { notFound } from "next/navigation";
 import { Barlow } from "next/font/google";
-import ClarityScript from "@/components/ClarityWrapper";
 
 const barlow = Barlow({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -39,7 +38,6 @@ export default function RootLayout({
       <UserProvider>
         <html lang={locale}>
           <body className={barlow.className}>
-            {(process.env.NEXT_CLARITY === "true" && <ClarityScript />) || null}
             <NextIntlClientProvider locale={locale} messages={messages}>
               {children}
             </NextIntlClientProvider>
