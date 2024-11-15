@@ -9,7 +9,6 @@ import Setup from "./Setup";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCatalogComplete, setUserData } from "@/store/features/userSlice";
 import { get } from "@/services/fetch";
-import useStepValidation from "@/hooks/useStepValidation";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { setDataRicardos } from "@/store/features/ricardoSlice";
@@ -22,12 +21,10 @@ interface SidebarCard {
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  const userData = useAppSelector(state => state.userData);
   const dict = useTranslations("dict.sidebar");
   const dispatch = useAppDispatch();
   const INBOX_URL = process.env.NEXT_PUBLIC_INBOX_URL;
   const { clientId } = useAppSelector(state => state.ricardosData);
-  const { currentStep, step_04 } = useStepValidation();
 
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -44,7 +41,6 @@ const Sidebar = () => {
       icon: <Icon name='business' viewBox='0 0 32 32' />,
       path: "/my-business",
     },
-
     {
       title: `${dict("hotlink")}`,
       icon: <Icon name='hotlink' viewBox='1 0 25 25' strokeWidth={1.2} />,
@@ -99,7 +95,7 @@ const Sidebar = () => {
       <button className={styles.btn} onClick={handleMenu}>
         <Icon name={isOpen ? "double_arrow_left" : "double_arrow_rigth"} />
       </button>
-      {isOpen && userData.id && !step_04 && <Setup value={currentStep - 1} />}
+      {isOpen && false && <Setup value={2} />} {/* TODOKEV: PONER EN TRUE PARA VER EL STEPER DEL ONBOARDING */}
       <div
         className={isOpen ? `${styles.cards_container}` : `${styles.cards_container} ${styles.cards_container_closed}`}
       >

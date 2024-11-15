@@ -37,26 +37,7 @@ export interface Client {
   palette: ColorPalette;
   created_at?: string;
   updated_at?: string;
-  onboardings?: Nullable<Onboardings[]>;
   address: string;
-}
-
-// Interfaces relacionadas con Onboarding
-export interface Onboardings {
-  _id: string;
-  active: boolean;
-  created_at: string;
-  updated_at: string;
-  skinx_template: SkinxTemplate;
-  skinx_generated: SkinxGenerated;
-}
-
-interface SkinxTemplate {
-  _id: string;
-}
-
-interface SkinxGenerated {
-  _id: string;
 }
 
 // Interfaces para actualización de datos

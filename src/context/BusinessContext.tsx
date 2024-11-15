@@ -10,7 +10,6 @@ import { update } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
 import { handleLogoBanner } from "@/utils/handleUploadBanner";
 import { useRouter } from "next/navigation";
-import useStepValidation from "@/hooks/useStepValidation";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -92,7 +91,6 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
   const router = useRouter();
   const locale = useLocale();
   const { notify, notifyError } = useMessageToast();
-  const { step_04 } = useStepValidation();
   const { clientId } = useAppSelector(state => state.ricardosData);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -199,9 +197,7 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
             phone: dataToSend.phone,
           }),
         );
-        if (!step_04) {
-          router.push(`/${locale}/templates`);
-        }
+        router.push(`/${locale}/my-business`);
       } else {
         notifyError(dict("toast.error_edit"));
         setLoading(false);

@@ -31,9 +31,7 @@
     "sidetrack": {
       "title": "Step",
       "step_1": "Business information",
-      "step_2": "Select template",
-      "step_3": "Catalog",
-      "step_4": "Generate PowerApp"
+      "step_2": "Catalog"
     },
     "navbar": {
       "login": "Login",
@@ -128,77 +126,15 @@
       "welcome": "Welcome to Small",
       "templates": "My templates",
       "find_designs": "Find more designs in",
-      "link_uitool": "Open in UiTool",
-      "empty_templates": "You don't have any template yet",
-      "introduction": {
-        "title": "Introduction",
-        "description": "Learn everything Small has to offer you!"
-      },
-      "business": {
-        "title": "My business",
-        "description": "Complete your business profile and get your first template."
-      },
-      "hotlink": {
-        "title": "Hotlink simulator",
-        "description": "Create your first hotlink and learn how to share it."
-      }
+      "empty_templates": "You don't have any template yet"
     },
     "introduction": {
       "title": "Introduction",
       "text": "Learn everything Small has to offer you!",
       "checkbox": "I already watched the video and I want to continue"
     },
-    "playground": {
-      "title": "Simulator",
-      "template_title": "Templates",
-      "form": {
-        "title": "Fields",
-        "button_hotlink": "Generate Hotlink",
-        "button_share": "Share Hotlink"
-      },
-      "phoneCase": {
-        "today": "Today"
-      },
-      "popup": {
-        "title": "Share and test on Whatsapp",
-        "btn": "Share on Whatsapp",
-        "copy_success": "URL copied to clipboard",
-        "copy_error": "Error copying URL",
-        "no_diffusion_link": "This PowerApp does not have a diffusion link"
-      },
-      "loading_dots": "Writing"
-    },
     "breadcrumb": {
       "breadcrumb_link": "Go back"
-    },
-    "guide": {
-      "header": {
-        "stepper_title1": "Section 1",
-        "stepper_subtitle1": "Know, Play, and Load",
-        "stepper_title2": "Section 2",
-        "stepper_subtitle2": "Share and Use"
-      },
-      "stepper_one": {
-        "title": "Steps",
-        "title_one": "Introduction",
-        "subtitle_one": "Introduction and Understanding of the Platform. Explanatory Video",
-        "title_two": "Play",
-        "subtitle_two": "Play in the playground, customize apps, and generate your first hotlink",
-        "title_three": "Upload",
-        "subtitle_three": "Upload data from your company and brand files for your designs",
-        "title_four": "Gallery",
-        "subtitle_four": "Take care of the design with our UiTool tool"
-      },
-      "stepper_two": {
-        "title": "Steps",
-        "title_one": "Distribute",
-        "subtitle_one": "Generate links for your clients and distribute your customized apps",
-        "title_two": "Manage",
-        "subtitle_two": "Manage the messages that arrive in your Inbox and chat with your clients",
-        "title_three": "Campaigns",
-        "subtitle_three": "Send campaigns and visualize the results of the interactions",
-        "button": "I have completed the steps"
-      }
     },
     "business": {
       "form": {
@@ -220,38 +156,6 @@
         "instagram": "Instagram",
         "phone": "Phone",
         "address": "Address"
-      },
-      "my-powerapp": {
-        "title": "Your app is almost ready",
-        "subtitle": "Check your information validate it before creating your app",
-        "uploaded_catalogs": "Uploaded Catalogs",
-        "chosen_templates": "Chosen Templates",
-        "empty_dataset": "There are no catalogs uploaded",
-        "product": "product",
-        "products": "products",
-        "button_generate": "Generate my app!",
-        "business_title": "Business information",
-        "name": "Name",
-        "last_name": "Last name",
-        "business_name": "Business name",
-        "category": "Category",
-        "business_description": "Business description",
-        "colors": "Colors",
-        "button": "Continue editing",
-        "button_go_edit": "Go to edit",
-        "description": "Description",
-        "price": "Price",
-        "catalog": "Catalog: ",
-        "empty_products": "This catalog doesn't have products yet",
-        "generate_popup_title": "Do you want to generate your app?",
-        "generate_popup_subtitle": "This process can take some minutes.",
-        "cancel": "Cancel",
-        "create": "Create",
-        "congratulation": "Congratulation!",
-        "success_subtitle": "Your app has been created successfully.",
-        "success_text": "Now, it’s to create your first link and share with your clients.",
-        "button_first_link": "Generate my first link",
-        "error_generate": "There was an error generating the app"
       }
     },
     "clients": {
@@ -441,13 +345,6 @@
       "description_05": "We strive to continually improve Small. This may include feature updates and changes to services. We will inform you of any significant changes to the platform.",
       "title_06": "Contact and Support",
       "description_06": "If you have questions, comments, or need assistance, please feel free to contact our support team. We are here to help you every step of the way."
-    },
-    "templates": {
-      "title": "Templates",
-      "subtitle": "Select the template that best suits your business",
-      "select": "Select",
-      "empty": "There are no templates available. Try again in a few minutes",
-      "next": "Next"
     },
     "draganddrop": {
       "invalid_file": "The file type you are selecting is not allowed",

@@ -3,8 +3,7 @@
 .container {
   @include flex(column, flex-start, flex-start, 10px);
   @include width-height(100%, 100%);
-  border-bottom: 1px solid $lighterGrey;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   .link_container {
     @include width-height(100%, 100%);
     display: grid;

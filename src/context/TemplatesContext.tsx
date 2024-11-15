@@ -7,8 +7,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 interface TemplateContext {
   templates: Template[];
   loading: boolean;
-  selectedTemplateId: string;
-  setSelectedTemplateId: (id: string) => void;
   previewId: string;
   setPreviewId: (id: string) => void;
   previewLoading: boolean;
@@ -18,8 +16,6 @@ interface TemplateContext {
 const TemplateContext = createContext<TemplateContext>({
   templates: [],
   loading: true,
-  selectedTemplateId: "",
-  setSelectedTemplateId: () => "",
   previewId: "",
   setPreviewId: () => "",
   previewLoading: false,
@@ -29,7 +25,6 @@ const TemplateContext = createContext<TemplateContext>({
 export const TemplateProvider = ({ children }: { children: JSX.Element }) => {
   const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedTemplateId, setSelectedTemplateId] = useState("");
   const [previewId, setPreviewId] = useState("");
   const [previewLoading, setPreviewLoading] = useState(false);
   const { clientId } = useAppSelector(state => state.ricardosData);
@@ -46,19 +41,13 @@ export const TemplateProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     fetchDataHotlink();
-
-    if (selectedTemplateId) {
-      window.localStorage.setItem("selectedTemplateId", selectedTemplateId);
-    }
-  }, [selectedTemplateId, clientId]);
+  }, [clientId]);
 
   return (
     <TemplateContext.Provider
       value={{
         templates,
         loading,
-        selectedTemplateId,
-        setSelectedTemplateId,
         previewId,
         setPreviewId,
         previewLoading,

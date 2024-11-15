@@ -29,7 +29,6 @@ export const userInitialState: UserBusiness = {
     palette: [],
     created_at: "",
     updated_at: "",
-    onboardings: null,
   },
   isCatalogComplete: false,
 };

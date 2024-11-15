@@ -1,5 +1,4 @@
 import styles from "./styles.module.scss";
-import useStepValidation from "@/hooks/useStepValidation";
 import { useBusinessContext } from "@/context/BusinessContext";
 import { useTranslations } from "next-intl";
 // Components
@@ -10,7 +9,6 @@ import Button from "@/components/Button";
 
 const SecondaryForm = () => {
   const { formData, logo, setLogo, errorLogo, banner, setBanner, loading, handleSubmit } = useBusinessContext();
-  const { step_04 } = useStepValidation();
   const dict = useTranslations("dict.form_validation");
 
   return (
@@ -31,7 +29,7 @@ const SecondaryForm = () => {
         <AddInfoForm />
       </section>
       <div className={styles.button}>
-        <Button title={step_04 ? "Update" : "Update and Next"} loading={loading} type='button' onclick={handleSubmit} />
+        <Button title={"Update"} loading={loading} type='button' onclick={handleSubmit} />
       </div>
     </div>
   );

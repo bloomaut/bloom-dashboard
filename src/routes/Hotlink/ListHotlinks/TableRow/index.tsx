@@ -16,7 +16,6 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   const { id, setId } = useFlakesContext();
   const [openInfoPopup, setOpenInfoPopup] = useState(false);
   const { notify, notifyError } = useMessageToast();
-  const dict = useTranslations("dict.playground.popup");
 
   const baseUrlEngine = process.env.NEXT_PUBLIC_ENGINE_URL; // TODO: haremos esta URL dinámica con un ENV y/o con un sobdomain dependiendo el cliente
 
@@ -27,10 +26,10 @@ const TableRow = ({ hotlink }: TableRowProps) => {
   const handleCopyClick = () => {
     navigator.clipboard.writeText(`${baseUrlEngine}/${hotlink.hash}`).then(
       function () {
-        notify(`${dict("copy_success")}`);
+        console.log("SUCCESS"); // TODOKEV: Reemplazar por alert component
       },
       function (err) {
-        notifyError(`${dict("copy_error")}`);
+        console.log("ERROR"); // TODOKEV: Idem
       },
     );
   };
