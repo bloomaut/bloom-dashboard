@@ -291,7 +291,8 @@
         "catalog_type": "Tipo de catálogo",
         "select_type": "Seleccionar tipo",
         "products": "Productos",
-        "services": "Servicios"
+        "services": "Servicios",
+        "store": "Tienda"
       },
       "popup_excel": {
         "massive_upload_title": "Carga masiva desde Excel",

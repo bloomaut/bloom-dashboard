@@ -15,12 +15,12 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
       <div
         className={
           dataschema && dataschema?.category === "uitool-products"
-            ? styles.card
-            : `${styles.card} ${styles.card_services}`
+            ? styles.card : dataschema?.category === "uitool-services" ?
+            `${styles.card} ${styles.card_services}` : `${styles.card} ${styles.card_store}`
         }
       >
         <Link
-          href={dataschema?.category === "uitool-products" ? `/catalog/products/${_id}` : `/catalog/services/${_id}`}
+          href={(dataschema?.category === "uitool-products" || dataschema?.category === "uitool-store") ? `/catalog/products/${_id}` : `/catalog/services/${_id}`}
           className={styles.image_container}
         >
           {image ? (
@@ -39,7 +39,7 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
           )}
         </Link>
         <Link
-          href={dataschema?.category === "uitool-products" ? `/catalog/products/${_id}` : `/catalog/services/${_id}`}
+          href={(dataschema?.category === "uitool-products" || dataschema?.category === "uitool-store") ? `/catalog/products/${_id}` : `/catalog/services/${_id}`}
           className={styles.content}
         >
           <div className={styles.title_container}>
