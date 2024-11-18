@@ -6,7 +6,7 @@ import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { DataItemsType, DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
-import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { useCatalogProductsContext } from "@/context/CatalogProductsContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
 import { AllProducts } from "@/typescript/interfaces/catalog.interface";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
@@ -57,7 +57,7 @@ const initialValues: InitialValuesProps = {
 };
 
 const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) => {
-  const { datasetDetail, handleAddDataset, handleUpdateDataset } = useCatalogDetailContext();
+  const { datasetDetail, handleAddDataset, handleUpdateDataset } = useCatalogProductsContext();
   const [formData, setFormData] = useState<InitialValuesProps>(initialValues);
   const [checkValidation, setCheckValidation] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);

@@ -6,7 +6,7 @@ import { DatasetDetailType, DataItemsType } from "@/typescript/interfaces/catalo
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCatalogComplete } from "@/store/features/userSlice";
 
-interface CatalogDetailContextType {
+interface CatalogProductsContextType {
   datasetDetail: DatasetDetailType | null | undefined;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
@@ -16,7 +16,7 @@ interface CatalogDetailContextType {
   handleUpdateDataset: (updatedDataset: DataItemsType) => void;
 }
 
-const CatalogDetailContext = createContext<CatalogDetailContextType>({
+const CatalogProductsContext = createContext<CatalogProductsContextType>({
   datasetDetail: null,
   fetchDatasetById: async () => {
     throw new Error("fetchDatasetById function not implemented");
@@ -36,7 +36,7 @@ const CatalogDetailContext = createContext<CatalogDetailContextType>({
   },
 });
 
-export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) => {
+export const CatalogProductsProvider = ({ children }: { children: JSX.Element }) => {
   const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { clientId } = useAppSelector(state => state.ricardosData);
@@ -81,7 +81,7 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
   };
 
   return (
-    <CatalogDetailContext.Provider
+    <CatalogProductsContext.Provider
       value={{
         datasetDetail,
         fetchDatasetById,
@@ -93,8 +93,8 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
       }}
     >
       {children}
-    </CatalogDetailContext.Provider>
+    </CatalogProductsContext.Provider>
   );
 };
 
-export const useCatalogDetailContext = () => useContext(CatalogDetailContext);
+export const useCatalogProductsContext = () => useContext(CatalogProductsContext);

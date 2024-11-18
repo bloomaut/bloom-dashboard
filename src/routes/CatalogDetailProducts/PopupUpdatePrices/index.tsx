@@ -7,7 +7,7 @@ import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
-import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { useCatalogProductsContext } from "@/context/CatalogProductsContext";
 
 interface Props {
   id: string | string[];
@@ -18,7 +18,7 @@ const PopupUpdatePrices = ({ id, closePopup }: Props) => {
   const dict = useTranslations("dict");
   const { dropdownRef } = useCloseDropdown(closePopup);
   const { notify, notifyError } = useMessageToast();
-  const { fetchDatasetById } = useCatalogDetailContext();
+  const { fetchDatasetById } = useCatalogProductsContext();
   const [closing, setClosing] = useState(false);
   const [percentageValue, setPercentageValue] = useState<string>("");
   const [loading, setLoading] = useState(false);
