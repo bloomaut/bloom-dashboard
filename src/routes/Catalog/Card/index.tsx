@@ -23,9 +23,11 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
       >
         <Link
           href={
-            dataschema?.category === "uitool-products" ? `/catalog/products/${_id}` :
-            dataschema?.category === "uitool-store" ? `/catalog/store/${_id}` :
-              `/catalog/services/${_id}`
+            dataschema?.category === "uitool-products"
+              ? `/catalog/products/${_id}`
+              : dataschema?.category === "uitool-store"
+                ? `/catalog/store/${_id}`
+                : `/catalog/services/${_id}`
           }
           className={styles.image_container}
         >
@@ -46,9 +48,11 @@ const Card = ({ _id, name, description, image, visibility, totalDataItems, datas
         </Link>
         <Link
           href={
-            dataschema?.category === "uitool-products" ? `/catalog/products/${_id}` :
-            dataschema?.category === "uitool-store" ? `/catalog/store/${_id}` :
-              `/catalog/services/${_id}`
+            dataschema?.category === "uitool-products"
+              ? `/catalog/products/${_id}`
+              : dataschema?.category === "uitool-store"
+                ? `/catalog/store/${_id}`
+                : `/catalog/services/${_id}`
           }
           className={styles.content}
         >
