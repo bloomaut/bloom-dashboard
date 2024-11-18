@@ -106,7 +106,12 @@ const FormActions = ({
         const postDataschema = {
           name: formData.category_name,
           description: formData.category_description,
-          dataschema: formData.type_catalog === "uitool-products" ? schema[0]._id : formData.type_catalog === "uitool-services" ? schema[1]._id : schema[2]._id,
+          dataschema:
+            formData.type_catalog === "uitool-products"
+              ? schema[0]._id
+              : formData.type_catalog === "uitool-services"
+                ? schema[1]._id
+                : schema[2]._id,
           order: 0,
           image: null,
         };
