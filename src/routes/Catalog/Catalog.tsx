@@ -29,6 +29,7 @@ const Catalog = () => {
 
   const numberOfProducts = sumCategories(datasets, "uitool-products");
   const numberOfServices = sumCategories(datasets, "uitool-services");
+  const numberOfStore = sumCategories(datasets, "uitool-store");
 
   return (
     <div className={styles.catalog_container}>
@@ -49,6 +50,12 @@ const Catalog = () => {
                 dataschema='uitool-services'
                 name={dict("catalog.all_services")}
                 totalDataItems={numberOfServices}
+                image={whiteImage}
+              />
+              <CardAll
+                dataschema='uitool-store'
+                name={dict("catalog.all_services")}
+                totalDataItems={numberOfStore}
                 image={whiteImage}
               />
             </div>

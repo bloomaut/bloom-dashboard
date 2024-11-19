@@ -311,7 +311,8 @@
       "upload_excel_title": "Subir Planilla Excel",
       "upload_excel": "Subir Excel",
       "all_products": "Ver productos",
-      "all_services": "Ver servicios"
+      "all_services": "Ver servicios",
+      "all_store": "Ver tienda"
     },
     "form_validation": {
       "ClientFirstname": "El nombre es requerido",

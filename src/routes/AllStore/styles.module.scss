@@ -1,0 +1,33 @@
+.products_container {
+  @include flex(column, flex-start, flex-start, 35px);
+  @include width-height(100%, auto);
+  .header_container {
+    @include flex(row, space-between, center, 10px);
+    p {
+      @include fontSize-fontWeight(28px, 500);
+      margin-bottom: 5px;
+    }
+  }
+  .table_container {
+    @include width-height(90%, auto);
+    @include flex(column, flex-start, flex-start, 5px);
+    align-self: center;
+    .content_container {
+      @include width-height(100%, auto);
+      max-height: 365px;
+      overflow-y: auto;
+      @media (width >= $queryXl) {
+        max-height: 500px;
+      }
+    }
+    .content_container::-webkit-scrollbar {
+      width: 5px;
+      background-color: $greyBackground;
+    }
+
+    .content_container::-webkit-scrollbar-thumb {
+      background-color: $orange;
+      border-radius: 10px;
+    }
+  }
+}
