@@ -16,7 +16,7 @@ const AllStore = () => {
   const dict = useTranslations("dict.catalog");
 
   const fetchProducts = async () => {
-    const data = await get(`dataitem/list/products`, ENV.BOX);
+    const data = await get(`dataitem/list/store`, ENV.BOX);
     if (data.statusCode === 200) {
       const sortedItems: AllStoreInterface[] = [...data.dataItems].sort((a, b) => a.order - b.order);
       setProducts(sortedItems);
@@ -41,7 +41,7 @@ const AllStore = () => {
       <div className={styles.header_container}>
         <Breadcrumb />
         <p>
-          {dict("all_products")} ({products?.length})
+          {dict("all_store")} ({products?.length})
         </p>
       </div>
 

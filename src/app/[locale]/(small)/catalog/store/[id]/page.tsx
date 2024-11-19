@@ -1,6 +1,6 @@
 "use client";
-import CatalogDetailProducts from "@/routes/CatalogDetailProducts";
+import CatalogDetailStore from "@/routes/CatalogDetailStore";
 
 export default function Page() {
-  return <CatalogDetailProducts />;
+  return <CatalogDetailStore />;
 }

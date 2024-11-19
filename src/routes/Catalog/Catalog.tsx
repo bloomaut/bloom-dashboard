@@ -54,7 +54,7 @@ const Catalog = () => {
               />
               <CardAll
                 dataschema='uitool-store'
-                name={dict("catalog.all_services")}
+                name={dict("catalog.all_store")}
                 totalDataItems={numberOfStore}
                 image={whiteImage}
               />
