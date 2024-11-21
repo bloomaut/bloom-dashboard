@@ -4,7 +4,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { post, update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { DataItemsType, DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
+import { StoreDataItem, DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogStoreContext } from "@/context/CatalogStoreContext";
 import { handleFileUpload } from "@/utils/handleFileUpload";
@@ -71,7 +71,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
 
   useEffect(() => {
     if (action === "put" && id) {
-      const product = datasetDetail?.dataItems.find((item: DataItemsType) => item._id === id);
+      const product = datasetDetail?.dataItems.find((item: StoreDataItem) => item._id === id);
       if (product) {
         setFormData({
           data: {

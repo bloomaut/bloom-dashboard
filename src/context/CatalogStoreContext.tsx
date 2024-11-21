@@ -2,18 +2,18 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
-import { DatasetDetailType, DataItemsType } from "@/typescript/interfaces/catalog.interface";
+import { DatasetDetailStore, StoreDataItem } from "@/typescript/interfaces/catalog.interface";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogStoreContextType {
-  datasetDetail: DatasetDetailType | null | undefined;
+  datasetDetail: DatasetDetailStore | null | undefined;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
   loading: boolean;
   handleRemoveDataset: (deletedId: string) => void;
-  handleAddDataset: (dataset: DataItemsType) => void;
-  handleUpdateDataset: (updatedDataset: DataItemsType) => void;
+  handleAddDataset: (dataset: StoreDataItem) => void;
+  handleUpdateDataset: (updatedDataset: StoreDataItem) => void;
 }
 
 const CatalogStoreContext = createContext<CatalogStoreContextType>({
@@ -37,7 +37,7 @@ const CatalogStoreContext = createContext<CatalogStoreContextType>({
 });
 
 export const CatalogStoreProvider = ({ children }: { children: JSX.Element }) => {
-  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
+  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailStore | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { clientId } = useAppSelector(state => state.ricardosData);
   const { id } = useParams();
@@ -62,7 +62,7 @@ export const CatalogStoreProvider = ({ children }: { children: JSX.Element }) =>
     }
   };
 
-  const handleAddDataset = (dataset: DataItemsType) => {
+  const handleAddDataset = (dataset: StoreDataItem) => {
     if (datasetDetail) {
       setDatasetDetail({ ...datasetDetail, dataItems: [...datasetDetail.dataItems, dataset] });
     }
@@ -71,7 +71,7 @@ export const CatalogStoreProvider = ({ children }: { children: JSX.Element }) =>
     }
   };
 
-  const handleUpdateDataset = (updatedDataset: DataItemsType) => {
+  const handleUpdateDataset = (updatedDataset: StoreDataItem) => {
     if (datasetDetail) {
       const updatedDataItems = datasetDetail.dataItems.map(item =>
         item._id === updatedDataset._id ? { ...item, ...updatedDataset } : item,

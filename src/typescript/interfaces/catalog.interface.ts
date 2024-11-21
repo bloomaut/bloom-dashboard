@@ -129,13 +129,14 @@ export interface PutPercentage {
   percentage: string | number;
 }
 
-// Detalle de Dataset
-export interface DatasetDetailType {
-  dataItems: DataItemsType[];
+/* ********** PRODUCTS ********** */
+
+export interface DatasetDetailProduct {
+  dataItems: ProductDataItem[];
   dataSet: DatasetProp;
 }
 
-export interface DataItemsType {
+export interface ProductDataItem {
   createdAt: Timestamp;
   data: {
     listdescr: string;
@@ -149,8 +150,30 @@ export interface DataItemsType {
   _id: ID;
 }
 
-// Detalle de Servicios
-export interface DatasetDetailServicesType {
+/* ********** STORE ********** */
+
+export interface DatasetDetailStore {
+  dataItems: StoreDataItem[];
+  dataSet: DatasetProp;
+}
+
+export interface StoreDataItem {
+  createdAt: Timestamp;
+  data: {
+    listdescr: string;
+    listimage: string;
+    listname: string;
+    listprice: string;
+  };
+  order: number;
+  updatedAt: Timestamp;
+  visibility: boolean;
+  _id: ID;
+}
+
+/* ********** SERVICES ********** */
+
+export interface DatasetDetailServices {
   dataItems: DataItemsServiceType[];
   dataSet: DatasetProp;
 }

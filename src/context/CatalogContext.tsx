@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
-import { DatasetProps, DatasetDetailType } from "@/typescript/interfaces/catalog.interface";
+import { DatasetProps, DatasetDetailProduct } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setDataschemaData } from "@/store/features/dataschemaSlice";
@@ -8,7 +8,7 @@ import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogContextType {
   datasets: DatasetProps[];
-  datasetDetail: DatasetDetailType | null | undefined;
+  datasetDetail: DatasetDetailProduct | null | undefined;
   loading: boolean;
   fetchDatasets: () => Promise<void>;
   fetchDatasetById: (id: string) => Promise<void>;
@@ -41,7 +41,7 @@ const CatalogContext = createContext<CatalogContextType>({
 export const CatalogProvider = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [datasets, setDatasets] = useState<DatasetProps[]>([]);
-  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
+  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailProduct | null | undefined>(null);
   const { clientId } = useAppSelector(state => state.ricardosData);
   const dispatch = useAppDispatch();
 
