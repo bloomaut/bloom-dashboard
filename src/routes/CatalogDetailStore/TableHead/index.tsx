@@ -18,8 +18,8 @@ const TableHead = ({ allProducts }: Props) => {
       <h2 className={styles.name}></h2>
       <h2 className={styles.name}>{dict("name")}</h2>
       {allProducts && <h2 className={styles.name}>{dict("title")}</h2>}
-      <h2 className={styles.description}>{dict("description")}</h2>
       <h2 className={styles.price}>{dict("price")}</h2>
+      <h2 className={styles.description}>Variants</h2>
     </div>
   );
 };

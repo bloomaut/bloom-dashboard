@@ -66,6 +66,7 @@ const Detail = () => {
                 id={item._id}
                 name={item.data.listname}
                 description={item.data.listdescr}
+                variants={item.variants}
                 price={item.data.listprice}
                 image={item.data.listimage}
                 position={item.order}

@@ -19,6 +19,7 @@ const icons: IconPaths = {
   ],
   // Flechas
   arrow_up: ["m7 14 5-5 5 5z"],
+  arrow_up_chevron: ["M0.75 9.5L6 4.25L11.25 9.5"],
   arrow_left: ["M6.62633 11.9158L1.38534 6.67596M1.38534 6.67596L6.62518 1.43497M1.38534 6.67596L14.8607 6.67449"],
   arrow_right: ["M9 5.5L16 12.5L9 19.5"],
   arrow_down: ["m7 10 5 5 5-5z"],

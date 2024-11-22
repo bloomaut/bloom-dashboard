@@ -33,14 +33,30 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
-    padding-top: 17px;
   }
   .icons {
     @include flex(row, center, center, 5px);
     border-left: none;
     padding-left: 0px;
   }
+  .icon_variants button {
+    padding-bottom: 0;
+  }
   &:hover {
     background-color: $orangeBackground;
+  }
+  .box_variants {
+    width: 100%;
+    background-color: #F6F6F6;
+    border-radius: 5px;
+  }
+  .no_variants {
+    text-align: center;
+    padding: 10px;
+  }
+  .add_variant {
+    display: flex;
+    justify-content: center;
+    align-content: center;
   }
 }

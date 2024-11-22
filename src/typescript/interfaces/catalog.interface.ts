@@ -165,6 +165,8 @@ export interface StoreDataItem {
     listname: string;
     listprice: string;
   };
+  isVariant: boolean;
+  variants: any[];
   order: number;
   updatedAt: Timestamp;
   visibility: boolean;
