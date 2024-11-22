@@ -166,7 +166,7 @@ const TableRow = ({
               title='Add new variant'
               styleName='btn_variant'
               icon={<Icon name='add' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />}
-              onclick={() => console.log('Add new variant')}
+              onclick={() => console.log("Add new variant")}
             />
           </div>
         </div>
