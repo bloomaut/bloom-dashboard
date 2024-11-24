@@ -58,6 +58,7 @@ const AllStore = () => {
                 name={item.data.listname}
                 catalog={item.dataset.name}
                 description={item.data.listdescr}
+                variants={item.variants}
                 price={item.data.listprice}
                 image={item.data.listimage}
                 position={item.order}

@@ -23,16 +23,6 @@ export interface AllProductsDataset {
   name: string;
 }
 
-export interface AllProducts {
-  _id: ID;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  data: DataItemsList;
-  dataset: AllProductsDataset;
-  order: number;
-  visibility: boolean;
-}
-
 export interface DatasetProps {
   _id: ID;
   name: string;
@@ -148,6 +138,18 @@ export interface ProductDataItem {
   updatedAt: Timestamp;
   visibility: boolean;
   _id: ID;
+}
+
+export interface AllProducts {
+  _id: ID;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  data: DataItemsList;
+  dataset: AllProductsDataset;
+  isVariant: boolean;
+  variants: any[];
+  order: number;
+  visibility: boolean;
 }
 
 /* ********** STORE ********** */
