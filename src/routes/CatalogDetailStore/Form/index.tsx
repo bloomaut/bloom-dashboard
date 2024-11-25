@@ -377,7 +377,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
             </div>
             {showUserFields && (
               <div className={styles.extra_body}>
-
                 <div className={styles.select_type}>
                   <label className={styles.label}>Género</label>
                   <select
@@ -389,9 +388,9 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
                     <option value='' selected>
                       Seleccionar
                     </option>
-                    <option value="M">M</option>
-                    <option value="F">F</option>
-                    <option value="U">Unisex</option>
+                    <option value='M'>M</option>
+                    <option value='F'>F</option>
+                    <option value='U'>Unisex</option>
                   </select>
                 </div>
 
@@ -406,14 +405,12 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
                     <option value='' selected>
                       Seleccionar
                     </option>
-                    <option value="baby">Bebes</option>
-                    <option value="child">Niños</option>
-                    <option value="teenager">Adolecentes</option>
-                    <option value="adult">Adultos</option>
+                    <option value='baby'>Bebes</option>
+                    <option value='child'>Niños</option>
+                    <option value='teenager'>Adolecentes</option>
+                    <option value='adult'>Adultos</option>
                   </select>
                 </div>
-
-
               </div>
             )}
           </div>
@@ -432,7 +429,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
             </div>
             {showSpects && (
               <div className={styles.extra_body}>
-
                 <div className={styles.select_type}>
                   <label className={styles.label}>Material</label>
                   <select
@@ -444,24 +440,23 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
                     <option value='' selected>
                       Seleccionar
                     </option>
-                    <option value="Algodón">Algodón</option>
-                    <option value="Cuero">Cuero</option>
-                    <option value="Encaje">Encaje</option>
-                    <option value="Lino">Lino</option>
-                    <option value="Lycra">Lycra</option>
-                    <option value="Microfibra">Microfibra</option>
-                    <option value="Nylon">Nylon</option>
-                    <option value="Poliéster">Poliéster</option>
-                    <option value="Satén">Satén</option>
-                    <option value="Seda">Seda</option>
-                    <option value="Spandex">Spandex</option>
-                    <option value="Terciopelo">Terciopelo</option>
-                    <option value="Tul">Tul</option>
-                    <option value="Viscosa">Viscosa</option>
-                    <option value="Lana">Lana</option>
+                    <option value='Algodón'>Algodón</option>
+                    <option value='Cuero'>Cuero</option>
+                    <option value='Encaje'>Encaje</option>
+                    <option value='Lino'>Lino</option>
+                    <option value='Lycra'>Lycra</option>
+                    <option value='Microfibra'>Microfibra</option>
+                    <option value='Nylon'>Nylon</option>
+                    <option value='Poliéster'>Poliéster</option>
+                    <option value='Satén'>Satén</option>
+                    <option value='Seda'>Seda</option>
+                    <option value='Spandex'>Spandex</option>
+                    <option value='Terciopelo'>Terciopelo</option>
+                    <option value='Tul'>Tul</option>
+                    <option value='Viscosa'>Viscosa</option>
+                    <option value='Lana'>Lana</option>
                   </select>
                 </div>
-
               </div>
             )}
           </div>
