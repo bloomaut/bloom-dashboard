@@ -439,6 +439,15 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
                   />
                 </div>
 
+                <Input
+                  type='text'
+                  textLabel='Talle'
+                  textHolder=''
+                  name='productSize'
+                  value={formData.data?.productSize || ""}
+                  handleChange={handleChange}
+                />
+
                 <div className={styles.select_type}>
                   <label className={styles.label}>Material</label>
                   <select
