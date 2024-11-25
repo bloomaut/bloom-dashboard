@@ -34,6 +34,8 @@ interface InitialValuesProps {
     listdescr: string;
     listprice: number | null;
     listimage: string | null;
+    productBrand: string | null;
+    productModel: string | null;
   };
   order: number | null;
   visibility: boolean;
@@ -51,6 +53,8 @@ const initialValues: InitialValuesProps = {
     listdescr: "",
     listprice: null,
     listimage: null,
+    productBrand: null,
+    productModel: null,
   },
   order: null,
   visibility: true,
@@ -67,6 +71,10 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
   const { notify, notifyError } = useMessageToast();
   const dict = useTranslations("dict");
 
+  const [showBrand, setShowBrand] = useState<boolean>(false);
+  const [showUserFields, setShowUserFields] = useState<boolean>(false);
+  const [showSpects, setShowSpects] = useState<boolean>(false);
+
   const imageUrl = action === "put" && formData.data?.listimage ? formData.data?.listimage : null;
 
   useEffect(() => {
@@ -79,6 +87,8 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
             listdescr: product.data.listdescr,
             listprice: product.data.listprice ? parseFloat(product.data.listprice) : null,
             listimage: product.data.listimage,
+            productBrand: product.data?.productBrand,
+            productModel: product.data?.productModel,
           },
           order: product.order,
           visibility: product.visibility,
@@ -92,6 +102,8 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
               listdescr: product.data.listdescr,
               listprice: product.data.listprice,
               listimage: product.data.listimage,
+              productBrand: product.data?.productBrand,
+              productModel: product.data?.productModel,
             },
             order: product.order,
             visibility: product.visibility,
@@ -220,6 +232,18 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
     }, 300);
   };
 
+  const clickShowBrand = () => {
+    setShowBrand(!showBrand);
+  };
+
+  const clickUserFields = () => {
+    setShowUserFields(!showUserFields);
+  };
+
+  const clickSpects = () => {
+    setShowSpects(!showSpects);
+  };
+
   useEffect(() => {
     if (checkValidation && Object.keys(errors).length === 0) {
       setCheckValidation(false);
@@ -261,16 +285,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
               />
               {checkValidation && <ErrorMessage error={errors.listdescr} />}
             </div>
-            <Input
-              type='text'
-              textLabel='Order number'
-              textHolder=''
-              textDescription={dict("catalog.form_actions.order_description")}
-              name='order'
-              value={formData.order ?? ""}
-              handleChange={handleChange}
-            />
-            <CheckBox text='Visible on my apps' active={formData.visibility} onChange={handleVisibility} />
           </div>
           <div className={styles.price}>
             <Input
@@ -289,6 +303,83 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
             <DragAndDrop type='image' file={file} setFile={setFile} currentImage={imageUrl} />
           </div>
         </div>
+
+        <br></br>
+
+        <div className={styles.inputs_container}>
+          <div className={styles.box_extra_fields}>
+            <div className={styles.extra_header} onClick={() => clickShowBrand()}>
+              <p>Marca y modelo</p>
+              <Icon name={showBrand ? "arrow_up_chevron" : "arrow_down_chevron"} width={30} height={30} strokeColor='#7f7f7f' />
+            </div>
+            {showBrand && (
+              <div className={styles.extra_body}>
+                <Input
+                  type='text'
+                  textLabel='Marca'
+                  textHolder=''
+                  name='productBrand'
+                  value={formData.data?.productBrand || ""}
+                  handleChange={handleChange}
+                />
+                <Input
+                  type='text'
+                  textLabel='Modelo'
+                  textHolder=''
+                  name='productModel'
+                  value={formData.data?.productModel || ""}
+                  handleChange={handleChange}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className={styles.inputs_container}>
+          <div className={styles.box_extra_fields}>
+            <div className={styles.extra_header} onClick={() => clickUserFields()}>
+              <p>Perfil de usuario</p>
+              <Icon name={showUserFields ? "arrow_up_chevron" : "arrow_down_chevron"} width={30} height={30} strokeColor='#7f7f7f' />
+            </div>
+            {showUserFields && (
+              <div className={styles.extra_body}>
+
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className={styles.inputs_container}>
+          <div className={styles.box_extra_fields}>
+            <div className={styles.extra_header} onClick={() => clickSpects()}>
+              <p>Especificaciones</p>
+              <Icon name={showSpects ? "arrow_up_chevron" : "arrow_down_chevron"} width={30} height={30} strokeColor='#7f7f7f' />
+            </div>
+            {showSpects && (
+              <div className={styles.extra_body}>
+
+              </div>
+            )}
+          </div>
+        </div>
+
+        <br></br>
+
+        <div className={styles.inputs_container}>
+          <div className={styles.products_information}>
+            <Input
+              type='text'
+              textLabel='Order number'
+              textHolder=''
+              textDescription={dict("catalog.form_actions.order_description")}
+              name='order'
+              value={formData.order ?? ""}
+              handleChange={handleChange}
+            />
+            <CheckBox text='Visible on my apps' active={formData.visibility} onChange={handleVisibility} />
+          </div>
+        </div>
+
         <div className={styles.button_container}>
           <Button title='Save product' type='submit' loading={loading} />
         </div>

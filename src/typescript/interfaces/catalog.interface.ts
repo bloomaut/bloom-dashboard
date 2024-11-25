@@ -166,6 +166,8 @@ export interface StoreDataItem {
     listimage: string;
     listname: string;
     listprice: string;
+    productBrand: string;
+    productModel: string;
   };
   isVariant: boolean;
   variants: any[];

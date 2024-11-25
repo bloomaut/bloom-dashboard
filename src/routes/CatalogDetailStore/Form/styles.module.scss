@@ -86,6 +86,28 @@
       display: none;
     }
   }
+  .box_extra_fields {
+    width: 850px;
+    
+    .extra_header {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid grey;
+      svg {
+        margin-top: 15px;
+      }
+    }
+    .extra_body {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      gap: 10px;
+    }
+  }
 }
 
 .closing {
