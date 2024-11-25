@@ -429,6 +429,17 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
             </div>
             {showSpects && (
               <div className={styles.extra_body}>
+
+                <div className={styles.select_type}>
+                  <label className={styles.label}>Color</label>
+                  <input
+                    type='color'
+                    value={formData.data?.productColor || ""}
+                    onChange={handleChange}
+                    name='productColor'
+                  />
+                </div>
+
                 <div className={styles.select_type}>
                   <label className={styles.label}>Material</label>
                   <select
@@ -457,6 +468,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
                     <option value='Lana'>Lana</option>
                   </select>
                 </div>
+
               </div>
             )}
           </div>
