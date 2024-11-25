@@ -36,6 +36,11 @@ interface InitialValuesProps {
     listimage: string | null;
     productBrand: string | null;
     productModel: string | null;
+    productGenre: string | null;
+    productAge: string | null;
+    productColor: string | null;
+    productSize: string | null;
+    productMaterial: string | null;
   };
   order: number | null;
   visibility: boolean;
@@ -55,6 +60,11 @@ const initialValues: InitialValuesProps = {
     listimage: null,
     productBrand: null,
     productModel: null,
+    productGenre: null,
+    productAge: null,
+    productColor: null,
+    productSize: null,
+    productMaterial: null,
   },
   order: null,
   visibility: true,
@@ -89,6 +99,11 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
             listimage: product.data.listimage,
             productBrand: product.data?.productBrand,
             productModel: product.data?.productModel,
+            productGenre: product.data?.productGenre,
+            productAge: product.data?.productAge,
+            productColor: product.data?.productColor,
+            productSize: product.data?.productSize,
+            productMaterial: product.data?.productMaterial,
           },
           order: product.order,
           visibility: product.visibility,
@@ -104,6 +119,11 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
               listimage: product.data.listimage,
               productBrand: product.data?.productBrand,
               productModel: product.data?.productModel,
+              productGenre: product.data?.productGenre,
+              productAge: product.data?.productAge,
+              productColor: product.data?.productColor,
+              productSize: product.data?.productSize,
+              productMaterial: product.data?.productMaterial,
             },
             order: product.order,
             visibility: product.visibility,
@@ -195,7 +215,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     if (name in formData.data) {
       setFormData((prevState: InitialValuesProps) => ({
@@ -234,14 +254,20 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
 
   const clickShowBrand = () => {
     setShowBrand(!showBrand);
+    setShowUserFields(false);
+    setShowSpects(false);
   };
 
   const clickUserFields = () => {
     setShowUserFields(!showUserFields);
+    setShowBrand(false);
+    setShowSpects(false);
   };
 
   const clickSpects = () => {
     setShowSpects(!showSpects);
+    setShowBrand(false);
+    setShowUserFields(false);
   };
 
   useEffect(() => {
@@ -304,8 +330,6 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
           </div>
         </div>
 
-        <br></br>
-
         <div className={styles.inputs_container}>
           <div className={styles.box_extra_fields}>
             <div className={styles.extra_header} onClick={() => clickShowBrand()}>
@@ -351,7 +375,47 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
                 strokeColor='#7f7f7f'
               />
             </div>
-            {showUserFields && <div className={styles.extra_body}></div>}
+            {showUserFields && (
+              <div className={styles.extra_body}>
+
+                <div className={styles.select_type}>
+                  <label className={styles.label}>Género</label>
+                  <select
+                    className={styles.select}
+                    onChange={handleChange}
+                    name='productGenre'
+                    value={formData.data?.productGenre || ""}
+                  >
+                    <option value='' selected>
+                      Seleccionar
+                    </option>
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                    <option value="U">Unisex</option>
+                  </select>
+                </div>
+
+                <div className={styles.select_type}>
+                  <label className={styles.label}>Edad</label>
+                  <select
+                    className={styles.select}
+                    onChange={handleChange}
+                    name='productAge'
+                    value={formData.data?.productAge || ""}
+                  >
+                    <option value='' selected>
+                      Seleccionar
+                    </option>
+                    <option value="baby">Bebes</option>
+                    <option value="child">Niños</option>
+                    <option value="teenager">Adolecentes</option>
+                    <option value="adult">Adultos</option>
+                  </select>
+                </div>
+
+
+              </div>
+            )}
           </div>
         </div>
 
@@ -366,11 +430,42 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
                 strokeColor='#7f7f7f'
               />
             </div>
-            {showSpects && <div className={styles.extra_body}></div>}
+            {showSpects && (
+              <div className={styles.extra_body}>
+
+                <div className={styles.select_type}>
+                  <label className={styles.label}>Material</label>
+                  <select
+                    className={styles.select}
+                    onChange={handleChange}
+                    name='productMaterial'
+                    value={formData.data?.productMaterial || ""}
+                  >
+                    <option value='' selected>
+                      Seleccionar
+                    </option>
+                    <option value="Algodón">Algodón</option>
+                    <option value="Cuero">Cuero</option>
+                    <option value="Encaje">Encaje</option>
+                    <option value="Lino">Lino</option>
+                    <option value="Lycra">Lycra</option>
+                    <option value="Microfibra">Microfibra</option>
+                    <option value="Nylon">Nylon</option>
+                    <option value="Poliéster">Poliéster</option>
+                    <option value="Satén">Satén</option>
+                    <option value="Seda">Seda</option>
+                    <option value="Spandex">Spandex</option>
+                    <option value="Terciopelo">Terciopelo</option>
+                    <option value="Tul">Tul</option>
+                    <option value="Viscosa">Viscosa</option>
+                    <option value="Lana">Lana</option>
+                  </select>
+                </div>
+
+              </div>
+            )}
           </div>
         </div>
-
-        <br></br>
 
         <div className={styles.inputs_container}>
           <div className={styles.products_information}>

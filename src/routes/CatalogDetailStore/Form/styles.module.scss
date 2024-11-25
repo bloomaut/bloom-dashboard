@@ -88,6 +88,7 @@
   }
   .box_extra_fields {
     width: 850px;
+    margin-bottom: 15px;
     
     .extra_header {
       cursor: pointer;
@@ -96,6 +97,7 @@
       align-items: center;
       width: 100%;
       border-bottom: 1px solid grey;
+      margin-bottom: 5px;
       svg {
         margin-top: 15px;
       }
@@ -106,6 +108,24 @@
       justify-content: center;
       align-content: center;
       gap: 10px;
+    }
+    .select_type {
+      @include width-height(100%, auto);
+      @include flex(column, flex-start, flex-start, 5px);
+      padding: 5px 0;
+      .label {
+        @include fontSize-fontWeight(14px, 400);
+        color: $lightGrey;
+      }
+      .select {
+        @include width-height(100%, 30px);
+        padding: 5px 10px;
+        outline: none;
+        border: 1px solid $lighterGrey;
+        border-radius: 4px;
+        background-color: #fff;
+        color: $text;
+      }
     }
   }
 }
