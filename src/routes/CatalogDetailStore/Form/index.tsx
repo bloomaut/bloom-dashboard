@@ -310,7 +310,12 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
           <div className={styles.box_extra_fields}>
             <div className={styles.extra_header} onClick={() => clickShowBrand()}>
               <p>Marca y modelo</p>
-              <Icon name={showBrand ? "arrow_up_chevron" : "arrow_down_chevron"} width={30} height={30} strokeColor='#7f7f7f' />
+              <Icon
+                name={showBrand ? "arrow_up_chevron" : "arrow_down_chevron"}
+                width={30}
+                height={30}
+                strokeColor='#7f7f7f'
+              />
             </div>
             {showBrand && (
               <div className={styles.extra_body}>
@@ -339,13 +344,14 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
           <div className={styles.box_extra_fields}>
             <div className={styles.extra_header} onClick={() => clickUserFields()}>
               <p>Perfil de usuario</p>
-              <Icon name={showUserFields ? "arrow_up_chevron" : "arrow_down_chevron"} width={30} height={30} strokeColor='#7f7f7f' />
+              <Icon
+                name={showUserFields ? "arrow_up_chevron" : "arrow_down_chevron"}
+                width={30}
+                height={30}
+                strokeColor='#7f7f7f'
+              />
             </div>
-            {showUserFields && (
-              <div className={styles.extra_body}>
-
-              </div>
-            )}
+            {showUserFields && <div className={styles.extra_body}></div>}
           </div>
         </div>
 
@@ -353,13 +359,14 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
           <div className={styles.box_extra_fields}>
             <div className={styles.extra_header} onClick={() => clickSpects()}>
               <p>Especificaciones</p>
-              <Icon name={showSpects ? "arrow_up_chevron" : "arrow_down_chevron"} width={30} height={30} strokeColor='#7f7f7f' />
+              <Icon
+                name={showSpects ? "arrow_up_chevron" : "arrow_down_chevron"}
+                width={30}
+                height={30}
+                strokeColor='#7f7f7f'
+              />
             </div>
-            {showSpects && (
-              <div className={styles.extra_body}>
-
-              </div>
-            )}
+            {showSpects && <div className={styles.extra_body}></div>}
           </div>
         </div>
 
