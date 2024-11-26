@@ -203,12 +203,7 @@ const TableRow = ({
               onclick={() => setShowAddVariant(true)}
             />
             {showAddVariant && (
-              <Form
-                action='post'
-                title={'Add variant to product'}
-                variantOf={id}
-                setShowPopup={setShowAddVariant}
-              />
+              <Form action='post' title={"Add variant to product"} variantOf={id} setShowPopup={setShowAddVariant} />
             )}
           </div>
         </div>
