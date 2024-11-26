@@ -48,6 +48,7 @@ const TableRow = ({
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
+  const [showAddVariant, setShowAddVariant] = useState(false);
 
   const submitDelete = async () => {
     setLoading(true);
@@ -199,8 +200,16 @@ const TableRow = ({
               title='Add new variant'
               styleName='btn_variant'
               icon={<Icon name='add' width={25} height={25} strokeColor='#7f7f7f' viewBox='0 0 25 18' />}
-              onclick={() => console.log("Add new variant")}
+              onclick={() => setShowAddVariant(true)}
             />
+            {showAddVariant && (
+              <Form
+                action='post'
+                title={'Add variant to product'}
+                variantOf={id}
+                setShowPopup={setShowAddVariant}
+              />
+            )}
           </div>
         </div>
       )}

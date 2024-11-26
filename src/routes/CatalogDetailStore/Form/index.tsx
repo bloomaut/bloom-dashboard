@@ -23,6 +23,7 @@ interface FormProps {
   title: string;
   action: "post" | "put";
   id?: string;
+  variantOf?: string;
   allProducts?: AllProducts[];
   onUpdate?: (editedProduct: AllProducts) => void;
   onCreate?: (newItem: AllProducts) => void;
@@ -70,7 +71,7 @@ const initialValues: InitialValuesProps = {
   visibility: true,
 };
 
-const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) => {
+const Form = ({ setShowPopup, action, id, variantOf, allProducts, onUpdate }: FormProps) => {
   const { datasetDetail, handleAddDataset, handleUpdateDataset } = useCatalogStoreContext();
   const [formData, setFormData] = useState<InitialValuesProps>(initialValues);
   const [checkValidation, setCheckValidation] = useState<boolean>(false);
@@ -152,6 +153,7 @@ const Form = ({ setShowPopup, action, id, allProducts, onUpdate }: FormProps) =>
           dataset: datasetDetail?.dataSet._id ?? "",
           data: formData.data,
           visibility: formData.visibility,
+          dataItemId: variantOf ? variantOf : null,
           ...(formData.order !== null && { order: formData.order }),
         };
 
