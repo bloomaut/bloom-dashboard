@@ -173,7 +173,13 @@ const TableRow = ({
               <div className={`${styles.name_container} ${styles.variants_dropdown}`}>
                 {isValidImageUrl(item.data.listimage) ? (
                   <Zoom classDialog='custom-zoom'>
-                    <Image src={item.data.listimage} className={styles.image} alt={item.data.listname} width={300} height={300} />
+                    <Image
+                      src={item.data.listimage}
+                      className={styles.image}
+                      alt={item.data.listname}
+                      width={300}
+                      height={300}
+                    />
                   </Zoom>
                 ) : (
                   <div className={styles.icon_container}>
