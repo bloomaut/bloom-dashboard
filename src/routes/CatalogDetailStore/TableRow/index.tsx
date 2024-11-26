@@ -161,6 +161,33 @@ const TableRow = ({
               <p>This product does not have variants yet.</p>
             </div>
           )}
+
+          {variants?.map((item: any) => (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: ".3fr 1fr 2fr",
+              }}
+            >
+              <div></div>
+              <div className={`${styles.name_container} ${styles.variants_dropdown}`}>
+                {isValidImageUrl(item.data.listimage) ? (
+                  <Zoom classDialog='custom-zoom'>
+                    <Image src={item.data.listimage} className={styles.image} alt={item.data.listname} width={300} height={300} />
+                  </Zoom>
+                ) : (
+                  <div className={styles.icon_container}>
+                    <Icon name='dataset' width={30} height={30} strokeColor={"#BEBEBE"} />
+                  </div>
+                )}
+                <p className={styles.box}>{item.data.listname}</p>
+              </div>
+              <div className={styles.box}>
+                <p>$ {item.data.listprice}</p>
+              </div>
+            </div>
+          ))}
+
           <div className={styles.add_variant}>
             <Button
               title='Add new variant'
