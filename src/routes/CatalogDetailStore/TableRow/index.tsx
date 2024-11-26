@@ -167,10 +167,11 @@ const TableRow = ({
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: ".3fr 1fr 2fr",
+                gridTemplateColumns: ".1fr .3fr 1fr 2fr",
               }}
             >
               <div></div>
+              <div className={styles.order}>{item.order}</div>
               <div className={`${styles.name_container} ${styles.variants_dropdown}`}>
                 {isValidImageUrl(item.data.listimage) ? (
                   <Zoom classDialog='custom-zoom'>
