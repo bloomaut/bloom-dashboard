@@ -25,9 +25,7 @@ const Navbar = () => {
         <Link href='/'>
           <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
         </Link>
-        {user && (
-          <RoleComponent />
-        )}
+        {user && <RoleComponent />}
       </div>
       <div className={styles.inner_container}>
         {user && (
