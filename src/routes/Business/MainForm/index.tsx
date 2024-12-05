@@ -3,6 +3,7 @@ import Input from "@/components/Input";
 import { useTranslations } from "next-intl";
 import { useBusinessContext } from "@/context/BusinessContext";
 import Select from "./Select";
+import Icon from "@/components/Icon";
 
 const Form = () => {
   const { formData, handleChange, handleSubmit, checkValidation, errors, handleCategoryChange } = useBusinessContext();
@@ -38,23 +39,40 @@ const Form = () => {
           {checkValidation && <ErrorMessage error={errors.lastname} />}
         </div>
       </div>
-      <div className={styles.row_02}>
-        <Input
-          textLabel={dict("form.business_name")}
-          textHolder={dict("form.business_name")}
-          type='text'
-          name='business_name'
-          value={formData.client.name || ""}
-          handleChange={handleChange}
-        />
-        {checkValidation && <ErrorMessage error={errors.business_name} />}
+      <div className={styles.row_01}>
+        <div className={styles.form_control}>
+          <Input
+            textLabel={dict("form.business_name")}
+            textHolder={dict("form.business_name")}
+            type='text'
+            name='business_name'
+            value={formData.client.name || ""}
+            handleChange={handleChange}
+          />
+          {checkValidation && <ErrorMessage error={errors.business_name} />}
+        </div>
+        <div className={`${styles.form_control} ${styles.disabled}`}>
+          <Input
+            textLabel="Free subdomain"
+            textHolder="my-company"
+            type='text'
+            name='subdomain'
+            value={formData.subdomain || ""}
+            handleChange={handleChange}
+            disabled={true}
+          />
+          <div>
+            <Icon title="Para cambiar su subdominio, por favor póngase en contacto con nosotros." name='info' width={15} height={15} viewBox='0 0 22 22' />
+            <span className={`${styles.label_subdomain}`}>{ `${formData.subdomain || 'my-company'}.small.ar` }</span>
+          </div>
+        </div>
       </div>
-      <div className={styles.row_03}>
+      <div className={styles.row_02}>
         <label>{dict("form.type_business")}</label>
         <Select name='business_category' value={formData.client.category || ""} onChange={handleCategoryChange} />
         {checkValidation && <ErrorMessage error={errors.business_category} />}
       </div>
-      <div className={styles.row_04}>
+      <div className={styles.row_03}>
         <Input
           textLabel={dict("form.describe_business")}
           textHolder={dict("form.describe_business")}

@@ -10,6 +10,7 @@ export interface UserBusiness {
   lastname: Nullable<string>;
   email?: string;
   phone: string;
+  subdomain?: string;
   company_position?: string;
   active?: boolean;
   created_at?: string;

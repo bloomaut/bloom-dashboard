@@ -12,6 +12,7 @@ import { get } from "@/services/fetch";
 import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { setDataRicardos } from "@/store/features/ricardoSlice";
+import { setDataSubdomains } from '@/store/features/subdomainsSlice';
 
 interface SidebarCard {
   title: string;
@@ -82,12 +83,23 @@ const Sidebar = () => {
     }
   };
 
+  const getSubdomains = async () => {
+    const res = await get("subdomains");
+    if (res.statusCode === 200) {
+      dispatch(setDataSubdomains(res.result.subdomains));
+    }
+  };
+
   useEffect(() => {
     getUserData();
   }, [clientId]);
 
   useEffect(() => {
     getDataFromRicardos();
+  }, []);
+
+  useEffect(() => {
+    getSubdomains();
   }, []);
 
   return (
