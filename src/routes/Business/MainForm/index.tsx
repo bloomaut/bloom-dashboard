@@ -53,8 +53,8 @@ const Form = () => {
         </div>
         <div className={`${styles.form_control} ${styles.disabled}`}>
           <Input
-            textLabel="Free subdomain"
-            textHolder="my-company"
+            textLabel='Free subdomain'
+            textHolder='my-company'
             type='text'
             name='subdomain'
             value={formData.subdomain || ""}
@@ -62,8 +62,14 @@ const Form = () => {
             disabled={true}
           />
           <div>
-            <Icon title="Para cambiar su subdominio, por favor póngase en contacto con nosotros." name='info' width={15} height={15} viewBox='0 0 22 22' />
-            <span className={`${styles.label_subdomain}`}>{ `${formData.subdomain || 'my-company'}.small.ar` }</span>
+            <Icon
+              title='Para cambiar su subdominio, por favor póngase en contacto con nosotros.'
+              name='info'
+              width={15}
+              height={15}
+              viewBox='0 0 22 22'
+            />
+            <span className={`${styles.label_subdomain}`}>{`${formData.subdomain || "my-company"}.small.ar`}</span>
           </div>
         </div>
       </div>

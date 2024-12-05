@@ -9,7 +9,7 @@ export const store = configureStore({
     userData: userSlice,
     dataschema: dataSchemaSlice,
     ricardosData: ricardoSlice,
-    subdomainsData: subdomainsSlice
+    subdomainsData: subdomainsSlice,
   },
 });
 

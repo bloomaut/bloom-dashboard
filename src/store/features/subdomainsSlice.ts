@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import { Subdomain } from "@/typescript/interfaces/user.interface";
 
 export const initialState = {
-    subdomains: [] as Subdomain[],
+  subdomains: [] as Subdomain[],
 };
 
 export const subdomainsSlice = createSlice({

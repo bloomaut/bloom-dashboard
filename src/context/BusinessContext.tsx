@@ -10,7 +10,7 @@ import { update } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
 import { handleLogoBanner } from "@/utils/handleUploadBanner";
 import { useRouter } from "next/navigation";
-import { setDataSubdomains } from '@/store/features/subdomainsSlice';
+import { setDataSubdomains } from "@/store/features/subdomainsSlice";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -242,10 +242,14 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
         [name]: value,
       };
     });
-    if (name === 'business_name' && !alreadyHadSubdomain) {
+    if (name === "business_name" && !alreadyHadSubdomain) {
       setFormData(prevFormData => ({
         ...prevFormData,
-        subdomain: value.trim().toLowerCase().replaceAll(' ', '-').replace(/[^\w\s]/gi, ''),
+        subdomain: value
+          .trim()
+          .toLowerCase()
+          .replaceAll(" ", "-")
+          .replace(/[^\w\s]/gi, ""),
       }));
     }
   };
