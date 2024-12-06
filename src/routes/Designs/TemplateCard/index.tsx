@@ -15,6 +15,7 @@ import { useDesignContext } from "@/context/DesignContext";
 import { createPortal } from "react-dom";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setDataSubdomains } from "@/store/features/subdomainsSlice";
+import { Subdomain } from "@/typescript/interfaces/user.interface";
 
 const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRelated) => {
   const [popupDelete, setPopupDelete] = useState<boolean>(false);
@@ -94,7 +95,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
   const handleConfirm = (landingEngineId: number) => {
     const subdomains = subdomainsData.subdomains.map(s => {
       if (s.id === landingEngineId) {
-        return {
+        const subdomain: Subdomain = {
           id: s.id,
           base_url: s.base_url,
           subdomain: s.subdomain,
@@ -104,6 +105,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
           updated_at: s.updated_at,
           flake_landing: { _id },
         };
+        return subdomain;
       } else {
         return s;
       }
