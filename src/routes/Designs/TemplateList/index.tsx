@@ -87,7 +87,7 @@ const TemplateList = () => {
                     <TemplateCard key={item._id} {...item} datatype={"designs"} selectedList={selectedList} />
                   ))
                 ) : (
-                  <p className={styles.empty_text}>Yo do not have websites yet</p>
+                  <p className={styles.empty_text}>You do not have websites yet</p>
                 )}
               </div>
             </div>

@@ -2,31 +2,37 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import Icon from "@/components/Icon";
 import default_image from "/public/assets/default_image.jpg";
-import Button from "@/components/Button";
 import PopupConfirm from "@/components/PopupConfirm";
 import PopupDesign from "@/routes/CreateDesign/PopupDesign";
-import { useState } from "react";
+import PopupSubdomains from "@/routes/CreateDesign/PopupSubdomains";
+import { useEffect, useState } from "react";
 import { HogRelated } from "@/typescript/interfaces/flakes.interface";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import { get, remove } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useDesignContext } from "@/context/DesignContext";
-import { DesignProps } from "@/typescript/interfaces/designs.interface";
 import { createPortal } from "react-dom";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setDataSubdomains } from "@/store/features/subdomainsSlice";
 
 const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRelated) => {
-  const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [popupDelete, setPopupDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [popupData, setPopupData] = useState<DesignProps | null>(null);
-  const [activePopup, setActivePopup] = useState<boolean>(false);
+  const [showLandingPopup, setShowLandingPopup] = useState<boolean>(false);
+  const [hasSubdomainAssigned, setHasSubdomainAssigned] = useState<boolean>(false);
+  const subdomainsData = useAppSelector(state => state.subdomainsData);
   const { notify, notifyError } = useMessageToast();
   const { handleRemoveDesign } = useDesignContext();
+  const dispatch = useAppDispatch();
   const dict = useTranslations("dict");
 
-  const handleClick = () => {
-    setOpenPopup(!openPopup);
+  /* DESIGNS FUNCTIONS */
+
+  const copyDesignLink = async (_id: string) => {
+    // c = campaign
+    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${_id}`);
+    notify("Design link copied on clipboard!");
   };
 
   const handleDelete = async () => {
@@ -40,41 +46,78 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
         notifyError(dict("toast.error_design_delete"));
       }
       setPopupDelete(false);
-      setOpenPopup(false);
       setLoading(false);
     }
   };
 
   const getDesignById = async (id: string) => {
+    // Esta función se usaba cuando usábamos el PopupDesign para mostrar el diseño
     const response = await get(`design-small/${id}`);
     if (response?.statusCode === 200) {
-      setPopupData(response.result.design);
-      setActivePopup(true);
+      setShowLandingPopup(true);
     }
   };
 
-  const copyDesignLink = async (_id: string) => {
-    // c = campaign
-    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${_id}`);
-    notify("Design link copied on clipboard!");
-  };
+  /* HOGS FUNCTIONS */
 
   const copyDiffusionLink = async (_id: string) => {
     await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/d/${_id}`);
     notify("Diffusion link copied on clipboard!");
   };
 
+  /* LANDINGS FUNCTIONS */
+
+  useEffect(() => {
+    landingHasDomainAssigned();
+  }, [hasSubdomainAssigned, subdomainsData]);
+
+  const landingHasDomainAssigned = () => {
+    let hasSubdomainAssigned = false;
+    subdomainsData.subdomains.map(s => {
+      if (s.flake_landing?._id === _id) {
+        hasSubdomainAssigned = true;
+      }
+    });
+    setHasSubdomainAssigned(hasSubdomainAssigned);
+  }
+
   const copyLandingURL = async (_id: string) => {
-    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/preview/landing/${_id}`);
+    // await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/preview/landing/${_id}`);
+    subdomainsData.subdomains.map(async (s) => {
+      if (s.flake_landing?._id === _id) {
+        await navigator.clipboard.writeText(`https://${s.full_domain}`);
+      }
+    });
     notify("Website link copied on clipboard!");
   };
+
+  const handleConfirm = (landingEngineId: number) => {
+    const subdomains = subdomainsData.subdomains.map(s => {
+      if (s.id === landingEngineId) {
+        return {
+          id: s.id,
+          base_url: s.base_url,
+          subdomain: s.subdomain,
+          full_domain: s.full_domain,
+          registration: s.registration,
+          created_at: s.created_at,
+          updated_at: s.updated_at,
+          flake_landing: { _id },
+        };
+      } else {
+        return s;
+      }
+    });
+    dispatch(setDataSubdomains(subdomains));
+  }
+
+  /* POST FUNCTIONS */
 
   const downloadPostImage = async (thumbnail: string | null) => {
     if (!thumbnail) {
       notifyError("No image available to download.");
       return false;
     }
-
     const link = document.createElement("a");
     link.href = thumbnail;
     link.download = `${title}.jpg`;
@@ -92,10 +135,36 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
 
         <div className={styles.card_action}>
           <div className={styles.card_icons}>
+
             {selectedList === "landing" && (
-              <button className={styles.actions} onClick={() => copyLandingURL(_id)}>
-                <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
-              </button>
+              <>
+                {hasSubdomainAssigned ? (
+                  <>
+                    <button className={styles.actions} onClick={() => copyLandingURL(_id)}>
+                      <Icon name="copy" viewBox="0 0 60 60" strokeWidth={3} strokeColor="#282d7e" />
+                    </button>
+                    <button className={styles.bottom_actions} onClick={() => setShowLandingPopup(true)}>
+                      <Icon name='config' viewBox='0 0 85 85' strokeWidth={5} strokeColor='#282d7e' />
+                    </button>
+                  </>
+                ) : (
+                  <button className={styles.actions} onClick={() => setShowLandingPopup(true)}>
+                    <Icon name="config" viewBox="0 0 85 85" strokeWidth={4} strokeColor="#282d7e" />
+                  </button>
+                )}
+                {showLandingPopup &&
+                  createPortal(
+                    <PopupSubdomains
+                      onConfirm={handleConfirm}
+                      onCancel={() => setShowLandingPopup(false)}
+                      setShowConfirmation={setShowLandingPopup}
+                      landingId={_id}
+                      title={title}
+                    />,
+                    document.body,
+                  )
+                }
+              </>
             )}
 
             {datatype === "designs" && selectedList === "hog" && (
@@ -156,33 +225,15 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
               textAccept={dict("popup.confirm")}
             />,
             document.body,
-          )}
-
-        {/* {activePopup &&
-            createPortal(
-              <PopupDesign
-                onCancel={() => setActivePopup(false)}
-                setShowConfirmation={setActivePopup}
-                thumbnail={popupData?.thumbnail || ""}
-                title={popupData?.title || ""}
-                description={popupData?.description || ""}
-                typeDesign={popupData?.type_design || "hog"}
-                hog={popupData?.hog?.title || ""}
-                post={popupData?.post?.title || ""}
-                email={popupData?.email?.title || ""}
-                pwa={popupData?.power_app.title || ""}
-                url={`${process.env.NEXT_PUBLIC_ENGINE_URL}/c/${popupData?._id}`}
-                loading={loading}
-                fields={popupData?.variables || []}
-                id={popupData?._id}
-                setPopupData={setPopupData}
-              />,
-              document.body,
-            )
-          }*/}
+          )
+        }
       </div>
     </div>
   );
 };
 
 export default TemplateCard;
+function dispatch(arg0: { payload: any; type: "subdomainsData/setDataSubdomains"; }) {
+  throw new Error("Function not implemented.");
+}
+

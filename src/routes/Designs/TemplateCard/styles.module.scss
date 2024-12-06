@@ -44,7 +44,7 @@
       border-radius: 10px;
 
       .title {
-        @include fontSize-fontWeight(16px, 600);
+        @include fontSize-fontWeight(16px, 400);
         color: #381D2A;
       }
     }

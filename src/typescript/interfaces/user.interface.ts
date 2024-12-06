@@ -35,5 +35,5 @@ export interface Subdomain {
   registration: "free" | "purchased";
   created_at: Date;
   updated_at: Date;
-  flake_landing: string | null;
+  flake_landing: null | { _id: string };
 }
