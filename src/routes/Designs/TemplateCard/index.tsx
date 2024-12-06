@@ -79,11 +79,11 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
       }
     });
     setHasSubdomainAssigned(hasSubdomainAssigned);
-  }
+  };
 
   const copyLandingURL = async (_id: string) => {
     // await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/preview/landing/${_id}`);
-    subdomainsData.subdomains.map(async (s) => {
+    subdomainsData.subdomains.map(async s => {
       if (s.flake_landing?._id === _id) {
         await navigator.clipboard.writeText(`https://${s.full_domain}`);
       }
@@ -109,7 +109,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
       }
     });
     dispatch(setDataSubdomains(subdomains));
-  }
+  };
 
   /* POST FUNCTIONS */
 
@@ -135,13 +135,12 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
 
         <div className={styles.card_action}>
           <div className={styles.card_icons}>
-
             {selectedList === "landing" && (
               <>
                 {hasSubdomainAssigned ? (
                   <>
                     <button className={styles.actions} onClick={() => copyLandingURL(_id)}>
-                      <Icon name="copy" viewBox="0 0 60 60" strokeWidth={3} strokeColor="#282d7e" />
+                      <Icon name='copy' viewBox='0 0 60 60' strokeWidth={3} strokeColor='#282d7e' />
                     </button>
                     <button className={styles.bottom_actions} onClick={() => setShowLandingPopup(true)}>
                       <Icon name='config' viewBox='0 0 85 85' strokeWidth={5} strokeColor='#282d7e' />
@@ -149,7 +148,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
                   </>
                 ) : (
                   <button className={styles.actions} onClick={() => setShowLandingPopup(true)}>
-                    <Icon name="config" viewBox="0 0 85 85" strokeWidth={4} strokeColor="#282d7e" />
+                    <Icon name='config' viewBox='0 0 85 85' strokeWidth={4} strokeColor='#282d7e' />
                   </button>
                 )}
                 {showLandingPopup &&
@@ -162,8 +161,7 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
                       title={title}
                     />,
                     document.body,
-                  )
-                }
+                  )}
               </>
             )}
 
@@ -225,15 +223,13 @@ const TemplateCard = ({ title, thumbnail, _id, datatype, selectedList }: HogRela
               textAccept={dict("popup.confirm")}
             />,
             document.body,
-          )
-        }
+          )}
       </div>
     </div>
   );
 };
 
 export default TemplateCard;
-function dispatch(arg0: { payload: any; type: "subdomainsData/setDataSubdomains"; }) {
+function dispatch(arg0: { payload: any; type: "subdomainsData/setDataSubdomains" }) {
   throw new Error("Function not implemented.");
 }
-
