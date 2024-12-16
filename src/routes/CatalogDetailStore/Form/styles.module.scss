@@ -1,0 +1,162 @@
+.form_container {
+  @include flex(row, center, center);
+  @include width-height(100vw, 100vh);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in-out forwards;
+  .inner_container {
+    @include flex(column, center, center, 20px);
+    @include width-height(900px, auto);
+    @include fontSize-fontWeight(24px, 500);
+    padding: 50px 25px 20px 25px;
+    background-color: $white;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 4px 10px 10px 0 rgba(0, 0, 0, 0.25);
+    animation: scaleIn 0.3s ease-in-out forwards;
+    .btn_close {
+      @include width-height(100%, auto);
+      button {
+        position: absolute;
+        top: 8px;
+        right: 5px;
+        border: none;
+        outline: none;
+        background: none;
+        cursor: pointer;
+      }
+    }
+    .header {
+      @include width-height(100%, auto);
+      display: grid;
+      grid-template-columns: 40% 20% 30%;
+      gap: 4%;
+      p {
+        @include fontSize-fontWeight(24px, 600);
+        text-align: start;
+        color: $text;
+      }
+    }
+    .inputs_container {
+      @include width-height(100%, auto);
+      display: grid;
+      gap: 4%;
+      grid-template-columns: 40% 20% 30%;
+      position: relative;
+      .products_information {
+        @include flex(column, center, flex-start, 15px);
+        .product_description {
+          @include width-height(100%, auto);
+          position: relative;
+          .error {
+            @include width-height(250px, auto);
+            @include fontSize-fontWeight(12px, 400);
+            text-align: start;
+            position: absolute;
+            top: 120px;
+            color: red;
+          }
+        }
+      }
+      .media {
+        @include flex(column, flex-start, flex-start, 10px);
+        .label {
+          @include fontSize-fontWeight(14px, 400);
+          color: $lightGrey;
+          padding: 5px 0;
+        }
+      }
+    }
+    .button_container {
+      @include width-height(100%, auto);
+      @include flex(row, flex-end, center);
+    }
+    .error {
+      @include width-height(200px, auto);
+      text-align: start;
+      position: absolute;
+      top: 60px;
+      @include fontSize-fontWeight(12px, 400);
+      color: red;
+    }
+    .error_hidden {
+      display: none;
+    }
+  }
+  .box_extra_fields {
+    width: 850px;
+    margin-bottom: 15px;
+    
+    .extra_header {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid grey;
+      margin-bottom: 5px;
+      svg {
+        margin-top: 15px;
+      }
+    }
+    .extra_body {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      gap: 10px;
+    }
+    .select_type {
+      @include width-height(100%, auto);
+      @include flex(column, flex-start, flex-start, 5px);
+      padding: 5px 0;
+      .label {
+        @include fontSize-fontWeight(14px, 400);
+        color: $lightGrey;
+      }
+      .select {
+        @include width-height(100%, 30px);
+        padding: 5px 10px;
+        outline: none;
+        border: 1px solid $lighterGrey;
+        border-radius: 4px;
+        background-color: #fff;
+        color: $text;
+      }
+    }
+  }
+}
+
+.closing {
+  animation: fadeOutPopup 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutPopup {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

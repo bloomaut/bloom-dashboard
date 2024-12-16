@@ -291,7 +291,8 @@
         "catalog_type": "Catalog type",
         "select_type": "Select type",
         "products": "Products",
-        "services": "Services"
+        "services": "Services",
+        "store": "Store"
       },
       "popup_excel": {
         "massive_upload_title": "Massive upload from Excel",
@@ -310,7 +311,8 @@
       "upload_excel_title": "Upload Excel Spreadsheet",
       "upload_excel": "Upload Excel",
       "all_products": "See all products",
-      "all_services": "See all services"
+      "all_services": "See all services",
+      "all_store": "See all store products"
     },
     "form_validation": {
       "ClientFirstname": "The name is required",

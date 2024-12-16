@@ -16,6 +16,7 @@ interface Props {
   ErrorMessage?: JSX.Element;
   inputPrice?: boolean;
   required?: boolean;
+  disabled?: boolean;
 }
 
 const Input = ({
@@ -32,6 +33,7 @@ const Input = ({
   ErrorMessage,
   inputPrice = false,
   required = false,
+  disabled = false,
 }: Props) => {
   const inputType = type === "textarea" ? `${styles.input} ${styles.textarea}` : styles.input;
   const pathname = usePathname();
@@ -62,6 +64,7 @@ const Input = ({
             name={name}
             value={value}
             onChange={handleChange}
+            disabled={disabled}
           />
           {inputPrice && <p className={styles.sign}>$</p>}
         </>

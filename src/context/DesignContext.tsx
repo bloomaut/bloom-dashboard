@@ -35,7 +35,7 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
   });
   const [loading, setLoading] = useState(true);
   // Recuperamos el `selectedList` desde el localStorage (si existe)
-  const savedSelectedList = typeof window !== "undefined" ? localStorage.getItem("selectedList") : "hog";
+  const savedSelectedList = "hog";
   const [selectedList, setSelectedList] = useState<string>(savedSelectedList || "hog");
   const [designSelected, setDesignSelected] = useState<DesignSelected>();
   const { clientId } = useAppSelector(state => state.ricardosData);
@@ -77,10 +77,6 @@ export const DesignProvider = ({ children }: { children: JSX.Element }) => {
 
     fetchPowerApps();
   }, [selectedList, clientId]);
-
-  useEffect(() => {
-    localStorage.setItem("selectedList", selectedList.toString());
-  }, [selectedList]);
 
   const handleRemoveDesign = (deletedId: string) => {
     if (listTemplates?.designs.length) {

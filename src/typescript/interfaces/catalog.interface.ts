@@ -23,16 +23,6 @@ export interface AllProductsDataset {
   name: string;
 }
 
-export interface AllProducts {
-  _id: ID;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  data: DataItemsList;
-  dataset: AllProductsDataset;
-  order: number;
-  visibility: boolean;
-}
-
 export interface DatasetProps {
   _id: ID;
   name: string;
@@ -129,13 +119,14 @@ export interface PutPercentage {
   percentage: string | number;
 }
 
-// Detalle de Dataset
-export interface DatasetDetailType {
-  dataItems: DataItemsType[];
+/* ********** PRODUCTS ********** */
+
+export interface DatasetDetailProduct {
+  dataItems: ProductDataItem[];
   dataSet: DatasetProp;
 }
 
-export interface DataItemsType {
+export interface ProductDataItem {
   createdAt: Timestamp;
   data: {
     listdescr: string;
@@ -149,8 +140,51 @@ export interface DataItemsType {
   _id: ID;
 }
 
-// Detalle de Servicios
-export interface DatasetDetailServicesType {
+export interface AllProducts {
+  _id: ID;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  data: DataItemsList;
+  dataset: AllProductsDataset;
+  isVariant: boolean;
+  variants: any[];
+  order: number;
+  visibility: boolean;
+}
+
+/* ********** STORE ********** */
+
+export interface DatasetDetailStore {
+  dataItems: StoreDataItem[];
+  dataSet: DatasetProp;
+}
+
+export interface StoreDataItem {
+  createdAt: Timestamp;
+  data: {
+    listdescr: string;
+    listimage: string;
+    listname: string;
+    listprice: string;
+    productBrand: string;
+    productModel: string;
+    productGenre: string;
+    productAge: string;
+    productColor: string;
+    productSize: string;
+    productMaterial: string;
+  };
+  isVariant: boolean;
+  variants: any[];
+  order: number;
+  updatedAt: Timestamp;
+  visibility: boolean;
+  _id: ID;
+}
+
+/* ********** SERVICES ********** */
+
+export interface DatasetDetailServices {
   dataItems: DataItemsServiceType[];
   dataSet: DatasetProp;
 }

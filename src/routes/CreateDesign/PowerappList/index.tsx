@@ -26,17 +26,11 @@ const PowerappList = ({ setActiveStep }: PowerappListProps) => {
   const params = useParams();
 
   useEffect(() => {
-    const storedSelectedList = localStorage.getItem("selectedList") || "hog";
+    const storedSelectedList = "hog";
     if (storedSelectedList) {
       setSelectedList(storedSelectedList);
     }
   }, []);
-
-  useEffect(() => {
-    if (selectedList) {
-      localStorage.setItem("selectedList", selectedList);
-    }
-  }, [selectedList]);
 
   useEffect(() => {
     if (listTemplates?.designs) {

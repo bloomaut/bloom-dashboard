@@ -22,21 +22,6 @@
   }
   .row_02 {
     @include width-height(100%, auto);
-    position: relative;
-    .error {
-      @include width-height(200px, auto);
-      text-align: start;
-      position: absolute;
-      top: 60px;
-      @include fontSize-fontWeight(12px, 400);
-      color: red;
-    }
-    .error_hidden {
-      display: none;
-    }
-  }
-  .row_03 {
-    @include width-height(100%, auto);
     @include flex(column, flex-start, flex-start, 5px);
     position: relative;
     label {
@@ -55,7 +40,7 @@
       display: none;
     }
   }
-  .row_04 {
+  .row_03 {
     @include width-height(100%, auto);
     position: relative;
     .error {
@@ -69,5 +54,17 @@
     .error_hidden {
       display: none;
     }
+  }
+  .label_subdomain {
+    font-size: 12px;
+    position: absolute;
+  }
+  .disabled input {
+    color: gray;
+    background-color: #f3f1fd;
+  }
+  svg {
+    cursor: pointer;
+    margin-right: 5px;
   }
 }

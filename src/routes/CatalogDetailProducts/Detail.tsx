@@ -1,4 +1,4 @@
-import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { useCatalogProductsContext } from "@/context/CatalogProductsContext";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { putFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
@@ -22,7 +22,7 @@ const Detail = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [sortedDataItems, setSortedDataItems] = useState<any[]>([]);
   const [dataItemsCount, setDataItemsCount] = useState<number>(0);
-  const { loading, setLoading, datasetDetail, fetchDatasetById } = useCatalogDetailContext();
+  const { loading, setLoading, datasetDetail, fetchDatasetById } = useCatalogProductsContext();
   const { notify, notifyError } = useMessageToast();
   const { id } = useParams();
   const dict = useTranslations("dict");

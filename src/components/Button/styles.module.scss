@@ -266,6 +266,18 @@
   }
 }
 
+.btn_variant {
+  @extend .btn;
+  color: $lightGrey;
+  background: none;
+  padding: 10px;
+  margin: 10px;
+  &:hover {
+    background: none;
+    outline: 1px solid $lightGrey
+  }
+}
+
 .popup_design_btn {
   @extend .btn;
   @include width-height(100px, 30px);

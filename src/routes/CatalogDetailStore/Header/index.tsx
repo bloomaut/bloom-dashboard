@@ -9,7 +9,7 @@ import PopupExcel from "../PopupExcel";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { postFile } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
-import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { useCatalogStoreContext } from "@/context/CatalogStoreContext";
 
 interface Header {
   name: string | undefined | null;
@@ -21,7 +21,7 @@ const Header = ({ name, id, quantity }: Header) => {
   const [showPopupCreate, setShowPopupCreate] = useState(false);
   const [bulkLoadPopup, setBulkLoadPopup] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { loading, setLoading, fetchDatasetById } = useCatalogDetailContext();
+  const { loading, setLoading, fetchDatasetById } = useCatalogStoreContext();
   const dict = useTranslations("dict");
   const { notify, notifyError } = useMessageToast();
 

@@ -2,21 +2,21 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { get } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useParams } from "next/navigation";
-import { DatasetDetailType, DataItemsType } from "@/typescript/interfaces/catalog.interface";
+import { DatasetDetailProduct, ProductDataItem } from "@/typescript/interfaces/catalog.interface";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCatalogComplete } from "@/store/features/userSlice";
 
-interface CatalogDetailContextType {
-  datasetDetail: DatasetDetailType | null | undefined;
+interface CatalogProductsContextType {
+  datasetDetail: DatasetDetailProduct | null | undefined;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
   loading: boolean;
   handleRemoveDataset: (deletedId: string) => void;
-  handleAddDataset: (dataset: DataItemsType) => void;
-  handleUpdateDataset: (updatedDataset: DataItemsType) => void;
+  handleAddDataset: (dataset: ProductDataItem) => void;
+  handleUpdateDataset: (updatedDataset: ProductDataItem) => void;
 }
 
-const CatalogDetailContext = createContext<CatalogDetailContextType>({
+const CatalogProductsContext = createContext<CatalogProductsContextType>({
   datasetDetail: null,
   fetchDatasetById: async () => {
     throw new Error("fetchDatasetById function not implemented");
@@ -36,8 +36,8 @@ const CatalogDetailContext = createContext<CatalogDetailContextType>({
   },
 });
 
-export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) => {
-  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailType | null | undefined>(null);
+export const CatalogProductsProvider = ({ children }: { children: JSX.Element }) => {
+  const [datasetDetail, setDatasetDetail] = useState<DatasetDetailProduct | null | undefined>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { clientId } = useAppSelector(state => state.ricardosData);
   const { id } = useParams();
@@ -62,7 +62,7 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
     }
   };
 
-  const handleAddDataset = (dataset: DataItemsType) => {
+  const handleAddDataset = (dataset: ProductDataItem) => {
     if (datasetDetail) {
       setDatasetDetail({ ...datasetDetail, dataItems: [...datasetDetail.dataItems, dataset] });
     }
@@ -71,7 +71,7 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
     }
   };
 
-  const handleUpdateDataset = (updatedDataset: DataItemsType) => {
+  const handleUpdateDataset = (updatedDataset: ProductDataItem) => {
     if (datasetDetail) {
       const updatedDataItems = datasetDetail.dataItems.map(item =>
         item._id === updatedDataset._id ? { ...item, ...updatedDataset } : item,
@@ -81,7 +81,7 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
   };
 
   return (
-    <CatalogDetailContext.Provider
+    <CatalogProductsContext.Provider
       value={{
         datasetDetail,
         fetchDatasetById,
@@ -93,8 +93,8 @@ export const CatalogDetailProvider = ({ children }: { children: JSX.Element }) =
       }}
     >
       {children}
-    </CatalogDetailContext.Provider>
+    </CatalogProductsContext.Provider>
   );
 };
 
-export const useCatalogDetailContext = () => useContext(CatalogDetailContext);
+export const useCatalogProductsContext = () => useContext(CatalogProductsContext);

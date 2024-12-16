@@ -12,7 +12,7 @@ import Form from "../Form";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { AllProducts } from "@/typescript/interfaces/catalog.interface";
-import { useCatalogDetailContext } from "@/context/CatalogDetailContext";
+import { useCatalogProductsContext } from "@/context/CatalogProductsContext";
 
 interface Props {
   id: string;
@@ -39,7 +39,7 @@ const TableRow = ({
   onDelete,
   onUpdate,
 }: Props) => {
-  const { handleRemoveDataset } = useCatalogDetailContext();
+  const { handleRemoveDataset } = useCatalogProductsContext();
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dict = useTranslations("dict");

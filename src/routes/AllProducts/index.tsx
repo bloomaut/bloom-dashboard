@@ -5,8 +5,8 @@ import { get } from "@/services/fetch";
 import { useEffect, useState } from "react";
 //Components
 import LoadingSpinner from "@/components/Loading";
-import TableHead from "../CatalogDetail/TableHead";
-import TableRow from "../CatalogDetail/TableRow";
+import TableHead from "../CatalogDetailProducts/TableHead";
+import TableRow from "../CatalogDetailProducts/TableRow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { AllProducts as AllProductsInterface } from "@/typescript/interfaces/catalog.interface";
 

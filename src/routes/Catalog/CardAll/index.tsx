@@ -11,9 +11,23 @@ interface CardAllProps {
 
 const CardAll = ({ name, totalDataItems, dataschema }: CardAllProps) => {
   return (
-    <article className={dataschema === "uitool-products" ? styles.card : `${styles.card} ${styles.card_services}`}>
+    <article
+      className={
+        dataschema === "uitool-products"
+          ? styles.card
+          : dataschema === "uitool-store"
+            ? `${styles.card} ${styles.card_store}`
+            : `${styles.card} ${styles.card_services}`
+      }
+    >
       <Link
-        href={dataschema === "uitool-products" ? "all-products" : "all-services"}
+        href={
+          dataschema === "uitool-products"
+            ? "all-products"
+            : dataschema === "uitool-store"
+              ? "all-store"
+              : "all-services"
+        }
         className={styles.title_container}
       >
         <h2 className={styles.title} title={name}>

@@ -106,7 +106,12 @@ const FormActions = ({
         const postDataschema = {
           name: formData.category_name,
           description: formData.category_description,
-          dataschema: formData.type_catalog === "uitool-products" ? schema[0]._id : schema[1]._id,
+          dataschema:
+            formData.type_catalog === "uitool-products"
+              ? schema[0]._id
+              : formData.type_catalog === "uitool-services"
+                ? schema[1]._id
+                : schema[2]._id,
           order: 0,
           image: null,
         };
@@ -208,11 +213,12 @@ const FormActions = ({
                 value={formData.type_catalog}
                 disabled={action === "put"}
               >
-                <option value='' hidden>
+                <option value='' selected>
                   {dict("catalog.form_actions.select_type")}
                 </option>
                 <option value={schema[0].category}>{dict("catalog.form_actions.products")}</option>
                 <option value={schema[1].category}>{dict("catalog.form_actions.services")}</option>
+                <option value={schema[2].category}>{dict("catalog.form_actions.store")}</option>
               </select>
             </div>
             <Input

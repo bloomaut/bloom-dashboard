@@ -25,12 +25,14 @@ const Navbar = () => {
         <Link href='/'>
           <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
         </Link>
-        <RoleComponent />
+        {user && <RoleComponent />}
       </div>
       <div className={styles.inner_container}>
-        <Link href='/notify' className={styles.bell}>
-          <Icon name='bell' viewBox='0 0 25 20' strokeColor='#381d2a' />
-        </Link>
+        {user && (
+          <Link href='/notify' className={styles.bell}>
+            <Icon name='bell' viewBox='0 0 25 20' strokeColor='#381d2a' />
+          </Link>
+        )}
         {/* Language Dropdown */}
         <LangDrop />
         <SuiteComponent />

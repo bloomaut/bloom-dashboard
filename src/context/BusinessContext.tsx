@@ -10,6 +10,7 @@ import { update } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
 import { handleLogoBanner } from "@/utils/handleUploadBanner";
 import { useRouter } from "next/navigation";
+import { setDataSubdomains } from "@/store/features/subdomainsSlice";
 
 const initialFormData: UserBusiness = {
   name: "",
@@ -26,6 +27,7 @@ const initialFormData: UserBusiness = {
     address: "",
   },
   phone: "",
+  subdomain: "",
 };
 
 interface BusinessContextType {
@@ -86,6 +88,8 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
   const fieldsToValidate = ["name", "lastname", "business_name", "business_category", "business_description", "logo"];
   const errors = useFormValidator(formData, fieldsToValidate);
   const userData = useAppSelector(state => state.userData);
+  const subdomainsData = useAppSelector(state => state.subdomainsData);
+  const [alreadyHadSubdomain, setHadSubdomain] = useState<string | null | undefined>(null);
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict");
   const router = useRouter();
@@ -108,6 +112,13 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
   // Inicializar el form con los datos que llegan de la API o mostrarlo vacío
   useEffect(() => {
     setFormData(userData.name !== "" ? userData : initialFormData);
+    if (subdomainsData.subdomains.length > 0) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        subdomain: subdomainsData.subdomains[0].subdomain,
+      }));
+      setHadSubdomain(subdomainsData.subdomains[0].subdomain);
+    }
   }, [userData, clientId]);
 
   // Si el logo existe, agregarlo al FormData
@@ -170,6 +181,7 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
         website: formData.client.company_web,
         instagram: formData.client.instagram,
         phone: formData.phone,
+        subdomain: formData.subdomain,
         address: formData.client.address,
         logo: formData.client.logo,
         palette: formData.client.palette,
@@ -195,8 +207,13 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
               address: dataToSend.address,
             },
             phone: dataToSend.phone,
+            subdomain: dataToSend.subdomain,
           }),
         );
+        setHadSubdomain(dataToSend.subdomain);
+        if (response.result.landingEngine) {
+          dispatch(setDataSubdomains([response.result.landingEngine])); // landingEngine = subdomain
+        }
         router.push(`/${locale}/my-business`);
       } else {
         notifyError(dict("toast.error_edit"));
@@ -225,6 +242,16 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
         [name]: value,
       };
     });
+    if (name === "business_name" && !alreadyHadSubdomain) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        subdomain: value
+          .trim()
+          .toLowerCase()
+          .replaceAll(" ", "-")
+          .replace(/[^\w\s]/gi, ""),
+      }));
+    }
   };
 
   return (
