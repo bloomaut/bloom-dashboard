@@ -292,7 +292,7 @@
         "select_type": "Seleccionar tipo",
         "products": "Productos",
         "services": "Servicios",
-        "store": "Tienda"
+        "store": "Tienda y productos"
       },
       "popup_excel": {
         "massive_upload_title": "Carga masiva desde Excel",

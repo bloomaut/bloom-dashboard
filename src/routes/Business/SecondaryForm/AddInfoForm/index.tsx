@@ -31,6 +31,26 @@ const AddInfoForm = () => {
         />
       </div>
       <div className={styles.input}>
+        <label>Facebook</label>
+        <Input
+          textHolder={"JohnDoe"}
+          type='text'
+          name='business_facebook'
+          value={formData.client.facebook || ""}
+          handleChange={handleChange}
+        />
+      </div>
+      <div className={styles.input}>
+        <label>TikTok</label>
+        <Input
+          textHolder={"@JohnDoe"}
+          type='text'
+          name='business_tiktok'
+          value={formData.client.tiktok || ""}
+          handleChange={handleChange}
+        />
+      </div>
+      <div className={styles.input}>
         <label>{dict("data.phone")}</label>
         <Input
           textHolder={"+54 9 11 15...."}

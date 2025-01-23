@@ -23,6 +23,8 @@ export const userInitialState: UserBusiness = {
     active: true,
     banner: null,
     instagram: null,
+    facebook: null,
+    tiktok: null,
     address: "",
     description: null,
     category: null,
