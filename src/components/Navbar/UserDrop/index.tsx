@@ -16,10 +16,10 @@ const UserDrop = () => {
     localStorage.removeItem("client_id");
     setTimeout(() => {
       if (window) {
-        window.location.href = '/api/auth/logout';
+        window.location.href = "/api/auth/logout";
       }
-    }, 0)
-  }
+    }, 0);
+  };
 
   return (
     <div className={styles.container} ref={dropdownRef}>
