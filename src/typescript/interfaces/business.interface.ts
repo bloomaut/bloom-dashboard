@@ -33,6 +33,8 @@ export interface Client {
   logo: string;
   active?: boolean;
   instagram: Nullable<string>;
+  facebook: Nullable<string>;
+  tiktok: Nullable<string>;
   description: Nullable<string>;
   category: Nullable<string>;
   palette: ColorPalette;
