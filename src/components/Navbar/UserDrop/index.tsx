@@ -12,6 +12,15 @@ const UserDrop = () => {
   const { dropdownRef } = useCloseDropdown(setOpen);
   const { user } = useUser();
 
+  const handleLogout = () => {
+    localStorage.removeItem("client_id");
+    setTimeout(() => {
+      if (window) {
+        window.location.href = '/api/auth/logout';
+      }
+    }, 0)
+  }
+
   return (
     <div className={styles.container} ref={dropdownRef}>
       <Icon name='user' width={25} height={25} strokeWidth={0.1} fillColor='#381d2a' viewBox='0 0 27 25' />
@@ -22,7 +31,7 @@ const UserDrop = () => {
       <div className={`${styles.list_container} ${!open && styles.list_hidden}`}>
         <ul>
           <li>
-            <a href='/api/auth/logout'>{dict("logout")}</a>
+            <a onClick={handleLogout}>{dict("logout")}</a>
           </li>
         </ul>
       </div>
