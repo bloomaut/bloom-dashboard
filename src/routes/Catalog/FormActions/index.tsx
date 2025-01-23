@@ -216,9 +216,9 @@ const FormActions = ({
                 <option value='' selected>
                   {dict("catalog.form_actions.select_type")}
                 </option>
-                <option value={schema[0].category}>{dict("catalog.form_actions.products")}</option>
-                <option value={schema[1].category}>{dict("catalog.form_actions.services")}</option>
+                {/* <option value={schema[0].category}>{dict("catalog.form_actions.products")}</option> */}
                 <option value={schema[2].category}>{dict("catalog.form_actions.store")}</option>
+                <option value={schema[1].category}>{dict("catalog.form_actions.services")}</option>
               </select>
             </div>
             <Input
