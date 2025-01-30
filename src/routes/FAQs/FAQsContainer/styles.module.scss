@@ -1,0 +1,30 @@
+.spinner_container {
+    @include width-height(100%, auto);
+    @include flex(column, center, center);
+    margin-top: 40px;
+}
+
+.subtitle {
+    @include fontSize-fontWeight(16px, 400);
+    color: $lightGrey;
+}
+  
+.table_header {
+    display: flex;
+    justify-content: start;
+
+    p {
+        font-size: 18px;
+        color: $lightGrey;
+        width: 50%;
+    }
+}
+
+.hr {
+    background-color: $lightGrey;
+    border-color: $lightGrey;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    border-top: none;
+    border-left: none;
+}
