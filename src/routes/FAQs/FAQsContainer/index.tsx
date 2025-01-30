@@ -1,11 +1,25 @@
+import { useState } from "react";
 import { useFAQContext } from "@/context/FAQContext";
 import styles from "./styles.module.scss";
 import Title from "@/components/Title";
 import LoadingSpinner from "@/components/Loading";
 import FAQForm from "../FAQForm";
+import Icon from "@/components/Icon";
 
 const FAQsContainer = () => {
+  const [showExtraFAQ, setShowExtraFAQ] = useState<number>();
   const { faqs, setFaqs, loading } = useFAQContext();
+
+  const handleAddFAQ = () => {
+    setFaqs((prev) => [
+      ...prev,
+      {
+        _id: "new-faq",
+        question: "",
+        answer: "",
+      },
+  ]);
+  }
 
   return (
     <div>
@@ -27,8 +41,17 @@ const FAQsContainer = () => {
         <>
           <hr className={styles.hr}></hr>
           {faqs.map((f, i) => (
-            <FAQForm _id={f._id} faq={f} key={i}></FAQForm>
+            <>
+              <FAQForm _id={f._id} faq={f} key={i}></FAQForm>
+              <hr className={`${styles.hr} ${styles.hr2}`}></hr>
+            </>
           ))}
+          <div className={styles.btn_container}>
+            <button className={styles.btn_add} onClick={handleAddFAQ}>
+              <Icon name='add' viewBox='0 0 20 22' width={20} height={20} strokeWidth={1.5} strokeColor='#1D1D1D' />
+              Add more
+            </button>
+          </div>
         </>
       )}
     </div>
