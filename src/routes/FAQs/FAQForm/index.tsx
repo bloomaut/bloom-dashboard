@@ -25,7 +25,7 @@ const FAQForm = ({ faq }: Props) => {
   const { setFaqs } = useFAQContext();
 
   useEffect(() => {
-    console.log(faq)
+    console.log(faq);
     setFormData({
       question: faq.question,
       answer: faq.answer,
@@ -48,21 +48,17 @@ const FAQForm = ({ faq }: Props) => {
       const data = await post("small-faq", formData, ENV.BOX);
       if (data.data.statusCode === 201) {
         const newFaq = data.data.result.smallFAQ;
-        setFaqs((prev) =>
-          prev.map((f) =>
-            f.tempKey === faq.tempKey ? { ...faq, _id: newFaq._id } : f
-          )
-        );
+        setFaqs(prev => prev.map(f => (f.tempKey === faq.tempKey ? { ...faq, _id: newFaq._id } : f)));
       }
     } else {
       // UPDATE
       const data = await update("small-faq", formData, faq._id, ENV.BOX);
       if (data.statusCode === 200) {
         const faq = data.smallFAQ;
-        setFaqs((prev) =>
-          prev.map((f) =>
-            f.question === formData.question ? { ...faq, question: faq.question, answer: faq.answer } : f
-          )
+        setFaqs(prev =>
+          prev.map(f =>
+            f.question === formData.question ? { ...faq, question: faq.question, answer: faq.answer } : f,
+          ),
         );
       }
     }
@@ -72,13 +68,11 @@ const FAQForm = ({ faq }: Props) => {
 
   const handleDelete = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('_id', faq._id)
+    console.log("_id", faq._id);
     const del = confirm("Do you want to delete this FAQ?");
     if (del) {
       await remove(`/small-faq`, faq._id, ENV.BOX);
-      setFaqs((prev) =>
-        prev.filter((f) => f._id !== faq._id)
-      );
+      setFaqs(prev => prev.filter(f => f._id !== faq._id));
       notify("Successfully deleted FAQ");
     }
   };
@@ -100,13 +94,10 @@ const FAQForm = ({ faq }: Props) => {
           <textarea name='answer' value={formData.answer} onChange={handleChange} placeholder='Answer'></textarea>
         </div>
         <div>
-          <button
-            className={`${styles.btn_del} btn_delete_business`}
-            onClick={handleDelete}
-          >
+          <button className={`${styles.btn_del} btn_delete_business`} onClick={handleDelete}>
             <Icon name='delete' width={24} height={24} strokeColor='#7f7f7f' viewBox='0 0 23 26' />
           </button>
-          <Button title={"Save"} type="submit" loading={loading} />
+          <Button title={"Save"} type='submit' loading={loading} />
         </div>
       </form>
     </div>
