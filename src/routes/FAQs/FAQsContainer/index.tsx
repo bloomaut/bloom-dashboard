@@ -11,15 +11,16 @@ const FAQsContainer = () => {
   const { faqs, setFaqs, loading } = useFAQContext();
 
   const handleAddFAQ = () => {
-    setFaqs((prev) => [
+    setFaqs(prev => [
       ...prev,
       {
-        _id: "new-faq",
+        _id: "",
+        tempKey: Date.now().toString(),
         question: "",
         answer: "",
       },
-  ]);
-  }
+    ]);
+  };
 
   return (
     <div>
@@ -33,16 +34,16 @@ const FAQsContainer = () => {
         <p>Questions</p>
         <p>Answers</p>
       </div>
+      <hr className={styles.hr}></hr>
       {loading ? (
         <div className={styles.spinner_container}>
           <LoadingSpinner />
         </div>
       ) : (
         <>
-          <hr className={styles.hr}></hr>
           {faqs.map((f, i) => (
             <>
-              <FAQForm _id={f._id} faq={f} key={i}></FAQForm>
+              <FAQForm faq={f} key={f.tempKey || f._id}></FAQForm>
               <hr className={`${styles.hr} ${styles.hr2}`}></hr>
             </>
           ))}

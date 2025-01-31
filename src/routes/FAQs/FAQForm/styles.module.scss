@@ -35,6 +35,11 @@
             border-radius: 4px;
         }
     }
+    .btn_del {
+        cursor: pointer;
+        background: transparent;
+        border: none;
+    }
     .submit {
         padding: 8px 12px;
         background-color: $orange;
