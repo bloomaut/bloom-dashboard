@@ -2,6 +2,7 @@ import { PostDataSchema, PostDataItem, PostOnboarding } from "../interfaces/cata
 import { PostClient } from "../interfaces/clients.interface";
 import { PostPowerAppDesign, PostPowerAppPre } from "../interfaces/designs.interface";
 import { PostFlake } from "../interfaces/flakes.interface";
+import { PostFAQ } from "../interfaces/faq.interface";
 
 export type POST =
   | PostClient
@@ -11,4 +12,5 @@ export type POST =
   | PostOnboarding
   | PostPowerAppPre
   | PostPowerAppDesign
+  | PostFAQ
   | string;

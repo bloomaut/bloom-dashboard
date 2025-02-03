@@ -62,6 +62,11 @@ const Sidebar = () => {
       icon: <Icon name='design_2' width={30} viewBox='0 -5 35 35' />,
       path: "/designs",
     },
+    {
+      title: `FAQs`,
+      icon: <Icon name='faqs' width={30} viewBox='0 -5 35 35' />,
+      path: "/faqs",
+    },
   ];
 
   const getUserData = async () => {
