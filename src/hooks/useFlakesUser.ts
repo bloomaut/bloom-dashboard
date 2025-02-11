@@ -8,16 +8,18 @@ export const useFlakeData = () => {
   const [loading, setLoading] = useState(true);
   const { clientId } = useAppSelector(state => state.ricardosData);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await get("small/flakes/user");
-      if (response.statusCode === 200) {
-        setFlakes(response.result.powerapps);
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    const response = await get("small/flakes/user");
+    if (response.statusCode === 200) {
+      setFlakes(response.result.powerapps);
+      setLoading(false);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    setTimeout(() => { // Esperamos un poco para que primero responda el /me
+      fetchData();
+    }, 1000);
   }, [clientId]);
 
   return { flakes, loading };

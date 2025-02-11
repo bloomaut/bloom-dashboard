@@ -7,10 +7,8 @@ import Icon from "@/components/Icon";
 import Link from "next/link";
 import Setup from "./Setup";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setCatalogComplete, setUserData } from "@/store/features/userSlice";
+import { setUserData } from "@/store/features/userSlice";
 import { get } from "@/services/fetch";
-import { DatasetProps } from "@/typescript/interfaces/catalog.interface";
-import { ENV } from "@/typescript/types/api";
 import { setDataRicardos } from "@/store/features/ricardoSlice";
 import { setDataSubdomains } from "@/store/features/subdomainsSlice";
 
@@ -69,43 +67,29 @@ const Sidebar = () => {
     },
   ];
 
-  const getUserData = async () => {
-    const res = await get("user/me");
-    if (res.statusCode === 200) {
-      dispatch(setUserData(res.result.user));
+  const getData = async () => {
+    // GET USER INFO
+    const resUser = await get("user/me");
+    if (resUser.statusCode === 200) {
+      dispatch(setUserData(resUser.result.user));
     }
-    const data = await get("datasets/small/list", ENV.BOX);
-    if (data.statusCode === 200) {
-      const isComplete = data.data.datasets.some((obj: DatasetProps) => obj.totalDataItems >= 1);
-      dispatch(setCatalogComplete(isComplete));
-    }
-  };
 
-  const getDataFromRicardos = async () => {
-    const res = await get("client-permissions/role");
-    if (res.statusCode === 200) {
-      dispatch(setDataRicardos(res.result.clients.ricardos));
+    // GET PERMISSIONS TO RICHARDS
+    const resRichards = await get("client-permissions/role");
+    if (resRichards.statusCode === 200) {
+      dispatch(setDataRicardos(resRichards.result.clients.ricardos));
     }
-  };
 
-  const getSubdomains = async () => {
-    const res = await get("subdomains");
-    if (res.statusCode === 200) {
-      dispatch(setDataSubdomains(res.result.subdomains));
+    // GET SUBDOMAINS
+    const resSubdomains = await get("subdomains");
+    if (resSubdomains.statusCode === 200) {
+      dispatch(setDataSubdomains(resSubdomains.result.subdomains));
     }
   };
 
   useEffect(() => {
-    getUserData();
+    getData();
   }, [clientId]);
-
-  useEffect(() => {
-    getDataFromRicardos();
-  }, []);
-
-  useEffect(() => {
-    getSubdomains();
-  }, []);
 
   return (
     <div className={`${styles.container} ${!isOpen && styles.container_closed}`}>
