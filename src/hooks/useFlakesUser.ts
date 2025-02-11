@@ -17,7 +17,8 @@ export const useFlakeData = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => { // Esperamos un poco para que primero responda el /me
+    setTimeout(() => {
+      // Esperamos un poco para que primero responda el /me
       fetchData();
     }, 1000);
   }, [clientId]);
