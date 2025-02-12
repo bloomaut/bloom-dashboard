@@ -399,7 +399,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                     className={styles["custom-datepicker"]}
                     showTimeSelect
                     showTimeSelectOnly
-                    timeIntervals={15}
+                    timeIntervals={30}
                     timeCaption='Time'
                     dateFormat='HH:mm:ss'
                     placeholderText={dict("catalog.services.from")}
@@ -418,7 +418,7 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
                     className={styles["custom-datepicker"]}
                     showTimeSelect
                     showTimeSelectOnly
-                    timeIntervals={15}
+                    timeIntervals={30}
                     timeCaption='Time'
                     dateFormat='HH:mm:ss'
                     placeholderText={dict("catalog.services.to")}

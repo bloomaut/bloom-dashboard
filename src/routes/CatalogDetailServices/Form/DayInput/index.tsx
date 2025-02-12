@@ -110,7 +110,7 @@ const DayInput = ({ formData, handleChange, errors, checkValidation, action }: D
                     className={styles["custom-datepicker"]}
                     showTimeSelect
                     showTimeSelectOnly
-                    timeIntervals={15}
+                    timeIntervals={30}
                     timeCaption='Time'
                     dateFormat='HH:mm:ss'
                     placeholderText={dict("services.from")}
@@ -124,7 +124,7 @@ const DayInput = ({ formData, handleChange, errors, checkValidation, action }: D
                     className={styles["custom-datepicker"]}
                     showTimeSelect
                     showTimeSelectOnly
-                    timeIntervals={15}
+                    timeIntervals={30}
                     timeCaption='Time'
                     dateFormat='HH:mm:ss'
                     placeholderText={dict("services.to")}
