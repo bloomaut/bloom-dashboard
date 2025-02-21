@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import PopupConfirm from "@/components/PopupConfirm";
 import { SetStateAction, useEffect, useState } from "react";
-import { post, remove, update } from "@/services/fetch";
+import { get, post, remove, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
@@ -95,6 +95,10 @@ const FormActions = ({
       setFile(null);
     }
   }, [name, description, image, visibility, dataschema]);
+
+  /* useEffect(() => {
+
+  }, []); */
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
