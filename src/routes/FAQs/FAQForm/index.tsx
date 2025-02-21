@@ -54,7 +54,7 @@ const FAQForm = ({ faq }: Props) => {
       // UPDATE
       const data = await update("small-faq", formData, faq._id, ENV.BOX);
       if (data.statusCode === 200) {
-        const faq = data.smallFAQ;
+        const faq = data.result.smallFAQ;
         setFaqs(prev =>
           prev.map(f =>
             f.question === formData.question ? { ...faq, question: faq.question, answer: faq.answer } : f,
