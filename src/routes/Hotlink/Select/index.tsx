@@ -34,7 +34,7 @@ const Select = () => {
             <select name='design' id='design' onChange={handleDesignChange} defaultValue={selectedFlakeId}>
               {flakes.map(flake => (
                 <option key={flake._id} value={flake._id}>
-                  {flake.skinx.title}
+                  {flake.skinx.title} - {flake.title}
                 </option>
               ))}
             </select>

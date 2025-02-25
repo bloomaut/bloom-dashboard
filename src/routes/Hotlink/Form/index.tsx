@@ -161,13 +161,19 @@ const Form = () => {
 
     if (link) {
       navigator.clipboard.writeText(link).then(function () {
-        console.log("SUCCESS"); // TODOKEV: Reemplazar por alert component
+        notify("Link de difusión copiado en el portapapeles.");
       });
       setLoadingButton(false);
     } else {
-      console.log("ERROR");
-      setLoadingButton(false); // TODOKEV: Idem
+      notifyError("Esta PWA no posee link de difusión.");
+      setLoadingButton(false);
     }
+  };
+
+  const handleHotlinkPath = () => {
+    navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/h/${selectedFlakeId}`).then(function () {
+      notify("Hotlink path copiado en el portapapeles.");
+    });
   };
 
   useEffect(() => {
@@ -177,9 +183,7 @@ const Form = () => {
         handleCopyClick();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
@@ -248,6 +252,7 @@ const Form = () => {
               loading={loadingButton}
               onclick={handleCopyClick}
             />
+            <Button title={"Get hotlink path"} styleName='btn_outline' onclick={handleHotlinkPath} />
           </div>
         </form>
       ) : null}
