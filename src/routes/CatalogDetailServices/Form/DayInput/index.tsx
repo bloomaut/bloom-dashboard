@@ -47,14 +47,10 @@ const DayInput = ({ formData, handleChange, errors, checkValidation, action }: D
 
   const initializeActiveDays = useCallback(() => {
     return days.reduce<{ [key: string]: boolean }>((acc, day) => {
-      if (day.label.toLowerCase() === "sunday") {
-        acc[day.label.toLowerCase()] = false;
+      if (action === "post") {
+        acc[day.label.toLowerCase()] = true;
       } else {
-        if (action === "post") {
-          acc[day.label.toLowerCase()] = true;
-        } else {
-          acc[day.label.toLowerCase()] = Boolean(formData.data[day.from] || formData.data[day.to]);
-        }
+        acc[day.label.toLowerCase()] = Boolean(formData.data[day.from] || formData.data[day.to]);
       }
       return acc;
     }, {});
