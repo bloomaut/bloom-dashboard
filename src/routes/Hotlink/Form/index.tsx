@@ -161,20 +161,20 @@ const Form = () => {
 
     if (link) {
       navigator.clipboard.writeText(link).then(function () {
-        notify('Link de difusión copiado en el portapapeles.');
+        notify("Link de difusión copiado en el portapapeles.");
       });
       setLoadingButton(false);
     } else {
-      notifyError('Esta PWA no posee link de difusión.');
+      notifyError("Esta PWA no posee link de difusión.");
       setLoadingButton(false);
     }
   };
 
   const handleHotlinkPath = () => {
     navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_ENGINE_URL}/h/${selectedFlakeId}`).then(function () {
-      notify('Hotlink path copiado en el portapapeles.');
+      notify("Hotlink path copiado en el portapapeles.");
     });
-  }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -252,11 +252,7 @@ const Form = () => {
               loading={loadingButton}
               onclick={handleCopyClick}
             />
-            <Button
-              title={'Get hotlink path'}
-              styleName='btn_outline'
-              onclick={handleHotlinkPath}
-            />
+            <Button title={"Get hotlink path"} styleName='btn_outline' onclick={handleHotlinkPath} />
           </div>
         </form>
       ) : null}
