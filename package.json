@@ -7,12 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint \"*/**/*.{js,ts,tsx}\" --quiet --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@auth0/auth0-react": "2.2.4",
     "@auth0/nextjs-auth0": "3.5.0",
     "@emotion/react": "^11.11.4",
+    "@prisma/client": "6.8.2",
     "@reduxjs/toolkit": "2.2.1",
     "auth0-lock": "12.4.0",
     "axios": "1.6.7",
@@ -24,6 +26,7 @@
     "next-intl": "3.9.1",
     "open-graph-scraper": "6.5.0",
     "open-graph-scraper-lite": "^2.0.0",
+    "prisma": "^6.8.2",
     "react": "^18.2.0",
     "react-awesome-reveal": "^4.2.8",
     "react-datepicker": "^7.3.0",

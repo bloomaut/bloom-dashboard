@@ -128,6 +128,51 @@ export const postExcel = async (file: File) => {
   }
 };
 
+export const postQuest = async () => {
+  const json = {
+    userId: "userIdtest2",
+    answers: [{ q: "1", a: "yes" }],
+    completed: false,
+  };
+  try {
+    const response = await fetch(`/api/quest`, {
+      method: "POST",
+      body: JSON.stringify(json),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
+export const getQuest = async () => {
+  try {
+    const response = await fetch(`/api/quest/userIdtest`, {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Request failed:", error);
+    throw error;
+  }
+};
+
 export const putFile = async (url: string, file: File, api?: EnvironmentApi) => {
   try {
     const formData = new FormData();

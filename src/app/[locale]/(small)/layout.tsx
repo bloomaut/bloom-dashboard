@@ -1,3 +1,4 @@
+"use client";
 import "@/styles/globals.scss";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
@@ -8,8 +9,11 @@ import { Slide } from "react-toastify";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import SideTrack from "@/components/SideTrack";
+import { useState } from "react";
+import Questionaire from "@/components/Questionaire/Questionaire";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
+  const [showQuestions, setShowQuestions] = useState(false);
   return (
     <div className={styles.container}>
       <Navbar />
@@ -26,13 +30,21 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
         pauseOnHover
         transition={Slide}
       />
-      <div className={styles.inner_container}>
-        <Sidebar />
-        <SideTrack />
-        <div className={styles.children_container} id='children_container'>
-          {children}
+      {showQuestions ? (
+        <div className={styles.inner_container}>
+          <div className={styles.children_container} id='children_container'>
+            <Questionaire />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={styles.inner_container}>
+          <Sidebar />
+          <SideTrack />
+          <div className={styles.children_container} id='children_container'>
+            {children}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
