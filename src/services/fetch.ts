@@ -128,16 +128,11 @@ export const postExcel = async (file: File) => {
   }
 };
 
-export const postQuest = async () => {
-  const json = {
-    userId: "userIdtest2",
-    answers: [{ q: "1", a: "yes" }],
-    completed: false,
-  };
+export const postQuest = async (questData: { userId: string; answers: string[]; completed: boolean }) => {
   try {
     const response = await fetch(`/api/quest`, {
       method: "POST",
-      body: JSON.stringify(json),
+      body: JSON.stringify(questData),
     });
 
     if (!response.ok) {
@@ -155,9 +150,9 @@ export const postQuest = async () => {
   }
 };
 
-export const getQuest = async () => {
+export const getQuest = async (userId: number) => {
   try {
-    const response = await fetch(`/api/quest/userIdtest`, {
+    const response = await fetch(`/api/quest/${userId}`, {
       method: "GET",
     });
 
