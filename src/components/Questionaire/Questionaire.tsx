@@ -1,19 +1,21 @@
-import { get, getQuest, postExcel, postQuest } from "@/services/fetch";
+import { get, getQuest, postQuest } from "@/services/fetch";
 import { setDataRicardos } from "@/store/features/ricardoSlice";
 import { setDataSubdomains } from "@/store/features/subdomainsSlice";
 import { setUserData } from "@/store/features/userSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setQuestData, updateQuestData } from "@/store/questSlice";
-import React, { useEffect } from "react";
+import { setQuestData, setQuestTerms, updateQuestData } from "@/store/questSlice";
+import React, { useEffect, useState } from "react";
+import Terms from "./Terms";
+import Buttons from "./Buttons";
 
 function Questionaire() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.userData);
   const questData = useAppSelector(state => state.questData);
-  const handleCreate = async () => {
-    const data = await postQuest(questData);
-  };
+  const [currentIndex, setCurrentIndex] = useState(1);
+
   const { clientId } = useAppSelector(state => state.ricardosData);
+
   const getData = async () => {
     const resUser = await get("user/me");
     if (resUser.statusCode === 200) {
@@ -35,12 +37,13 @@ function Questionaire() {
 
   useEffect(() => {
     const handleGet = async () => {
+      if (user.id === null || !user.id) return;
       console.log(user);
 
-      const data = await getQuest(user.id!);
+      const data = await getQuest(user.id);
       console.log(data);
       if (data.message === "No user found") {
-        const newData = { userId: String(user.id), answers: ["", ""], completed: false };
+        const newData = { userId: String(user.id), answers: ["", ""], terms: false, completed: false };
         postQuest(newData);
         dispatch(setQuestData(newData));
       } else {
@@ -56,18 +59,62 @@ function Questionaire() {
     dispatch(updateQuestData({ index, data: e?.target?.value }));
   };
 
+  const handleTerms = () => {
+    console.log("terms");
+    dispatch(setQuestTerms(true));
+  };
+
+  const handleUpdate = () => {
+    postQuest({ userId: String(user.id), answers: ["1", "2", "3", "4", "5"], terms: false, completed: false });
+  };
+
+  const handleIndex = (operation: string) => {
+    if (operation === "add") {
+      if (currentIndex === questData.answers.length - 1) return;
+      else {
+        setCurrentIndex(currentIndex + 1);
+      }
+    }
+    if (operation === "sub") {
+      if (currentIndex === 0) return;
+      else {
+        setCurrentIndex(currentIndex - 1);
+      }
+    }
+  };
+
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", gap: "3rem", justifyContent: "center", alignItems: "center" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "3rem",
+        width: "45%",
+        height: "100%",
+      }}
     >
-      <div>Questionaire</div>
-      {questData.answers &&
-        questData.answers.map((elem, index) => {
-          return <input type='text' onChange={e => handleChange(e, index)} />;
-        })}
+      {questData.terms ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "3rem",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {<input type='text' onChange={e => handleChange(e, currentIndex)} value={questData.answers[currentIndex]} />}
 
-      <button onClick={handleCreate}>User Create</button>
-      <button onClick={() => console.log(questData, user)}>Info</button>
+          <Buttons handleIndex={handleIndex} />
+        </div>
+      ) : (
+        <Terms handleTerms={handleTerms} />
+      )}
+      <div style={{ position: "absolute", left: 0, top: "10%", display: "flex", flexDirection: "column", gap: "2rem" }}>
+        <button onClick={handleUpdate}>User Update</button>
+        <button onClick={() => dispatch(setQuestTerms(!questData.terms))}>Terms</button>
+        <button onClick={() => console.log(currentIndex)}>Info</button>
+      </div>
     </div>
   );
 }

@@ -128,7 +128,12 @@ export const postExcel = async (file: File) => {
   }
 };
 
-export const postQuest = async (questData: { userId: string; answers: string[]; completed: boolean }) => {
+export const postQuest = async (questData: {
+  userId: string;
+  answers: string[];
+  terms: boolean;
+  completed: boolean;
+}) => {
   try {
     const response = await fetch(`/api/quest`, {
       method: "POST",

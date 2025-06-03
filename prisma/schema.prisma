@@ -17,5 +17,6 @@ model Response {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String
   answers   Json[]
+  terms     Boolean
   completed Boolean
 }

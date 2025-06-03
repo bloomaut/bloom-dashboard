@@ -13,7 +13,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req) {
   }
 
   try {
-    const { userId, answers, completed } = body;
+    const { userId, answers, terms, completed } = body;
 
     const user = await prisma.response.findFirst({
       where: {
@@ -28,11 +28,21 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req) {
         data: {
           userId,
           answers,
+          terms,
           completed,
         },
       });
     } else {
-      newResponse = "User already exists";
+      newResponse = await prisma.response.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          answers,
+          terms,
+          completed,
+        },
+      });
     }
 
     return NextResponse.json(newResponse);
