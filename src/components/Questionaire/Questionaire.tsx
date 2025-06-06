@@ -6,9 +6,9 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setQuestData, setQuestTerms, updateQuestData } from "@/store/questSlice";
 import React, { useEffect, useState } from "react";
 import Terms from "./Terms";
-import Buttons from "./Buttons";
 import QuestForm from "./QuestForm";
 import Fin from "./Fin";
+import Proposal from "./Proposal";
 
 export interface QuestData {
   userId: string;
@@ -132,6 +132,7 @@ function Questionaire() {
       )}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin />}
+      {tab === "prop" && <Proposal />}
       <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
       >
@@ -139,6 +140,7 @@ function Questionaire() {
         <button onClick={() => setTab("terms")}>Terms</button>
         <button onClick={() => setTab("quest")}>Quest</button>
         <button onClick={() => setTab("fin")}>Fin</button>
+        <button onClick={() => setTab("prop")}>Propuesta</button>
         <button onClick={() => console.log(currentIndex)}>Info</button>
       </div>
     </div>
