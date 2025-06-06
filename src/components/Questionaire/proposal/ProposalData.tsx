@@ -12,11 +12,7 @@ function ProposalData() {
           </div>
           <span style={styles.pdfText}>propuesta-small.pdf</span>
         </div>
-        <button
-          style={styles.downloadButton}
-          onMouseOver={e => (e.target.style.backgroundColor = "#f3f4f6")}
-          onMouseOut={e => (e.target.style.backgroundColor = "white")}
-        >
+        <button style={styles.downloadButton}>
           <Download size={16} />
           <span>Descargar</span>
         </button>

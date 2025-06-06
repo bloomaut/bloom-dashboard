@@ -9,7 +9,7 @@ export const styles = {
     margin: "0 auto",
   },
   header: {
-    textAlign: "center",
+    textAlign: "center" as const,
     marginBottom: "32px",
   },
   title: {
@@ -80,7 +80,7 @@ export const styles = {
     padding: "32px",
   },
   proposalHeader: {
-    textAlign: "center",
+    textAlign: "center" as const,
     marginBottom: "32px",
   },
   proposalTitle: {
@@ -124,7 +124,7 @@ export const styles = {
   investmentSection: {
     borderTop: "1px solid #e5e7eb",
     paddingTop: "24px",
-    textAlign: "center",
+    textAlign: "center" as const,
   },
   investmentAmount: {
     fontSize: "30px",
@@ -138,7 +138,7 @@ export const styles = {
   },
   sidebar: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as const,
     gap: "16px",
   },
   sidebarCard: {
@@ -198,7 +198,7 @@ export const styles = {
     backgroundColor: "#eff6ff",
     borderRadius: "8px",
     padding: "16px",
-    textAlign: "center",
+    textAlign: "center" as const,
   },
   helpIcon: {
     width: "32px",
