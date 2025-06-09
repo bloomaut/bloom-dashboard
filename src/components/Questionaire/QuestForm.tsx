@@ -4,6 +4,7 @@ import { QuestData } from "./Questionaire";
 import GradientBar from "./QuestBar";
 import Icon from "../Icon";
 import Image from "next/image";
+import { questions } from "./questions";
 
 interface Props {
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => void;
@@ -28,8 +29,8 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData }: Props
       <GradientBar value={currentIndex} />
       <div style={{ width: "100%", display: "flex", flexDirection: "row", height: "100%" }}>
         <div style={{ width: "65%", height: "100%" }}>
-          <div style={{ fontFamily: "Inter, sans-serif", fontSize: "22px", fontWeight: 600 }}>
-            ¿Cuáles son tus principales objetivos de negocio para los próximos 6 meses?
+          <div style={{ fontFamily: "Inter, sans-serif", fontSize: "20px", fontWeight: 600 }}>
+            {questions[currentIndex]}
           </div>
           <div
             style={{ backgroundColor: "#D9D9D9", height: "88%", borderRadius: 15, marginTop: "3rem", width: "90%" }}

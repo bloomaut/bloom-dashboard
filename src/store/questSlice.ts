@@ -1,6 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
+function extractAnswers(questData: any) {
+  const answers: string[] = [];
+
+  questData.forEach((block: any) => {
+    block.questions.forEach((questionObj: any) => {
+      answers.push(questionObj.answer);
+    });
+  });
+
+  return answers;
+}
+
 export const initialState = {
   userId: "",
   answers: ["", "", "", "", "", "", "", "", "", ""],
@@ -13,8 +25,9 @@ export const questSlice = createSlice({
   initialState,
   reducers: {
     setQuestData: (state, action) => {
+      console.log(action.payload);
       state.userId = action.payload.userId;
-      state.answers = action.payload.answers;
+      state.answers = extractAnswers(action.payload.answers);
       state.completed = action.payload.completed;
     },
     setQuestTerms: (state, action) => {

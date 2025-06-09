@@ -130,7 +130,10 @@ export const postExcel = async (file: File) => {
 
 export const postQuest = async (questData: {
   userId: string;
-  answers: string[];
+  answers: {
+    block: string;
+    questions: { question: string; id: string; answer: string }[];
+  }[];
   terms: boolean;
   completed: boolean;
 }) => {

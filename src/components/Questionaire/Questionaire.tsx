@@ -9,6 +9,7 @@ import Terms from "./Terms";
 import QuestForm from "./QuestForm";
 import Fin from "./Fin";
 import Proposal from "./Proposal";
+import { answers, generatePayload, questions } from "./questions";
 
 export interface QuestData {
   userId: string;
@@ -48,14 +49,13 @@ function Questionaire() {
 
   useEffect(() => {
     const handleGet = async () => {
-      if (user.id === null || !user.id) return;
       console.log(user);
-
+      if (user.id === null || !user.id) return;
       const data = await getQuest(user.id);
-      console.log(data);
       if (data.message === "No user found") {
-        const newData = { userId: String(user.id), answers: ["", ""], terms: false, completed: false };
-        postQuest(newData);
+        console.log("set");
+        const newData = { userId: String(user.id), answers: answers, terms: false, completed: false };
+        //postQuest(newData);
         dispatch(setQuestData(newData));
       } else {
         dispatch(setQuestData(data));
@@ -77,12 +77,21 @@ function Questionaire() {
   };
 
   const handleUpdate = () => {
+    const data = generatePayload(questData);
     postQuest({
       userId: String(user.id),
-      answers: questData.answers,
+      answers: data,
       terms: questData.terms,
       completed: questData.completed,
     });
+    dispatch(
+      setQuestData({
+        userId: String(user.id),
+        answers: data,
+        terms: questData.terms,
+        completed: questData.completed,
+      }),
+    );
   };
 
   const handleIndex = (operation: string) => {
@@ -133,7 +142,7 @@ function Questionaire() {
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin />}
       {tab === "prop" && <Proposal />}
-      <div
+      {/* <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
       >
         <button onClick={handleUpdate}>User Update</button>
@@ -141,8 +150,8 @@ function Questionaire() {
         <button onClick={() => setTab("quest")}>Quest</button>
         <button onClick={() => setTab("fin")}>Fin</button>
         <button onClick={() => setTab("prop")}>Propuesta</button>
-        <button onClick={() => console.log(currentIndex)}>Info</button>
-      </div>
+        <button onClick={() => console.log(questData)}>Info</button>
+      </div> */}
     </div>
   );
 }
