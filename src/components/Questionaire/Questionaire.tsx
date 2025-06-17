@@ -73,6 +73,7 @@ function Questionaire() {
 
   const handleTerms = () => {
     console.log("terms");
+    setTab("quest");
     dispatch(setQuestTerms(true));
   };
 
@@ -136,13 +137,13 @@ function Questionaire() {
           handleChange={handleChange}
           handleIndex={handleIndex}
           questData={questData}
-          currentIndex={currentIndex}
+          currentIndex={currentIndex * 4}
         />
       )}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin />}
       {tab === "prop" && <Proposal />}
-      {/* <div
+      <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
       >
         <button onClick={handleUpdate}>User Update</button>
@@ -151,7 +152,7 @@ function Questionaire() {
         <button onClick={() => setTab("fin")}>Fin</button>
         <button onClick={() => setTab("prop")}>Propuesta</button>
         <button onClick={() => console.log(questData)}>Info</button>
-      </div> */}
+      </div>
     </div>
   );
 }
