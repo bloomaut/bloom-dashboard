@@ -96,6 +96,9 @@ function Questionaire() {
   };
 
   const handleIndex = (operation: string) => {
+    if (currentIndex === 104) {
+      setTab("fin");
+    }
     if (operation === "add") {
       if (currentIndex === questData.answers.length - 1) return;
       else {
@@ -137,7 +140,7 @@ function Questionaire() {
           handleChange={handleChange}
           handleIndex={handleIndex}
           questData={questData}
-          currentIndex={currentIndex * 4}
+          currentIndex={currentIndex}
         />
       )}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}

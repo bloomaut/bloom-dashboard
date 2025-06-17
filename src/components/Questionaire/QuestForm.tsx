@@ -108,7 +108,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData }: Props
         marginTop: "1rem",
       }}
     >
-      <GradientBar value={currentIndex} />
+      <GradientBar value={currentIndex * 4} />
       <div style={{ width: "100%", display: "flex", flexDirection: "row", height: "100%" }}>
         <div style={{ width: "65%", height: "100%" }}>
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: "20px", fontWeight: 600 }}>
