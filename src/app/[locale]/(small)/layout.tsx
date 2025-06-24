@@ -13,7 +13,7 @@ import { useState } from "react";
 import Questionaire from "@/components/Questionaire/Questionaire";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
-  const [showQuestions, setShowQuestions] = useState(true);
+  const [showQuestions, setShowQuestions] = useState(false);
   return (
     <div className={styles.container}>
       <Navbar />
