@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+//import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./styles.module.scss";
@@ -14,7 +14,7 @@ const Login = () => {
 
   return (
     <section>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className={styles.login_container}>
         <div className={styles.column_one}>
           <div className={styles.bar}></div>
