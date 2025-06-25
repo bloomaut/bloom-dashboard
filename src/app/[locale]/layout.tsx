@@ -6,6 +6,7 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Providers } from "@/store/provider";
 import { notFound } from "next/navigation";
 import { Barlow } from "next/font/google";
+import "../global.css";
 
 const barlow = Barlow({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
