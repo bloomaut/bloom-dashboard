@@ -3,10 +3,8 @@
 import { useState } from "react";
 import { InventorySetup } from "@/components/v0Components/InventorySetup";
 import { InventoryDashboard } from "@/components/v0Components/InventoryDashboard";
-import { Sidebar } from "@/components/v0Components/Sidebar";
 
 export default function InventoryPage() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [hasProducts, setHasProducts] = useState(false);
 
   const handleFirstProductAdded = () => {

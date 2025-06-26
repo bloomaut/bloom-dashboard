@@ -19,7 +19,7 @@ export function SectionBlocked({ title, description }: SectionBlockedProps) {
 
       {/* Main Content */}
       <main className='flex-1 overflow-auto p-6 flex items-center justify-center'>
-        <div className='max-w-sm mx-auto w-full'>
+        <div className='mx-auto w-full'>
           <TutorialStepper />
         </div>
       </main>

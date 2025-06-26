@@ -146,7 +146,7 @@ export function InventoryDashboard() {
 
       {/* Main Content */}
       <main className='flex-1 overflow-auto p-6'>
-        <div className='max-w-7xl mx-auto'>
+        <div className='mx-auto'>
           {/* Stats Overview */}
           <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
             <Card>
