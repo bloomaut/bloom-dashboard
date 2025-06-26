@@ -65,6 +65,11 @@ const Sidebar = () => {
       icon: <Icon name='faqs' width={30} viewBox='0 -5 35 35' />,
       path: "/faqs",
     },
+    {
+      title: `CRM`,
+      icon: <Icon name='clients' />,
+      path: "/crm",
+    },
   ];
 
   const getData = async () => {

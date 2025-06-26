@@ -146,7 +146,7 @@ function Questionaire() {
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin />}
       {tab === "prop" && <Proposal />}
-      <div
+      {/* <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
       >
         <button onClick={handleUpdate}>User Update</button>
@@ -155,7 +155,7 @@ function Questionaire() {
         <button onClick={() => setTab("fin")}>Fin</button>
         <button onClick={() => setTab("prop")}>Propuesta</button>
         <button onClick={() => console.log(questData)}>Info</button>
-      </div>
+      </div> */}
     </div>
   );
 }
