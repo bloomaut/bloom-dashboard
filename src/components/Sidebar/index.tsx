@@ -70,6 +70,11 @@ const Sidebar = () => {
       icon: <Icon name='clients' />,
       path: "/crm",
     },
+    {
+      title: `Redes Sociales`,
+      icon: <Icon name='share' />,
+      path: "/social-media",
+    },
   ];
 
   const getData = async () => {
