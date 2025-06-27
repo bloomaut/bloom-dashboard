@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { ProfileInfoCard } from "@/components/v0Components/profile-info-card"
-import { GoalsCard } from "@/components/v0Components/goals-card"
-import { ScheduleCard } from "@/components/v0Components/schedule-card"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { RefreshCw, Settings, Bell, TrendingUp, Users, Heart, Grid3X3 } from "lucide-react"
-import { AppDownload } from "@/components/v0Components/app-download"
+import { ProfileInfoCard } from "@/components/v0Components/profile-info-card";
+import { GoalsCard } from "@/components/v0Components/goals-card";
+import { ScheduleCard } from "@/components/v0Components/schedule-card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { RefreshCw, Settings, Bell, TrendingUp, Users, Heart, Grid3X3 } from "lucide-react";
+import { AppDownload } from "@/components/v0Components/app-download";
 
 export function SocialMediaDashboard() {
   // Datos simulados de los perfiles conectados
@@ -31,7 +31,7 @@ export function SocialMediaDashboard() {
       isVerified: false,
       goalsCompletion: 50, // Add this line
     },
-  ]
+  ];
 
   // Metas generadas por la plataforma
   const instagramGoals = [
@@ -43,7 +43,7 @@ export function SocialMediaDashboard() {
       unit: "seguidores",
       deadline: "31 Dic 2024",
       status: "on-track" as const,
-      icon: <Users className="h-4 w-4 text-blue-600" />,
+      icon: <Users className='h-4 w-4 text-blue-600' />,
     },
     {
       id: "ig-posts",
@@ -53,7 +53,7 @@ export function SocialMediaDashboard() {
       unit: "posts",
       deadline: "31 Ene 2025",
       status: "behind" as const,
-      icon: <Grid3X3 className="h-4 w-4 text-purple-600" />,
+      icon: <Grid3X3 className='h-4 w-4 text-purple-600' />,
     },
     {
       id: "ig-engagement",
@@ -63,9 +63,9 @@ export function SocialMediaDashboard() {
       unit: "%",
       deadline: "28 Feb 2025",
       status: "on-track" as const,
-      icon: <Heart className="h-4 w-4 text-red-600" />,
+      icon: <Heart className='h-4 w-4 text-red-600' />,
     },
-  ]
+  ];
 
   const tiktokGoals = [
     {
@@ -76,7 +76,7 @@ export function SocialMediaDashboard() {
       unit: "seguidores",
       deadline: "31 Dic 2024",
       status: "on-track" as const,
-      icon: <Users className="h-4 w-4 text-blue-600" />,
+      icon: <Users className='h-4 w-4 text-blue-600' />,
     },
     {
       id: "tk-videos",
@@ -86,9 +86,9 @@ export function SocialMediaDashboard() {
       unit: "videos",
       deadline: "Cada semana",
       status: "behind" as const,
-      icon: <Grid3X3 className="h-4 w-4 text-black" />,
+      icon: <Grid3X3 className='h-4 w-4 text-black' />,
     },
-  ]
+  ];
 
   // Cronograma diario generado automáticamente
   const dailyTasks = [
@@ -125,7 +125,7 @@ export function SocialMediaDashboard() {
       priority: "high" as const,
       details: "Crear contenido siguiendo la tendencia actual, duración 15-30 segundos",
     },
-  ]
+  ];
 
   // Cronograma semanal
   const weeklyTasks = [
@@ -151,38 +151,38 @@ export function SocialMediaDashboard() {
       priority: "high" as const,
       details: "Crear calendario de contenido, preparar imágenes y escribir captions",
     },
-  ]
+  ];
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className='flex-1 flex flex-col overflow-hidden'>
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard de Redes Sociales</h1>
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" size="sm">
-              <RefreshCw className="h-4 w-4 mr-2" />
+      <header className='bg-white border-b border-gray-200 px-6 py-4'>
+        <div className='flex items-center justify-between'>
+          <h1 className='text-2xl font-bold text-gray-900'>Dashboard de Redes Sociales</h1>
+          <div className='flex items-center space-x-3'>
+            <Button variant='outline' size='sm'>
+              <RefreshCw className='h-4 w-4 mr-2' />
               Actualizar datos
             </Button>
-            <Button variant="outline" size="sm">
-              <Settings className="h-4 w-4 mr-2" />
+            <Button variant='outline' size='sm'>
+              <Settings className='h-4 w-4 mr-2' />
               Configuración
             </Button>
-            <Button variant="outline" size="sm">
-              <Bell className="h-4 w-4" />
+            <Button variant='outline' size='sm'>
+              <Bell className='h-4 w-4' />
             </Button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto p-6">
-        <div className="max-w-7xl mx-auto space-y-8">
+      <main className='flex-1 overflow-auto p-6'>
+        <div className='max-w-7xl mx-auto space-y-8'>
           {/* Información de Perfiles */}
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Perfiles Conectados</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {profilesData.map((profile) => (
+            <h2 className='text-xl font-semibold text-gray-900 mb-4'>Perfiles Conectados</h2>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              {profilesData.map(profile => (
                 <ProfileInfoCard key={profile.platform} {...profile} />
               ))}
             </div>
@@ -190,46 +190,46 @@ export function SocialMediaDashboard() {
 
           {/* Metas */}
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Metas y Objetivos</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <GoalsCard platform="instagram" goals={instagramGoals} />
-              <GoalsCard platform="tiktok" goals={tiktokGoals} />
+            <h2 className='text-xl font-semibold text-gray-900 mb-4'>Metas y Objetivos</h2>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+              <GoalsCard platform='instagram' goals={instagramGoals} />
+              <GoalsCard platform='tiktok' goals={tiktokGoals} />
             </div>
           </section>
 
           {/* Cronograma */}
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Cronograma Automatizado</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ScheduleCard title="Tareas de Hoy" tasks={dailyTasks} type="daily" />
-              <ScheduleCard title="Tareas de la Semana" tasks={weeklyTasks} type="weekly" />
+            <h2 className='text-xl font-semibold text-gray-900 mb-4'>Cronograma Automatizado</h2>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+              <ScheduleCard title='Tareas de Hoy' tasks={dailyTasks} type='daily' />
+              <ScheduleCard title='Tareas de la Semana' tasks={weeklyTasks} type='weekly' />
             </div>
           </section>
 
           {/* Resumen de Progreso */}
           <section>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+              <div className='lg:col-span-2'>
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <TrendingUp className="h-5 w-5" />
+                    <CardTitle className='flex items-center space-x-2'>
+                      <TrendingUp className='h-5 w-5' />
                       <span>Resumen de Progreso</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="text-center p-4 bg-blue-50 rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600">75%</div>
-                        <div className="text-sm text-blue-800">Metas en progreso</div>
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+                      <div className='text-center p-4 bg-blue-50 rounded-lg'>
+                        <div className='text-2xl font-bold text-blue-600'>75%</div>
+                        <div className='text-sm text-blue-800'>Metas en progreso</div>
                       </div>
-                      <div className="text-center p-4 bg-green-50 rounded-lg">
-                        <div className="text-2xl font-bold text-green-600">3/5</div>
-                        <div className="text-sm text-green-800">Tareas completadas hoy</div>
+                      <div className='text-center p-4 bg-green-50 rounded-lg'>
+                        <div className='text-2xl font-bold text-green-600'>3/5</div>
+                        <div className='text-sm text-green-800'>Tareas completadas hoy</div>
                       </div>
-                      <div className="text-center p-4 bg-purple-50 rounded-lg">
-                        <div className="text-2xl font-bold text-purple-600">+12%</div>
-                        <div className="text-sm text-purple-800">Crecimiento esta semana</div>
+                      <div className='text-center p-4 bg-purple-50 rounded-lg'>
+                        <div className='text-2xl font-bold text-purple-600'>+12%</div>
+                        <div className='text-sm text-purple-800'>Crecimiento esta semana</div>
                       </div>
                     </div>
                   </CardContent>
@@ -244,5 +244,5 @@ export function SocialMediaDashboard() {
         </div>
       </main>
     </div>
-  )
+  );
 }
