@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 // Components
 import Sidebar from "@/components/Sidebar";
-//import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import SideTrack from "@/components/SideTrack";
 import { useState } from "react";
 import Questionaire from "@/components/Questionaire/Questionaire";
@@ -16,7 +16,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [showQuestions, setShowQuestions] = useState(true);
   return (
     <div className={styles.container}>
-      {/* <Navbar /> */}
+      <Navbar />
       <ToastContainer
         position='bottom-right'
         limit={2}

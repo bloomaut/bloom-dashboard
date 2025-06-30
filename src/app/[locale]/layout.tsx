@@ -6,8 +6,6 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Providers } from "@/store/provider";
 import { notFound } from "next/navigation";
 import { Barlow } from "next/font/google";
-import "../global.css";
-import { TutorialProvider } from "@/context/TutorialContext";
 
 const barlow = Barlow({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -41,7 +39,7 @@ export default function RootLayout({
         <html lang={locale}>
           <body className={barlow.className}>
             <NextIntlClientProvider locale={locale} messages={messages}>
-              <TutorialProvider>{children}</TutorialProvider>
+              {children}
             </NextIntlClientProvider>
           </body>
         </html>

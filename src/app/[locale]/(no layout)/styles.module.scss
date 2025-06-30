@@ -1,6 +1,6 @@
 .policy_container {
   @include width-height(100%, 100%);
-
+  max-width: 1200px;
   min-height: 100vh;
   background-color: $white;
   padding: 40px;

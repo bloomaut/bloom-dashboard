@@ -114,18 +114,9 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData }: Props
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: "20px", fontWeight: 600 }}>
             {questions[currentIndex]}
           </div>
-          <video
-            style={{
-              height: "88%",
-              borderRadius: 15,
-              marginTop: "3rem",
-              width: "90%",
-              objectFit: "cover",
-            }}
-            src='/assets/video/formato.mp4'
-            autoPlay
-            playsInline
-          />
+          <div
+            style={{ backgroundColor: "#D9D9D9", height: "88%", borderRadius: 15, marginTop: "3rem", width: "90%" }}
+          ></div>
         </div>
         <div style={{ width: "35%", height: "100%" }}>
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: "20px", fontWeight: 600 }}>

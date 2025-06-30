@@ -5,7 +5,7 @@
     radial-gradient(circle at bottom left, #ffffff, transparent 50%),
     linear-gradient(135deg, #fff3ef 0%, #fff3ef 25%, #ffd7ca 50%, #fff3ef 75%, #fff3ef 100%);
   background-blend-mode: normal;
-  min-height: calc(100vh);
+  min-height: calc(100vh - 65px);
   .column_one {
     @include width-height(75%, 100%);
     @include flex(row, flex-start, center);
@@ -55,7 +55,7 @@
   }
   .login_info {
     @include width-height(25%, 100%);
-    min-height: calc(100vh);
+    min-height: calc(100vh - 65px);
     background-color: $white;
     position: relative;
     .logo_container {
