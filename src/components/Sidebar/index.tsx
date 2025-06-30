@@ -76,6 +76,11 @@ const Sidebar = () => {
       icon: <DollarSign />,
       path: "/finances",
     },
+    {
+      title: `Redes Sociales`,
+      icon: <Icon name='share' />,
+      path: "/social-media",
+    },
   ];
 
   const getData = async () => {
