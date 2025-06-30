@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
+import { answers } from "@/components/Questionaire/questions";
 
 function extractAnswers(questData: any) {
   const answers: string[] = [];
@@ -16,7 +17,7 @@ function extractAnswers(questData: any) {
 
 export const initialState = {
   userId: "",
-  answers: ["", "", "", "", "", "", "", "", "", ""],
+  answers: answers,
   terms: false,
   completed: false,
 };
