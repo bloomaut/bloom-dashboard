@@ -15,8 +15,9 @@ datasource db {
 
 model Response {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String
-  answers   Json[]
+  block    String
+  clientId    String
+  questions   Json
   terms     Boolean
   completed Boolean
 }

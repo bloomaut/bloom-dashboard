@@ -38,7 +38,7 @@ export default function Terms({ handleTerms }: Props) {
           <div>Al utilizar Small, aceptas los siguientes términos y condiciones</div>
           {terms.map((term, index) => {
             return (
-              <div style={{ paddingLeft: "0.2rem" }}>
+              <div style={{ paddingLeft: "0.2rem" }} key={index}>
                 {index + 1}. {term}
               </div>
             );

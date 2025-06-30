@@ -52,12 +52,13 @@ function Questionaire() {
       console.log(user);
       if (user.id === null || !user.id) return;
       const data = await getQuest(user.id);
-      if (data.message === "No user found") {
-        console.log("set");
+      console.log("data", data);
+      if (data.message === "No user found" || !data) {
         const newData = { userId: String(user.id), answers: answers, terms: false, completed: false };
         //postQuest(newData);
         dispatch(setQuestData(newData));
       } else {
+        console.log("set2", data);
         dispatch(setQuestData(data));
       }
 
@@ -80,14 +81,14 @@ function Questionaire() {
   const handleUpdate = () => {
     const data = generatePayload(questData);
     postQuest({
-      userId: String(user.id),
+      userId: String(clientId || user.id),
       answers: data,
       terms: questData.terms,
       completed: questData.completed,
     });
     dispatch(
       setQuestData({
-        userId: String(user.id),
+        userId: String(clientId || user.id),
         answers: data,
         terms: questData.terms,
         completed: questData.completed,
@@ -149,7 +150,7 @@ function Questionaire() {
       <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
       >
-        <button onClick={handleUpdate}>User Update</button>
+        <button onClick={() => console.log(questData)}>User Update</button>
         <button onClick={() => setTab("terms")}>Terms</button>
         <button onClick={() => setTab("quest")}>Quest</button>
         <button onClick={() => setTab("fin")}>Fin</button>

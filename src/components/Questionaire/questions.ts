@@ -114,7 +114,10 @@ export const generatePayload = (questData: {
 }) => {
   return [
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_businessIdentit",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Cuál es el nombre comercial de tu empresa?",
@@ -169,7 +172,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_IdealMarketClient",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Cuál es tu cliente objetivo en términos de género, rango de edad y principales intereses?",
@@ -304,7 +310,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_successObjectives",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Cuáles son tus objetivos de negocio para los próximos 3 a 6 meses?",
@@ -339,7 +348,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_communicationChannels",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Qué canales de venta utilizas actualmente?",
@@ -364,7 +376,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_operationAndCapacity",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Cuántas unidades vendes en promedio cada semana?",
@@ -416,7 +431,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_financeAndBudget",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Cuánto capital operativo tienes disponible este año para invertir en mejoras o crecimiento?",
@@ -447,7 +465,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_teamAndHHRR",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Cómo está organizado tu equipo en términos de roles, número de personas y líneas de reporte?",
@@ -467,7 +488,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_challengesAndBarriers",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Cuál es el mayor desafío que enfrenta tu negocio actualmente?",
@@ -487,7 +511,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_brandingDesign",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Cómo definirías el tono y estilo de comunicación de tu marca?",
@@ -577,7 +604,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_entrepreuneurProfile",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Tienes claro cuál es el negocio que quieres desarrollar?",
@@ -673,7 +703,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_competitors",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Quiénes son tus principales competidores directos e indirectos?",
@@ -693,7 +726,10 @@ export const generatePayload = (questData: {
       ],
     },
     {
+      completed: questData.completed || false,
+      terms: questData.terms || false,
       block: "P0_feedback",
+      clientId: questData.userId,
       questions: [
         {
           question: "¿Querés agregar algo más que no hayamos preguntado?",

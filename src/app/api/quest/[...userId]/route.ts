@@ -17,9 +17,9 @@ const handleGet = withApiAuthRequired(async function handleFetch(req, { params }
     const userId = params.userId[0] as string;
     console.log(userId);
 
-    const user = await prisma.response.findFirst({
+    const user = await prisma.response.findMany({
       where: {
-        userId: userId,
+        clientId: userId,
       },
     });
 

@@ -5,6 +5,7 @@ function extractAnswers(questData: any) {
   const answers: string[] = [];
 
   questData.forEach((block: any) => {
+    console.log("block", block);
     block.questions.forEach((questionObj: any) => {
       answers.push(questionObj.answer);
     });
@@ -25,10 +26,11 @@ export const questSlice = createSlice({
   initialState,
   reducers: {
     setQuestData: (state, action) => {
-      console.log(action.payload);
-      state.userId = action.payload.userId;
-      state.answers = extractAnswers(action.payload.answers);
-      state.completed = action.payload.completed;
+      console.log("payload", action.payload.completed);
+      state.userId = action.payload.answers ? action.payload.userId : action.payload[0].clientId;
+      state.answers =
+        extractAnswers(action.payload.answers ? action.payload.answers : action.payload) || initialState.answers;
+      state.completed = action.payload[0] ? action.payload[0].completed : action.payload.completed;
     },
     setQuestTerms: (state, action) => {
       state.terms = action.payload;
