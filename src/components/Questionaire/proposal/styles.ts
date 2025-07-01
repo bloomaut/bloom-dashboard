@@ -5,7 +5,7 @@ export const styles = {
     padding: "24px",
   },
   maxWidth: {
-    maxWidth: "1152px",
+    maxWidth: "1652px",
     margin: "0 auto",
   },
   header: {

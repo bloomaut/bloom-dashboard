@@ -145,7 +145,7 @@ function Questionaire() {
         />
       )}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
-      {tab === "fin" && <Fin />}
+      {tab === "fin" && <Fin setTab={setTab} />}
       {tab === "prop" && <Proposal />}
       <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}

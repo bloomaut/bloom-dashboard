@@ -1,7 +1,17 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import { CircleLoader } from "./Spinner";
+import { useRouter } from "next/navigation";
 
-function Fin() {
+function Fin({ setTab }: { setTab: React.Dispatch<React.SetStateAction<string>> }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTab("prop");
+    }, 5000);
+  }, []);
+
   return (
     <div
       style={{
