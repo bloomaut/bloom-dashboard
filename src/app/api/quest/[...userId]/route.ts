@@ -25,7 +25,7 @@ const handleGet = withApiAuthRequired(async function handleFetch(req, { params }
 
     let newResponse;
 
-    if (!user) {
+    if (!user || user.length === 0) {
       newResponse = { message: "No user found", userId: userId };
     } else {
       newResponse = user;

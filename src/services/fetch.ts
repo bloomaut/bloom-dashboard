@@ -136,6 +136,7 @@ export const postQuest = async (questData: {
   }[];
   terms: boolean;
   completed: boolean;
+  prop: boolean;
 }) => {
   try {
     const response = await fetch(`/api/quest`, {
@@ -224,6 +225,38 @@ export const remove = async (url: string, id: string, api?: EnvironmentApi) => {
 
     const response = await axios.delete(`${API}/${url}/${id}`, { headers });
     return response.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
+export const postProp = async (questData: {
+  blocks: {
+    block: string;
+    clientId: string;
+    questions: {
+      question: string;
+      id: string;
+      answer: string;
+    }[];
+  }[];
+}) => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/interview/block`, {
+      method: "POST",
+      body: JSON.stringify(questData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return error.response;

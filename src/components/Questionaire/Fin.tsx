@@ -1,15 +1,27 @@
 "use client";
 import React, { useEffect } from "react";
 import { CircleLoader } from "./Spinner";
-import { useRouter } from "next/navigation";
+import { postProp } from "@/services/fetch";
+import { generatePropPayload, generatePropPayload2 } from "./questions";
 
-function Fin({ setTab }: { setTab: React.Dispatch<React.SetStateAction<string>> }) {
-  const router = useRouter();
-
+function Fin({
+  setTab,
+  questData,
+}: {
+  setTab: React.Dispatch<React.SetStateAction<string>>;
+  questData: {
+    userId: string;
+    answers: string[];
+    terms: boolean;
+    completed: boolean;
+    prop: boolean;
+  };
+}) {
   useEffect(() => {
     setTimeout(() => {
-      setTab("prop");
-    }, 5000);
+      const payload = generatePropPayload2({ userId: questData.userId, answers: questData.answers });
+      postProp(payload);
+    }, 2000);
   }, []);
 
   return (
@@ -28,7 +40,7 @@ function Fin({ setTab }: { setTab: React.Dispatch<React.SetStateAction<string>> 
         style={{
           width: "70%",
           height: "8px",
-          background: " #FF5733",
+          background: "#FF5733",
           borderRadius: "5px",
           position: "relative",
           marginBottom: "8rem",

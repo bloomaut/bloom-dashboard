@@ -20,4 +20,5 @@ model Response {
   questions   Json
   terms     Boolean
   completed Boolean
+  prop Boolean  @default(false)
 }

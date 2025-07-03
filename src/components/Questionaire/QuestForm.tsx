@@ -1,5 +1,5 @@
 // Updated QuestForm component with speech-to-text functionality
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { QuestData } from "./Questionaire";
 import GradientBar from "./QuestBar";
 import Icon from "../Icon";
@@ -11,13 +11,22 @@ interface Props {
   handleIndex: (operation: string) => void;
   currentIndex: number;
   questData: QuestData;
+  setIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function QuestForm({ handleChange, handleIndex, currentIndex, questData }: Props) {
+function QuestForm({ handleChange, handleIndex, currentIndex, questData, setIndex }: Props) {
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+
+  useEffect(() => {
+    for (let index = 0; index < questData.answers.length; index++) {
+      if (questData.answers[index] !== "") {
+        setIndex(index);
+      }
+    }
+  }, []);
 
   const startRecording = async () => {
     try {
@@ -147,6 +156,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData }: Props
                 ? "Transcribiendo..."
                 : "Escribe aqui o deja un audio (Podrás leer y editar tu respuesta aquí)"
             }
+            required
             disabled={isTranscribing}
           />
           <div

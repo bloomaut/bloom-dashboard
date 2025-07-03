@@ -3,13 +3,14 @@ import { setDataRicardos } from "@/store/features/ricardoSlice";
 import { setDataSubdomains } from "@/store/features/subdomainsSlice";
 import { setUserData } from "@/store/features/userSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setQuestData, setQuestTerms, updateQuestData } from "@/store/questSlice";
+import { setFirstQuestData, setQuestCompleted, setQuestData, setQuestTerms, updateQuestData } from "@/store/questSlice";
 import React, { useEffect, useState } from "react";
 import Terms from "./Terms";
 import QuestForm from "./QuestForm";
 import Fin from "./Fin";
 import Proposal from "./Proposal";
 import { answers, generatePayload, questions } from "./questions";
+import { CircleLoader } from "./Spinner";
 
 export interface QuestData {
   userId: string;
@@ -24,7 +25,7 @@ function Questionaire() {
   const questData = useAppSelector(state => state.questData);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const [tab, setTab] = useState("terms");
+  const [tab, setTab] = useState("loading");
 
   const { clientId } = useAppSelector(state => state.ricardosData);
 
@@ -49,17 +50,25 @@ function Questionaire() {
 
   useEffect(() => {
     const handleGet = async () => {
-      console.log(user);
       if (user.id === null || !user.id) return;
+      console.log(user.id);
       const data = await getQuest(user.id);
-      console.log("data", data);
       if (data.message === "No user found" || !data) {
-        const newData = { userId: String(user.id), answers: answers, terms: false, completed: false };
+        console.log("no esta");
+        const newData = { userId: String(user.id), answers: answers, terms: false, completed: false, prop: false };
         //postQuest(newData);
-        dispatch(setQuestData(newData));
+        dispatch(setFirstQuestData(newData));
+        setTab("terms");
       } else {
-        console.log("set2", data);
+        console.log("esta");
         dispatch(setQuestData(data));
+        if (!data[0].terms) {
+          setTab("terms");
+        } else if (!data[0].completed) {
+          setTab("quest");
+        } else {
+          setTab("fin");
+        }
       }
 
       console.error("Error fetching quest data");
@@ -68,7 +77,6 @@ function Questionaire() {
   }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => {
-    console.log(e.target.value);
     dispatch(updateQuestData({ index, data: e?.target?.value }));
   };
 
@@ -79,26 +87,34 @@ function Questionaire() {
   };
 
   const handleUpdate = () => {
+    console.log("update", questData);
     const data = generatePayload(questData);
     postQuest({
-      userId: String(clientId || user.id),
+      userId: questData.userId,
       answers: data,
       terms: questData.terms,
-      completed: questData.completed,
+      completed: currentIndex === 104 ? true : questData.completed,
+      prop: questData.prop,
     });
     dispatch(
       setQuestData({
-        userId: String(clientId || user.id),
+        userId: questData.userId,
         answers: data,
         terms: questData.terms,
-        completed: questData.completed,
+        completed: currentIndex === 104 ? true : questData.completed,
+        prop: questData.prop,
       }),
     );
   };
 
   const handleIndex = (operation: string) => {
     if (currentIndex === 104) {
-      setTab("fin");
+      console.log("completed");
+      dispatch(setQuestCompleted(true));
+      setTimeout(() => {
+        handleUpdate();
+        setTab("fin");
+      }, 2000);
     }
     if (operation === "add") {
       if (currentIndex === questData.answers.length - 1) return;
@@ -136,16 +152,22 @@ function Questionaire() {
       ) : (
         <Terms handleTerms={handleTerms} />
       )} */}
+      {tab === "loading" && (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}>
+          <CircleLoader />
+        </div>
+      )}
       {tab === "quest" && (
         <QuestForm
           handleChange={handleChange}
           handleIndex={handleIndex}
           questData={questData}
           currentIndex={currentIndex}
+          setIndex={setCurrentIndex}
         />
       )}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
-      {tab === "fin" && <Fin setTab={setTab} />}
+      {tab === "fin" && <Fin setTab={setTab} questData={questData} />}
       {tab === "prop" && <Proposal />}
       <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
@@ -155,7 +177,8 @@ function Questionaire() {
         <button onClick={() => setTab("quest")}>Quest</button>
         <button onClick={() => setTab("fin")}>Fin</button>
         <button onClick={() => setTab("prop")}>Propuesta</button>
-        <button onClick={() => console.log(questData)}>Info</button>
+        <button onClick={() => setCurrentIndex(104)}>Last</button>
+        <button onClick={() => console.log(questData.completed)}>Info</button>
       </div>
     </div>
   );
