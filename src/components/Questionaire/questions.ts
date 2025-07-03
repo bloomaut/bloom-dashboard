@@ -106,69 +106,6 @@ export const questions = [
   "¿Querés agregar algo más que no hayamos preguntado?",
 ];
 
-export const generatePropPayload2 = (questData: { userId: string; answers: string[] }) => {
-  return {
-    blocks: [
-      {
-        block: "P0_businessIdentity",
-        clientId: questData.userId,
-        questions: [
-          {
-            question: "¿Cuál es el nombre comercial de tu empresa?",
-            id: "P0_businessIdentity_A",
-            answer: questData.answers[0],
-          },
-          {
-            question: "¿Cómo definirías la actividad principal de tu empresa?",
-            id: "P0_businessIdentity_B",
-            answer: questData.answers[1],
-          },
-          {
-            question: "¿Cuál es la dirección física principal de tu negocio?",
-            id: "P0_businessIdentity_C",
-            answer: questData.answers[2],
-          },
-          {
-            question: "¿Qué productos y/o servicios ofreces actualmente?",
-            id: "P0_businessIdentity_D",
-            answer: questData.answers[3],
-          },
-          {
-            question: "¿Cómo agrupas tu oferta en líneas o categorías principales?",
-            id: "P0_businessIdentity_E",
-            answer: questData.answers[4],
-          },
-          {
-            question: "¿Cuáles son los productos o servicios que generan la mayor parte de tus ventas?",
-            id: "P0_businessIdentity_F",
-            answer: questData.answers[5],
-          },
-          {
-            question: "¿Tienes algún producto o servicio nuevo que quieras impulsar?",
-            id: "P0_businessIdentity_G",
-            answer: questData.answers[6],
-          },
-          {
-            question: "¿Tienes un lema o frase breve que resuma tu oferta?",
-            id: "P0_businessIdentity_H",
-            answer: questData.answers[7],
-          },
-          {
-            question: "¿Cuál es la historia personal que quieres que tu marca cuente?",
-            id: "P0_businessIdentity_I",
-            answer: questData.answers[8],
-          },
-          {
-            question: "¿Qué emociones te gustaría que transmita tu marca?",
-            id: "P0_businessIdentity_J",
-            answer: questData.answers[9],
-          },
-        ],
-      },
-    ],
-  };
-};
-
 export const generatePropPayload = (questData: { userId: string; answers: string[] }) => {
   return {
     blocks: [

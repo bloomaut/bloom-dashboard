@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { CircleLoader } from "./Spinner";
 import { postProp } from "@/services/fetch";
-import { generatePropPayload, generatePropPayload2 } from "./questions";
+import { generatePropPayload } from "./questions";
 
 function Fin({
   setTab,
@@ -19,7 +19,7 @@ function Fin({
 }) {
   useEffect(() => {
     setTimeout(() => {
-      const payload = generatePropPayload2({ userId: questData.userId, answers: questData.answers });
+      const payload = generatePropPayload({ userId: questData.userId, answers: questData.answers });
       postProp(payload);
     }, 2000);
   }, []);

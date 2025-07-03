@@ -12,9 +12,10 @@ interface Props {
   currentIndex: number;
   questData: QuestData;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
+  empty: boolean;
 }
 
-function QuestForm({ handleChange, handleIndex, currentIndex, questData, setIndex }: Props) {
+function QuestForm({ handleChange, handleIndex, currentIndex, questData, setIndex, empty }: Props) {
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -44,8 +45,6 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
       mediaRecorder.onstop = async () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
         await transcribeAudio(audioBlob);
-
-        // Stop all tracks to release microphone
         stream.getTracks().forEach(track => track.stop());
       };
 
@@ -156,9 +155,27 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                 ? "Transcribiendo..."
                 : "Escribe aqui o deja un audio (Podrás leer y editar tu respuesta aquí)"
             }
-            required
+            required={true}
             disabled={isTranscribing}
           />
+          {empty && (
+            <div
+              style={{
+                backgroundColor: "gray",
+                borderBottomLeftRadius: "20px",
+                borderBottomRightRadius: "20px",
+                borderTopRightRadius: "20px",
+                padding: "0.4rem",
+                whiteSpace: "nowrap",
+                position: "absolute",
+                top: "300px",
+                right: "10%",
+                color: "white",
+              }}
+            >
+              Campo no puede estar vacio
+            </div>
+          )}
           <div
             style={{
               width: "100%",

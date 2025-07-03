@@ -24,8 +24,31 @@ function Questionaire() {
   const user = useAppSelector(state => state.userData);
   const questData = useAppSelector(state => state.questData);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [empty, setEmpty] = useState(false);
 
   const [tab, setTab] = useState("loading");
+
+  const { id } = useAppSelector(state => state.userData.client);
+
+  const getData = async () => {
+    const resUser = await get("user/me");
+    if (resUser.statusCode === 200) {
+      console.log(resUser.result);
+      dispatch(setUserData(resUser.result.user));
+    }
+    const resRichards = await get("client-permissions/role");
+    if (resRichards.statusCode === 200) {
+      dispatch(setDataRicardos(resRichards.result.clients.ricardos));
+    }
+    const resSubdomains = await get("subdomains");
+    if (resSubdomains.statusCode === 200) {
+      dispatch(setDataSubdomains(resSubdomains.result.subdomains));
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [id]);
 
   useEffect(() => {
     const handleGet = async () => {
@@ -62,6 +85,7 @@ function Questionaire() {
   }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => {
+    setEmpty(false);
     dispatch(updateQuestData({ index, data: e?.target?.value }));
   };
 
@@ -104,15 +128,14 @@ function Questionaire() {
     if (operation === "add") {
       if (currentIndex === questData.answers.length - 1) return;
       else {
-        setCurrentIndex(currentIndex + 1);
+        if (!questData.answers[currentIndex]) {
+          setEmpty(true);
+        } else {
+          setCurrentIndex(currentIndex + 1);
+        }
       }
     }
-    if (operation === "sub") {
-      if (currentIndex === 0) return;
-      else {
-        setCurrentIndex(currentIndex - 1);
-      }
-    }
+
     handleUpdate();
   };
 
@@ -149,12 +172,13 @@ function Questionaire() {
           questData={questData}
           currentIndex={currentIndex}
           setIndex={setCurrentIndex}
+          empty={empty}
         />
       )}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin setTab={setTab} questData={questData} />}
       {tab === "prop" && <Proposal />}
-      <div
+      {/* <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
       >
         <button onClick={() => console.log(questData)}>User Update</button>
@@ -164,7 +188,7 @@ function Questionaire() {
         <button onClick={() => setTab("prop")}>Propuesta</button>
         <button onClick={() => setCurrentIndex(104)}>Last</button>
         <button onClick={() => console.log(questData.completed)}>Info</button>
-      </div>
+      </div> */}
     </div>
   );
 }
