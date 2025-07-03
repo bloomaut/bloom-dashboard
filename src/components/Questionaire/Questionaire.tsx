@@ -27,35 +27,20 @@ function Questionaire() {
 
   const [tab, setTab] = useState("loading");
 
-  const { clientId } = useAppSelector(state => state.ricardosData);
-
-  const getData = async () => {
-    const resUser = await get("user/me");
-    if (resUser.statusCode === 200) {
-      dispatch(setUserData(resUser.result.user));
-    }
-    const resRichards = await get("client-permissions/role");
-    if (resRichards.statusCode === 200) {
-      dispatch(setDataRicardos(resRichards.result.clients.ricardos));
-    }
-    const resSubdomains = await get("subdomains");
-    if (resSubdomains.statusCode === 200) {
-      dispatch(setDataSubdomains(resSubdomains.result.subdomains));
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, [clientId]);
-
   useEffect(() => {
     const handleGet = async () => {
-      if (user.id === null || !user.id) return;
+      if (user.client.id === null || !user.client.id) return;
       console.log(user.id);
-      const data = await getQuest(user.id);
+      const data = await getQuest(user.client.id);
       if (data.message === "No user found" || !data) {
         console.log("no esta");
-        const newData = { userId: String(user.id), answers: answers, terms: false, completed: false, prop: false };
+        const newData = {
+          userId: String(user.client.id),
+          answers: answers,
+          terms: false,
+          completed: false,
+          prop: false,
+        };
         //postQuest(newData);
         dispatch(setFirstQuestData(newData));
         setTab("terms");
