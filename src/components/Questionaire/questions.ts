@@ -110,7 +110,7 @@ export const generatePropPayload2 = (questData: { userId: string; answers: strin
   return {
     blocks: [
       {
-        block: "P0_businessIdentit",
+        block: "P0_businessIdentity",
         clientId: questData.userId,
         questions: [
           {
@@ -173,7 +173,7 @@ export const generatePropPayload = (questData: { userId: string; answers: string
   return {
     blocks: [
       {
-        block: "P0_businessIdentit",
+        block: "P0_businessIdentity",
         clientId: questData.userId,
         questions: [
           {

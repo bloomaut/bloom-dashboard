@@ -23,6 +23,7 @@
     "browserless": "^10.3.0",
     "date-fns": "^3.6.0",
     "formidable": "^3.5.4",
+    "fs": "0.0.1-security",
     "html-get": "^2.16.2",
     "lucide-react": "^0.513.0",
     "moment": "^2.30.1",

@@ -2,6 +2,7 @@ import { POST } from "@/typescript/types/post.type";
 import { UPDATE } from "@/typescript/types/update.type";
 import { EnvironmentApi } from "@/typescript/types/api";
 import axios from "axios";
+import fs from "fs";
 const API = "/api";
 
 export const get = async (url: string, api?: EnvironmentApi) => {
@@ -246,16 +247,13 @@ export const postProp = async (questData: {
   }[];
 }) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/interview/block`, {
-      method: "POST",
-      body: JSON.stringify(questData),
-    });
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/interview/block`, questData);
 
-    if (!response.ok) {
+    if (response.status === 400) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
 
-    const responseData = await response.json();
+    const responseData = response.data;
     return responseData;
   } catch (error) {
     if (axios.isAxiosError(error)) {
