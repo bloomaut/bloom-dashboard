@@ -8,8 +8,8 @@ import { useTutorial } from "@/context/TutorialContext";
 import { TutorialStepper } from "./TutorialStepper";
 
 const navigation = [
-  { name: "Mi Negocio", href: "/business", icon: Building2 },
-  { name: "Inventario", href: "/inventory", icon: Package },
+  { name: "Mi Negocio", href: "/my-business", icon: Building2 },
+  { name: "Inventario", href: "/catalog", icon: Package },
   { name: "Redes Sociales", href: "/social-media", icon: Share2 },
   { name: "CRM", href: "/crm", icon: Users },
   { name: "Finanzas", href: "/finances", icon: DollarSign },
@@ -23,6 +23,7 @@ interface SidebarProps {
 export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
   const pathname = usePathname();
   const { isCompleted } = useTutorial();
+  const isEnPath = pathname.startsWith("/en");
 
   return (
     <div className={cn("bg-white border-r border-gray-200 transition-all duration-300", collapsed ? "w-16" : "w-64")}>
@@ -50,7 +51,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
             return (
               <Link
                 key={item.name}
-                href={item.href}
+                href={item.href.startsWith("/en") ? item.href : isEnPath ? `/en${item.href}` : item.href}
                 className={cn(
                   "flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                   isActive
