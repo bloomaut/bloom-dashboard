@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,16 +10,21 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Package, ShoppingBag, Wrench, Upload, CheckCircle, ArrowRight } from "lucide-react";
-import { useTutorial } from "@/context/TutorialContext";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { useAppSelector } from "@/store/hooks";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import { useCatalogContext } from "@/context/CatalogContext";
+import { post } from "@/services/fetch";
+import { useTranslations } from "next-intl";
+import { ENV } from "@/typescript/types/api";
 
 interface InventorySetupProps {
   onFirstProductAdded: () => void;
 }
 
 export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
-  const { completeStep } = useTutorial();
   const [activeTab, setActiveTab] = useState("product");
+  const schema = useAppSelector(state => state.dataschema);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -27,16 +32,151 @@ export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
     stock: "",
     category: "",
     sku: "",
-    type: "product", // product or service
+    type: "product",
   });
+  const { notify, notifyError } = useMessageToast();
+  const { handleAddDataset, datasets, loading } = useCatalogContext();
+  const dict = useTranslations("dict");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Store created catalog IDs
+  const [productCatalogId, setProductCatalogId] = useState<string | null>(null);
+  const [serviceCatalogId, setServiceCatalogId] = useState<string | null>(null);
+  const [catalogsCreated, setCatalogsCreated] = useState(false);
+
+  useEffect(() => {
+    if (loading) return; // Don't run until datasets are loaded
+
+    const createDefaultCatalogs = async () => {
+      const productCatalog = datasets.find(ds => String(ds.dataschema.category) === "uitool-store");
+      const serviceCatalog = datasets.find(ds => String(ds.dataschema.category) === "uitool-services");
+
+      // If both exist, set IDs and skip creation
+      if (productCatalog && serviceCatalog) {
+        setProductCatalogId(productCatalog._id);
+        setServiceCatalogId(serviceCatalog._id);
+        setCatalogsCreated(true);
+        return;
+      }
+
+      // Otherwise, create missing catalogs
+      try {
+        console.log("data", productCatalog, serviceCatalog);
+        let response1, response2;
+        let success1 = false,
+          success2 = false;
+        if (datasets.length === 0) {
+          const postDataschema = {
+            name: "default",
+            description: "first catalog",
+            dataschema: schema[0]._id,
+            order: 0,
+            image: null,
+          };
+          response1 = await post("datasets", postDataschema, ENV.BOX);
+          success1 = response1.data.statusCode === 201;
+          if (success1) {
+            handleAddDataset(response1.data.data);
+            setProductCatalogId(response1.data.data._id);
+          }
+        }
+
+        if (datasets.length === 0) {
+          const postDataschemaService = {
+            name: "default",
+            description: "first catalog",
+            dataschema: schema[2]._id,
+            order: 0,
+            image: null,
+          };
+          response2 = await post("datasets", postDataschemaService, ENV.BOX);
+          success2 = response2.data.statusCode === 201;
+          if (success2) {
+            handleAddDataset(response2.data.data);
+            setServiceCatalogId(response2.data.data._id);
+          }
+        }
+
+        if (success1 && success2) {
+          setCatalogsCreated(true);
+          notify(dict("toast.post_dataset"));
+        } else {
+          notifyError(dict("toast.error_dataset"));
+        }
+      } catch (error) {
+        notifyError(dict("toast.error_dataset"));
+      }
+    };
+
+    if (schema[0]?._id && schema[2]?._id) {
+      createDefaultCatalogs();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [schema, datasets, loading]);
+
+  // Handle item creation (product or service)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Simular guardado
-    setTimeout(() => {
-      completeStep("inventory"); // Completar el paso del tutorial
-      onFirstProductAdded();
-    }, 1000);
+
+    // Wait until catalogs are created
+    if (!productCatalogId || !serviceCatalogId) {
+      notifyError("Los catálogos aún no están listos. Intenta de nuevo en unos segundos.");
+      return;
+    }
+
+    try {
+      let datasetId: string | null = null;
+      let data: any = {};
+
+      if (activeTab === "product") {
+        datasetId = productCatalogId;
+        data = {
+          listname: formData.name,
+          listdescr: formData.description,
+          listprice: formData.price,
+          listimage: null,
+          productBrand: null,
+          productAge: null,
+          productColor: null,
+          productGenre: null,
+          productMaterial: null,
+          productModel: null,
+          productSize: null,
+        };
+      } else if (activeTab === "service") {
+        datasetId = serviceCatalogId;
+        data = {
+          name: formData.name,
+          description: formData.description,
+          price: formData.price,
+          category: formData.category,
+        };
+      }
+
+      if (!datasetId) {
+        notifyError("No se pudo encontrar el catálogo para crear el item.");
+        return;
+      }
+
+      // Post the item to the correct dataset
+      const response = await post(
+        "dataitem",
+        {
+          dataset: datasetId,
+          data,
+          visibility: true,
+        },
+        ENV.BOX,
+      );
+
+      if (response.data.statusCode === 201) {
+        notify(dict("toast.success_item") || "¡Item creado!");
+        onFirstProductAdded();
+      } else {
+        notifyError(dict("toast.error_item") || "Error al crear el item.");
+      }
+    } catch (error) {
+      notifyError(dict("toast.error_item") || "Error al crear el item.");
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -101,11 +241,23 @@ export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
             <CardContent>
               <Tabs value={activeTab} onValueChange={setActiveTab} className='space-y-6'>
                 <TabsList className='grid w-full grid-cols-2'>
-                  <TabsTrigger value='product' className='flex items-center space-x-2'>
+                  <TabsTrigger
+                    value='product'
+                    className='flex items-center space-x-2'
+                    onClick={() => {
+                      handleInputChange("type", "uitool-products"), console.log("uitool-products");
+                    }}
+                  >
                     <ShoppingBag className='h-4 w-4' />
                     <span>Producto</span>
                   </TabsTrigger>
-                  <TabsTrigger value='service' className='flex items-center space-x-2'>
+                  <TabsTrigger
+                    value='service'
+                    className='flex items-center space-x-2'
+                    onClick={() => {
+                      handleInputChange("type", "uitool-services"), console.log("uitool-services");
+                    }}
+                  >
                     <Wrench className='h-4 w-4' />
                     <span>Servicio</span>
                   </TabsTrigger>

@@ -1,10 +1,11 @@
 import { putFile } from "@/services/fetch";
-import { useMessageToast } from "@/hooks/useMessageToast";
 import { ENV } from "@/typescript/types/api";
 
-export const handleLogoUpload = async (file: File | null) => {
-  const { notifyError } = useMessageToast();
-
+export async function handleLogoUpload(
+  file: File,
+  notify: (msg: string) => void,
+  notifyError: (msg: string) => void
+) {
   if (file) {
     const response = await putFile("small-business/logo", file, ENV.DASHBOARD);
     if (response.data.statusCode === 200) {
@@ -15,4 +16,4 @@ export const handleLogoUpload = async (file: File | null) => {
       return null;
     }
   }
-};
+}

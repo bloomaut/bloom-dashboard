@@ -1,19 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InventorySetup } from "@/components/v0Components/InventorySetup";
 import { InventoryDashboard } from "@/components/v0Components/InventoryDashboard";
+import { useCatalogContext } from "@/context/CatalogContext";
 
 export default function InventoryPage() {
-  const [hasProducts, setHasProducts] = useState(false);
+  const { datasets, loading } = useCatalogContext();
+  const [hasProductsOrServices, setHasProductsOrServices] = useState(false);
 
-  const handleFirstProductAdded = () => {
-    setHasProducts(true);
-  };
+  useEffect(() => {
+    // Check if any dataset has at least one product or service
+    const found = datasets.some(ds => typeof ds.totalDataItems === "number" && ds.totalDataItems > 0);
+    setHasProductsOrServices(found);
+  }, [datasets]);
 
   return (
     <div className='flex h-screen w-full bg-gray-50'>
-      {!hasProducts ? <InventorySetup onFirstProductAdded={handleFirstProductAdded} /> : <InventoryDashboard />}
+      {hasProductsOrServices ? (
+        <InventoryDashboard />
+      ) : (
+        <InventorySetup onFirstProductAdded={() => setHasProductsOrServices(true)} />
+      )}
     </div>
   );
 }
