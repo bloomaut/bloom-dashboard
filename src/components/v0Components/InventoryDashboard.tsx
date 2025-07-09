@@ -52,25 +52,23 @@ export function InventoryDashboard() {
   const { datasets } = useCatalogContext();
   const { fetchDatasetByIdBody } = useCatalogStoreContext();
   const [dataItems, setDataItems] = useState<any[]>([]);
-  const [ modal, setModal ] = useState(false);
+  const [modal, setModal] = useState(false);
 
+  useEffect(() => {
+    const fetchAll = async () => {
+      const dataIds = datasets.map(dataset => dataset._id);
+      const responses = await Promise.all(dataIds.map(id => fetchDatasetByIdBody(id)));
+      const allDataItems = responses.flatMap(dataset => dataset?.dataItems);
+      if (allDataItems.length > 0) {
+        setDataItems(allDataItems);
+      }
+      console.log("All dataset details:", responses);
+    };
 
- useEffect(() => {
-  const fetchAll = async () => {
-    const dataIds = datasets.map(dataset => dataset._id);
-    const responses = await Promise.all(dataIds.map(id => fetchDatasetByIdBody(id)));
-    const allDataItems = responses.flatMap(dataset => dataset?.dataItems);
-    if(allDataItems.length > 0) {
-      setDataItems(allDataItems)
+    if (datasets.length > 0) {
+      fetchAll();
     }
-    console.log("All dataset details:", responses);
-  };
-
-  if (datasets.length > 0) {
-    fetchAll();
-  }
-}, [datasets]);
-
+  }, [datasets]);
 
   const getStatusColor = (status: Product["status"]) => {
     switch (status) {
@@ -149,7 +147,11 @@ export function InventoryDashboard() {
                 <div className='flex items-center justify-between'>
                   <div>
                     <p className='text-sm font-medium text-gray-600'>Valor del inventario</p>
-                    <p className='text-2xl font-bold text-gray-900'>{dataItems.reduce((sum, item) => { return sum + (item.data.listprice || 0)}, 0)}</p>
+                    <p className='text-2xl font-bold text-gray-900'>
+                      {dataItems.reduce((sum, item) => {
+                        return sum + (item.data.listprice || 0);
+                      }, 0)}
+                    </p>
                   </div>
                   <TrendingUp className='h-8 w-8 text-green-600' />
                 </div>
@@ -211,15 +213,13 @@ export function InventoryDashboard() {
                           <Avatar className='h-12 w-12'>
                             <AvatarImage src={product.data.listimage || "/placeholder.svg"} />
                             <AvatarFallback>
-                              {product.data.sku ? (
-                                <ShoppingBag className='h-6 w-6' />
-                              ) : (
-                                <Tag className='h-6 w-6' />
-                              )}
+                              {product.data.sku ? <ShoppingBag className='h-6 w-6' /> : <Tag className='h-6 w-6' />}
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <h4 className='font-medium text-gray-900'>{product.data.listname || product.data.serviceName}</h4>
+                            <h4 className='font-medium text-gray-900'>
+                              {product.data.listname || product.data.serviceName}
+                            </h4>
                             <div className='flex items-center space-x-4 text-sm text-gray-500'>
                               <span>SKU: {product.data.sku}</span>
                               <span>•</span>
@@ -325,7 +325,7 @@ export function InventoryDashboard() {
           </Tabs>
         </div>
       </main>
-                    {modal && <InventoryForm setModal={setModal} />}
+      {modal && <InventoryForm setModal={setModal} />}
     </div>
   );
 }

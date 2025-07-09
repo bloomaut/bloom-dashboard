@@ -145,7 +145,7 @@ export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
           productSize: null,
           stock: formData.stock,
           category: formData.category,
-          sku: formData.sku
+          sku: formData.sku,
         };
       } else if (activeTab === "service") {
         datasetId = serviceCatalogId;

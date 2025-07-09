@@ -15,14 +15,13 @@ interface CatalogStoreContextType {
   handleRemoveDataset: (deletedId: string) => void;
   handleAddDataset: (dataset: StoreDataItem) => void;
   handleUpdateDataset: (updatedDataset: StoreDataItem) => void;
-  
 }
 
 const CatalogStoreContext = createContext<CatalogStoreContextType>({
   datasetDetail: null,
-   fetchDatasetByIdBody: async () => {
+  fetchDatasetByIdBody: async () => {
     throw new Error("fetchDatasetByIdBody function not implemented");
-   },
+  },
   fetchDatasetById: async () => {
     throw new Error("fetchDatasetById function not implemented");
   },
