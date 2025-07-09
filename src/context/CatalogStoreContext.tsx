@@ -8,16 +8,21 @@ import { setCatalogComplete } from "@/store/features/userSlice";
 
 interface CatalogStoreContextType {
   datasetDetail: DatasetDetailStore | null | undefined;
+  fetchDatasetByIdBody: (id: string) => Promise<DatasetDetailStore | undefined>;
   fetchDatasetById: () => Promise<void>;
   setLoading: (value: boolean) => void;
   loading: boolean;
   handleRemoveDataset: (deletedId: string) => void;
   handleAddDataset: (dataset: StoreDataItem) => void;
   handleUpdateDataset: (updatedDataset: StoreDataItem) => void;
+  
 }
 
 const CatalogStoreContext = createContext<CatalogStoreContextType>({
   datasetDetail: null,
+   fetchDatasetByIdBody: async () => {
+    throw new Error("fetchDatasetByIdBody function not implemented");
+   },
   fetchDatasetById: async () => {
     throw new Error("fetchDatasetById function not implemented");
   },
@@ -55,6 +60,13 @@ export const CatalogStoreProvider = ({ children }: { children: JSX.Element }) =>
     setLoading(false);
   };
 
+  const fetchDatasetByIdBody = async (id: string) => {
+    const data = await get(`datasets/${id}`, ENV.BOX);
+    if (data.statusCode === 200) {
+      return data.data;
+    }
+  };
+
   const handleRemoveDataset = (deletedId: string) => {
     if (datasetDetail) {
       const filteredDataItems = datasetDetail.dataItems.filter(item => item._id !== deletedId);
@@ -85,6 +97,7 @@ export const CatalogStoreProvider = ({ children }: { children: JSX.Element }) =>
       value={{
         datasetDetail,
         fetchDatasetById,
+        fetchDatasetByIdBody,
         handleRemoveDataset,
         handleAddDataset,
         handleUpdateDataset,

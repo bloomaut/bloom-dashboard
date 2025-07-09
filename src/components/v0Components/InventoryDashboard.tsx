@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,6 +29,10 @@ import {
   Edit,
   Trash2,
 } from "lucide-react";
+import { useCatalogContext } from "@/context/CatalogContext";
+import { useCatalogStoreContext } from "@/context/CatalogStoreContext";
+import { set } from "react-datepicker/dist/date_utils";
+import InventoryForm from "@/app/[locale]/(small)/catalog/InventoryForm";
 
 interface Product {
   id: string;
@@ -45,50 +49,28 @@ interface Product {
 export function InventoryDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("products");
+  const { datasets } = useCatalogContext();
+  const { fetchDatasetByIdBody } = useCatalogStoreContext();
+  const [dataItems, setDataItems] = useState<any[]>([]);
+  const [ modal, setModal ] = useState(false);
 
-  // Datos simulados
-  const products: Product[] = [
-    {
-      id: "1",
-      name: "Camiseta básica",
-      sku: "CAM-001",
-      category: "Ropa",
-      price: 25.99,
-      stock: 45,
-      status: "active",
-      type: "product",
-    },
-    {
-      id: "2",
-      name: "Consultoría de marketing",
-      sku: "CONS-001",
-      category: "Servicios",
-      price: 150.0,
-      stock: 0, // Los servicios no tienen stock
-      status: "active",
-      type: "service",
-    },
-    {
-      id: "3",
-      name: "Zapatillas deportivas",
-      sku: "ZAP-001",
-      category: "Calzado",
-      price: 89.99,
-      stock: 3,
-      status: "low-stock",
-      type: "product",
-    },
-    {
-      id: "4",
-      name: "Auriculares inalámbricos",
-      sku: "AUR-001",
-      category: "Electrónica",
-      price: 199.99,
-      stock: 0,
-      status: "out-of-stock",
-      type: "product",
-    },
-  ];
+
+ useEffect(() => {
+  const fetchAll = async () => {
+    const dataIds = datasets.map(dataset => dataset._id);
+    const responses = await Promise.all(dataIds.map(id => fetchDatasetByIdBody(id)));
+    const allDataItems = responses.flatMap(dataset => dataset?.dataItems);
+    if(allDataItems.length > 0) {
+      setDataItems(allDataItems)
+    }
+    console.log("All dataset details:", responses);
+  };
+
+  if (datasets.length > 0) {
+    fetchAll();
+  }
+}, [datasets]);
+
 
   const getStatusColor = (status: Product["status"]) => {
     switch (status) {
@@ -136,7 +118,7 @@ export function InventoryDashboard() {
               <Filter className='h-4 w-4 mr-2' />
               Filtros
             </Button>
-            <Button size='sm' className='bg-red-500 hover:bg-red-600'>
+            <Button size='sm' className='bg-red-500 hover:bg-red-600' onClick={() => setModal(true)}>
               <Plus className='h-4 w-4 mr-2' />
               Nuevo producto
             </Button>
@@ -154,7 +136,7 @@ export function InventoryDashboard() {
                 <div className='flex items-center justify-between'>
                   <div>
                     <p className='text-sm font-medium text-gray-600'>Total productos</p>
-                    <p className='text-2xl font-bold text-gray-900'>127</p>
+                    <p className='text-2xl font-bold text-gray-900'>{dataItems.length}</p>
                   </div>
                   <Package className='h-8 w-8 text-blue-600' />
                 </div>
@@ -167,7 +149,7 @@ export function InventoryDashboard() {
                 <div className='flex items-center justify-between'>
                   <div>
                     <p className='text-sm font-medium text-gray-600'>Valor del inventario</p>
-                    <p className='text-2xl font-bold text-gray-900'>$45.2K</p>
+                    <p className='text-2xl font-bold text-gray-900'>{dataItems.reduce((sum, item) => { return sum + (item.data.listprice || 0)}, 0)}</p>
                   </div>
                   <TrendingUp className='h-8 w-8 text-green-600' />
                 </div>
@@ -220,16 +202,16 @@ export function InventoryDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className='space-y-4'>
-                    {products.map(product => (
+                    {dataItems.map(product => (
                       <div
-                        key={product.id}
+                        key={product._id}
                         className='flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50'
                       >
                         <div className='flex items-center space-x-4'>
                           <Avatar className='h-12 w-12'>
-                            <AvatarImage src={product.image || "/placeholder.svg"} />
+                            <AvatarImage src={product.data.listimage || "/placeholder.svg"} />
                             <AvatarFallback>
-                              {product.type === "product" ? (
+                              {product.data.sku ? (
                                 <ShoppingBag className='h-6 w-6' />
                               ) : (
                                 <Tag className='h-6 w-6' />
@@ -237,14 +219,14 @@ export function InventoryDashboard() {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <h4 className='font-medium text-gray-900'>{product.name}</h4>
+                            <h4 className='font-medium text-gray-900'>{product.data.listname || product.data.serviceName}</h4>
                             <div className='flex items-center space-x-4 text-sm text-gray-500'>
-                              <span>SKU: {product.sku}</span>
+                              <span>SKU: {product.data.sku}</span>
                               <span>•</span>
-                              <span>{product.category}</span>
+                              <span>{product.data.category}</span>
                               <span>•</span>
                               <Badge variant='outline' className='text-xs'>
-                                {product.type === "product" ? "Producto" : "Servicio"}
+                                {product.data.sku ? "Producto" : "Servicio"}
                               </Badge>
                             </div>
                           </div>
@@ -252,13 +234,13 @@ export function InventoryDashboard() {
 
                         <div className='flex items-center space-x-6'>
                           <div className='text-right'>
-                            <p className='font-medium text-gray-900'>${product.price}</p>
-                            {product.type === "product" && (
-                              <p className='text-sm text-gray-500'>Stock: {product.stock}</p>
+                            <p className='font-medium text-gray-900'>${product.data.listPrice}</p>
+                            {product.data.type === "product" && (
+                              <p className='text-sm text-gray-500'>Stock: {product.data.stock}</p>
                             )}
                           </div>
-                          <Badge className={getStatusColor(product.status)} variant='secondary'>
-                            {getStatusText(product.status)}
+                          <Badge className={getStatusColor(product.data.status)} variant='secondary'>
+                            {getStatusText(product.data.status)}
                           </Badge>
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -343,6 +325,7 @@ export function InventoryDashboard() {
           </Tabs>
         </div>
       </main>
+                    {modal && <InventoryForm setModal={setModal} />}
     </div>
   );
 }

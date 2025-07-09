@@ -1,7 +1,4 @@
-"use client";
-
-import type React from "react";
-
+import React from 'react'
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,238 +6,128 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Package, ShoppingBag, Wrench, Upload, CheckCircle, ArrowRight } from "lucide-react";
+import {  ShoppingBag, Wrench, Upload, CheckCircle, ArrowRight } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useAppSelector } from "@/store/hooks";
-import { useMessageToast } from "@/hooks/useMessageToast";
-import { useCatalogContext } from "@/context/CatalogContext";
-import { post } from "@/services/fetch";
-import { useTranslations } from "next-intl";
-import { ENV } from "@/typescript/types/api";
-import { duration } from "moment";
+import { useAppSelector } from '@/store/hooks';
+import { useTranslations } from 'next-intl';
+import { useMessageToast } from '@/hooks/useMessageToast';
+import { useCatalogContext } from '@/context/CatalogContext';
+import { post } from '@/services/fetch';
+import { ENV } from '@/typescript/types/api';
 
-interface InventorySetupProps {
-  onFirstProductAdded: () => void;
-}
+function InventoryForm({setModal}: { setModal: (value: boolean) => void }) {
 
-export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
-  const [activeTab, setActiveTab] = useState("product");
-  const schema = useAppSelector(state => state.dataschema);
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    stock: "",
-    category: "",
-    sku: "",
-    type: "product",
-    duration: "",
-  });
-  const { notify, notifyError } = useMessageToast();
-  const { handleAddDataset, datasets, loading } = useCatalogContext();
-  const dict = useTranslations("dict");
+    const { datasets } = useCatalogContext();
+    const [activeTab, setActiveTab] = useState("product");
+      const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        price: "",
+        stock: "",
+        category: "",
+        sku: "",
+        type: "product",
+        duration: "",
+      });
+      const { notify, notifyError } = useMessageToast();
+      const dict = useTranslations("dict");
+    
+      const [productCatalogId, setProductCatalogId] = useState<string | null>(null);
+      const [serviceCatalogId, setServiceCatalogId] = useState<string | null>(null);
+    
+      useEffect(() => {
+          const createDefaultCatalogs = async () => {
+            const productCatalog = datasets.find(ds => String(ds.dataschema.category) === "uitool-store");
+            const serviceCatalog = datasets.find(ds => String(ds.dataschema.category) === "uitool-services");
+      console.log('useEffect datasets', productCatalog);
+            if (productCatalog && serviceCatalog) {
+              setProductCatalogId(productCatalog._id);
+              setServiceCatalogId(serviceCatalog._id);
+              return;
+            }
+            
+        }
+        createDefaultCatalogs()
+        }, [datasets]);
 
-  // Store created catalog IDs
-  const [productCatalogId, setProductCatalogId] = useState<string | null>(null);
-  const [serviceCatalogId, setServiceCatalogId] = useState<string | null>(null);
-  const [catalogsCreated, setCatalogsCreated] = useState(false);
-
-  useEffect(() => {
-    if (loading) return; // Don't run until datasets are loaded
-
-    const createDefaultCatalogs = async () => {
-      const productCatalog = datasets.find(ds => String(ds.dataschema.category) === "uitool-store");
-      const serviceCatalog = datasets.find(ds => String(ds.dataschema.category) === "uitool-services");
-
-      // If both exist, set IDs and skip creation
-      if (productCatalog && serviceCatalog) {
-        setProductCatalogId(productCatalog._id);
-        setServiceCatalogId(serviceCatalog._id);
-        setCatalogsCreated(true);
-        return;
-      }
-
-      // Otherwise, create missing catalogs
-      try {
-        console.log("data", productCatalog, serviceCatalog);
-        let response1, response2;
-        let success1 = false,
-          success2 = false;
-        if (datasets.length === 0) {
-          const postDataschema = {
-            name: "default",
-            description: "first catalog",
-            dataschema: schema[0]._id,
-            order: 0,
-            image: null,
-          };
-          response1 = await post("datasets", postDataschema, ENV.BOX);
-          success1 = response1.data.statusCode === 201;
-          if (success1) {
-            handleAddDataset(response1.data.data);
-            setProductCatalogId(response1.data.data._id);
+      const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
+            console.log(datasets);
+          // Wait until catalogs are created
+          if (!productCatalogId || !serviceCatalogId) {
+            notifyError("Los catálogos aún no están listos. Intenta de nuevo en unos segundos.");
+            return;
           }
-        }
-
-        if (datasets.length === 0) {
-          const postDataschemaService = {
-            name: "default",
-            description: "first catalog",
-            dataschema: schema[2]._id,
-            order: 0,
-            image: null,
-          };
-          response2 = await post("datasets", postDataschemaService, ENV.BOX);
-          success2 = response2.data.statusCode === 201;
-          if (success2) {
-            handleAddDataset(response2.data.data);
-            setServiceCatalogId(response2.data.data._id);
+      
+          try {
+            let datasetId: string | null = null;
+            let data: any = {};
+      
+            if (activeTab === "product") {
+              datasetId = productCatalogId;
+              data = {
+                listname: formData.name,
+                listdescr: formData.description,
+                listprice: formData.price,
+                listimage: null,
+                productBrand: null,
+                productAge: null,
+                productColor: null,
+                productGenre: null,
+                productMaterial: null,
+                productModel: null,
+                productSize: null,
+                stock: formData.stock,
+                category: formData.category,
+                sku: formData.sku
+              };
+            } else if (activeTab === "service") {
+              datasetId = serviceCatalogId;
+              data = {
+                serviceName: formData.name,
+                serviceDescr: formData.description,
+                simultaneous: 1,
+                price: formData.price,
+                category: formData.category,
+                duration: formData.duration,
+              };
+            }
+      
+            if (!datasetId) {
+              notifyError("No se pudo encontrar el catálogo para crear el item.");
+              return;
+            }
+      
+            const response = await post(
+              "dataitem",
+              {
+                dataset: datasetId,
+                data,
+                visibility: true,
+              },
+              ENV.BOX,
+            );
+      
+            if (response.data.statusCode === 201) {
+              notify(dict("toast.success_item") || "¡Item creado!");
+            } else {
+              notifyError(dict("toast.error_item") || "Error al crear el item.");
+            }
+          } catch (error) {
+            notifyError(dict("toast.error_item") || "Error al crear el item.");
           }
-        }
-
-        if (success1 && success2) {
-          setCatalogsCreated(true);
-          notify(dict("toast.post_dataset"));
-        } else {
-          notifyError(dict("toast.error_dataset"));
-        }
-      } catch (error) {
-        notifyError(dict("toast.error_dataset"));
-      }
-    };
-
-    if (schema[0]?._id && schema[2]?._id) {
-      createDefaultCatalogs();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [schema, datasets, loading]);
-
-  // Handle item creation (product or service)
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Wait until catalogs are created
-    if (!productCatalogId || !serviceCatalogId) {
-      notifyError("Los catálogos aún no están listos. Intenta de nuevo en unos segundos.");
-      return;
-    }
-
-    try {
-      let datasetId: string | null = null;
-      let data: any = {};
-
-      if (activeTab === "product") {
-        datasetId = productCatalogId;
-        data = {
-          listname: formData.name,
-          listdescr: formData.description,
-          listprice: formData.price,
-          listimage: null,
-          productBrand: null,
-          productAge: null,
-          productColor: null,
-          productGenre: null,
-          productMaterial: null,
-          productModel: null,
-          productSize: null,
-          stock: formData.stock,
-          category: formData.category,
-          sku: formData.sku
         };
-      } else if (activeTab === "service") {
-        datasetId = serviceCatalogId;
-        data = {
-          serviceName: formData.name,
-          serviceDescr: formData.description,
-          simultaneous: 1,
-          price: formData.price,
-          category: formData.category,
-          duration: formData.duration,
+      
+        const handleInputChange = (field: string, value: string) => {
+          setFormData(prev => ({
+            ...prev,
+            [field]: value,
+          }));
         };
-      }
-
-      if (!datasetId) {
-        notifyError("No se pudo encontrar el catálogo para crear el item.");
-        return;
-      }
-
-      // Post the item to the correct dataset
-      const response = await post(
-        "dataitem",
-        {
-          dataset: datasetId,
-          data,
-          visibility: true,
-        },
-        ENV.BOX,
-      );
-
-      if (response.data.statusCode === 201) {
-        notify(dict("toast.success_item") || "¡Item creado!");
-        onFirstProductAdded();
-      } else {
-        notifyError(dict("toast.error_item") || "Error al crear el item.");
-      }
-    } catch (error) {
-      notifyError(dict("toast.error_item") || "Error al crear el item.");
-    }
-  };
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
+        
   return (
-    <div className='flex-1 flex flex-col overflow-hidden'>
-      {/* Header */}
-      <header className='bg-white border-b border-gray-200 px-6 py-4'>
-        <div className='flex items-center justify-between'>
-          <h1 className='text-2xl font-bold text-gray-900'>Configuración de Inventario</h1>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className='flex-1 overflow-auto p-6'>
-        <div className='h-full mx-auto flex flex-col justify-between'>
-          {/* Welcome Card */}
-          <Card className='mb-[2rem] border-blue-200 bg-blue-50 p-3'>
-            <CardHeader>
-              <CardTitle className='text-blue-800 flex items-center space-x-2'>
-                <Package className='h-6 w-6' />
-                <span>¡Bienvenido a tu Inventario!</span>
-              </CardTitle>
-              <CardDescription className='text-blue-700'>
-                Para comenzar, necesitas agregar tu primer producto o servicio. Esto nos ayudará a configurar tu
-                catálogo y habilitar todas las funcionalidades de gestión.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className='text-blue-700'>
-              <div className='space-y-2 flex flex-col gap-2'>
-                <p className='flex items-center space-x-2'>
-                  <CheckCircle className='h-4 w-4 text-blue-600' />
-                  <span>Gestiona tu stock en tiempo real</span>
-                </p>
-                <p className='flex items-center space-x-2'>
-                  <CheckCircle className='h-4 w-4 text-blue-600' />
-                  <span>Crea catálogos organizados</span>
-                </p>
-                <p className='flex items-center space-x-2'>
-                  <CheckCircle className='h-4 w-4 text-blue-600' />
-                  <span>Configura promociones automáticas</span>
-                </p>
-                <p className='flex items-center space-x-2'>
-                  <CheckCircle className='h-4 w-4 text-blue-600' />
-                  <span>Controla precios y márgenes</span>
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Form Card */}
-          <Card>
+    <Card style={{width: '90%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>
+        <div style={{position: 'absolute', right: 0, top: 0, padding: '1rem', cursor: 'pointer'}} onClick={() => setModal(false)}>X</div>
             <CardHeader>
               <CardTitle>Agregar tu primer item</CardTitle>
               <CardDescription>Completa la información de tu primer producto o servicio</CardDescription>
@@ -441,8 +328,7 @@ export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
               </Tabs>
             </CardContent>
           </Card>
-        </div>
-      </main>
-    </div>
-  );
+  )
 }
+
+export default InventoryForm
