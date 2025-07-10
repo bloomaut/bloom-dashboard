@@ -332,7 +332,7 @@ export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
                       </div>
                       <div className='space-y-2'>
                         <Label htmlFor='product-category'>Categoría</Label>
-                        <Select value={formData.category} onValueChange={value => handleInputChange("category", value)}>
+                        <Select value={formData.category} onValueChange={(value: string) => handleInputChange("category", value)}>
                           <SelectTrigger>
                             <SelectValue placeholder='Seleccionar categoría' />
                           </SelectTrigger>
@@ -374,7 +374,7 @@ export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
                       </div>
                       <div className='space-y-2'>
                         <Label htmlFor='service-duration'>Duración</Label>
-                        <Select value={formData.duration} onValueChange={value => handleInputChange("duration", value)}>
+                        <Select value={formData.duration} onValueChange={(value : string) => handleInputChange("duration", value)}>
                           <SelectTrigger>
                             <SelectValue placeholder='Duración del servicio' />
                           </SelectTrigger>
@@ -413,7 +413,7 @@ export function InventorySetup({ onFirstProductAdded }: InventorySetupProps) {
                       </div>
                       <div className='space-y-2'>
                         <Label htmlFor='service-category'>Categoría</Label>
-                        <Select value={formData.category} onValueChange={value => handleInputChange("category", value)}>
+                        <Select value={formData.category} onValueChange={(value : string) => handleInputChange("category", value)}>
                           <SelectTrigger>
                             <SelectValue placeholder='Seleccionar categoría' />
                           </SelectTrigger>
