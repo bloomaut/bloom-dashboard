@@ -7,7 +7,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     const res = new NextResponse();
     const { accessToken } = await getAccessToken(req, res);
     const apiId = req.headers.get("X-ID") || "";
-    const type_download = req.headers.get("type-download" || "");
+    const type_download = req.headers.get("type-download");
 
     // XLXS requests
     const resp = await fetch(`${process.env.NEXT_PUBLIC_API_BOX}/api/datasets/${apiId}/${type_download}`, {
