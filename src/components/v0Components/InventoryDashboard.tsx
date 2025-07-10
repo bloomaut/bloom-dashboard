@@ -213,7 +213,7 @@ export function InventoryDashboard() {
                           <Avatar className='h-12 w-12'>
                             <AvatarImage src={product.data.listimage || "/placeholder.svg"} />
                             <AvatarFallback>
-                              {product.data.sku ? <ShoppingBag className='h-6 w-6' /> : <Tag className='h-6 w-6' />}
+                              {product.data.stock ? <ShoppingBag className='h-6 w-6' /> : <Tag className='h-6 w-6' />}
                             </AvatarFallback>
                           </Avatar>
                           <div>
@@ -226,7 +226,7 @@ export function InventoryDashboard() {
                               <span>{product.data.category}</span>
                               <span>•</span>
                               <Badge variant='outline' className='text-xs'>
-                                {product.data.sku ? "Producto" : "Servicio"}
+                                {product.data.stock ? "Producto" : "Servicio"}
                               </Badge>
                             </div>
                           </div>
