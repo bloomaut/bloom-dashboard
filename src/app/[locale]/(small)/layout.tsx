@@ -6,11 +6,11 @@ import "./styles.css";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 // Components
-import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import SideTrack from "@/components/SideTrack";
 import { useState } from "react";
 import Questionaire from "@/components/Questionaire/Questionaire";
+import { Sidebar } from "@/components/v0Components/Sidebar";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [showQuestions, setShowQuestions] = useState(true);

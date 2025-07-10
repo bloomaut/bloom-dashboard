@@ -11,7 +11,7 @@ import { get, post, remove, update } from "@/services/fetch";
 import { ENV } from "@/typescript/types/api";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useTranslations } from "next-intl";
-import { handleFileUpload } from "@/utils/handleFileUpload";
+import { useHandleFileUpload } from "@/utils/handleFileUpload";
 import { useAppSelector } from "@/store/hooks";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import { useCatalogContext } from "@/context/CatalogContext";
@@ -99,6 +99,8 @@ const FormActions = ({
   /* useEffect(() => {
 
   }, []); */
+
+  const handleFileUpload = useHandleFileUpload();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

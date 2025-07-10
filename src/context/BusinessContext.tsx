@@ -97,7 +97,6 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
   const router = useRouter();
   const locale = useLocale();
   const { notify, notifyError } = useMessageToast();
-  const { clientId } = useAppSelector(state => state.ricardosData);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData(prevFormData => ({
@@ -121,13 +120,13 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
       }));
       setHadSubdomain(subdomainsData.subdomains[0].subdomain);
     }
-  }, [userData, clientId]);
+  }, [userData, subdomainsData]);
 
   // Si el logo existe, agregarlo al FormData
   useEffect(() => {
     const uploadLogo = async () => {
       if (logo) {
-        const data = await handleLogoUpload(logo);
+        const data = await handleLogoUpload(logo, notify, notifyError);
         const logoURL = data?.url || "";
         const colors = data?.colors || [];
         const parsedPalette = colors.map((color: string) => ({ color }));
@@ -151,7 +150,7 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
   useEffect(() => {
     const uploadBanner = async () => {
       if (banner) {
-        const bannerUrl = await handleLogoBanner(banner);
+        const bannerUrl = await handleLogoBanner(banner, notify, notifyError);
         setFormData(prevFormData => ({
           ...prevFormData,
           client: {

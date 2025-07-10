@@ -19,7 +19,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     return new NextResponse(blob, { status: 200, statusText: "OK", headers });
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.error("----------Axios Error----------", error.response?.data);
+      console.error("----------Axios Error-----------", error.response?.data);
       return NextResponse.json({ error: error.response?.data?.message }, { status: error.response?.status || 500 });
     } else {
       // Handle other types of errors here
