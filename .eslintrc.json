@@ -1,10 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:react-hooks/recommended"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended", "plugin:react-hooks/recommended"],
   "plugins": ["@typescript-eslint", "prettier", "react-hooks"],
   "parserOptions": {
     "ecmaVersion": "latest",

@@ -8,7 +8,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { DesignProps, VariablesFormDesign } from "@/typescript/interfaces/designs.interface";
 import { useMessageToast } from "@/hooks/useMessageToast";
-import { handleFileUpload } from "@/utils/handleFileUpload";
 import { useParams, useRouter } from "next/navigation";
 import PopupDesign from "../PopupDesign";
 import useFormValidator from "@/hooks/useFormValidator";
@@ -75,23 +74,6 @@ const DesignForm = () => {
       }));
     }
   };
-
-  useEffect(() => {
-    const uploadVarImage = async () => {
-      if (variableName && file) {
-        setLoading(true);
-        const imageUrl = await handleFileUpload(file);
-        setFormValues(prevValues => ({
-          ...prevValues,
-          variables: prevValues.variables.map(variable =>
-            variable.name === variableName ? { ...variable, value: imageUrl } : variable,
-          ),
-        }));
-        setLoading(false);
-      }
-    };
-    uploadVarImage();
-  }, [file]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

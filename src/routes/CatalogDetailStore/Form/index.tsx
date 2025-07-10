@@ -7,7 +7,6 @@ import { useMessageToast } from "@/hooks/useMessageToast";
 import { StoreDataItem, DataschemaField, PostDataItem, PutDataItem } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogStoreContext } from "@/context/CatalogStoreContext";
-import { handleFileUpload } from "@/utils/handleFileUpload";
 import { AllProducts } from "@/typescript/interfaces/catalog.interface";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 // Components
@@ -156,16 +155,6 @@ const Form = ({ setShowPopup, action, id, variantOf, allProducts, onUpdate }: Fo
           dataItemId: variantOf ? variantOf : null,
           ...(formData.order !== null && { order: formData.order }),
         };
-
-        if (file) {
-          const uploadedImageUrl = await handleFileUpload(file);
-          if (uploadedImageUrl) {
-            dataToSend.data.listimage = uploadedImageUrl;
-          } else {
-            throw new Error(dict("toast.error_uploading"));
-          }
-        }
-
         if (action === "post") {
           await postDataItem(dataToSend);
         } else if (action === "put" && id) {

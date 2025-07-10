@@ -1,55 +1,55 @@
 .form {
-    @include width-height(100%, auto);
-    @include flex(row, start, flex-start, 15px);
-    flex-wrap: wrap;
-    position: relative;
-    .input_row {
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
-        width: 100%;
-        gap: 10px;
+  @include width-height(100%, auto);
+  @include flex(row, start, flex-start, 15px);
+  flex-wrap: wrap;
+  position: relative;
+  .input_row {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
+    gap: 10px;
+  }
+  .input {
+    @include width-height(44%, auto);
+    @include flex(column, center, flex-start, 5px);
+    input,
+    textarea {
+      width: 100%;
+      border: none;
+      box-shadow: 0 0 1px $lightGrey;
+      padding: 8px 12px;
+      border-radius: 4px;
+      outline: none;
+      font-size: 16px;
     }
-    .input {
-        @include width-height(44%, auto);
-        @include flex(column, center, flex-start, 5px);
-        input,
-        textarea {
-            width: 100%;
-            border: none;
-            box-shadow: 0 0 1px $lightGrey;
-            padding: 8px 12px;
-            border-radius: 4px;
-            outline: none;
-            font-size: 16px;
-        }
-        
-        textarea {
-            min-height: 100px;
-            resize: none;
-        }
-        p {
-            box-shadow: 0 0 1px $lightGrey;
-            background-color: $white;
-            padding: 4px 40px 4px 12px;
-            border-radius: 4px;
-        }
+
+    textarea {
+      min-height: 100px;
+      resize: none;
     }
-    .btn_del {
-        cursor: pointer;
-        background: transparent;
-        border: none;
+    p {
+      box-shadow: 0 0 1px $lightGrey;
+      background-color: $white;
+      padding: 4px 40px 4px 12px;
+      border-radius: 4px;
     }
-    .submit {
-        padding: 8px 12px;
-        background-color: $orange;
-        color: $white;
-        border-radius: 4px;
-        position: absolute;
-        bottom: 0;
-        right: 10px;
-        &:hover {
-            background-color: $darkOrange;
-        }
+  }
+  .btn_del {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+  }
+  .submit {
+    padding: 8px 12px;
+    background-color: $orange;
+    color: $white;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    &:hover {
+      background-color: $darkOrange;
     }
+  }
 }
