@@ -9,6 +9,10 @@ module.exports = withNextIntl({
         protocol: "https",
         hostname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+      },
     ],
   },
   sassOptions: {

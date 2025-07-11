@@ -5,6 +5,7 @@ import GradientBar from "./QuestBar";
 import Icon from "../Icon";
 import Image from "next/image";
 import { questions } from "./questions";
+import { getYouTubeEmbedURL, videos } from "./videos";
 
 interface Props {
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => void;
@@ -122,9 +123,16 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: "20px", fontWeight: 600 }}>
             {questions[currentIndex]}
           </div>
-          <div
+          {/*  <div
             style={{ backgroundColor: "#D9D9D9", height: "88%", borderRadius: 15, marginTop: "3rem", width: "90%" }}
-          ></div>
+          ></div> */}
+          <iframe
+            style={{ borderRadius: 15, marginTop: "3rem" }}
+            width='90%'
+            height='88%'
+            src={`${getYouTubeEmbedURL(videos[currentIndex])}`}
+            allow='accelerometer; autoplay;'
+          ></iframe>
         </div>
         <div style={{ width: "35%", height: "100%" }}>
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: "20px", fontWeight: 600 }}>
