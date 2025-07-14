@@ -1,8 +1,17 @@
+"use client";
 import { Download, HelpCircle, MessageCircle } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { styles } from "./styles";
+import { approveProposal } from "@/services/fetch";
+import { useRouter } from "next/navigation";
 
 function ProposalActions() {
+  const router = useRouter();
+  const [checked, setChecked] = useState(false);
+  const hadleClick = () => {
+    approveProposal();
+    router.push("/");
+  };
   return (
     <div style={styles.sidebar}>
       {/* Actions */}
@@ -15,10 +24,17 @@ function ProposalActions() {
         </button>
 
         <div style={styles.checkboxContainer}>
-          <input type='checkbox' style={styles.checkbox} />
+          <input type='checkbox' style={styles.checkbox} onChange={() => setChecked(!checked)} />
           <span>He leído y acepto los términos de esta propuesta comercial</span>
         </div>
-
+        <button
+          className='my-2'
+          style={{ ...styles.secondaryButton, backgroundColor: !checked ? "#bebebe" : "#ff5722", color: "white" }}
+          disabled={!checked}
+          onClick={hadleClick}
+        >
+          <span className='whitespace-nowrap'>Continuar con la propuesta</span>
+        </button>
         <button style={styles.secondaryButton}>
           <MessageCircle size={16} />
           <span>Dar Feedback / Ajustar</span>

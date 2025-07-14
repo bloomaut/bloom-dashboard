@@ -31,6 +31,8 @@ export const userInitialState: UserBusiness = {
     palette: [],
     created_at: "",
     updated_at: "",
+    proposal_status: "pending",
+    proposal_url: null,
   },
   isCatalogComplete: false,
 };

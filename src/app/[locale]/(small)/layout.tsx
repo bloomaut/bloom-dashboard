@@ -12,9 +12,11 @@ import { useState } from "react";
 import Questionaire from "@/components/Questionaire/Questionaire";
 import { Sidebar } from "@/components/v0Components/Sidebar";
 import { TutorialProvider } from "@/context/TutorialContext";
+import { useAppSelector } from "@/store/hooks";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [showQuestions, setShowQuestions] = useState(true);
+  const user = useAppSelector(state => state.userData);
   return (
     <div className={styles.container}>
       <TutorialProvider>
@@ -32,7 +34,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
           pauseOnHover
           transition={Slide}
         />
-        {showQuestions ? (
+        {user.client.proposal_status !== "APPROVED" ? (
           <div className={styles.inner_container}>
             <div className={styles.children_container} id='children_container'>
               <Questionaire />
