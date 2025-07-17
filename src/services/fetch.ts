@@ -320,3 +320,21 @@ export const approveProposal = async () => {
     }
   }
 };
+
+export const getMetas = async () => {
+  try {
+    const response = await axios.get("/api/pipeline/goals");
+
+    if (response.status === 400) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};

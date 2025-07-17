@@ -34,21 +34,23 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
           pauseOnHover
           transition={Slide}
         />
-        {user.client.proposal_status !== "APPROVED" ? (
-          <div className={styles.inner_container}>
-            <div className={styles.children_container} id='children_container'>
-              <Questionaire />
+        {
+          /* user.client.proposal_status !== "APPROVED" */ false ? (
+            <div className={styles.inner_container}>
+              <div className={styles.children_container} id='children_container'>
+                <Questionaire />
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className={styles.inner_container}>
-            <Sidebar />
-            <SideTrack />
-            <div className={styles.children_container} id='children_container'>
-              {children}
+          ) : (
+            <div className={styles.inner_container}>
+              <Sidebar />
+              <SideTrack />
+              <div className={styles.children_container} id='children_container'>
+                {children}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
       </TutorialProvider>
     </div>
   );
