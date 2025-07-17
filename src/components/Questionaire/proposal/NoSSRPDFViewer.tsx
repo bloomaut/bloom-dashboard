@@ -3,10 +3,11 @@
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import { useEffect, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const PDFViewer = () => {
   const [numPages, setNumPages] = useState<number | null>(null);
-
+  const user = useAppSelector(state => state.userData);
   pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
   const onLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -22,7 +23,7 @@ const PDFViewer = () => {
   return (
     <div>
       <Document
-        file='/pdf/ejemplo-doc-propuesta-comercial.pdf'
+        file={user.client.proposal_url || "/pdf/ejemplo-doc-propuesta-comercial.pdf"}
         onLoadSuccess={onLoadSuccess}
         onLoadError={error => console.error("Error loading PDF:", error)}
       >

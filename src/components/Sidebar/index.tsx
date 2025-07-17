@@ -11,6 +11,7 @@ import { setUserData } from "@/store/features/userSlice";
 import { get } from "@/services/fetch";
 import { setDataRicardos } from "@/store/features/ricardoSlice";
 import { setDataSubdomains } from "@/store/features/subdomainsSlice";
+import { DollarSign, Share2 } from "lucide-react";
 
 interface SidebarCard {
   title: string;
@@ -64,6 +65,21 @@ const Sidebar = () => {
       title: `FAQs`,
       icon: <Icon name='faqs' width={30} viewBox='0 -5 35 35' />,
       path: "/faqs",
+    },
+    {
+      title: `CRM`,
+      icon: <Icon name='clients' />,
+      path: "/crm",
+    },
+    {
+      title: `Finances`,
+      icon: <DollarSign />,
+      path: "/finances",
+    },
+    {
+      title: `Redes Sociales`,
+      icon: <Share2 />,
+      path: "/social-media",
     },
   ];
 

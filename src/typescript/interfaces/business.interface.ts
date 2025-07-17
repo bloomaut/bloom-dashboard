@@ -41,6 +41,8 @@ export interface Client {
   created_at?: string;
   updated_at?: string;
   address: string;
+  proposal_status: string;
+  proposal_url: string | null;
 }
 
 // Interfaces para actualización de datos

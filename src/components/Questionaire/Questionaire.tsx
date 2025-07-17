@@ -74,8 +74,10 @@ function Questionaire() {
           setTab("terms");
         } else if (!data[0].completed) {
           setTab("quest");
-        } else {
+        } else if (!user.client.proposal_url) {
           setTab("fin");
+        } else {
+          setTab("prop");
         }
       }
 
@@ -178,7 +180,7 @@ function Questionaire() {
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin setTab={setTab} questData={questData} />}
       {tab === "prop" && <Proposal />}
-      {/* <div
+      <div
         style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
       >
         <button onClick={() => console.log(questData)}>User Update</button>
@@ -188,7 +190,7 @@ function Questionaire() {
         <button onClick={() => setTab("prop")}>Propuesta</button>
         <button onClick={() => setCurrentIndex(104)}>Last</button>
         <button onClick={() => console.log(questData.completed)}>Info</button>
-      </div> */}
+      </div>
     </div>
   );
 }

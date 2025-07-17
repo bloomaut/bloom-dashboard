@@ -12,7 +12,7 @@ import {
 } from "@/typescript/interfaces/catalog.interface";
 import { ENV } from "@/typescript/types/api";
 import { useCatalogServiceContext } from "@/context/CatalogServicesContext";
-import { handleFileUpload } from "@/utils/handleFileUpload";
+import { useHandleFileUpload } from "@/utils/handleFileUpload";
 import { useCloseDropdown } from "@/hooks/useCloseDropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -286,14 +286,6 @@ const Form = ({ setShowPopup, action, id, allServices, onUpdate }: FormProps) =>
           visibility: formData.visibility,
           ...(formData.order !== null && { order: formData.order }),
         };
-        if (file) {
-          const uploadedImageUrl = await handleFileUpload(file);
-          if (uploadedImageUrl) {
-            dataToSend.data.serviceImage = uploadedImageUrl;
-          } else {
-            throw new Error(dict("toast.error_uploading"));
-          }
-        }
         if (action === "post") {
           await postDataItem(dataToSend);
         } else if (action === "put" && id) {

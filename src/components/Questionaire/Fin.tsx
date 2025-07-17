@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
 import { CircleLoader } from "./Spinner";
-import { postProp } from "@/services/fetch";
+import { postOnboarding, postProp } from "@/services/fetch";
 import { generatePropPayload } from "./questions";
+import PollUser from "./Polling";
 
 function Fin({
   setTab,
@@ -21,6 +22,7 @@ function Fin({
     setTimeout(() => {
       const payload = generatePropPayload({ userId: questData.userId, answers: questData.answers });
       postProp(payload);
+      postOnboarding();
     }, 2000);
   }, []);
 
@@ -48,7 +50,7 @@ function Fin({
       >
         <div style={{ position: "absolute", top: "-35px" }}>Terminado</div>
       </div>
-
+      <PollUser setTab={setTab} />
       <div style={{ position: "absolute", top: "-35px", right: "15%" }}>100%</div>
       <CircleLoader />
       <div style={{ fontWeight: 600, fontFamily: "inter, sans-serif", fontSize: "2.2rem", marginTop: "2rem" }}>

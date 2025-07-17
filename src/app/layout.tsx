@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import "./globals.css";
 
 interface ErrorProps {
   children: ReactNode;

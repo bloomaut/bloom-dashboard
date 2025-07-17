@@ -3,6 +3,8 @@ import { UPDATE } from "@/typescript/types/update.type";
 import { EnvironmentApi } from "@/typescript/types/api";
 import axios from "axios";
 import fs from "fs";
+import { parse } from "cookie";
+import { NextApiRequest } from "next";
 const API = "/api";
 
 export const get = async (url: string, api?: EnvironmentApi) => {
@@ -255,6 +257,61 @@ export const postProp = async (questData: {
 
     const responseData = response.data;
     return responseData;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+/* 
+export const postProp2 = async () => {
+  try {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/onboarding`);
+    console.log("response", response);
+    if (response.status === 400) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const responseData = response.data;
+    return responseData;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+}; */
+
+export const postOnboarding = async () => {
+  try {
+    const response = await axios.post("/api/post-onboarding");
+
+    if (response.status === 400) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
+export const approveProposal = async () => {
+  try {
+    const response = await axios.get("/api/approve");
+
+    if (response.status === 400) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return error.response;
