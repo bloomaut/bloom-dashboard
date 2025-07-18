@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./loginLanding.module.scss";
 
+const BUTTONS_DISABLED = true; // Set to true to disable all main CTA buttons
+
 export default function SmallLanding() {
   return (
     <div className={styles.container}>
@@ -13,7 +15,7 @@ export default function SmallLanding() {
             <span className={styles.tagline}>de cero a todo</span>
           </div>
           <Link href='/api/auth/login'>
-            <button className={styles.headerButton}>Crea tu negocio</button>
+            <button className={styles.headerButton} disabled={BUTTONS_DISABLED}>Crea tu negocio</button>
           </Link>
         </div>
       </header>
@@ -45,7 +47,7 @@ export default function SmallLanding() {
 
               <div className={styles.heroButtons}>
                 <Link href='/api/auth/login'>
-                  <button className={styles.heroMainButton}>Crea tu negocio</button>
+                  <button className={styles.heroMainButton} disabled={BUTTONS_DISABLED}>Crea tu negocio</button>
                 </Link>
               </div>
 
@@ -113,7 +115,7 @@ export default function SmallLanding() {
             </p>
             <div className={styles.ctaButtons}>
               <Link href='/api/auth/login'>
-                <button className={styles.ctaButton}>Comenzar Ahora - Gratis</button>
+                <button className={styles.ctaButton} disabled={BUTTONS_DISABLED}>Comenzar Ahora - Gratis</button>
               </Link>
             </div>
             <p className={styles.ctaDisclaimer}>Sin compromiso • Soporte incluido</p>
