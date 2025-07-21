@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./loginLanding.module.scss";
 
-const BUTTONS_DISABLED = true; // Set to true to disable all main CTA buttons
+const BUTTONS_DISABLED = false; // Set to true to disable all main CTA buttons
 
 export default function SmallLanding() {
   return (
