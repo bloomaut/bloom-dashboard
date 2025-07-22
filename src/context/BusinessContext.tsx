@@ -39,7 +39,7 @@ interface BusinessContextType {
   setFormData: React.Dispatch<React.SetStateAction<UserBusiness>>;
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
   handleSubmit: () => void;
-  handleCategoryChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleCategoryChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   checkValidation: boolean;
   errors: Record<string, string>;
   logo: File | null;
@@ -100,7 +100,7 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
   const locale = useLocale();
   const { notify, notifyError } = useMessageToast();
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       client: {
