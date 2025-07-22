@@ -38,7 +38,7 @@ export function BusinessDashboard() {
     loading,
     handleSubmit,
     handleChange,
-    handleCategoryChange,
+    handleCategoryChangeInput,
   } = useBusinessContext();
 
   const [businessData, setBusinessData] = useState({
@@ -207,7 +207,7 @@ export function BusinessDashboard() {
                         placeholder='Ej: Restaurante, Tienda, Servicios'
                         name='business_category'
                         value={formData.client.category || ""}
-                        onChange={handleCategoryChange}
+                        onChange={handleCategoryChangeInput}
                       />
                     </div>
                   </div>
