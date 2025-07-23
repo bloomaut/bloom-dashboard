@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 function ProposalActions() {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
-  const handleClick = () => {
+  const hadleClick = () => {
     approveProposal();
     router.push("/");
   };
@@ -31,7 +31,7 @@ function ProposalActions() {
           className='my-2'
           style={{ ...styles.secondaryButton, backgroundColor: !checked ? "#bebebe" : "#ff5722", color: "white" }}
           disabled={!checked}
-          onClick={handleClick}
+          onClick={hadleClick}
         >
           <span className='whitespace-nowrap'>Continuar con la propuesta</span>
         </button>

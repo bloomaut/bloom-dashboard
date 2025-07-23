@@ -17,8 +17,6 @@ export interface UserBusiness {
   updated_at?: string;
   client: Client;
   isCatalogComplete?: boolean;
-  founded?: number;
-  employees?: number;
 }
 
 export interface UserBusinessSelector {
@@ -29,7 +27,6 @@ export interface Client {
   id?: number | null;
   name: Nullable<string>;
   cuit?: string;
-
   banner: Nullable<string>;
   razon_social?: string;
   company_web: string;
@@ -44,8 +41,8 @@ export interface Client {
   created_at?: string;
   updated_at?: string;
   address: string;
-  proposal_status?: string;
-  proposal_url?: string | null;
+  proposal_status: string;
+  proposal_url: string | null;
 }
 
 // Interfaces para actualización de datos
