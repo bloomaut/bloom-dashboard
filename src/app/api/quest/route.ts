@@ -14,7 +14,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req) {
 
   try {
     const { userId, answers, completed } = body;
-    const user = await prisma.response.findFirst({
+    const user = await prisma.questionStepper.findFirst({
       where: {
         clientId: userId,
       },
@@ -22,7 +22,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req) {
     let newResponse;
 
     if (!user) {
-      newResponse = await prisma.response.createMany({
+      newResponse = await prisma.questionStepper.createMany({
         data: answers.map((answer: any) => ({
           block: answer.block,
           clientId: userId,
@@ -32,13 +32,13 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req) {
         })),
       });
     } else {
-      await prisma.response.deleteMany({
+      await prisma.questionStepper.deleteMany({
         where: {
           clientId: userId,
         },
       });
 
-      const createdResponses = await prisma.response.createMany({
+      const createdResponses = await prisma.questionStepper.createMany({
         data: answers.map((answer: any) => ({
           block: answer.block,
           clientId: userId,
