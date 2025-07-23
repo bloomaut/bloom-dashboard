@@ -115,11 +115,10 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
         alignItems: "center",
         height: "100%",
         marginTop: "1rem",
-        overflow: "hidden",
       }}
     >
       <GradientBar value={currentIndex * 4} />
-      <div style={{ width: "100%", display: "flex", flexDirection: "row", height: "90vh" }}>
+      <div style={{ width: "100%", display: "flex", flexDirection: "row", height: "100%" }}>
         <div style={{ width: "65%", height: "100%" }}>
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: "20px", fontWeight: 600 }}>
             {questions[currentIndex]}
@@ -130,7 +129,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
           <iframe
             style={{ borderRadius: 15, marginTop: "3rem" }}
             width='90%'
-            height='70%'
+            height='88%'
             src={`${getYouTubeEmbedURL(videos[currentIndex])}`}
             allow='accelerometer; autoplay;'
           ></iframe>
@@ -151,7 +150,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
               fontFamily: "Barlow, sans-serif",
               color: "#575757",
               marginTop: "3rem",
-              height: "70%",
+              height: "79%",
               width: "100%",
               outline: "none",
               resize: "none",

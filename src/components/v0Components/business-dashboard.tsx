@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,30 +17,13 @@ import {
   Globe,
   Instagram,
   MessageCircle,
-  Palette as PaletteIcon,
+  Palette,
   Settings,
   FileText,
   Download,
 } from "lucide-react";
-import { getMetas } from "@/services/fetch";
-import { useBusinessContext } from "@/context/BusinessContext";
-import DragImage from "../DragAndDrop/DragImage";
-import Palette from "@/routes/Business/SecondaryForm/Palette";
 
 export function BusinessDashboard() {
-  const {
-    formData,
-    logo,
-    setLogo,
-    errorLogo,
-    banner,
-    setBanner,
-    loading,
-    handleSubmit,
-    handleChange,
-    handleCategoryChangeInput,
-  } = useBusinessContext();
-
   const [businessData, setBusinessData] = useState({
     name: "Mi Empresa",
     description: "Una empresa innovadora dedicada a brindar soluciones de calidad",
@@ -51,18 +34,6 @@ export function BusinessDashboard() {
     instagram: "@mi_empresa",
     tiktok: "@mi_empresa_tk",
   });
-
-  const [goals, setGoals] = useState();
-
-  useEffect(() => {
-    const getGoals = async () => {
-      const goals = await getMetas();
-      if (goals) {
-        setGoals(goals);
-      }
-    };
-    getGoals();
-  }, []);
 
   // Todas las metas combinadas
   const allGoals = [
@@ -144,11 +115,11 @@ export function BusinessDashboard() {
   ];
 
   const handleSave = () => {
-    console.log("Guardando datos del negocio:", formData, goals);
+    console.log("Guardando datos del negocio:", businessData);
   };
 
   return (
-    <div className='flex-1 flex flex-col overflow-hidden w-full'>
+    <div className='flex-1 flex flex-col overflow-hidden'>
       {/* Header */}
       <header className='bg-white border-b border-gray-200 px-6 py-4'>
         <div className='flex items-center justify-between'>
@@ -194,31 +165,23 @@ export function BusinessDashboard() {
                       <Label htmlFor='business-name'>Nombre del negocio</Label>
                       <Input
                         id='business-name'
-                        name='business_name'
-                        value={formData.client.name || ""}
-                        onChange={handleChange}
+                        value={businessData.name}
+                        onChange={e => setBusinessData({ ...businessData, name: e.target.value })}
                         placeholder='Nombre de tu empresa'
                       />
                     </div>
                     <div className='space-y-2'>
-                      <Label htmlFor='business_category'>Tipo de negocio</Label>
-                      <Input
-                        id='business_category'
-                        placeholder='Ej: Restaurante, Tienda, Servicios'
-                        name='business_category'
-                        value={formData.client.category || ""}
-                        onChange={handleCategoryChangeInput}
-                      />
+                      <Label htmlFor='business-type'>Tipo de negocio</Label>
+                      <Input id='business-type' placeholder='Ej: Restaurante, Tienda, Servicios' />
                     </div>
                   </div>
 
                   <div className='space-y-2'>
-                    <Label htmlFor='business_description'>Descripción</Label>
+                    <Label htmlFor='description'>Descripción</Label>
                     <Textarea
-                      id='business_description'
-                      name='business_description'
-                      value={formData.client.description || ""}
-                      onChange={handleChange}
+                      id='description'
+                      value={businessData.description}
+                      onChange={e => setBusinessData({ ...businessData, description: e.target.value })}
                       placeholder='Describe tu negocio en pocas palabras'
                       rows={4}
                     />
@@ -227,25 +190,11 @@ export function BusinessDashboard() {
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                     <div className='space-y-2'>
                       <Label htmlFor='founded'>Año de fundación</Label>
-                      <Input
-                        id='founded'
-                        type='number'
-                        placeholder='2020'
-                        name='founded'
-                        onChange={handleChange}
-                        value={formData.founded || 0}
-                      />
+                      <Input id='founded' type='number' placeholder='2020' />
                     </div>
                     <div className='space-y-2'>
                       <Label htmlFor='employees'>Número de empleados</Label>
-                      <Input
-                        id='employees'
-                        type='number'
-                        placeholder='1-10'
-                        name='employees'
-                        onChange={handleChange}
-                        value={formData.employees || 0}
-                      />
+                      <Input id='employees' placeholder='1-10' />
                     </div>
                   </div>
                 </CardContent>
@@ -297,7 +246,11 @@ export function BusinessDashboard() {
                   <CardContent className='space-y-6'>
                     <div className='space-y-4'>
                       <div className='border-2 border-dashed border-gray-300 rounded-lg p-8 text-center'>
-                        <DragImage type='image' file={logo} setFile={setLogo} currentImage={formData.client?.logo} />
+                        <Upload className='h-12 w-12 mx-auto text-gray-400 mb-4' />
+                        <p className='text-sm text-gray-600 mb-2'>Logo de la empresa</p>
+                        <Button variant='outline' size='sm'>
+                          Subir logo
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -332,9 +285,8 @@ export function BusinessDashboard() {
                         </div>
                       </div>
                     </div>
-                    <Palette />
                     <Button variant='outline' className='w-full'>
-                      <PaletteIcon className='h-4 w-4 mr-2' />
+                      <Palette className='h-4 w-4 mr-2' />
                       Generar paleta automática
                     </Button>
                   </CardContent>

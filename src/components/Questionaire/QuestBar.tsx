@@ -4,16 +4,8 @@ import React from "react";
 const GradientBar = ({ value }: { value: number }) => {
   const clampedValue = Math.max(0, Math.min(500, value)); // Clamp between 0 and 100
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        gap: 30,
-        position: "relative",
-        marginTop: "2rem",
-      }}
-    >
+    <div style={{ display: "flex", flexDirection: "row", width: "100%", gap: 30, position: "relative" }}>
+      {value}
       <div
         style={{
           width: "42.8%",

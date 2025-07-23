@@ -18,22 +18,8 @@ import { GoalsCard } from "./GoalCard";
 import { FinancialChart } from "./FinancialChart";
 import { TransactionList } from "./TransactionList";
 import { BudgetTracker } from "./BudgetTracker";
-import { useEffect, useState } from "react";
-import { getFinances } from "@/services/fetch";
-import FinanceModal from "@/app/[locale]/(small)/finances/FinanceModal";
 
 export function FinancesDashboard() {
-  const [financeData, setFinanceData] = useState();
-  const [openModal, setOpenModal] = useState(false);
-
-  useEffect(() => {
-    const getFinanceData = async () => {
-      const financeData = await getFinances();
-      setFinanceData(financeData);
-    };
-    getFinanceData();
-  }, []);
-
   // Datos simulados
   const chartData = [
     { month: "Ene", income: 45000, expenses: 32000, profit: 13000 },
@@ -169,7 +155,7 @@ export function FinancesDashboard() {
         <div className='flex items-center justify-between'>
           <h1 className='text-2xl font-bold text-gray-900'>Finanzas</h1>
           <div className='flex items-center space-x-3'>
-            <Button size='sm' className='bg-red-500 hover:bg-red-600' onClick={() => setOpenModal(true)}>
+            <Button size='sm' className='bg-red-500 hover:bg-red-600'>
               <Plus className='h-4 w-4 mr-2' />
               Nueva transacción
             </Button>
@@ -259,22 +245,21 @@ export function FinancesDashboard() {
             </TabsList>
 
             {/* Overview */}
-            <TabsContent value='overview' className='space-y-6 min-h-60 items-center justify-center'>
-              <div className='w-full h-full min-h-60 flex items-center justify-center'>Próximamente</div>
+            <TabsContent value='overview' className='space-y-6'>
               <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-                {/* <FinancialChart title='Ingresos' data={chartData} type='income' />
+                <FinancialChart title='Ingresos' data={chartData} type='income' />
                 <FinancialChart title='Gastos' data={chartData} type='expenses' />
                 <FinancialChart title='Ganancias' data={chartData} type='profit' />
               </div>
-                  
+
               <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                 <TransactionList title='Transacciones Recientes' transactions={recentTransactions} />
-                <BudgetTracker categories={budgetCategories} /> */}
+                <BudgetTracker categories={budgetCategories} />
               </div>
             </TabsContent>
 
             {/* Transactions */}
-            <TabsContent value='transactions' className='space-y-6 min-h-[700px]'>
+            <TabsContent value='transactions' className='space-y-6'>
               <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6'>
                 <Card>
                   <CardContent className='p-6'>
@@ -317,9 +302,8 @@ export function FinancesDashboard() {
             </TabsContent>
 
             {/* Budget */}
-            <TabsContent value='budget' className='space-y-6 min-h-60'>
-              <div className='w-full h-full min-h-60 flex items-center justify-center'>Próximamente</div>
-              {/*   <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+            <TabsContent value='budget' className='space-y-6'>
+              <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                 <BudgetTracker categories={budgetCategories} />
 
                 <Card>
@@ -355,13 +339,12 @@ export function FinancesDashboard() {
                     </div>
                   </CardContent>
                 </Card>
-              </div> */}
+              </div>
             </TabsContent>
 
             {/* Reports */}
-            <TabsContent value='reports' className='space-y-6 min-h-60'>
-              <div className='w-full h-full min-h-60 flex items-center justify-center'>Próximamente</div>
-              {/*  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+            <TabsContent value='reports' className='space-y-6'>
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
                 <Card className='hover:shadow-md transition-shadow cursor-pointer'>
                   <CardContent className='p-6'>
                     <div className='flex items-center space-x-3'>
@@ -397,12 +380,11 @@ export function FinancesDashboard() {
                     </div>
                   </CardContent>
                 </Card>
-              </div> */}
+              </div>
             </TabsContent>
           </Tabs>
         </div>
       </main>
-      {openModal && <FinanceModal setModal={setOpenModal} />}
     </div>
   );
 }
