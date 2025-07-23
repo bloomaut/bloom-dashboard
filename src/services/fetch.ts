@@ -320,3 +320,63 @@ export const approveProposal = async () => {
     }
   }
 };
+
+export const getMetas = async () => {
+  try {
+    const response = await axios.get("/api/pipeline/goals");
+
+    if (response.status === 400) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
+export const getFinances = async () => {
+  try {
+    const response = await axios.get("/api/finances");
+
+    if (response.status === 400) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
+export const createTransaction = async (data: {
+  amount: number;
+  type: string;
+  category: string;
+  description: string;
+  date: string;
+}) => {
+  try {
+    const response = await axios.post("/api/finances", data);
+
+    if (response.status === 400) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
