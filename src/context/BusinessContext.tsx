@@ -30,6 +30,8 @@ const initialFormData: UserBusiness = {
     proposal_status: "",
     proposal_url: "",
   },
+  founded: 0,
+  employees: 0,
   phone: "",
   subdomain: "",
 };
@@ -48,6 +50,7 @@ interface BusinessContextType {
   banner: File | null;
   setBanner: React.Dispatch<React.SetStateAction<File | null>>;
   loading: boolean;
+  handleCategoryChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const BusinessContext = createContext<BusinessContextType>({
@@ -63,6 +66,9 @@ const BusinessContext = createContext<BusinessContextType>({
   },
   handleCategoryChange: () => {
     throw new Error("handleCategoryChange function not implemented");
+  },
+  handleCategoryChangeInput: () => {
+    throw new Error("handleCategoryChangeInput function not implemented");
   },
   checkValidation: false,
   errors: {},
@@ -101,6 +107,16 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
   const { notify, notifyError } = useMessageToast();
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      client: {
+        ...prevFormData.client,
+        category: e.target.value,
+      },
+    }));
+  };
+
+  const handleCategoryChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       client: {
@@ -278,6 +294,7 @@ export const BusinessProvider = ({ children }: BusinessProviderProps) => {
         handleSubmit,
         checkValidation,
         handleCategoryChange,
+        handleCategoryChangeInput,
         errors,
       }}
     >

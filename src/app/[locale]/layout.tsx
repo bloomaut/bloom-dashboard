@@ -37,7 +37,7 @@ export default function RootLayout({
     <Providers>
       <UserProvider>
         <html lang={locale}>
-          <body className={barlow.className}>
+          <body className={barlow.className} style={{ overflow: "hidden" }}>
             <NextIntlClientProvider locale={locale} messages={messages}>
               {children}
             </NextIntlClientProvider>
