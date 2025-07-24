@@ -7,7 +7,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     const res = new NextResponse();
     const { accessToken } = await getAccessToken(req, res);
 
-    console.log("My Access Token:", accessToken);
+    //console.log("My Access Token:", accessToken);
 
     const path = req.nextUrl.pathname.substring(req.nextUrl.pathname.indexOf("/api"));
 
