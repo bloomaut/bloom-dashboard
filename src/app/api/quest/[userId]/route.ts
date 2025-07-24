@@ -16,7 +16,7 @@ const handleGet = withApiAuthRequired(async function handleFetch(req, { params }
       return NextResponse.json({ error: "userId parameter is required" }, { status: 400 });
     }
 
-    const userId = params.userId[0] as string;
+    const userId = params.userId as string;
     console.log(userId);
 
     const user = await prisma.questionStepper.findMany({

@@ -9,7 +9,7 @@ export const prisma =
   new PrismaClient({
     datasources: {
       db: {
-        url: process.env.DATABASE_URL,
+        url: "mongodb+srv://notiadmin:qLrJaiPnpjMALFWx@notimation-suit-dev.fdti2uz.mongodb.net/notimation-suit-dev",
       },
     },
     log: ["error", "warn"],
