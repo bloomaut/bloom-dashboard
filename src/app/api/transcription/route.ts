@@ -15,7 +15,7 @@ const speechClient = new SpeechClient({
 const handleRequest = withApiAuthRequired(async function handleTranscribe(req: NextRequest) {
   try {
     console.log("GOOGLE_CLIENT_EMAIL:", process.env.GOOGLE_CLIENT_EMAIL);
-    console.log("GOOGLE_PRIVATE_KEY exists:", !!process.env.GOOGLE_PRIVATE_KEY);
+    console.log("GOOGLE_PRIVATE_KEY exists:", Boolean(process.env.GOOGLE_PRIVATE_KEY));
     console.log("GOOGLE_PRIVATE_KEY length:", process.env.GOOGLE_PRIVATE_KEY?.length);
 
     const res = new NextResponse();
