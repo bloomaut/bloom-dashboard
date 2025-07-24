@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
     "lint": "eslint \"*/**/*.{js,ts,tsx}\" --quiet --fix",
     "prepare": "husky",
-    "postinstall": "npx prisma generate"
+    "postinstall": "prisma generate",
+    "build": "prisma generate && next build"
   },
   "dependencies": {
     "@auth0/auth0-react": "2.2.4",
