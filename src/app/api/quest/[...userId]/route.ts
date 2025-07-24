@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { cookies } from "next/headers";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 const handleGet = withApiAuthRequired(async function handleFetch(req, { params }) {
   if (req.method !== "GET") {

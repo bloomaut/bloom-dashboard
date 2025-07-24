@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 const handleRequest = withApiAuthRequired(async function handleFetch(req) {
   const body = await req.json();
