@@ -1,9 +1,9 @@
+export const runtime = "nodejs";
+
 import { getAccessToken, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
 import { SpeechClient } from "@google-cloud/speech";
 
-// Initialize the Speech client with your service account
 const speechClient = new SpeechClient({
   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
   credentials: {
@@ -14,38 +14,50 @@ const speechClient = new SpeechClient({
 
 const handleRequest = withApiAuthRequired(async function handleTranscribe(req: NextRequest) {
   try {
+    console.log("GOOGLE_CLIENT_EMAIL:", process.env.GOOGLE_CLIENT_EMAIL);
+    console.log("GOOGLE_PRIVATE_KEY exists:", !!process.env.GOOGLE_PRIVATE_KEY);
+    console.log("GOOGLE_PRIVATE_KEY length:", process.env.GOOGLE_PRIVATE_KEY?.length);
+
     const res = new NextResponse();
-    const { accessToken } = await getAccessToken(req, res);
+    await getAccessToken(req, res);
 
     const formData = await req.formData();
-    const audioFile = formData.get("audio") as File;
-    const questionIndex = formData.get("questionIndex") as string;
+    const audioFile = formData.get("audio") as File | null;
+    const questionIndex = formData.get("questionIndex") as string | null;
 
     if (!audioFile) {
+      console.warn("No audio file provided");
       return NextResponse.json({ error: "No audio file provided" }, { status: 400 });
     }
 
     const bytes = await audioFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const audioConfig = {
-      audioChannelCount: 1,
-      encoding: "WEBM_OPUS" as const,
-      sampleRateHertz: 48000,
-      languageCode: "es-ES",
-      enableAutomaticPunctuation: true,
-      enableWordTimeOffsets: false,
-      model: "default",
-    };
+    console.log("Audio file size (bytes):", buffer.length);
 
     const speechRequest = {
       audio: {
         content: buffer.toString("base64"),
       },
-      config: audioConfig,
+      config: {
+        audioChannelCount: 1,
+        encoding: "WEBM_OPUS" as const,
+        sampleRateHertz: 48000,
+        languageCode: "es-ES",
+        enableAutomaticPunctuation: true,
+        enableWordTimeOffsets: false,
+        model: "default",
+      },
     };
 
-    const [response] = await speechClient.recognize(speechRequest);
+    let response;
+    try {
+      [response] = await speechClient.recognize(speechRequest);
+      console.log("Google Speech API response:", JSON.stringify(response, null, 2));
+    } catch (gError) {
+      console.error("Google Speech API error:", gError);
+      return NextResponse.json({ error: "Google Speech API failed", success: false }, { status: 500 });
+    }
 
     const transcription = response.results?.map(result => result.alternatives?.[0]?.transcript).join("\n") || "";
 
@@ -54,38 +66,19 @@ const handleRequest = withApiAuthRequired(async function handleTranscribe(req: N
     return NextResponse.json({
       transcription,
       confidence,
-      questionIndex: parseInt(questionIndex),
+      questionIndex: parseInt(questionIndex || "0"),
       success: true,
     });
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error("----------Axios Error----------", error.response?.data);
-      return NextResponse.json(
-        {
-          error: error.response?.data?.message || "Transcription failed",
-          success: false,
-        },
-        { status: error.response?.status || 500 },
-      );
-    } else if (error instanceof Error) {
-      console.error("----------Transcription Error----------", error.message);
-      return NextResponse.json(
-        {
-          error: error.message || "Failed to transcribe audio",
-          success: false,
-        },
-        { status: 500 },
-      );
-    } else {
-      console.error("----------Other Error----------", error);
-      return NextResponse.json(
-        {
-          error: "Internal server error during transcription",
-          success: false,
-        },
-        { status: 500 },
-      );
-    }
+  } catch (error: any) {
+    console.error("Unhandled error:", error);
+
+    return NextResponse.json(
+      {
+        error: error?.message || "Internal transcription error",
+        success: false,
+      },
+      { status: 500 },
+    );
   }
 });
 

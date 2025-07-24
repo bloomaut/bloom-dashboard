@@ -21,7 +21,6 @@ const Navbar = () => {
 
   return (
     <nav className={styles.container}>
-      Hola
       <div className={styles.logo_container}>
         <Link href='/'>
           <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
