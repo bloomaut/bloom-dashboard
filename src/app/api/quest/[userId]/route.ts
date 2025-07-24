@@ -3,14 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { cookies } from "next/headers";
 
-import { prisma } from "@/lib/prisma";
-
 const handleGet = withApiAuthRequired(async function handleFetch(req, { params }) {
   if (req.method !== "GET") {
     return new NextResponse("Method Not Allowed", { status: 405 });
   }
 
   try {
+    // Dynamic import - only loads at runtime
+    const { prisma } = await import("@/lib/prisma");
+
     if (!params || !params.userId) {
       return NextResponse.json({ error: "userId parameter is required" }, { status: 400 });
     }

@@ -2,8 +2,6 @@ import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-import { prisma } from "@/lib/prisma";
-
 const handleRequest = withApiAuthRequired(async function handleFetch(req) {
   const body = await req.json();
 
@@ -12,6 +10,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req) {
   }
 
   try {
+    const { prisma } = await import("@/lib/prisma");
     const { userId, answers, completed } = body;
     const user = await prisma.questionStepper.findFirst({
       where: {
