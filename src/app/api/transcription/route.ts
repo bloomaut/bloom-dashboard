@@ -7,7 +7,7 @@ import { SpeechClient } from "@google-cloud/speech";
 const speechClient = new SpeechClient({
   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
   credentials: {
-    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    client_email: "speech-to-text-service@small-transcription.iam.gserviceaccount.com",
     private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
   },
 });
@@ -17,6 +17,7 @@ const handleRequest = withApiAuthRequired(async function handleTranscribe(req: N
     console.log("GOOGLE_CLIENT_EMAIL:", process.env.GOOGLE_CLIENT_EMAIL);
     console.log("GOOGLE_PRIVATE_KEY exists:", Boolean(process.env.GOOGLE_PRIVATE_KEY));
     console.log("GOOGLE_PRIVATE_KEY length:", process.env.GOOGLE_PRIVATE_KEY?.length);
+    console.log("GOOGLE_CLIENT_EMAIL:", process.env.GOOGLE_CLIENT_EMAIL);
 
     const res = new NextResponse();
     await getAccessToken(req, res);
