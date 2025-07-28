@@ -181,15 +181,68 @@ function Questionaire() {
       {tab === "fin" && <Fin setTab={setTab} questData={questData} />}
       {tab === "prop" && <Proposal />}
       <div
-        style={{ position: "absolute", left: 0, top: "30%", display: "flex", flexDirection: "column", gap: "1.5rem" }}
+        style={{ position: "absolute", left: "3%", bottom: "3%", display: "flex", flexDirection: "row", gap: "1.5rem" }}
       >
-        <button onClick={() => console.log(questData)}>User Update</button>
-        <button onClick={() => setTab("terms")}>Terms</button>
-        <button onClick={() => setTab("quest")}>Quest</button>
-        <button onClick={() => setTab("fin")}>Fin</button>
-        <button onClick={() => setTab("prop")}>Propuesta</button>
-        <button onClick={() => setCurrentIndex(104)}>Last</button>
-        <button onClick={() => console.log(questData.completed)}>Info</button>
+        <button
+          onClick={() => setCurrentIndex(0)}
+          style={{
+            padding: "0.5rem",
+            cursor: "pointer",
+            backgroundColor: "#ff5722",
+            borderRadius: "5px",
+            color: "white",
+          }}
+        >
+          Reiniciar
+        </button>
+        {/* <button
+          style={{
+            padding: "0.5rem",
+            cursor: "pointer",
+            backgroundColor: "#ff5722",
+            borderRadius: "5px",
+            color: "white",
+          }}
+          onClick={() => setTab("terms")}
+        >
+          Terms
+        </button>
+        <button
+          style={{
+            padding: "0.5rem",
+            cursor: "pointer",
+            backgroundColor: "#ff5722",
+            borderRadius: "5px",
+            color: "white",
+          }}
+          onClick={() => setTab("quest")}
+        >
+          Quest
+        </button>
+        <button
+          style={{
+            padding: "0.5rem",
+            cursor: "pointer",
+            backgroundColor: "#ff5722",
+            borderRadius: "5px",
+            color: "white",
+          }}
+          onClick={() => setTab("fin")}
+        >
+          Fin
+        </button>
+        <button
+          style={{
+            padding: "0.5rem",
+            cursor: "pointer",
+            backgroundColor: "#ff5722",
+            borderRadius: "5px",
+            color: "white",
+          }}
+          onClick={() => setTab("prop")}
+        >
+          Propuesta
+        </button> */}
       </div>
     </div>
   );
