@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./loginLanding.module.scss";
+import { useState } from "react";
 
 const BUTTONS_DISABLED = false; // Set to true to disable all main CTA buttons
 
 export default function SmallLanding() {
+  const [currentSlide, setCurrentSlide] = useState(0);
   return (
     <div className={styles.container}>
       {/* Header */}
@@ -74,17 +76,54 @@ export default function SmallLanding() {
           </div>
 
           {/* Video Player */}
-          <div className={styles.videoContainer}>
-            <div className={styles.videoWrapper}>
-              <iframe
-                className={styles.videoIframe}
-                src='https://player.vimeo.com/video/1100402596?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
-                frameBorder='0'
-                allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share'
-                title='VSL - Small'
-              ></iframe>
+          <div className={styles.carouselContainer}>
+            <div className={styles.carouselWrapper}>
+              <div className={styles.carousel} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                {/* Slide 1: Image */}
+                <div className={styles.carouselSlide}>
+                  <div className={styles.imageContainer}>
+                    <Image
+                      src='/tangible_hero.png' // Replace with your actual image path
+                      alt='Small Platform Preview'
+                      fill
+                      className={styles.carouselImage}
+                      priority
+                      objectFit='contain'
+                    />
+                  </div>
+                </div>
+
+                {/* Slide 2: Video */}
+                <div className={styles.carouselSlide}>
+                  <div className={styles.videoWrapper}>
+                    <iframe
+                      className={styles.videoIframe}
+                      src='https://player.vimeo.com/video/1100402596?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
+                      frameBorder='0'
+                      allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share'
+                      title='VSL - Small'
+                    ></iframe>
+                  </div>
+                  <div className={styles.videoBadge}>5 min y transforma tu vida</div>
+                </div>
+              </div>
+
+              {/* Navigation dots */}
+              <div className={styles.carouselDots}>
+                <button
+                  className={`${styles.dot} ${currentSlide === 0 ? styles.dotActive : ""}`}
+                  onClick={() => setCurrentSlide(0)}
+                >
+                  <span className={styles.dotLabel}>Vista previa</span>
+                </button>
+                <button
+                  className={`${styles.dot} ${currentSlide === 1 ? styles.dotActive : ""}`}
+                  onClick={() => setCurrentSlide(1)}
+                >
+                  <span className={styles.dotLabel}>Video</span>
+                </button>
+              </div>
             </div>
-            <div className={styles.videoBadge}>5 min y tranforma tu vida</div>
           </div>
         </div>
       </section>
