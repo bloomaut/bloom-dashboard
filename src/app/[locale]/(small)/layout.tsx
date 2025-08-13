@@ -34,7 +34,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
           pauseOnHover
           transition={Slide}
         />
-        {user.client.proposal_status !== "APPROVED" ? (
+        {false ? (
           <div className={styles.inner_container}>
             <div className={styles.children_container} id='children_container'>
               <Questionaire />

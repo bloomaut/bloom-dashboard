@@ -47,16 +47,26 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
         <nav className='flex-1 p-4 space-y-2'>
           {navigation.map(item => {
             const isActive = pathname === item.href;
+            const isAllowed = ["my-business", "social-media"].includes(
+              item.href.replace(/^\//, ""), // remove leading slash for comparison
+            );
 
             return (
               <Link
                 key={item.name}
-                href={item.href.startsWith("/en") ? item.href : isEnPath ? `/en${item.href}` : item.href}
+                href={
+                  isAllowed ? (item.href.startsWith("/en") ? item.href : isEnPath ? `/en${item.href}` : item.href) : "#"
+                }
+                onClick={e => {
+                  if (!isAllowed) e.preventDefault(); // stop navigation if disabled
+                }}
                 className={cn(
                   "flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-red-50 text-red-700 border-l-4 border-red-500"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+                  isAllowed
+                    ? isActive
+                      ? "bg-red-50 text-red-700 border-l-4 border-red-500"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    : "text-gray-400 cursor-not-allowed",
                 )}
               >
                 <item.icon className='h-5 w-5 flex-shrink-0' />

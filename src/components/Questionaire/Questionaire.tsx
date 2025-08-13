@@ -4,13 +4,14 @@ import { setDataSubdomains } from "@/store/features/subdomainsSlice";
 import { setUserData } from "@/store/features/userSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setFirstQuestData, setQuestCompleted, setQuestData, setQuestTerms, updateQuestData } from "@/store/questSlice";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Terms from "./Terms";
 import QuestForm from "./QuestForm";
 import Fin from "./Fin";
 import Proposal from "./Proposal";
 import { answers, generatePayload, questions } from "./questions";
 import { CircleLoader } from "./Spinner";
+import WishList from "./WishList";
 
 export interface QuestData {
   userId: string;
@@ -53,7 +54,7 @@ function Questionaire() {
   useEffect(() => {
     const handleGet = async () => {
       if (user.client.id === null || !user.client.id) return;
-      console.log(user.id);
+      console.log("user", user.client.wish_list);
       const data = await getQuest(user.client.id);
       if (data.message === "No user found" || !data) {
         console.log("no esta");
@@ -66,11 +67,13 @@ function Questionaire() {
         };
         //postQuest(newData);
         dispatch(setFirstQuestData(newData));
-        setTab("terms");
+        setTab("wishList");
       } else {
         console.log("esta");
         dispatch(setQuestData(data));
-        if (!data[0].terms) {
+        if (user.client.wish_list === true) {
+          setTab("wishList");
+        } else if (!data[0].terms) {
           setTab("terms");
         } else if (!data[0].completed) {
           setTab("quest");
@@ -177,24 +180,28 @@ function Questionaire() {
           empty={empty}
         />
       )}
+      {tab === "wishList" && <WishList />}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin setTab={setTab} questData={questData} />}
       {tab === "prop" && <Proposal />}
       <div
         style={{ position: "absolute", left: "3%", bottom: "3%", display: "flex", flexDirection: "row", gap: "1.5rem" }}
       >
-        <button
-          onClick={() => setCurrentIndex(0)}
-          style={{
-            padding: "0.5rem",
-            cursor: "pointer",
-            backgroundColor: "#ff5722",
-            borderRadius: "5px",
-            color: "white",
-          }}
-        >
-          Reiniciar
-        </button>
+        {user.client.wish_list === false && (
+          <button
+            onClick={() => setCurrentIndex(0)}
+            style={{
+              padding: "0.5rem",
+              cursor: "pointer",
+              backgroundColor: "#ff5722",
+              borderRadius: "5px",
+              color: "white",
+            }}
+          >
+            Reiniciar
+          </button>
+        )}
+
         {/* <button
           style={{
             padding: "0.5rem",
