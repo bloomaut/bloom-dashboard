@@ -38,7 +38,11 @@ export default function SmallLanding() {
             <div className={styles.heroTextContent}>
               <div className={styles.heroTextInner}>
                 <div className={styles.heroHeadings}>
-                  <h1 className={styles.heroTitle}>{dict("landing.title")}</h1>
+                  <div className={styles.heroTitleContainer}>
+                    <h1 className={styles.heroTitle}>{dict("landing.title_start")}</h1>
+                    <h1 className={styles.heroTitleAccent}>{dict("landing.title_accent")}</h1>
+                    <h1 className={styles.heroTitle}>{dict("landing.title_end")}</h1>
+                  </div>
                   <h2 className={styles.heroSubtitle}>{dict("landing.subtitle")}</h2>
                 </div>
                 <p className={styles.heroDescription}>{dict("landing.body")}</p>
@@ -103,7 +107,7 @@ export default function SmallLanding() {
           <div className={styles.videoWrapper}>
             <iframe
               className={styles.videoIframe}
-              src='https://player.vimeo.com/video/1100402596?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
+              src='https://player.vimeo.com/video/1110327162?h=9db501ce3f?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
               frameBorder='0'
               allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share'
               title='VSL - Small'
@@ -117,7 +121,7 @@ export default function SmallLanding() {
         <div className={styles.roadmapContainer}>
           <div className={styles.roadmapFigure}>
             <Image
-              src={en ? "/onboarding_EN.webp" : "/images/roadmap_section_figure.png"}
+              src={en ? "/images/onboarding_EN.png" : "/images/roadmap_section_figure.png"}
               alt='Small Roadmap - Proceso de digitalización paso a paso'
               width={2878}
               height={2904}
