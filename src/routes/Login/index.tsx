@@ -79,7 +79,7 @@ export default function SmallLanding() {
                 <div className={styles.carouselSlide}>
                   <div className={styles.imageContainer}>
                     <Image
-                      src='/tangible_hero.png' // Replace with your actual image path
+                      src='/images/assets_hero.png' // Replace with your actual image path
                       alt='Small Platform Preview'
                       fill
                       className={styles.carouselImage}
@@ -93,8 +93,8 @@ export default function SmallLanding() {
           </div>
         </div>
       </section>
-      <section style={{ width: "100%", paddingBlock: "2rem", display: "flex", justifyContent: "center" }}>
-        <div style={{ width: "90%" }}>
+      <section style={{ width: "100%", paddingBlock: "3rem", display: "flex", justifyContent: "center", backgroundColor: "rgba(58, 58, 58, 0.15)" }}>
+        <div style={{ width: "75%", maxWidth: "900px", padding: "2rem 0" }}>
           <div className={styles.videoWrapper}>
             <iframe
               className={styles.videoIframe}
@@ -156,7 +156,7 @@ export default function SmallLanding() {
         }}
       >
         <div style={{ width: "100%", height: "100vh", position: "relative" }}>
-          <Image src='/platform.webp' alt='Plataformas Small - Herramientas y soluciones digitales' fill priority />
+          <Image src='/images/platformSection_EN.png' alt='Plataformas Small - Herramientas y soluciones digitales' fill priority />
         </div>
       </section>
 
@@ -166,9 +166,10 @@ export default function SmallLanding() {
           <div className={styles.footerGrid}>
             <div className={styles.footerLogoSection}>
               <div className={styles.logoContainer}>
-                <Image src='/images/small-logo.png' alt='Small Logo' width={191} height={45} className={styles.logo} />
+                <Image src='/pointZeroIso.webp' alt='Small Logo' width={45} height={45} />
+                <Image src='/pointZeroTipo.webp' alt='Small Logo' width={65} height={65} />
               </div>
-              <p>{dict("footer.description")}</p>
+              <p>From zero to 100. We transform ideas into businesses. Free, simple, and straightforward.</p>
             </div>
 
             <div className={styles.footerColumn}>
