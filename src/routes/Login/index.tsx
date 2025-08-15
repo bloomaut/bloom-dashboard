@@ -26,7 +26,6 @@ export default function SmallLanding() {
           </div>
           <Link href='/api/auth/login'>
             <button className={styles.headerButton}>{dict("landing.cta")}</button>
-
           </Link>
         </div>
       </header>
@@ -47,9 +46,7 @@ export default function SmallLanding() {
 
               <div className={styles.heroButtons}>
                 <Link href='/api/auth/login'>
-
                   <button className={styles.heroMainButton}>{dict("landing.cta")}</button>
-
                 </Link>
               </div>
 
@@ -93,7 +90,15 @@ export default function SmallLanding() {
           </div>
         </div>
       </section>
-      <section style={{ width: "100%", paddingBlock: "3rem", display: "flex", justifyContent: "center", backgroundColor: "rgba(58, 58, 58, 0.15)" }}>
+      <section
+        style={{
+          width: "100%",
+          paddingBlock: "3rem",
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "rgba(58, 58, 58, 0.15)",
+        }}
+      >
         <div style={{ width: "75%", maxWidth: "900px", padding: "2rem 0" }}>
           <div className={styles.videoWrapper}>
             <iframe
@@ -137,7 +142,6 @@ export default function SmallLanding() {
             <div className={styles.ctaButtons}>
               <Link href='/api/auth/login'>
                 <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
-
               </Link>
             </div>
             <p className={styles.ctaDisclaimer}>{dict("cta_section.disclaimer")}</p>
@@ -156,7 +160,12 @@ export default function SmallLanding() {
         }}
       >
         <div style={{ width: "100%", height: "100vh", position: "relative" }}>
-          <Image src='/images/platformSection_EN.png' alt='Plataformas Small - Herramientas y soluciones digitales' fill priority />
+          <Image
+            src='/images/platformSection_EN.png'
+            alt='Plataformas Small - Herramientas y soluciones digitales'
+            fill
+            priority
+          />
         </div>
       </section>
 
