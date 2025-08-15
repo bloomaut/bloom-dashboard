@@ -11,12 +11,12 @@ export async function generateMetadata({ params: { locale } }: { params: { local
       title: `PointZero - ${t("hero.title")} ${t("hero.title_accent")}`,
       description: t("hero.description"),
       locale: locale,
-      alternateLanguages: {
-        canonical: "/en",
-        languages: {
-          en: "/en",
-          es: "/es",
-        },
+    },
+    alternates: {
+      canonical: "/en",
+      languages: {
+        en: "/en",
+        es: "/es",
       },
     },
     icons: {
