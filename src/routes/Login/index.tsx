@@ -124,11 +124,7 @@ export default function SmallLanding() {
         <div className={styles.ctaContainer}>
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>{dict("cta_section.title")}</h2>
-            <p className={styles.ctaDescription}>
-              {dict("cta_section.description")}
-              <span className={styles.ctaDescriptionBold}>{dict("cta_section.description_bold")}</span>
-              {dict("cta_section.description_end")}
-            </p>
+            <p className={styles.ctaDescription}>{dict("cta_section.description")}</p>
             <div className={styles.ctaButtons}>
               <Link href='/api/auth/login'>
                 <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
