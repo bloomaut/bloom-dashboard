@@ -117,7 +117,7 @@ export default function SmallLanding() {
         <div className={styles.roadmapContainer}>
           <div className={styles.roadmapFigure}>
             <Image
-              src={en ? "/onboarding_EN.webp" : "/images/roadmap_section_figure.png"}
+              src={en ? "/images/onboarding_EN.png" : "/images/roadmap_section_figure.png"}
               alt='Small Roadmap - Proceso de digitalización paso a paso'
               width={2878}
               height={2904}
