@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 
+const BUTTONS_DISABLED = false; // Set to true to disable all main CTA buttons
+
 export default function SmallLanding() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const dict = useTranslations("dict");
@@ -24,6 +26,7 @@ export default function SmallLanding() {
           </div>
           <Link href='/api/auth/login'>
             <button className={styles.headerButton}>{dict("landing.cta")}</button>
+
           </Link>
         </div>
       </header>
@@ -44,7 +47,9 @@ export default function SmallLanding() {
 
               <div className={styles.heroButtons}>
                 <Link href='/api/auth/login'>
+
                   <button className={styles.heroMainButton}>{dict("landing.cta")}</button>
+
                 </Link>
               </div>
 
@@ -128,6 +133,7 @@ export default function SmallLanding() {
             <div className={styles.ctaButtons}>
               <Link href='/api/auth/login'>
                 <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
+
               </Link>
             </div>
             <p className={styles.ctaDisclaimer}>{dict("cta_section.disclaimer")}</p>
