@@ -26,7 +26,6 @@ export default function SmallLanding() {
           </div>
           <Link href='/api/auth/login'>
             <button className={styles.headerButton}>{dict("landing.cta")}</button>
-
           </Link>
         </div>
       </header>
@@ -47,9 +46,7 @@ export default function SmallLanding() {
 
               <div className={styles.heroButtons}>
                 <Link href='/api/auth/login'>
-
                   <button className={styles.heroMainButton}>{dict("landing.cta")}</button>
-
                 </Link>
               </div>
 
@@ -133,7 +130,6 @@ export default function SmallLanding() {
             <div className={styles.ctaButtons}>
               <Link href='/api/auth/login'>
                 <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
-
               </Link>
             </div>
             <p className={styles.ctaDisclaimer}>{dict("cta_section.disclaimer")}</p>
@@ -162,7 +158,8 @@ export default function SmallLanding() {
           <div className={styles.footerGrid}>
             <div className={styles.footerLogoSection}>
               <div className={styles.logoContainer}>
-                <Image src='/images/small-logo.png' alt='Small Logo' width={191} height={45} className={styles.logo} />
+                <Image src='/pointZeroIso.webp' alt='Small Logo' width={55} height={55} />
+                <Image src='/pointZeroTipo.webp' alt='Small Logo' width={75} height={75} />
               </div>
               <p>{dict("footer.description")}</p>
             </div>
