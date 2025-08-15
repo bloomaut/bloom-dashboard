@@ -180,7 +180,7 @@ $small-black: #000000;
   }
 
   @media (min-width: 1280px) {
-    font-size: 3.75rem;
+    font-size: 5rem;
   }
 }
 
@@ -203,7 +203,7 @@ $small-black: #000000;
   }
 
   @media (min-width: 1280px) {
-    font-size: 3rem;
+    font-size: 4.5rem;
   }
 }
 
@@ -272,7 +272,7 @@ $small-black: #000000;
 }
 
 .statNumber {
-  font-size: 1.25rem;
+  font-size: 2rem;
   font-weight: 600;
   color: $small-red;
 
@@ -349,7 +349,6 @@ $small-black: #000000;
 
 .roadmapFigure {
   position: relative;
-  max-width: 80rem;
   width: 100%;
 }
 
@@ -445,7 +444,8 @@ $small-black: #000000;
 
 // Platform section styles
 .platformSection {
-  padding: 4rem 0;
+  padding: 4rem 2rem;
+
   background-color: $small-white;
 
   @media (min-width: 640px) {
@@ -454,17 +454,26 @@ $small-black: #000000;
 }
 
 .platformContainer {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 1rem; // Adjust spacing between left and right groups as needed
+}
 
-  @media (min-width: 640px) {
-    padding: 0 1.5rem;
-  }
+.platformLeftGroup {
+  flex: 1; // Takes 50% of the width
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem; // Adjust spacing between the two images
+}
 
-  @media (min-width: 1024px) {
-    padding: 0 2rem;
-  }
+.platformRightGroup {
+  flex: 1; // Takes 50% of the width
+  display: flex;
+  align-items: center; // Centers the third image vertically if needed
+  justify-content: center; // Centers the third image horizontally if needed
 }
 
 .platformHeader {
@@ -490,16 +499,15 @@ $small-black: #000000;
 .platformFigure {
   display: flex;
   justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .platformFigureInner {
   position: relative;
   width: 100%;
-}
-
-.platformImage {
-  width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 // Footer styles
@@ -833,11 +841,11 @@ $small-black: #000000;
 
 @media (min-width: 1280px) {
   .xlText5xl {
-    font-size: 3rem;
+    font-size: 4rem;
   }
 
   .xlText6xl {
-    font-size: 3.75rem;
+    font-size: 4rem;
   }
 
   .xlMx20 {
@@ -850,10 +858,8 @@ $small-black: #000000;
 
 .carouselContainer {
   position: relative;
-  width: 100%;
-  max-width: 600px;
+  width: 60%;
   margin: 0 auto;
-  height: 500px;
   @media (max-width: 768px) {
     max-width: 100%;
     margin: 2rem 0;

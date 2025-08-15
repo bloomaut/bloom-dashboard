@@ -58,7 +58,7 @@ export default function SmallLanding() {
               </div>
 
               {/* Stats */}
-              <div className={styles.stats}>
+              {/*  <div className={styles.stats}>
                 <div className={styles.statItem}>
                   <div className={styles.statNumber}>500+</div>
                   <div className={styles.statLabel}>Pymes digitalizadas</div>
@@ -71,7 +71,7 @@ export default function SmallLanding() {
                   <div className={styles.statNumber}>Inmediata</div>
                   <div className={styles.statLabel}>Implementacion</div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -113,15 +113,11 @@ export default function SmallLanding() {
                 <button
                   className={`${styles.dot} ${currentSlide === 0 ? styles.dotActive : ""}`}
                   onClick={() => setCurrentSlide(0)}
-                >
-                  <span className={styles.dotLabel}>Vista previa</span>
-                </button>
+                ></button>
                 <button
                   className={`${styles.dot} ${currentSlide === 1 ? styles.dotActive : ""}`}
                   onClick={() => setCurrentSlide(1)}
-                >
-                  <span className={styles.dotLabel}>Video</span>
-                </button>
+                ></button>
               </div>
             </div>
           </div>
@@ -170,24 +166,75 @@ export default function SmallLanding() {
 
       {/* Platforms Section */}
       <section className={styles.platformSection}>
+        <div style={{ width: "100%", display: "flex", flexDirection: "row", paddingBottom: "4rem" }}>
+          <div
+            style={{
+              width: "50%",
+              display: "flex",
+              alignContent: "center",
+              justifyContent: "center",
+              color: "#7f7f7f",
+              fontSize: "3.5rem",
+              fontWeight: 800,
+            }}
+          >
+            Del Video
+          </div>
+          <div
+            style={{
+              width: "50%",
+              display: "flex",
+              alignContent: "center",
+              justifyContent: "center",
+              color: "#ff5722",
+              fontSize: "3.5rem",
+              fontWeight: 800,
+            }}
+          >
+            A la venta
+          </div>
+        </div>
         <div className={styles.platformContainer}>
-          <div className={styles.platformHeader}>
-            <h2 className={styles.platformTitle}>
-              Plataformas <span className={styles.platformTitleAccent}>Small</span>
-            </h2>
+          {/* Left side - First two images (50% width) */}
+          <div className={styles.platformLeftGroup}>
+            <div className={styles.platformFigure}>
+              <div className={styles.platformFigureInner}>
+                <Image
+                  src='/app_video.png'
+                  alt='Plataformas Small - Herramientas y soluciones digitales'
+                  width={350}
+                  height={708}
+                  className={styles.platformImage}
+                  priority
+                />
+              </div>
+            </div>
+            <div className={styles.platformFigure}>
+              <div className={styles.platformFigureInner}>
+                <Image
+                  src='/tiktok.png'
+                  alt='Plataformas Small - Herramientas y soluciones digitales'
+                  width={310}
+                  height={608}
+                  className={styles.platformImage}
+                  priority
+                />
+              </div>
+            </div>
           </div>
 
-          {/* Platform Figure */}
-          <div className={styles.platformFigure}>
-            <div className={styles.platformFigureInner}>
-              <Image
-                src='/images/platform_section_figure.png'
-                alt='Plataformas Small - Herramientas y soluciones digitales'
-                width={6441}
-                height={2988}
-                className={styles.platformImage}
-                priority
-              />
+          {/* Right side - Third image (50% width) */}
+          <div className={styles.platformRightGroup}>
+            <div className={styles.platformFigure}>
+              <div className={styles.platformFigureInner}>
+                <Image
+                  src='/tienda.png'
+                  alt='Plataformas Small - Herramientas y soluciones digitales'
+                  fill
+                  className={styles.platformImage}
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>

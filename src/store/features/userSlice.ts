@@ -33,6 +33,7 @@ export const userInitialState: UserBusiness = {
     updated_at: "",
     proposal_status: "pending",
     proposal_url: null,
+    wish_list: false,
   },
   isCatalogComplete: false,
 };

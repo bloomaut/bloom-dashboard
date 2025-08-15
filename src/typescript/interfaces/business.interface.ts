@@ -29,7 +29,6 @@ export interface Client {
   id?: number | null;
   name: Nullable<string>;
   cuit?: string;
-
   banner: Nullable<string>;
   razon_social?: string;
   company_web: string;
@@ -46,6 +45,7 @@ export interface Client {
   address: string;
   proposal_status?: string;
   proposal_url?: string | null;
+  wish_list?: boolean;
 }
 
 // Interfaces para actualización de datos
