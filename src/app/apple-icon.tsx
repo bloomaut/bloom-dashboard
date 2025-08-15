@@ -1,15 +1,15 @@
-import { ImageResponse } from 'next/og'
- 
+import { ImageResponse } from "next/og";
+
 // Route segment config
-export const runtime = 'edge'
- 
+export const runtime = "edge";
+
 // Image metadata
 export const size = {
   width: 180,
   height: 180,
-}
-export const contentType = 'image/png'
- 
+};
+export const contentType = "image/png";
+
 // Image generation
 export default function AppleIcon() {
   return new ImageResponse(
@@ -18,21 +18,21 @@ export default function AppleIcon() {
       <div
         style={{
           fontSize: 24,
-          background: 'transparent',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          background: "transparent",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <img
-          src="https://pointzero.com/pointZeroIso.webp"
-          alt="Point Zero"
+          src='https://pointzero.com/pointZeroIso.webp'
+          alt='Point Zero'
           style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
           }}
         />
       </div>
@@ -42,6 +42,6 @@ export default function AppleIcon() {
       // For convenience, we can re-use the exported icons size metadata
       // config to also set the ImageResponse's width and height.
       size,
-    }
-  )
+    },
+  );
 }

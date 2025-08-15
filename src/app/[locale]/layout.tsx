@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     description: "We transform ideas into businesses. Free, simple, and straightforward.",
   },
   icons: {
-    icon: '/pointZeroIso.webp',
-    shortcut: '/pointZeroIso.webp',
-    apple: '/pointZeroIso.webp',
+    icon: "/pointZeroIso.webp",
+    shortcut: "/pointZeroIso.webp",
+    apple: "/pointZeroIso.webp",
   },
 };
 
