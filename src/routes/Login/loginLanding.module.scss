@@ -117,7 +117,7 @@ $small-black: #000000;
   margin-bottom: 1.5rem;
 
   @media (min-width: 1024px) {
-    width: 50%;
+    width: 60%;
     margin-bottom: 0;
     margin-right: 2rem;
   }
@@ -180,7 +180,7 @@ $small-black: #000000;
   }
 
   @media (min-width: 1280px) {
-    font-size: 5rem;
+    font-size: 4rem;
   }
 }
 
@@ -203,7 +203,7 @@ $small-black: #000000;
   }
 
   @media (min-width: 1280px) {
-    font-size: 4.5rem;
+    font-size: 3.5rem;
   }
 }
 
@@ -455,8 +455,8 @@ $small-black: #000000;
 
 .platformContainer {
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 500px;
   gap: 1rem; // Adjust spacing between left and right groups as needed
 }
 
@@ -470,7 +470,7 @@ $small-black: #000000;
 }
 
 .platformRightGroup {
-  flex: 1; // Takes 50% of the width
+  // Takes 50% of the width
   display: flex;
   align-items: center; // Centers the third image vertically if needed
   justify-content: center; // Centers the third image horizontally if needed
@@ -858,7 +858,7 @@ $small-black: #000000;
 
 .carouselContainer {
   position: relative;
-  width: 60%;
+  width: 50%;
   margin: 0 auto;
   @media (max-width: 768px) {
     max-width: 100%;
