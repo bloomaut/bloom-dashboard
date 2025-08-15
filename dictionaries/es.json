@@ -1,5 +1,39 @@
 {
   "dict": {
+    "landing": {
+      "slogan": "De zero a 100",
+      "title": "Emprende desde cero, crece sin miedo",
+      "subtitle": "El camino más corto a tu independencia, sin costos y sin complicaciones",
+      "body": "Creamos tu negocio listo para lanzar y te acompañamos en cada paso de tu crecimiento. Con una marca, un plan y una estrategia que elimina la incertidumbre y reducen el esfuerzo al mínimo, para que puedas enfocarte únicamente en lo que mejor sabes hacer. Nosotros nos encargamos del resto, compartimos el riesgo y te guiamos hacia el éxito garantizado.",
+      "cta": "Lanza tu negocio hoy!",
+      "subtitle_2": "¿Listo para lanzar tu negocio?",
+      "body_2": "Empieza tu camino a tu nueva vida hoy con PointZero, sin riesgos, simple y rápido.",
+      "cta_2": "Comienza hoy!"
+    },
+    "footer": {
+      "description": "Small de cero a todo. Transformamos ideas en negocios con IA. Gratis, simple y sin vueltas.",
+      "services_title": "Servicios",
+      "services_online_store": "Tienda Online",
+      "services_digital_management": "Gestión Digital",
+      "services_digital_marketing": "Marketing Digital",
+      "services_technical_support": "Soporte Técnico",
+      "company_title": "Empresa",
+      "company_about_us": "Sobre Nosotros",
+      "company_success_stories": "Casos de Éxito",
+      "company_blog": "Blog",
+      "company_contact": "Contacto",
+      "legal_title": "Legal",
+      "legal_terms_of_use": "Términos de Uso",
+      "legal_privacy_policy": "Política de Privacidad",
+      "legal_cookies": "Cookies",
+      "copyright": "© 2025 Small. Todos los derechos reservados."
+    },
+    "cta_section": {
+      "title": "Listo para lanzar tu negocio?",
+      "description": "Empieza tu camino a tu nueva vida hoy con PointZero, sin riesgos, simple y rapido. ",
+      "button": "Comienza hoy!",
+      "disclaimer": "Sin compromiso • Soporte incluido"
+    },
     "error": {
       "message": "¡Hubo un problema!",
       "btn": "Recargar sitio",

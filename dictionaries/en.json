@@ -1,5 +1,41 @@
 {
   "dict": {
+    "landing": {
+      "slogan": "From Zero to 100",
+      "title": "Start from zero, grow without fear",
+      "subtitle": "The fastest path to independence, free and hassle-free",
+      "body": "We build your business ready to launch and guide you every step of the way. With a brand, a plan, and a strategy that removes uncertainty and cuts effort to the minimum, so you can focus entirely on what you do best. We handle the rest, share the risk, and lead you toward guaranteed success.",
+      "cta": "Launch your business today!",
+      "subtitle_2": "Ready to launch your business?",
+      "body_2": "Start your journey to a new life today with PointZero—risk-free, simple, and fast.",
+      "cta_2": "Start today!"
+    },
+    "footer": {
+      "description": "Small from zero to everything. We transform ideas into businesses with AI. Free, simple, and straightforward.",
+      "services_title": "Services",
+      "services_online_store": "Online Store",
+      "services_digital_management": "Digital Management",
+      "services_digital_marketing": "Digital Marketing",
+      "services_technical_support": "Technical Support",
+      "company_title": "Company",
+      "company_about_us": "About Us",
+      "company_success_stories": "Success Stories",
+      "company_blog": "Blog",
+      "company_contact": "Contact",
+      "legal_title": "Legal",
+      "legal_terms_of_use": "Terms of Use",
+      "legal_privacy_policy": "Privacy Policy",
+      "legal_cookies": "Cookies",
+      "copyright": "© 2025 Small. All rights reserved."
+    },
+    "cta_section": {
+      "title": "Ready to launch your business?",
+      "description": "Start your journey to a new life today with",
+      "description_bold": " PointZero",
+      "description_end": "—risk-free, simple, and fast.",
+      "button": "Start today!",
+      "disclaimer": "No commitment • Support included"
+    },
     "error": {
       "message": "Somethings went wrong!",
       "btn": "Reset",

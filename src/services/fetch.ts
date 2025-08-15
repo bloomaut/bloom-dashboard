@@ -2,9 +2,6 @@ import { POST } from "@/typescript/types/post.type";
 import { UPDATE } from "@/typescript/types/update.type";
 import { EnvironmentApi } from "@/typescript/types/api";
 import axios from "axios";
-import fs from "fs";
-import { parse } from "cookie";
-import { NextApiRequest } from "next";
 const API = "/api";
 
 export const get = async (url: string, api?: EnvironmentApi) => {
