@@ -3,11 +3,11 @@
   min-height: 100vh;
   background-color: $generalBackground;
   .inner_container {
-    @include width-height(100%, calc(100%));
     @include flex(row, space-between, flex-start);
+    width: 100%;
     flex-wrap: nowrap;
     .children_container {
-      @include width-height(100%, 100%);
+      width: 100%;
       @include flex(column, flex-start, center);
       background-color: $generalBackground;
       overflow-y: auto;

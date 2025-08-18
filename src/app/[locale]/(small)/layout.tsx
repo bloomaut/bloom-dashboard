@@ -35,8 +35,8 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
           transition={Slide}
         />
         {user.client.proposal_status !== "APPROVED" ? (
-          <div className={styles.inner_container}>
-            <div className={styles.children_container} id='children_container'>
+          <div className={styles.inner_container} style={{ width: "100%" }}>
+            <div className={styles.children_container} style={{ width: "100%" }} id='children_container'>
               <Questionaire />
             </div>
           </div>

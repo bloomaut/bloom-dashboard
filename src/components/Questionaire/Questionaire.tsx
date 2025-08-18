@@ -122,13 +122,20 @@ function Questionaire() {
   };
 
   const handleIndex = (operation: string) => {
-    if (currentIndex === 104) {
+    console.log(currentIndex);
+    if (currentIndex === 31) {
       console.log("completed");
       dispatch(setQuestCompleted(true));
       setTimeout(() => {
         handleUpdate();
         setTab("fin");
       }, 2000);
+    }
+    if (operation === "subtract") {
+      if (currentIndex === 0) return;
+      else {
+        setCurrentIndex(currentIndex - 1);
+      }
     }
     if (operation === "add") {
       if (currentIndex === questData.answers.length - 1) return;
@@ -166,7 +173,9 @@ function Questionaire() {
         <Terms handleTerms={handleTerms} />
       )} */}
       {tab === "loading" && (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}>
+        <div
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100vh" }}
+        >
           <CircleLoader />
         </div>
       )}
