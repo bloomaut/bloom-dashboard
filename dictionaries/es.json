@@ -2,7 +2,9 @@
   "dict": {
     "landing": {
       "slogan": "De zero a 100",
-      "title": "Emprende desde cero, crece sin miedo",
+      "title_start": "Emprende desde ",
+      "title_accent": "Zero ",
+      "title_end": ", crece sin miedo",
       "subtitle": "El camino más corto a tu independencia, sin costos y sin complicaciones",
       "body": "Creamos tu negocio listo para lanzar y te acompañamos en cada paso de tu crecimiento. Con una marca, un plan y una estrategia que elimina la incertidumbre y reducen el esfuerzo al mínimo, para que puedas enfocarte únicamente en lo que mejor sabes hacer. Nosotros nos encargamos del resto, compartimos el riesgo y te guiamos hacia el éxito garantizado.",
       "cta": "Lanza tu negocio hoy!",

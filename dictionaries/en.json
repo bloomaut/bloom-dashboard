@@ -2,8 +2,10 @@
   "dict": {
     "landing": {
       "slogan": "From Zero to 100",
-      "title": "Start from zero, grow without fear",
-      "subtitle": "The fastest path to independence, free and hassle-free",
+      "title_start": "Start from ",
+      "title_accent": "Zero ",
+      "title_end": "without fear",
+      "subtitle": "The fastest path to independence, free and no hassle",
       "body": "We build your business ready to launch and guide you every step of the way. With a brand, a plan, and a strategy that removes uncertainty and cuts effort to the minimum, so you can focus entirely on what you do best. We handle the rest, share the risk, and lead you toward guaranteed success.",
       "cta": "Launch your business today!",
       "subtitle_2": "Ready to launch your business?",
@@ -30,7 +32,9 @@
     },
     "cta_section": {
       "title": "Ready to launch your business?",
-      "description": "Start your journey to a new life today with PointZero—risk-free, simple, and fast.",
+      "description": "Start your journey to a new life today with",
+      "description_bold": " PointZero",
+      "description_end": "—risk-free, simple, and fast.",
       "button": "Start today!",
       "disclaimer": "No commitment • Support included"
     },

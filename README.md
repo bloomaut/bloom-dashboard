@@ -1,6 +1,6 @@
-# SMALL
+# Point Zero
 
-Small, created by Notimation, combines all our marketing tools into one easy-to-use app. It simplifies campaign and service management, offering users a centralized platform for control and monitoring.
+Point Zero, created by Notimation, combines all our marketing tools into one easy-to-use app. It simplifies campaign and service management, offering users a centralized platform for control and monitoring.
 
 **Nota:** This project is currently in development and may be subject to frequent changes. If you encounter any issues or have suggestions, please feel free to open an issue or submit a pull request.
 
@@ -11,7 +11,7 @@ To build the project locally, follow these steps:
 1. Clone this repository to your local machine using Git
 
 ```bash
-git clone https://github.com/notimation/small.git
+git clone https://github.com/notimation/pointzero.git
 ```
 
 2. Install project dependencies
@@ -34,7 +34,7 @@ yarn dev
 pnpm dev
 ```
 
-## Tecnologies
+## Technologies
 
 This project uses the following technologies and dependencies
 
@@ -58,7 +58,7 @@ This project uses the following technologies and dependencies
 - [Sass](https://sass-lang.com/) - v1.71.1
 - [TypeScript](https://www.typescriptlang.org/) - v5.1.6
 - [husky](https://typicode.github.io/husky/) - v9.0.11
-- [prettier](https://www.npmjs.com/package/prettier) - v3.2.5
+- [prettier](https://www.prettier.io/) - v3.2.5
 
 ## Internationalization (i18n) Configuration with Next.js
 
@@ -72,7 +72,7 @@ In the `dictionaries` folder, add within the JSON files for each language, the d
 "dict": {
     "home": {
       "banner": {
-        "welcome": "Te damos la bienvenida a Small",
+        "welcome": "Te damos la bienvenida a Point Zero",
         "title": "Aprendé con Playground",
       }
     },
@@ -102,5 +102,4 @@ const Component = () => {
 }
 ```
 
-
-By following these steps, we have configured international
+By following these steps, we have configured internationalization for our Point Zero application.

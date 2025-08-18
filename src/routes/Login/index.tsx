@@ -38,7 +38,11 @@ export default function SmallLanding() {
             <div className={styles.heroTextContent}>
               <div className={styles.heroTextInner}>
                 <div className={styles.heroHeadings}>
-                  <h1 className={styles.heroTitle}>{dict("landing.title")}</h1>
+                  <div className={styles.heroTitleContainer}>
+                    <h1 className={styles.heroTitle}>{dict("landing.title_start")}</h1>
+                    <h1 className={styles.heroTitleAccent}>{dict("landing.title_accent")}</h1>
+                    <h1 className={styles.heroTitle}>{dict("landing.title_end")}</h1>
+                  </div>
                   <h2 className={styles.heroSubtitle}>{dict("landing.subtitle")}</h2>
                 </div>
                 <p className={styles.heroDescription}>{dict("landing.body")}</p>
@@ -76,7 +80,7 @@ export default function SmallLanding() {
                 <div className={styles.carouselSlide}>
                   <div className={styles.imageContainer}>
                     <Image
-                      src='/tangible_hero.png' // Replace with your actual image path
+                      src='/images/assets_hero.png' // Replace with your actual image path
                       alt='Small Platform Preview'
                       fill
                       className={styles.carouselImage}
@@ -90,12 +94,20 @@ export default function SmallLanding() {
           </div>
         </div>
       </section>
-      <section style={{ width: "100%", paddingBlock: "2rem", display: "flex", justifyContent: "center" }}>
-        <div style={{ width: "90%" }}>
+      <section
+        style={{
+          width: "100%",
+          paddingBlock: "3rem",
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "rgba(58, 58, 58, 0.15)",
+        }}
+      >
+        <div style={{ width: "75%", maxWidth: "900px", padding: "2rem 0" }}>
           <div className={styles.videoWrapper}>
             <iframe
               className={styles.videoIframe}
-              src='https://player.vimeo.com/video/1100402596?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
+              src='https://player.vimeo.com/video/1110327162?h=9db501ce3f?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
               frameBorder='0'
               allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share'
               title='VSL - Small'
@@ -109,7 +121,7 @@ export default function SmallLanding() {
         <div className={styles.roadmapContainer}>
           <div className={styles.roadmapFigure}>
             <Image
-              src={en ? "/onboarding_EN.webp" : "/images/roadmap_section_figure.png"}
+              src={en ? "/images/onboarding_EN.png" : "/images/roadmap_section_figure.png"}
               alt='Small Roadmap - Proceso de digitalización paso a paso'
               width={2878}
               height={2904}
@@ -148,7 +160,12 @@ export default function SmallLanding() {
         }}
       >
         <div style={{ width: "100%", height: "100vh", position: "relative" }}>
-          <Image src='/platform.webp' alt='Plataformas Small - Herramientas y soluciones digitales' fill priority />
+          <Image
+            src='/images/platformSection_EN.png'
+            alt='Plataformas Small - Herramientas y soluciones digitales'
+            fill
+            priority
+          />
         </div>
       </section>
 
@@ -158,10 +175,10 @@ export default function SmallLanding() {
           <div className={styles.footerGrid}>
             <div className={styles.footerLogoSection}>
               <div className={styles.logoContainer}>
-                <Image src='/pointZeroIso.webp' alt='Small Logo' width={55} height={55} />
-                <Image src='/pointZeroTipo.webp' alt='Small Logo' width={75} height={75} />
+                <Image src='/pointZeroIso.webp' alt='Small Logo' width={45} height={45} />
+                <Image src='/pointZeroTipo.webp' alt='Small Logo' width={65} height={65} />
               </div>
-              <p>{dict("footer.description")}</p>
+              <p>From zero to 100. We transform ideas into businesses. Free, simple, and straightforward.</p>
             </div>
 
             <div className={styles.footerColumn}>

@@ -14,12 +14,17 @@ const barlow = Barlow({
 });
 
 export const metadata: Metadata = {
-  title: "Small",
-  description: "Small",
+  title: "PointZero",
+  description: "We transform ideas into businesses. Free, simple, and straightforward.",
   // metadataBase: new URL(""),
   openGraph: {
-    title: "Small",
-    description: "Small",
+    title: "PointZero",
+    description: "We transform ideas into businesses. Free, simple, and straightforward.",
+  },
+  icons: {
+    icon: "/pointZeroIso.webp",
+    shortcut: "/pointZeroIso.webp",
+    apple: "/pointZeroIso.webp",
   },
 };
 
