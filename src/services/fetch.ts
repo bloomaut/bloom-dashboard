@@ -239,7 +239,6 @@ export const postProp = async (questData: {
     block: string;
     clientId: string;
     questions: {
-      question: string;
       id: string;
       answer: string;
     }[];
