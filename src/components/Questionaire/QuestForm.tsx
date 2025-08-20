@@ -4,7 +4,7 @@ import { QuestData } from "./Questionaire";
 import GradientBar from "./QuestBar";
 import Icon from "../Icon";
 import Image from "next/image";
-import { questions } from "./questions";
+import { questions, questions2 } from "./questions";
 import { getYouTubeEmbedURL, videos } from "./videos";
 
 interface Props {
@@ -106,7 +106,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
   };
 
   // Calculate progress percentage
-  const progressPercentage = ((currentIndex + 1) / questions.length) * 100;
+  const progressPercentage = ((currentIndex + 1) / questions2.length) * 100;
 
   return (
     <div
@@ -160,7 +160,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
               color: "rgba(106, 32, 164, 0.7)",
             }}
           >
-            Pregunta {currentIndex + 1} de {questions.length}
+            Pregunta {currentIndex + 1} de {questions2.length}
           </span>
         </div>
         <div
@@ -209,7 +209,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
             fontFamily: "Inter, sans-serif",
           }}
         >
-          {questions[currentIndex]}
+          {questions2[currentIndex].question}
         </h2>
 
         {/* Content Layout */}
@@ -241,42 +241,94 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
           {/* Input Section */}
           <div style={{ width: "100%", position: "relative" }}>
             <div style={{ position: "relative" }}>
-              <textarea
-                style={{
-                  width: "100%",
-                  height: "300px",
-                  fontSize: "1.125rem",
-                  padding: "1.5rem",
-                  border: isRecording ? "2px solid #FF3D02" : "2px solid rgba(106, 32, 164, 0.3)",
-                  borderRadius: "0.75rem",
-                  backgroundColor: isRecording ? "rgba(255, 245, 243, 0.8)" : "rgba(255, 255, 255, 0.8)",
-                  color: "#575757",
-                  fontFamily: "Inter, sans-serif",
-                  outline: "none",
-                  resize: "none",
-                  transition: "all 0.3s ease",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-                }}
-                value={questData.answers[currentIndex]}
-                onChange={e => handleChange(e, currentIndex)}
-                placeholder={
-                  isTranscribing ? "Transcribiendo..." : "Escribe aquí o usa el micrófono para grabar tu respuesta..."
-                }
-                disabled={isTranscribing}
-                onFocus={e => {
-                  e.target.style.borderColor = "#FF3D02";
-                  e.target.style.backgroundColor = "white";
-                }}
-                onBlur={e => {
-                  if (!isRecording) {
-                    e.target.style.borderColor = "rgba(106, 32, 164, 0.3)";
-                    e.target.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+              {questions2[currentIndex].type === "singlechoice" ? (
+                <div>
+                  {questions2[currentIndex].options.map((opt, idx) => (
+                    <label
+                      key={idx}
+                      style={{
+                        display: "block",
+                        marginBottom: "1rem",
+                        fontSize: "1.125rem",
+                        color: "#575757",
+                        fontFamily: "Inter, sans-serif",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <input
+                        type='radio'
+                        name={`question_${currentIndex}`}
+                        value={typeof opt === "string" ? opt : opt.value}
+                        checked={questData.answers[currentIndex] === (typeof opt === "string" ? opt : opt.value)}
+                        onChange={e => {
+                          // Synthetic event for handleChange
+                          const syntheticEvent = {
+                            target: { value: e.target.value },
+                          } as React.ChangeEvent<HTMLTextAreaElement>;
+                          handleChange(syntheticEvent, currentIndex);
+                        }}
+                        style={{
+                          marginRight: "0.75rem",
+                          accentColor: "#6A20A4",
+                        }}
+                      />
+                      {typeof opt === "string" ? opt : opt.option}
+                    </label>
+                  ))}
+                  {empty && (
+                    <div
+                      style={{
+                        backgroundColor: "#ef4444",
+                        color: "white",
+                        padding: "0.5rem 1rem",
+                        borderRadius: "0.5rem",
+                        fontSize: "0.875rem",
+                        fontWeight: "500",
+                        boxShadow: "0 4px 12px rgba(239, 68, 68, 0.3)",
+                        marginTop: "1rem",
+                      }}
+                    >
+                      Campo no puede estar vacío
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <textarea
+                  style={{
+                    width: "100%",
+                    height: "300px",
+                    fontSize: "1.125rem",
+                    padding: "1.5rem",
+                    border: isRecording ? "2px solid #FF3D02" : "2px solid rgba(106, 32, 164, 0.3)",
+                    borderRadius: "0.75rem",
+                    backgroundColor: isRecording ? "rgba(255, 245, 243, 0.8)" : "rgba(255, 255, 255, 0.8)",
+                    color: "#575757",
+                    fontFamily: "Inter, sans-serif",
+                    outline: "none",
+                    resize: "none",
+                    transition: "all 0.3s ease",
+                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                  }}
+                  value={questData.answers[currentIndex]}
+                  onChange={e => handleChange(e, currentIndex)}
+                  placeholder={
+                    isTranscribing ? "Transcribiendo..." : "Escribe aquí o usa el micrófono para grabar tu respuesta..."
                   }
-                }}
-              />
-
-              {/* Error Message */}
-              {empty && (
+                  disabled={isTranscribing}
+                  onFocus={e => {
+                    e.target.style.borderColor = "#FF3D02";
+                    e.target.style.backgroundColor = "white";
+                  }}
+                  onBlur={e => {
+                    if (!isRecording) {
+                      e.target.style.borderColor = "rgba(106, 32, 164, 0.3)";
+                      e.target.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+                    }
+                  }}
+                />
+              )}
+              {/* Error Message for textarea */}
+              {questions2[currentIndex].type !== "singlechoice" && empty && (
                 <div
                   style={{
                     position: "absolute",
@@ -298,85 +350,87 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
             </div>
 
             {/* Audio Controls */}
-            <div
-              style={{
-                marginTop: "1.5rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-              }}
-            >
+            {questions2[currentIndex].type === "extended_text" && (
               <div
                 style={{
+                  marginTop: "1.5rem",
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.75rem",
-                  cursor: isTranscribing ? "not-allowed" : "pointer",
-                  opacity: isTranscribing ? 0.5 : 1,
-                  padding: "0.75rem 1rem",
-                  borderRadius: "2rem",
-                  backgroundColor: isRecording ? "rgba(255, 61, 2, 0.1)" : "rgba(255, 255, 255, 0.8)",
-                  border: "2px solid",
-                  borderColor: isRecording ? "#FF3D02" : "rgba(106, 32, 164, 0.3)",
-                  transition: "all 0.3s ease",
-                }}
-                onClick={!isTranscribing ? handleMicrophoneClick : undefined}
-                onMouseEnter={e => {
-                  if (!isTranscribing) {
-                    e.currentTarget.style.backgroundColor = isRecording
-                      ? "rgba(255, 61, 2, 0.15)"
-                      : "rgba(255, 255, 255, 1)";
-                    e.currentTarget.style.transform = "scale(1.02)";
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (!isTranscribing) {
-                    e.currentTarget.style.backgroundColor = isRecording
-                      ? "rgba(255, 61, 2, 0.1)"
-                      : "rgba(255, 255, 255, 0.8)";
-                    e.currentTarget.style.transform = "scale(1)";
-                  }
+                  gap: "1rem",
                 }}
               >
                 <div
                   style={{
-                    position: "relative",
-                    width: "2rem",
-                    height: "2rem",
-                    borderRadius: "50%",
-                    backgroundColor: isRecording ? "#FF3D02" : "transparent",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    animation: isRecording ? "pulse 1.5s infinite" : "none",
+                    gap: "0.75rem",
+                    cursor: isTranscribing ? "not-allowed" : "pointer",
+                    opacity: isTranscribing ? 0.5 : 1,
+                    padding: "0.75rem 1rem",
+                    borderRadius: "2rem",
+                    backgroundColor: isRecording ? "rgba(255, 61, 2, 0.1)" : "rgba(255, 255, 255, 0.8)",
+                    border: "2px solid",
+                    borderColor: isRecording ? "#FF3D02" : "rgba(106, 32, 164, 0.3)",
+                    transition: "all 0.3s ease",
+                  }}
+                  onClick={!isTranscribing ? handleMicrophoneClick : undefined}
+                  onMouseEnter={e => {
+                    if (!isTranscribing) {
+                      e.currentTarget.style.backgroundColor = isRecording
+                        ? "rgba(255, 61, 2, 0.15)"
+                        : "rgba(255, 255, 255, 1)";
+                      e.currentTarget.style.transform = "scale(1.02)";
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    if (!isTranscribing) {
+                      e.currentTarget.style.backgroundColor = isRecording
+                        ? "rgba(255, 61, 2, 0.1)"
+                        : "rgba(255, 255, 255, 0.8)";
+                      e.currentTarget.style.transform = "scale(1)";
+                    }
                   }}
                 >
-                  <Image
-                    src={"/mic.png"}
-                    alt='mic'
-                    width={24}
-                    height={24}
+                  <div
                     style={{
-                      filter: isRecording ? "brightness(0) invert(1)" : "none",
+                      position: "relative",
+                      width: "2rem",
+                      height: "2rem",
+                      borderRadius: "50%",
+                      backgroundColor: isRecording ? "#FF3D02" : "transparent",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      animation: isRecording ? "pulse 1.5s infinite" : "none",
                     }}
-                  />
+                  >
+                    <Image
+                      src={"/mic.png"}
+                      alt='mic'
+                      width={24}
+                      height={24}
+                      style={{
+                        filter: isRecording ? "brightness(0) invert(1)" : "none",
+                      }}
+                    />
+                  </div>
+                  <span
+                    style={{
+                      color: isRecording ? "#FF3D02" : "#6A20A4",
+                      fontWeight: isRecording ? 600 : 500,
+                      fontSize: "0.875rem",
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  >
+                    {isTranscribing
+                      ? "Transcribiendo..."
+                      : isRecording
+                        ? "Grabando... (Click para parar)"
+                        : "Grabar audio"}
+                  </span>
                 </div>
-                <span
-                  style={{
-                    color: isRecording ? "#FF3D02" : "#6A20A4",
-                    fontWeight: isRecording ? 600 : 500,
-                    fontSize: "0.875rem",
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
-                  {isTranscribing
-                    ? "Transcribiendo..."
-                    : isRecording
-                      ? "Grabando... (Click para parar)"
-                      : "Grabar audio"}
-                </span>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

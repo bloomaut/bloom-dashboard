@@ -9,7 +9,7 @@ import Terms from "./Terms";
 import QuestForm from "./QuestForm";
 import Fin from "./Fin";
 import Proposal from "./Proposal";
-import { answers, generatePayload, questions } from "./questions";
+import { answers, generatePayload } from "./questions";
 import { CircleLoader } from "./Spinner";
 import WishList from "./WishList";
 
@@ -72,7 +72,7 @@ function Questionaire() {
         console.log("esta");
         dispatch(setQuestData(data));
         if (user.client.wish_list === true) {
-          setTab("wishList");
+          setTab("terms");
         } else if (!data[0].terms) {
           setTab("terms");
         } else if (!data[0].completed) {
@@ -123,14 +123,34 @@ function Questionaire() {
 
   const handleIndex = (operation: string) => {
     console.log(currentIndex);
-    if (currentIndex === 31) {
-      console.log("completed");
-      dispatch(setQuestCompleted(true));
-      setTimeout(() => {
-        handleUpdate();
-        setTab("fin");
-      }, 2000);
+
+    // Custom logic for question 13 (index 12, since arrays are 0-based)
+    if (currentIndex === 12 && operation === "add") {
+      const answer = questData.answers[12];
+      if (answer === "product") {
+        setCurrentIndex(13); // Go to product questions
+        return;
+      }
+      if (answer === "service") {
+        setCurrentIndex(19); // Jump to service questions (Q20)
+        return;
+      }
+      // If "product_service" or "Both", proceed normally
     }
+
+    // If user answered "product", after Q19 (index 18), jump to Q24 (index 23)
+    if (questData.answers[12] === "product" && currentIndex === 18 && operation === "add") {
+      setCurrentIndex(23); // Jump to Q24
+      return;
+    }
+
+    // If user answered "service", after Q23 (index 22), jump to Q24 (index 23)
+    if (questData.answers[12] === "service" && currentIndex === 22 && operation === "add") {
+      setCurrentIndex(23); // Jump to Q24
+      return;
+    }
+
+    // Normal navigation
     if (operation === "subtract") {
       if (currentIndex === 0) return;
       else {
