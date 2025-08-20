@@ -124,33 +124,28 @@ function Questionaire() {
   const handleIndex = (operation: string) => {
     console.log(currentIndex);
 
-    // Custom logic for question 13 (index 12, since arrays are 0-based)
     if (currentIndex === 12 && operation === "add") {
       const answer = questData.answers[12];
       if (answer === "product") {
-        setCurrentIndex(13); // Go to product questions
+        setCurrentIndex(13);
         return;
       }
       if (answer === "service") {
-        setCurrentIndex(19); // Jump to service questions (Q20)
+        setCurrentIndex(19);
         return;
       }
-      // If "product_service" or "Both", proceed normally
     }
 
-    // If user answered "product", after Q19 (index 18), jump to Q24 (index 23)
     if (questData.answers[12] === "product" && currentIndex === 18 && operation === "add") {
-      setCurrentIndex(23); // Jump to Q24
+      setCurrentIndex(23);
       return;
     }
 
-    // If user answered "service", after Q23 (index 22), jump to Q24 (index 23)
     if (questData.answers[12] === "service" && currentIndex === 22 && operation === "add") {
-      setCurrentIndex(23); // Jump to Q24
+      setCurrentIndex(23);
       return;
     }
 
-    // Normal navigation
     if (operation === "subtract") {
       if (currentIndex === 0) return;
       else {
