@@ -72,7 +72,7 @@ function Questionaire() {
         console.log("esta");
         dispatch(setQuestData(data));
         if (user.client.wish_list === true) {
-          setTab("terms");
+          setTab("wishList");
         } else if (!data[0].terms) {
           setTab("terms");
         } else if (!data[0].completed) {
