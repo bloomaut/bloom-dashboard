@@ -34,7 +34,6 @@ function Questionaire() {
   const getData = async () => {
     const resUser = await get("user/me");
     if (resUser.statusCode === 200) {
-      console.log(resUser.result);
       dispatch(setUserData(resUser.result.user));
     }
     const resRichards = await get("client-permissions/role");
@@ -54,10 +53,8 @@ function Questionaire() {
   useEffect(() => {
     const handleGet = async () => {
       if (user.client.id === null || !user.client.id) return;
-      console.log("user", user.client.wish_list);
       const data = await getQuest(user.client.id);
       if (data.message === "No user found" || !data) {
-        console.log("no esta");
         const newData = {
           userId: String(user.client.id),
           answers: answers,
@@ -67,12 +64,11 @@ function Questionaire() {
         };
         //postQuest(newData);
         dispatch(setFirstQuestData(newData));
-        setTab("terms");
+        setTab("wishlist");
       } else {
-        console.log("esta");
         dispatch(setQuestData(data));
         if (user.client.wish_list === true) {
-          setTab("terms");
+          setTab("wishlist");
         } else if (!data[0].terms) {
           setTab("terms");
         } else if (!data[0].completed) {
@@ -83,8 +79,6 @@ function Questionaire() {
           setTab("prop");
         }
       }
-
-      console.error("Error fetching quest data");
     };
     handleGet();
   }, [user]);
@@ -95,13 +89,11 @@ function Questionaire() {
   };
 
   const handleTerms = () => {
-    console.log("terms");
     setTab("quest");
     dispatch(setQuestTerms(true));
   };
 
   const handleUpdate = () => {
-    console.log("update", questData);
     const data = generatePayload(questData);
     postQuest({
       userId: questData.userId,
@@ -122,7 +114,6 @@ function Questionaire() {
   };
 
   const handleIndex = (operation: string) => {
-    console.log(currentIndex);
     if (currentIndex === 31 && operation === "add") {
       setTab("fin");
       return;
@@ -156,7 +147,6 @@ function Questionaire() {
       }
     }
     if (operation === "add") {
-      console.log("llega 1");
       if (currentIndex === questData.answers.length - 1) return;
       else {
         if (currentIndex === 23) {
@@ -165,7 +155,6 @@ function Questionaire() {
         if (!questData.answers[currentIndex]) {
           setEmpty(true);
         } else {
-          console.log("llega 2");
           setCurrentIndex(currentIndex + 1);
         }
       }

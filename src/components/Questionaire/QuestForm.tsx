@@ -140,15 +140,14 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
   const questionObj = questions2[currentIndex];
   const displayQuestion = showConditional ? questionObj.question : questionObj.conditionalQuestion;
 
-  // Handler for radio/textarea change
   const handleConditionalRadio = (value: string) => {
     if (value === "no") {
       handleChange(
         { target: { value: questionObj.defaultAnswer } } as React.ChangeEvent<HTMLTextAreaElement>,
         currentIndex,
       );
-      setShowConditional(false); // Reset conditional state
-      setShowMainQuestion(false); // Reset main question state
+      setShowConditional(false);
+      setShowMainQuestion(false);
       handleIndex("add");
     } else if (value === "yes") {
       setShowMainQuestion(true);
@@ -161,9 +160,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
     handleIndex("add");
   };
 
-  // Render logic
   if (questionObj.hasConditionalQuestion && !showMainQuestion) {
-    // Show conditional question with Yes/No radios
     return (
       <div
         style={{
