@@ -4,7 +4,7 @@ import { QuestData } from "./Questionaire";
 import GradientBar from "./QuestBar";
 import Icon from "../Icon";
 import Image from "next/image";
-import { questions, questions2 } from "./questions";
+import { questions2 } from "./questions";
 import { getYouTubeEmbedURL, videos } from "./videos";
 
 interface Props {
@@ -21,14 +21,21 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
   const [isTranscribing, setIsTranscribing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const [showConditional, setShowConditional] = useState(false);
+  const [showMainQuestion, setShowMainQuestion] = useState(false);
 
   useEffect(() => {
     for (let index = 0; index < questData.answers.length; index++) {
-      if (questData.answers[index] !== "") {
+      if (questData.answers[index]) {
         setIndex(index);
       }
     }
   }, []);
+
+  useEffect(() => {
+    setShowConditional(false);
+    setShowMainQuestion(false);
+  }, [currentIndex]);
 
   const startRecording = async () => {
     try {
@@ -105,8 +112,250 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
     }
   };
 
-  // Calculate progress percentage
   const progressPercentage = ((currentIndex + 1) / questions2.length) * 100;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    const questionObj = questions2[currentIndex];
+
+    if (questionObj.hasConditionalQuestion && !showConditional) {
+      if (value.toLowerCase() === "no") {
+        handleChange(
+          { target: { value: questionObj.defaultAnswer } } as React.ChangeEvent<HTMLTextAreaElement>,
+          currentIndex,
+        );
+        handleIndex("add");
+      } else if (value.toLowerCase() === "yes") {
+        setShowConditional(true);
+      }
+    } else if (showConditional) {
+      handleChange({ target: { value } } as React.ChangeEvent<HTMLTextAreaElement>, currentIndex);
+      setShowConditional(false);
+      handleIndex("add");
+    } else {
+      handleChange({ target: { value } } as React.ChangeEvent<HTMLTextAreaElement>, currentIndex);
+    }
+  };
+
+  const questionObj = questions2[currentIndex];
+  const displayQuestion = showConditional ? questionObj.question : questionObj.conditionalQuestion;
+
+  // Handler for radio/textarea change
+  const handleConditionalRadio = (value: string) => {
+    if (value === "no") {
+      handleChange(
+        { target: { value: questionObj.defaultAnswer } } as React.ChangeEvent<HTMLTextAreaElement>,
+        currentIndex,
+      );
+      setShowConditional(false); // Reset conditional state
+      setShowMainQuestion(false); // Reset main question state
+      handleIndex("add");
+    } else if (value === "yes") {
+      setShowMainQuestion(true);
+    }
+  };
+
+  const handleMainAnswer = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    handleChange(e as React.ChangeEvent<HTMLTextAreaElement>, currentIndex);
+    setShowMainQuestion(false);
+    handleIndex("add");
+  };
+
+  // Render logic
+  if (questionObj.hasConditionalQuestion && !showMainQuestion) {
+    // Show conditional question with Yes/No radios
+    return (
+      <div
+        style={{
+          background: "linear-gradient(135deg, #FBFAFE 0%, #ffffff 100%)",
+          padding: "1rem",
+        }}
+      >
+        {/* Progress Section */}
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                color: "#6A20A4",
+                fontFamily: "Inter, sans-serif",
+              }}
+              onClick={() =>
+                console.log(
+                  currentIndex,
+                  questionObj.hasConditionalQuestion,
+                  showMainQuestion,
+                  questionObj.hasConditionalQuestion && !showMainQuestion,
+                )
+              }
+            >
+              Cuestionario
+            </span>
+            <span
+              style={{
+                fontSize: "1.125rem",
+                fontWeight: "500",
+                color: "#6A20A4",
+              }}
+            >
+              {Math.round(progressPercentage)}%
+            </span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "1rem",
+                fontWeight: "500",
+                color: "rgba(106, 32, 164, 0.7)",
+              }}
+            >
+              Pregunta {currentIndex + 1} de {questions2.length}
+            </span>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              backgroundColor: "rgba(106, 32, 164, 0.2)",
+              borderRadius: "9999px",
+              height: "1rem",
+              boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <div
+              style={{
+                background: "linear-gradient(90deg, #FF3D02 0%, #6A20A4 100%)",
+                height: "1rem",
+                borderRadius: "9999px",
+                width: `${progressPercentage}%`,
+                transition: "all 0.5s ease-out",
+                boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            maxWidth: "80rem",
+            margin: "0 auto",
+            width: "100%",
+            minHeight: "70vh",
+          }}
+        >
+          {/* Question Title */}
+          <h2
+            style={{
+              fontSize: "2.25rem",
+              fontWeight: "bold",
+              color: "#6A20A4",
+              marginBottom: "3rem",
+              lineHeight: "1.4",
+              textAlign: "center",
+              fontFamily: "Inter, sans-serif",
+            }}
+          >
+            {displayQuestion}
+          </h2>
+
+          {/* Content Layout */}
+          <div
+            style={{
+              width: "80%",
+              gap: "3rem",
+              alignItems: "start",
+              display: "flex",
+              flexDirection: "column",
+              margin: "0 auto",
+            }}
+          >
+            {/* Video Section */}
+            {/*   <div style={{ width: "100%" }}>
+            <iframe
+              style={{
+                borderRadius: "1rem",
+                width: "100%",
+                height: "400px",
+                border: "none",
+                boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+              }}
+              src={`${getYouTubeEmbedURL(videos[currentIndex])}`}
+              allow='accelerometer; autoplay;'
+            />
+          </div> */}
+
+            {/* Input Section */}
+            <div style={{ width: "100%", position: "relative" }}>
+              <div style={{ position: "relative" }}>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "1rem",
+                    fontSize: "1.125rem",
+                    color: "#575757",
+                    fontFamily: "Inter, sans-serif",
+                    cursor: "pointer",
+                  }}
+                >
+                  <input
+                    type='radio'
+                    name={`conditional_${currentIndex}`}
+                    value='yes'
+                    onChange={() => handleConditionalRadio("yes")}
+                    style={{
+                      marginRight: "0.75rem",
+                      accentColor: "#6A20A4",
+                    }}
+                  />
+                  Sí
+                </label>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "1rem",
+                    fontSize: "1.125rem",
+                    color: "#575757",
+                    fontFamily: "Inter, sans-serif",
+                    cursor: "pointer",
+                  }}
+                >
+                  <input
+                    type='radio'
+                    name={`conditional_${currentIndex}`}
+                    value='no'
+                    onChange={() => handleConditionalRadio("no")}
+                    style={{
+                      marginRight: "0.75rem",
+                      accentColor: "#6A20A4",
+                    }}
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -209,7 +458,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
             fontFamily: "Inter, sans-serif",
           }}
         >
-          {questions2[currentIndex].question}
+          {questionObj.question}
         </h2>
 
         {/* Content Layout */}
@@ -241,9 +490,9 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
           {/* Input Section */}
           <div style={{ width: "100%", position: "relative" }}>
             <div style={{ position: "relative" }}>
-              {questions2[currentIndex].type === "singlechoice" ? (
+              {questionObj.type === "singlechoice" ? (
                 <div>
-                  {questions2[currentIndex].options.map((opt, idx) => (
+                  {questionObj.options.map((opt, idx) => (
                     <label
                       key={idx}
                       style={{
@@ -260,13 +509,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                         name={`question_${currentIndex}`}
                         value={typeof opt === "string" ? opt : opt.value}
                         checked={questData.answers[currentIndex] === (typeof opt === "string" ? opt : opt.value)}
-                        onChange={e => {
-                          // Synthetic event for handleChange
-                          const syntheticEvent = {
-                            target: { value: e.target.value },
-                          } as React.ChangeEvent<HTMLTextAreaElement>;
-                          handleChange(syntheticEvent, currentIndex);
-                        }}
+                        onChange={handleInputChange}
                         style={{
                           marginRight: "0.75rem",
                           accentColor: "#6A20A4",
@@ -328,7 +571,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                 />
               )}
               {/* Error Message for textarea */}
-              {questions2[currentIndex].type !== "singlechoice" && empty && (
+              {questionObj.type !== "singlechoice" && empty && (
                 <div
                   style={{
                     position: "absolute",
@@ -350,7 +593,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
             </div>
 
             {/* Audio Controls */}
-            {questions2[currentIndex].type === "extended_text" && (
+            {questionObj.type === "extended_text" && (
               <div
                 style={{
                   marginTop: "1.5rem",

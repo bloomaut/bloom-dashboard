@@ -9,7 +9,7 @@ import Terms from "./Terms";
 import QuestForm from "./QuestForm";
 import Fin from "./Fin";
 import Proposal from "./Proposal";
-import { answers, generatePayload } from "./questions";
+import { answers, generatePayload, questions2 } from "./questions";
 import { CircleLoader } from "./Spinner";
 import WishList from "./WishList";
 
@@ -67,12 +67,12 @@ function Questionaire() {
         };
         //postQuest(newData);
         dispatch(setFirstQuestData(newData));
-        setTab("wishList");
+        setTab("terms");
       } else {
         console.log("esta");
         dispatch(setQuestData(data));
         if (user.client.wish_list === true) {
-          setTab("wishList");
+          setTab("terms");
         } else if (!data[0].terms) {
           setTab("terms");
         } else if (!data[0].completed) {
@@ -123,7 +123,10 @@ function Questionaire() {
 
   const handleIndex = (operation: string) => {
     console.log(currentIndex);
-
+    if (currentIndex === 31 && operation === "add") {
+      setTab("fin");
+      return;
+    }
     if (currentIndex === 12 && operation === "add") {
       const answer = questData.answers[12];
       if (answer === "product") {
@@ -153,11 +156,16 @@ function Questionaire() {
       }
     }
     if (operation === "add") {
+      console.log("llega 1");
       if (currentIndex === questData.answers.length - 1) return;
       else {
+        if (currentIndex === 23) {
+          setCurrentIndex(24);
+        }
         if (!questData.answers[currentIndex]) {
           setEmpty(true);
         } else {
+          console.log("llega 2");
           setCurrentIndex(currentIndex + 1);
         }
       }
