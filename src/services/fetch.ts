@@ -132,7 +132,7 @@ export const postQuest = async (questData: {
   userId: string;
   answers: {
     block: string;
-    questions: { question: string; id: string; answer: string }[];
+    questions: { id: string; answer: string }[];
   }[];
   terms: boolean;
   completed: boolean;
@@ -239,7 +239,6 @@ export const postProp = async (questData: {
     block: string;
     clientId: string;
     questions: {
-      question: string;
       id: string;
       answer: string;
     }[];

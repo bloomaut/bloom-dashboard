@@ -9,7 +9,7 @@ import Terms from "./Terms";
 import QuestForm from "./QuestForm";
 import Fin from "./Fin";
 import Proposal from "./Proposal";
-import { answers, generatePayload, questions } from "./questions";
+import { answers, generatePayload, questions2 } from "./questions";
 import { CircleLoader } from "./Spinner";
 import WishList from "./WishList";
 
@@ -34,7 +34,6 @@ function Questionaire() {
   const getData = async () => {
     const resUser = await get("user/me");
     if (resUser.statusCode === 200) {
-      console.log(resUser.result);
       dispatch(setUserData(resUser.result.user));
     }
     const resRichards = await get("client-permissions/role");
@@ -54,10 +53,8 @@ function Questionaire() {
   useEffect(() => {
     const handleGet = async () => {
       if (user.client.id === null || !user.client.id) return;
-      console.log("user", user.client.wish_list);
       const data = await getQuest(user.client.id);
       if (data.message === "No user found" || !data) {
-        console.log("no esta");
         const newData = {
           userId: String(user.client.id),
           answers: answers,
@@ -67,12 +64,11 @@ function Questionaire() {
         };
         //postQuest(newData);
         dispatch(setFirstQuestData(newData));
-        setTab("wishList");
+        setTab("wishlist");
       } else {
-        console.log("esta");
         dispatch(setQuestData(data));
         if (user.client.wish_list === true) {
-          setTab("wishList");
+          setTab("wishlist");
         } else if (!data[0].terms) {
           setTab("terms");
         } else if (!data[0].completed) {
@@ -83,8 +79,6 @@ function Questionaire() {
           setTab("prop");
         }
       }
-
-      console.error("Error fetching quest data");
     };
     handleGet();
   }, [user]);
@@ -95,13 +89,11 @@ function Questionaire() {
   };
 
   const handleTerms = () => {
-    console.log("terms");
     setTab("quest");
     dispatch(setQuestTerms(true));
   };
 
   const handleUpdate = () => {
-    console.log("update", questData);
     const data = generatePayload(questData);
     postQuest({
       userId: questData.userId,
@@ -122,17 +114,44 @@ function Questionaire() {
   };
 
   const handleIndex = (operation: string) => {
-    if (currentIndex === 104) {
-      console.log("completed");
-      dispatch(setQuestCompleted(true));
-      setTimeout(() => {
-        handleUpdate();
-        setTab("fin");
-      }, 2000);
+    if (currentIndex === 31 && operation === "add") {
+      setTab("fin");
+      return;
+    }
+    if (currentIndex === 12 && operation === "add") {
+      const answer = questData.answers[12];
+      if (answer === "product") {
+        setCurrentIndex(13);
+        return;
+      }
+      if (answer === "service") {
+        setCurrentIndex(19);
+        return;
+      }
+    }
+
+    if (questData.answers[12] === "product" && currentIndex === 18 && operation === "add") {
+      setCurrentIndex(23);
+      return;
+    }
+
+    if (questData.answers[12] === "service" && currentIndex === 22 && operation === "add") {
+      setCurrentIndex(23);
+      return;
+    }
+
+    if (operation === "subtract") {
+      if (currentIndex === 0) return;
+      else {
+        setCurrentIndex(currentIndex - 1);
+      }
     }
     if (operation === "add") {
       if (currentIndex === questData.answers.length - 1) return;
       else {
+        if (currentIndex === 23) {
+          setCurrentIndex(24);
+        }
         if (!questData.answers[currentIndex]) {
           setEmpty(true);
         } else {
@@ -166,7 +185,9 @@ function Questionaire() {
         <Terms handleTerms={handleTerms} />
       )} */}
       {tab === "loading" && (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}>
+        <div
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100vh" }}
+        >
           <CircleLoader />
         </div>
       )}

@@ -16,3 +16,7 @@ export const prisma =
   });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+//mongodb+srv://razgrisss41:<pass>@cluster0.dkqqwgl.mongodb.net/
+
+//mongodb+srv://notiadmin:qLrJaiPnpjMALFWx@notimation-suit-dev.fdti2uz.mongodb.net/notimation-suit-dev
