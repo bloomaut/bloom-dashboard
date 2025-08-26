@@ -1,42 +1,69 @@
 {
   "dict": {
-    "landing": {
-      "slogan": "From Zero to 100",
-      "title_start": "Start from ",
-      "title_accent": "Zero ",
-      "title_end": "without fear",
-      "subtitle": "The fastest path to independence, free and no hassle",
-      "body": "We build your business ready to launch and guide you every step of the way. With a brand, a plan, and a strategy that removes uncertainty and cuts effort to the minimum, so you can focus entirely on what you do best. We handle the rest, share the risk, and lead you toward guaranteed success.",
-      "cta": "Launch your business today!",
-      "subtitle_2": "Ready to launch your business?",
-      "body_2": "Start your journey to a new life today with PointZero—risk-free, simple, and fast.",
-      "cta_2": "Start today!"
+   "header": {
+      "cta": "LAUNCH TODAY!"
     },
-    "footer": {
-      "description": "Small from zero to everything. We transform ideas into businesses with AI. Free, simple, and straightforward.",
-      "services_title": "Services",
-      "services_online_store": "Online Store",
-      "services_digital_management": "Digital Management",
-      "services_digital_marketing": "Digital Marketing",
-      "services_technical_support": "Technical Support",
-      "company_title": "Company",
-      "company_about_us": "About Us",
-      "company_success_stories": "Success Stories",
-      "company_blog": "Blog",
-      "company_contact": "Contact",
-      "legal_title": "Legal",
-      "legal_terms_of_use": "Terms of Use",
-      "legal_privacy_policy": "Privacy Policy",
-      "legal_cookies": "Cookies",
-      "copyright": "© 2025 Small. All rights reserved."
+    "hero": {
+      "title": {
+        "launch": "Launch",
+        "fast": "fast",
+        "and": "and",
+        "confidently": "confidently"
+      },
+      "subtitle1": "Focus on what you do best,",
+      "subtitle2": "we",
+      "subtitle2_handle": "handle the",
+      "subtitle2_rest": "rest",
+      "description": "instantly creates your personalized marketing plan, strategy, brand identity, and content workflow. With a",
+      "description_mentored": "mentored video recording app",
+      "description_middle": ", record guided content and sell directly through a customized",
+      "description_ecommerce": "eCommerce",
+      "description_end": "store with a dashboard to manage your account —",
+      "description_free": "all free 🎁",
+      "cta": "LAUNCH YOUR BUSINESS TODAY!",
+      "bloom_ai": "Bloom AI"
+    },
+    "platforms": {
+      "mobile": "Mobile",
+      "mentor": "Mentor",
+      "app": "App",
+      "subtitle": "Your creative director in your pocket"
+    },
+    "desktools": {
+      "title": "Your",
+      "ecommerce": "Ecommerce"
+    },
+    "all_in_one": {
+      "title": "All-in-One",
+      "rest": "Business Platform"
     },
     "cta_section": {
       "title": "Ready to launch your business?",
-      "description": "Start your journey to a new life today with",
-      "description_bold": " PointZero",
-      "description_end": "—risk-free, simple, and fast.",
-      "button": "Start today!",
+      "subtitle": "Start your journey to a new life today",
+      "button": "START TODAY!",
       "disclaimer": "No commitment • Support included"
+    },
+    "footer": {
+      "follow": "Follow us on:",
+      "services": {
+        "title": "Services",
+        "online_store": "Online Store",
+        "digital_management": "Digital Management",
+        "digital_marketing": "Digital Marketing"
+      },
+      "company": {
+        "title": "Company",
+        "about": "About Us",
+        "blog": "Blog",
+        "contact": "Contact"
+      },
+      "legal": {
+        "title": "Legal",
+        "terms": "Terms of Use",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookies"
+      },
+      "copyright": "© 2025 Bloomit. All rights reserved."
     },
     "error": {
       "message": "Somethings went wrong!",

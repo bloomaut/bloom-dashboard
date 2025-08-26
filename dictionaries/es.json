@@ -1,40 +1,69 @@
 {
   "dict": {
-    "landing": {
-      "slogan": "De zero a 100",
-      "title_start": "Emprende desde ",
-      "title_accent": "Zero ",
-      "title_end": ", crece sin miedo",
-      "subtitle": "El camino más corto a tu independencia, sin costos y sin complicaciones",
-      "body": "Creamos tu negocio listo para lanzar y te acompañamos en cada paso de tu crecimiento. Con una marca, un plan y una estrategia que elimina la incertidumbre y reducen el esfuerzo al mínimo, para que puedas enfocarte únicamente en lo que mejor sabes hacer. Nosotros nos encargamos del resto, compartimos el riesgo y te guiamos hacia el éxito garantizado.",
-      "cta": "Lanza tu negocio hoy!",
-      "subtitle_2": "¿Listo para lanzar tu negocio?",
-      "body_2": "Empieza tu camino a tu nueva vida hoy con PointZero, sin riesgos, simple y rápido.",
-      "cta_2": "Comienza hoy!"
+    "header": {
+      "cta": "¡LANZA HOY!"
     },
-    "footer": {
-      "description": "Small de cero a todo. Transformamos ideas en negocios con IA. Gratis, simple y sin vueltas.",
-      "services_title": "Servicios",
-      "services_online_store": "Tienda Online",
-      "services_digital_management": "Gestión Digital",
-      "services_digital_marketing": "Marketing Digital",
-      "services_technical_support": "Soporte Técnico",
-      "company_title": "Empresa",
-      "company_about_us": "Sobre Nosotros",
-      "company_success_stories": "Casos de Éxito",
-      "company_blog": "Blog",
-      "company_contact": "Contacto",
-      "legal_title": "Legal",
-      "legal_terms_of_use": "Términos de Uso",
-      "legal_privacy_policy": "Política de Privacidad",
-      "legal_cookies": "Cookies",
-      "copyright": "© 2025 Small. Todos los derechos reservados."
+    "hero": {
+      "title": {
+        "launch": "Lanza",
+        "fast": "hoy",
+        "and": "con",
+        "confidently": "confianza"
+      },
+      "subtitle1": "Enfocate en lo tuyo,",
+      "subtitle2": "nosotros",
+      "subtitle2_handle": "hacemos el",
+      "subtitle2_rest": "resto",
+      "description": "crea instantáneamente tu plan de marketing personalizado, estrategia, identidad de marca y flujo de trabajo de contenido. Con una",
+      "description_mentored": "aplicación de grabación de video con mentoría",
+      "description_middle": ", graba contenido guiado y vende directamente a través de una tienda",
+      "description_ecommerce": "eCommerce",
+      "description_end": "personalizada con un panel para gestionar tu cuenta —",
+      "description_free": "todo gratis 🎁",
+      "cta": "¡LANZA TU NEGOCIO HOY!",
+      "bloom_ai": "Bloom AI"
+    },
+    "platforms": {
+      "mobile": "Aplicación",
+      "mentor": "Mentor",
+      "app": "Móvil",
+      "subtitle": "Tu director creativo en tu bolsillo"
+    },
+    "desktools": {
+      "title": "Tu",
+      "ecommerce": "Ecommerce"
+    },
+    "all_in_one": {
+      "title": "Todo-en-Uno",
+      "rest": "Plataforma de Negocios"
     },
     "cta_section": {
-      "title": "Listo para lanzar tu negocio?",
-      "description": "Empieza tu camino a tu nueva vida hoy con PointZero, sin riesgos, simple y rapido. ",
-      "button": "Comienza hoy!",
+      "title": "¿Listo para lanzar tu negocio?",
+      "subtitle": "Comienza tu viaje hacia una nueva vida hoy",
+      "button": "¡COMIENZA HOY!",
       "disclaimer": "Sin compromiso • Soporte incluido"
+    },
+    "footer": {
+      "follow": "Síguenos en:",
+      "services": {
+        "title": "Servicios",
+        "online_store": "Tienda Online",
+        "digital_management": "Gestión Digital",
+        "digital_marketing": "Marketing Digital"
+      },
+      "company": {
+        "title": "Empresa",
+        "about": "Acerca de Nosotros",
+        "blog": "Blog",
+        "contact": "Contacto"
+      },
+      "legal": {
+        "title": "Legal",
+        "terms": "Términos de Uso",
+        "privacy": "Política de Privacidad",
+        "cookies": "Cookies"
+      },
+      "copyright": "© 2025 Bloomit. Todos los derechos reservados."
     },
     "error": {
       "message": "¡Hubo un problema!",
