@@ -5,10 +5,10 @@ export async function generateMetadata({ params: { locale } }: { params: { local
   const t = await getTranslations({ locale, namespace: "dict.landing" });
 
   return {
-    title: `PointZero - ${t("hero.title")} ${t("hero.title_accent")}`,
+    title: `Bloom - ${t("hero.title")} ${t("hero.title_accent")}`,
     description: t("hero.description"),
     openGraph: {
-      title: `PointZero - ${t("hero.title")} ${t("hero.title_accent")}`,
+      title: `Bloom - ${t("hero.title")} ${t("hero.title_accent")}`,
       description: t("hero.description"),
       locale: locale,
     },
@@ -20,9 +20,9 @@ export async function generateMetadata({ params: { locale } }: { params: { local
       },
     },
     icons: {
-      icon: "/pointZeroIso.webp",
-      shortcut: "/pointZeroIso.webp",
-      apple: "/pointZeroIso.webp",
+      icon: "/icon.png",
+      shortcut: "/icon.png",
+      apple: "/icon.png",
     },
   };
 }

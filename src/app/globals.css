@@ -158,3 +158,184 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #ff3d02;
 }
+
+/* ================================
+   Global CSS for My Business
+   Colors, Typography, and Text Styles
+================================ */
+
+
+:root {
+  /* Colors */
+  --color-primary: #4DC2F4;
+  --color-secondary: #5A0075;
+  --color-background: #FFFFFF;
+  --color-background-dark: #000000;
+  --color-background-transparent: #ffffff9d;
+  --color-background-dark-transparent: #0000009d;
+
+  --color-font-primary: #000000;
+  --color-font-secondary: #4A4A4A;
+  --color-font-tertiary: #767676;
+  --color-font-primary-dark: #FFFFFF;
+}
+
+/* Typography - Base sizes for mobile (320px+) */
+:root {
+  --font-family: 'Roboto', sans-serif;
+
+  /* Font sizes - Mobile first approach (reducidos 7.5% adicional en headings) */
+  --font-size-h1: 2.08rem;   /* 33px (era 36px) */
+  --font-size-h2: 1.665rem;  /* 27px (era 29px) */
+  --font-size-h3: 1.457rem;  /* 23px (era 25px) */
+  --font-size-h4: 1.249rem;  /* 20px (era 22px) */
+  --font-size-h5: 1.041rem;  /* 17px (era 18px) */
+  --font-size-body: 0.9rem;  /* 14px (SIN CAMBIO) */
+
+  /* Font weights */
+  --font-weight-bold: 700;
+  --font-weight-semi-bold: 500;
+  --font-weight-medium: 400;
+  --font-weight-regular: 300;
+  --font-weight-light: 200;
+}
+
+/* Tablet sizes (768px+) */
+@media (min-width: 768px) {
+  :root {
+    --font-size-h1: 2.914rem;   /* 47px (era 50px) */
+    --font-size-h2: 2.289rem;   /* 37px (era 40px) */
+    --font-size-h3: 1.873rem;   /* 30px (era 32px) */
+    --font-size-h4: 1.559rem;   /* 25px (era 27px) */
+    --font-size-h5: 1.249rem;   /* 20px (era 22px) */
+    --font-size-body: 1.0125rem; /* 16px (SIN CAMBIO) */
+  }
+}
+
+/* Desktop sizes (1024px+) */
+@media (min-width: 1024px) {
+  :root {
+    --font-size-h1: 3.746rem;   /* 60px (era 65px) */
+    --font-size-h2: 2.914rem;   /* 47px (era 50px) */
+    --font-size-h3: 2.289rem;   /* 37px (era 40px) */
+    --font-size-h4: 1.873rem;   /* 30px (era 32px) */
+    --font-size-h5: 1.559rem;   /* 25px (era 27px) */
+    --font-size-body: 1.125rem; /* 18px (SIN CAMBIO) */
+  }
+}
+
+/* Large desktop sizes (1440px+) */
+@media (min-width: 1440px) {
+  :root {
+    --font-size-h1: 4.579rem;   /* 73px (era 79px) */
+    --font-size-h2: 3.538rem;   /* 57px (era 61px) */
+    --font-size-h3: 2.706rem;   /* 43px (era 47px) */
+    --font-size-h4: 2.081rem;   /* 33px (era 36px) */
+    --font-size-h5: 1.665rem;   /* 27px (era 29px) */
+    --font-size-body: 1.2375rem; /* 20px (SIN CAMBIO) */
+  }
+}
+
+/* Extra large screens (1920px+) */
+@media (min-width: 1920px) {
+  :root {
+    --font-size-h1: 5.369rem;   /* 86px (era 80px) */
+    --font-size-h2: 4.251rem;   /* 68px (era 63px) */
+    --font-size-h3: 3.356rem;   /* 54px (era 50px) */
+    --font-size-h4: 2.685rem;   /* 43px (era 40px) */
+    --font-size-h5: 2.013rem;   /* 32px (era 30px) */
+    --font-size-body: 1.451rem; /* 23px (era 22px) */
+  }
+}
+
+/* ================================
+   Base Styles
+================================ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--color-background);
+  color: var(--color-font-primary);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Headings */
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-font-primary);
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-font-primary);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-font-primary);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-font-secondary);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-font-tertiary);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+/* Body text */
+p, span, li {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-font-secondary);
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+/* Dark mode styles (can be applied with a class) */
+body.dark-mode {
+  background-color: var(--color-background-dark);
+  color: var(--color-font-primary-dark);
+}
+
+body.dark-mode a {
+  color: var(--color-primary);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5 {
+  color: var(--color-font-primary-dark);
+}
+
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode li {
+  color: var(--color-font-primary-dark);
+}
+
