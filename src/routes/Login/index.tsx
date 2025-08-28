@@ -175,8 +175,8 @@ export default function SmallLanding() {
             <Image
               src={getImageSrc("/peers_network")}
               alt='Bloomit Peers Network'
-              width={1536}
-              height={1024}
+              width={2880}
+              height={1546}
               className={styles.communityImage}
             />
           </div>
