@@ -20,7 +20,7 @@
       "description_ecommerce": "eCommerce",
       "description_end": "personalizada con un panel para gestionar tu cuenta —",
       "description_free": "todo gratis 🎁",
-      "cta": "¡LANZA TU NEGOCIO HOY!",
+      "cta": "¡LANZA TU MARKETING HOY!",
       "bloom_ai": "Bloom AI"
     },
     "platforms": {
@@ -28,6 +28,11 @@
       "mentor": "Mentor",
       "app": "Móvil",
       "subtitle": "Tu director creativo en tu bolsillo"
+    },
+    "community": {
+      "peers": "Comunidad",
+      "network": "de emprendedores",
+      "subtitle": "Comunidad de peers para feedback temprano antes de publicar"
     },
     "desktools": {
       "title": "Tu",

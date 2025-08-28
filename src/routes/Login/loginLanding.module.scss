@@ -673,6 +673,109 @@
   }
 }
 
+/* Bloomit Platforms Section */
+.bloomitCommunity {
+  padding: 6rem 0rem;
+  background-color: var(--color-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.communityContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+  text-align: center;
+}
+
+.communityContentText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.communityTitle {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.communityTitle .primaryColor {
+  color: var(--color-primary) !important;
+}
+
+.communityTitle .secondaryColor {
+  color: var(--color-font-secondary) !important;
+}
+
+.communitySubtitle {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-font-secondary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.communityImageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.communityImage {
+  width: 100%;
+  height: auto;
+}
+
+/* Responsive design para Platforms Section */
+@media (min-width: 1024px) {
+  .bloomitCommunity {
+    padding: 4rem 0rem;
+  }
+
+  .communityContent {
+    gap: 1.5rem;
+  }
+
+  .communityContentText {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .bloomitCommunity {
+    padding: 6rem 0rem;
+  }
+
+  .communityContent {
+    gap: 2rem;
+  }
+
+  .communityContentText {
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .bloomitCommunity {
+    padding: 8rem 0rem;
+  }
+
+  .communityContent {
+    gap: 3rem;
+  }
+
+  .communityContentText {
+    gap: 3rem;
+  }
+}
+
 /* Desktools Section */
 .desktoolsSection {
   padding: 4rem 0;
