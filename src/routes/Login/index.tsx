@@ -48,15 +48,13 @@ export default function SmallLanding() {
         </div>
         <div className={styles.heroContentContainer}>
           <h1 className={styles.heroTitle}>
-            {dict("hero.title.launch")} <span className={styles.primaryColor}>{dict("hero.title.fast")}</span>{" "}
+            {dict("hero.title.launch")} <span className={styles.primaryColor}>{dict("hero.title.fast")}</span>
             {dict("hero.title.and")} <span className={styles.secondaryColor}>{dict("hero.title.confidently")}</span>
           </h1>
           <h2 className={styles.heroSubtitle}>{dict("hero.subtitle1")}</h2>
           <h2 className={styles.heroSubtitle}>
             {dict("hero.subtitle2")}{" "}
-            <span className={styles.fontPrimaryColor}>
-              {dict("hero.subtitle2_handle")} <span className={styles.primaryColor}>{dict("hero.subtitle2_rest")}</span>
-            </span>
+            <span className={styles.secondaryColor}>{dict("hero.subtitle2_handle")}</span> {dict("hero.subtitle2_and")} <span className={styles.primaryColor}>{dict("hero.subtitle2_rest")}</span>
           </h2>
           <p className={styles.heroDescription}>
             <span className={styles.primaryBold}>{dict("hero.bloom_ai")}</span> {dict("hero.description")}{" "}
@@ -157,6 +155,29 @@ export default function SmallLanding() {
               width={2520}
               height={1626}
               className={styles.platformsImage}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 5.2 Bloomit Peers Community */}
+      <section className={styles.bloomitCommunity}>
+        <div className={styles.communityContent}>
+          <div className={styles.communityContentText}>
+            <h1 className={styles.communityTitle}>
+              <span className={styles.primaryColor}>{dict("community.peers")}</span>{" "}
+              <span className={styles.secondaryColor}>{dict("community.network")}</span>
+            </h1>
+
+            <h4 className={styles.communitySubtitle}>{dict("community.subtitle")}</h4>
+          </div>
+          <div className={styles.communityImageContainer}>
+            <Image
+              src={getImageSrc("/peers_network")}
+              alt='Bloomit Peers Network'
+              width={1536}
+              height={1024}
+              className={styles.communityImage}
             />
           </div>
         </div>
