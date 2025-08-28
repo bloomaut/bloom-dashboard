@@ -53,8 +53,8 @@ export default function SmallLanding() {
           </h1>
           <h2 className={styles.heroSubtitle}>{dict("hero.subtitle1")}</h2>
           <h2 className={styles.heroSubtitle}>
-            {dict("hero.subtitle2")}{" "}
-            <span className={styles.secondaryColor}>{dict("hero.subtitle2_handle")}</span> {dict("hero.subtitle2_and")} <span className={styles.primaryColor}>{dict("hero.subtitle2_rest")}</span>
+            {dict("hero.subtitle2")} <span className={styles.secondaryColor}>{dict("hero.subtitle2_handle")}</span>{" "}
+            {dict("hero.subtitle2_and")} <span className={styles.primaryColor}>{dict("hero.subtitle2_rest")}</span>
           </h2>
           <p className={styles.heroDescription}>
             <span className={styles.primaryBold}>{dict("hero.bloom_ai")}</span> {dict("hero.description")}{" "}
