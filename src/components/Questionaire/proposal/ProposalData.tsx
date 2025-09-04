@@ -1,8 +1,11 @@
 "use client";
 import React from "react";
+import dynamic from "next/dynamic";
 import { Download } from "lucide-react";
 import { styles } from "./styles";
-import PDFViewer from "./NoSSRPDFViewer";
+
+// client-only dynamic import to ensure react-pdf bundle isn't required during SSR
+const PDFViewer = dynamic(() => import("./NoSSRPDFViewer"), { ssr: false });
 
 function ProposalData() {
   return (
