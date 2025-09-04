@@ -24,25 +24,36 @@ import {
 function normalizeUser(u: any) {
   return {
     id: u.id ?? u._id ?? u.userId,
-    name: u.name ?? (`${u.firstName ?? ""} ${u.lastName ?? ""}`.trim() || "Sin nombre"),
+    // name may be split into name/lastname or firstName/lastName
+    name:
+      (u.name ??
+        (u.firstName ? `${u.firstName} ${u.lastName ?? ""}`.trim() : null) ??
+        (u.name || u.lastname ? `${u.name ?? ""} ${u.lastname ?? ""}`.trim() : null)) ||
+      "Sin nombre",
     email: u.email ?? u.emailAddress ?? "-",
-    // try a few possibilities for status (keep original if present)
-    status:
-      u.status ??
-      (u.proposal_status
-        ? u.proposal_status === "approved"
-          ? "con-propuesta-aprobada"
-          : u.proposal_status === "pending"
-            ? "con-propuesta-revision"
-            : u.proposal_status === "rejected"
-              ? "rechazado"
-              : "sin-propuesta"
-        : u.wish_list
-          ? "lista-espera"
-          : "sin-propuesta"),
+    // proposal fields may live under `client` in the new API
     role: u.role ?? u.roleName ?? "usuario",
     registrationDate: u.registrationDate ?? u.created_at ?? u.createdAt ?? null,
     lastLogin: u.lastLogin ?? u.last_login ?? null,
+    // derive status from many possible shapes, preferring explicit status
+    status: (() => {
+      if (u.status) return u.status;
+      const proposalUrl = u.proposal_url ?? u.client?.proposal_url ?? u.client?.proposalUrl;
+      const proposalStatus = u.proposal_status ?? u.client?.proposal_status ?? u.client?.proposalStatus;
+      const wishList = u.wish_list ?? u.client?.wish_list ?? false;
+
+      // if there is a proposal URL, map proposal_status to readable state
+      if (proposalUrl !== null && proposalUrl !== undefined && String(proposalUrl) !== "null") {
+        if (proposalStatus === "approved") return "con-propuesta-aprobada";
+        if (proposalStatus === "pending") return "con-propuesta-revision";
+        if (proposalStatus === "rejected") return "rechazado";
+        return "con-propuesta";
+      }
+
+      if (wishList) return "lista-espera";
+      // no proposal URL -> treat as in-progress / sin-propuesta
+      return "sin-propuesta";
+    })(),
     raw: u,
   };
 }
@@ -50,7 +61,7 @@ function normalizeUser(u: any) {
 export default function UserManagement() {
   const [statusFilter, setStatusFilter] = useState("todos");
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5;
+  const usersPerPage = 7;
 
   const [users, setUsers] = useState<any[]>([]);
   const [totalUsers, setTotalUsers] = useState<number | null>(null);
@@ -85,14 +96,38 @@ export default function UserManagement() {
       const fetcher = chooseFetcher(statusFilter);
       try {
         const res = await fetcher(currentPage, usersPerPage);
-        // normalize response: accept array or object with common keys
-        const items = Array.isArray(res) ? res : res?.data ?? res?.items ?? res?.users ?? [];
-        const total = res?.total ?? res?.count ?? res?.meta?.total ?? (Array.isArray(res) ? res.length : items.length);
+        // normalize response: support multiple API shapes, including the new
+        // one: { data: { result: { users: { total, page, limit, items: [...] }}}}
+        let items: any[] = [];
+        let total: number | null = null;
 
-        const normalized = items.map(normalizeUser);
+        if (Array.isArray(res)) {
+          items = res;
+        } else {
+          items =
+            res?.data?.result?.users?.items ??
+            res?.result?.users?.items ??
+            res?.users?.items ??
+            res?.items ??
+            res?.data ??
+            [];
+
+          total =
+            res?.data?.result?.users?.total ??
+            res?.result?.users?.total ??
+            res?.users?.total ??
+            res?.total ??
+            res?.count ??
+            res?.meta?.total ??
+            null;
+        }
+
+        const normalized = (items || []).map(normalizeUser);
         if (!mounted) return;
         setUsers(normalized);
-        setTotalUsers(typeof total === "number" ? total : Number(total) || normalized.length);
+        setTotalUsers(
+          typeof total === "number" ? total : total ? Number(total) || normalized.length : normalized.length,
+        );
       } catch (err: any) {
         if (!mounted) return;
         setError(err?.message ?? "Error al cargar usuarios");
@@ -138,7 +173,7 @@ export default function UserManagement() {
 
   return (
     // wrap page in the scoped root class to override global font vars
-    <div className={`${styles.root} space-y-6 m-6`}>
+    <div className={`${styles.root} space-y-6 m-2`}>
       {/* Filters */}
       <Card>
         <CardHeader>
@@ -169,7 +204,7 @@ export default function UserManagement() {
       {/* Users Table */}
       <Card>
         <CardHeader>
-          <CardTitle>
+          <CardTitle onClick={() => console.log(users, totalUsers)}>
             Lista de Usuarios ({totalUsers ?? users.length} {totalUsers === 1 ? "usuario" : "usuarios"})
           </CardTitle>
         </CardHeader>
@@ -238,12 +273,12 @@ export default function UserManagement() {
         </CardContent>
       </Card>
 
-      {totalUsers && totalUsers > usersPerPage && (
+      {(totalUsers ?? 0) > usersPerPage && (
         <Card>
           <CardContent className='p-4'>
             <div className='flex items-center justify-between'>
               <div className='text-sm text-muted-foreground'>
-                Mostrando {startIndex + 1} a {Math.min(endIndex, totalUsers)} de {totalUsers} usuarios
+                Mostrando {startIndex + 1} a {Math.min(endIndex, totalUsers ?? 0)} de {totalUsers} usuarios
               </div>
               <div className='flex items-center gap-2'>
                 <Button
