@@ -173,17 +173,10 @@ function Questionaire() {
         height: "100%",
         paddingTop: "1rem",
       }}
+      onClick={() => {
+        console.log("tab", tab);
+      }}
     >
-      {/* {questData.terms ? (
-        <QuestForm
-          handleChange={handleChange}
-          handleIndex={handleIndex}
-          questData={questData}
-          currentIndex={currentIndex}
-        />
-      ) : (
-        <Terms handleTerms={handleTerms} />
-      )} */}
       {tab === "loading" && (
         <div
           style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100vh" }}
@@ -201,7 +194,7 @@ function Questionaire() {
           empty={empty}
         />
       )}
-      {tab === "wishList" && <WishList />}
+      {tab === "wishlist" && <WishList />}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin setTab={setTab} questData={questData} />}
       {tab === "prop" && <Proposal />}
