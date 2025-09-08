@@ -1,0 +1,28 @@
+/* Route-scoped overrides: neutralize global typography variables inside backoffice */
+.root {
+  /* Reset the custom font-size vars the global file defines */
+  --font-size-h1: initial;
+  --font-size-h2: initial;
+  --font-size-h3: initial;
+  --font-size-h4: initial;
+  --font-size-h5: initial;
+  --font-size-body: initial;
+
+  /* Reset font-family if you want the browser default or a different one here */
+  --font-family: initial;
+}
+
+/* Extra safety: force headings / body text to use initial values inside this scope */
+.root h1,
+.root h2,
+.root h3,
+.root h4,
+.root h5,
+.root p,
+.root span,
+.root li {
+  font-size: initial !important;
+  font-family: initial !important;
+  line-height: initial !important;
+  margin: initial !important;
+}
