@@ -1,11 +1,9 @@
 // Updated QuestForm component with modern styling matching FormularioEmprendedor
 import React, { useState, useRef, useEffect } from "react";
 import { QuestData } from "./Questionaire";
-import GradientBar from "./QuestBar";
 import Icon from "../Icon";
 import Image from "next/image";
-import { questions2 } from "./questions";
-import { getYouTubeEmbedURL, videos } from "./videos";
+import { questions } from "./questions";
 
 interface Props {
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => void;
@@ -112,11 +110,11 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
     }
   };
 
-  const progressPercentage = ((currentIndex + 1) / questions2.length) * 100;
+  const progressPercentage = ((currentIndex + 1) / questions.length) * 100;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = e.target.value;
-    const questionObj = questions2[currentIndex];
+    const questionObj = questions[currentIndex];
 
     if (questionObj.hasConditionalQuestion && !showConditional) {
       if (value.toLowerCase() === "no") {
@@ -124,7 +122,8 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
           { target: { value: questionObj.defaultAnswer } } as React.ChangeEvent<HTMLTextAreaElement>,
           currentIndex,
         );
-        handleIndex("add");
+        // delay advancing one tick so parent state (redux) can update
+        setTimeout(() => handleIndex("add"), 0);
       } else if (value.toLowerCase() === "yes") {
         setShowConditional(true);
       }
@@ -137,18 +136,33 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
     }
   };
 
-  const questionObj = questions2[currentIndex];
+  const questionObj = questions[currentIndex];
+  // Defensive guard: if currentIndex is out of range (questionObj undefined),
+  // avoid runtime errors and render a small fallback UI.
+  if (!questionObj) {
+    return (
+      <div
+        style={{ padding: "1rem", textAlign: "center", color: "#6B7280" }}
+        onClick={() => console.log(questions, currentIndex)}
+      >
+        Pregunta no disponible.
+      </div>
+    );
+  }
+
   const displayQuestion = showConditional ? questionObj.question : questionObj.conditionalQuestion;
 
   const handleConditionalRadio = (value: string) => {
     if (value === "no") {
+      console.log(currentIndex);
       handleChange(
         { target: { value: questionObj.defaultAnswer } } as React.ChangeEvent<HTMLTextAreaElement>,
         currentIndex,
       );
       setShowConditional(false);
       setShowMainQuestion(false);
-      handleIndex("add");
+      // wait one tick so the parent's questData is updated before handleIndex validates it
+      setTimeout(() => handleIndex("add"), 0);
     } else if (value === "yes") {
       setShowMainQuestion(true);
     }
@@ -182,7 +196,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
               style={{
                 fontSize: "1.5rem",
                 fontWeight: "bold",
-                color: "#6A20A4",
+                color: "var(--color-primary)",
                 fontFamily: "Inter, sans-serif",
               }}
               onClick={() =>
@@ -200,7 +214,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
               style={{
                 fontSize: "1.125rem",
                 fontWeight: "500",
-                color: "#6A20A4",
+                color: "var(--color-primary)",
               }}
             >
               {Math.round(progressPercentage)}%
@@ -218,24 +232,24 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
               style={{
                 fontSize: "1rem",
                 fontWeight: "500",
-                color: "rgba(106, 32, 164, 0.7)",
+                color: "var(--color-font-secondary)",
               }}
             >
-              Pregunta {currentIndex + 1} de {questions2.length}
+              Pregunta {currentIndex + 1} de {questions.length}
             </span>
           </div>
           <div
             style={{
               width: "100%",
-              backgroundColor: "rgba(106, 32, 164, 0.2)",
+              backgroundColor: "rgba(0,0,0,0.04)",
               borderRadius: "9999px",
               height: "1rem",
-              boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+              boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.05)",
             }}
           >
             <div
               style={{
-                background: "linear-gradient(90deg, #FF3D02 0%, #6A20A4 100%)",
+                background: "linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
                 height: "1rem",
                 borderRadius: "9999px",
                 width: `${progressPercentage}%`,
@@ -263,7 +277,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
             style={{
               fontSize: "2.25rem",
               fontWeight: "bold",
-              color: "#6A20A4",
+              color: "var(--color-primary)",
               marginBottom: "3rem",
               lineHeight: "1.4",
               textAlign: "center",
@@ -341,7 +355,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                     onChange={() => handleConditionalRadio("no")}
                     style={{
                       marginRight: "0.75rem",
-                      accentColor: "#6A20A4",
+                      accentColor: "var(--color-primary)",
                     }}
                   />
                   No
@@ -373,10 +387,10 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
         >
           <span
             style={{
-              fontSize: "1.5rem",
-              fontWeight: "bold",
-              color: "#6A20A4",
+              fontSize: "1.125rem",
+              color: "var(--color-font-secondary)",
               fontFamily: "Inter, sans-serif",
+              cursor: "pointer",
             }}
           >
             Cuestionario
@@ -403,10 +417,10 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
             style={{
               fontSize: "1rem",
               fontWeight: "500",
-              color: "rgba(106, 32, 164, 0.7)",
+              color: "var(--color-primary)",
             }}
           >
-            Pregunta {currentIndex + 1} de {questions2.length}
+            Pregunta {currentIndex + 1} de {questions.length}
           </span>
         </div>
         <div
@@ -420,7 +434,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
         >
           <div
             style={{
-              background: "linear-gradient(90deg, #FF3D02 0%, #6A20A4 100%)",
+              background: "linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
               height: "1rem",
               borderRadius: "9999px",
               width: `${progressPercentage}%`,
@@ -448,7 +462,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
           style={{
             fontSize: "2.25rem",
             fontWeight: "bold",
-            color: "#6A20A4",
+            color: "var(--color-primary)",
             marginBottom: "3rem",
             lineHeight: "1.4",
             textAlign: "center",
@@ -504,27 +518,44 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                       <input
                         type='radio'
                         name={`question_${currentIndex}`}
-                        value={typeof opt === "string" ? opt : opt.value}
-                        checked={questData.answers[currentIndex] === (typeof opt === "string" ? opt : opt.value)}
+                        value={
+                          typeof opt === "string"
+                            ? opt
+                            : typeof opt === "object" && "value" in (opt as { value?: string })
+                              ? (opt as { value: string }).value
+                              : ""
+                        }
+                        checked={
+                          questData.answers[currentIndex] ===
+                          (typeof opt === "string"
+                            ? opt
+                            : typeof opt === "object" && "value" in (opt as { value?: string })
+                              ? (opt as { value: string }).value
+                              : "")
+                        }
                         onChange={handleInputChange}
                         style={{
                           marginRight: "0.75rem",
-                          accentColor: "#6A20A4",
+                          accentColor: "var(--color-primary)",
                         }}
                       />
-                      {typeof opt === "string" ? opt : opt.option}
+                      {typeof opt === "string"
+                        ? opt
+                        : typeof opt === "object" && "option" in (opt as { option?: string })
+                          ? (opt as { option: string }).option
+                          : ""}
                     </label>
                   ))}
                   {empty && (
                     <div
                       style={{
-                        backgroundColor: "#ef4444",
+                        backgroundColor: "var(--color-danger, var(--color-primary))",
                         color: "white",
                         padding: "0.5rem 1rem",
                         borderRadius: "0.5rem",
                         fontSize: "0.875rem",
                         fontWeight: "500",
-                        boxShadow: "0 4px 12px rgba(239, 68, 68, 0.3)",
+                        boxShadow: "0 4px 12px var(--color-primary)",
                         marginTop: "1rem",
                       }}
                     >
@@ -539,7 +570,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                     height: "300px",
                     fontSize: "1.125rem",
                     padding: "1.5rem",
-                    border: isRecording ? "2px solid #FF3D02" : "2px solid rgba(106, 32, 164, 0.3)",
+                    border: isRecording ? "2px solid var(--color-primary)" : "2px solid rgba(0,0,0,0.08)",
                     borderRadius: "0.75rem",
                     backgroundColor: isRecording ? "rgba(255, 245, 243, 0.8)" : "rgba(255, 255, 255, 0.8)",
                     color: "#575757",
@@ -556,12 +587,12 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                   }
                   disabled={isTranscribing}
                   onFocus={e => {
-                    e.target.style.borderColor = "#FF3D02";
+                    e.target.style.borderColor = "var(--color-primary)";
                     e.target.style.backgroundColor = "white";
                   }}
                   onBlur={e => {
                     if (!isRecording) {
-                      e.target.style.borderColor = "rgba(106, 32, 164, 0.3)";
+                      e.target.style.borderColor = "rgba(0,0,0,0.08)";
                       e.target.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
                     }
                   }}
@@ -574,13 +605,13 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                     position: "absolute",
                     top: "-3rem",
                     right: "0",
-                    backgroundColor: "#ef4444",
+                    backgroundColor: "var(--color-danger, var(--color-primary))",
                     color: "white",
                     padding: "0.5rem 1rem",
                     borderRadius: "0.5rem",
                     fontSize: "0.875rem",
                     fontWeight: "500",
-                    boxShadow: "0 4px 12px rgba(239, 68, 68, 0.3)",
+                    boxShadow: "0 4px 12px var(--color-danger)",
                     zIndex: 10,
                   }}
                 >
@@ -608,9 +639,9 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                     opacity: isTranscribing ? 0.5 : 1,
                     padding: "0.75rem 1rem",
                     borderRadius: "2rem",
-                    backgroundColor: isRecording ? "rgba(255, 61, 2, 0.1)" : "rgba(255, 255, 255, 0.8)",
+                    backgroundColor: isRecording ? "rgba(255, 245, 243, 0.8)" : "rgba(255, 255, 255, 0.8)",
                     border: "2px solid",
-                    borderColor: isRecording ? "#FF3D02" : "rgba(106, 32, 164, 0.3)",
+                    borderColor: isRecording ? "var(--color-primary)" : "rgba(0,0,0,0.08)",
                     transition: "all 0.3s ease",
                   }}
                   onClick={!isTranscribing ? handleMicrophoneClick : undefined}
@@ -637,26 +668,26 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
                       width: "2rem",
                       height: "2rem",
                       borderRadius: "50%",
-                      backgroundColor: isRecording ? "#FF3D02" : "transparent",
+                      backgroundColor: isRecording ? "var(--color-primary)" : "transparent",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       animation: isRecording ? "pulse 1.5s infinite" : "none",
                     }}
                   >
-                    <Image
-                      src={"/mic.png"}
-                      alt='mic'
-                      width={24}
-                      height={24}
-                      style={{
-                        filter: isRecording ? "brightness(0) invert(1)" : "none",
-                      }}
+                    <Icon
+                      name='mic'
+                      width={20}
+                      height={20}
+                      strokeColor={isRecording ? "white" : "var(--color-primary)"}
+                      fillColor={isRecording ? "var(--color-primary)" : "none"}
+                      strokeWidth={2}
+                      title='mic'
                     />
                   </div>
                   <span
                     style={{
-                      color: isRecording ? "#FF3D02" : "#6A20A4",
+                      color: isRecording ? "var(--color-primary)" : "var(--color-secondary)",
                       fontWeight: isRecording ? 600 : 500,
                       fontSize: "0.875rem",
                       fontFamily: "Inter, sans-serif",
@@ -688,38 +719,42 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.75rem",
-            padding: "0.5rem 2rem",
-            fontSize: "1.125rem",
-            border: "2px solid #6A20A4",
-            borderRadius: "1rem",
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            color: "#6A20A4",
+            justifyContent: "center",
+            gap: "0.5rem",
+            padding: "0.35rem 1rem",
+            minWidth: "140px",
+            fontSize: "1rem",
+            border: "2px solid var(--color-primary)",
+            borderRadius: "0.75rem",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            color: "var(--color-primary)",
             fontWeight: "500",
             cursor: currentIndex === 0 ? "not-allowed" : "pointer",
-            opacity: currentIndex === 0 ? 0.5 : 1,
-            transition: "all 0.3s ease",
+            opacity: currentIndex === 0 ? 0.6 : 1,
+            transition: "all 0.18s ease",
             fontFamily: "Inter, sans-serif",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+            boxShadow: "0 1px 6px rgba(0, 0, 0, 0.04)",
           }}
           onClick={() => handleIndex("subtract")}
           disabled={currentIndex === 0}
           onMouseEnter={e => {
             if (currentIndex !== 0) {
-              e.currentTarget.style.backgroundColor = "#6A20A4";
+              e.currentTarget.style.backgroundColor = "var(--color-primary)";
               e.currentTarget.style.color = "white";
-              e.currentTarget.style.transform = "scale(1.05)";
+              e.currentTarget.style.transform = "scale(1.03)";
             }
           }}
           onMouseLeave={e => {
             if (currentIndex !== 0) {
-              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
-              e.currentTarget.style.color = "#6A20A4";
+              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+              e.currentTarget.style.color = "var(--color-primary)";
               e.currentTarget.style.transform = "scale(1)";
             }
           }}
         >
-          <Icon name='arrow_left' strokeColor='currentColor' />
+          <div style={{ position: "absolute", top: "60%", left: "1rem", transform: "translateY(-50%)" }}>
+            <Icon name='arrow_left' strokeColor='currentColor' />
+          </div>
           <span>Anterior</span>
         </button>
 
@@ -727,30 +762,32 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.75rem",
-            padding: "0.5rem 2rem",
-            fontSize: "1.125rem",
+            justifyContent: "center",
+            gap: "0.5rem",
+            padding: "0.35rem 1rem",
+            minWidth: "140px",
+            fontSize: "1rem",
             border: "none",
-            borderRadius: "1rem",
-            background: "linear-gradient(90deg, #FF3D02 0%, #6A20A4 100%)",
+            borderRadius: "0.75rem",
+            background: "linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
             color: "white",
             fontWeight: "600",
             cursor: "pointer",
-            transition: "all 0.3s ease",
+            transition: "all 0.18s ease",
             fontFamily: "Inter, sans-serif",
-            boxShadow: "0 4px 15px rgba(255, 61, 2, 0.3)",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.12)",
           }}
           onClick={() => handleIndex("add")}
           onMouseEnter={e => {
-            e.currentTarget.style.transform = "scale(1.05)";
-            e.currentTarget.style.boxShadow = "0 6px 20px rgba(255, 61, 2, 0.4)";
+            e.currentTarget.style.transform = "scale(1.03)";
+            e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.12)";
           }}
           onMouseLeave={e => {
             e.currentTarget.style.transform = "scale(1)";
-            e.currentTarget.style.boxShadow = "0 4px 15px rgba(255, 61, 2, 0.3)";
+            e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.12)";
           }}
         >
-          <span>Siguiente</span>
+          <span style={{ color: "white", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>Siguiente</span>
           <Icon name='arrow_right' strokeColor='white' />
         </button>
       </div>
@@ -758,7 +795,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
       <style jsx>{`
         @keyframes pulse {
           0% {
-            box-shadow: 0 0 0 0 rgba(255, 61, 2, 0.7);
+            box-shadow: 0 0 0 0 var(--color-primary);
           }
           70% {
             box-shadow: 0 0 0 10px rgba(255, 61, 2, 0);

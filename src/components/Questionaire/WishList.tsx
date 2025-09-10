@@ -14,9 +14,10 @@ function WishList() {
           fontFamily: "Inter, sans-serif",
           alignItems: "center",
           justifyContent: "center",
+          color: "var(--color-font-secondary)",
         }}
       >
-        <Image src={small} alt='Small' width={150} height={150} priority />
+        <Image src={"/logotipo_horizontal.png"} alt='Small' width={150} height={150} priority />
         <div style={{ paddingTop: "15%", textAlign: "center" }}>
           {" "}
           ¡Estás en la lista de espera! Te avisaremos por correo electrónico en cuanto haya novedades o tu lugar esté

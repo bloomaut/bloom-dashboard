@@ -18,21 +18,21 @@ export default function Terms({ handleTerms }: Props) {
   return (
     <div style={{ display: "flex", alignItems: "center", width: "100%", justifyContent: "center" }}>
       <div style={{ width: "45%", display: "flex", flexDirection: "column", gap: 20, fontFamily: "Inter, sans-serif" }}>
-        <div style={{ fontSize: "1.8rem", fontWeight: 600, color: "#FF5733" }}>Bienvenidos a Small!</div>
+        <div style={{ fontSize: "1.8rem", fontWeight: 600, color: "var(--color-primary)" }}>Bienvenidos a Small!</div>
         <div style={{ backgroundColor: "#D9D9D9", height: "50vh", borderRadius: 15 }}></div>
         <div style={{ fontSize: "1.2rem", fontWeight: 600, color: "#575757" }}>Términos y condiciones</div>
         <div
           style={{
             height: "fit",
             borderRadius: 15,
-            border: "1px solid #FF5733",
+            border: "1px solid var(--color-primary)",
             fontSize: "0.9rem",
             padding: "1rem",
             display: "flex",
             flexDirection: "column",
             gap: "0.5rem",
             fontFamily: "Barlow, sans-serif",
-            color: "#575757",
+            color: "var(--color-font-secondary)",
           }}
         >
           <div>Al utilizar Small, aceptas los siguientes términos y condiciones</div>
@@ -73,7 +73,7 @@ export default function Terms({ handleTerms }: Props) {
               style={{
                 width: "15px",
                 height: "15px",
-                border: "2px solid orange",
+                border: "2px solid var(--color-primary)",
                 borderRadius: "4px",
                 display: "inline-block",
                 cursor: "pointer",
@@ -88,7 +88,7 @@ export default function Terms({ handleTerms }: Props) {
                   left: "3px",
                   width: "5px",
                   height: "8px",
-                  border: "solid orange",
+                  border: "solid var(--color-primary)",
                   borderWidth: "0 2px 2px 0",
                   transform: "rotate(45deg)",
                   opacity: term ? 1 : 0,
@@ -108,7 +108,7 @@ export default function Terms({ handleTerms }: Props) {
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "30px",
-              backgroundColor: "#FF5733",
+              backgroundColor: "var(--color-primary)",
               paddingBlock: 10,
               paddingInline: 20,
               color: "#ffffff",
