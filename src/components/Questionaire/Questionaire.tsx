@@ -9,7 +9,7 @@ import Terms from "./Terms";
 import QuestForm from "./QuestForm";
 import Fin from "./Fin";
 import Proposal from "./Proposal";
-import { answers, generatePayload, questions2 } from "./questions";
+import { answers, generatePayload } from "./questions";
 import { CircleLoader } from "./Spinner";
 import WishList from "./WishList";
 
@@ -114,11 +114,11 @@ function Questionaire() {
   };
 
   const handleIndex = (operation: string) => {
-    if (currentIndex === 31 && operation === "add") {
+    if (currentIndex === 27 && operation === "add") {
       setTab("fin");
       return;
     }
-    if (currentIndex === 12 && operation === "add") {
+    /*   if (currentIndex === 12 && operation === "add") {
       const answer = questData.answers[12];
       if (answer === "product") {
         setCurrentIndex(13);
@@ -128,9 +128,9 @@ function Questionaire() {
         setCurrentIndex(19);
         return;
       }
-    }
+    } */
 
-    if (questData.answers[12] === "product" && currentIndex === 18 && operation === "add") {
+    /* if (questData.answers[12] === "product" && currentIndex === 18 && operation === "add") {
       setCurrentIndex(23);
       return;
     }
@@ -138,7 +138,7 @@ function Questionaire() {
     if (questData.answers[12] === "service" && currentIndex === 22 && operation === "add") {
       setCurrentIndex(23);
       return;
-    }
+    } */
 
     if (operation === "subtract") {
       if (currentIndex === 0) return;
@@ -150,11 +150,15 @@ function Questionaire() {
       if (currentIndex === questData.answers.length - 1) return;
       else {
         if (currentIndex === 23) {
+          console.log(1);
           setCurrentIndex(24);
         }
         if (!questData.answers[currentIndex]) {
+          console.log(2);
           setEmpty(true);
+          setCurrentIndex(currentIndex + 1);
         } else {
+          console.log(3);
           setCurrentIndex(currentIndex + 1);
         }
       }
@@ -172,9 +176,6 @@ function Questionaire() {
         width: "95%",
         height: "100%",
         paddingTop: "1rem",
-      }}
-      onClick={() => {
-        console.log("tab", tab);
       }}
     >
       {tab === "loading" && (
@@ -201,20 +202,20 @@ function Questionaire() {
       <div
         style={{ position: "absolute", left: "3%", bottom: "3%", display: "flex", flexDirection: "row", gap: "1.5rem" }}
       >
-        {user.client.wish_list === false && (
+        {/*  {user.client.wish_list === false && (
           <button
             onClick={() => setCurrentIndex(0)}
             style={{
               padding: "0.5rem",
               cursor: "pointer",
-              backgroundColor: "#ff5722",
+              backgroundColor: "var(--color-primary)",
               borderRadius: "5px",
-              color: "white",
+              color: "var(--color-font-primary-dark, #ffffff)",
             }}
           >
             Reiniciar
           </button>
-        )}
+        )} */}
 
         {/* <button
           style={{

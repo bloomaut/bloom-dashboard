@@ -1,1 +1,10 @@
+:root {
+  --color-primary: #ff6b35;
+  --color-secondary: #ffa66a;
+  --color-font-primary: #ffffff;
+  --color-font-secondary: #333333;
+  --color-font-primary-dark: #1f2937;
+  --color-danger: #e02424;
+  --color-background: #ffffff;
+}
 /*# sourceMappingURL=theme.css.map */

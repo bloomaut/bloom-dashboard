@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
 import { Link } from "@/navigation";
 //Icons
-import small from "@/../public/assets/logo_small_color.png";
 //Components
 import LangDrop from "./LangDrop";
 import UserDrop from "./UserDrop";
@@ -23,7 +22,14 @@ const Navbar = () => {
     <nav className={styles.container}>
       <div className={styles.logo_container}>
         <Link href='/'>
-          <Image src={small} alt='Small' className={styles.logo} width={300} height={300} priority />
+          <Image
+            src={"/logotipo_horizontal.png"}
+            alt='Small'
+            className={styles.logo}
+            width={300}
+            height={300}
+            priority
+          />
         </Link>
         {user && <RoleComponent />}
       </div>
@@ -43,7 +49,7 @@ const Navbar = () => {
           <Oval
             height={25}
             width={50}
-            color='#ff3d02'
+            color='var(--color-primary)'
             visible={true}
             secondaryColor='#ffc8b8'
             strokeWidth={3}

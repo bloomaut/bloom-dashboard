@@ -42,7 +42,7 @@ function Fin({
         style={{
           width: "70%",
           height: "8px",
-          background: "#FF5733",
+          background: "var(--color-primary)",
           borderRadius: "5px",
           position: "relative",
           marginBottom: "8rem",

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const CircleLoader = ({ size = 60, dotCount = 12, color = "#ff6b35" }) => {
+export const CircleLoader = ({ size = 60, dotCount = 12, color = "var(--color-primary, #ff6b35)" }) => {
   const dots = Array.from({ length: dotCount }, (_, i) => {
     const angle = (i * 360) / dotCount;
     const delay = i * 0.1;

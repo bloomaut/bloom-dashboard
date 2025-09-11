@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 const GradientBar = ({ value }: { value: number }) => {
-  const clampedValue = Math.max(0, Math.min(500, value)); // Clamp between 0 and 100
+  const clampedValue = Math.max(0, Math.min(500, value)); // Clamp between 0 and 500
   return (
     <div
       style={{
@@ -20,7 +20,7 @@ const GradientBar = ({ value }: { value: number }) => {
           height: "8px",
           background:
             clampedValue >= 0
-              ? `linear-gradient(to right, #FF5733 ${Math.min((clampedValue / 200) * 100, 100)}%, #BEBEBE ${Math.min((clampedValue / 225) * 100, 100)}%)`
+              ? `linear-gradient(to right, var(--color-primary) ${Math.min((clampedValue / 200) * 100, 100)}%, #BEBEBE ${Math.min((clampedValue / 225) * 100, 100)}%)`
               : "#BEBEBE",
 
           borderRadius: "5px",
@@ -37,7 +37,7 @@ const GradientBar = ({ value }: { value: number }) => {
           height: "8px",
           background:
             clampedValue >= 200
-              ? `linear-gradient(to right, #FF5733 ${Math.min(((clampedValue - 200) / 90) * 100, 100)}%, #BEBEBE ${Math.min(((clampedValue - 200) / 145) * 100, 100)}%)`
+              ? `linear-gradient(to right, var(--color-primary) ${Math.min(((clampedValue - 200) / 90) * 100, 100)}%, #BEBEBE ${Math.min(((clampedValue - 200) / 145) * 100, 100)}%)`
               : "#BEBEBE",
 
           borderRadius: "5px",
@@ -59,7 +59,7 @@ const GradientBar = ({ value }: { value: number }) => {
           height: "8px",
           background:
             clampedValue >= 200
-              ? `linear-gradient(to right, #FF5733 ${Math.min(((clampedValue - 290) / 42) * 100, 100)}%, #BEBEBE ${Math.min(((clampedValue - 290) / 145) * 100, 100)}%)`
+              ? `linear-gradient(to right, var(--color-primary) ${Math.min(((clampedValue - 290) / 42) * 100, 100)}%, #BEBEBE ${Math.min(((clampedValue - 290) / 145) * 100, 100)}%)`
               : "#BEBEBE",
 
           borderRadius: "5px",
@@ -81,7 +81,7 @@ const GradientBar = ({ value }: { value: number }) => {
           height: "8px",
           background:
             clampedValue >= 200
-              ? `linear-gradient(to right, #FF5733 ${Math.min(((clampedValue - 332) / 50) * 100, 100)}%, #BEBEBE ${Math.min(((clampedValue - 332) / 145) * 100, 100)}%)`
+              ? `linear-gradient(to right, var(--color-primary) ${Math.min(((clampedValue - 332) / 50) * 100, 100)}%, #BEBEBE ${Math.min(((clampedValue - 332) / 145) * 100, 100)}%)`
               : "#BEBEBE",
           borderRadius: "5px",
           position: "relative",
@@ -102,7 +102,7 @@ const GradientBar = ({ value }: { value: number }) => {
           height: "8px",
           background:
             clampedValue >= 200
-              ? `linear-gradient(to right, #FF5733 ${Math.min(((clampedValue - 382) / 35) * 100, 100)}%, #BEBEBE ${Math.min(((clampedValue - 382) / 145) * 100, 100)}%)`
+              ? `linear-gradient(to right, var(--color-primary) ${Math.min(((clampedValue - 382) / 35) * 100, 100)}%, #BEBEBE ${Math.min(((clampedValue - 382) / 145) * 100, 100)}%)`
               : "#BEBEBE",
           borderRadius: "5px",
           position: "relative",
@@ -118,7 +118,9 @@ const GradientBar = ({ value }: { value: number }) => {
         />
       </div>
       <div>
-        <div style={{ position: "absolute", right: "0px", top: "-35px" }}>Finanzas</div>
+        <div style={{ position: "absolute", right: "0px", top: "-35px", color: "var(--color-font-secondary)" }}>
+          Finanzas
+        </div>
         <Image
           src={String(value).length === 3 && value >= 418 ? "/orangeCircle.png" : "/greyCircle.png"}
           alt='circle'

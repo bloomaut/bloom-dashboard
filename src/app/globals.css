@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import "../styles/theme.css";
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -164,33 +166,31 @@
    Colors, Typography, and Text Styles
 ================================ */
 
-
 :root {
   /* Colors */
-  --color-primary: #4DC2F4;
-  --color-secondary: #5A0075;
-  --color-background: #FFFFFF;
+  --color-primary: #4dc2f4;
+  --color-secondary: #5a0075;
+  --color-background: #ffffff;
   --color-background-dark: #000000;
   --color-background-transparent: #ffffff9d;
   --color-background-dark-transparent: #0000009d;
 
   --color-font-primary: #000000;
-  --color-font-secondary: #4A4A4A;
   --color-font-tertiary: #767676;
-  --color-font-primary-dark: #FFFFFF;
+  --color-font-primary-dark: #ffffff;
 }
 
 /* Typography - Base sizes for mobile (320px+) */
 :root {
-  --font-family: 'Roboto', sans-serif;
+  --font-family: "Roboto", sans-serif;
 
   /* Font sizes - Mobile first approach (reducidos 7.5% adicional en headings) */
-  --font-size-h1: 2.08rem;   /* 33px (era 36px) */
-  --font-size-h2: 1.665rem;  /* 27px (era 29px) */
-  --font-size-h3: 1.457rem;  /* 23px (era 25px) */
-  --font-size-h4: 1.249rem;  /* 20px (era 22px) */
-  --font-size-h5: 1.041rem;  /* 17px (era 18px) */
-  --font-size-body: 0.9rem;  /* 14px (SIN CAMBIO) */
+  --font-size-h1: 2.08rem; /* 33px (era 36px) */
+  --font-size-h2: 1.665rem; /* 27px (era 29px) */
+  --font-size-h3: 1.457rem; /* 23px (era 25px) */
+  --font-size-h4: 1.249rem; /* 20px (era 22px) */
+  --font-size-h5: 1.041rem; /* 17px (era 18px) */
+  --font-size-body: 0.9rem; /* 14px (SIN CAMBIO) */
 
   /* Font weights */
   --font-weight-bold: 700;
@@ -203,11 +203,11 @@
 /* Tablet sizes (768px+) */
 @media (min-width: 768px) {
   :root {
-    --font-size-h1: 2.914rem;   /* 47px (era 50px) */
-    --font-size-h2: 2.289rem;   /* 37px (era 40px) */
-    --font-size-h3: 1.873rem;   /* 30px (era 32px) */
-    --font-size-h4: 1.559rem;   /* 25px (era 27px) */
-    --font-size-h5: 1.249rem;   /* 20px (era 22px) */
+    --font-size-h1: 2.914rem; /* 47px (era 50px) */
+    --font-size-h2: 2.289rem; /* 37px (era 40px) */
+    --font-size-h3: 1.873rem; /* 30px (era 32px) */
+    --font-size-h4: 1.559rem; /* 25px (era 27px) */
+    --font-size-h5: 1.249rem; /* 20px (era 22px) */
     --font-size-body: 1.0125rem; /* 16px (SIN CAMBIO) */
   }
 }
@@ -215,11 +215,11 @@
 /* Desktop sizes (1024px+) */
 @media (min-width: 1024px) {
   :root {
-    --font-size-h1: 3.746rem;   /* 60px (era 65px) */
-    --font-size-h2: 2.914rem;   /* 47px (era 50px) */
-    --font-size-h3: 2.289rem;   /* 37px (era 40px) */
-    --font-size-h4: 1.873rem;   /* 30px (era 32px) */
-    --font-size-h5: 1.559rem;   /* 25px (era 27px) */
+    --font-size-h1: 3.746rem; /* 60px (era 65px) */
+    --font-size-h2: 2.914rem; /* 47px (era 50px) */
+    --font-size-h3: 2.289rem; /* 37px (era 40px) */
+    --font-size-h4: 1.873rem; /* 30px (era 32px) */
+    --font-size-h5: 1.559rem; /* 25px (era 27px) */
     --font-size-body: 1.125rem; /* 18px (SIN CAMBIO) */
   }
 }
@@ -227,11 +227,11 @@
 /* Large desktop sizes (1440px+) */
 @media (min-width: 1440px) {
   :root {
-    --font-size-h1: 4.579rem;   /* 73px (era 79px) */
-    --font-size-h2: 3.538rem;   /* 57px (era 61px) */
-    --font-size-h3: 2.706rem;   /* 43px (era 47px) */
-    --font-size-h4: 2.081rem;   /* 33px (era 36px) */
-    --font-size-h5: 1.665rem;   /* 27px (era 29px) */
+    --font-size-h1: 4.579rem; /* 73px (era 79px) */
+    --font-size-h2: 3.538rem; /* 57px (era 61px) */
+    --font-size-h3: 2.706rem; /* 43px (era 47px) */
+    --font-size-h4: 2.081rem; /* 33px (era 36px) */
+    --font-size-h5: 1.665rem; /* 27px (era 29px) */
     --font-size-body: 1.2375rem; /* 20px (SIN CAMBIO) */
   }
 }
@@ -239,11 +239,11 @@
 /* Extra large screens (1920px+) */
 @media (min-width: 1920px) {
   :root {
-    --font-size-h1: 5.369rem;   /* 86px (era 80px) */
-    --font-size-h2: 4.251rem;   /* 68px (era 63px) */
-    --font-size-h3: 3.356rem;   /* 54px (era 50px) */
-    --font-size-h4: 2.685rem;   /* 43px (era 40px) */
-    --font-size-h5: 2.013rem;   /* 32px (era 30px) */
+    --font-size-h1: 5.369rem; /* 86px (era 80px) */
+    --font-size-h2: 4.251rem; /* 68px (era 63px) */
+    --font-size-h3: 3.356rem; /* 54px (era 50px) */
+    --font-size-h4: 2.685rem; /* 43px (era 40px) */
+    --font-size-h5: 2.013rem; /* 32px (era 30px) */
     --font-size-body: 1.451rem; /* 23px (era 22px) */
   }
 }
@@ -252,7 +252,8 @@
    Base Styles
 ================================ */
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: var(--font-family);
@@ -307,12 +308,13 @@ h5 {
 }
 
 /* Body text */
-p, span, li {
+p,
+span,
+li {
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
   color: var(--color-font-secondary);
   line-height: 1.6;
-  margin: 0 0 1rem 0;
 }
 
 /* Dark mode styles (can be applied with a class) */
@@ -338,4 +340,3 @@ body.dark-mode span,
 body.dark-mode li {
   color: var(--color-font-primary-dark);
 }
-
