@@ -64,11 +64,11 @@ function Questionaire() {
         };
         //postQuest(newData);
         dispatch(setFirstQuestData(newData));
-        setTab("wishlist");
+        setTab("terms");
       } else {
         dispatch(setQuestData(data));
         if (user.client.wish_list === true) {
-          setTab("wishlist");
+          setTab("terms");
         } else if (!data[0].terms) {
           setTab("terms");
         } else if (!data[0].completed) {

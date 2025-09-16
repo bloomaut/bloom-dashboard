@@ -18,7 +18,7 @@ export default function Terms({ handleTerms }: Props) {
   return (
     <div style={{ display: "flex", alignItems: "center", width: "100%", justifyContent: "center" }}>
       <div style={{ width: "45%", display: "flex", flexDirection: "column", gap: 20, fontFamily: "Inter, sans-serif" }}>
-        <div style={{ fontSize: "1.8rem", fontWeight: 600, color: "var(--color-primary)" }}>Bienvenidos a Small!</div>
+        <div style={{ fontSize: "1.8rem", fontWeight: 600, color: "var(--color-primary)" }}>Bienvenido a Bloom AI</div>
         <div style={{ backgroundColor: "#D9D9D9", height: "50vh", borderRadius: 15 }}></div>
         <div style={{ fontSize: "1.2rem", fontWeight: 600, color: "#575757" }}>Términos y condiciones</div>
         <div
@@ -35,7 +35,7 @@ export default function Terms({ handleTerms }: Props) {
             color: "var(--color-font-secondary)",
           }}
         >
-          <div>Al utilizar Small, aceptas los siguientes términos y condiciones</div>
+          <div>Al utilizar Bloom AI, aceptas los siguientes términos y condiciones</div>
           {terms.map((term, index) => {
             return (
               <div style={{ paddingLeft: "0.2rem" }} key={index}>
