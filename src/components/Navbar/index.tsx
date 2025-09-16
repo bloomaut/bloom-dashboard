@@ -5,6 +5,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useTranslations } from "next-intl";
 import { Oval } from "react-loader-spinner";
 import { Link } from "@/navigation";
+import { usePathname } from "next/navigation";
 //Icons
 //Components
 import LangDrop from "./LangDrop";
@@ -17,6 +18,16 @@ import Icon from "../Icon";
 const Navbar = () => {
   const dict = useTranslations("dict.login");
   const { user, isLoading } = useUser();
+  const pathname = usePathname();
+
+  const shouldShowNavbar = () => {
+    const segments = pathname.split("/").filter(Boolean);
+    return segments.length > 1;
+  };
+
+  if (!shouldShowNavbar()) {
+    return null;
+  }
 
   return (
     <nav className={styles.container}>

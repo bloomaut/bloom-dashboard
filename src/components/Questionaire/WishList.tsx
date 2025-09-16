@@ -4,25 +4,38 @@ import small from "@/../public/assets/logo_small_color.png";
 
 function WishList() {
   return (
-    <div style={{ display: "flex", alignItems: "center", width: "100%", justifyContent: "center", paddingTop: "15%" }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        height: "100vh",
+        justifyContent: "center",
+      }}
+    >
       <div
         style={{
-          width: "45%",
+          width: "100%",
+          height: "100%",
           display: "flex",
           flexDirection: "column",
           gap: 20,
           fontFamily: "Inter, sans-serif",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "start",
           color: "var(--color-font-secondary)",
+          marginTop: "10%",
         }}
       >
-        <Image src={"/logotipo_horizontal.png"} alt='Small' width={150} height={150} priority />
-        <div style={{ paddingTop: "15%", textAlign: "center" }}>
+        <div style={{ position: "relative", width: "700px", height: "250px", marginTop: "2%" }}>
+          <Image src={"/bloomLogo.png"} alt='Bloom AI' fill priority />
+        </div>
+        <p style={{ paddingTop: "3%" }}>¡Gracias por unirte a Bloom AI!</p>
+        <div style={{ paddingTop: "1%", textAlign: "center" }}>
           {" "}
           ¡Estás en la lista de espera! Te avisaremos por correo electrónico en cuanto haya novedades o tu lugar esté
-          disponible. Revisa tu bandeja de entrada (y la carpeta de spam, por si acaso) para no perderte la
-          actualización.
+          disponible.
+          <br /> Revisa tu bandeja de entrada (y la carpeta de spam, por si acaso) para no perderte la actualización.
         </div>
       </div>
     </div>

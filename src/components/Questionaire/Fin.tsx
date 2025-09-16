@@ -34,7 +34,7 @@ function Fin({
         width: "100%",
         gap: 30,
         position: "relative",
-        marginTop: "2rem",
+        marginTop: "5%",
         alignItems: "center",
       }}
     >
