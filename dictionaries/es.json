@@ -485,6 +485,11 @@
     "notifications": {
       "title": "Notificaciones",
       "no_notifications": "No tienes notificaciones"
+    },
+    "wishlist": {
+      "title": "¡Gracias por unirte a Bloom AI!",
+      "joined_message": "Te has unido a la lista de espera.",
+      "notification_message": "Te avisaremos por correo cuando tu lugar esté disponible o haya novedades. Revisa tu bandeja de entrada (y spam) para no perderte ninguna actualización."
     }
   }
 }

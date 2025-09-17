@@ -485,6 +485,11 @@
     "notifications": {
       "title": "Notifications",
       "no_notifications": "You have no notifications"
-    }
+    },
+    "wishlist": {
+        "title": "Thank you for joining Bloom AI!",
+        "joined_message": "You have joined the waitlist.",
+        "notification_message": "We will notify you by email when your spot is available or there are updates. Check your inbox (and spam folder) so you don't miss any updates."
+      }
   }
 }
