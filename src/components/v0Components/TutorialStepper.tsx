@@ -44,12 +44,21 @@ export function TutorialStepper() {
         {/* Header mejorado para responsive */}
         <div className='space-y-2'>
           <div className='flex items-center justify-between'>
-            <CardTitle className='text-xs sm:text-sm font-medium text-blue-800 truncate'>
-              Configuración inicial
-            </CardTitle>
+            <div className='text-xs sm:text-sm font-medium text-blue-800 truncate'>Configuración inicial</div>
             <Badge
               variant='outline'
-              className='text-blue-700 border-blue-300 text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 flex-shrink-0 ml-2'
+              style={{
+                fontSize: "0.75rem",
+                color: "#1D4ED8", // text-blue-700
+                borderColor: "#93C5FD", // border-blue-300
+                padding: "0.125rem 0.375rem",
+                marginLeft: "0.5rem",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "0.25rem",
+                lineHeight: 1,
+              }}
             >
               {progress}%
             </Badge>
@@ -79,7 +88,7 @@ export function TutorialStepper() {
                 )}
               </div>
               <div className='flex-1 min-w-0'>
-                <p className='text-xs font-medium truncate leading-tight'>{step.title}</p>
+                <div className='text-xs font-medium truncate leading-tight'>{step.title}</div>
               </div>
             </div>
           ))}
@@ -89,14 +98,14 @@ export function TutorialStepper() {
         {activeStep && (
           <div className='pt-2 sm:pt-3 border-t border-blue-200'>
             <div className='space-y-2'>
-              <p className='text-xs font-medium text-blue-800'>Siguiente paso:</p>
-              <p className='text-xs text-blue-700 leading-relaxed'>{activeStep.description}</p>
+              <div className='text-xs font-medium text-blue-800'>Siguiente paso:</div>
+              <div className='text-xs text-blue-700 leading-relaxed'>{activeStep.description}</div>
               <Button
                 size='sm'
-                className='w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-1.5 sm:py-2'
+                className='w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-1.5 sm:py-2 cursor-pointer'
                 onClick={handleGoToStep}
               >
-                <span className='truncate'>Continuar</span>
+                <div className='truncate'>Continuar</div>
                 <ArrowRight className='h-3 w-3 ml-1 flex-shrink-0' />
               </Button>
             </div>

@@ -26,24 +26,11 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
   const isEnPath = pathname.startsWith("/en");
 
   return (
-    <div className={cn("bg-white border-r border-gray-200 transition-all duration-300", collapsed ? "w-16" : "w-64")}>
-      <div className='flex flex-col h-full'>
-        <div className='p-4 border-b border-gray-200'>
-          <div className='flex items-center justify-between'>
-            {!collapsed && (
-              <div className='flex items-center space-x-2'>
-                <div className='w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center'>
-                  <span className='text-white font-bold text-sm'>S</span>
-                </div>
-                <span className='font-semibold text-gray-900'>Small</span>
-              </div>
-            )}
-            <button onClick={onToggle} className='p-1 rounded-md hover:bg-gray-100'>
-              <ChevronLeft className={cn("h-4 w-4 transition-transform", collapsed && "rotate-180")} />
-            </button>
-          </div>
-        </div>
-
+    <div
+      className={cn("bg-white border-r border-gray-200 transition-all duration-300", collapsed ? "w-16" : "w-64")}
+      id='sidebar'
+    >
+      <div className='flex flex-col'>
         <nav className='flex-1 p-4 space-y-2'>
           {navigation.map(item => {
             const isActive = pathname === item.href;
@@ -76,7 +63,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           })}
         </nav>
 
-        <div className='p-4 border-t border-gray-200'>
+        <div className='p-4 border-t border-gray-200' style={{ minHeight: "calc(100vh - 16rem)" }}>
           {!isCompleted ? (
             <TutorialStepper />
           ) : (

@@ -102,7 +102,7 @@ export function ScheduleCard({ title, tasks, type }: ScheduleCardProps) {
                 <div className='flex items-start space-x-3'>
                   <div className='mt-1'>{getTaskIcon(task.type)}</div>
                   <div className='flex-1'>
-                    <h4 className='font-medium text-gray-900'>{task.title}</h4>
+                    <div className='font-medium text-gray-900'>{task.title}</div>
                     <p className='text-sm text-gray-600 mt-1'>{task.description}</p>
                     <div className='flex items-center space-x-2 mt-2'>
                       <Badge variant='outline' className='text-xs'>
@@ -138,26 +138,26 @@ export function ScheduleCard({ title, tasks, type }: ScheduleCardProps) {
           {selectedTask && (
             <div className='space-y-4'>
               <div>
-                <h4 className='font-medium text-gray-900 mb-2'>Descripción</h4>
+                <div className='font-medium text-gray-900 mb-2'>Descripción</div>
                 <p className='text-gray-600'>{selectedTask.description}</p>
               </div>
 
               <div className='grid grid-cols-2 gap-4'>
                 <div>
-                  <h4 className='font-medium text-gray-900 mb-1'>Plataforma</h4>
+                  <div className='font-medium text-gray-900 mb-1'>Plataforma</div>
                   <Badge variant='outline'>
                     {selectedTask.platform === "both" ? "Instagram + TikTok" : selectedTask.platform.toUpperCase()}
                   </Badge>
                 </div>
                 <div>
-                  <h4 className='font-medium text-gray-900 mb-1'>Día</h4>
+                  <div className='font-medium text-gray-900 mb-1'>Día</div>
                   <p className='text-gray-600'>{selectedTask.day}</p>
                 </div>
               </div>
 
               <div className='grid grid-cols-2 gap-4'>
                 <div>
-                  <h4 className='font-medium text-gray-900 mb-1'>Estado</h4>
+                  <div className='font-medium text-gray-900 mb-1'>Estado</div>
                   <Badge className={getStatusColor(selectedTask.status)} variant='secondary'>
                     {selectedTask.status === "completed" && "Completada"}
                     {selectedTask.status === "in-progress" && "En progreso"}
@@ -166,7 +166,7 @@ export function ScheduleCard({ title, tasks, type }: ScheduleCardProps) {
                   </Badge>
                 </div>
                 <div>
-                  <h4 className='font-medium text-gray-900 mb-1'>Prioridad</h4>
+                  <div className='font-medium text-gray-900 mb-1'>Prioridad</div>
                   <Badge
                     variant='outline'
                     className={
@@ -185,7 +185,7 @@ export function ScheduleCard({ title, tasks, type }: ScheduleCardProps) {
               </div>
 
               <div>
-                <h4 className='font-medium text-gray-900 mb-1'>Tipo de tarea</h4>
+                <div className='font-medium text-gray-900 mb-1'>Tipo de tarea</div>
                 <p className='text-gray-600 capitalize'>
                   {selectedTask.type === "post" && "Publicación"}
                   {selectedTask.type === "story" && "Historia"}
@@ -197,7 +197,7 @@ export function ScheduleCard({ title, tasks, type }: ScheduleCardProps) {
 
               {selectedTask.details && (
                 <div>
-                  <h4 className='font-medium text-gray-900 mb-2'>Detalles adicionales</h4>
+                  <div className='font-medium text-gray-900 mb-2'>Detalles adicionales</div>
                   <p className='text-gray-600'>{selectedTask.details}</p>
                 </div>
               )}

@@ -20,6 +20,16 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(({ variant = "defaul
   return (
     <span
       ref={ref}
+      style={{
+        fontSize: "0.75rem",
+        padding: "0.125rem 0.375rem",
+        marginLeft: "0.5rem",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: "0.25rem",
+        lineHeight: 1,
+      }}
       className={cn(
         "inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold",
         variantClasses[variant],

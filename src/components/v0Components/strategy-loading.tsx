@@ -86,84 +86,82 @@ export function StrategyLoading({ onComplete }: StrategyLoadingProps) {
       {/* Header */}
       <header className='bg-white border-b border-gray-200 px-6 py-4'>
         <div className='flex items-center justify-between'>
-          <h1 className='text-2xl font-bold text-gray-900'>Configuración de Redes Sociales</h1>
+          <div className='text-2xl font-bold text-gray-900'>Configuración de Redes Sociales</div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 overflow-auto p-6 flex items-center justify-center'>
-        <div className='max-w-2xl mx-auto w-full'>
-          <Card className='border-2 border-blue-100'>
-            <CardContent className='p-12 text-center space-y-8'>
-              {/* Loading Animation */}
-              <div className='relative'>
-                <div className='w-24 h-24 mx-auto mb-6 relative'>
-                  <div className='absolute inset-0 border-4 border-blue-100 rounded-full'></div>
-                  <div className='absolute inset-0 border-4 border-blue-500 rounded-full border-t-transparent animate-spin'></div>
-                  <div className='absolute inset-0 flex items-center justify-center'>
-                    <Sparkles className='h-8 w-8 text-blue-600 animate-pulse' />
+      <main className='flex-1 overflow-auto px-6 pb-6 flex items-start justify-center'>
+        <Card className='border-2 border-blue-100' style={{ scale: "0.80", transform: "translateY(-2rem)" }}>
+          <CardContent className='p-12 text-center space-y-8'>
+            {/* Loading Animation */}
+            <div className='relative'>
+              <div className='w-24 h-24 mx-auto mb-6 relative'>
+                <div className='absolute inset-0 border-4 border-blue-100 rounded-full'></div>
+                <div className='absolute inset-0 border-4 border-blue-500 rounded-full border-t-transparent animate-spin'></div>
+                <div className='absolute inset-0 flex items-center justify-center'>
+                  <Sparkles className='h-8 w-8 text-blue-600 animate-pulse' />
+                </div>
+              </div>
+            </div>
+
+            {/* Main Message */}
+            <div className='space-y-4'>
+              <div className='text-3xl font-bold text-gray-900'>Estamos creando tus estrategias de redes sociales</div>
+              <div className='text-lg text-gray-600'>
+                Analizando tus perfiles y generando un plan personalizado para el éxito de tu negocio
+              </div>
+            </div>
+
+            {/* Progress Bar */}
+            <div className='space-y-4'>
+              <Progress value={progress} className='h-3' />
+              <div className='text-sm text-gray-500'>{Math.round(progress)}% completado</div>
+            </div>
+
+            {/* Current Step */}
+            <div className='space-y-6'>
+              <div className='flex items-center justify-center space-x-3 p-4 bg-blue-50 rounded-lg'>
+                {steps[currentStep]?.icon}
+                <div className='font-medium text-gray-900'>{steps[currentStep]?.text}</div>
+              </div>
+
+              {/* Steps List */}
+              <div className='space-y-3'>
+                {steps.map((step, index) => (
+                  <div
+                    key={index}
+                    className={`flex items-center space-x-3 p-3 rounded-lg transition-all ${
+                      index < currentStep
+                        ? "bg-green-50 text-green-800"
+                        : index === currentStep
+                          ? "bg-blue-50 text-blue-800"
+                          : "bg-gray-50 text-gray-500"
+                    }`}
+                  >
+                    {index < currentStep ? (
+                      <CheckCircle className='h-4 w-4 text-green-600' />
+                    ) : (
+                      <div className='w-4 h-4 flex items-center justify-center'>
+                        {React.cloneElement(step.icon, {
+                          className: `h-4 w-4 ${index === currentStep ? "animate-pulse" : "opacity-50"}`,
+                        })}
+                      </div>
+                    )}
+                    <div className='text-sm font-medium'>{step.text}</div>
                   </div>
-                </div>
+                ))}
               </div>
+            </div>
 
-              {/* Main Message */}
-              <div className='space-y-4'>
-                <h2 className='text-3xl font-bold text-gray-900'>Estamos creando tus estrategias de redes sociales</h2>
-                <p className='text-lg text-gray-600'>
-                  Analizando tus perfiles y generando un plan personalizado para el éxito de tu negocio
-                </p>
+            {/* Fun Facts */}
+            <div className='pt-8 border-t border-gray-200'>
+              <div className='text-sm text-gray-500 italic'>
+                💡 Sabías que las empresas que usan estrategias automatizadas aumentan su engagement en un 67%
               </div>
-
-              {/* Progress Bar */}
-              <div className='space-y-4'>
-                <Progress value={progress} className='h-3' />
-                <p className='text-sm text-gray-500'>{Math.round(progress)}% completado</p>
-              </div>
-
-              {/* Current Step */}
-              <div className='space-y-6'>
-                <div className='flex items-center justify-center space-x-3 p-4 bg-blue-50 rounded-lg'>
-                  {steps[currentStep]?.icon}
-                  <span className='font-medium text-gray-900'>{steps[currentStep]?.text}</span>
-                </div>
-
-                {/* Steps List */}
-                <div className='space-y-3'>
-                  {steps.map((step, index) => (
-                    <div
-                      key={index}
-                      className={`flex items-center space-x-3 p-3 rounded-lg transition-all ${
-                        index < currentStep
-                          ? "bg-green-50 text-green-800"
-                          : index === currentStep
-                            ? "bg-blue-50 text-blue-800"
-                            : "bg-gray-50 text-gray-500"
-                      }`}
-                    >
-                      {index < currentStep ? (
-                        <CheckCircle className='h-4 w-4 text-green-600' />
-                      ) : (
-                        <div className='w-4 h-4 flex items-center justify-center'>
-                          {React.cloneElement(step.icon, {
-                            className: `h-4 w-4 ${index === currentStep ? "animate-pulse" : "opacity-50"}`,
-                          })}
-                        </div>
-                      )}
-                      <span className='text-sm font-medium'>{step.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Fun Facts */}
-              <div className='pt-8 border-t border-gray-200'>
-                <p className='text-sm text-gray-500 italic'>
-                  💡 Sabías que las empresas que usan estrategias automatizadas aumentan su engagement en un 67%
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
