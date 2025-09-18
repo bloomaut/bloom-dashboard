@@ -4,10 +4,10 @@
   background-color: $generalBackground;
   .inner_container {
     @include flex(row, space-between, flex-start);
-    width: 100%;
     flex-wrap: nowrap;
     .children_container {
-      width: 100%;
+      flex: 1 1 auto; // allow to grow and shrink
+      min-height: 0; // allow overflow to work inside flex
       @include flex(column, flex-start, center);
       background-color: $generalBackground;
       overflow-y: auto;

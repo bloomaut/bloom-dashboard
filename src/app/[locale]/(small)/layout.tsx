@@ -78,9 +78,9 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className={styles.container} style={{ overflow: "hidden" }}>
+    <div className={styles.container}>
       <TutorialProvider>
-        <Navbar />
+        {/* <Navbar /> */}
         <ToastContainer
           position='bottom-right'
           limit={2}
@@ -94,7 +94,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
           pauseOnHover
           transition={Slide}
         />
-        {user.client.proposal_status !== "APPROVED" ? (
+        {false ? (
           <div className={styles.inner_container} style={{ width: "100%" }}>
             <div className={styles.children_container} style={{ width: "100%" }} id='children_container'>
               <Questionaire />

@@ -6,6 +6,7 @@ import { Building2, Share2, Users, DollarSign, ChevronLeft, Inbox, Package } fro
 import { cn } from "@/lib/utils";
 import { useTutorial } from "@/context/TutorialContext";
 import { TutorialStepper } from "./TutorialStepper";
+import Image from "next/image";
 
 const navigation = [
   { name: "Mi Negocio", href: "/my-business", icon: Building2 },
@@ -30,6 +31,9 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       className={cn("bg-white border-r border-gray-200 transition-all duration-300", collapsed ? "w-16" : "w-64")}
       id='sidebar'
     >
+      <Link href='/' className='flex items-center  px-4 py-3 pl-6'>
+        <Image src={"/logotipo_horizontal.png"} alt='Small' width={150} height={150} priority />
+      </Link>
       <div className='flex flex-col'>
         <nav className='flex-1 p-4 space-y-2'>
           {navigation.map(item => {
