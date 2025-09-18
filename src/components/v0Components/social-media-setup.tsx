@@ -71,13 +71,13 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
       {/* Header */}
       <header className='bg-white border-b border-gray-200 px-6 py-4'>
         <div className='flex items-center justify-between'>
-          <h1 className='text-2xl font-bold text-gray-900'>Configuración de Redes Sociales</h1>
+          <div className='text-2xl font-bold text-gray-900'>Configuración de Redes Sociales</div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className='flex-1 overflow-auto p-6'>
-        <div className='max-w-4xl mx-auto'>
+        <div className='max-w-5xl mx-auto pb-20'>
           {/* Instructions Card */}
           <Card className='mb-8 border-orange-200 bg-orange-50'>
             <CardHeader>

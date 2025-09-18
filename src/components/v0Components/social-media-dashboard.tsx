@@ -154,11 +154,11 @@ export function SocialMediaDashboard() {
   ];
 
   return (
-    <div className='flex-1 flex flex-col overflow-hidden'>
+    <div className='flex-1 flex flex-col overflow-hidden pb-20'>
       {/* Header */}
       <header className='bg-white border-b border-gray-200 px-6 py-4'>
         <div className='flex items-center justify-between'>
-          <h1 className='text-2xl font-bold text-gray-900'>Dashboard de Redes Sociales</h1>
+          <div className='text-2xl font-bold text-gray-900'>Dashboard de Redes Sociales</div>
           <div className='flex items-center space-x-3'>
             <Button variant='outline' size='sm'>
               <RefreshCw className='h-4 w-4 mr-2' />
@@ -176,11 +176,11 @@ export function SocialMediaDashboard() {
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 overflow-auto p-6'>
+      <main className='flex-1 overflow-auto py-6 px-2'>
         <div className='max-w-7xl mx-auto space-y-8'>
           {/* Información de Perfiles */}
           <section>
-            <h2 className='text-xl font-semibold text-gray-900 mb-4'>Perfiles Conectados</h2>
+            <div className='text-xl font-semibold text-gray-900 mb-4'>Perfiles Conectados</div>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               {profilesData.map(profile => (
                 <ProfileInfoCard key={profile.platform} {...profile} />
@@ -190,7 +190,7 @@ export function SocialMediaDashboard() {
 
           {/* Metas */}
           <section>
-            <h2 className='text-xl font-semibold text-gray-900 mb-4'>Metas y Objetivos</h2>
+            <div className='text-xl font-semibold text-gray-900 mb-4'>Metas y Objetivos</div>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
               <GoalsCard platform='instagram' goals={instagramGoals} />
               <GoalsCard platform='tiktok' goals={tiktokGoals} />
@@ -199,7 +199,7 @@ export function SocialMediaDashboard() {
 
           {/* Cronograma */}
           <section>
-            <h2 className='text-xl font-semibold text-gray-900 mb-4'>Cronograma Automatizado</h2>
+            <div className='text-xl font-semibold text-gray-900 mb-4'>Cronograma Automatizado</div>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
               <ScheduleCard title='Tareas de Hoy' tasks={dailyTasks} type='daily' />
               <ScheduleCard title='Tareas de la Semana' tasks={weeklyTasks} type='weekly' />
@@ -236,9 +236,9 @@ export function SocialMediaDashboard() {
                 </Card>
               </div>
 
-              <div>
+              {/*  <div>
                 <AppDownload />
-              </div>
+              </div> */}
             </div>
           </section>
         </div>

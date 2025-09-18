@@ -16,9 +16,16 @@ const NotFoundHandler = () => {
     <html>
       <body className={barlow.className}>
         <div className={styles.container}>
-          <Image src={smallLogo} alt='' />
+          <Image
+            src={"/logotipo_horizontal.png"}
+            alt='Small'
+            className={styles.logo}
+            width={300}
+            height={300}
+            priority
+          />
           <h1>Oops! Page not found</h1>
-          <Link href={"/"} className={styles.btn}>
+          <Link href={"/"} className=''>
             Go Back
           </Link>
         </div>

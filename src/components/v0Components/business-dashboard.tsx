@@ -152,7 +152,7 @@ export function BusinessDashboard() {
       {/* Header */}
       <header className='bg-white border-b border-gray-200 px-6 py-4'>
         <div className='flex items-center justify-between'>
-          <h1 className='text-2xl font-bold text-gray-900'>Mi Negocio</h1>
+          <div className='text-2xl font-bold'>Mi Negocio</div>
           <div className='flex items-center space-x-3'>
             <Button size='sm' className='bg-red-500 hover:bg-red-600' onClick={handleSave}>
               <Save className='h-4 w-4 mr-2' />
@@ -163,8 +163,8 @@ export function BusinessDashboard() {
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 overflow-auto p-6'>
-        <div className='max-w-6xl mx-auto'>
+      <main className='flex-1 overflow-auto'>
+        <div>
           {/* Metas y Objetivos */}
           <section className='mb-8'>
             <GoalsSummary goals={allGoals} />

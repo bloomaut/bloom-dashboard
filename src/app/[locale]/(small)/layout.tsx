@@ -18,7 +18,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   const [showQuestions, setShowQuestions] = useState(true);
   const user = useAppSelector(state => state.userData);
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ overflow: "hidden" }}>
       <TutorialProvider>
         <Navbar />
         <ToastContainer
