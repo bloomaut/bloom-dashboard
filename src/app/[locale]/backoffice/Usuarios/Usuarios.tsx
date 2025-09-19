@@ -174,6 +174,10 @@ export default function UserManagement() {
   return (
     // wrap page in the scoped root class to override global font vars
     <div className={`${styles.root} space-y-6 m-2`}>
+      <div>
+        <div className='text-3xl font-bold tracking-tight'>Gestión de Usuarios</div>
+        <div className='text-muted-foreground'>Administra y supervisa todos los usuarios del sistema</div>
+      </div>
       {/* Filters */}
       <Card>
         <CardHeader>
