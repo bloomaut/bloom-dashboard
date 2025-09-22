@@ -133,8 +133,8 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
 
                 <Button
                   onClick={() => handleConnect("instagram")}
-                  disabled={connectedAccounts.instagram || connecting === "instagram"}
-                  className='w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
+                  disabled={true}
+                  className='w-full bg-gray-300 hover:bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
                 >
                   {connecting === "instagram" ? (
                     <>
@@ -201,7 +201,7 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
           </div>
 
           {/* Progress Summary */}
-          <Card>
+          {/*  <Card>
             <CardHeader>
               <CardTitle>Progreso de Configuración</CardTitle>
               <CardDescription>Conecta ambas cuentas para acceder al dashboard</CardDescription>
@@ -259,7 +259,7 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
                 )}
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       </main>
     </div>
