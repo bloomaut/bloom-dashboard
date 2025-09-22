@@ -6,40 +6,46 @@
     "hero": {
       "title": {
         "launch": "Lanza",
-        "fast": "hoy",
-        "and": "con",
-        "confidently": "confianza"
+        "fast": "rápido",
+        "and": " y",
+        "confidently": "con confianza"
       },
-      "subtitle1": "Enfocate en lo tuyo,",
-      "subtitle2": "nosotros",
-      "subtitle2_handle": "hacemos el",
-      "subtitle2_rest": "resto",
+      "subtitle1": "Supera tus miedos junto con tu",
+      "subtitle2": "",
+      "subtitle2_handle": "comunidad de pares",
+      "subtitle2_and": "y",
+      "subtitle2_rest": "mentores",
       "description": "crea instantáneamente tu plan de marketing personalizado, estrategia, identidad de marca y flujo de trabajo de contenido. Con una",
-      "description_mentored": "aplicación de grabación de video con mentoría",
-      "description_middle": ", graba contenido guiado y vende directamente a través de una tienda",
-      "description_ecommerce": "eCommerce",
-      "description_end": "personalizada con un panel para gestionar tu cuenta —",
-      "description_free": "todo gratis 🎁",
-      "cta": "¡LANZA TU NEGOCIO HOY!",
+      "description_mentored": "app de grabación con mentoría integrada",
+      "description_middle": ", graba contenido guiado y compártelo con tu",
+      "description_ecommerce": "comunidad privada de emprendedores",
+      "description_end": "para validación previa antes de lanzar al mundo real —",
+      "description_free": "todo completamente gratis 🎁",
+      "cta": "¡LANZA TU MARKETING HOY!",
       "bloom_ai": "Bloom AI"
     },
     "platforms": {
-      "mobile": "Aplicación",
+      "mobile": "App",
       "mentor": "Mentor",
       "app": "Móvil",
-      "subtitle": "Tu director creativo en tu bolsillo"
+      "subtitle": "Tu director creativo en el bolsillo"
+    },
+    "community": {
+      "peers": "Comunidad",
+      "network": "de Emprendedores",
+      "subtitle": "Comunidad exclusiva de pares para feedback temprano antes de publicar"
     },
     "desktools": {
       "title": "Tu",
       "ecommerce": "Ecommerce"
     },
     "all_in_one": {
-      "title": "Todo-en-Uno",
-      "rest": "Plataforma de Negocios"
+      "title": "Plataforma",
+      "rest": "Todo-en-Uno"
     },
     "cta_section": {
-      "title": "¿Listo para lanzar tu negocio?",
-      "subtitle": "Comienza tu viaje hacia una nueva vida hoy",
+      "title": "¿Listo para lanzar tu marketing?",
+      "subtitle": "Inicia tu viaje hacia una nueva vida hoy mismo",
       "button": "¡COMIENZA HOY!",
       "disclaimer": "Sin compromiso • Soporte incluido"
     },
@@ -407,7 +413,7 @@
       "title_03": "Uso Responsable",
       "description_03": "Small está diseñada para facilitar la gestión de contactos comerciales de manera segura y eficiente. Usted se compromete a utilizar la aplicación de manera responsable y respetuosa, tanto con sus contactos como con otros usuarios de la aplicación. Cualquier comportamiento inapropiado o no autorizado dentro de la aplicación puede resultar en la suspensión o eliminación de su cuenta.",
       "title_04": "Seguridad de la Cuenta",
-      "description_04": "La seguridad de su cuenta es de suma importancia. Mantenga su información de inicio de sesión en secreto y no comparta sus credenciales con nadie más. Si sospecha de un acceso no autorizado a su cuenta, notifíquelo de inmediato a nuestro equipo de soporte.",
+      "description_04": "La seguridad de su cuenta es de suma importancia. Mantenga su información de inicio de sesión en secreto y no comparte sus credenciales con nadie más. Si sospecha de un acceso no autorizado a su cuenta, notifíquelo de inmediato a nuestro equipo de soporte.",
       "title_05": "Actualizaciones y Cambios",
       "description_05": "Nos esforzamos por mejorar continuamente Small. Esto puede incluir actualizaciones de funciones y cambios en los servicios. Le informaremos sobre cualquier cambio significativo en la plataforma.",
       "title_06": "Contacto y Soporte",
@@ -479,6 +485,11 @@
     "notifications": {
       "title": "Notificaciones",
       "no_notifications": "No tienes notificaciones"
+    },
+    "wishlist": {
+      "title": "¡Gracias por unirte a Bloom AI!",
+      "joined_message": "Te has unido a la lista de espera.",
+      "notification_message": "Te avisaremos por correo cuando tu lugar esté disponible o haya novedades. Revisa tu bandeja de entrada (y spam) para no perderte ninguna actualización."
     }
   }
 }

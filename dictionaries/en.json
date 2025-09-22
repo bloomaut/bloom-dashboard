@@ -6,21 +6,22 @@
     "hero": {
       "title": {
         "launch": "Launch",
-        "fast": "fast",
-        "and": "and",
+        "fast": "marketing",
+        "and": ",",
         "confidently": "confidently"
       },
-      "subtitle1": "Focus on what you do best,",
-      "subtitle2": "we",
-      "subtitle2_handle": "handle the",
-      "subtitle2_rest": "rest",
+      "subtitle1": "Break the molds of fear",
+      "subtitle2": "with",
+      "subtitle2_handle": "your peers",
+      "subtitle2_and": "and",
+      "subtitle2_rest": "mentor",
       "description": "instantly creates your personalized marketing plan, strategy, brand identity, and content workflow. With a",
       "description_mentored": "mentored video recording app",
-      "description_middle": ", record guided content and sell directly through a customized",
-      "description_ecommerce": "eCommerce",
-      "description_end": "store with a dashboard to manage your account —",
+      "description_middle": ", record guided content and share it with",
+      "description_ecommerce": " your private peer comunity",
+      "description_end": "for pre-publication validation before you go to real —",
       "description_free": "all free 🎁",
-      "cta": "LAUNCH YOUR BUSINESS TODAY!",
+      "cta": "LAUNCH YOUR MARKETING TODAY!",
       "bloom_ai": "Bloom AI"
     },
     "platforms": {
@@ -28,6 +29,11 @@
       "mentor": "Mentor",
       "app": "App",
       "subtitle": "Your creative director in your pocket"
+    },
+    "community": {
+      "peers": "Peers",
+      "network": "Network",
+      "subtitle": "Exclusive peer community for early feedback before publishing"
     },
     "desktools": {
       "title": "Your",
@@ -38,7 +44,7 @@
       "rest": "Business Platform"
     },
     "cta_section": {
-      "title": "Ready to launch your business?",
+      "title": "Ready to launch your marketing?",
       "subtitle": "Start your journey to a new life today",
       "button": "START TODAY!",
       "disclaimer": "No commitment • Support included"
@@ -63,7 +69,7 @@
         "privacy": "Privacy Policy",
         "cookies": "Cookies"
       },
-      "copyright": "© 2025 Bloomit. All rights reserved."
+      "copyright": "© 2025 Bloom. All rights reserved."
     },
     "error": {
       "message": "Somethings went wrong!",
@@ -479,6 +485,11 @@
     "notifications": {
       "title": "Notifications",
       "no_notifications": "You have no notifications"
-    }
+    },
+    "wishlist": {
+        "title": "Thank you for joining Bloom AI!",
+        "joined_message": "You have joined the waitlist.",
+        "notification_message": "We will notify you by email when your spot is available or there are updates. Check your inbox (and spam folder) so you don't miss any updates."
+      }
   }
 }
