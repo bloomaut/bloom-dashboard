@@ -78,9 +78,9 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className={styles.container} style={{ overflow: "hidden" }}>
+    <div className={styles.container}>
       <TutorialProvider>
-        <Navbar />
+        {/* <Navbar /> */}
         <ToastContainer
           position='bottom-right'
           limit={2}

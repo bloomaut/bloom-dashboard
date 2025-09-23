@@ -235,10 +235,6 @@ export function SocialMediaDashboard() {
                   </CardContent>
                 </Card>
               </div>
-
-              {/*  <div>
-                <AppDownload />
-              </div> */}
             </div>
           </section>
         </div>
