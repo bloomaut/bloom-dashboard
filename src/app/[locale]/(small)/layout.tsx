@@ -1,8 +1,5 @@
 "use client";
-import "@/styles/globals.scss";
-import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
-import "./styles.css";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 // Components
