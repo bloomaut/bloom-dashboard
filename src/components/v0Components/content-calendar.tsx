@@ -1,8 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, Video } from "lucide-react";
+import {
+  CheckCircle,
+  Clock,
+  Video,
+  X,
+  Calendar,
+  Hash,
+  Target,
+  MessageSquare,
+  Lightbulb,
+  Heart,
+  Brain,
+  Play,
+} from "lucide-react";
 
 // Type definitions
 interface ContentItem {
@@ -29,8 +43,20 @@ interface ContentItem {
   };
 }
 
+interface ProfileData {
+  _id: string;
+  clientId: string;
+  username: string;
+  bio: string;
+  avatar: string;
+  socialMedia: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface ContentCalendarProps {
   contentItems: ContentItem[];
+  profileData?: ProfileData | null;
 }
 
 // Color scheme for time periods
@@ -55,10 +81,12 @@ const TIME_PERIOD_COLORS = {
   },
 } as const;
 
-// Days of the week in Spanish
+// Days of the week in divish
 const DAYS_OF_WEEK = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
-export function ContentCalendar({ contentItems }: ContentCalendarProps) {
+export function ContentCalendar({ contentItems, profileData }: ContentCalendarProps) {
+  const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
+
   // Get current week's dates
   const getCurrentWeekDates = () => {
     const today = new Date();
@@ -102,6 +130,189 @@ export function ContentCalendar({ contentItems }: ContentCalendarProps) {
 
   const groupedContent = groupContentByDay();
 
+  // Render content tooltip
+  const renderContentTooltip = () => {
+    if (!selectedContent) return null;
+
+    const colors = TIME_PERIOD_COLORS[selectedContent.dayTime];
+
+    return (
+      <div 
+        className='fixed inset-0 bg-[rgb(0,0,0,0.7)] flex items-center justify-center z-50 p-4'
+        onClick={() => setSelectedContent(null)}
+      >
+        <div 
+          className='bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto scrollbar-hide'
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className={`p-4 ${colors.bg} ${colors.border} border-b`}>
+            <div className='flex items-center justify-between'>
+              <div className='flex items-center space-x-3'>
+                <Video className='h-5 w-5' />
+                <div>
+                  <div className='text-lg font-semibold'>{selectedContent.content.title}</div>
+                  <div className='flex items-center space-x-2 text-sm opacity-75'>
+                    <Calendar className='h-3 w-3' />
+                    <div>{selectedContent.day.toLocaleDateString("es-ES")}</div>
+                    <div>•</div>
+                    <div className='capitalize'>{selectedContent.dayTime}</div>
+                    {selectedContent.completed && (
+                      <>
+                        <div>•</div>
+                        <CheckCircle className='h-3 w-3 text-green-600' />
+                        <div>Completado</div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedContent(null)}
+                className='p-1 hover:bg-gray-200 rounded-full transition-colors'
+              >
+                <X className='h-5 w-5' />
+              </button>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className='p-6 space-y-6'>
+            {/* Basic Info */}
+            <div className='grid grid-cols-2 gap-4'>
+              <div>
+                <div className='font-medium text-gray-700 mb-2'>Información Básica</div>
+                <div className='space-y-2 text-sm'>
+                  <div className='flex items-center space-x-2'>
+                    <Target className='h-4 w-4 text-gray-500' />
+                    <div className='text-gray-600'>Pilar:</div>
+                    <Badge variant='secondary'>{selectedContent.pillar}</Badge>
+                  </div>
+                  <div className='flex items-center space-x-2'>
+                    <Play className='h-4 w-4 text-gray-500' />
+                    <div className='text-gray-600'>Tipo:</div>
+                    <div>{selectedContent.publishType}</div>
+                  </div>
+                  <div className='flex items-center space-x-2'>
+                    <div className='text-gray-600'>Red Social:</div>
+                    <Badge variant='outline'>{selectedContent.socialMedia.toUpperCase()}</Badge>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className='font-medium text-gray-700 mb-2'>Estado</div>
+                <div className='space-y-2 text-sm'>
+                  <div className='flex items-center space-x-2'>
+                    {selectedContent.completed ? (
+                      <>
+                        <CheckCircle className='h-4 w-4 text-green-600' />
+                        <div className='text-green-600 font-medium'>Completado</div>
+                      </>
+                    ) : (
+                      <>
+                        <Clock className='h-4 w-4 text-orange-600' />
+                        <div className='text-orange-600 font-medium'>Pendiente</div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Hook */}
+            {selectedContent.content.hook && (
+              <div>
+                <div className='font-medium text-gray-700 mb-2 flex items-center space-x-2'>
+                  <Lightbulb className='h-4 w-4' />
+                  <div>Hook</div>
+                </div>
+                <div className='bg-gray-50 p-3 rounded-lg text-sm'>{selectedContent.content.hook}</div>
+              </div>
+            )}
+
+            {/* Script */}
+            <div>
+              <div className='font-medium text-gray-700 mb-2'>Guión</div>
+              <div className='bg-gray-50 p-3 rounded-lg text-sm whitespace-pre-wrap'>
+                {selectedContent.content.script}
+              </div>
+            </div>
+
+            {/* Copy */}
+            <div>
+              <div className='font-medium text-gray-700 mb-2 flex items-center space-x-2'>
+                <MessageSquare className='h-4 w-4' />
+                <div>Copy</div>
+              </div>
+              <div className='bg-gray-50 p-3 rounded-lg text-sm'>{selectedContent.content.copy}</div>
+            </div>
+
+            {/* Hashtags */}
+            {selectedContent.content.hashtags && (
+              <div>
+                <div className='font-medium text-gray-700 mb-2 flex items-center space-x-2'>
+                  <Hash className='h-4 w-4' />
+                  <div>Hashtags</div>
+                </div>
+                <div className='bg-blue-50 p-3 rounded-lg text-sm text-blue-800'>
+                  {selectedContent.content.hashtags}
+                </div>
+              </div>
+            )}
+
+            {/* CTA */}
+            {selectedContent.content.cta_copy && (
+              <div>
+                <div className='font-medium text-gray-700 mb-2'>Call to Action</div>
+                <div className='bg-green-50 p-3 rounded-lg text-sm text-green-800 font-medium'>
+                  {selectedContent.content.cta_copy}
+                </div>
+              </div>
+            )}
+
+            {/* Additional Fields */}
+            <div className='grid grid-cols-2 gap-4'>
+              {selectedContent.content.feelings && (
+                <div>
+                  <div className='font-medium text-gray-700 mb-2 flex items-center space-x-2'>
+                    <Heart className='h-4 w-4' />
+                    <div>Sentimientos</div>
+                  </div>
+                  <Badge variant='outline'>{selectedContent.content.feelings}</Badge>
+                </div>
+              )}
+              {selectedContent.content.understanding && (
+                <div>
+                  <div className='font-medium text-gray-700 mb-2 flex items-center space-x-2'>
+                    <Brain className='h-4 w-4' />
+                    <div>Comprensión</div>
+                  </div>
+                  <Badge variant='outline'>{selectedContent.content.understanding}</Badge>
+                </div>
+              )}
+            </div>
+
+            {selectedContent.content.key_words_copy && (
+              <div>
+                <div className='font-medium text-gray-700 mb-2'>Palabras Clave</div>
+                <div className='bg-purple-50 p-3 rounded-lg text-sm text-purple-800'>
+                  {selectedContent.content.key_words_copy}
+                </div>
+              </div>
+            )}
+
+            {selectedContent.content.make && (
+              <div>
+                <div className='font-medium text-gray-700 mb-2'>Tipo de Contenido</div>
+                <Badge variant='secondary'>{selectedContent.content.make}</Badge>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Render content item card
   const renderContentItem = (item: ContentItem) => {
     const colors = TIME_PERIOD_COLORS[item.dayTime];
@@ -109,7 +320,8 @@ export function ContentCalendar({ contentItems }: ContentCalendarProps) {
     return (
       <div
         key={`${item.clientId}-${item.skinxId}-${item.presetId}`}
-        className={`p-2 mb-2 rounded-lg border ${colors.bg} ${colors.border} ${colors.text}`}
+        className={`p-2 mb-2 rounded-lg border ${colors.bg} ${colors.border} ${colors.text} cursor-pointer hover:shadow-md transition-shadow`}
+        onClick={() => setSelectedContent(item)}
       >
         <div className='flex items-center justify-between mb-1'>
           <div className='flex items-center space-x-1'>
@@ -121,7 +333,11 @@ export function ContentCalendar({ contentItems }: ContentCalendarProps) {
 
         <div className='text-xs opacity-75 mb-1'>{item.pillar}</div>
 
-        <div className='text-xs opacity-60 truncate'>{item.content.script.substring(0, 40)}...</div>
+        {item.content.hook ? (
+          <div className='text-xs opacity-60 truncate'>{item.content.hook}</div>
+        ) : (
+          <div className='text-xs opacity-60 truncate'>{item.content.script.substring(0, 40)}...</div>
+        )}
       </div>
     );
   };
@@ -144,28 +360,68 @@ export function ContentCalendar({ contentItems }: ContentCalendarProps) {
 
   return (
     <div className='w-full space-y-6'>
-      {/* Color Legend */}
-      <Card>
-        <CardHeader className='pb-3'>
-          <CardTitle className='text-lg'>Esquema de Colores - Horarios</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className='flex flex-wrap gap-4'>
-            <div className='flex items-center space-x-2'>
-              <div className='w-4 h-4 bg-yellow-500 rounded-full'></div>
-              <div className='text-sm font-medium'>Mañana (6:00 - 12:00)</div>
+      {/* Tooltip */}
+      {renderContentTooltip()}
+
+      {/* Color Legend and Profile Cards */}
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+        {/* Color Legend */}
+        <Card>
+          <CardHeader className='pb-3'>
+            <CardTitle className='text-lg'>Esquema de Colores - Horarios</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className='flex flex-wrap gap-4'>
+              <div className='flex items-center space-x-2'>
+                <div className='w-4 h-4 bg-yellow-500 rounded-full'></div>
+                <div className='text-sm font-medium'>Mañana (6:00 - 12:00)</div>
+              </div>
+              <div className='flex items-center space-x-2'>
+                <div className='w-4 h-4 bg-red-500 rounded-full'></div>
+                <div className='text-sm font-medium'>Tarde (12:00 - 18:00)</div>
+              </div>
+              <div className='flex items-center space-x-2'>
+                <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                <div className='text-sm font-medium'>Noche (18:00 - 24:00)</div>
+              </div>
             </div>
-            <div className='flex items-center space-x-2'>
-              <div className='w-4 h-4 bg-red-500 rounded-full'></div>
-              <div className='text-sm font-medium'>Tarde (12:00 - 18:00)</div>
-            </div>
-            <div className='flex items-center space-x-2'>
-              <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
-              <div className='text-sm font-medium'>Noche (18:00 - 24:00)</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+
+        {/* Profile Card */}
+        <Card>
+          <CardHeader className='pb-3'></CardHeader>
+          <CardContent>
+            {profileData ? (
+              <div className='flex items-center space-x-4'>
+                <div className='flex-shrink-0'>
+                  <img
+                    src={profileData.avatar}
+                    alt={profileData.username}
+                    className='w-24 h-24   rounded-full object-cover'
+                  />
+                </div>
+                <div className='flex-1 min-w-0'>
+                  <div className='flex items-center space-x-2 mb-1'>
+                    <div className='text-lg font-semibold truncate'>@{profileData.username}</div>
+                    <Badge variant='secondary' className='text-xs'>
+                      {profileData.socialMedia.toUpperCase()}
+                    </Badge>
+                  </div>
+                  <div className='text-sm text-gray-600 line-clamp-2 mb-2'>{profileData.bio}</div>
+                </div>
+              </div>
+            ) : (
+              <div className='flex items-center justify-center h-20 text-gray-500'>
+                <div className='text-center'>
+                  <div className='text-sm'>No hay perfil conectado</div>
+                  <div className='text-xs mt-1'>Conecta tu cuenta de TikTok</div>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Calendar Grid */}
       <Card>

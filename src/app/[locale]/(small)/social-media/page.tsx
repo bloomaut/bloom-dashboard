@@ -37,11 +37,14 @@ export default function SocialMediaPage() {
   };
 
   return (
-    <div className='flex h-screen bg-gray-50 w-full'>
-      {!hasConnectedAccounts && !isCreatingStrategies ? (
-        <SocialMediaSetup connectedAccounts={connectedAccounts} onAccountConnection={handleAccountConnection} />
-      ) : isCreatingStrategies ? (
+    <div className='flex h-screen bg-gray-50 w-full' id='social-media-page'>
+      {!hasConnectedAccounts /*  && !isCreatingStrategies  */ ? (
+        <SocialMediaSetup
+          connectedAccounts={connectedAccounts}
+          onAccountConnection={handleAccountConnection}
+        /> /* : isCreatingStrategies ? (
         <StrategyLoading onComplete={handleStrategiesComplete} />
+      ) */
       ) : (
         <SocialMediaDashboard />
       )}

@@ -23,7 +23,7 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
     setConnecting(platform);
 
     // Simular proceso de conexión
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     onAccountConnection(platform);
     setConnecting(null);

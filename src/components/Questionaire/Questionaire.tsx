@@ -67,11 +67,11 @@ function Questionaire() {
         setTab("wishlist");
       } else {
         dispatch(setQuestData(data));
-        if (user.client.wish_list === true) {
+        /*  if (user.client.wish_list === true) {
           setTab("wishlist");
-        } else if (!data[0].terms) {
+        } else */ if (!data[0].terms) {
           setTab("terms");
-        } else if (!data[0].completed) {
+        } else if (!data[4].questions[4].answer) {
           setTab("quest");
         } else if (!user.client.proposal_url) {
           setTab("fin");
@@ -115,30 +115,10 @@ function Questionaire() {
 
   const handleIndex = (operation: string) => {
     if (currentIndex === 27 && operation === "add") {
+      handleUpdate();
       setTab("fin");
       return;
     }
-    /*   if (currentIndex === 12 && operation === "add") {
-      const answer = questData.answers[12];
-      if (answer === "product") {
-        setCurrentIndex(13);
-        return;
-      }
-      if (answer === "service") {
-        setCurrentIndex(19);
-        return;
-      }
-    } */
-
-    /* if (questData.answers[12] === "product" && currentIndex === 18 && operation === "add") {
-      setCurrentIndex(23);
-      return;
-    }
-
-    if (questData.answers[12] === "service" && currentIndex === 22 && operation === "add") {
-      setCurrentIndex(23);
-      return;
-    } */
 
     if (operation === "subtract") {
       if (currentIndex === 0) return;

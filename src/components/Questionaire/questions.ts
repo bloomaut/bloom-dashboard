@@ -288,7 +288,7 @@ export const generatePropPayload = (questData: { userId: string; answers: string
   return {
     blocks: [
       {
-        block: "P0_businessIdentity",
+        block: "P0_basicInfo",
         clientId: questData.userId,
         questions: [
           {
@@ -305,39 +305,119 @@ export const generatePropPayload = (questData: { userId: string; answers: string
           },
           {
             id: "P0_Q4",
+            answer: "",
+          },
+        ],
+      },
+      {
+        block: "P0_brandHeart",
+        clientId: questData.userId,
+        questions: [
+          {
+            id: "P0_Q5",
             answer: questData.answers[3],
           },
           {
-            id: "P0_Q5",
+            id: "P0_Q6",
             answer: questData.answers[4],
           },
           {
-            id: "P0_Q6",
+            id: "P0_Q7",
             answer: questData.answers[5],
           },
           {
-            id: "P0_Q7",
+            id: "P0_Q8",
             answer: questData.answers[6],
           },
+        ],
+      },
+      {
+        block: "P0_persona",
+        clientId: questData.userId,
+        questions: [
           {
-            id: "P0_Q8",
+            id: "P0_Q9",
             answer: questData.answers[7],
           },
           {
-            id: "P0_Q9",
+            id: "P0_Q10",
             answer: questData.answers[8],
           },
           {
-            id: "P0_Q10",
+            id: "P0_Q11",
             answer: questData.answers[9],
           },
           {
-            id: "P0_Q11",
+            id: "P0_Q12",
             answer: questData.answers[10],
           },
+        ],
+      },
+      {
+        block: "P0_competitors",
+        clientId: questData.userId,
+        questions: [
           {
-            id: "P0_Q12",
+            id: "P0_Q13",
             answer: questData.answers[11],
+          },
+          {
+            id: "P0_Q14",
+            answer: questData.answers[12],
+          },
+          {
+            id: "P0_Q15",
+            answer: questData.answers[13],
+          },
+          {
+            id: "P0_Q16",
+            answer: questData.answers[14],
+          },
+          {
+            id: "P0_Q17",
+            answer: questData.answers[15],
+          },
+          {
+            id: "P0_Q18",
+            answer: questData.answers[16],
+          },
+          {
+            id: "P0_Q19",
+            answer: "",
+          },
+        ],
+      },
+      {
+        block: "P0_brandVoice",
+        clientId: questData.userId,
+        questions: [
+          {
+            id: "P0_Q20",
+            answer: questData.answers[17],
+          },
+          {
+            id: "P0_Q21",
+            answer: questData.answers[18],
+          },
+          {
+            id: "P0_Q22",
+            answer: questData.answers[19],
+          },
+          {
+            id: "P0_Q23",
+            answer: questData.answers[20],
+          },
+          {
+            id: "P0_Q24",
+            answer: questData.answers[21],
+          },
+          {
+            id: "P0_Q25",
+            answer: questData.answers[22],
+          },
+          {
+            id: "P0_Q26",
+            answer: questData.answers[23],
           },
         ],
       },
@@ -346,102 +426,20 @@ export const generatePropPayload = (questData: { userId: string; answers: string
         clientId: questData.userId,
         questions: [
           {
-            id: "P0_Q13",
-            answer: questData.answers[12],
-          },
-        ],
-      },
-      {
-        block: "P0_product",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q14",
-            answer: questData.answers[13],
-          },
-          {
-            id: "P0_Q15",
-            answer: questData.answers[14],
-          },
-          {
-            id: "P0_Q16",
-            answer: questData.answers[15],
-          },
-          {
-            id: "P0_Q17",
-            answer: questData.answers[16],
-          },
-          {
-            id: "P0_Q18",
-            answer: questData.answers[17],
-          },
-          {
-            id: "P0_Q19",
-            answer: questData.answers[18],
-          },
-        ],
-      },
-      {
-        block: "P0_service",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q20",
-            answer: questData.answers[19],
-          },
-          {
-            id: "P0_Q21",
-            answer: questData.answers[20],
-          },
-          {
-            id: "P0_Q22",
-            answer: questData.answers[21],
-          },
-          {
-            id: "P0_Q23",
-            answer: questData.answers[22],
-          },
-        ],
-      },
-      {
-        block: "P0_businessProfile",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q24",
-            answer: questData.answers[23],
-          },
-          {
-            id: "P0_Q25",
+            id: "P0_Q27",
             answer: questData.answers[24],
           },
           {
-            id: "P0_Q26",
+            id: "P0_Q28",
             answer: questData.answers[25],
           },
           {
-            id: "P0_Q27",
+            id: "P0_Q29",
             answer: questData.answers[26],
           },
           {
-            id: "P0_Q28",
-            answer: questData.answers[27],
-          },
-          {
-            id: "P0_Q29",
-            answer: questData.answers[28],
-          },
-          {
             id: "P0_Q30",
-            answer: questData.answers[29],
-          },
-          {
-            id: "P0_Q31",
-            answer: questData.answers[30],
-          },
-          {
-            id: "P0_Q32",
-            answer: questData.answers[31],
+            answer: questData.answers[27],
           },
         ],
       },
@@ -624,14 +622,6 @@ export const generatePayload = (questData: {
         {
           id: "P0_Q30",
           answer: questData.answers[29],
-        },
-        {
-          id: "P0_Q31",
-          answer: questData.answers[30],
-        },
-        {
-          id: "P0_Q32",
-          answer: questData.answers[31],
         },
       ],
     },

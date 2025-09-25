@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RefreshCw, Settings, Bell, TrendingUp, Users, Heart, Grid3X3 } from "lucide-react";
 import { AppDownload } from "@/components/v0Components/app-download";
+import { ContentCalendarExample } from "./content-calendar-example";
 
 export function SocialMediaDashboard() {
   // Datos simulados de los perfiles conectados
@@ -160,85 +161,18 @@ export function SocialMediaDashboard() {
         <div className='flex items-center justify-between'>
           <div className='text-2xl font-bold text-gray-900'>Dashboard de Redes Sociales</div>
           <div className='flex items-center space-x-3'>
-            <Button variant='outline' size='sm'>
+            <Button variant='outline' size='sm' className='cursor-pointer'>
               <RefreshCw className='h-4 w-4 mr-2' />
               Actualizar datos
             </Button>
-            <Button variant='outline' size='sm'>
+            <Button variant='outline' size='sm' className='cursor-pointer'>
               <Settings className='h-4 w-4 mr-2' />
-              Configuración
-            </Button>
-            <Button variant='outline' size='sm'>
-              <Bell className='h-4 w-4' />
+              Generar
             </Button>
           </div>
         </div>
       </header>
-
-      {/* Main Content */}
-      <main className='flex-1 overflow-auto py-6 px-2 h-screen'>
-        <div className='max-w-7xl mx-auto space-y-8'>
-          {/* Información de Perfiles */}
-          <section>
-            <div className='text-xl font-semibold text-gray-900 mb-4'>Perfiles Conectados</div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-              {profilesData.map(profile => (
-                <ProfileInfoCard key={profile.platform} {...profile} />
-              ))}
-            </div>
-          </section>
-
-          {/* Metas */}
-          <section>
-            <div className='text-xl font-semibold text-gray-900 mb-4'>Metas y Objetivos</div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-              <GoalsCard platform='instagram' goals={instagramGoals} />
-              <GoalsCard platform='tiktok' goals={tiktokGoals} />
-            </div>
-          </section>
-
-          {/* Cronograma */}
-          <section>
-            <div className='text-xl font-semibold text-gray-900 mb-4'>Cronograma Automatizado</div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-              <ScheduleCard title='Tareas de Hoy' tasks={dailyTasks} type='daily' />
-              <ScheduleCard title='Tareas de la Semana' tasks={weeklyTasks} type='weekly' />
-            </div>
-          </section>
-
-          {/* Resumen de Progreso */}
-          <section>
-            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-              <div className='lg:col-span-2'>
-                <Card>
-                  <CardHeader>
-                    <CardTitle className='flex items-center space-x-2'>
-                      <TrendingUp className='h-5 w-5' />
-                      <span>Resumen de Progreso</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-                      <div className='text-center p-4 bg-blue-50 rounded-lg'>
-                        <div className='text-2xl font-bold text-blue-600'>75%</div>
-                        <div className='text-sm text-blue-800'>Metas en progreso</div>
-                      </div>
-                      <div className='text-center p-4 bg-green-50 rounded-lg'>
-                        <div className='text-2xl font-bold text-green-600'>3/5</div>
-                        <div className='text-sm text-green-800'>Tareas completadas hoy</div>
-                      </div>
-                      <div className='text-center p-4 bg-purple-50 rounded-lg'>
-                        <div className='text-2xl font-bold text-purple-600'>+12%</div>
-                        <div className='text-sm text-purple-800'>Crecimiento esta semana</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </section>
-        </div>
-      </main>
+      <ContentCalendarExample />
     </div>
   );
 }

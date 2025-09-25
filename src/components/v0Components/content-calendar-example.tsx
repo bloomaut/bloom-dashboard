@@ -1,6 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { ContentCalendar } from "@/components/v0Components/content-calendar";
+import { getContent, getProfile } from "@/services/socialMediaService";
 
 // Mock data for testing the component
 const mockContentData = [
@@ -144,15 +146,141 @@ const mockContentData = [
   },
 ];
 
+interface ProfileData {
+  profile: {
+    _id: string;
+    clientId: string;
+    username: string;
+    bio: string;
+    avatar: string;
+    socialMedia: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
 export function ContentCalendarExample() {
+  const [contentData, setContentData] = useState(mockContentData);
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        setLoading(true);
+
+        // Get current week date range
+        const today = new Date();
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay()); // Go to Sunday
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6); // Go to Saturday
+
+        // Format dates for API call (YYYY-MM-DD format)
+        const startDate = startOfWeek.toISOString().split("T")[0];
+        const endDate = endOfWeek.toISOString().split("T")[0];
+
+        // Call the APIs
+        const profileResponse = await getProfile();
+        const contentResponse: any = await getContent(startDate, endDate);
+
+        // Set profile data
+        if (profileResponse.data && profileResponse.data.result) {
+          setProfileData(profileResponse.data.result);
+        }
+
+        console.log(contentResponse, profileResponse);
+
+        // Transform the API response to match our ContentItem interface
+        // Handle both direct array response and nested response structure
+        let contents = [];
+        if (Array.isArray(contentResponse)) {
+          contents = contentResponse;
+        } else if (contentResponse.data && contentResponse.data.result && contentResponse.data.result.contents) {
+          contents = contentResponse.data.result.contents;
+        } else if (contentResponse.result && contentResponse.result.contents) {
+          contents = contentResponse.result.contents;
+        }
+
+        if (contents.length > 0) {
+          const transformedData = contents.map((item: any) => {
+            // Map dayType from API to our time periods
+            let dayTime: "morning" | "afternoon" | "evening" = "morning";
+            if (item.dayType === "afternoon" || item.dayType === "tarde") {
+              dayTime = "afternoon";
+            } else if (item.dayType === "evening" || item.dayType === "noche") {
+              dayTime = "evening";
+            } else if (item.dayType === "morning" || item.dayType === "mañana") {
+              dayTime = "morning";
+            }
+
+            return {
+              clientId: item.clientId || "unknown",
+              socialMedia: item.socialMedia || ("tiktok" as const),
+              publishType: (item.publishType === "video" ? "Video" : item.publishType) || ("Video" as const),
+              pillar: item.pillar || "General",
+              day: new Date(item.day),
+              dayTime: dayTime,
+              completed: item.completed || item.status === "completed",
+              skinxId: item.skinxId || "",
+              presetId: item.presetId || "",
+              content: {
+                title: item.content?.title || `Contenido de ${item.pillar}`,
+                script: item.content?.script || "",
+                copy: item.content?.copy || "",
+                hashtags: item.content?.hashtags || null,
+                cta_copy: item.content?.cta_copy || null,
+                key_words_copy: item.content?.key_words_copy || null,
+                feelings: item.content?.feelings || null,
+                understanding: item.content?.understanding || null,
+                make: item.content?.make || null,
+                hook: item.content?.hook || null,
+              },
+            };
+          });
+
+          setContentData(transformedData);
+        } else {
+          // Keep using mock data if API doesn't return expected structure
+          setContentData(mockContentData);
+        }
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching content:", err);
+        setError("Failed to fetch content data");
+        // Keep using mock data if API fails
+        setContentData(mockContentData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContent();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className='p-6'>
+        <div className='flex items-center justify-center h-64'>
+          <div className='text-gray-600'>Cargando contenido...</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='p-6'>
       <div className='mb-6'>
-        <div className='text-3xl font-bold text-gray-900 mb-2'>Calendario de Contenido</div>
         <div className='text-gray-600'>Visualiza y gestiona todo tu contenido programado de la semana</div>
+        {error && (
+          <div className='mt-2 p-2 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded'>
+            {error} - Mostrando datos de ejemplo
+          </div>
+        )}
       </div>
 
-      <ContentCalendar contentItems={mockContentData} />
+      <ContentCalendar contentItems={contentData} profileData={profileData?.profile} />
     </div>
   );
 }
