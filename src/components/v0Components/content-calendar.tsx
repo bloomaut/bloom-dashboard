@@ -137,13 +137,13 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
     const colors = TIME_PERIOD_COLORS[selectedContent.dayTime];
 
     return (
-      <div 
+      <div
         className='fixed inset-0 bg-[rgb(0,0,0,0.7)] flex items-center justify-center z-50 p-4'
         onClick={() => setSelectedContent(null)}
       >
-        <div 
+        <div
           className='bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto scrollbar-hide'
-          onClick={(e) => e.stopPropagation()}
+          onClick={e => e.stopPropagation()}
         >
           {/* Header */}
           <div className={`p-4 ${colors.bg} ${colors.border} border-b`}>
