@@ -54,7 +54,9 @@ export default function NoSSRPDFViewer() {
 
   if (!loaded) {
     return (
-      <div style={{ width: "100%", minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
+      <div
+        style={{ width: "100%", minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
         {dict("loading")}
       </div>
     );

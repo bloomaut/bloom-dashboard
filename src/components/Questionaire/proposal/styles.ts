@@ -4,7 +4,7 @@ export const styles = {
     maxWidth: "100%",
     backgroundColor: "white",
     padding: "3rem",
-    marginTop: "-1rem"
+    marginTop: "-1rem",
   },
   header: {
     textAlign: "center" as const,
@@ -76,13 +76,13 @@ export const styles = {
     "&:active": {
       transform: "translateY(0)",
       boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-    }
+    },
   },
   sidebar: {
     display: "flex",
     flexDirection: "column" as const,
     gap: "1.5rem",
-    height: "fit-content"
+    height: "fit-content",
   },
   sidebarCard: {
     backgroundColor: "white",
@@ -122,7 +122,7 @@ export const styles = {
     },
     "&:active": {
       transform: "translateY(0)",
-    }
+    },
   },
   checkboxContainer: {
     display: "flex",
@@ -168,7 +168,7 @@ export const styles = {
     },
     "&:active": {
       transform: "translateY(0)",
-    }
+    },
   },
   continueButton: {
     width: "100%",
@@ -198,7 +198,7 @@ export const styles = {
       cursor: "not-allowed",
       transform: "none",
       boxShadow: "none",
-    }
+    },
   },
   helpSection: {
     background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
@@ -216,7 +216,7 @@ export const styles = {
       right: "0",
       height: "3px",
       background: "linear-gradient(90deg, #0ea5e9, #3b82f6)",
-    }
+    },
   },
   helpIcon: {
     width: "40px",
@@ -255,6 +255,6 @@ export const styles = {
     },
     "&:active": {
       transform: "translateY(0)",
-    }
+    },
   },
 };

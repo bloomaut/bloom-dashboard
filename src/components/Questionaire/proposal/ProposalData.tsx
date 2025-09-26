@@ -14,7 +14,7 @@ function ProposalData() {
     <div style={styles.mainContent}>
       <div style={styles.pdfSection}>
         <div style={styles.pdfLeft}>
-            <FileText size={"2.5rem"} color="#FFFFFF"/>
+          <FileText size={"2.5rem"} color='#FFFFFF' />
           <span style={styles.pdfText}>{dict("pdf_title")}</span>
         </div>
         <button style={styles.downloadButton}>

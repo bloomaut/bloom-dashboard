@@ -21,31 +21,24 @@ function ProposalActions() {
         <h4 style={styles.sidebarTitle}>{dict("actions_title")}</h4>
 
         <div style={styles.checkboxContainer}>
-          <input 
-            type='checkbox' 
-            style={styles.checkbox} 
-            onChange={() => setChecked(!checked)} 
-            id="terms-checkbox"
-          />
-          <label htmlFor="terms-checkbox">
-            {dict("terms_acceptance")}
-          </label>
+          <input type='checkbox' style={styles.checkbox} onChange={() => setChecked(!checked)} id='terms-checkbox' />
+          <label htmlFor='terms-checkbox'>{dict("terms_acceptance")}</label>
         </div>
-        
+
         <button
-          style={{ 
-            ...styles.continueButton, 
-            backgroundColor: !checked ? "#cbd5e1" : "var(--color-primary)" 
+          style={{
+            ...styles.continueButton,
+            backgroundColor: !checked ? "#cbd5e1" : "var(--color-primary)",
           }}
           disabled={!checked}
           onClick={handleClick}
         >
-          <p style={{color: !checked ? "#475569" : "#FFFFFF"}}>{dict("continue_proposal")}</p>
+          <p style={{ color: !checked ? "#475569" : "#FFFFFF" }}>{dict("continue_proposal")}</p>
         </button>
-        
+
         <button style={styles.secondaryButton}>
-          <MessageCircle size={"1.7rem"} color="#FFFFFF" />
-          <p style={{color: "#FFFFFF"}}>{dict("give_feedback")}</p>
+          <MessageCircle size={"1.7rem"} color='#FFFFFF' />
+          <p style={{ color: "#FFFFFF" }}>{dict("give_feedback")}</p>
         </button>
       </div>
 
