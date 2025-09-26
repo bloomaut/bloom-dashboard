@@ -10,7 +10,7 @@ const intlMiddleware = createMiddleware({
 });
 
 const protectedRoutes = ["/", "catalog", "clients", "hotlink", "my-business"];
-const publicRoutes = ["/policy", "/login"];
+const publicRoutes = ["/policy", "/login", "/pricing"];
 
 function isProtectedRoute(pathname: string) {
   return protectedRoutes.some(route => pathname.includes(route));

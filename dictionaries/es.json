@@ -540,6 +540,82 @@
       "need_help": "¿Necesitas ayuda?",
       "help_description": "Nuestro equipo está disponible para resolver cualquier duda sobre tu propuesta.",
       "contact_support": "Contactar Soporte"
+    },
+    "pricing": {
+      "header": {
+        "badge": "Nuevo: Precios basados en valor",
+        "title": "Planes y Precios",
+        "subtitle": "Comienza gratis inmediatamente. Actualiza para más funciones, límites y colaboración."
+      },
+      "plans": {
+        "free": {
+          "name": "Free",
+          "price": "$0",
+          "period": "USD",
+          "description": "Para personas que quieren explorar",
+          "button": "Comenzar Gratis",
+          "features": [
+            "Marca de agua de Bloom",
+            "Generación de marca (rebranding)",
+            "Estrategias mensuales limitadas",
+            "Contenido manual limitado",
+            "Presets básicos + caption",
+            "Teleprompt",
+            "Trim Editor",
+            "Sessions",
+            "Carga manual de imágenes",
+            "Comunidad (peer-validation)",
+            "Proceso de quemado local (lento)",
+            "Publicación automática"
+          ]
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "$20",
+          "period": "USD/mes",
+          "description": "Para creadores y empresas en crecimiento",
+          "button": "Actualizar a Pro",
+          "features": [
+            "Sin marca de agua de Bloom",
+            "Todo lo del plan Free",
+            "Límites aumentados",
+            "Generación de flakes de Hog y Landing",
+            "Omnichannel al CRM",
+            "Acceso a setters",
+            "Roles y asientos",
+            "Mostrar plataforma en video",
+            "Proceso de quemado en nube (rápido)"
+          ]
+        },
+        "ecommerce": {
+          "name": "Ecommerce",
+          "price": "$40",
+          "period": "USD/mes",
+          "description": "Para empresas que requieren funciones avanzadas",
+          "button": "Próximamente",
+          "features": [
+            "Todo lo del plan Pro",
+            "Funciones de ecommerce avanzadas",
+            "Integraciones personalizadas",
+            "Soporte prioritario",
+            "Análisis avanzados"
+          ]
+        }
+      },
+      "popular_badge": "Recomendado",
+      "enterprise": {
+        "title": "Enterprise",
+        "description": "Para grandes empresas que requieren seguridad adicional y soporte personalizado.",
+        "button": "Contáctanos",
+        "features": [
+          "Configuración personalizada",
+          "SSO y autenticación avanzada",
+          "Acceso prioritario y mejor rendimiento",
+          "Soporte dedicado al cliente",
+          "Integraciones personalizadas",
+          "SLA garantizado"
+        ]
+      }
     }
   }
 }
