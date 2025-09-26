@@ -37,7 +37,7 @@ export default function SocialMediaPage() {
   };
 
   return (
-    <div className='flex h-screen bg-gray-50 w-full' id='social-media-page'>
+    <div className='flex h-full bg-gray-50 w-full' id='social-media-page'>
       {!hasConnectedAccounts /*  && !isCreatingStrategies  */ ? (
         <SocialMediaSetup
           connectedAccounts={connectedAccounts}

@@ -92,8 +92,12 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
           transition={Slide}
         />
         {false ? (
-          <div className={styles.inner_container} style={{ width: "100%" }} id='inner_container'>
-            <div className={styles.children_container} style={{ width: "100%" }} id='children_container'>
+          <div className={styles.inner_container} style={{ width: "100%", height: "100%" }} id='inner_container'>
+            <div
+              className={styles.children_container}
+              style={{ width: "100%", height: "100%" }}
+              id='children_container'
+            >
               <Questionaire />
             </div>
           </div>

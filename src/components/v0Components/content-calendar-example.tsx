@@ -205,13 +205,15 @@ export function ContentCalendarExample() {
 
         if (contents.length > 0) {
           const transformedData = contents.map((item: any) => {
-            // Map dayType from API to our time periods
+            // Map dayTime from API to our time periods (prioritize dayTime over dayType)
             let dayTime: "morning" | "afternoon" | "evening" = "morning";
-            if (item.dayType === "afternoon" || item.dayType === "tarde") {
+            const timeField = item.dayTime || item.dayType;
+
+            if (timeField === "afternoon" || timeField === "tarde") {
               dayTime = "afternoon";
-            } else if (item.dayType === "evening" || item.dayType === "noche") {
+            } else if (timeField === "evening" || timeField === "noche") {
               dayTime = "evening";
-            } else if (item.dayType === "morning" || item.dayType === "mañana") {
+            } else if (timeField === "morning" || timeField === "mañana") {
               dayTime = "morning";
             }
 
