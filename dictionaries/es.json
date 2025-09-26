@@ -498,6 +498,18 @@
       "terms_link": "Términos y Condiciones",
       "checkbox_suffix": "y autorizo el procesamiento de mis datos según se describe.",
       "continue_button": "Continuar"
+    },
+    "questionnaire": {
+      "question": "Pregunta",
+      "of": "de",
+      "place_holder_simple": "Escribe aquí tu respuesta...",
+      "place_holder_extended": "Escribe aquí o usa el micrófono para grabar tu respuesta...",
+      "date_holder": "Haz clic en el campo o el ícono para seleccionar una fecha",
+      "selected_date": "Fecha seleccionada: ",
+      "transcribing": "Transcribiendo...",
+      "continue_button": "Siguiente",
+      "record_audio": "Grabar audio",
+      "recording_audio": "Grabando... (Click para parar)"
     }
   }
 }
