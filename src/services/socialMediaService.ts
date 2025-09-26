@@ -70,12 +70,18 @@ export const fixContentIdeas = async (contentIdeaId: string): Promise<boolean> =
   }
 };
 
-export const createContentIdea = async (pillar: string, idea: string, date: string): Promise<ContentIdeaResponse> => {
+export const createContentIdea = async (
+  pillar: string,
+  idea: string,
+  date: string,
+  dayTime: string,
+): Promise<ContentIdeaResponse> => {
   try {
     const response = await axios.post(`${API_BASE_URL}/api/social-media/create-content-idea`, {
       pillar,
       idea,
-      Date: date,
+      date,
+      dayTime,
     });
     return response.data;
   } catch (error) {
