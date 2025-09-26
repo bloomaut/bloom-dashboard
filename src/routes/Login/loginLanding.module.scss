@@ -27,6 +27,26 @@
   width: 100%;
 }
 
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem
+}
+
+.navLink {
+  color: var(--color-font-primary);
+  text-decoration: none;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family);
+  margin-right: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: var(--color-secondary);
+}
+
 /* Logotipo */
 .logo {
   display: flex;

@@ -490,6 +490,133 @@
         "title": "Thank you for joining Bloom AI!",
         "joined_message": "You have joined the waitlist.",
         "notification_message": "We will notify you by email when your spot is available or there are updates. Check your inbox (and spam folder) so you don't miss any updates."
+      },
+      "terms": {
+        "title": "Welcome to Bloom!",
+        "subtitle": "Before we begin, we invite you to learn more about our platform and our terms of use",
+        "checkbox_text": "I accept the",
+        "terms_link": "Terms and Conditions",
+        "checkbox_suffix": "and authorize the processing of my data as described.",
+        "continue_button": "Continue"
+      },
+      "questionnaire": {
+        "question": "Question",
+        "of": "of",
+        "place_holder_simple": "Write your answer here...",
+        "place_holder_extended": "Write here or use the microphone to record your answer...",
+        "date_holder": "Click on the field or icon to select a date",
+        "selected_date": "Selected date: ",
+        "transcribing": "Transcribing...",
+        "continue_button": "Next",
+        "record_audio": "Record audio",
+        "recording_audio": "Recording audio... (Click to stop)"
+      },
+      "completion": {
+        "title": "Questionnaire",
+        "completed": "Completed",
+        "progress": "100%",
+        "processing_title": "We are processing your response",
+        "processing_description": "This process will take between 15 and 20 minutes.",
+        "notification_description": "We will notify you by email and on this page when your document is ready.",
+        "status_processing": "Processing...",
+        "keep_page_open": "Keep this page open to receive real-time updates"
+      },
+      "proposal": {
+        "completed": "Proposal Ready",
+        "title": "Your Proposal is Ready",
+        "subtitle": "Review your personalized proposal and proceed with the next steps",
+        "pdf_title": "Bloom Marketing Proposal",
+        "download": "Download",
+        "loading": "Loading PDF viewer...",
+        "actions_title": "Actions",
+
+        "downloading": "Downloading...",
+        "download_proposal": "Download Proposal",
+        
+        "terms_acceptance": "I have read and accept the terms of this commercial proposal",
+        "continue_proposal": "Continue with proposal",
+        "processing": "Processing...",
+        "give_feedback": "Give Feedback / Adjust",
+        "need_help": "Need help?",
+        "help_description": "Our team is available to resolve any questions about your proposal.",
+        "contact_support": "Contact Support"
+      },
+      "pricing": {
+        "header": {
+          "badge": "New: Value-based pricing",
+          "title": "Plans and Pricing",
+          "subtitle": "Start free immediately. Upgrade for more features, limits and collaboration."
+        },
+        "plans": {
+          "free": {
+            "name": "Free",
+            "price": "$0",
+            "period": "USD",
+            "description": "For people who want to explore",
+            "button": "Start Free",
+            "features": [
+              "Bloom watermark",
+              "Brand generation (rebranding)",
+              "Limited monthly strategies",
+              "Limited manual content",
+              "Basic presets + caption",
+              "Teleprompt",
+              "Trim Editor",
+              "Sessions",
+              "Manual image upload",
+              "Community (peer-validation)",
+              "Local burning process (slow)",
+              "Automatic publishing"
+            ]
+          },
+          "pro": {
+            "name": "Pro",
+            "price": "$20",
+            "period": "USD/month",
+            "description": "For creators and growing businesses",
+            "button": "Upgrade to Pro",
+            "features": [
+              "No Bloom watermark",
+              "Everything in Free plan",
+              "Increased limits",
+              "Hog and Landing flakes generation",
+              "Omnichannel to CRM",
+              "Access to setters",
+              "Roles and seats",
+              "Show platform in video",
+              "Cloud burning process (fast)"
+            ]
+          },
+          "ecommerce": {
+            "name": "Ecommerce",
+            "price": "$40",
+            "period": "USD/month",
+            "description": "For businesses requiring advanced features",
+            "button": "Coming Soon",
+            "features": [
+              "Everything in Pro plan",
+              "Advanced ecommerce features",
+              "Custom integrations",
+              "Priority support",
+              "Advanced analytics"
+            ]
+          }
+        },
+        "popular_badge": "Recommended",
+        "enterprise": {
+          "title": "Enterprise",
+          "description": "For large enterprises requiring additional security and personalized support.",
+          "button": "Contact Us",
+          "features": [
+            "Custom configuration",
+            "SSO and advanced authentication",
+            "Priority access and better performance",
+            "Dedicated customer support",
+            "Custom integrations",
+            "Guaranteed SLA"
+          ]
+        }
       }
-  }
+    }
 }
+

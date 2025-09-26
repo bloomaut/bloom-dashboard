@@ -490,6 +490,132 @@
       "title": "¡Gracias por unirte a Bloom AI!",
       "joined_message": "Te has unido a la lista de espera.",
       "notification_message": "Te avisaremos por correo cuando tu lugar esté disponible o haya novedades. Revisa tu bandeja de entrada (y spam) para no perderte ninguna actualización."
+    },
+    "terms": {
+      "title": "Bienvenido a Bloom!",
+      "subtitle": "Antes de comenzar, te invitamos a conocer más sobre nuestra plataforma y nuestros términos de uso",
+      "checkbox_text": "Acepto los",
+      "terms_link": "Términos y Condiciones",
+      "checkbox_suffix": "y autorizo el procesamiento de mis datos según se describe.",
+      "continue_button": "Continuar"
+    },
+    "questionnaire": {
+      "question": "Pregunta",
+      "of": "de",
+      "place_holder_simple": "Escribe aquí tu respuesta...",
+      "place_holder_extended": "Escribe aquí o usa el micrófono para grabar tu respuesta...",
+      "date_holder": "Haz clic en el campo o el ícono para seleccionar una fecha",
+      "selected_date": "Fecha seleccionada: ",
+      "transcribing": "Transcribiendo...",
+      "continue_button": "Siguiente",
+      "record_audio": "Grabar audio",
+      "recording_audio": "Grabando... (Click para parar)"
+    },
+    "completion": {
+      "title": "Cuestionario",
+      "completed": "Terminado",
+      "progress": "100%",
+      "processing_title": "Estamos procesando tu respuesta",
+      "processing_description": "Este proceso tomará entre 15 y 20 minutos.",
+      "notification_description": "Te notificaremos por correo electrónico y en esta página cuando tu documento esté listo.",
+      "status_processing": "Procesando...",
+      "keep_page_open": "Mantén esta página abierta para recibir actualizaciones en tiempo real"
+    },
+    "proposal": {
+      "completed": "Propuesta Lista",
+      "title": "Tu Propuesta Está Lista",
+      "subtitle": "Revisa tu propuesta personalizada y procede con los siguientes pasos",
+      "pdf_title": "Propuestas de Marketing de Bloom",
+      "download": "Descargar",
+      "loading": "Cargando visor PDF...",
+      "actions_title": "Acciones",
+
+      "downloading": "Descargando...",
+      "download_proposal": "Descargar Propuesta",
+      
+      "terms_acceptance": "He leído y acepto los términos de esta propuesta comercial",
+      "continue_proposal": "Continuar con la propuesta",
+      "processing": "Procesando...",
+      "give_feedback": "Dar Feedback / Ajustar",
+      "need_help": "¿Necesitas ayuda?",
+      "help_description": "Nuestro equipo está disponible para resolver cualquier duda sobre tu propuesta.",
+      "contact_support": "Contactar Soporte"
+    },
+    "pricing": {
+      "header": {
+        "badge": "Nuevo: Precios basados en valor",
+        "title": "Planes y Precios",
+        "subtitle": "Comienza gratis inmediatamente. Actualiza para más funciones, límites y colaboración."
+      },
+      "plans": {
+        "free": {
+          "name": "Free",
+          "price": "$0",
+          "period": "USD",
+          "description": "Para personas que quieren explorar",
+          "button": "Comenzar Gratis",
+          "features": [
+            "Marca de agua de Bloom",
+            "Generación de marca (rebranding)",
+            "Estrategias mensuales limitadas",
+            "Contenido manual limitado",
+            "Presets básicos + caption",
+            "Teleprompt",
+            "Trim Editor",
+            "Sessions",
+            "Carga manual de imágenes",
+            "Comunidad (peer-validation)",
+            "Proceso de quemado local (lento)",
+            "Publicación automática"
+          ]
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "$20",
+          "period": "USD/mes",
+          "description": "Para creadores y empresas en crecimiento",
+          "button": "Actualizar a Pro",
+          "features": [
+            "Sin marca de agua de Bloom",
+            "Todo lo del plan Free",
+            "Límites aumentados",
+            "Generación de flakes de Hog y Landing",
+            "Omnichannel al CRM",
+            "Acceso a setters",
+            "Roles y asientos",
+            "Mostrar plataforma en video",
+            "Proceso de quemado en nube (rápido)"
+          ]
+        },
+        "ecommerce": {
+          "name": "Ecommerce",
+          "price": "$40",
+          "period": "USD/mes",
+          "description": "Para empresas que requieren funciones avanzadas",
+          "button": "Próximamente",
+          "features": [
+            "Todo lo del plan Pro",
+            "Funciones de ecommerce avanzadas",
+            "Integraciones personalizadas",
+            "Soporte prioritario",
+            "Análisis avanzados"
+          ]
+        }
+      },
+      "popular_badge": "Recomendado",
+      "enterprise": {
+        "title": "Enterprise",
+        "description": "Para grandes empresas que requieren seguridad adicional y soporte personalizado.",
+        "button": "Contáctanos",
+        "features": [
+          "Configuración personalizada",
+          "SSO y autenticación avanzada",
+          "Acceso prioritario y mejor rendimiento",
+          "Soporte dedicado al cliente",
+          "Integraciones personalizadas",
+          "SLA garantizado"
+        ]
+      }
     }
   }
 }

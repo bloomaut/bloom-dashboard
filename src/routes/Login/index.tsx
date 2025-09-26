@@ -34,10 +34,17 @@ export default function SmallLanding() {
             <Image src='/logotipo_horizontal.png' alt='Bloomit' width={203} height={73} priority />
           </div>
 
-          {/* Botón CTA */}
-          <Link href='/api/auth/login'>
-            <button className={styles.headerButton}>{dict("header.cta")}</button>
-          </Link>
+          {/* Navigation Links */}
+          <div className={styles.headerLeft}>
+            <Link href={en ? "/en/pricing" : "/es/pricing"} className={styles.navLink}>
+              {en ? "Pricing" : "Precios"}
+            </Link>
+
+            {/* Botón CTA */}
+            <Link href='/api/auth/login'>
+              <button className={styles.headerButton}>{dict("header.cta")}</button>
+            </Link>
+          </div>
         </div>
       </header>
 

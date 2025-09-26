@@ -11,6 +11,10 @@
   @include width-height(100%, 100%);
 }
 
+.pricing_container {
+  @include width-height(100%, 100%);
+}
+
 @media (width <= $querySm) {
   .policy_container {
     padding: 20px;
