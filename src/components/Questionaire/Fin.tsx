@@ -28,9 +28,9 @@ function Fin({
       if (!hasExecuted) {
         hasExecuted = true;
         try {
-          //const payload = generatePropPayload({ userId: questData.userId, answers: questData.answers });
-          //await postProp(payload);
-          //postOnboarding();
+          const payload = generatePropPayload({ userId: questData.userId, answers: questData.answers });
+          await postProp(payload);
+          postOnboarding();
         } catch (error) {
           console.error("Error posting prop:", error);
         }
