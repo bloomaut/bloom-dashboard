@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Icon from "../Icon";
 import { useTranslations } from "next-intl";
 
 interface Props {
@@ -11,64 +10,75 @@ export default function Terms({ handleTerms }: Props) {
   const dict = useTranslations("dict.terms");
 
   return (
-    <div style={{ 
-      display: "flex", 
-      alignItems: "center", 
-      justifyContent: "center",
-      width: "100%", 
-      minHeight: "100vh",
-      marginTop: "-1rem"
-    }}>
-      <div style={{ 
-        width: "100%", 
-        maxWidth: "900px",
-        display: "flex", 
-        flexDirection: "column", 
+    <div
+      style={{
+        display: "flex",
         alignItems: "center",
-        gap: "clamp(1.5rem, 4vw, 3rem)", 
-        fontFamily: "Inter, sans-serif" 
-      }}>
-        
+        justifyContent: "center",
+        width: "100%",
+        minHeight: "100vh",
+        marginTop: "-1rem",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "900px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "clamp(1.5rem, 4vw, 3rem)",
+          fontFamily: "Inter, sans-serif",
+        }}
+      >
         {/* Título principal - Responsive (más pequeño) */}
-        <h2 style={{ 
-          fontSize: "clamp(1.8rem, 5vw, 3rem)", 
-          fontWeight: 600, 
-          color: "#000000",
-          margin: 0,
-          textAlign: "center",
-          lineHeight: "1.2"
-        }}>
+        <h2
+          style={{
+            fontSize: "clamp(1.8rem, 5vw, 3rem)",
+            fontWeight: 600,
+            color: "#000000",
+            margin: 0,
+            textAlign: "center",
+            lineHeight: "1.2",
+          }}
+        >
           {dict("title")}
         </h2>
-        
+
         {/* Subtítulo - Responsive (más pequeño) */}
-        <p style={{ 
-          fontSize: "clamp(0.9rem, 2.5vw, 1.2rem)", 
-          fontWeight: 400, 
-          color: "#6B7280",
-          margin: 0,
-          textAlign: "center",
-          lineHeight: "1.6",
-          maxWidth: "min(700px, 90vw)",
-          padding: "0 1rem"
-        }}>
+        <p
+          style={{
+            fontSize: "clamp(0.9rem, 2.5vw, 1.2rem)",
+            fontWeight: 400,
+            color: "#6B7280",
+            margin: 0,
+            textAlign: "center",
+            lineHeight: "1.6",
+            maxWidth: "min(700px, 90vw)",
+            padding: "0 1rem",
+          }}
+        >
           {dict("subtitle")}
         </p>
 
         {/* Contenedor de video con ratio 16:9 - Más grande */}
-        <div style={{ 
-          width: "100%",
-          maxWidth: "min(850px, 95vw)",
-          margin: "0 1rem",
-          position: "relative"
-        }}>
-          <div style={{
+        <div
+          style={{
             width: "100%",
-            aspectRatio: "16 / 9",
-            backgroundColor: "#D9D9D9",
-            borderRadius: "clamp(15px, 2vw, 20px)",
-            overflow: "hidden"
-          }}>
+            maxWidth: "min(850px, 95vw)",
+            margin: "0 1rem",
+            position: "relative",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              aspectRatio: "16 / 9",
+              backgroundColor: "#D9D9D9",
+              borderRadius: "clamp(15px, 2vw, 20px)",
+              overflow: "hidden",
+            }}
+          >
             {/* Aquí puedes agregar tu iframe o video */}
             {/* Ejemplo con iframe:
             <iframe
@@ -83,19 +93,21 @@ export default function Terms({ handleTerms }: Props) {
             */}
           </div>
         </div>
-        
+
         {/* Checkbox y términos - Responsive (más pequeño) */}
-        <div style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center", // Cambio de flex-start a center para mejor alineación
-          gap: "clamp(0.8rem, 2vw, 1.2rem)",
-          fontSize: "clamp(0.8rem, 2vw, 1rem)",
-          color: "#4B5563",
-          maxWidth: "min(700px, 90vw)",
-          width: "100%",
-          padding: "0 1rem",
-        }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center", // Cambio de flex-start a center para mejor alineación
+            gap: "clamp(0.8rem, 2vw, 1.2rem)",
+            fontSize: "clamp(0.8rem, 2vw, 1rem)",
+            color: "#4B5563",
+            maxWidth: "min(700px, 90vw)",
+            width: "100%",
+            padding: "0 1rem",
+          }}
+        >
           <input
             type='checkbox'
             id='term'
@@ -116,7 +128,7 @@ export default function Terms({ handleTerms }: Props) {
               cursor: "pointer",
               position: "relative",
               flexShrink: 0,
-              marginTop: "0" // Removido el marginTop para mejor alineación
+              marginTop: "0", // Removido el marginTop para mejor alineación
             }}
           >
             <span
@@ -136,21 +148,21 @@ export default function Terms({ handleTerms }: Props) {
               className='checkmark'
             ></span>
           </label>
-          
+
           <span style={{ lineHeight: "1.5" }}>
             {dict("checkbox_text")}{" "}
-            <a 
-              href="/terminos-y-condiciones" 
-              target="_blank"
-              style={{ 
-                color: "var(--color-primary)", 
+            <a
+              href='/terminos-y-condiciones'
+              target='_blank'
+              style={{
+                color: "var(--color-primary)",
                 textDecoration: "underline",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
             >
               {dict("terms_link")}
-            </a>
-            {" "}{dict("checkbox_suffix")}
+            </a>{" "}
+            {dict("checkbox_suffix")}
           </span>
         </div>
 
@@ -175,22 +187,24 @@ export default function Terms({ handleTerms }: Props) {
             boxShadow: term ? "0 6px 16px var(--color-primary)" : "none",
             transform: term ? "translateY(0)" : "none",
             margin: "0 1rem",
-            padding: "0"
+            padding: "0",
           }}
           onClick={() => {
             if (!term) return;
             handleTerms();
           }}
           disabled={!term}
-          onMouseEnter={(e) => {
-            if (term && window.innerWidth > 768) { // Solo hover en desktop
+          onMouseEnter={e => {
+            if (term && window.innerWidth > 768) {
+              // Solo hover en desktop
               e.currentTarget.style.backgroundColor = "#5A0075";
               e.currentTarget.style.transform = "translateY(-3px)";
               e.currentTarget.style.boxShadow = "0 8px 20px #5A0075";
             }
           }}
-          onMouseLeave={(e) => {
-            if (term && window.innerWidth > 768) { // Solo hover en desktop
+          onMouseLeave={e => {
+            if (term && window.innerWidth > 768) {
+              // Solo hover en desktop
               e.currentTarget.style.backgroundColor = "var(--color-primary)";
               e.currentTarget.style.transform = "translateY(0)";
               e.currentTarget.style.boxShadow = "0 6px 16px var(--color-primary)";
