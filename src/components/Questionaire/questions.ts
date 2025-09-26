@@ -27,7 +27,8 @@ export const questions = [
     type: "simple_text",
     mandatory: false,
     question: "What is your business name?",
-    short_description: "Share the name of your business or idea. If you don’t have one yet, you can skip this and we’ll help you create one later.",
+    short_description:
+      "Share the name of your business or idea. If you don’t have one yet, you can skip this and we’ll help you create one later.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -40,7 +41,8 @@ export const questions = [
     type: "extended_text",
     mandatory: true,
     question: "Why does your business exist?",
-    short_description: "Explain the main purpose of your business. Example: 'We believe businesses can improve our world by building strong communities.'",
+    short_description:
+      "Explain the main purpose of your business. Example: 'We believe businesses can improve our world by building strong communities.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -51,7 +53,8 @@ export const questions = [
     type: "extended_text",
     mandatory: true,
     question: "What future do you want to help create?",
-    short_description: "Describe the future you want to contribute to. Example: 'We want a world where companies make good choices for people, profit, and the planet.'",
+    short_description:
+      "Describe the future you want to contribute to. Example: 'We want a world where companies make good choices for people, profit, and the planet.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -62,7 +65,8 @@ export const questions = [
     type: "extended_text",
     mandatory: true,
     question: "What is your mission? What are you here to do?",
-    short_description: "Explain what your business does every day to move toward that future. Example: 'We help brands build meaningful relationships through storytelling.'",
+    short_description:
+      "Explain what your business does every day to move toward that future. Example: 'We help brands build meaningful relationships through storytelling.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -73,7 +77,8 @@ export const questions = [
     type: "extended_text",
     mandatory: true,
     question: "What values guide your business?",
-    short_description: "Write down 3–5 values that define how you work. Example: 'Be curious, do good work, embrace diversity, act courageously, be kind.'",
+    short_description:
+      "Write down 3–5 values that define how you work. Example: 'Be curious, do good work, embrace diversity, act courageously, be kind.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -86,7 +91,8 @@ export const questions = [
     type: "extended_text",
     mandatory: true,
     question: "Who is your ideal customer?",
-    short_description: "Describe them with a fictitious name, approximate age, gender, and occupation. Example: 'Mariana, 28, architect, values sustainability.'",
+    short_description:
+      "Describe them with a fictitious name, approximate age, gender, and occupation. Example: 'Mariana, 28, architect, values sustainability.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -172,7 +178,7 @@ export const questions = [
     defaultAnswer: "",
   },
   {
-    id: "Q16",    
+    id: "Q16",
     type: "extended_text",
     mandatory: true,
     question: "What are their weaknesses?",
@@ -262,7 +268,7 @@ export const questions = [
     defaultAnswer: "",
   },
   {
-    id: "Q24",  
+    id: "Q24",
     type: "extended_text",
     mandatory: true,
     question: "What do you NOT want your brand to sound like?",
@@ -349,7 +355,8 @@ export const questionsES = [
     type: "simple_text",
     mandatory: false,
     question: "¿Cómo se llama tu negocio?",
-    short_description: "Comparte el nombre de tu negocio o idea. Si aún no tienes uno, puedes saltar esta pregunta y luego te ayudaremos a crear uno.",
+    short_description:
+      "Comparte el nombre de tu negocio o idea. Si aún no tienes uno, puedes saltar esta pregunta y luego te ayudaremos a crear uno.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -362,7 +369,8 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "¿Por qué existe tu negocio?",
-    short_description: "Explica el propósito principal de tu negocio. Ejemplo: 'Creemos que los negocios pueden mejorar el mundo construyendo comunidades fuertes.'",
+    short_description:
+      "Explica el propósito principal de tu negocio. Ejemplo: 'Creemos que los negocios pueden mejorar el mundo construyendo comunidades fuertes.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -373,7 +381,8 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "¿Qué futuro quieres ayudar a crear?",
-    short_description: "Describe el futuro al que deseas contribuir. Ejemplo: 'Queremos un mundo donde las empresas tomen buenas decisiones para las personas, las ganancias y el planeta.'",
+    short_description:
+      "Describe el futuro al que deseas contribuir. Ejemplo: 'Queremos un mundo donde las empresas tomen buenas decisiones para las personas, las ganancias y el planeta.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -384,7 +393,8 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "¿Cuál es tu misión? ¿Qué vienes a hacer?",
-    short_description: "Explica lo que tu negocio hace día a día para construir ese futuro. Ejemplo: 'Ayudamos a las marcas a crear relaciones significativas a través de historias.'",
+    short_description:
+      "Explica lo que tu negocio hace día a día para construir ese futuro. Ejemplo: 'Ayudamos a las marcas a crear relaciones significativas a través de historias.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -395,7 +405,8 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "¿Qué valores guían tu negocio?",
-    short_description: "Escribe entre 3 y 5 valores que definan cómo trabajas. Ejemplo: 'Ser curioso, hacer un buen trabajo, abrazar la diversidad, actuar con valentía, ser amable.'",
+    short_description:
+      "Escribe entre 3 y 5 valores que definan cómo trabajas. Ejemplo: 'Ser curioso, hacer un buen trabajo, abrazar la diversidad, actuar con valentía, ser amable.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -408,7 +419,8 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "¿Quién es tu cliente ideal?",
-    short_description: "Descríbelo con un nombre ficticio, edad aproximada, género y ocupación. Ejemplo: 'Mariana, 28, arquitecta, valora la sostenibilidad.'",
+    short_description:
+      "Descríbelo con un nombre ficticio, edad aproximada, género y ocupación. Ejemplo: 'Mariana, 28, arquitecta, valora la sostenibilidad.'",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -494,7 +506,7 @@ export const questionsES = [
     defaultAnswer: "",
   },
   {
-    id: "Q16",    
+    id: "Q16",
     type: "extended_text",
     mandatory: true,
     question: "¿Cuáles son sus debilidades?",
@@ -522,7 +534,8 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "¿Cómo quieres que las personas se sientan al interactuar con tu marca?",
-    short_description: "Piensa en las emociones que quieres transmitir. Ejemplo: seguridad, entusiasmo, cuidado, inspiración.",
+    short_description:
+      "Piensa en las emociones que quieres transmitir. Ejemplo: seguridad, entusiasmo, cuidado, inspiración.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -533,7 +546,8 @@ export const questionsES = [
     type: "simple_text",
     mandatory: true,
     question: "¿Qué 3 a 5 adjetivos describen tu marca?",
-    short_description: "Elige palabras que reflejen la personalidad de tu marca. Ejemplo: amigable, innovadora, confiable.",
+    short_description:
+      "Elige palabras que reflejen la personalidad de tu marca. Ejemplo: amigable, innovadora, confiable.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -584,7 +598,7 @@ export const questionsES = [
     defaultAnswer: "",
   },
   {
-    id: "Q24",  
+    id: "Q24",
     type: "extended_text",
     mandatory: true,
     question: "¿Cómo NO quieres que suene tu marca?",
@@ -623,7 +637,8 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "¿Cómo suelen enterarse los clientes de tu negocio?",
-    short_description: "Explica las principales formas en que te descubren. Ejemplo: redes sociales, anuncios, ubicación, recomendaciones.",
+    short_description:
+      "Explica las principales formas en que te descubren. Ejemplo: redes sociales, anuncios, ubicación, recomendaciones.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -634,14 +649,14 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "Una vez que los clientes te conocen, ¿cómo suelen comprar?",
-    short_description: "Describe el proceso de compra típico. Ejemplo: visita a la tienda, WhatsApp, sitio web, sistema de reservas.",
+    short_description:
+      "Describe el proceso de compra típico. Ejemplo: visita a la tienda, WhatsApp, sitio web, sistema de reservas.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
 ];
-
 
 export const generatePropPayload = (questData: { userId: string; answers: string[] }) => {
   return {

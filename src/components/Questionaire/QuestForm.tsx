@@ -179,28 +179,28 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
   };
 
   // Nueva función para validar si la pregunta actual está completada
-const isCurrentQuestionCompleted = () => {
-  const questionObj = en ? questions[currentIndex] : questionsES[currentIndex];
-  if (!questionObj) return true;
-  
-  // Si la pregunta no es obligatoria, siempre está "completada"
-  if (!questionObj.mandatory) return true;
-  
-  const currentAnswer = questData.answers[currentIndex];
-  
-  // Para preguntas de tipo date_text, verificar que la fecha esté completa
-  if (questionObj.type === "date_text") {
+  const isCurrentQuestionCompleted = () => {
+    const questionObj = en ? questions[currentIndex] : questionsES[currentIndex];
+    if (!questionObj) return true;
+
+    // Si la pregunta no es obligatoria, siempre está "completada"
+    if (!questionObj.mandatory) return true;
+
+    const currentAnswer = questData.answers[currentIndex];
+
+    // Para preguntas de tipo date_text, verificar que la fecha esté completa
+    if (questionObj.type === "date_text") {
+      return currentAnswer && currentAnswer.trim() !== "";
+    }
+
+    // Para preguntas de tipo singlechoice, verificar que haya una opción seleccionada
+    if (questionObj.type === "singlechoice") {
+      return currentAnswer && currentAnswer.trim() !== "";
+    }
+
+    // Para otros tipos de preguntas, verificar que no esté vacío
     return currentAnswer && currentAnswer.trim() !== "";
-  }
-  
-  // Para preguntas de tipo singlechoice, verificar que haya una opción seleccionada
-  if (questionObj.type === "singlechoice") {
-    return currentAnswer && currentAnswer.trim() !== "";
-  }
-  
-  // Para otros tipos de preguntas, verificar que no esté vacío
-  return currentAnswer && currentAnswer.trim() !== "";
-};
+  };
 
   if (questionObj.hasConditionalQuestion && !showMainQuestion) {
     return (
@@ -624,8 +624,7 @@ const isCurrentQuestionCompleted = () => {
                         pointerEvents: "none",
                         zIndex: 1,
                       }}
-                    >
-                    </label>
+                    ></label>
 
                     {/* Input de fecha estilizado */}
                     <input
@@ -635,8 +634,8 @@ const isCurrentQuestionCompleted = () => {
                         padding: "1.25rem 1rem 1rem 1rem",
                         fontSize: "1.125rem",
                         border: "2px solid",
-                        borderColor: questData.answers[currentIndex] 
-                          ? "var(--color-primary)" 
+                        borderColor: questData.answers[currentIndex]
+                          ? "var(--color-primary)"
                           : "rgba(148, 163, 184, 0.3)",
                         borderRadius: "1rem",
                         backgroundColor: "rgba(255, 255, 255, 0.95)",
@@ -666,8 +665,8 @@ const isCurrentQuestionCompleted = () => {
                         e.target.style.boxShadow = "0 12px 35px rgba(90, 0, 117, 0.2), 0 8px 25px rgba(0, 0, 0, 0.1)";
                       }}
                       onBlur={e => {
-                        e.target.style.borderColor = questData.answers[currentIndex] 
-                          ? "var(--color-primary)" 
+                        e.target.style.borderColor = questData.answers[currentIndex]
+                          ? "var(--color-primary)"
                           : "rgba(148, 163, 184, 0.3)";
                         e.target.style.backgroundColor = "rgba(255, 255, 255, 0.95)";
                         e.target.style.transform = "translateY(0)";
@@ -675,13 +674,13 @@ const isCurrentQuestionCompleted = () => {
                           ? "0 8px 25px rgba(255, 61, 2, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08)"
                           : "0 4px 12px rgba(0, 0, 0, 0.05)";
                       }}
-                      onClick={(e) => {
+                      onClick={e => {
                         // Intentar abrir el selector solo en respuesta directa al clic del usuario
                         try {
                           (e.target as HTMLInputElement).showPicker?.();
                         } catch (error) {
                           // Si falla showPicker, el comportamiento nativo del input funcionará
-                          console.log('showPicker no disponible, usando comportamiento nativo');
+                          console.log("showPicker no disponible, usando comportamiento nativo");
                         }
                       }}
                     />
@@ -700,14 +699,14 @@ const isCurrentQuestionCompleted = () => {
                         padding: "0.25rem",
                         borderRadius: "0.25rem",
                       }}
-                      onClick={(e) => {
+                      onClick={e => {
                         e.preventDefault();
                         e.stopPropagation();
-                        
+
                         // Buscar el input de fecha más cercano
                         const container = e.currentTarget.parentElement;
                         const input = container?.querySelector('input[type="date"]') as HTMLInputElement;
-                        
+
                         if (input) {
                           input.focus();
                           // Intentar abrir el selector solo en respuesta directa al clic del usuario
@@ -719,19 +718,19 @@ const isCurrentQuestionCompleted = () => {
                           }
                         }
                       }}
-                      onMouseEnter={(e) => {
+                      onMouseEnter={e => {
                         e.currentTarget.style.backgroundColor = "rgba(90, 0, 117, 0.1)";
                         e.currentTarget.style.transform = "translateY(-50%) scale(1.1)";
                       }}
-                      onMouseLeave={(e) => {
+                      onMouseLeave={e => {
                         e.currentTarget.style.backgroundColor = "transparent";
                         e.currentTarget.style.transform = "translateY(-50%) scale(1)";
                       }}
                     >
-                      <Icon 
-                        name="calendar" 
-                        width={20} 
-                        height={20} 
+                      <Icon
+                        name='calendar'
+                        width={20}
+                        height={20}
                         strokeColor={questData.answers[currentIndex] ? "var(--color-primary)" : "#9CA3AF"}
                         strokeWidth={2}
                       />
@@ -751,7 +750,7 @@ const isCurrentQuestionCompleted = () => {
                         textAlign: "center",
                       }}
                     >
-                      <Icon name="info" width={16} height={16} strokeColor="#6B7280" />
+                      <Icon name='info' width={16} height={16} strokeColor='#6B7280' />
                       <span>{dict("date_holder")}</span>
                     </div>
                   )}
@@ -773,19 +772,22 @@ const isCurrentQuestionCompleted = () => {
                         fontFamily: "Inter, sans-serif",
                       }}
                     >
-                      <Icon name="check" width={20} height={20} strokeColor="var(--color-primary)" strokeWidth={2.5} />
+                      <Icon name='check' width={20} height={20} strokeColor='var(--color-primary)' strokeWidth={2.5} />
                       <span>
-                        {dict("selected_date")} {en ? new Date(questData.answers[currentIndex] + 'T00:00:00').toLocaleDateString('en-GB', {
-                          weekday: 'long',
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        }) : new Date(questData.answers[currentIndex] + 'T00:00:00').toLocaleDateString('es-ES', {
-                          weekday: 'long',
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}
+                        {dict("selected_date")}{" "}
+                        {en
+                          ? new Date(questData.answers[currentIndex] + "T00:00:00").toLocaleDateString("en-GB", {
+                              weekday: "long",
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })
+                          : new Date(questData.answers[currentIndex] + "T00:00:00").toLocaleDateString("es-ES", {
+                              weekday: "long",
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })}
                       </span>
                     </div>
                   )}
@@ -809,7 +811,7 @@ const isCurrentQuestionCompleted = () => {
                         animation: "shake 0.5s ease-in-out",
                       }}
                     >
-                      <Icon name="alert-circle" width={18} height={18} strokeColor="#DC2626" strokeWidth={2} />
+                      <Icon name='alert-circle' width={18} height={18} strokeColor='#DC2626' strokeWidth={2} />
                       <span>Por favor selecciona una fecha para continuar</span>
                     </div>
                   )}
@@ -833,9 +835,7 @@ const isCurrentQuestionCompleted = () => {
                   }}
                   value={questData.answers[currentIndex]}
                   onChange={e => handleChange(e, currentIndex)}
-                  placeholder={
-                    isTranscribing ? dict("transcribing") : dict("place_holder_extended")
-                  }
+                  placeholder={isTranscribing ? dict("transcribing") : dict("place_holder_extended")}
                   disabled={isTranscribing}
                   onFocus={e => {
                     e.target.style.borderColor = "var(--color-primary)";
@@ -849,56 +849,60 @@ const isCurrentQuestionCompleted = () => {
                   }}
                 />
               ) : questionObj.type === "simple_text" ? (
-              <input
-                type="text"
-                style={{
-                  width: "100%",
-                  fontSize: "1.125rem",
-                  padding: "1.5rem",
-                  border: isRecording ? "2px solid var(--color-primary)" : "2px solid rgba(0,0,0,0.08)",
-                  borderRadius: "0.75rem",
-                  backgroundColor: isRecording ? "rgba(255, 245, 243, 0.8)" : "rgba(255, 255, 255, 0.8)",
-                  color: "#575757",
-                  fontFamily: "Inter, sans-serif",
-                  outline: "none",
-                  transition: "all 0.3s ease",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-                }}
-                value={questData.answers[currentIndex]}
-                onChange={e => handleChange(e, currentIndex)}
-                placeholder={dict("place_holder_simple")}
-                onFocus={e => {
-                  e.target.style.borderColor = "var(--color-primary)";
-                  e.target.style.backgroundColor = "white";
-                }}
-                onBlur={e => {
-                  if (!isRecording) {
-                    e.target.style.borderColor = "rgba(0,0,0,0.08)";
-                    e.target.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
-                  }
-                }}
-              />
-              ) : <>Not Available for {questionObj.type}</>}
-              {/* Error Message for textarea and simple_text */}
-              {(questionObj.type === "extended_text" || questionObj.type === "simple_text") && empty && questionObj.mandatory && (
-                <div
+                <input
+                  type='text'
                   style={{
-                    position: "absolute",
-                    top: "-3rem",
-                    right: "0",
-                    backgroundColor: "var(--color-danger, var(--color-primary))",
-                    color: "white",
-                    padding: "0.5rem 1rem",
-                    borderRadius: "0.5rem",
-                    fontSize: "0.875rem",
-                    fontWeight: "500",
-                    boxShadow: "0 4px 12px var(--color-danger)",
-                    zIndex: 10,
+                    width: "100%",
+                    fontSize: "1.125rem",
+                    padding: "1.5rem",
+                    border: isRecording ? "2px solid var(--color-primary)" : "2px solid rgba(0,0,0,0.08)",
+                    borderRadius: "0.75rem",
+                    backgroundColor: isRecording ? "rgba(255, 245, 243, 0.8)" : "rgba(255, 255, 255, 0.8)",
+                    color: "#575757",
+                    fontFamily: "Inter, sans-serif",
+                    outline: "none",
+                    transition: "all 0.3s ease",
+                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
                   }}
-                >
-                  {dict("mandatory_field")}
-                </div>
+                  value={questData.answers[currentIndex]}
+                  onChange={e => handleChange(e, currentIndex)}
+                  placeholder={dict("place_holder_simple")}
+                  onFocus={e => {
+                    e.target.style.borderColor = "var(--color-primary)";
+                    e.target.style.backgroundColor = "white";
+                  }}
+                  onBlur={e => {
+                    if (!isRecording) {
+                      e.target.style.borderColor = "rgba(0,0,0,0.08)";
+                      e.target.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+                    }
+                  }}
+                />
+              ) : (
+                <>Not Available for {questionObj.type}</>
               )}
+              {/* Error Message for textarea and simple_text */}
+              {(questionObj.type === "extended_text" || questionObj.type === "simple_text") &&
+                empty &&
+                questionObj.mandatory && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "-3rem",
+                      right: "0",
+                      backgroundColor: "var(--color-danger, var(--color-primary))",
+                      color: "white",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "0.5rem",
+                      fontSize: "0.875rem",
+                      fontWeight: "500",
+                      boxShadow: "0 4px 12px var(--color-danger)",
+                      zIndex: 10,
+                    }}
+                  >
+                    {dict("mandatory_field")}
+                  </div>
+                )}
             </div>
 
             {/* Audio Controls */}
@@ -997,7 +1001,7 @@ const isCurrentQuestionCompleted = () => {
         }}
       >
         {/* Botón "Anterior" removido completamente */}
-        
+
         <button
           style={{
             display: "flex",
@@ -1009,7 +1013,7 @@ const isCurrentQuestionCompleted = () => {
             fontSize: "1.125rem",
             border: "none",
             borderRadius: "1rem",
-            background: isCurrentQuestionCompleted() 
+            background: isCurrentQuestionCompleted()
               ? "linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%)"
               : "linear-gradient(90deg, #ccc 0%, #999 100%)",
             color: "white",
@@ -1018,8 +1022,8 @@ const isCurrentQuestionCompleted = () => {
             opacity: isCurrentQuestionCompleted() ? 1 : 0.6,
             transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             fontFamily: "Inter, sans-serif",
-            boxShadow: isCurrentQuestionCompleted() 
-              ? "0 8px 25px rgba(255, 61, 2, 0.25), 0 4px 12px rgba(0, 0, 0, 0.12)" 
+            boxShadow: isCurrentQuestionCompleted()
+              ? "0 8px 25px rgba(255, 61, 2, 0.25), 0 4px 12px rgba(0, 0, 0, 0.12)"
               : "0 4px 12px rgba(0, 0, 0, 0.08)",
             position: "relative",
             overflow: "hidden",
@@ -1053,12 +1057,12 @@ const isCurrentQuestionCompleted = () => {
               }}
             />
           )}
-          
-          <span 
-            style={{ 
-              color: "white", 
-              display: "inline-flex", 
-              alignItems: "center", 
+
+          <span
+            style={{
+              color: "white",
+              display: "inline-flex",
+              alignItems: "center",
               gap: "0.75rem",
               fontSize: "1.125rem",
               fontWeight: "700",
@@ -1112,7 +1116,8 @@ const isCurrentQuestionCompleted = () => {
         }
 
         @keyframes shake {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateX(0);
           }
           25% {
@@ -1128,7 +1133,6 @@ const isCurrentQuestionCompleted = () => {
         }
       `}</style>
     </div>
-
   );
 }
 
