@@ -235,7 +235,8 @@ function Fin({
       {/* Estilos CSS para animaciones */}
       <style jsx>{`
         @keyframes pulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 1;
             transform: scale(1);
           }
