@@ -490,6 +490,14 @@
       "title": "¡Gracias por unirte a Bloom AI!",
       "joined_message": "Te has unido a la lista de espera.",
       "notification_message": "Te avisaremos por correo cuando tu lugar esté disponible o haya novedades. Revisa tu bandeja de entrada (y spam) para no perderte ninguna actualización."
+    },
+    "terms": {
+      "title": "Bienvenido a Bloom!",
+      "subtitle": "Antes de comenzar, te invitamos a conocer más sobre nuestra plataforma y nuestros términos de uso",
+      "checkbox_text": "Acepto los",
+      "terms_link": "Términos y Condiciones",
+      "checkbox_suffix": "y autorizo el procesamiento de mis datos según se describe.",
+      "continue_button": "Continuar"
     }
   }
 }
