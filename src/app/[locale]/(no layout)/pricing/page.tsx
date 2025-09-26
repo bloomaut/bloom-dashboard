@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Check } from "lucide-react"
-import { useTranslations } from "next-intl"
-import Link from "next/link"
-import styles from "./pricing.module.scss"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import styles from "./pricing.module.scss";
 
 export default function PricingPage() {
-  const dict = useTranslations("dict")
+  const dict = useTranslations("dict");
 
   const plans = [
     {
@@ -34,7 +34,7 @@ export default function PricingPage() {
       buttonText: dict("pricing.plans.free.button"),
       buttonVariant: "outline" as const,
       popular: false,
-      actionType: "free"
+      actionType: "free",
     },
     {
       name: dict("pricing.plans.pro.name"),
@@ -55,7 +55,7 @@ export default function PricingPage() {
       buttonText: dict("pricing.plans.pro.button"),
       buttonVariant: "default" as const,
       popular: true,
-      actionType: "pro"
+      actionType: "pro",
     },
     {
       name: dict("pricing.plans.ecommerce.name"),
@@ -73,17 +73,17 @@ export default function PricingPage() {
       buttonVariant: "outline" as const,
       popular: false,
       comingSoon: true,
-      actionType: "ecommerce"
+      actionType: "ecommerce",
     },
-  ]
+  ];
 
   const handlePlanClick = (actionType: string) => {
     if (actionType === "free" || actionType === "pro") {
       // Redirigir a la página de login/auth como en la landing page
-      window.location.href = '/api/auth/login'
+      window.location.href = "/api/auth/login";
     }
     // Para ecommerce no hacemos nada ya que está deshabilitado (coming soon)
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -91,14 +91,10 @@ export default function PricingPage() {
       <div className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.badgeWrapper}>
-            <div className={styles.headerBadge}>
-              {dict("pricing.header.badge")}
-            </div>
+            <div className={styles.headerBadge}>{dict("pricing.header.badge")}</div>
           </div>
           <h1 className={styles.title}>{dict("pricing.header.title")}</h1>
-          <p className={styles.subtitle}>
-            {dict("pricing.header.subtitle")}
-          </p>
+          <p className={styles.subtitle}>{dict("pricing.header.subtitle")}</p>
         </div>
       </div>
 
@@ -138,11 +134,11 @@ export default function PricingPage() {
                 </CardContent>
 
                 <CardFooter className={styles.cardFooter}>
-                  <Button 
-                    variant={plan.buttonVariant} 
-                    className={styles.planButton} 
-                    disabled={plan.comingSoon} 
-                    size="lg"
+                  <Button
+                    variant={plan.buttonVariant}
+                    className={styles.planButton}
+                    disabled={plan.comingSoon}
+                    size='lg'
                     onClick={() => handlePlanClick(plan.actionType)}
                   >
                     {plan.buttonText}
@@ -166,7 +162,7 @@ export default function PricingPage() {
                     {dict("pricing.enterprise.description")}
                   </CardDescription>
                 </div>
-                <Button variant="outline" size="lg" className={styles.enterpriseButton}>
+                <Button variant='outline' size='lg' className={styles.enterpriseButton}>
                   {dict("pricing.enterprise.button")}
                 </Button>
               </div>
@@ -208,5 +204,5 @@ export default function PricingPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

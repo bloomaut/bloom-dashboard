@@ -45,7 +45,6 @@ export default function SmallLanding() {
               <button className={styles.headerButton}>{dict("header.cta")}</button>
             </Link>
           </div>
-          
         </div>
       </header>
 
