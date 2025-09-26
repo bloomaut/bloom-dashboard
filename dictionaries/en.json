@@ -520,6 +520,26 @@
         "notification_description": "We will notify you by email and on this page when your document is ready.",
         "status_processing": "Processing...",
         "keep_page_open": "Keep this page open to receive real-time updates"
+      },
+      "proposal": {
+        "completed": "Proposal Ready",
+        "title": "Your Proposal is Ready",
+        "subtitle": "Review your personalized proposal and proceed with the next steps",
+        "pdf_title": "Bloom Marketing Proposal",
+        "download": "Download",
+        "loading": "Loading PDF viewer...",
+        "actions_title": "Actions",
+
+        "downloading": "Downloading...",
+        "download_proposal": "Download Proposal",
+        
+        "terms_acceptance": "I have read and accept the terms of this commercial proposal",
+        "continue_proposal": "Continue with proposal",
+        "processing": "Processing...",
+        "give_feedback": "Give Feedback / Adjust",
+        "need_help": "Need help?",
+        "help_description": "Our team is available to resolve any questions about your proposal.",
+        "contact_support": "Contact Support"
       }
   }
 }

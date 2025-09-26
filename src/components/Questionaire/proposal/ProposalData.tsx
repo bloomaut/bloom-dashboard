@@ -1,28 +1,30 @@
 "use client";
 import React from "react";
 import dynamic from "next/dynamic";
-import { Download } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import { styles } from "./styles";
+import { useTranslations } from "next-intl";
 
 // client-only dynamic import to ensure react-pdf bundle isn't required during SSR
 const PDFViewer = dynamic(() => import("./NoSSRPDFViewer"), { ssr: false });
 
 function ProposalData() {
+  const dict = useTranslations("dict.proposal");
   return (
     <div style={styles.mainContent}>
       <div style={styles.pdfSection}>
         <div style={styles.pdfLeft}>
-          <div style={styles.pdfIcon}>
-            <span>📄</span>
-          </div>
-          <span style={styles.pdfText}>propuesta-small.pdf</span>
+            <FileText size={"2.5rem"} color="#FFFFFF"/>
+          <span style={styles.pdfText}>{dict("pdf_title")}</span>
         </div>
         <button style={styles.downloadButton}>
-          <Download size={16} />
-          <span>Descargar</span>
+          <Download size={"1.3rem"} />
+          <p>{dict("download")}</p>
         </button>
       </div>
-      <PDFViewer />
+      <div style={styles.pdfContainer}>
+        <PDFViewer />
+      </div>
     </div>
   );
 }

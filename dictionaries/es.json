@@ -520,6 +520,26 @@
       "notification_description": "Te notificaremos por correo electrónico y en esta página cuando tu documento esté listo.",
       "status_processing": "Procesando...",
       "keep_page_open": "Mantén esta página abierta para recibir actualizaciones en tiempo real"
+    },
+    "proposal": {
+      "completed": "Propuesta Lista",
+      "title": "Tu Propuesta Está Lista",
+      "subtitle": "Revisa tu propuesta personalizada y procede con los siguientes pasos",
+      "pdf_title": "Propuestas de Marketing de Bloom",
+      "download": "Descargar",
+      "loading": "Cargando visor PDF...",
+      "actions_title": "Acciones",
+
+      "downloading": "Descargando...",
+      "download_proposal": "Descargar Propuesta",
+      
+      "terms_acceptance": "He leído y acepto los términos de esta propuesta comercial",
+      "continue_proposal": "Continuar con la propuesta",
+      "processing": "Procesando...",
+      "give_feedback": "Dar Feedback / Ajustar",
+      "need_help": "¿Necesitas ayuda?",
+      "help_description": "Nuestro equipo está disponible para resolver cualquier duda sobre tu propuesta.",
+      "contact_support": "Contactar Soporte"
     }
   }
 }

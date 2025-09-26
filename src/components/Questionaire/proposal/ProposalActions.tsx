@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { styles } from "./styles";
 import { approveProposal } from "@/services/fetch";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 function ProposalActions() {
   const router = useRouter();
+  const dict = useTranslations("dict.proposal");
   const [checked, setChecked] = useState(false);
   const handleClick = () => {
     approveProposal();
@@ -16,37 +18,43 @@ function ProposalActions() {
     <div style={styles.sidebar}>
       {/* Actions */}
       <div style={styles.sidebarCard}>
-        <h3 style={styles.sidebarTitle}>Acciones</h3>
-
-        <button style={styles.primaryButton}>
-          <Download size={16} />
-          <span>Descargar Propuesta</span>
-        </button>
+        <h4 style={styles.sidebarTitle}>{dict("actions_title")}</h4>
 
         <div style={styles.checkboxContainer}>
-          <input type='checkbox' style={styles.checkbox} onChange={() => setChecked(!checked)} />
-          <span>He leído y acepto los términos de esta propuesta comercial</span>
+          <input 
+            type='checkbox' 
+            style={styles.checkbox} 
+            onChange={() => setChecked(!checked)} 
+            id="terms-checkbox"
+          />
+          <label htmlFor="terms-checkbox">
+            {dict("terms_acceptance")}
+          </label>
         </div>
+        
         <button
-          className='my-2'
-          style={{ ...styles.secondaryButton, backgroundColor: !checked ? "#bebebe" : "#ff5722", color: "white" }}
+          style={{ 
+            ...styles.continueButton, 
+            backgroundColor: !checked ? "#cbd5e1" : "var(--color-primary)" 
+          }}
           disabled={!checked}
           onClick={handleClick}
         >
-          <span className='whitespace-nowrap'>Continuar con la propuesta</span>
+          <p style={{color: !checked ? "#475569" : "#FFFFFF"}}>{dict("continue_proposal")}</p>
         </button>
+        
         <button style={styles.secondaryButton}>
-          <MessageCircle size={16} />
-          <span>Dar Feedback / Ajustar</span>
+          <MessageCircle size={"1.7rem"} color="#FFFFFF" />
+          <p style={{color: "#FFFFFF"}}>{dict("give_feedback")}</p>
         </button>
       </div>
 
       {/* Help Section */}
       <div style={styles.helpSection}>
         <HelpCircle style={styles.helpIcon} />
-        <h4 style={styles.helpTitle}>¿Necesitas ayuda?</h4>
-        <p style={styles.helpText}>Nuestro equipo está disponible para resolver cualquier duda sobre tu propuesta.</p>
-        <button style={styles.helpButton}>Contactar Soporte</button>
+        <h4 style={styles.helpTitle}>{dict("need_help")}</h4>
+        <p style={styles.helpText}>{dict("help_description")}</p>
+        <button style={styles.helpButton}>{dict("contact_support")}</button>
       </div>
     </div>
   );
