@@ -510,6 +510,16 @@
         "continue_button": "Next",
         "record_audio": "Record audio",
         "recording_audio": "Recording audio... (Click to stop)"
+      },
+      "completion": {
+        "title": "Questionnaire",
+        "completed": "Completed",
+        "progress": "100%",
+        "processing_title": "We are processing your response",
+        "processing_description": "This process will take between 15 and 20 minutes.",
+        "notification_description": "We will notify you by email and on this page when your document is ready.",
+        "status_processing": "Processing...",
+        "keep_page_open": "Keep this page open to receive real-time updates"
       }
   }
 }
