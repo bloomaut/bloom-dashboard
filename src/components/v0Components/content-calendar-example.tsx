@@ -189,7 +189,7 @@ export function ContentCalendarExample() {
         }
 
         // Content fetching and fixing loop
-        let maxRetries = 3;
+        const maxRetries = 3;
         let currentRetry = 0;
         let finalContentData = [];
 
