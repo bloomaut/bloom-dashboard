@@ -69,6 +69,11 @@ export const getProposalApprovedUsers = (page = 1, limit = 10) =>
 export const getProposalRejectedUsers = (page = 1, limit = 10) =>
   listUsers({ page, limit, proposal_url: "notnull", proposal_status: "rejected" });
 
+export async function getUsersStats() {
+  const url = "/api/back-office/users";
+  return request(url);
+}
+
 export default {
   listUsers,
   getAllUsers,
@@ -77,4 +82,5 @@ export default {
   getProposalPendingUsers,
   getProposalApprovedUsers,
   getProposalRejectedUsers,
+  getUsersStats,
 };
