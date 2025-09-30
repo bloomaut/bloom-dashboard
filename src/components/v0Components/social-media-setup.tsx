@@ -23,7 +23,7 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
     setConnecting(platform);
 
     // Simular proceso de conexión
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     onAccountConnection(platform);
     setConnecting(null);
@@ -34,7 +34,7 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
       [platform]: true,
     };
 
-    if (newConnectedAccounts.instagram && newConnectedAccounts.tiktok) {
+    if (newConnectedAccounts.tiktok) {
       completeStep("social-media"); // Completar el paso del tutorial
     }
   };
@@ -94,7 +94,7 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
           </Card>
 
           {/* Warning Message */}
-          {(connectedAccounts.instagram || connectedAccounts.tiktok) &&
+          {/*   {(connectedAccounts.instagram || connectedAccounts.tiktok) &&
             !(connectedAccounts.instagram && connectedAccounts.tiktok) && (
               <Card className='mb-6 border-yellow-200 bg-yellow-50'>
                 <CardContent className='pt-6'>
@@ -109,7 +109,7 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
                   </div>
                 </CardContent>
               </Card>
-            )}
+            )} */}
 
           {/* Setup Cards */}
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-8'>

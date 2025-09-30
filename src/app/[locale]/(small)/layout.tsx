@@ -1,8 +1,5 @@
 "use client";
-import "@/styles/globals.scss";
-import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.scss";
-import "./styles.css";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 // Components
@@ -78,7 +75,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id='layout_container'>
       <TutorialProvider>
         {/* <Navbar /> */}
         <ToastContainer
@@ -95,13 +92,17 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
           transition={Slide}
         />
         {user.client.proposal_status !== "APPROVED" ? (
-          <div className={styles.inner_container} style={{ width: "100%" }}>
-            <div className={styles.children_container} style={{ width: "100%" }} id='children_container'>
+          <div className={styles.inner_container} style={{ width: "100%", height: "100%" }} id='inner_container'>
+            <div
+              className={styles.children_container}
+              style={{ width: "100%", height: "100%" }}
+              id='children_container'
+            >
               <Questionaire />
             </div>
           </div>
         ) : (
-          <div className={styles.inner_container}>
+          <div className={styles.inner_container} id='inner_container'>
             <Sidebar />
             <SideTrack />
             <div className={styles.children_container} id='children_container'>

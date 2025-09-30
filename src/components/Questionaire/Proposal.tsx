@@ -3,8 +3,14 @@ import ProposalData from "./proposal/ProposalData";
 import ProposalActions from "./proposal/ProposalActions";
 import { styles } from "./proposal/styles";
 import { useTranslations } from "next-intl";
+import { UserBusiness } from "@/typescript/interfaces/business.interface";
 
-function Proposal() {
+type Props = {
+  user: UserBusiness;
+};
+
+function Proposal({ user }: Props) {
+   const pdfFile = user.client.proposal_url;
   const dict = useTranslations("dict.proposal");
 
   return (
@@ -23,7 +29,7 @@ function Proposal() {
         }}
       >
         {/* Main Content */}
-        <ProposalData />
+        <ProposalData pdfFile={pdfFile}/>
         {/* Actions */}
         <ProposalActions />
       </div>

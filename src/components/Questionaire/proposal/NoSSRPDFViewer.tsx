@@ -10,7 +10,11 @@ type LoadedPdf = {
   pdfjs: any;
 };
 
-export default function NoSSRPDFViewer() {
+interface NoSSRPDFViewerProps {
+  pdfUrl?: string | null;
+}
+
+export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
   const [loaded, setLoaded] = useState<LoadedPdf | null>(null);
   const [numPages, setNumPages] = useState<number | null>(null);
   const user = useAppSelector(state => state.userData);
@@ -46,23 +50,39 @@ export default function NoSSRPDFViewer() {
   }, []);
 
   useEffect(() => {
-    if (!loaded) return;
-    // remove text layer produced by react-pdf if present (keep client-only DOM ops in effect)
-    const docs = Array.from(document.getElementsByClassName("react-pdf__Page__textContent"));
-    docs.forEach(el => el.remove());
+  if (!loaded) return;
+
+    // Remove text layer and annotation layer produced by react-pdf
+    const removeTextLayers = () => {
+      const textLayers = Array.from(document.getElementsByClassName("react-pdf__Page__textContent"));
+      textLayers.forEach(el => el.remove());
+
+      const annotationLayers = Array.from(document.getElementsByClassName("react-pdf__Page__annotations"));
+      annotationLayers.forEach(el => el.remove());
+    };
+
+    // Remove immediately and also with a slight delay to catch dynamically added elements
+    removeTextLayers();
+    const timeoutId = setTimeout(removeTextLayers, 100);
+
+    return () => clearTimeout(timeoutId);
   }, [loaded, numPages]);
 
   if (!loaded) {
     return (
-      <div
-        style={{ width: "100%", minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center" }}
-      >
+      <div style={{ width: "100%", minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {dict("loading")}
       </div>
     );
   }
 
-  const file = user?.client?.proposal_url || "/pdf/ejemplo-doc-propuesta-comercial.pdf";
+  // Determine the PDF file URL and proxy if needed
+  const originalFile = pdfUrl || user?.client?.proposal_url || "/pdf/ejemplo-doc-propuesta-comercial.pdf";
+
+  // Check if the URL is external and needs proxying
+  const isExternalUrl = originalFile.startsWith("http") && !originalFile.includes(window.location.hostname);
+  const file = isExternalUrl ? `/api/pdf-proxy?url=${encodeURIComponent(originalFile)}` : originalFile;
+
   const { Document, Page } = loaded;
 
   const onLoadSuccess = (payload: { numPages: number }) => {
@@ -71,13 +91,34 @@ export default function NoSSRPDFViewer() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        overflow: "hidden",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <Document
         file={file}
         onLoadSuccess={onLoadSuccess}
         onLoadError={(e: any) => console.error("Error loading PDF:", e)}
+        options={{
+          // Disable text layer rendering
+          disableTextLayer: true,
+          // Disable annotation layer rendering
+          disableAnnotationLayer: true,
+        }}
       >
-        <Page key={`page_${1}`} pageNumber={1} width={1200} height={3400} />
+        <Page
+          key={`page_${1}`}
+          pageNumber={1}
+          width={1200}
+          height={3400}
+          // Disable text and annotation layers at page level too
+          renderTextLayer={false}
+          renderAnnotationLayer={false}
+        />
       </Document>
     </div>
   );

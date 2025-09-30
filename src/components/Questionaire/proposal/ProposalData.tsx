@@ -8,7 +8,11 @@ import { useTranslations } from "next-intl";
 // client-only dynamic import to ensure react-pdf bundle isn't required during SSR
 const PDFViewer = dynamic(() => import("./NoSSRPDFViewer"), { ssr: false });
 
-function ProposalData() {
+interface ProposalDataProps {
+  pdfFile?: string | null;
+}
+
+function ProposalData({ pdfFile }: ProposalDataProps) {
   const dict = useTranslations("dict.proposal");
   return (
     <div style={styles.mainContent}>
@@ -23,7 +27,7 @@ function ProposalData() {
         </button>
       </div>
       <div style={styles.pdfContainer}>
-        <PDFViewer />
+        <PDFViewer pdfUrl={pdfFile}/>
       </div>
     </div>
   );

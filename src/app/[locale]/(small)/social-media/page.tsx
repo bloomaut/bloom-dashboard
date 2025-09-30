@@ -15,7 +15,7 @@ export default function SocialMediaPage() {
   const [isCreatingStrategies, setIsCreatingStrategies] = useState(false);
   const [strategiesReady, setStrategiesReady] = useState(false);
 
-  const hasConnectedAccounts = connectedAccounts.instagram && connectedAccounts.tiktok;
+  const hasConnectedAccounts = /* connectedAccounts.instagram && */ connectedAccounts.tiktok;
 
   const handleAccountConnection = (platform: "instagram" | "tiktok") => {
     const newConnectedAccounts = {
@@ -24,7 +24,7 @@ export default function SocialMediaPage() {
     };
 
     // Si ambas cuentas van a estar conectadas, activar inmediatamente la creación de estrategias
-    if (newConnectedAccounts.instagram && newConnectedAccounts.tiktok) {
+    if (/* newConnectedAccounts.instagram &&  */ newConnectedAccounts.tiktok) {
       setIsCreatingStrategies(true);
     }
 
@@ -37,11 +37,14 @@ export default function SocialMediaPage() {
   };
 
   return (
-    <div className='flex h-screen bg-gray-50 w-full'>
-      {!hasConnectedAccounts && !isCreatingStrategies ? (
-        <SocialMediaSetup connectedAccounts={connectedAccounts} onAccountConnection={handleAccountConnection} />
-      ) : isCreatingStrategies ? (
+    <div className='flex h-full bg-gray-50 w-full' id='social-media-page'>
+      {!hasConnectedAccounts /*  && !isCreatingStrategies  */ ? (
+        <SocialMediaSetup
+          connectedAccounts={connectedAccounts}
+          onAccountConnection={handleAccountConnection}
+        /> /* : isCreatingStrategies ? (
         <StrategyLoading onComplete={handleStrategiesComplete} />
+      ) */
       ) : (
         <SocialMediaDashboard />
       )}
