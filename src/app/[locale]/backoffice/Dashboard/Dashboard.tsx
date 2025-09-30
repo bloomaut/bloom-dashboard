@@ -10,7 +10,6 @@ interface UserStats {
   withProposal: number;
 }
 
-
 export default function DashboardPage() {
   const [stats, setStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,9 +20,8 @@ export default function DashboardPage() {
       try {
         setLoading(true);
         const response = await getUsersStats();
-        console.log("response: ", response)        
+        console.log("response: ", response);
         if (response?.data?.statusCode === 200 && response?.data?.result?.users) {
-
           setStats(response.data.result.users);
         } else {
           throw new Error("Formato de respuesta inválido");

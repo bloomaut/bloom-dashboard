@@ -10,8 +10,7 @@ interface UserStats {
   withProposal: number;
 }
 
-export function DashboardCharts({userStats}: {userStats: UserStats | null}) {
-
+export function DashboardCharts({ userStats }: { userStats: UserStats | null }) {
   // Prepare data for status distribution chart
   const statusData = [
     { name: "Sin Propuesta", value: userStats?.withoutProposal || 0, color: "#4DC2F4" },

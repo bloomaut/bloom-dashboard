@@ -10,11 +10,20 @@ interface UserStats {
   withProposal: number;
 }
 
-export function DashboardStats({stats, loading, error}: {stats:UserStats | null, loading:boolean, error:string | null}) {
-
+export function DashboardStats({
+  stats,
+  loading,
+  error,
+}: {
+  stats: UserStats | null;
+  loading: boolean;
+  error: string | null;
+}) {
   // Calcular tasa de conversión
-  const conversionRate = stats ? 
-    stats.total > 0 ? ((stats.withProposal / stats.total) * 100).toFixed(1) : "0.0"
+  const conversionRate = stats
+    ? stats.total > 0
+      ? ((stats.withProposal / stats.total) * 100).toFixed(1)
+      : "0.0"
     : "0.0";
 
   const dashboardStats = [
@@ -51,11 +60,9 @@ export function DashboardStats({stats, loading, error}: {stats:UserStats | null,
   if (error) {
     return (
       <div className='grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'>
-        <Card className="col-span-full">
-          <CardContent className="pt-6">
-            <div className="text-center text-red-600">
-              Error al cargar estadísticas: {error}
-            </div>
+        <Card className='col-span-full'>
+          <CardContent className='pt-6'>
+            <div className='text-center text-red-600'>Error al cargar estadísticas: {error}</div>
           </CardContent>
         </Card>
       </div>
