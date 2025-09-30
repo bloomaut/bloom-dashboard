@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ContentCalendar } from "@/components/v0Components/content-calendar";
-import { getContent, getProfile } from "@/services/socialMediaService";
+import { getContent, getProfile, fixContentIdeasWithRetry } from "@/services/socialMediaService";
 
 // Mock data for testing the component
 const mockContentData = [
@@ -164,6 +164,7 @@ export function ContentCalendarExample() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fixingContent, setFixingContent] = useState(false);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -181,80 +182,128 @@ export function ContentCalendarExample() {
         const startDate = startOfWeek.toISOString().split("T")[0];
         const endDate = endOfWeek.toISOString().split("T")[0];
 
-        // Call the APIs
+        // Call the profile API
         const profileResponse = await getProfile();
-        const contentResponse: any = await getContent(startDate, endDate);
-
-        // Set profile data
         if (profileResponse.data && profileResponse.data.result) {
           setProfileData(profileResponse.data.result);
         }
 
-        console.log(contentResponse, profileResponse);
+        // Content fetching and fixing loop
+        let maxRetries = 3;
+        let currentRetry = 0;
+        let finalContentData = [];
 
-        // Transform the API response to match our ContentItem interface
-        // Handle both direct array response and nested response structure
-        let contents = [];
-        if (Array.isArray(contentResponse)) {
-          contents = contentResponse;
-        } else if (contentResponse.data && contentResponse.data.result && contentResponse.data.result.contents) {
-          contents = contentResponse.data.result.contents;
-        } else if (contentResponse.result && contentResponse.result.contents) {
-          contents = contentResponse.result.contents;
-        }
+        while (currentRetry < maxRetries) {
+          try {
+            console.log(`Fetching content attempt ${currentRetry + 1}/${maxRetries}`);
+            const contentResponse: any = await getContent(startDate, endDate);
 
-        if (contents.length > 0) {
-          const transformedData = contents.map((item: any) => {
-            // Map dayTime from API to our time periods (prioritize dayTime over dayType)
-            let dayTime: "morning" | "afternoon" | "evening" = "morning";
-            const timeField = item.dayTime || item.dayType;
-
-            if (timeField === "afternoon" || timeField === "tarde") {
-              dayTime = "afternoon";
-            } else if (timeField === "evening" || timeField === "noche") {
-              dayTime = "evening";
-            } else if (timeField === "morning" || timeField === "mañana") {
-              dayTime = "morning";
+            // Extract ideas from the response
+            let ideas = [];
+            if (contentResponse.result && contentResponse.result.ideas) {
+              ideas = contentResponse.result.ideas;
+            } else if (contentResponse.data && contentResponse.data.result && contentResponse.data.result.ideas) {
+              ideas = contentResponse.data.result.ideas;
             }
 
-            return {
-              clientId: item.clientId || "unknown",
-              socialMedia: item.socialMedia || ("tiktok" as const),
-              publishType: (item.publishType === "video" ? "Video" : item.publishType) || ("Video" as const),
-              pillar: item.pillar || "General",
-              day: new Date(item.day),
-              dayTime: dayTime,
-              completed: item.completed || item.status === "completed",
-              skinxId: item.skinxId || "",
-              presetId: item.presetId || "",
-              content: {
-                title: item.content?.title || `Contenido de ${item.pillar}`,
-                script: item.content?.script || "",
-                copy: item.content?.copy || "",
-                hashtags: item.content?.hashtags || null,
-                cta_copy: item.content?.cta_copy || null,
-                key_words_copy: item.content?.key_words_copy || null,
-                feelings: item.content?.feelings || null,
-                understanding: item.content?.understanding || null,
-                make: item.content?.make || null,
-                hook: item.content?.hook || null,
-              },
-            };
-          });
+            if (ideas.length === 0) {
+              console.log("No ideas found in response, using mock data");
+              finalContentData = mockContentData;
+              break;
+            }
 
-          setContentData(transformedData);
-        } else {
-          // Keep using mock data if API doesn't return expected structure
-          setContentData(mockContentData);
+            // Collect incomplete idea IDs
+            const incompleteIds: string[] = [];
+            ideas.forEach((idea: any) => {
+              if (idea.completed === false) {
+                incompleteIds.push(idea.id);
+              }
+            });
+
+            console.log(`Found ${incompleteIds.length} incomplete ideas:`, incompleteIds);
+
+            // If there are incomplete ideas and we haven't reached max retries, try to fix them
+            if (incompleteIds.length > 0 && currentRetry < maxRetries - 1) {
+              setFixingContent(true);
+              console.log(`Attempting to fix ${incompleteIds.length} incomplete ideas...`);
+
+              try {
+                const fixResult = await fixContentIdeasWithRetry(incompleteIds);
+                console.log("Fix result:", fixResult);
+
+                // Wait a moment for the fixes to be processed
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                currentRetry++;
+                continue; // Try fetching again
+              } catch (fixError) {
+                console.error("Error fixing content ideas:", fixError);
+                currentRetry++;
+                continue; // Try fetching again even if fix failed
+              }
+            }
+
+            // Transform the data regardless of completion status
+            const transformedData = ideas.map((item: any) => {
+              // Map dayTime from API to our time periods (prioritize dayTime over dayType)
+              let dayTime: "morning" | "afternoon" | "evening" = "morning";
+              const timeField = item.dayTime || item.dayType;
+
+              if (timeField === "afternoon" || timeField === "tarde") {
+                dayTime = "afternoon";
+              } else if (timeField === "evening" || timeField === "noche") {
+                dayTime = "evening";
+              } else if (timeField === "morning" || timeField === "mañana") {
+                dayTime = "morning";
+              }
+
+              return {
+                clientId: item.clientId || "unknown",
+                socialMedia: item.socialMedia || ("tiktok" as const),
+                publishType: (item.publishType === "video" ? "Video" : item.publishType) || ("Video" as const),
+                pillar: item.pillar || "General",
+                day: new Date(item.day),
+                dayTime: dayTime,
+                completed: item.completed || item.status === "completed",
+                skinxId: item.skinxId || item.id || "",
+                presetId: item.presetId || "",
+                content: {
+                  title: item.content?.title || item.title || `Contenido de ${item.pillar}`,
+                  script: item.content?.script || item.script || "",
+                  copy: item.content?.copy || item.copy || "",
+                  hashtags: item.content?.hashtags || item.hashtags || null,
+                  cta_copy: item.content?.cta_copy || item.cta_copy || null,
+                  key_words_copy: item.content?.key_words_copy || item.key_words_copy || null,
+                  feelings: item.content?.feelings || item.feelings || null,
+                  understanding: item.content?.understanding || item.understanding || null,
+                  make: item.content?.make || item.make || null,
+                  hook: item.content?.hook || item.hook || null,
+                },
+              };
+            });
+
+            finalContentData = transformedData;
+            break; // Successfully processed, exit loop
+          } catch (fetchError) {
+            console.error(`Content fetch attempt ${currentRetry + 1} failed:`, fetchError);
+            currentRetry++;
+
+            if (currentRetry >= maxRetries) {
+              console.log("Max retries reached, using mock data");
+              finalContentData = mockContentData;
+            }
+          }
         }
+
+        setContentData(finalContentData);
         setError(null);
       } catch (err) {
-        console.error("Error fetching content:", err);
+        console.error("Error in content fetching process:", err);
         setError("Failed to fetch content data");
-        // Keep using mock data if API fails
         setContentData(mockContentData);
       } finally {
         setLoading(false);
+        setFixingContent(false);
       }
     };
 
@@ -265,7 +314,17 @@ export function ContentCalendarExample() {
     return (
       <div className='p-6'>
         <div className='flex items-center justify-center h-64'>
-          <div className='text-gray-600'>Cargando contenido...</div>
+          <div className='flex flex-col items-center space-y-4'>
+            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600'></div>
+            {fixingContent ? (
+              <div className='text-center'>
+                <div className='text-gray-700 font-medium'>Optimizando contenido...</div>
+                <div className='text-gray-500 text-sm'>Procesando ideas incompletas</div>
+              </div>
+            ) : (
+              <div className='text-gray-600'>Cargando contenido...</div>
+            )}
+          </div>
         </div>
       </div>
     );

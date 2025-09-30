@@ -58,10 +58,10 @@ export const getProfile = async (): Promise<any> => {
   }
 };
 
-export const fixContentIdeas = async (contentIdeaId: string): Promise<boolean> => {
+export const fixContentIdeas = async (contentIdeaIds: string[]): Promise<boolean> => {
   try {
     const response = await axios.post(`${API_BASE_URL}/api/social-media/fix-content-ideas`, {
-      contentIdea_id: contentIdeaId,
+      ids: contentIdeaIds,
     });
     return response.status === 200;
   } catch (error) {
@@ -126,12 +126,12 @@ export const generateWeekContent = async (): Promise<{ message: string }> => {
   }
 };
 
-export const fixContentIdeasWithRetry = async (contentIdeaId: string, maxRetries: number = 3): Promise<boolean> => {
+export const fixContentIdeasWithRetry = async (contentIdeaIds: string[], maxRetries: number = 3): Promise<boolean> => {
   let attempts = 0;
 
   while (attempts < maxRetries) {
     try {
-      const success = await fixContentIdeas(contentIdeaId);
+      const success = await fixContentIdeas(contentIdeaIds);
       if (success) {
         return true;
       }
