@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 type LoadedPdf = {
   Document: any;
@@ -17,6 +18,7 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
   const [loaded, setLoaded] = useState<LoadedPdf | null>(null);
   const [numPages, setNumPages] = useState<number | null>(null);
   const user = useAppSelector(state => state.userData);
+  const dict = useTranslations("dict.proposal");
 
   useEffect(() => {
     let mounted = true;
@@ -68,8 +70,10 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
 
   if (!loaded) {
     return (
-      <div style={{ width: "100%", minHeight: 200, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        Cargando visor PDF...
+      <div
+        style={{ width: "100%", minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        {dict("loading")}
       </div>
     );
   }

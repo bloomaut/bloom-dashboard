@@ -3,43 +3,28 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { XAxis, YAxis, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Tooltip } from "recharts";
 
-const monthlyData = [
-  { month: "Ene", usuarios: 186, propuestas: 12 },
-  { month: "Feb", usuarios: 305, propuestas: 18 },
-  { month: "Mar", usuarios: 237, propuestas: 15 },
-  { month: "Abr", usuarios: 273, propuestas: 22 },
-  { month: "May", usuarios: 209, propuestas: 19 },
-  { month: "Jun", usuarios: 314, propuestas: 25 },
-];
+interface UserStats {
+  total: number;
+  withoutProposal: number;
+  inWishList: number;
+  withProposal: number;
+}
 
-const userFlowData = [
-  { step: "Visitantes", value: 10000 },
-  { step: "Registro", value: 2847 },
-  { step: "Propuesta", value: 156 },
-];
+export function DashboardCharts({ userStats }: { userStats: UserStats | null }) {
+  // Prepare data for status distribution chart
+  const statusData = [
+    { name: "Sin Propuesta", value: userStats?.withoutProposal || 0, color: "#4DC2F4" },
+    { name: "En Lista de Espera", value: userStats?.inWishList || 0, color: "#6A20A4" },
+    { name: "Con Propuesta", value: userStats?.withProposal || 0, color: "#2BA8D4" },
+  ];
 
-const statusData = [
-  { name: "En Lista de Espera", value: 1847, color: "#4DC2F4" },
-  { name: "En Proceso", value: 1000, color: "#6A20A4" },
-  { name: "Con Propuesta", value: 1234, color: "#2BA8D4" }, // Variante más oscura del primario
-];
+  const userFlowData = [
+    { step: "Total", value: userStats?.total || 0 },
+    { step: "En Lista de Espera", value: userStats?.inWishList || 0 },
+    { step: "Sin Propuesta", value: userStats?.withoutProposal || 0 },
+    { step: "Con Propuesta", value: userStats?.withProposal || 0 },
+  ];
 
-const chartConfig = {
-  usuarios: {
-    label: "Usuarios",
-    color: "#4DC2F4",
-  },
-  propuestas: {
-    label: "Propuestas",
-    color: "#6A20A4",
-  },
-  value: {
-    label: "Valor",
-    color: "#4DC2F4",
-  },
-};
-
-export function DashboardCharts() {
   return (
     <div className='space-y-4'>
       {/* Second row with two charts */}

@@ -83,7 +83,7 @@ function Questionaire() {
     handleGet();
   }, [user]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, index: number) => {
     setEmpty(false);
     dispatch(updateQuestData({ index, data: e?.target?.value }));
   };
