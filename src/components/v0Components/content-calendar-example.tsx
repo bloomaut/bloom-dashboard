@@ -281,7 +281,6 @@ export function ContentCalendarExample() {
           </div>
         )}
       </div>
-
       <ContentCalendar contentItems={contentData} profileData={profileData?.profile} />
     </div>
   );

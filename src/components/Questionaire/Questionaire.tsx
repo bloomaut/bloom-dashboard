@@ -67,9 +67,9 @@ function Questionaire() {
         setTab("wishlist");
       } else {
         dispatch(setQuestData(data));
-        /*  if (user.client.wish_list === true) {
+        if (user.client.wish_list === true) {
           setTab("wishlist");
-        } else */ if (!data[0].terms) {
+        } else if (!data[0].terms) {
           setTab("terms");
         } else if (!data[4].questions[4].answer) {
           setTab("quest");
@@ -178,7 +178,7 @@ function Questionaire() {
       {tab === "wishlist" && <WishList />}
       {tab === "terms" && <Terms handleTerms={handleTerms} />}
       {tab === "fin" && <Fin setTab={setTab} questData={questData} />}
-      {tab === "prop" && <Proposal />}
+      {tab === "prop" && <Proposal user={user} />}
       <div
         style={{ position: "absolute", left: "3%", bottom: "3%", display: "flex", flexDirection: "row", gap: "1.5rem" }}
       >

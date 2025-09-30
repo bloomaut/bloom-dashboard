@@ -59,6 +59,7 @@ export const styles = {
   },
   pdfText: {
     fontWeight: "500",
+    color: "white",
   },
   downloadButton: {
     backgroundColor: "white",

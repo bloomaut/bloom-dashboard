@@ -6,7 +6,11 @@ import { styles } from "./styles";
 
 const PDFViewer = dynamic(() => import("./NoSSRPDFViewer"), { ssr: false });
 
-function ProposalData() {
+interface ProposalDataProps {
+  pdfFile?: string | null;
+}
+
+function ProposalData({ pdfFile }: ProposalDataProps) {
   return (
     <div style={styles.mainContent}>
       <div style={styles.pdfSection}>
@@ -21,7 +25,7 @@ function ProposalData() {
           <span>Descargar</span>
         </button>
       </div>
-      <PDFViewer />
+      <PDFViewer pdfUrl={pdfFile} />
     </div>
   );
 }

@@ -20,7 +20,7 @@ function ProposalActions() {
 
         <button style={styles.primaryButton}>
           <Download size={16} />
-          <span>Descargar Propuesta</span>
+          <span style={{ color: "white" }}>Descargar Propuesta</span>
         </button>
 
         <div style={styles.checkboxContainer}>
@@ -33,7 +33,9 @@ function ProposalActions() {
           disabled={!checked}
           onClick={handleClick}
         >
-          <span className='whitespace-nowrap'>Continuar con la propuesta</span>
+          <span className='whitespace-nowrap' style={{ color: "white" }}>
+            Continuar con la propuesta
+          </span>
         </button>
         <button style={styles.secondaryButton}>
           <MessageCircle size={16} />

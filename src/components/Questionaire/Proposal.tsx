@@ -2,8 +2,14 @@ import React from "react";
 import ProposalData from "./proposal/ProposalData";
 import ProposalActions from "./proposal/ProposalActions";
 import { styles } from "./proposal/styles";
+import { UserBusiness } from "@/typescript/interfaces/business.interface";
 
-function Proposal() {
+type Props = {
+  user: UserBusiness;
+};
+
+function Proposal({ user }: Props) {
+  const pdfFile = user.client.proposal_url;
   return (
     <div style={styles.container}>
       <div style={styles.maxWidth}>
@@ -21,7 +27,7 @@ function Proposal() {
           }}
         >
           {/* Main Content */}
-          <ProposalData />
+          <ProposalData pdfFile={pdfFile} />
           {/* Actions */}
           <ProposalActions />
         </div>
