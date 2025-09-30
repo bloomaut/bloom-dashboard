@@ -10,7 +10,7 @@ type Props = {
 };
 
 function Proposal({ user }: Props) {
-   const pdfFile = user.client.proposal_url;
+  const pdfFile = user.client.proposal_url;
   const dict = useTranslations("dict.proposal");
 
   return (
@@ -29,7 +29,7 @@ function Proposal({ user }: Props) {
         }}
       >
         {/* Main Content */}
-        <ProposalData pdfFile={pdfFile}/>
+        <ProposalData pdfFile={pdfFile} />
         {/* Actions */}
         <ProposalActions />
       </div>

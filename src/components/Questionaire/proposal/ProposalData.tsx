@@ -27,7 +27,7 @@ function ProposalData({ pdfFile }: ProposalDataProps) {
         </button>
       </div>
       <div style={styles.pdfContainer}>
-        <PDFViewer pdfUrl={pdfFile}/>
+        <PDFViewer pdfUrl={pdfFile} />
       </div>
     </div>
   );

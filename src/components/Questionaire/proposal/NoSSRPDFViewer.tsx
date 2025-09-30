@@ -50,7 +50,7 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
   }, []);
 
   useEffect(() => {
-  if (!loaded) return;
+    if (!loaded) return;
 
     // Remove text layer and annotation layer produced by react-pdf
     const removeTextLayers = () => {
@@ -70,7 +70,9 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
 
   if (!loaded) {
     return (
-      <div style={{ width: "100%", minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div
+        style={{ width: "100%", minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
         {dict("loading")}
       </div>
     );
