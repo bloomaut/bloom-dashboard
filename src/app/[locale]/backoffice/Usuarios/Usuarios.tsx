@@ -8,18 +8,18 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import Table, { TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { 
-  Filter, 
-  Edit, 
-  ChevronLeft, 
-  ChevronRight, 
-  Search, 
-  Users, 
+import {
+  Filter,
+  Edit,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  Users,
   Calendar,
   Mail,
   User,
   MoreHorizontal,
-  Eye
+  Eye,
 } from "lucide-react";
 import styles from "./backoffice.module.css";
 
@@ -54,10 +54,10 @@ function normalizeUser(u: any, appliedFilter?: string) {
       if (appliedFilter && appliedFilter !== "todos") {
         return appliedFilter;
       }
-      
+
       // Si hay un status explícito, lo usamos
       if (u.status) return u.status;
-      
+
       const proposalUrl = u.proposal_url ?? u.client?.proposal_url ?? u.client?.proposalUrl;
       const proposalStatus = u.proposal_status ?? u.client?.proposal_status ?? u.client?.proposalStatus;
       const wishList = u.wish_list ?? u.client?.wish_list ?? false;
@@ -163,9 +163,10 @@ export default function UserManagement() {
   }, [statusFilter, currentPage, usersPerPage]);
 
   // Filter users by search term
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter(
+    user =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   // compute pagination UI values from totalUsers
@@ -205,13 +206,13 @@ export default function UserManagement() {
           </Badge>
         );
       case "rechazado":
+        return <Badge className='bg-red-50 text-red-700 border-red-200 hover:bg-red-100 font-medium'>Rechazado</Badge>;
+      default:
         return (
-          <Badge className='bg-red-50 text-red-700 border-red-200 hover:bg-red-100 font-medium'>
-            Rechazado
+          <Badge variant='outline' className='font-medium'>
+            {status}
           </Badge>
         );
-      default:
-        return <Badge variant='outline' className='font-medium'>{status}</Badge>;
     }
   };
 
@@ -220,7 +221,7 @@ export default function UserManagement() {
     return new Date(dateString).toLocaleDateString("es-ES", {
       day: "2-digit",
       month: "2-digit",
-      year: "numeric"
+      year: "numeric",
     });
   };
 
@@ -256,17 +257,17 @@ export default function UserManagement() {
                 <Input
                   placeholder='Buscar por nombre o email...'
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={e => setSearchTerm(e.target.value)}
                   className='pl-10 border-slate-300 focus:border-blue-500 focus:ring-blue-500'
                 />
               </div>
-              
+
               {/* Status Filter */}
               <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
                 <SelectTrigger className='w-full lg:w-[280px] border-slate-300 focus:border-blue-500 focus:ring-blue-500'>
                   <SelectValue placeholder='Filtrar por estado' />
                 </SelectTrigger>
-                <SelectContent >
+                <SelectContent>
                   <SelectItem value='todos'>Todos los estados</SelectItem>
                   <SelectItem value='con-propuesta-revision'>Con Propuesta - En Revisión</SelectItem>
                   <SelectItem value='con-propuesta-aprobada'>Con Propuesta - Aprobada</SelectItem>
@@ -284,7 +285,8 @@ export default function UserManagement() {
           <CardHeader className='pb-4'>
             <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
               <CardTitle className='text-slate-900'>
-                Lista de Usuarios ({totalUsers ?? filteredUsers.length} {(totalUsers ?? filteredUsers.length) === 1 ? "usuario" : "usuarios"})
+                Lista de Usuarios ({totalUsers ?? filteredUsers.length}{" "}
+                {(totalUsers ?? filteredUsers.length) === 1 ? "usuario" : "usuarios"})
               </CardTitle>
             </div>
           </CardHeader>
@@ -304,7 +306,9 @@ export default function UserManagement() {
                     <div className='text-red-600 font-medium'>{error}</div>
                   ) : (
                     <div className='text-slate-500'>
-                      {searchTerm ? 'No se encontraron usuarios que coincidan con la búsqueda.' : 'No se encontraron usuarios.'}
+                      {searchTerm
+                        ? "No se encontraron usuarios que coincidan con la búsqueda."
+                        : "No se encontraron usuarios."}
                     </div>
                   )}
                 </div>
@@ -320,24 +324,22 @@ export default function UserManagement() {
                             </div>
                             <h3 className='font-semibold text-slate-900 truncate'>{user.name}</h3>
                           </div>
-                          
+
                           <div className='space-y-2 text-sm'>
                             <div className='flex items-center gap-2 text-slate-600'>
                               <Mail className='h-3 w-3' />
                               <span className='truncate'>{user.email}</span>
                             </div>
-                            
+
                             <div className='flex items-center gap-2 text-slate-600'>
                               <Calendar className='h-3 w-3' />
                               <span>{formatDate(user.registrationDate)}</span>
                             </div>
-                            
-                            <div className='flex items-center gap-2'>
-                              {getStatusBadge(user.status)}
-                            </div>
+
+                            <div className='flex items-center gap-2'>{getStatusBadge(user.status)}</div>
                           </div>
                         </div>
-                        
+
                         <div className='ml-4 flex-shrink-0'>
                           <Link href={`/usuarios/${user.id}`}>
                             <Button variant='ghost' size='sm' className='h-8 w-8 p-0'>
@@ -382,7 +384,9 @@ export default function UserManagement() {
                           <div className='text-red-600 font-medium'>{error}</div>
                         ) : (
                           <div className='text-slate-500'>
-                            {searchTerm ? 'No se encontraron usuarios que coincidan con la búsqueda.' : 'No se encontraron usuarios.'}
+                            {searchTerm
+                              ? "No se encontraron usuarios que coincidan con la búsqueda."
+                              : "No se encontraron usuarios."}
                           </div>
                         )}
                       </TableCell>
@@ -408,9 +412,9 @@ export default function UserManagement() {
                         <TableCell className='text-right'>
                           <div className='flex justify-center mr-7'>
                             <Link href={`/usuarios/${user.id}`}>
-                              <Button 
-                                variant='ghost' 
-                                size='sm' 
+                              <Button
+                                variant='ghost'
+                                size='sm'
                                 className='h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600 transition-colors'
                               >
                                 <Eye className='h-4 w-4' />
@@ -435,7 +439,7 @@ export default function UserManagement() {
                 <div className='text-sm text-slate-600 text-center sm:text-left'>
                   Mostrando {startIndex + 1} a {Math.min(endIndex, totalUsers ?? 0)} de {totalUsers} usuarios
                 </div>
-                
+
                 <div className='flex items-center justify-center gap-2'>
                   <Button
                     variant='outline'
@@ -460,7 +464,7 @@ export default function UserManagement() {
                       } else {
                         page = currentPage - 2 + i;
                       }
-                      
+
                       return (
                         <Button
                           key={page}
@@ -468,9 +472,9 @@ export default function UserManagement() {
                           size='sm'
                           onClick={() => setCurrentPage(page)}
                           className={`w-8 h-8 p-0 ${
-                            currentPage === page 
-                              ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-                              : 'border-slate-300 hover:bg-slate-50'
+                            currentPage === page
+                              ? "bg-blue-600 hover:bg-blue-700 text-white"
+                              : "border-slate-300 hover:bg-slate-50"
                           }`}
                         >
                           {page}
