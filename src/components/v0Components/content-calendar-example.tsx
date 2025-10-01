@@ -214,7 +214,6 @@ export function ContentCalendarExample() {
               ideas = contentResponse.data.result.ideas;
             }
 
-            
             if (contentItems.length === 0) {
               console.log("No content found in response, using mock data");
               finalContentData = mockContentData;
@@ -271,7 +270,7 @@ export function ContentCalendarExample() {
                 socialMedia: item.socialMedia || ("tiktok" as const),
                 publishType: (item.publishType === "video" ? "Video" : item.publishType) || ("Video" as const),
                 pillar: item.pillar || "General",
-                day: new Date(item.day.split('T')[0] + 'T12:00:00.000Z'),
+                day: new Date(item.day.split("T")[0] + "T12:00:00.000Z"),
                 dayTime: dayTime,
                 completed: item.completed || item.status === "completed",
                 skinxId: item.skinxId || item.id || "",
