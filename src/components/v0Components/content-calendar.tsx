@@ -331,7 +331,7 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
           {item.completed && <CheckCircle className='h-3 w-3 text-green-600' />}
         </div>
 
-        <div className='text-xs opacity-75 mb-1'>{item.pillar}</div>
+        <div className='text-xs opacity-75 mb-1 truncate'>{item.pillar}</div>
 
         {item.content.hook ? (
           <div className='text-xs opacity-60 truncate'>{item.content.hook}</div>

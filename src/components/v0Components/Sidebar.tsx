@@ -10,8 +10,8 @@ import Image from "next/image";
 
 const navigation = [
   { name: "Mi Negocio", href: "/my-business", icon: Building2 },
-  { name: "Inventario", href: "/catalog", icon: Package },
   { name: "Redes Sociales", href: "/social-media", icon: Share2 },
+  { name: "Inventario", href: "/catalog", icon: Package },
   { name: "CRM", href: "/crm", icon: Users },
   { name: "Finanzas", href: "/finances", icon: DollarSign },
 ];
@@ -28,14 +28,17 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
 
   return (
     <div
-      className={cn("bg-white border-r border-gray-200 transition-all duration-300", collapsed ? "w-16" : "w-64")}
+      className={cn(
+        "bg-white border-r border-gray-200 transition-all duration-300 h-screen min-w-64",
+        collapsed ? "w-16" : "w-64",
+      )}
       id='sidebar'
     >
-      <Link href='/' className='flex items-center  px-4 py-3 pl-6'>
+      <Link href='/' className='flex items-center px-4 py-3 pl-6'>
         <Image src={"/logotipo_horizontal.png"} alt='Small' width={150} height={150} priority />
       </Link>
       <div className='flex flex-col'>
-        <nav className='flex-1 p-4 space-y-2'>
+        <nav className='flex-1 p-4 space-y-2 h-full'>
           {navigation.map(item => {
             const isActive = pathname === item.href;
             const isAllowed = ["my-business", "social-media"].includes(
@@ -57,8 +60,9 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
                     ? isActive
                       ? "bg-red-50 text-red-700 border-l-4 border-red-500"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                    : "text-gray-400 cursor-not-allowed",
+                    : "text-gray-300 cursor-not-allowed opacity-50 bg-gray-50",
                 )}
+                style={!isAllowed ? { pointerEvents: "none" } : undefined}
               >
                 <item.icon className='h-5 w-5 flex-shrink-0' />
                 {!collapsed && <span>{item.name}</span>}
@@ -67,8 +71,8 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           })}
         </nav>
 
-        <div className='p-4 border-t border-gray-200' style={{ minHeight: "calc(100vh - 16rem)" }}>
-          {!isCompleted ? (
+        {/*   <div className='p-4 border-t border-gray-200' style={{ minHeight: "calc(100vh - 16rem)" }}>
+           {!isCompleted ? (
             <TutorialStepper />
           ) : (
             <Link
@@ -79,7 +83,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
               {!collapsed && <span>Go to Inbox</span>}
             </Link>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
