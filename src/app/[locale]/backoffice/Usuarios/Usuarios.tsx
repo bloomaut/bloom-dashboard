@@ -227,7 +227,7 @@ export default function UserManagement() {
 
   return (
     <div className={`${styles.root} min-h-screen bg-slate-50/50`}>
-      <div className='max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6'>
+      <div className='mx-0 p-4 sm:p-6 lg:p-1 space-y-6'>
         {/* Header */}
         <div className='bg-white rounded-lg border border-slate-200 p-6 shadow-sm'>
           <div className='flex items-center gap-3 mb-2'>
