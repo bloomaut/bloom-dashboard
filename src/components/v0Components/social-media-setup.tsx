@@ -6,36 +6,53 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Instagram, MessageCircle, CheckCircle, Clock, AlertCircle } from "lucide-react";
 import { useTutorial } from "@/context/TutorialContext";
+import { connectTikTokAccount, generateWeekContent } from "@/services/socialMediaService";
+import { useMessageToast } from "@/hooks/useMessageToast";
 
 interface SocialMediaSetupProps {
   connectedAccounts: {
     instagram: boolean;
     tiktok: boolean;
   };
+  profile?: any;
   onAccountConnection: (platform: "instagram" | "tiktok") => void;
+  refetchProfile: () => Promise<void>;
 }
 
-export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: SocialMediaSetupProps) {
-  const { completeStep } = useTutorial();
+export function SocialMediaSetup({ connectedAccounts, onAccountConnection, refetchProfile }: SocialMediaSetupProps) {
+  const { notify, notifyError } = useMessageToast();
   const [connecting, setConnecting] = useState<string | null>(null);
 
   const handleConnect = async (platform: "instagram" | "tiktok") => {
-    setConnecting(platform);
+    if (platform === "tiktok") {
+      setConnecting("tiktok");
+      try {
+        const code = "fruta";
+        const response = await connectTikTokAccount(code);
 
-    // Simular proceso de conexión
-    await new Promise(resolve => setTimeout(resolve, 1000));
+        if (response.data.statusCode === 200) {
+          notify("Cuenta de TikTok conectada exitosamente");
 
-    onAccountConnection(platform);
-    setConnecting(null);
+          try {
+            notify("Generando contenido inicial...");
+            await generateWeekContent("first-login");
+            notify("Contenido inicial generado exitosamente");
+          } catch (contentError) {
+            console.error("Error generating week content:", contentError);
+            notifyError("Error al generar el contenido inicial");
+          }
 
-    // Verificar si ambas cuentas están conectadas después de esta conexión
-    const newConnectedAccounts = {
-      ...connectedAccounts,
-      [platform]: true,
-    };
-
-    if (newConnectedAccounts.tiktok) {
-      completeStep("social-media"); // Completar el paso del tutorial
+          await refetchProfile();
+          onAccountConnection("tiktok");
+        } else {
+          notifyError("Error al conectar la cuenta de TikTok");
+        }
+      } catch (error) {
+        console.error("Error connecting TikTok:", error);
+        notifyError("Error al conectar la cuenta de TikTok");
+      } finally {
+        setConnecting(null);
+      }
     }
   };
 
@@ -199,67 +216,6 @@ export function SocialMediaSetup({ connectedAccounts, onAccountConnection }: Soc
               </CardContent>
             </Card>
           </div>
-
-          {/* Progress Summary */}
-          {/*  <Card>
-            <CardHeader>
-              <CardTitle>Progreso de Configuración</CardTitle>
-              <CardDescription>Conecta ambas cuentas para acceder al dashboard</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className='space-y-4'>
-                <div className='flex items-center justify-between p-3 bg-gray-50 rounded-lg'>
-                  <div className='flex items-center space-x-3'>
-                    <Instagram className='h-5 w-5 text-purple-500' />
-                    <span className='font-medium'>Instagram</span>
-                  </div>
-                  {connectedAccounts.instagram ? (
-                    <CheckCircle className='h-5 w-5 text-green-500' />
-                  ) : (
-                    <div className='w-5 h-5 border-2 border-gray-300 rounded-full' />
-                  )}
-                </div>
-
-                <div className='flex items-center justify-between p-3 bg-gray-50 rounded-lg'>
-                  <div className='flex items-center space-x-3'>
-                    <MessageCircle className='h-5 w-5 text-black' />
-                    <span className='font-medium'>TikTok</span>
-                  </div>
-                  {connectedAccounts.tiktok ? (
-                    <CheckCircle className='h-5 w-5 text-green-500' />
-                  ) : (
-                    <div className='w-5 h-5 border-2 border-gray-300 rounded-full' />
-                  )}
-                </div>
-
-                <div className='pt-4 border-t'>
-                  <div className='flex items-center justify-between text-sm'>
-                    <span className='text-gray-600'>Progreso total:</span>
-                    <span className='font-medium'>
-                      {Object.values(connectedAccounts).filter(Boolean).length} de 2 completado
-                      {Object.values(connectedAccounts).filter(Boolean).length === 2 ? " ✓" : " (ambas requeridas)"}
-                    </span>
-                  </div>
-                  <div className='mt-2 w-full bg-gray-200 rounded-full h-2'>
-                    <div
-                      className='bg-green-500 h-2 rounded-full transition-all duration-300'
-                      style={{
-                        width: `${(Object.values(connectedAccounts).filter(Boolean).length / 2) * 100}%`,
-                      }}
-                    />
-                  </div>
-                </div>
-                {connectedAccounts.instagram && connectedAccounts.tiktok && (
-                  <div className='pt-4 border-t'>
-                    <Button className='w-full bg-green-500 hover:bg-green-600'>
-                      <CheckCircle className='h-4 w-4 mr-2' />
-                      ¡Configuración Completa! Acceder al Dashboard
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card> */}
         </div>
       </main>
     </div>

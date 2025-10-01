@@ -39,8 +39,8 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
     };
 
     updatePageWidth();
-    window.addEventListener('resize', updatePageWidth);
-    return () => window.removeEventListener('resize', updatePageWidth);
+    window.addEventListener("resize", updatePageWidth);
+    return () => window.removeEventListener("resize", updatePageWidth);
   }, []);
 
   useEffect(() => {
@@ -91,15 +91,14 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
   if (!loaded) {
     return (
       <div
-        {dict("loading")}
-        style={{ 
-          width: "100%", 
-          height: "70vh", 
-          display: "flex", 
-          alignItems: "center", 
+        style={{
+          width: "100%",
+          height: "70vh",
+          display: "flex",
+          alignItems: "center",
           justifyContent: "center",
           fontSize: "16px",
-          color: "#6b7280"
+          color: "#6b7280",
         }}
       >
         {dict("loading")}...
@@ -197,23 +196,25 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
 
       {/* Page Number Input for Quick Navigation */}
       {numPages && numPages > 3 && (
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.5rem",
-          padding: "0.5rem",
-          backgroundColor: "rgba(255, 255, 255, 0.9)",
-          borderTop: "1px solid #e2e8f0",
-          fontSize: "14px",
-        }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+            padding: "0.5rem",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            borderTop: "1px solid #e2e8f0",
+            fontSize: "14px",
+          }}
+        >
           <span>Ir a página:</span>
           <input
-            type="number"
+            type='number'
             min={1}
             max={numPages}
             value={currentPage}
-            onChange={(e) => goToPage(parseInt(e.target.value) || 1)}
+            onChange={e => goToPage(parseInt(e.target.value) || 1)}
             style={{
               width: "60px",
               padding: "0.25rem 0.5rem",
