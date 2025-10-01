@@ -90,9 +90,9 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
   // Get current week's dates
   const getCurrentWeekDates = () => {
     const today = new Date();
-    const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    const currentDay = today.getDay();
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - currentDay); // Go to Sunday
+    startOfWeek.setDate(today.getDate() - currentDay);
 
     const weekDates = [];
     for (let i = 0; i < 7; i++) {

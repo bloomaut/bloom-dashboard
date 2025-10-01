@@ -14,6 +14,52 @@ interface ProposalDataProps {
 
 function ProposalData({ pdfFile }: ProposalDataProps) {
   const dict = useTranslations("dict.proposal");
+
+  const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!pdfFile) {
+      console.error("No PDF file URL available");
+      return;
+    }
+
+    try {
+      // Use the proxy for external URLs to avoid CORS issues
+      const isExternalUrl = pdfFile.startsWith("http") && !pdfFile.includes(window.location.hostname);
+      const fetchUrl = isExternalUrl ? `/api/pdf-proxy?url=${encodeURIComponent(pdfFile)}` : pdfFile;
+
+      // Fetch the PDF file through proxy
+      const response = await fetch(fetchUrl);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch PDF: ${response.status}`);
+      }
+
+      const blob = await response.blob();
+
+      // Create a temporary URL for the blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a temporary anchor element and trigger download
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = pdfFile.split("/").pop()?.split("?")[0] || "propuesta-small.pdf";
+      link.style.display = "none";
+      document.body.appendChild(link);
+      /* link.click(); */
+
+      // Cleanup after a short delay to ensure download starts
+      setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }, 100);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+      alert("No se pudo descargar el PDF. Por favor, inténtalo de nuevo.");
+    }
+  };
+
   return (
     <div style={styles.mainContent}>
       <div style={styles.pdfSection}>
@@ -21,13 +67,13 @@ function ProposalData({ pdfFile }: ProposalDataProps) {
           <FileText size={"2.5rem"} color='#FFFFFF' />
           <span style={styles.pdfText}>{dict("pdf_title")}</span>
         </div>
-        <button style={styles.downloadButton}>
+        <button type='button' style={styles.downloadButton} onClick={handleDownload}>
           <Download size={"1.3rem"} />
           <p>{dict("download")}</p>
         </button>
       </div>
       <div style={styles.pdfContainer}>
-        <PDFViewer pdfUrl={pdfFile}/>
+        <PDFViewer pdfUrl={pdfFile} />
       </div>
     </div>
   );
