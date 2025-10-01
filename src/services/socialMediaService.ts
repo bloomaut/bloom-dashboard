@@ -35,7 +35,7 @@ interface TikTokConnectionResponse {
 
 export const getContent = async (startDate: string, endDate: string): Promise<any[]> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/social-media/content`, {
+    const response = await axios.get(`/api/social-media/content`, {
       params: {
         start_date: startDate,
         end_date: endDate,
@@ -50,7 +50,7 @@ export const getContent = async (startDate: string, endDate: string): Promise<an
 
 export const getProfile = async (): Promise<any> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/social-media/profile`);
+    const response = await axios.get(`/api/social-media/profile`);
     return response.data;
   } catch (error) {
     console.error("Error fetching content:", error);
@@ -60,7 +60,7 @@ export const getProfile = async (): Promise<any> => {
 
 export const fixContentIdeas = async (contentIdeaIds: string[]): Promise<boolean> => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/social-media/fix-content-ideas`, {
+    const response = await axios.post(`/api/social-media/fix-content-ideas`, {
       ids: contentIdeaIds,
     });
     return response.status === 200;
@@ -77,7 +77,7 @@ export const createContentIdea = async (
   dayTime: string,
 ): Promise<ContentIdeaResponse> => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/social-media/create-content-idea`, {
+    const response = await axios.post(`/api/social-media/create-content-idea`, {
       pillar,
       idea,
       date,
@@ -118,7 +118,7 @@ export const getSocialProfileInfo = async (platform: "tiktok" | "instagram"): Pr
 
 export const generateWeekContent = async (): Promise<{ message: string }> => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/api/social-media/week-content/next-week`);
+    const response = await axios.put(`/api/social-media/pipeline/next-week`);
     return response.data;
   } catch (error) {
     console.error("Error generating week content:", error);
