@@ -301,7 +301,7 @@ export const postOnboarding = async () => {
 
 export const approveProposal = async () => {
   try {
-    const response = await axios.get("/api/quest/approve");
+    const response = await axios.post("/api/quest/approve");
 
     if (response.status === 400) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);

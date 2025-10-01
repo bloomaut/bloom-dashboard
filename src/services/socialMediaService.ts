@@ -117,8 +117,9 @@ export const getSocialProfileInfo = async (platform: "tiktok" | "instagram"): Pr
 };
 
 export const generateWeekContent = async (): Promise<{ message: string }> => {
+  console.log("Entre")
   try {
-    const response = await axios.put(`/api/social-media/pipeline/next-week`);
+    const response = await axios.put(`/api/social-media/pipeline?pipelineType=first-login`);
     return response.data;
   } catch (error) {
     console.error("Error generating week content:", error);
