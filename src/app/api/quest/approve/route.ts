@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized: Missing token" }, { status: 401 });
     }
 
-    const response = await axios.post(
+    const response = await axios.put(
       `${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/proposal`,
       {},
       {

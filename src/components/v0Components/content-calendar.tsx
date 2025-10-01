@@ -84,15 +84,22 @@ const TIME_PERIOD_COLORS = {
 // Days of the week in divish
 const DAYS_OF_WEEK = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
+// Helper function to truncate text to 20 characters
+const truncateText = (text: string, maxLength: number = 23): string => {
+  if (!text) return "";
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength) + "...";
+};
+
 export function ContentCalendar({ contentItems, profileData }: ContentCalendarProps) {
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
 
   // Get current week's dates
   const getCurrentWeekDates = () => {
     const today = new Date();
-    const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    const currentDay = today.getDay();
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - currentDay); // Go to Sunday
+    startOfWeek.setDate(today.getDate() - currentDay);
 
     const weekDates = [];
     for (let i = 0; i < 7; i++) {
@@ -326,17 +333,17 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
         <div className='flex items-center justify-between mb-1'>
           <div className='flex items-center space-x-1'>
             <Video className='h-3 w-3' />
-            <div className='text-xs font-medium truncate'>{item.content.title}</div>
+            <div className='text-xs font-medium truncate'>{truncateText(item.content.title)}</div>
           </div>
           {item.completed && <CheckCircle className='h-3 w-3 text-green-600' />}
         </div>
 
-        <div className='text-xs opacity-75 mb-1'>{item.pillar}</div>
+        <div className='text-xs opacity-75 mb-1 truncate'>{item.pillar}</div>
 
         {item.content.hook ? (
           <div className='text-xs opacity-60 truncate'>{item.content.hook}</div>
         ) : (
-          <div className='text-xs opacity-60 truncate'>{item.content.script.substring(0, 40)}...</div>
+          <div className='text-xs opacity-60 truncate'>{item.content.script}</div>
         )}
       </div>
     );

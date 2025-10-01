@@ -164,11 +164,11 @@ export function BusinessDashboard() {
 
       {/* Main Content */}
       <main className='flex-1 overflow-auto'>
-        <div>
+        <div className='mx-2 mt-2'>
           {/* Metas y Objetivos */}
-          <section className='mb-8'>
+          {/*   <section className='mb-8'>
             <GoalsSummary goals={allGoals} />
-          </section>
+          </section> */}
 
           {/* Tabs Content */}
           <Tabs defaultValue='info' className='space-y-6'>

@@ -26,16 +26,18 @@ interface SocialProfileInfo {
 }
 
 interface TikTokConnectionResponse {
-  success: boolean;
-  accountInfo: {
-    name: string;
-    handle: string;
+  data: {
+    statusCode: number;
+    accountInfo: {
+      name: string;
+      handle: string;
+    };
   };
 }
 
 export const getContent = async (startDate: string, endDate: string): Promise<any[]> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/social-media/content`, {
+    const response = await axios.get(`/api/social-media/content`, {
       params: {
         start_date: startDate,
         end_date: endDate,
@@ -50,7 +52,7 @@ export const getContent = async (startDate: string, endDate: string): Promise<an
 
 export const getProfile = async (): Promise<any> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/social-media/profile`);
+    const response = await axios.get(`/api/social-media/profile`);
     return response.data;
   } catch (error) {
     console.error("Error fetching content:", error);
@@ -60,7 +62,7 @@ export const getProfile = async (): Promise<any> => {
 
 export const fixContentIdeas = async (contentIdeaIds: string[]): Promise<boolean> => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/social-media/fix-content-ideas`, {
+    const response = await axios.post(`/api/social-media/fix-content-ideas`, {
       ids: contentIdeaIds,
     });
     return response.status === 200;
@@ -77,7 +79,7 @@ export const createContentIdea = async (
   dayTime: string,
 ): Promise<ContentIdeaResponse> => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/social-media/create-content-idea`, {
+    const response = await axios.post(`/api/social-media/create-content-idea`, {
       pillar,
       idea,
       date,
@@ -90,10 +92,10 @@ export const createContentIdea = async (
   }
 };
 
-export const connectTikTokAccount = async (authToken: string): Promise<TikTokConnectionResponse> => {
+export const connectTikTokAccount = async (code: string): Promise<TikTokConnectionResponse> => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/social-media/connect-social-account/tiktok`, {
-      auth_token: authToken,
+    const response = await axios.put(`${API_BASE_URL}/api/social-media/connect/tiktok`, {
+      code: code,
     });
     return response.data;
   } catch (error) {
@@ -116,11 +118,10 @@ export const getSocialProfileInfo = async (platform: "tiktok" | "instagram"): Pr
   }
 };
 
-export const generateWeekContent = async (): Promise<{ message: string }> => {
-  console.log("Entre")
+export const generateWeekContent = async (type: "first-login" | "next-week"): Promise<{ message: string }> => {
+  console.log("Entre");
   try {
-    const response = await axios.put(`/api/social-media/pipeline?pipelineType=first-login`);
-    console.log("response", response.data);
+    const response = await axios.put(`/api/social-media/pipeline?pipelineType=${type}`);
     return response.data;
   } catch (error) {
     console.error("Error generating week content:", error);
