@@ -191,14 +191,22 @@ export function ContentCalendarExample() {
         // Content fetching and fixing loop
         const maxRetries = 3;
         let currentRetry = 0;
-        let finalContentData = [];
+        let finalContentData: any[] = [];
 
         while (currentRetry < maxRetries) {
           try {
             console.log(`Fetching content attempt ${currentRetry + 1}/${maxRetries}`);
             const contentResponse: any = await getContent(startDate, endDate);
 
-            // Extract ideas from the response
+            console.log("Content items:", contentResponse);
+            // Extract content from the response
+            let contentItems = [];
+            if (contentResponse.result && contentResponse.result.contents) {
+              contentItems = contentResponse.result.contents;
+            } else if (contentResponse.data && contentResponse.data.result && contentResponse.data.result.contents) {
+              contentItems = contentResponse.data.result.contents;
+            }
+
             let ideas = [];
             if (contentResponse.result && contentResponse.result.ideas) {
               ideas = contentResponse.result.ideas;
@@ -206,8 +214,9 @@ export function ContentCalendarExample() {
               ideas = contentResponse.data.result.ideas;
             }
 
-            if (ideas.length === 0) {
-              console.log("No ideas found in response, using mock data");
+            
+            if (contentItems.length === 0) {
+              console.log("No content found in response, using mock data");
               finalContentData = mockContentData;
               break;
             }
@@ -244,7 +253,7 @@ export function ContentCalendarExample() {
             }
 
             // Transform the data regardless of completion status
-            const transformedData = ideas.map((item: any) => {
+            const transformedData = contentItems.map((item: any) => {
               // Map dayTime from API to our time periods (prioritize dayTime over dayType)
               let dayTime: "morning" | "afternoon" | "evening" = "morning";
               const timeField = item.dayTime || item.dayType;
@@ -262,7 +271,7 @@ export function ContentCalendarExample() {
                 socialMedia: item.socialMedia || ("tiktok" as const),
                 publishType: (item.publishType === "video" ? "Video" : item.publishType) || ("Video" as const),
                 pillar: item.pillar || "General",
-                day: new Date(item.day),
+                day: new Date(item.day.split('T')[0] + 'T12:00:00.000Z'),
                 dayTime: dayTime,
                 completed: item.completed || item.status === "completed",
                 skinxId: item.skinxId || item.id || "",
@@ -281,7 +290,7 @@ export function ContentCalendarExample() {
                 },
               };
             });
-
+            console.log("Transformed content items:", transformedData);
             finalContentData = transformedData;
             break; // Successfully processed, exit loop
           } catch (fetchError) {
