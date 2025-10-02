@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   CheckCircle,
   Clock,
@@ -16,6 +17,8 @@ import {
   Heart,
   Brain,
   Play,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 // Type definitions
@@ -92,14 +95,16 @@ const truncateText = (text: string, maxLength: number = 23): string => {
 };
 
 export function ContentCalendar({ contentItems, profileData }: ContentCalendarProps) {
+  console.log("PROFILEDATA: ", profileData);
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
+  const [currentWeekOffset, setCurrentWeekOffset] = useState(0); // 0 = semana actual, -1 = semana anterior, 1 = semana siguiente
 
-  // Get current week's dates
-  const getCurrentWeekDates = () => {
+  // Get week dates based on offset
+  const getWeekDates = (weekOffset: number = 0) => {
     const today = new Date();
     const currentDay = today.getDay();
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - currentDay);
+    startOfWeek.setDate(today.getDate() - currentDay + weekOffset * 7);
 
     const weekDates = [];
     for (let i = 0; i < 7; i++) {
@@ -110,7 +115,41 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
     return weekDates;
   };
 
-  const weekDates = getCurrentWeekDates();
+  const weekDates = getWeekDates(currentWeekOffset);
+
+  // Navigation functions
+  const goToPreviousWeek = () => {
+    setCurrentWeekOffset(prev => prev - 1);
+  };
+
+  const goToNextWeek = () => {
+    setCurrentWeekOffset(prev => prev + 1);
+  };
+
+  const goToCurrentWeek = () => {
+    setCurrentWeekOffset(0);
+  };
+
+  // Get week range text
+  const getWeekRangeText = () => {
+    const startDate = weekDates[0];
+    const endDate = weekDates[6];
+
+    const formatDate = (date: Date) => {
+      return `${date.getDate()}/${date.getMonth() + 1}`;
+    };
+
+    if (startDate.getMonth() === endDate.getMonth()) {
+      return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+    } else {
+      return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+    }
+  };
+
+  // Check if it's current week
+  const isCurrentWeek = () => {
+    return currentWeekOffset === 0;
+  };
 
   // Group content by day and time
   const groupContentByDay = () => {
@@ -433,7 +472,39 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
       {/* Calendar Grid */}
       <Card>
         <CardHeader className='pb-3'>
-          <CardTitle className='text-lg'>Calendario de Contenido Semanal</CardTitle>
+          <div className='flex items-center justify-between'>
+            <CardTitle className='text-lg'>Calendario de Contenido Semanal</CardTitle>
+
+            {/* Week Navigation */}
+            <div className='flex items-center space-x-4'>
+              <div className='flex items-center space-x-2'>
+                <Button variant='outline' size='sm' onClick={goToPreviousWeek} className='h-8 w-8 p-0'>
+                  <ChevronLeft className='h-4 w-4' />
+                </Button>
+
+                <div className='text-center min-w-[120px]'>
+                  <div className='text-sm font-medium'>{getWeekRangeText()}</div>
+                  <div className='text-xs text-gray-500'>
+                    {isCurrentWeek()
+                      ? "Semana actual"
+                      : currentWeekOffset > 0
+                        ? `+${currentWeekOffset} semana${currentWeekOffset > 1 ? "s" : ""}`
+                        : `${currentWeekOffset} semana${currentWeekOffset < -1 ? "s" : ""}`}
+                  </div>
+                </div>
+
+                <Button variant='outline' size='sm' onClick={goToNextWeek} className='h-8 w-8 p-0'>
+                  <ChevronRight className='h-4 w-4' />
+                </Button>
+              </div>
+
+              {!isCurrentWeek() && (
+                <Button variant='outline' size='sm' onClick={goToCurrentWeek} className='text-xs px-3 py-1 h-8'>
+                  Hoy
+                </Button>
+              )}
+            </div>
+          </div>
         </CardHeader>
         <CardContent className='p-0'>
           <div className='grid grid-cols-7 gap-0 min-h-[500px]'>

@@ -6,7 +6,7 @@ import { GoalsCard } from "@/components/v0Components/goals-card";
 import { ScheduleCard } from "@/components/v0Components/schedule-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RefreshCw, Settings, Bell, TrendingUp, Users, Heart, Grid3X3 } from "lucide-react";
+import { RefreshCw, Settings, Bell, TrendingUp, Users, Heart, Grid3X3, Sparkles } from "lucide-react";
 import { AppDownload } from "@/components/v0Components/app-download";
 import { ContentCalendar } from "./content-calendar";
 import { CreateContentModal } from "./create-content-modal";
@@ -250,7 +250,7 @@ export function SocialMediaDashboard() {
               {isGenerating ? "Generando..." : "Actualizar datos"}
             </Button>
             <Button variant='outline' size='sm' className='cursor-pointer' onClick={() => setIsCreateModalOpen(true)}>
-              <Settings className='h-4 w-4 mr-2' />
+              <Sparkles className='h-4 w-4 mr-2' />
               Generar
             </Button>
           </div>
