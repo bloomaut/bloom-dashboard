@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
+import { getAccessToken } from "@auth0/nextjs-auth0";
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get("appSession")?.value;
+    //const cookieStore = cookies();
+    //const token = cookieStore.get("appSession")?.value;
+    const res = new NextResponse();
+    const { accessToken } = await getAccessToken(req, res);
 
-    if (!token) {
+    if (!accessToken) {
       return NextResponse.json({ error: "Unauthorized: Missing token" }, { status: 401 });
     }
 
@@ -16,14 +19,14 @@ export async function POST(req: NextRequest) {
       {},
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
 
     return NextResponse.json(response.data);
   } catch (error: any) {
-    console.error("POST /api/post-onboarding error:", error);
+    console.error("PUT /api/quest/approve error:", error);
     if (axios.isAxiosError(error)) {
       return NextResponse.json(
         { error: error.response?.data || "Upstream API error" },

@@ -73,7 +73,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
     );
   }
-
+  console.log("USER LAYOUT: ", user);
   return (
     <div className={styles.container} id='layout_container'>
       <TutorialProvider>
@@ -91,7 +91,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
           pauseOnHover
           transition={Slide}
         />
-        {user.client.proposal_status !== "APPROVED" ? (
+        {user.client.proposal_status !== "approved" ? (
           <div className={styles.inner_container} style={{ width: "100%", height: "100%" }} id='inner_container'>
             <div
               className={styles.children_container}

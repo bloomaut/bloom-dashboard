@@ -52,6 +52,7 @@ function Questionaire() {
 
   useEffect(() => {
     const handleGet = async () => {
+      console.log("USER: ", user);
       if (user.client.id === null || !user.client.id) return;
       const data = await getQuest(user.client.id);
       if (data.message === "No user found" || !data) {
@@ -64,12 +65,10 @@ function Questionaire() {
         };
         //postQuest(newData);
         dispatch(setFirstQuestData(newData));
-        setTab("wishlist");
+        setTab("terms");
       } else {
         dispatch(setQuestData(data));
-        if (user.client.wish_list === true) {
-          setTab("wishlist");
-        } else if (!data[0].terms) {
+        if (!data[0].terms) {
           setTab("terms");
         } else if (!data[4].questions[4].answer) {
           setTab("quest");

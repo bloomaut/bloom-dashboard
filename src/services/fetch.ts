@@ -301,7 +301,8 @@ export const postOnboarding = async () => {
 
 export const approveProposal = async () => {
   try {
-    const response = await axios.post("/api/quest/approve");
+    // Cambiar de POST a PUT
+    const response = await axios.put("/api/quest/approve");
 
     if (response.status === 400) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
