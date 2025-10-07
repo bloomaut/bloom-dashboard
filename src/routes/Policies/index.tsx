@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 import { last_update, policies } from "@/utils/policies";
 import Image from "next/image";
-import logo from "@/../public/assets/logo_small_color.png";
+import logo from "@/../public/assets/default_image.jpg";
 
 const Policies = () => {
   const dict = useTranslations("dict.privacy");
