@@ -107,7 +107,7 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
   }
 
   // Determine the PDF file URL and proxy if needed
-  const originalFile = pdfUrl || user?.client?.proposal_url || "/pdf/ejemplo-doc-propuesta-comercial.pdf";
+  const originalFile = pdfUrl || user?.client?.proposal_url || "";
 
   // Check if the URL is external and needs proxying
   const isExternalUrl = originalFile.startsWith("http") && !originalFile.includes(window.location.hostname);
