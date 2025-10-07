@@ -1,5 +1,6 @@
-import HomePage from "@/routes/Home";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return <HomePage />;
+export default function Home({ params: { locale } }: { params: { locale: string } }) {
+  redirect(`/${locale}/my-business`);
+  return null;
 }

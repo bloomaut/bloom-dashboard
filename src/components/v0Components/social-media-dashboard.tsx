@@ -2,12 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { ProfileInfoCard } from "@/components/v0Components/profile-info-card";
-import { GoalsCard } from "@/components/v0Components/goals-card";
 import { ScheduleCard } from "@/components/v0Components/schedule-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RefreshCw, Settings, Bell, TrendingUp, Users, Heart, Grid3X3, Sparkles } from "lucide-react";
-import { AppDownload } from "@/components/v0Components/app-download";
 import { ContentCalendar } from "./content-calendar";
 import { CreateContentModal } from "./create-content-modal";
 import { generateWeekContent, getContent, getProfile, fixContentIdeasWithRetry } from "@/services/socialMediaService";

@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Instagram, MessageCircle, CheckCircle, Clock, AlertCircle } from "lucide-react";
-import { useTutorial } from "@/context/TutorialContext";
 import { connectTikTokAccount, generateWeekContent } from "@/services/socialMediaService";
 import { useMessageToast } from "@/hooks/useMessageToast";
 

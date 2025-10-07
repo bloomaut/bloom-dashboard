@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Building2, Share2, Users, DollarSign, ChevronLeft, Inbox, Package } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useTutorial } from "@/context/TutorialContext";
-import { TutorialStepper } from "./TutorialStepper";
 import Image from "next/image";
 
 const navigation = [
@@ -23,7 +21,6 @@ interface SidebarProps {
 
 export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
   const pathname = usePathname();
-  const { isCompleted } = useTutorial();
   const isEnPath = pathname.startsWith("/en");
 
   return (

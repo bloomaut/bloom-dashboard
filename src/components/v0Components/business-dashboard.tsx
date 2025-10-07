@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GoalsSummary } from "@/components/v0Components/goals-summary";
 import {
   Upload,
   Save,
@@ -466,4 +465,3 @@ export function BusinessDashboard() {
     </div>
   );
 }
-export { GoalsSummary };

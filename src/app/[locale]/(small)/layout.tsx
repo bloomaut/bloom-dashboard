@@ -3,13 +3,11 @@ import styles from "./styles.module.scss";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 // Components
-import Navbar from "@/components/Navbar";
 import SideTrack from "@/components/SideTrack";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Questionaire from "@/components/Questionaire/Questionaire";
 import { Sidebar } from "@/components/v0Components/Sidebar";
-import { TutorialProvider } from "@/context/TutorialContext";
 import { useAppSelector } from "@/store/hooks";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {
@@ -76,41 +74,35 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
   console.log("USER LAYOUT: ", user);
   return (
     <div className={styles.container} id='layout_container'>
-      <TutorialProvider>
-        {/* <Navbar /> */}
-        <ToastContainer
-          position='bottom-right'
-          limit={2}
-          autoClose={2000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          transition={Slide}
-        />
-        {user.client.proposal_status !== "approved" ? (
-          <div className={styles.inner_container} style={{ width: "100%", height: "100%" }} id='inner_container'>
-            <div
-              className={styles.children_container}
-              style={{ width: "100%", height: "100%" }}
-              id='children_container'
-            >
-              <Questionaire />
-            </div>
+      {/* <Navbar /> */}
+      <ToastContainer
+        position='bottom-right'
+        limit={2}
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Slide}
+      />
+      {user.client.proposal_status !== "approved" ? (
+        <div className={styles.inner_container} style={{ width: "100%", height: "100%" }} id='inner_container'>
+          <div className={styles.children_container} style={{ width: "100%", height: "100%" }} id='children_container'>
+            <Questionaire />
           </div>
-        ) : (
-          <div className={styles.inner_container} id='inner_container'>
-            <Sidebar />
-            <SideTrack />
-            <div className={styles.children_container} id='children_container'>
-              {children}
-            </div>
+        </div>
+      ) : (
+        <div className={styles.inner_container} id='inner_container'>
+          <Sidebar />
+          <SideTrack />
+          <div className={styles.children_container} id='children_container'>
+            {children}
           </div>
-        )}
-      </TutorialProvider>
+        </div>
+      )}
     </div>
   );
 };
