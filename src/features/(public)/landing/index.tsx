@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./loginLanding.module.scss";
+import styles from "./styles/landing.module.scss";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { FaLinkedinIn, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";

@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 import "./globals.css";
 
-interface ErrorProps {
-  children: ReactNode;
-}
-
-export default function GlobalError({ children }: ErrorProps) {
-  return <>{children}</>;
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang='auto'>
+      <body>{children}</body>
+    </html>
+  );
 }

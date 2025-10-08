@@ -1,11 +1,11 @@
 import "@/styles/globals.scss";
 import type { Metadata } from "next";
 import { locales } from "@/navigation";
-import { NextIntlClientProvider, useMessages } from "next-intl";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Providers } from "@/store/provider";
 import { notFound } from "next/navigation";
 import { Barlow, Roboto } from "next/font/google";
+import { NextIntlClientProvider, useMessages } from "next-intl";
 
 const barlow = Barlow({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function PublicLayout({
   children,
   params: { locale },
 }: {
@@ -49,13 +49,9 @@ export default function RootLayout({
   return (
     <Providers>
       <UserProvider>
-        <html lang={locale}>
-          <body className={`${barlow.className} ${barlow.variable} ${roboto.variable}`}>
-            <NextIntlClientProvider locale={locale} messages={messages}>
-              {children}
-            </NextIntlClientProvider>
-          </body>
-        </html>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <div className={`${barlow.className} ${barlow.variable} ${roboto.variable}`}>{children}</div>
+        </NextIntlClientProvider>
       </UserProvider>
     </Providers>
   );

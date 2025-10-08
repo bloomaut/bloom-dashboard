@@ -2,11 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import styles from "./pricing.module.scss";
+import styles from "./styles/pricing.module.scss";
 
 export default function PricingPage() {
   const dict = useTranslations("dict");
