@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PublicLayout({
+export default function AppLayout({
   children,
   params: { locale },
 }: {

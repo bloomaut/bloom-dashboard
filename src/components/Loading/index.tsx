@@ -1,31 +1,30 @@
 "use client";
-import styles from "./styles.module.scss";
-import { Oval } from "react-loader-spinner";
-import ReactDOM from "react-dom";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+
+// Cargamos el spinner sin SSR para evitar diferencias de marcado
+const Spinner = dynamic(() => import("react-loader-spinner").then(m => m.TailSpin), { ssr: false });
 
 const LoadingSpinner = ({ home = false }: { home?: boolean }) => {
-  const isClient = typeof window !== "undefined";
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  if (!isClient) {
-    return <div style={{ display: "none" }} />;
-  }
-
-  return ReactDOM.createPortal(
-    <div className={home ? `${styles.loadingWrapper} ${styles.loadingHome}` : `${styles.loadingWrapper}`}>
-      <Oval
-        height={50}
-        width={50}
-        color='#ff3d02'
-        wrapperStyle={{}}
-        wrapperClass=''
-        visible={true}
-        ariaLabel='oval-loading'
-        secondaryColor='#ffc8b8'
-        strokeWidth={2}
-        strokeWidthSecondary={2}
-      />
-    </div>,
-    document.body,
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: home ? "24px" : "12px",
+      }}
+    >
+      {mounted ? (
+        <Spinner height={48} width={48} color='#FD7E14' ariaLabel='loading' />
+      ) : (
+        // Placeholder estable en SSR para evitar mismatches
+        <div style={{ width: 48, height: 48 }} />
+      )}
+    </div>
   );
 };
 

@@ -1,5 +1,6 @@
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LayoutWrapper } from "./LayoutWrapper";
+import LayoutWrapper from "../components/LayoutWrapper";
 
 export default function Config() {
   return (

@@ -1,0 +1,23 @@
+.container {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+}
+
+.content {
+  text-align: center;
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #666;
+}
+
+.error {
+  color: red;
+  margin-top: 12px;
+}

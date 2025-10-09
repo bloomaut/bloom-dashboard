@@ -2,32 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Users, Settings, Menu, X } from "lucide-react";
 
 const navigation = [
-  {
-    name: "Dashboard",
-    href: "dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Gestión de Usuarios",
-    href: "usuarios",
-    icon: Users,
-  },
-  {
-    name: "Configuración",
-    href: "configuracion",
-    icon: Settings,
-  },
+  { name: "Métricas", href: "metrics", icon: LayoutDashboard },
+  { name: "Usuarios", href: "users", icon: Users },
+  { name: "Configuración", href: "settings", icon: Settings },
 ];
 
-export function Sidebar({ setTab, tab }: { setTab: (tab: string) => void; tab: string }) {
+export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { locale } = useParams() as { locale: string };
 
   return (
     <div>
@@ -65,24 +54,23 @@ export function Sidebar({ setTab, tab }: { setTab: (tab: string) => void; tab: s
           {/* Navigation */}
           <nav className='flex-1 px-4 py-6 space-y-2'>
             {navigation.map(item => {
+              const href = `/${locale}/backoffice/${item.href}`;
+              const isActive = pathname?.startsWith(href);
               return (
-                <div
+                <Link
                   key={item.name}
+                  href={href}
                   className={cn(
-                    "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group cursor-pointer",
-                    tab === item.href
+                    "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group",
+                    isActive
                       ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
                       : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                   )}
-                  onClick={() => {
-                    console.log(item.href), setTab(item.href);
-                  }}
+                  onClick={() => setIsOpen(false)}
                 >
-                  <div className='flex items-center'>
-                    <item.icon className='mr-3 h-5 w-5' />
-                    {item.name}
-                  </div>
-                </div>
+                  <item.icon className='mr-3 h-5 w-5' />
+                  {item.name}
+                </Link>
               );
             })}
           </nav>

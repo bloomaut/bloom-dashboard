@@ -7,7 +7,7 @@ interface LayoutWrapperProps {
   breadcrumbs?: Array<{ label: string; href?: string }>;
 }
 
-export function LayoutWrapper({ children, title, description, breadcrumbs }: LayoutWrapperProps) {
+export default function LayoutWrapper({ children, title, description, breadcrumbs }: LayoutWrapperProps) {
   return (
     <div className='flex min-h-screen bg-white items-center justify-center'>
       <div className='text-center'>

@@ -41,7 +41,7 @@ export default function SmallLanding() {
             </Link>
 
             {/* Botón CTA */}
-            <Link href='/api/auth/login'>
+            <Link href={`/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`}>
               <button className={styles.headerButton}>{dict("header.cta")}</button>
             </Link>
           </div>
@@ -70,7 +70,7 @@ export default function SmallLanding() {
             <span className={styles.boldText}>{dict("hero.description_ecommerce")}</span> {dict("hero.description_end")}{" "}
             <span className={styles.secondaryBold}>{dict("hero.description_free")}</span>
           </p>
-          <Link href='/api/auth/login'>
+          <Link href={`/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`}>
             <button className={styles.heroButton}>{dict("hero.cta")}</button>
           </Link>
         </div>
@@ -135,7 +135,7 @@ export default function SmallLanding() {
           </div>
 
           <div className={styles.ctaButtonContainer}>
-            <Link href='/api/auth/login'>
+            <Link href={`/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`}>
               <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
             </Link>
             <p className={styles.ctaDisclaimer}>{dict("cta_section.disclaimer")}</p>

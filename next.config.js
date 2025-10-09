@@ -19,4 +19,7 @@ module.exports = withNextIntl({
     includePaths: [path.join(__dirname, "src/styles")],
     prependData: `@import "theme.scss";`,
   },
+  compiler: {
+    styledComponents: true,
+  },
 });

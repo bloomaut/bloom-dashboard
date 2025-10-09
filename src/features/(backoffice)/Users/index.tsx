@@ -1,6 +1,6 @@
 "use client";
-
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ import {
   MoreHorizontal,
   Eye,
 } from "lucide-react";
-import styles from "./backoffice.module.css";
+import styles from "./styles/users.module.css";
 
 // service helpers
 import {
@@ -79,6 +79,7 @@ function normalizeUser(u: any, appliedFilter?: string) {
 }
 
 export default function UserManagement() {
+  const { locale } = useParams() as { locale: string };
   const [statusFilter, setStatusFilter] = useState("todos");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -341,7 +342,7 @@ export default function UserManagement() {
                         </div>
 
                         <div className='ml-4 flex-shrink-0'>
-                          <Link href={`/usuarios/${user.id}`}>
+                          <Link href={`/${locale}/backoffice/users/${user.id}`}>
                             <Button variant='ghost' size='sm' className='h-8 w-8 p-0'>
                               <Eye className='h-4 w-4' />
                             </Button>
@@ -411,7 +412,7 @@ export default function UserManagement() {
                         <TableCell className='text-slate-600'>{formatDate(user.registrationDate)}</TableCell>
                         <TableCell className='text-right'>
                           <div className='flex justify-center mr-7'>
-                            <Link href={`/usuarios/${user.id}`}>
+                            <Link href={`/${locale}/backoffice/users/${user.id}`}>
                               <Button
                                 variant='ghost'
                                 size='sm'

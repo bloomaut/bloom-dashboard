@@ -13,24 +13,15 @@ const barlow = Barlow({
 
 const NotFoundHandler = () => {
   return (
-    <html>
-      <body className={barlow.className}>
-        <div className={styles.container}>
-          <Image
-            src={"/logotipo_horizontal.png"}
-            alt='Small'
-            className={styles.logo}
-            width={300}
-            height={300}
-            priority
-          />
-          <h1>Oops! Page not found</h1>
-          <Link href={"/"} className=''>
-            Go Back
-          </Link>
-        </div>
-      </body>
-    </html>
+    <div className={barlow.className}>
+      <div className={styles.container}>
+        <Image src={"/logotipo_horizontal.png"} alt='Small' className={styles.logo} width={300} height={300} priority />
+        <h1>Oops! Page not found</h1>
+        <Link href={"/"} className=''>
+          Go Back
+        </Link>
+      </div>
+    </div>
   );
 };
 

@@ -1,7 +1,8 @@
+"use client";
 import { useEffect, useState } from "react";
 import { getUsersStats } from "@/services/userFetch";
-import { DashboardCharts } from "./DashboardCharts";
-import { DashboardStats } from "./DashboardStats";
+import { DashboardCharts } from "../components/DashboardCharts";
+import { DashboardStats } from "../components/DashboardStats";
 
 interface UserStats {
   total: number;

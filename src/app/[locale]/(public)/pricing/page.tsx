@@ -1,5 +1,4 @@
-"use client";
-import Pricing from "@/features/(public)/pricing";
+import Pricing from "@/features/(public)/Pricing";
 
 export default function PricingPage() {
   return <Pricing />;

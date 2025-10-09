@@ -5,9 +5,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import styles from "./styles/pricing.module.scss";
+import { usePathname } from "next/navigation";
 
 export default function PricingPage() {
   const dict = useTranslations("dict");
+  const pathname = usePathname();
+  const en = pathname.includes("/en");
 
   const plans = [
     {
@@ -78,7 +81,7 @@ export default function PricingPage() {
   const handlePlanClick = (actionType: string) => {
     if (actionType === "free" || actionType === "pro") {
       // Redirigir a la página de login/auth como en la landing page
-      window.location.href = "/api/auth/login";
+      window.location.href = `/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`;
     }
     // Para ecommerce no hacemos nada ya que está deshabilitado (coming soon)
   };
