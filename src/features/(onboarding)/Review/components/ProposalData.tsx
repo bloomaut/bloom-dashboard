@@ -2,7 +2,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { Download, FileText } from "lucide-react";
-import { styles } from "./styles";
+import { styles } from "../styles/styles";
 import { useTranslations } from "next-intl";
 
 // client-only dynamic import to ensure react-pdf bundle isn't required during SSR
@@ -44,10 +44,10 @@ function ProposalData({ pdfFile }: ProposalDataProps) {
       // Create a temporary anchor element and trigger download
       const link = document.createElement("a");
       link.href = url;
-      link.download = pdfFile.split("/").pop()?.split("?")[0] || "propuesta-small.pdf";
+      link.download = "bloom_proposal.pdf";
       link.style.display = "none";
       document.body.appendChild(link);
-      /* link.click(); */
+      link.click();
 
       // Cleanup after a short delay to ensure download starts
       setTimeout(() => {
@@ -56,7 +56,12 @@ function ProposalData({ pdfFile }: ProposalDataProps) {
       }, 100);
     } catch (error) {
       console.error("Error downloading PDF:", error);
-      alert("No se pudo descargar el PDF. Por favor, inténtalo de nuevo.");
+      // Fallback: abrir en nueva pestaña para no bloquear al usuario
+      const fallbackUrl =
+        pdfFile.startsWith("http") && !pdfFile.includes(window.location.hostname)
+          ? `/api/pdf-proxy?url=${encodeURIComponent(pdfFile)}`
+          : pdfFile;
+      window.open(fallbackUrl, "_blank", "noopener,noreferrer");
     }
   };
 

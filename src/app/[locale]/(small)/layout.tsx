@@ -6,7 +6,7 @@ import { Slide } from "react-toastify";
 import SideTrack from "@/components/SideTrack";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Questionaire from "@/components/Questionaire/Questionaire";
+import Questionary from "@/features/(onboarding)/Questionary";
 import { Sidebar } from "@/components/v0Components/Sidebar";
 import { useAppSelector } from "@/store/hooks";
 
@@ -91,7 +91,7 @@ const SmallLayout = ({ children }: { children: React.ReactNode }) => {
       {user.client.proposal_status !== "approved" ? (
         <div className={styles.inner_container} style={{ width: "100%", height: "100%" }} id='inner_container'>
           <div className={styles.children_container} style={{ width: "100%", height: "100%" }} id='children_container'>
-            <Questionaire />
+            <Questionary />
           </div>
         </div>
       ) : (

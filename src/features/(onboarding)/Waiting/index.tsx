@@ -1,46 +1,61 @@
 "use client";
-import React, { useEffect } from "react";
-import { CircleLoader } from "./Spinner";
-import { postOnboarding, postProp } from "@/services/fetch";
-import { generatePropPayload } from "./questions";
-import PollUser from "./Polling";
+import React from "react";
+import { CircleLoader } from "../components/Spinner";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import { useAppDispatch } from "@/store/hooks";
+import { setUserData } from "@/store/features/userSlice";
+import { get } from "@/services/fetch";
 
-function Fin({
-  setTab,
-  questData,
-}: {
-  setTab: React.Dispatch<React.SetStateAction<string>>;
-  questData: {
-    userId: string;
-    answers: string[];
-    terms: boolean;
-    completed: boolean;
-    prop: boolean;
-  };
-}) {
+function Waiting() {
   const dict = useTranslations("dict.completion");
+  const router = useRouter();
+  const locale = useLocale();
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    let hasExecuted = false;
+  React.useEffect(() => {
+    let intervalId: ReturnType<typeof setInterval> | null = null;
+    let redirected = false;
 
-    const timeoutId = setTimeout(async () => {
-      if (!hasExecuted) {
-        hasExecuted = true;
-        try {
-          const payload = generatePropPayload({ userId: questData.userId, answers: questData.answers });
-          await postProp(payload);
-          postOnboarding();
-        } catch (error) {
-          console.error("Error posting prop:", error);
+    const checkStatus = async () => {
+      try {
+        const resUser = await get("user/me");
+        if (resUser?.statusCode === 200) {
+          const user = resUser.result.user;
+          dispatch(setUserData(user));
+
+          const client = user?.client ?? user;
+          const status = client?.proposal_status;
+          const proposalUrl = client?.proposal_url;
+
+          // Cuando el documento esté listo, ir a la revisión
+          if (!redirected && proposalUrl && status === "pending") {
+            redirected = true;
+            if (intervalId) clearInterval(intervalId);
+            router.push(`/${locale}/onboarding/review`);
+          }
+
+          // Si ya fue aprobada, salir del onboarding al dashboard
+          if (!redirected && status === "approved") {
+            redirected = true;
+            if (intervalId) clearInterval(intervalId);
+            router.push(`/${locale}/dashboard`);
+          }
         }
+      } catch (err) {
+        console.error("Error al consultar estado de propuesta:", err);
       }
-    }, 2000);
+    };
+
+    // Llamada inmediata y luego cada 3 minutos
+    checkStatus();
+    intervalId = setInterval(checkStatus, 180000);
 
     return () => {
-      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
     };
-  }, []); // Mantener array vacío pero con cleanup
+  }, [dispatch, router, locale]);
 
   return (
     <div
@@ -173,9 +188,7 @@ function Fin({
             maxWidth: "500px",
             marginTop: "2rem",
           }}
-        >
-          <PollUser setTab={setTab} />
-        </div>
+        ></div>
 
         {/* Información adicional con mejor diseño */}
         <div
@@ -258,4 +271,4 @@ function Fin({
   );
 }
 
-export default Fin;
+export default Waiting;

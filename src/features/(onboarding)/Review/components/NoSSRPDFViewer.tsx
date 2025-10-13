@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { styles } from "./styles";
+import { styles } from "../styles/styles";
 
 type LoadedPdf = {
   Document: any;

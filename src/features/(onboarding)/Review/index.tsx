@@ -1,17 +1,16 @@
+"use client";
 import React from "react";
-import ProposalData from "./proposal/ProposalData";
-import ProposalActions from "./proposal/ProposalActions";
-import { styles } from "./proposal/styles";
+import ProposalData from "./components/ProposalData";
+import ProposalActions from "./components/ProposalActions";
+import { styles } from "./styles/styles";
 import { useTranslations } from "next-intl";
-import { UserBusiness } from "@/typescript/interfaces/business.interface";
+import { useAppSelector } from "@/store/hooks";
 
-type Props = {
-  user: UserBusiness;
-};
-
-function Proposal({ user }: Props) {
-  const pdfFile = user.client.proposal_url;
+function Review() {
+  const user = useAppSelector(state => state.userData);
+  const pdfFile = user?.client?.proposal_url || null;
   const dict = useTranslations("dict.proposal");
+  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
 
   return (
     <div style={styles.container}>
@@ -24,7 +23,7 @@ function Proposal({ user }: Props) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: window.innerWidth >= 1024 ? "2fr 1fr" : "1fr",
+          gridTemplateColumns: isDesktop ? "2fr 1fr" : "1fr",
           gap: "1rem",
         }}
       >
@@ -37,4 +36,4 @@ function Proposal({ user }: Props) {
   );
 }
 
-export default Proposal;
+export default Review;

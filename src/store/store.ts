@@ -3,7 +3,7 @@ import userSlice from "./features/userSlice";
 import dataSchemaSlice from "./features/dataschemaSlice";
 import ricardoSlice from "./features/ricardoSlice";
 import subdomainsSlice from "./features/subdomainsSlice";
-import questSlice from "./questSlice";
+import questSlice from "../features/(onboarding)/Questionary/store/questSlice";
 
 export const store = configureStore({
   reducer: {

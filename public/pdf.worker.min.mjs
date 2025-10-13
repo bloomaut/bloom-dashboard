@@ -53055,7 +53055,7 @@ class WorkerMessageHandler {
     const n = new Set(),
       s = getVerbosityLevel(),
       { docId: o, apiVersion: c } = e,
-      l = "5.3.93";
+      l = "5.3.31";
     if (c !== l) throw new Error(`The API version "${c}" does not match the Worker version "${l}".`);
     const buildMsg = (e, t) =>
       `The \`${e}.prototype\` contains unexpected enumerable property "${t}", thus breaking e.g. \`for...in\` iteration of ${e}s.`;

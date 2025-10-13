@@ -1,13 +1,53 @@
+"use client";
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { update, get } from "@/services/fetch";
+import { setUserData } from "@/store/features/userSlice";
 
-interface Props {
-  handleTerms: () => void;
-}
-
-export default function Terms({ handleTerms }: Props) {
+export default function Terms() {
   const [term, setTerm] = useState(false);
   const dict = useTranslations("dict.terms");
+
+  const user = useAppSelector(state => state.userData);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const locale = useLocale();
+  const [loading, setLoading] = useState(false);
+
+  const handleTerms = async () => {
+    if (!term || loading) return;
+
+    const clientId = user?.client?.id;
+    if (!clientId) {
+      console.error("Client ID no disponible en userData");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await update("user", {
+        client: {
+          id: clientId,
+          proposal_status: "terms_accepted",
+        },
+      });
+
+      const resUser = await get("user/me");
+      console.log("resUser:", resUser);
+      if (resUser?.statusCode === 200 && resUser?.result?.user) {
+        dispatch(setUserData(resUser.result.user));
+      }
+
+      router.replace(`/${locale}/onboarding/questionary`);
+    } catch (error) {
+      console.error("Error al aceptar términos:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -182,36 +222,36 @@ export default function Terms({ handleTerms }: Props) {
             fontSize: "clamp(0.9rem, 2vw, 1.1rem)",
             fontWeight: 500,
             gap: "clamp(0.5rem, 1.5vw, 0.8rem)",
-            cursor: term ? "pointer" : "not-allowed",
+            cursor: term && !loading ? "pointer" : "not-allowed",
             transition: "all 0.3s ease",
             boxShadow: term ? "0 6px 16px var(--color-primary)" : "none",
             transform: term ? "translateY(0)" : "none",
             margin: "0 1rem",
             padding: "0",
+            opacity: loading ? 0.8 : 1,
           }}
           onClick={() => {
-            if (!term) return;
+            if (!term || loading) return;
             handleTerms();
           }}
-          disabled={!term}
+          disabled={!term || loading}
+          aria-busy={loading}
           onMouseEnter={e => {
-            if (term && window.innerWidth > 768) {
-              // Solo hover en desktop
+            if (term && !loading && window.innerWidth > 768) {
               e.currentTarget.style.backgroundColor = "#5A0075";
               e.currentTarget.style.transform = "translateY(-3px)";
               e.currentTarget.style.boxShadow = "0 8px 20px #5A0075";
             }
           }}
           onMouseLeave={e => {
-            if (term && window.innerWidth > 768) {
-              // Solo hover en desktop
+            if (term && !loading && window.innerWidth > 768) {
               e.currentTarget.style.backgroundColor = "var(--color-primary)";
               e.currentTarget.style.transform = "translateY(0)";
               e.currentTarget.style.boxShadow = "0 6px 16px var(--color-primary)";
             }
           }}
         >
-          {dict("continue_button")}
+          {loading ? "Procesando..." : dict("continue_button")}
         </button>
       </div>
     </div>

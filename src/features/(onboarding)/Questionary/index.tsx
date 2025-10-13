@@ -1,21 +1,22 @@
-// Updated QuestForm component with modern styling matching FormularioEmprendedor
+"use client";
+
 import React, { useState, useRef, useEffect } from "react";
-import { QuestData } from "./Questionaire";
-import Icon from "../Icon";
-import { questions, questionsES } from "./questions";
+import Icon from "../../../components/Icon";
+import { questions, questionsES, generatePropPayload } from "./utils/questions";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { get, postProp, postOnboarding } from "@/services/fetch";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  updateQuestData,
+  setCurrentIndex,
+  setUserId,
+  hydrateQuestAnswers,
+} from "@/features/(onboarding)/Questionary/store/questSlice";
+import { setUserData } from "@/store/features/userSlice";
+import { MOCK_ANSWERS_ES } from "./utils/mockAnswers";
 
-interface Props {
-  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, index: number) => void;
-  handleIndex: (operation: string) => void;
-  currentIndex: number;
-  questData: QuestData;
-  setIndex: React.Dispatch<React.SetStateAction<number>>;
-  empty: boolean;
-}
-
-function QuestForm({ handleChange, handleIndex, currentIndex, questData, setIndex, empty }: Props) {
+function Questionary() {
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -24,15 +25,163 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
   const [showMainQuestion, setShowMainQuestion] = useState(false);
   const dict = useTranslations("dict.questionnaire");
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const mockAppliedRef = useRef(false);
   const en = pathname.includes("/en");
+
+  const dispatch = useAppDispatch();
+  const questData = useAppSelector(s => s.questData);
+  const currentIndex = questData.currentIndex;
+  const [empty, setEmpty] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const storageKey = questData.userId ? `questionary::${questData.userId}::${en ? "en" : "es"}` : null;
+
+  useEffect(() => {
+    let cancelled = false;
+    const boot = async () => {
+      try {
+        const {
+          result: { user },
+        } = await get("user/me");
+        const uid = user?.client?.id ?? user?.id ?? null;
+        if (cancelled) return;
+        dispatch(setUserId(uid));
+
+        if (uid) {
+          const key = `questionary::${uid}::${en ? "en" : "es"}`;
+          const raw = localStorage.getItem(key);
+          if (raw) {
+            const parsed = JSON.parse(raw) as { answers: string[]; currentIndex?: number };
+            dispatch(hydrateQuestAnswers(parsed.answers));
+            const targetLen = (en ? questions : questionsES).length;
+            if (
+              typeof parsed.currentIndex === "number" &&
+              parsed.currentIndex >= 0 &&
+              parsed.currentIndex < targetLen
+            ) {
+              dispatch(setCurrentIndex(parsed.currentIndex));
+            } else {
+              const lastAnswered = parsed.answers.reduce((acc, v, i) => (v ? i : acc), 0);
+              dispatch(setCurrentIndex(lastAnswered));
+            }
+          } else {
+            // posicionarse en la última contestada si hubiera algo en state
+            const lastAnswered = questData.answers.reduce((acc, v, i) => (v ? i : acc), 0);
+            dispatch(setCurrentIndex(lastAnswered));
+          }
+        }
+      } catch {
+        // sin userId -> persistencia desactivada
+      }
+    };
+    boot();
+    return () => {
+      cancelled = true;
+    };
+  }, [dispatch, en]);
+
+  useEffect(() => {
+    if (!storageKey) return;
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({ answers: questData.answers, currentIndex }));
+    } catch {}
+  }, [storageKey, questData.answers, currentIndex]);
+
+  const handleIndex = (op: "add" | "subtract") => {
+    const total = en ? questions.length : questionsES.length;
+    if (op === "add") {
+      const q = (en ? questions : questionsES)[currentIndex];
+      const ans = questData.answers[currentIndex];
+      const ok = !q?.mandatory || (ans && ans.trim() !== "");
+      setEmpty(!ok);
+      if (!ok) return;
+
+      if (currentIndex >= total - 1) {
+        submitAnswers();
+      } else {
+        dispatch(setCurrentIndex(currentIndex + 1));
+      }
+    } else if (op === "subtract" && currentIndex > 0) {
+      dispatch(setCurrentIndex(currentIndex - 1));
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, index: number) => {
+    const value = e.target.value ?? "";
+    dispatch(updateQuestData({ index, data: value }));
+  };
+
+  const submitAnswers = async () => {
+    if (submitting) return;
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const uid = questData.userId || null;
+      if (!uid) throw new Error("No pudimos resolver tu usuario para enviar el cuestionario.");
+
+      // 1) Enviar respuestas estructuradas (entrevista por bloques)
+      const payload = generatePropPayload({ userId: String(uid), answers: questData.answers });
+      console.log("payload:", payload);
+      const propRes = await postProp(payload);
+      if (propRes?.error) {
+        throw new Error(typeof propRes.error === "string" ? propRes.error : "Error al enviar respuestas");
+      }
+      console.log("propRes:", propRes);
+      // 2) Notificar avance de onboarding (proxy interno a pipeline/onboarding)
+      const onboardingRes = await postOnboarding();
+      console.log("onboardingRes:", onboardingRes);
+      if (onboardingRes?.error) {
+        throw new Error(typeof onboardingRes.error === "string" ? onboardingRes.error : "Error en postOnboarding");
+      }
+
+      // 3) Hidratar el usuario local con el nuevo proposal_status ("processing")
+      const resUser = await get("user/me");
+      console.log("resUser questionary:", resUser);
+      if (resUser?.statusCode === 200 && resUser?.result?.user) {
+        dispatch(setUserData(resUser.result.user));
+      }
+
+      // Persistencia y redirección
+      try {
+        if (storageKey) {
+          const raw = localStorage.getItem(storageKey);
+          const parsed = raw ? JSON.parse(raw) : {};
+          parsed.completed = true;
+          localStorage.setItem(storageKey, JSON.stringify(parsed));
+        }
+      } catch {}
+
+      const locale = en ? "en" : "es";
+      router.replace(`/${locale}/onboarding/waiting`);
+    } catch (err: any) {
+      setSubmitError(err?.message ?? "Error al enviar tus respuestas");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     for (let index = 0; index < questData.answers.length; index++) {
       if (questData.answers[index]) {
-        setIndex(index);
+        dispatch(setCurrentIndex(index));
       }
     }
   }, []);
+
+  useEffect(() => {
+    // Autocompletar (mock) activado por query param ?mock=1
+    if (mockAppliedRef.current) return;
+    const mock = searchParams.get("mock");
+    if (mock === "1" && questData.userId) {
+      const total = en ? questions.length : questionsES.length;
+      const incoming = MOCK_ANSWERS_ES;
+      dispatch(hydrateQuestAnswers(incoming));
+      dispatch(setCurrentIndex(total - 1));
+      mockAppliedRef.current = true;
+    }
+  }, [dispatch, searchParams, questData.userId, en]);
 
   useEffect(() => {
     setShowConditional(false);
@@ -1018,8 +1167,8 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
               : "linear-gradient(90deg, #ccc 0%, #999 100%)",
             color: "white",
             fontWeight: "700",
-            cursor: isCurrentQuestionCompleted() ? "pointer" : "not-allowed",
-            opacity: isCurrentQuestionCompleted() ? 1 : 0.6,
+            cursor: isCurrentQuestionCompleted() && !submitting ? "pointer" : "not-allowed",
+            opacity: submitting ? 0.85 : isCurrentQuestionCompleted() ? 1 : 0.6,
             transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             fontFamily: "Inter, sans-serif",
             boxShadow: isCurrentQuestionCompleted()
@@ -1028,8 +1177,11 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
             position: "relative",
             overflow: "hidden",
           }}
-          onClick={() => isCurrentQuestionCompleted() && handleIndex("add")}
-          disabled={!isCurrentQuestionCompleted()}
+          onClick={() => {
+            if (!isCurrentQuestionCompleted() || submitting) return;
+            handleIndex("add");
+          }}
+          disabled={!isCurrentQuestionCompleted() || submitting}
           onMouseEnter={e => {
             if (isCurrentQuestionCompleted()) {
               e.currentTarget.style.transform = "translateY(-3px) scale(1.05)";
@@ -1068,7 +1220,7 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
               fontWeight: "700",
             }}
           >
-            {dict("continue_button")}
+            {submitting ? "Procesando..." : dict("continue_button")}
           </span>
         </button>
       </div>
@@ -1136,4 +1288,4 @@ function QuestForm({ handleChange, handleIndex, currentIndex, questData, setInde
   );
 }
 
-export default QuestForm;
+export default Questionary;

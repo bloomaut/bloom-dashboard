@@ -254,6 +254,7 @@ export const postProp = async (questData: {
     const responseData = response.data;
     return responseData;
   } catch (error) {
+    console.error("Request failed postProp:", error);
     if (axios.isAxiosError(error)) {
       return error.response;
     } else {
@@ -291,6 +292,7 @@ export const postOnboarding = async () => {
 
     return response.data;
   } catch (error) {
+    console.error("Request failed postOnboarding:", error);
     if (axios.isAxiosError(error)) {
       return error.response;
     } else {

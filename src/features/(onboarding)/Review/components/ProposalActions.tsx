@@ -1,7 +1,7 @@
 "use client";
 import { Download, HelpCircle, MessageCircle } from "lucide-react";
 import React, { useState } from "react";
-import { styles } from "./styles";
+import { styles } from "../styles/styles";
 import { approveProposal, get } from "@/services/fetch";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -16,9 +16,13 @@ function ProposalActions() {
   const locale = useLocale();
   const user = useAppSelector(state => state.userData);
   const [checked, setChecked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleClick = async () => {
     try {
+      if (isSubmitting) return;
+      setIsSubmitting(true);
+
       // Aprobar la propuesta
       await approveProposal();
 
@@ -28,9 +32,11 @@ function ProposalActions() {
         dispatch(setUserData(resUser.result.user));
       }
 
-      router.push("/");
+      router.push(`/${locale}/dashboard`);
     } catch (error) {
       console.error("Error al aprobar propuesta:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -102,12 +108,14 @@ ${user?.email || ""}`,
         <button
           style={{
             ...styles.continueButton,
-            backgroundColor: !checked ? "#cbd5e1" : "var(--color-primary)",
+            backgroundColor: !checked || isSubmitting ? "#cbd5e1" : "var(--color-primary)",
           }}
-          disabled={!checked}
+          disabled={!checked || isSubmitting}
           onClick={handleClick}
         >
-          <p style={{ color: !checked ? "#475569" : "#FFFFFF" }}>{dict("continue_proposal")}</p>
+          <p style={{ color: !checked || isSubmitting ? "#475569" : "#FFFFFF" }}>
+            {isSubmitting ? (locale === "es" ? "Procesando..." : "Processing...") : dict("continue_proposal")}
+          </p>
         </button>
 
         <button style={styles.secondaryButton} onClick={handleFeedbackClick}>

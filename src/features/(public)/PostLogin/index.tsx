@@ -32,11 +32,11 @@ export default function PostLoginPage() {
           router.replace(`/${locale}/backoffice/metrics`);
           return;
         }
-        if (onboarding !== "completed") {
-          //router.replace(`/${locale}/onboarding/terms`);
+        if (onboarding !== "approved") {
+          router.replace(`/${locale}/onboarding`);
           return;
         }
-        //router.replace(`/${locale}/dashboard/home`);
+        router.replace(`/${locale}/dashboard/home`);
       } catch (e) {
         if (!cancelled) {
           setError("No pudimos resolver tu sesión. Intenta nuevamente.");
