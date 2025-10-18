@@ -6,7 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RefreshCw, Settings, Bell, TrendingUp, Users, Heart, Grid3X3, Sparkles } from "lucide-react";
 import { ContentCalendar } from "@/features/(dashboard)/Social/components/ContentCalendar";
 import { CreateContentModal } from "@/features/(dashboard)/Social/components/CreateContentModal";
-import { generateWeekContent, getContent, getProfile, fixContentIdeasWithRetry } from "@/features/(dashboard)/Social/services/socialMediaService";
+import {
+  generateWeekContent,
+  getContent,
+  getProfile,
+  fixContentIdeasWithRetry,
+} from "@/features/(dashboard)/Social/services/socialMediaService";
 import { useMessageToast } from "@/hooks/useMessageToast";
 
 // Mock data for testing the component
