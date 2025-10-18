@@ -62,17 +62,10 @@ const SideTrack = ({ isOpen = false, onToggle }: SideTrackProps) => {
 
   return (
     <>
-      <section 
-        className={`${styles.sidetrack_container} ${isOpen ? styles.sidetrack_open : ''}`}
-        id="sidetrack"
-      >
+      <section className={`${styles.sidetrack_container} ${isOpen ? styles.sidetrack_open : ""}`} id='sidetrack'>
         {/* Close button for mobile */}
-        <button 
-          className={styles.close_button}
-          onClick={onToggle}
-          aria-label="Cerrar panel de progreso"
-        >
-          <X className="h-5 w-5" />
+        <button className={styles.close_button} onClick={onToggle} aria-label='Cerrar panel de progreso'>
+          <X className='h-5 w-5' />
         </button>
 
         {/* Progress indicator */}
@@ -85,19 +78,17 @@ const SideTrack = ({ isOpen = false, onToggle }: SideTrackProps) => {
           <h2 className={styles.title}>
             {dict("title")} {currentStepData?.position || currentStep + 1}
           </h2>
-          <p className={styles.description}>
-            {currentStepData?.title || dict("step_1")}
-          </p>
-          
+          <p className={styles.description}>{currentStepData?.title || dict("step_1")}</p>
+
           {/* Progress bar */}
-          <div className="mt-4">
-            <div className="flex justify-between text-sm text-white/80 mb-2">
+          <div className='mt-4'>
+            <div className='flex justify-between text-sm text-white/80 mb-2'>
               <span>Progreso</span>
               <span>{Math.round(progressPercentage)}%</span>
             </div>
-            <div className="w-full bg-white/20 rounded-full h-2">
-              <div 
-                className="bg-gradient-to-r from-green-400 to-green-500 h-2 rounded-full transition-all duration-500 ease-out"
+            <div className='w-full bg-white/20 rounded-full h-2'>
+              <div
+                className='bg-gradient-to-r from-green-400 to-green-500 h-2 rounded-full transition-all duration-500 ease-out'
                 style={{ width: `${progressPercentage}%` }}
               />
             </div>
@@ -126,16 +117,14 @@ const SideTrack = ({ isOpen = false, onToggle }: SideTrackProps) => {
 
         {/* Next step suggestion */}
         {completedSteps < totalSteps && (
-          <div className="mt-auto pt-6 border-t border-white/20">
-            <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-              <div className="flex items-center justify-between">
+          <div className='mt-auto pt-6 border-t border-white/20'>
+            <div className='bg-white/10 rounded-lg p-4 backdrop-blur-sm'>
+              <div className='flex items-center justify-between'>
                 <div>
-                  <h4 className="font-medium text-white mb-1">Siguiente paso</h4>
-                  <p className="text-sm text-white/80">
-                    {data.find(step => !step.completed)?.title || "¡Completado!"}
-                  </p>
+                  <h4 className='font-medium text-white mb-1'>Siguiente paso</h4>
+                  <p className='text-sm text-white/80'>{data.find(step => !step.completed)?.title || "¡Completado!"}</p>
                 </div>
-                <ChevronRight className="h-5 w-5 text-white/60" />
+                <ChevronRight className='h-5 w-5 text-white/60' />
               </div>
             </div>
           </div>
@@ -143,14 +132,12 @@ const SideTrack = ({ isOpen = false, onToggle }: SideTrackProps) => {
 
         {/* Completion celebration */}
         {completedSteps === totalSteps && (
-          <div className="mt-auto pt-6 border-t border-white/20">
-            <div className="bg-gradient-to-r from-green-500/20 to-green-400/20 rounded-lg p-4 backdrop-blur-sm border border-green-400/30">
-              <div className="text-center">
-                <div className="text-2xl mb-2">🎉</div>
-                <h4 className="font-medium text-white mb-1">¡Felicitaciones!</h4>
-                <p className="text-sm text-white/80">
-                  Has completado todos los pasos de configuración
-                </p>
+          <div className='mt-auto pt-6 border-t border-white/20'>
+            <div className='bg-gradient-to-r from-green-500/20 to-green-400/20 rounded-lg p-4 backdrop-blur-sm border border-green-400/30'>
+              <div className='text-center'>
+                <div className='text-2xl mb-2'>🎉</div>
+                <h4 className='font-medium text-white mb-1'>¡Felicitaciones!</h4>
+                <p className='text-sm text-white/80'>Has completado todos los pasos de configuración</p>
               </div>
             </div>
           </div>

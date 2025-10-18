@@ -25,13 +25,7 @@ import DragImage from "@/components/DragAndDrop/DragImage";
 import Palette from "@/features/(dashboard)/Home/components/Palette";
 
 export function BusinessDashboard() {
-  const {
-    formData,
-    logo,
-    setLogo,
-    handleChange,
-    handleCategoryChangeInput,
-  } = useBusinessContext();
+  const { formData, logo, setLogo, handleChange, handleCategoryChangeInput } = useBusinessContext();
 
   const [businessData, setBusinessData] = useState({
     name: "Mi Empresa",
@@ -66,7 +60,6 @@ export function BusinessDashboard() {
       {/* Main Content */}
       <main className='flex-1 overflow-auto'>
         <div className='mx-2 mt-2'>
-
           {/* Tabs Content */}
           <Tabs defaultValue='info' className='space-y-6'>
             <TabsList className='grid w-full grid-cols-4'>
