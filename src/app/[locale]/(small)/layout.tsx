@@ -7,7 +7,7 @@ import SideTrack from "@/features/(dashboard)/components/SideTrack";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Questionary from "@/features/(onboarding)/Questionary";
-import { Sidebar } from "@/features/(dashboard)/components/SideBard/Sidebar";
+import { Sidebar } from "@/features/(dashboard)/components/SideBard";
 import { useAppSelector } from "@/store/hooks";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {

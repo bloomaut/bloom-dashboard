@@ -262,25 +262,6 @@ export const postProp = async (questData: {
     }
   }
 };
-/* 
-export const postProp2 = async () => {
-  try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/onboarding`);
-    console.log("response", response);
-    if (response.status === 400) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
-
-    const responseData = response.data;
-    return responseData;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return error.response;
-    } else {
-      throw error;
-    }
-  }
-}; */
 
 export const postOnboarding = async () => {
   try {
@@ -305,66 +286,6 @@ export const approveProposal = async () => {
   try {
     // Cambiar de POST a PUT
     const response = await axios.put("/api/quest/approve");
-
-    if (response.status === 400) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return error.response;
-    } else {
-      throw error;
-    }
-  }
-};
-
-export const getMetas = async () => {
-  try {
-    const response = await axios.get("/api/pipeline/goals");
-
-    if (response.status === 400) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return error.response;
-    } else {
-      throw error;
-    }
-  }
-};
-
-export const getFinances = async () => {
-  try {
-    const response = await axios.get("/api/finances");
-
-    if (response.status === 400) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return error.response;
-    } else {
-      throw error;
-    }
-  }
-};
-
-export const createTransaction = async (data: {
-  amount: number;
-  type: string;
-  category: string;
-  description: string;
-  date: string;
-}) => {
-  try {
-    const response = await axios.post("/api/finances", data);
 
     if (response.status === 400) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);

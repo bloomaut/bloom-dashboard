@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Upload,
   Save,
   MapPin,
   Phone,
@@ -21,7 +20,6 @@ import {
   FileText,
   Download,
 } from "lucide-react";
-import { getMetas } from "@/services/fetch";
 import { useBusinessContext } from "@/features/(dashboard)/Home/context/BusinessContext";
 import DragImage from "@/components/DragAndDrop/DragImage";
 import Palette from "@/features/(dashboard)/Home/components/Palette";
@@ -31,11 +29,6 @@ export function BusinessDashboard() {
     formData,
     logo,
     setLogo,
-    errorLogo,
-    banner,
-    setBanner,
-    loading,
-    handleSubmit,
     handleChange,
     handleCategoryChangeInput,
   } = useBusinessContext();
@@ -51,99 +44,8 @@ export function BusinessDashboard() {
     tiktok: "@mi_empresa_tk",
   });
 
-  const [goals, setGoals] = useState();
-
-  useEffect(() => {
-    const getGoals = async () => {
-      const goals = await getMetas();
-      if (goals) {
-        setGoals(goals);
-      }
-    };
-    getGoals();
-  }, []);
-
-  // Todas las metas combinadas
-  const allGoals = [
-    // Metas de Instagram
-    {
-      id: "ig-followers",
-      title: "Seguidores",
-      current: 2450,
-      target: 3000,
-      unit: "",
-      status: "on-track" as const,
-      platform: "instagram" as const,
-    },
-    {
-      id: "ig-posts",
-      title: "Posts mensuales",
-      current: 8,
-      target: 12,
-      unit: "",
-      status: "behind" as const,
-      platform: "instagram" as const,
-    },
-    {
-      id: "ig-engagement",
-      title: "Engagement",
-      current: 4.2,
-      target: 5.0,
-      unit: "%",
-      status: "on-track" as const,
-      platform: "instagram" as const,
-    },
-    // Metas de TikTok
-    {
-      id: "tk-followers",
-      title: "Seguidores",
-      current: 1200,
-      target: 2000,
-      unit: "",
-      status: "on-track" as const,
-      platform: "tiktok" as const,
-    },
-    {
-      id: "tk-videos",
-      title: "Videos semanales",
-      current: 2,
-      target: 4,
-      unit: "",
-      status: "behind" as const,
-      platform: "tiktok" as const,
-    },
-    // Metas financieras
-    {
-      id: "fin-revenue",
-      title: "Ingresos mensuales",
-      current: 67000,
-      target: 80000,
-      unit: "$",
-      status: "on-track" as const,
-      platform: "finances" as const,
-    },
-    {
-      id: "fin-profit",
-      title: "Margen ganancia",
-      current: 32.8,
-      target: 40.0,
-      unit: "%",
-      status: "behind" as const,
-      platform: "finances" as const,
-    },
-    {
-      id: "fin-savings",
-      title: "Fondo emergencia",
-      current: 25000,
-      target: 50000,
-      unit: "$",
-      status: "on-track" as const,
-      platform: "finances" as const,
-    },
-  ];
-
   const handleSave = () => {
-    console.log("Guardando datos del negocio:", formData, goals);
+    console.log("datos del negocio guardados");
   };
 
   return (
@@ -164,10 +66,6 @@ export function BusinessDashboard() {
       {/* Main Content */}
       <main className='flex-1 overflow-auto'>
         <div className='mx-2 mt-2'>
-          {/* Metas y Objetivos */}
-          {/*   <section className='mb-8'>
-            <GoalsSummary goals={allGoals} />
-          </section> */}
 
           {/* Tabs Content */}
           <Tabs defaultValue='info' className='space-y-6'>
