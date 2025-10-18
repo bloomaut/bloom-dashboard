@@ -6,7 +6,7 @@ import LoadingSpinner from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 import { get } from "@/services/fetch";
 
-export default function AdminGuard({ children }: { children: React.ReactNode }) {
+export default function DashboardGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { locale } = useParams() as { locale?: string };
   const [error, setError] = useState<string | null>(null);
@@ -15,28 +15,14 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     let cancelled = false;
 
-    const checkAdmin = async () => {
-      // 1) Fast-path: confía en cookie seteada por post-login
-      const cookies = typeof document !== "undefined" ? document.cookie : "";
-      const fromCookie = cookies
-        .split("; ")
-        .find(c => c.startsWith("app-role="))
-        ?.split("=")[1];
-
-      if (fromCookie === "admin") {
-        if (!cancelled) setAllowed(true);
-        return;
-      }
-
-      // 2) Fallback: consulta backend si no hay cookie
+    const checkAccess = async () => {
       try {
-        const {
-          result: { user },
-        } = await get("user/me");
-        const role = user?.role ?? user?.app_metadata?.role ?? "user";
+        const me = await get("user/me");
+        const user = me?.result?.user ?? me?.user ?? null;
+        const status = user?.client?.proposal_status ?? null;
 
-        if (role !== "admin") {
-          router.replace(`/${locale || "en"}/dashboard/home`);
+        if (status !== "approved") {
+          router.replace(`/${locale || "en"}/post-login`);
           return;
         }
 
@@ -46,7 +32,7 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
       }
     };
 
-    checkAdmin();
+    checkAccess();
     return () => {
       cancelled = true;
     };

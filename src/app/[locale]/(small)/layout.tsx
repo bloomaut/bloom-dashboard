@@ -3,11 +3,11 @@ import styles from "./styles.module.scss";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 // Components
-import SideTrack from "@/components/SideTrack";
+import SideTrack from "@/features/(dashboard)/components/SideTrack";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Questionary from "@/features/(onboarding)/Questionary";
-import { Sidebar } from "@/components/v0Components/Sidebar";
+import { Sidebar } from "@/features/(dashboard)/components/SideBard/Sidebar";
 import { useAppSelector } from "@/store/hooks";
 
 const SmallLayout = ({ children }: { children: React.ReactNode }) => {

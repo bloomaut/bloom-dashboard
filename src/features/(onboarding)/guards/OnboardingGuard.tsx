@@ -19,6 +19,7 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
 
   const resolveOnboardingPath = (client: any, loc: string): string | null => {
     if (!client) return `/${loc}`;
+    // TODO: Settear wishlist a true en el condicional
     if (client.wish_list === false) return `/${loc}/onboarding/wishlist`;
 
     // Temporal hasta que arregle error de api que no actualiza el proposal_status. Revisar la propiedad proposal_url
