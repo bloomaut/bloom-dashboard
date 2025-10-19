@@ -97,6 +97,18 @@
       "setup": {
         "title": "Vamos a configurar tu negocio",
         "completed": "completado"
+      },
+      "dashboard": {
+        "navigation": {
+          "my_business": "Mi Negocio",
+          "my_business_description": "Gestiona tu negocio",
+          "social_media": "Redes Sociales",
+          "social_media_description": "Conecta tus redes"
+        },
+        "user": {
+          "default_name": "Usuario",
+          "default_business": "Mi Negocio"
+        }
       }
     },
     "sidetrack": {

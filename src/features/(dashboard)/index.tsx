@@ -4,36 +4,29 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import "@/styles/globals.scss";
 import styles from "./styles/dashboard.module.scss";
-import { Sidebar } from "@/features/(dashboard)/components/SideBard";
-import SideTrack from "@/features/(dashboard)/components/SideTrack";
+import Sidebar from "@/features/(dashboard)/components/SideBard";
 
 export default function DashboardWrapper({ children }: Readonly<{ children: React.ReactNode }>) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sideTrackOpen, setSideTrackOpen] = useState(false);
 
   // Close sidebar when clicking outside on mobile
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const sidebar = document.getElementById("sidebar");
-      const sidetrack = document.getElementById("sidetrack");
       const target = event.target as Node;
 
       if (sidebarOpen && sidebar && !sidebar.contains(target)) {
         setSidebarOpen(false);
       }
-
-      if (sideTrackOpen && sidetrack && !sidetrack.contains(target)) {
-        setSideTrackOpen(false);
-      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [sidebarOpen, sideTrackOpen]);
+  }, [sidebarOpen]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (sidebarOpen || sideTrackOpen) {
+    if (sidebarOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -42,7 +35,7 @@ export default function DashboardWrapper({ children }: Readonly<{ children: Reac
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [sidebarOpen, sideTrackOpen]);
+  }, [sidebarOpen]);
 
   return (
     <div className={styles.dashboard_container}>
@@ -63,11 +56,8 @@ export default function DashboardWrapper({ children }: Readonly<{ children: Reac
 
       {/* Sidebar Container */}
       <div className={`${styles.sidebar_container} ${sidebarOpen ? styles.sidebar_open : ""}`}>
-        <Sidebar collapsed={false} onToggle={() => setSidebarOpen(!sidebarOpen)} />
+        <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       </div>
-
-      {/* SideTrack */}
-      <SideTrack isOpen={sideTrackOpen} onToggle={() => setSideTrackOpen(!sideTrackOpen)} />
 
       {/* Main Content */}
       <main className={styles.main_content}>
