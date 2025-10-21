@@ -1,56 +1,59 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  fetchProfile,
+  selectSocialMediaProfile,
+  selectIsLoading,
+  selectSocialMediaError,
+  clearError,
+} from "@/features/(dashboard)/Social/store/socialMediaSlice";
 import { SocialMediaSetup } from "@/features/(dashboard)/Social/components/SocialMediaSetup";
 import { SocialMediaDashboard } from "@/features/(dashboard)/Social/components/SocialMediaDashboard";
-import { getProfile } from "@/features/(dashboard)/Social/services/socialMediaService";
+import { useMessageToast } from "@/hooks/useMessageToast";
+import styles from "./styles/dashboardSocial.module.scss";
 
 export default function SocialMediaPage() {
-  const [connectedAccounts, setConnectedAccounts] = useState({
-    instagram: false,
-    tiktok: false,
-  });
-  const [isCreatingStrategies, setIsCreatingStrategies] = useState(false);
+  const dispatch = useAppDispatch();
+  const { notifyError } = useMessageToast();
 
-  const handleAccountConnection = (platform: "instagram" | "tiktok") => {
-    const newConnectedAccounts = {
-      ...connectedAccounts,
-      [platform]: true,
-    };
+  // Redux selectors
+  const profile = useAppSelector(selectSocialMediaProfile);
+  const isLoading = useAppSelector(selectIsLoading);
+  const error = useAppSelector(selectSocialMediaError);
 
-    if (newConnectedAccounts.tiktok) {
-      setIsCreatingStrategies(true);
-    }
-
-    setConnectedAccounts(newConnectedAccounts);
-  };
-
-  const [profile, setProfile] = useState<any>();
-
-  const fetchProfile = async () => {
-    try {
-      const profileResponse = await getProfile();
-      setProfile(profileResponse.data.result.profile);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    }
-  };
-
+  // Fetch profile on component mount
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    dispatch(fetchProfile());
+  }, [dispatch]);
+
+  // Handle errors
+  useEffect(() => {
+    if (error) {
+      notifyError(error);
+      dispatch(clearError());
+    }
+  }, [error, notifyError, dispatch]);
+
+  // Show loading state
+  if (isLoading && !profile) {
+    return (
+      <div className={styles.loadingContainer} id='social-media-page'>
+        <div className={styles.loadingContent}>
+          <div className={styles.loadingSpinner}></div>
+          <p className={styles.loadingText}>Cargando perfil...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Determine if user has connected accounts
+  const hasConnectedAccounts = profile?.connected_accounts?.instagram || profile?.connected_accounts?.tiktok;
 
   return (
-    <div className='flex h-full bg-gray-50 w-full' id='social-media-page'>
-      {!profile?.connected ? (
-        <SocialMediaSetup
-          connectedAccounts={connectedAccounts}
-          onAccountConnection={handleAccountConnection}
-          refetchProfile={fetchProfile}
-        />
-      ) : (
-        <SocialMediaDashboard />
-      )}
+    <div className={styles.socialMediaPage} id='social-media-page'>
+      {!hasConnectedAccounts ? <SocialMediaSetup /> : <SocialMediaDashboard />}
     </div>
   );
 }

@@ -1,24 +1,20 @@
 // Definición de tipos comunes
 type Nullable<T> = T | null;
-type ColorPalette = Nullable<{ color: string }[]>;
 
 // Interfaces principales
 export interface UserBusiness {
   id?: number | null;
   auth0_id?: string;
+  role?: string;
   name: Nullable<string>;
   lastname: Nullable<string>;
   email?: string;
-  phone: string;
-  subdomain?: string;
-  company_position?: string;
+  phone: Nullable<string>;
   active?: boolean;
   created_at?: string;
   updated_at?: string;
   client: Client;
   isCatalogComplete?: boolean;
-  founded?: number;
-  employees?: number;
 }
 
 export interface UserBusinessSelector {
@@ -28,24 +24,25 @@ export interface UserBusinessSelector {
 export interface Client {
   id?: number | null;
   name: Nullable<string>;
-  cuit?: string;
+  cuit: Nullable<string>;
+  company_web: Nullable<string>;
+  logo: Nullable<string>;
+  role?: string;
   banner: Nullable<string>;
-  razon_social?: string;
-  company_web: string;
-  logo: string;
+  address: Nullable<string>;
   active?: boolean;
+  wish_list?: boolean;
   instagram: Nullable<string>;
   facebook: Nullable<string>;
   tiktok: Nullable<string>;
   description: Nullable<string>;
   category: Nullable<string>;
-  palette: ColorPalette;
+  palette: string | null; // Cambiado a string para manejar el formato del API
+  proposal_url: Nullable<string>;
+  suscription?: string;
+  proposal_status?: string;
   created_at?: string;
   updated_at?: string;
-  address: string;
-  proposal_status?: string;
-  proposal_url?: string | null;
-  wish_list?: boolean;
 }
 
 // Interfaces para actualización de datos
@@ -58,9 +55,30 @@ export interface PutBusiness {
   instagram: Nullable<string>;
   phone: Nullable<string>;
   logo: Nullable<string>;
-  palette: ColorPalette | undefined;
+  palette: string | null; // Actualizado para coincidir con el nuevo formato
 }
 
 export interface PutPalette {
-  palette: ColorPalette;
+  palette: string | null; // Actualizado para coincidir con el nuevo formato
 }
+
+// Interfaz para manejar la paleta como array (para uso interno en componentes)
+export interface ColorPaletteItem {
+  color: string;
+  name?: string;
+}
+
+// Utilidad para convertir string de paleta a array
+export const parsePaletteString = (paletteString: string | null): ColorPaletteItem[] => {
+  if (!paletteString) return [];
+
+  return paletteString.split(",").map((color, index) => ({
+    color: color.trim(),
+    name: `Color ${index + 1}`,
+  }));
+};
+
+// Utilidad para convertir array de paleta a string
+export const stringifyPalette = (palette: ColorPaletteItem[]): string => {
+  return palette.map(item => item.color).join(",");
+};

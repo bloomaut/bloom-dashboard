@@ -6,15 +6,99 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RefreshCw, Settings, Bell, TrendingUp, Users, Heart, Grid3X3, Sparkles } from "lucide-react";
 import { ContentCalendar } from "@/features/(dashboard)/Social/components/ContentCalendar";
 import { CreateContentModal } from "@/features/(dashboard)/Social/components/CreateContentModal";
-import {
-  generateWeekContent,
-  getContent,
-  getProfile,
-  fixContentIdeasWithRetry,
-} from "@/features/(dashboard)/Social/services/socialMediaService";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  fetchContent,
+  generateContent,
+  selectSocialMediaContent,
+  selectSocialMediaProfile,
+  selectIsLoading,
+  selectSocialMediaError,
+  selectIsGenerating,
+  selectIsCreatingContent,
+  clearError,
+  //ContentItem as ReduxContentItem,
+  //ProfileData as ReduxProfileData,
+} from "@/features/(dashboard)/Social/store/socialMediaSlice";
+import styles from "./style.module.scss";
 
-// Mock data for testing the component
+// Type mapping for ContentCalendar compatibility
+interface CalendarContentItem {
+  clientId: string;
+  socialMedia: "tiktok";
+  publishType: "Video";
+  pillar: string;
+  day: Date;
+  dayTime: "morning" | "afternoon" | "evening";
+  completed: boolean;
+  skinxId: string;
+  presetId: string;
+  content: {
+    title: string;
+    script: string;
+    copy: string;
+    hashtags: string | null;
+    cta_copy: string | null;
+    key_words_copy: string | null;
+    feelings: string | null;
+    understanding: string | null;
+    make: string | null;
+    hook: string | null;
+  };
+}
+
+interface CalendarProfileData {
+  _id: string;
+  clientId: string;
+  username: string;
+  bio: string;
+  avatar: string;
+  socialMedia: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Utility function to convert Redux content to Calendar format
+const convertToCalendarFormat = (reduxContent: any[]): CalendarContentItem[] => {
+  return reduxContent.map(item => ({
+    ...item,
+    socialMedia: "tiktok" as const,
+    publishType: "Video" as const,
+    day: new Date(item.day),
+    dayTime: item.dayTime === "night" ? "evening" : item.dayTime,
+    skinxId: item.clientId, // Using clientId as fallback
+    presetId: item.clientId, // Using clientId as fallback
+    content: {
+      ...item.content,
+      hashtags: item.content.hashtags || null,
+      cta_copy: item.content.cta_copy || null,
+      key_words_copy: item.content.key_words_copy || null,
+      feelings: item.content.feelings || null,
+      understanding: item.content.understanding || null,
+      make: item.content.make || null,
+      hook: item.content.hook || null,
+    },
+  }));
+};
+
+// Utility function to convert Redux profile to Calendar format
+const convertProfileToCalendarFormat = (reduxProfile: any | null): CalendarProfileData | null => {
+  if (!reduxProfile) return null;
+
+  return {
+    _id: reduxProfile.name, // Using name as fallback for _id
+    clientId: reduxProfile.name, // Using name as fallback
+    username: reduxProfile.name,
+    bio: reduxProfile.description,
+    avatar: "", // Default empty avatar
+    socialMedia: "tiktok",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+};
+
+// Mock data for testing the component (kept for fallback)
 const mockContentData = [
   {
     clientId: "client-001",
@@ -41,193 +125,79 @@ const mockContentData = [
   },
 ];
 
-interface ProfileData {
-  profile: {
-    _id: string;
-    clientId: string;
-    username: string;
-    bio: string;
-    avatar: string;
-    socialMedia: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
-
 export function SocialMediaDashboard() {
+  const dispatch = useAppDispatch();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [contentData, setContentData] = useState(mockContentData);
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [fixingContent, setFixingContent] = useState(false);
+
+  // Redux selectors
+  const content = useAppSelector(selectSocialMediaContent);
+  const profile = useAppSelector(selectSocialMediaProfile);
+  const isLoading = useAppSelector(selectIsLoading);
+  const error = useAppSelector(selectSocialMediaError);
+  const isGenerating = useAppSelector(selectIsGenerating);
+  const isFixingContent = useAppSelector(selectIsCreatingContent);
+
   const { notify, notifyError } = useMessageToast();
 
-  const fetchContent = async () => {
-    try {
-      setLoading(true);
-
-      const today = new Date();
-      const startOfWeek = new Date(today);
-      startOfWeek.setDate(today.getDate() - today.getDay());
-      const endOfWeek = new Date(startOfWeek);
-      endOfWeek.setDate(startOfWeek.getDate() + 6);
-
-      const startDate = startOfWeek.toISOString().split("T")[0];
-      const endDate = endOfWeek.toISOString().split("T")[0];
-
-      const profileResponse = await getProfile();
-      if (profileResponse.data && profileResponse.data.result) {
-        setProfileData(profileResponse.data.result);
-      }
-
-      const maxRetries = 3;
-      let currentRetry = 0;
-      let finalContentData: any[] = [];
-
-      while (currentRetry < maxRetries) {
-        try {
-          console.log(`Fetching content attempt ${currentRetry + 1}/${maxRetries}`);
-          const contentResponse: any = await getContent(startDate, endDate);
-
-          console.log("Content items:", contentResponse);
-          let contentItems = [];
-          if (contentResponse.result && contentResponse.result.contents) {
-            contentItems = contentResponse.result.contents;
-          } else if (contentResponse.data && contentResponse.data.result && contentResponse.data.result.contents) {
-            contentItems = contentResponse.data.result.contents;
-          }
-
-          let ideas = [];
-          if (contentResponse.result && contentResponse.result.ideas) {
-            ideas = contentResponse.result.ideas;
-          } else if (contentResponse.data && contentResponse.data.result && contentResponse.data.result.ideas) {
-            ideas = contentResponse.data.result.ideas;
-          }
-
-          if (contentItems.length === 0) {
-            console.log("No content found in response, using mock data");
-            finalContentData = mockContentData;
-            break;
-          }
-
-          const incompleteIds: string[] = [];
-          ideas.forEach((idea: any) => {
-            if (idea.completed === false) {
-              incompleteIds.push(idea.id);
-            }
-          });
-
-          console.log(`Found ${incompleteIds.length} incomplete ideas:`, incompleteIds);
-
-          if (incompleteIds.length > 0 && currentRetry < maxRetries - 1) {
-            setFixingContent(true);
-            console.log(`Attempting to fix ${incompleteIds.length} incomplete ideas...`);
-
-            try {
-              const fixResult = await fixContentIdeasWithRetry(incompleteIds);
-              console.log("Fix result:", fixResult);
-
-              await new Promise(resolve => setTimeout(resolve, 2000));
-
-              currentRetry++;
-              continue;
-            } catch (fixError) {
-              console.error("Error fixing content ideas:", fixError);
-              currentRetry++;
-              continue;
-            }
-          }
-
-          const transformedData = contentItems.map((item: any) => {
-            let dayTime: "morning" | "afternoon" | "evening" = "morning";
-            const timeField = item.dayTime || item.dayType;
-
-            if (timeField === "afternoon" || timeField === "tarde") {
-              dayTime = "afternoon";
-            } else if (timeField === "evening" || timeField === "noche") {
-              dayTime = "evening";
-            } else if (timeField === "morning" || timeField === "mañana") {
-              dayTime = "morning";
-            }
-
-            return {
-              clientId: item.clientId || "unknown",
-              socialMedia: item.socialMedia || ("tiktok" as const),
-              publishType: (item.publishType === "video" ? "Video" : item.publishType) || ("Video" as const),
-              pillar: item.pillar || "General",
-              day: new Date(item.day.split("T")[0] + "T12:00:00.000Z"),
-              dayTime: dayTime,
-              completed: item.completed || item.status === "completed",
-              skinxId: item.skinxId || item.id || "",
-              presetId: item.presetId || "",
-              content: {
-                title: item.content?.title || item.title || `Contenido de ${item.pillar}`,
-                script: item.content?.script || item.script || "",
-                copy: item.content?.copy || item.copy || "",
-                hashtags: item.content?.hashtags || item.hashtags || null,
-                cta_copy: item.content?.cta_copy || item.cta_copy || null,
-                key_words_copy: item.content?.key_words_copy || item.key_words_copy || null,
-                feelings: item.content?.feelings || item.feelings || null,
-                understanding: item.content?.understanding || item.understanding || null,
-                make: item.content?.make || item.make || null,
-                hook: item.content?.hook || item.hook || null,
-              },
-            };
-          });
-          console.log("Transformed content items:", transformedData);
-          finalContentData = transformedData;
-          break;
-        } catch (fetchError) {
-          console.error(`Content fetch attempt ${currentRetry + 1} failed:`, fetchError);
-          currentRetry++;
-
-          if (currentRetry >= maxRetries) {
-            console.log("Max retries reached, using mock data");
-            finalContentData = mockContentData;
-          }
-        }
-      }
-
-      setContentData(finalContentData);
-      setError(null);
-    } catch (err) {
-      console.error("Error in content fetching process:", err);
-      setError("Failed to fetch content data");
-      setContentData(mockContentData);
-    } finally {
-      setLoading(false);
-      setFixingContent(false);
-    }
-  };
-
   useEffect(() => {
-    fetchContent();
-  }, []);
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(today.getDate() + 7);
+
+    dispatch(
+      fetchContent({
+        startDate: today.toISOString().split("T")[0],
+        endDate: nextWeek.toISOString().split("T")[0],
+      }),
+    );
+  }, [dispatch]);
+
+  // Clear error notifications
+  useEffect(() => {
+    if (error) {
+      notifyError(error);
+      dispatch(clearError());
+    }
+  }, [error, notifyError, dispatch]);
 
   const handleCreateContentSuccess = () => {
     console.log("Contenido creado exitosamente");
-    fetchContent();
+
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(today.getDate() + 7);
+
+    dispatch(
+      fetchContent({
+        startDate: today.toISOString().split("T")[0],
+        endDate: nextWeek.toISOString().split("T")[0],
+      }),
+    );
   };
 
   const handleGenerateNextWeek = async () => {
-    setIsGenerating(true);
     try {
       notify("Generando contenido para la próxima semana...");
-      await generateWeekContent("next-week");
+      await dispatch(generateContent("next-week")).unwrap();
       notify("Contenido generado exitosamente");
-      await fetchContent();
+      const today = new Date();
+      const nextWeek = new Date(today);
+      nextWeek.setDate(today.getDate() + 7);
+
+      dispatch(
+        fetchContent({
+          startDate: today.toISOString().split("T")[0],
+          endDate: nextWeek.toISOString().split("T")[0],
+        }),
+      );
     } catch (error) {
       console.error("Error generating next week content:", error);
       notifyError("Error al generar el contenido");
-    } finally {
-      setIsGenerating(false);
     }
   };
 
   return (
-    <div className='flex-1 flex flex-col overflow-hidden'>
+    <div className={styles.container}>
       {/* Modal */}
       <CreateContentModal
         isOpen={isCreateModalOpen}
@@ -236,55 +206,59 @@ export function SocialMediaDashboard() {
       />
 
       {/* Header */}
-      <header className='bg-white border-b border-gray-200 px-6 py-4'>
-        <div className='flex items-center justify-between'>
-          <div className='text-2xl font-bold text-gray-900'>Dashboard de Redes Sociales</div>
-          <div className='flex items-center space-x-3'>
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <div className={styles.headerTitle}>Dashboard de Redes Sociales</div>
+          <div className={styles.headerActions}>
             <Button
               variant='outline'
               size='sm'
-              className='cursor-pointer'
+              className={styles.refreshButton}
               onClick={handleGenerateNextWeek}
               disabled={isGenerating}
             >
-              <RefreshCw className={`h-4 w-4 mr-2 ${isGenerating ? "animate-spin" : ""}`} />
+              <RefreshCw className={isGenerating ? styles.spinning : ""} />
               {isGenerating ? "Generando..." : "Actualizar datos"}
             </Button>
-            <Button variant='outline' size='sm' className='cursor-pointer' onClick={() => setIsCreateModalOpen(true)}>
-              <Sparkles className='h-4 w-4 mr-2' />
+            <Button
+              variant='outline'
+              size='sm'
+              className={styles.generateButton}
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              <Sparkles />
               Generar
             </Button>
           </div>
         </div>
       </header>
 
-      {loading ? (
-        <div className='p-6'>
-          <div className='flex items-center justify-center h-64'>
-            <div className='flex flex-col items-center space-y-4'>
-              <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600'></div>
-              {fixingContent ? (
-                <div className='text-center'>
-                  <div className='text-gray-700 font-medium'>Optimizando contenido...</div>
-                  <div className='text-gray-500 text-sm'>Procesando ideas incompletas</div>
+      {isLoading ? (
+        <div className={styles.contentArea}>
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingContent}>
+              <div className={styles.loadingSpinner}></div>
+              {isFixingContent ? (
+                <div className={styles.loadingTextContainer}>
+                  <div className={styles.loadingTitle}>Optimizando contenido...</div>
+                  <div className={styles.loadingSubtitle}>Procesando ideas incompletas</div>
                 </div>
               ) : (
-                <div className='text-gray-600'>Cargando contenido...</div>
+                <div className={styles.loadingText}>Cargando contenido...</div>
               )}
             </div>
           </div>
         </div>
       ) : (
-        <div className='p-6'>
-          <div className='mb-6'>
-            <div className='text-gray-600'>Visualiza y gestiona todo tu contenido programado de la semana</div>
-            {error && (
-              <div className='mt-2 p-2 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded'>
-                {error} - Mostrando datos de ejemplo
-              </div>
-            )}
+        <div className={styles.contentArea}>
+          <div className={styles.contentDescription}>
+            <div className={styles.descriptionText}>Visualiza y gestiona todo tu contenido programado de la semana</div>
+            {error && <div className={styles.errorMessage}>{String(error)} - Mostrando datos de ejemplo</div>}
           </div>
-          <ContentCalendar contentItems={contentData} profileData={profileData?.profile} />
+          <ContentCalendar
+            contentItems={convertToCalendarFormat(content)}
+            profileData={convertProfileToCalendarFormat(profile)}
+          />
         </div>
       )}
     </div>

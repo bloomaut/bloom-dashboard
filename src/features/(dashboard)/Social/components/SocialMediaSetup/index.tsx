@@ -1,214 +1,202 @@
 "use client";
 
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  connectTikTok,
+  generateContent,
+  selectSocialMediaProfile,
+  selectIsLoading,
+  selectIsGenerating,
+  selectSocialMediaError,
+  clearError,
+} from "@/features/(dashboard)/Social/store/socialMediaSlice";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Instagram, MessageCircle, CheckCircle, Clock, AlertCircle } from "lucide-react";
-import { connectTikTokAccount, generateWeekContent } from "@/features/(dashboard)/Social/services/socialMediaService";
 import { useMessageToast } from "@/hooks/useMessageToast";
+import { useEffect } from "react";
+import styles from "./style.module.scss";
 
-interface SocialMediaSetupProps {
-  connectedAccounts: {
-    instagram: boolean;
-    tiktok: boolean;
-  };
-  profile?: any;
-  onAccountConnection: (platform: "instagram" | "tiktok") => void;
-  refetchProfile: () => Promise<void>;
-}
-
-export function SocialMediaSetup({ connectedAccounts, onAccountConnection, refetchProfile }: SocialMediaSetupProps) {
+export function SocialMediaSetup() {
+  const dispatch = useAppDispatch();
   const { notify, notifyError } = useMessageToast();
-  const [connecting, setConnecting] = useState<string | null>(null);
 
-  const handleConnect = async (platform: "instagram" | "tiktok") => {
+  // Redux selectors
+  const profile = useAppSelector(selectSocialMediaProfile);
+  const isLoading = useAppSelector(selectIsLoading);
+  const isGenerating = useAppSelector(selectIsGenerating);
+  const error = useAppSelector(selectSocialMediaError);
+
+  // Handle errors
+  useEffect(() => {
+    if (error) {
+      notifyError(error);
+      dispatch(clearError());
+    }
+  }, [error, notifyError, dispatch]);
+
+  const handleConnectPlatform = async (platform: "instagram" | "tiktok") => {
     if (platform === "tiktok") {
-      setConnecting("tiktok");
       try {
-        const code = "fruta";
-        const response = await connectTikTokAccount(code);
+        // Simulate TikTok OAuth flow
+        const code = "mock_tiktok_auth_code";
 
-        if (response.data.statusCode === 200) {
+        notify("Conectando cuenta de TikTok...");
+        const connectResult = await dispatch(connectTikTok(code)).unwrap();
+
+        if (connectResult) {
           notify("Cuenta de TikTok conectada exitosamente");
 
-          try {
-            notify("Generando contenido inicial...");
-            await generateWeekContent("first-login");
-            notify("Contenido inicial generado exitosamente");
-          } catch (contentError) {
-            console.error("Error generating week content:", contentError);
-            notifyError("Error al generar el contenido inicial");
-          }
-
-          await refetchProfile();
-          onAccountConnection("tiktok");
-        } else {
-          notifyError("Error al conectar la cuenta de TikTok");
+          // Generate initial content
+          notify("Generando contenido inicial...");
+          await dispatch(generateContent("first-login")).unwrap();
+          notify("Contenido inicial generado exitosamente");
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error connecting TikTok:", error);
-        notifyError("Error al conectar la cuenta de TikTok");
-      } finally {
-        setConnecting(null);
+        notifyError(error || "Error al conectar la cuenta de TikTok");
       }
+    } else {
+      // Instagram connection logic would go here
+      notifyError("La conexión de Instagram no está disponible aún");
     }
   };
 
   const getStatusBadge = (platform: "instagram" | "tiktok") => {
-    if (connectedAccounts[platform]) {
+    const isConnected = profile?.connected_accounts?.[platform] || false;
+
+    if (isConnected) {
       return (
-        <Badge className='bg-green-100 text-green-800 border-green-200'>
-          <CheckCircle className='h-3 w-3 mr-1' />
+        <Badge variant='default' className={styles.connectedBadge}>
+          <CheckCircle className={styles.badgeIcon} />
           Conectado
         </Badge>
       );
-    }
-
-    if (connecting === platform) {
+    } else {
       return (
-        <Badge className='bg-blue-100 text-blue-800 border-blue-200'>
-          <Clock className='h-3 w-3 mr-1' />
-          Conectando...
+        <Badge variant='secondary' className={styles.disconnectedBadge}>
+          <Clock className={styles.badgeIcon} />
+          No conectado
         </Badge>
       );
     }
-
-    return (
-      <Badge className='bg-gray-100 text-gray-600 border-gray-200'>
-        <AlertCircle className='h-3 w-3 mr-1' />
-        No conectado
-      </Badge>
-    );
   };
 
   return (
-    <div className='flex-1 flex flex-col overflow-hidden'>
+    <div className={styles.container}>
       {/* Header */}
-      <header className='bg-white border-b border-gray-200 px-6 py-4'>
-        <div className='flex items-center justify-between'>
-          <div className='text-2xl font-bold text-gray-900'>Configuración de Redes Sociales</div>
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <div className={styles.headerTitle}>Configuración de Redes Sociales</div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 overflow-auto p-6'>
-        <div className='max-w-5xl mx-auto pb-20'>
+      <main className={styles.main}>
+        <div className={styles.mainContent}>
           {/* Instructions Card */}
-          <Card className='mb-8 border-orange-200 bg-orange-50'>
+          <Card className={styles.instructionsCard}>
             <CardHeader>
-              <CardTitle className='text-orange-800'>Instrucciones</CardTitle>
-              <CardDescription className='text-orange-700'>
+              <CardTitle className={styles.instructionsTitle}>Instrucciones</CardTitle>
+              <CardDescription className={styles.instructionsDescription}>
                 Página inicial donde primero tienes que registrar tus cuentas de Instagram y TikTok
               </CardDescription>
             </CardHeader>
-            <CardContent className='text-orange-700'>
-              <p className='mb-2'>Deberían haber dos botones uno para IG, otro para TikTok.</p>
-              <p className='mb-2'>Y alguna UI que indique el estatus de registro.</p>
+            <CardContent className={styles.instructionsContent}>
+              <p>Deberían haber dos botones uno para IG, otro para TikTok.</p>
+              <p>Y alguna UI que indique el estatus de registro.</p>
               <p>Si ya se registró una cuenta envíos verde completado, si todavía no se hizo nada con otro color.</p>
             </CardContent>
           </Card>
 
-          {/* Warning Message */}
-          {/*   {(connectedAccounts.instagram || connectedAccounts.tiktok) &&
-            !(connectedAccounts.instagram && connectedAccounts.tiktok) && (
-              <Card className='mb-6 border-yellow-200 bg-yellow-50'>
-                <CardContent className='pt-6'>
-                  <div className='flex items-center space-x-3'>
-                    <AlertCircle className='h-5 w-5 text-yellow-600' />
-                    <div>
-                      <p className='font-medium text-yellow-800'>¡Casi listo!</p>
-                      <p className='text-sm text-yellow-700'>
-                        Necesitas conectar ambas cuentas (Instagram y TikTok) para acceder al dashboard completo.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )} */}
-
           {/* Setup Cards */}
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-8'>
-            {/* Instagram Setup */}
-            <Card className='hover:shadow-lg transition-shadow'>
-              <CardHeader className='text-center'>
-                <div className='mx-auto w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-4'>
-                  <Instagram className='h-8 w-8 text-white' />
+          <div className={styles.setupGrid}>
+            {/* TikTok Setup */}
+            <Card className={styles.setupCard}>
+              <CardHeader className={styles.setupCardHeader}>
+                <div className={`${styles.setupCardIcon} ${styles.tiktok}`}>
+                  <MessageCircle />
                 </div>
-                <CardTitle className='text-xl'>Instagram</CardTitle>
-                <CardDescription>Conecta tu cuenta de Instagram para gestionar tus publicaciones</CardDescription>
+                <CardTitle className={styles.setupCardTitle}>TikTok</CardTitle>
+                <CardDescription>Conecta tu cuenta de TikTok para gestionar tu contenido</CardDescription>
               </CardHeader>
-              <CardContent className='text-center space-y-4'>
-                {getStatusBadge("instagram")}
+              <CardContent className={styles.setupCardContent}>
+                {getStatusBadge("tiktok")}
 
-                <div className='space-y-2'>
-                  <p className='text-sm text-gray-600'>• Programar publicaciones</p>
-                  <p className='text-sm text-gray-600'>• Ver métricas de engagement</p>
-                  <p className='text-sm text-gray-600'>• Gestionar stories</p>
+                <div className={styles.featuresList}>
+                  <p className={styles.featureItem}>• Subir videos automáticamente</p>
+                  <p className={styles.featureItem}>• Analizar rendimiento</p>
+                  <p className={styles.featureItem}>• Programar contenido</p>
                 </div>
 
                 <Button
-                  onClick={() => handleConnect("instagram")}
-                  disabled={true}
-                  className='w-full bg-gray-300 hover:bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                  onClick={() => handleConnectPlatform("tiktok")}
+                  disabled={profile?.connected_accounts?.tiktok || isLoading || isGenerating}
+                  className={`${styles.connectButton} ${styles.tiktok}`}
                 >
-                  {connecting === "instagram" ? (
+                  {isLoading ? (
                     <>
-                      <Clock className='h-4 w-4 mr-2 animate-spin' />
+                      <Clock className={styles.spinning} />
                       Conectando...
                     </>
-                  ) : connectedAccounts.instagram ? (
+                  ) : isGenerating ? (
                     <>
-                      <CheckCircle className='h-4 w-4 mr-2' />
+                      <Clock className={styles.spinning} />
+                      Generando contenido...
+                    </>
+                  ) : profile?.connected_accounts?.tiktok ? (
+                    <>
+                      <CheckCircle />
                       Conectado
                     </>
                   ) : (
                     <>
-                      <Instagram className='h-4 w-4 mr-2' />
-                      Conectar Instagram
+                      <MessageCircle />
+                      Conectar TikTok
                     </>
                   )}
                 </Button>
               </CardContent>
             </Card>
 
-            {/* TikTok Setup */}
-            <Card className='hover:shadow-lg transition-shadow'>
-              <CardHeader className='text-center'>
-                <div className='mx-auto w-16 h-16 bg-black rounded-full flex items-center justify-center mb-4'>
-                  <MessageCircle className='h-8 w-8 text-white' />
+            {/* Instagram Setup */}
+            <Card className={styles.setupCard}>
+              <CardHeader className={styles.setupCardHeader}>
+                <div className={`${styles.setupCardIcon} ${styles.instagram}`}>
+                  <Instagram />
                 </div>
-                <CardTitle className='text-xl'>TikTok</CardTitle>
-                <CardDescription>Conecta tu cuenta de TikTok para gestionar tu contenido</CardDescription>
+                <CardTitle className={styles.setupCardTitle}>Instagram</CardTitle>
+                <CardDescription>Conecta tu cuenta de Instagram para gestionar tus publicaciones</CardDescription>
               </CardHeader>
-              <CardContent className='text-center space-y-4'>
-                {getStatusBadge("tiktok")}
+              <CardContent className={styles.setupCardContent}>
+                {getStatusBadge("instagram")}
 
-                <div className='space-y-2'>
-                  <p className='text-sm text-gray-600'>• Subir videos automáticamente</p>
-                  <p className='text-sm text-gray-600'>• Analizar rendimiento</p>
-                  <p className='text-sm text-gray-600'>• Programar contenido</p>
+                <div className={styles.featuresList}>
+                  <p className={styles.featureItem}>• Programar publicaciones</p>
+                  <p className={styles.featureItem}>• Ver métricas de engagement</p>
+                  <p className={styles.featureItem}>• Gestionar stories</p>
                 </div>
 
                 <Button
-                  onClick={() => handleConnect("tiktok")}
-                  disabled={connectedAccounts.tiktok || connecting === "tiktok"}
-                  className='w-full bg-black hover:bg-gray-800'
+                  onClick={() => handleConnectPlatform("instagram")}
+                  disabled={true}
+                  className={`${styles.connectButton} ${styles.instagram}`}
                 >
-                  {connecting === "tiktok" ? (
+                  {false ? (
                     <>
-                      <Clock className='h-4 w-4 mr-2 animate-spin' />
+                      <Clock className={styles.spinning} />
                       Conectando...
                     </>
-                  ) : connectedAccounts.tiktok ? (
+                  ) : profile?.connected_accounts?.instagram ? (
                     <>
-                      <CheckCircle className='h-4 w-4 mr-2' />
+                      <CheckCircle />
                       Conectado
                     </>
                   ) : (
                     <>
-                      <MessageCircle className='h-4 w-4 mr-2' />
-                      Conectar TikTok
+                      <Instagram />
+                      Proximamente
                     </>
                   )}
                 </Button>

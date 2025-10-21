@@ -5,10 +5,13 @@ import { useParams, useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 import { get } from "@/services/fetch";
+import { useAppDispatch } from "@/store/hooks";
+import { setUserData } from "@/store/features/userSlice";
 
 export default function DashboardGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { locale } = useParams() as { locale?: string };
+  const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
   const [allowed, setAllowed] = useState(false);
 
@@ -20,6 +23,11 @@ export default function DashboardGuard({ children }: { children: React.ReactNode
         const me = await get("user/me");
         const user = me?.result?.user ?? me?.user ?? null;
         const status = user?.client?.proposal_status ?? null;
+
+        // Actualizar Redux con los datos del usuario
+        if (user && !cancelled) {
+          dispatch(setUserData(user));
+        }
 
         if (status !== "approved") {
           router.replace(`/${locale || "en"}/post-login`);
@@ -36,7 +44,7 @@ export default function DashboardGuard({ children }: { children: React.ReactNode
     return () => {
       cancelled = true;
     };
-  }, [router, locale]);
+  }, [router, locale, dispatch]);
 
   const handleReset = () => {
     setError(null);

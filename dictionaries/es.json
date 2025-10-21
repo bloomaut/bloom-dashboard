@@ -553,10 +553,74 @@
       "help_description": "Nuestro equipo está disponible para resolver cualquier duda sobre tu propuesta. Solo presiona el botón de arriba para dar feedback o ajustar tu propuesta.",
       "contact_support": "Contactar Soporte"
     },
-    "pricing": {
+    "business_dashboard": {
       "header": {
-        "badge": "Nuevo: Precios basados en valor",
-        "title": "Planes y Precios",
+        "default_title": "Mi Negocio"
+      },
+      "sections": {
+        "basic_data": "Datos Básicos",
+        "branding": "Branding",
+        "commercial_proposal": "Propuesta Comercial"
+      },
+      "fields": {
+        "business_name": "Nombre del negocio",
+        "category": "Categoría",
+        "description": "Descripción",
+        "address": "Dirección",
+        "website": "Sitio web",
+        "company_logo": "Logo de la empresa",
+        "color_palette": "Paleta de colores",
+        "not_specified": "No especificado"
+      },
+      "branding": {
+        "no_logo_configured": "No hay logo configurado",
+        "logo_alt": "Logo de la empresa",
+        "no_palette_configured": "No hay paleta de colores configurada"
+      },
+      "proposal": {
+        "title": "Propuesta Comercial",
+        "status": {
+          "approved": "Aprobada",
+          "pending": "Pendiente",
+          "review": "En revisión"
+        },
+        "download_pdf": "Descargar PDF",
+        "status_label": "Estado",
+        "auto_generated": "Generada automáticamente",
+        "approved_message": "Tu propuesta ha sido aprobada y está lista para usar",
+      "auto_update_message": "La propuesta se actualiza automáticamente cuando modificas la información de tu negocio"
+    }
+  },
+  "settings": {
+    "header": {
+      "title": "Configuración",
+      "description": "Gestiona tu información personal y configuración de cuenta"
+    },
+    "sections": {
+      "personal_info": "Información Personal",
+      "account_actions": "Acciones de Cuenta"
+    },
+    "fields": {
+      "name": "Nombre",
+      "lastname": "Apellido",
+      "email": "Email",
+      "phone": "Teléfono",
+      "role": "Rol",
+      "registration_date": "Fecha de registro",
+      "not_specified": "No especificado",
+      "not_available": "No disponible"
+    },
+    "roles": {
+      "user": "Usuario"
+    },
+    "actions": {
+      "logout": "Cerrar Sesión"
+    }
+  },
+  "pricing": {
+    "header": {
+      "badge": "Nuevo: Precios basados en valor",
+      "title": "Planes y Precios",
         "subtitle": "Comienza gratis inmediatamente. Actualiza para más funciones, límites y colaboración."
       },
       "plans": {

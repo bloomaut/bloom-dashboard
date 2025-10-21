@@ -6,11 +6,14 @@ import { useState, useEffect, useRef } from "react";
 import { update } from "@/services/fetch";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { Oval } from "react-loader-spinner";
-import { useBusinessContext } from "@/features/(dashboard)/Home/context/BusinessContext";
+import { useAppSelector } from "@/store/hooks";
+import { userState } from "@/store/features/userSlice";
+import { parsePaletteString } from "@/typescript/interfaces/business.interface";
 import CheckBox from "@/components/Checkbox";
 
 const Palette = () => {
-  const { formData, setFormData } = useBusinessContext();
+  const userData = useAppSelector(userState);
+  const clientData = userData.client;
   const [colors, setColors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showIcon, setShowIcon] = useState<boolean>(false);
@@ -22,10 +25,13 @@ const Palette = () => {
   const newColorInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (formData.client.palette && formData.client.palette.length > 0 && checkbox) {
-      setColors(formData.client.palette.map(({ color }) => color));
+    if (clientData?.palette && checkbox) {
+      const paletteArray = parsePaletteString(clientData.palette);
+      if (paletteArray.length > 0) {
+        setColors(paletteArray.map(({ color }) => color));
+      }
     }
-  }, [formData.client.palette]);
+  }, [clientData?.palette, checkbox]);
 
   const handleColorChange = (index: number, value: string) => {
     const updatedColors = [...colors];
@@ -58,8 +64,11 @@ const Palette = () => {
   const handleSaveColors = async () => {
     if (!updateActive) return;
     setLoading(true);
+
+    // Convertir array de colores a string para el nuevo formato
+    const paletteString = colors.join(",");
     const updatePalette = {
-      palette: colors.map(color => ({ color })),
+      palette: paletteString,
     };
 
     const data = await update("small-business", updatePalette);
@@ -68,13 +77,7 @@ const Palette = () => {
       setLoading(false);
       setUpdateActive(false);
       notify("Paleta actualizada correctamente");
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        client: {
-          ...prevFormData.client,
-          palette: updatePalette.palette,
-        },
-      }));
+      // Nota: Ya no usamos updateClientField, el estado se actualizará cuando se recargue desde la API
     } else {
       setLoading(false);
       notifyError("Error al actualizar la paleta");
@@ -152,7 +155,7 @@ const Palette = () => {
           />
         </div>
       ) : (
-        formData.client.logo && (
+        clientData.logo && (
           <p className={updateActive ? styles.update_active : styles.submit} onClick={handleSaveColors}>
             {dict("data.update_palette")}
           </p>

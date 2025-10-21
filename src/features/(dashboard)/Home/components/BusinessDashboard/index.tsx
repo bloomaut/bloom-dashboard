@@ -1,356 +1,228 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Save,
-  MapPin,
-  Phone,
-  Mail,
-  Globe,
-  Instagram,
-  MessageCircle,
-  Palette as PaletteIcon,
-  Settings,
-  FileText,
-  Download,
-} from "lucide-react";
-import { useBusinessContext } from "@/features/(dashboard)/Home/context/BusinessContext";
-import DragImage from "@/components/DragAndDrop/DragImage";
-import Palette from "@/features/(dashboard)/Home/components/Palette";
+import { MapPin, Globe, FileText, Download, CheckCircle, Clock, ExternalLink } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
+import { userState } from "@/store/features/userSlice";
+import { parsePaletteString } from "@/typescript/interfaces/business.interface";
+import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import styles from "./styles.module.scss";
 
 export function BusinessDashboard() {
-  const { formData, logo, setLogo, handleChange, handleCategoryChangeInput } = useBusinessContext();
+  const userData = useAppSelector(userState);
+  const clientData = userData.client;
+  const dict = useTranslations("dict.business_dashboard");
 
-  const [businessData, setBusinessData] = useState({
-    name: "Mi Empresa",
-    description: "Una empresa innovadora dedicada a brindar soluciones de calidad",
-    email: "contacto@miempresa.com",
-    phone: "+54 9 11 1234-5678",
-    address: "Av. Corrientes 2000, CABA, Argentina",
-    website: "https://miempresa.com",
-    instagram: "@mi_empresa",
-    tiktok: "@mi_empresa_tk",
-  });
+  console.log("screen size", window.innerWidth);
 
-  const handleSave = () => {
-    console.log("datos del negocio guardados");
+  // Convertir la paleta de string a array para mostrar
+  const paletteArray = parsePaletteString(clientData?.palette);
+
+  console.log("userData", userData);
+  console.log("clientData", clientData);
+  console.log("paletteArray", paletteArray);
+
+  // Función para obtener el estado de la propuesta
+  const getProposalStatus = (status: string) => {
+    switch (status) {
+      case "approved":
+        return { text: dict("proposal.status.approved"), icon: CheckCircle, color: "text-green-600" };
+      case "pending":
+        return { text: dict("proposal.status.pending"), icon: Clock, color: "text-yellow-600" };
+      default:
+        return { text: dict("proposal.status.review"), icon: Clock, color: "text-gray-600" };
+    }
   };
 
+  const proposalStatus = getProposalStatus(clientData.proposal_status || "pending");
+
   return (
-    <div className='flex flex-col min-h-screen w-full mb-5'>
+    <div className={styles.container}>
       {/* Header */}
-      <header className='bg-white border-b border-gray-200 px-6 py-4'>
-        <div className='flex items-center justify-between'>
-          <div className='text-2xl font-bold'>Mi Negocio</div>
-          <div className='flex items-center space-x-3'>
-            <Button size='sm' className='bg-red-500 hover:bg-red-600' onClick={handleSave}>
-              <Save className='h-4 w-4 mr-2' />
-              Guardar cambios
-            </Button>
-          </div>
+      <header className={styles.header}>
+        <div className={styles.header_content}>
+          <div className={styles.header_title}>{dict("header.default_title")}</div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 overflow-auto'>
-        <div className='mx-2 mt-2'>
-          {/* Tabs Content */}
-          <Tabs defaultValue='info' className='space-y-6'>
-            <TabsList className='grid w-full grid-cols-4'>
-              <TabsTrigger value='info'>Información</TabsTrigger>
-              <TabsTrigger value='branding'>Branding</TabsTrigger>
-              <TabsTrigger value='contact'>Contacto</TabsTrigger>
-              <TabsTrigger value='settings'>Configuración</TabsTrigger>
-            </TabsList>
+      <main className={styles.main}>
+        <div className={styles.main_content}>
+          {/* Información Básica */}
+          <Card className={styles.settings_card}>
+            <CardHeader className={styles.card_header}>
+              <CardTitle className={styles.card_title}>
+                <FileText className={styles.title_icon} />
+                {dict("sections.basic_data")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className={styles.user_info_grid}>
+                <div className={styles.info_field}>
+                  <label className={styles.field_label}>
+                    <FileText className={styles.label_icon} />
+                    {dict("fields.business_name")}
+                  </label>
+                  <p className={styles.field_value}>{clientData?.name || dict("fields.not_specified")}</p>
+                </div>
 
-            {/* Información Básica */}
-            <TabsContent value='info' className='space-y-6'>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Información del Negocio</CardTitle>
-                  <CardDescription>
-                    Completa la información básica de tu empresa para mejorar tu presencia online
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className='space-y-6'>
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                    <div className='space-y-2'>
-                      <Label htmlFor='business-name'>Nombre del negocio</Label>
-                      <Input
-                        id='business-name'
-                        name='business_name'
-                        value={formData.client.name || ""}
-                        onChange={handleChange}
-                        placeholder='Nombre de tu empresa'
-                      />
-                    </div>
-                    <div className='space-y-2'>
-                      <Label htmlFor='business_category'>Tipo de negocio</Label>
-                      <Input
-                        id='business_category'
-                        placeholder='Ej: Restaurante, Tienda, Servicios'
-                        name='business_category'
-                        value={formData.client.category || ""}
-                        onChange={handleCategoryChangeInput}
-                      />
-                    </div>
-                  </div>
+                <div className={styles.info_field}>
+                  <label className={styles.field_label}>
+                    <FileText className={styles.label_icon} />
+                    {dict("fields.category")}
+                  </label>
+                  <p className={styles.field_value}>{clientData?.category || dict("fields.not_specified")}</p>
+                </div>
 
-                  <div className='space-y-2'>
-                    <Label htmlFor='business_description'>Descripción</Label>
-                    <Textarea
-                      id='business_description'
-                      name='business_description'
-                      value={formData.client.description || ""}
-                      onChange={handleChange}
-                      placeholder='Describe tu negocio en pocas palabras'
-                      rows={4}
-                    />
-                  </div>
+                <div className={styles.info_field}>
+                  <label className={styles.field_label}>
+                    <FileText className={styles.label_icon} />
+                    {dict("fields.description")}
+                  </label>
+                  <p className={styles.field_value}>{clientData?.description || dict("fields.not_specified")}</p>
+                </div>
 
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                    <div className='space-y-2'>
-                      <Label htmlFor='founded'>Año de fundación</Label>
-                      <Input
-                        id='founded'
-                        type='number'
-                        placeholder='2020'
-                        name='founded'
-                        onChange={handleChange}
-                        value={formData.founded || 0}
-                      />
-                    </div>
-                    <div className='space-y-2'>
-                      <Label htmlFor='employees'>Número de empleados</Label>
-                      <Input
-                        id='employees'
-                        type='number'
-                        placeholder='1-10'
-                        name='employees'
-                        onChange={handleChange}
-                        value={formData.employees || 0}
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                <div className={styles.info_field}>
+                  <label className={styles.field_label}>
+                    <MapPin className={styles.label_icon} />
+                    {dict("fields.address")}
+                  </label>
+                  <p className={styles.field_value}>{clientData?.address || dict("fields.not_specified")}</p>
+                </div>
 
-              {/* Nueva Card para Propuesta Comercial */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Documentos Comerciales</CardTitle>
-                  <CardDescription>Descarga y gestiona los documentos de tu negocio</CardDescription>
-                </CardHeader>
-                <CardContent className='space-y-4'>
-                  <div className='flex items-center justify-between p-4 border rounded-lg bg-blue-50'>
-                    <div className='flex items-center space-x-3'>
-                      <div className='w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center'>
-                        <FileText className='h-5 w-5 text-blue-600' />
-                      </div>
-                      <div>
-                        <h4 className='font-medium text-gray-900'>Propuesta Comercial</h4>
-                        <p className='text-sm text-gray-600'>
-                          Documento personalizado con la información de tu negocio
-                        </p>
-                      </div>
-                    </div>
-                    <Button className='bg-blue-600 hover:bg-blue-700'>
-                      <Download className='h-4 w-4 mr-2' />
-                      Descargar PDF
-                    </Button>
-                  </div>
-
-                  <div className='text-sm text-gray-500 bg-gray-50 p-3 rounded-lg'>
-                    <p className='flex items-center space-x-2'>
-                      <span>💡</span>
-                      <span>La propuesta se genera automáticamente con la información de tu perfil de negocio</span>
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Branding */}
-            <TabsContent value='branding' className='space-y-6'>
-              <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Logo de la empresa</CardTitle>
-                    <CardDescription>Sube el logo que representa tu marca</CardDescription>
-                  </CardHeader>
-                  <CardContent className='space-y-6'>
-                    <div className='space-y-4'>
-                      <div className='border-2 border-dashed border-gray-300 rounded-lg p-8 text-center'>
-                        <DragImage type='image' file={logo} setFile={setLogo} currentImage={formData.client?.logo} />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Colores de marca</CardTitle>
-                    <CardDescription>Define la paleta de colores de tu negocio</CardDescription>
-                  </CardHeader>
-                  <CardContent className='space-y-4'>
-                    <div className='space-y-3'>
-                      <div className='flex items-center space-x-3'>
-                        <div className='w-8 h-8 bg-red-500 rounded-full border-2 border-gray-200'></div>
-                        <div className='flex-1'>
-                          <Label>Color principal</Label>
-                          <Input value='#EF4444' readOnly className='mt-1' />
-                        </div>
-                      </div>
-                      <div className='flex items-center space-x-3'>
-                        <div className='w-8 h-8 bg-gray-800 rounded-full border-2 border-gray-200'></div>
-                        <div className='flex-1'>
-                          <Label>Color secundario</Label>
-                          <Input value='#1F2937' readOnly className='mt-1' />
-                        </div>
-                      </div>
-                      <div className='flex items-center space-x-3'>
-                        <div className='w-8 h-8 bg-blue-500 rounded-full border-2 border-gray-200'></div>
-                        <div className='flex-1'>
-                          <Label>Color de acento</Label>
-                          <Input value='#3B82F6' readOnly className='mt-1' />
-                        </div>
-                      </div>
-                    </div>
-                    <Palette />
-                    <Button variant='outline' className='w-full'>
-                      <PaletteIcon className='h-4 w-4 mr-2' />
-                      Generar paleta automática
-                    </Button>
-                  </CardContent>
-                </Card>
+                <div className={styles.info_field}>
+                  <label className={styles.field_label}>
+                    <Globe className={styles.label_icon} />
+                    {dict("fields.website")}
+                  </label>
+                  <p className={styles.field_value}>
+                    {clientData?.company_web ? (
+                      <a
+                        href={clientData.company_web}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className={styles.info_link}
+                      >
+                        {clientData.company_web}
+                      </a>
+                    ) : (
+                      dict("fields.not_specified")
+                    )}
+                  </p>
+                </div>
               </div>
-            </TabsContent>
+            </CardContent>
+          </Card>
 
-            {/* Información de Contacto */}
-            <TabsContent value='contact' className='space-y-6'>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Información de Contacto</CardTitle>
-                  <CardDescription>
-                    Mantén actualizada tu información para que los clientes puedan contactarte
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className='space-y-6'>
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                    <div className='space-y-2'>
-                      <Label htmlFor='email'>Email</Label>
-                      <div className='relative'>
-                        <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
-                        <Input
-                          id='email'
-                          type='email'
-                          value={businessData.email}
-                          onChange={e => setBusinessData({ ...businessData, email: e.target.value })}
-                          className='pl-10'
-                          placeholder='contacto@empresa.com'
-                        />
+          {/* Branding */}
+          <Card className={styles.settings_card}>
+            <CardHeader className={styles.card_header}>
+              <CardTitle className={styles.card_title}>
+                <FileText className={styles.title_icon} />
+                {dict("sections.branding")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className={styles.user_info_grid}>
+                <div className={styles.info_field}>
+                  <label className={styles.field_label}>
+                    <FileText className={styles.label_icon} />
+                    {dict("fields.company_logo")}
+                  </label>
+                  <div className={styles.logo_display}>
+                    {clientData?.logo ? (
+                      <img src={clientData.logo} alt={dict("branding.logo_alt")} className={styles.logo_image} />
+                    ) : (
+                      <div className={styles.logo_placeholder}>
+                        <FileText className={styles.placeholder_icon} />
+                        <span>{dict("branding.no_logo_configured")}</span>
                       </div>
-                    </div>
+                    )}
+                  </div>
+                </div>
 
-                    <div className='space-y-2'>
-                      <Label htmlFor='phone'>Teléfono</Label>
-                      <div className='relative'>
-                        <Phone className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
-                        <Input
-                          id='phone'
-                          value={businessData.phone}
-                          onChange={e => setBusinessData({ ...businessData, phone: e.target.value })}
-                          className='pl-10'
-                          placeholder='+54 9 11 1234-5678'
-                        />
+                <div className={styles.info_field}>
+                  <label className={styles.field_label}>
+                    <FileText className={styles.label_icon} />
+                    {dict("fields.color_palette")}
+                  </label>
+                  <div className={styles.color_palette}>
+                    {paletteArray && paletteArray.length > 0 ? (
+                      paletteArray.map((colorItem, index) => (
+                        <div key={index} className={styles.color_item}>
+                          <div className={styles.color_circle} style={{ backgroundColor: colorItem.color }} />
+                          <div className={styles.color_input_group}>
+                            <span className={styles.color_label}>{colorItem.name}</span>
+                            <span className={styles.color_value}>{colorItem.color}</span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className={styles.palette_placeholder}>
+                        <span>{dict("branding.no_palette_configured")}</span>
                       </div>
-                    </div>
+                    )}
                   </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-                  <div className='space-y-2'>
-                    <Label htmlFor='address'>Dirección</Label>
-                    <div className='relative'>
-                      <MapPin className='absolute left-3 top-3 h-4 w-4 text-gray-400' />
-                      <Textarea
-                        id='address'
-                        value={businessData.address}
-                        onChange={e => setBusinessData({ ...businessData, address: e.target.value })}
-                        className='pl-10'
-                        placeholder='Dirección completa de tu negocio'
-                        rows={3}
-                      />
+          {/* Propuesta Comercial */}
+          <Card className={styles.settings_card}>
+            <CardHeader className={styles.card_header}>
+              <CardTitle className={styles.card_title}>
+                <FileText className={styles.title_icon} />
+                {dict("sections.commercial_proposal")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className={styles.actions_section}>
+                <div className={styles.document_item}>
+                  <div className={styles.document_content}>
+                    <div className={styles.document_icon}>
+                      <FileText className={styles.document_icon_svg} />
                     </div>
-                  </div>
-
-                  <div className='space-y-2'>
-                    <Label htmlFor='website'>Sitio web</Label>
-                    <div className='relative'>
-                      <Globe className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
-                      <Input
-                        id='website'
-                        value={businessData.website}
-                        onChange={e => setBusinessData({ ...businessData, website: e.target.value })}
-                        className='pl-10'
-                        placeholder='https://tuempresa.com'
-                      />
-                    </div>
-                  </div>
-
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                    <div className='space-y-2'>
-                      <Label htmlFor='instagram'>Instagram</Label>
-                      <div className='relative'>
-                        <Instagram className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
-                        <Input
-                          id='instagram'
-                          value={businessData.instagram}
-                          onChange={e => setBusinessData({ ...businessData, instagram: e.target.value })}
-                          className='pl-10'
-                          placeholder='@tu_empresa'
-                        />
+                    <div>
+                      <div className={styles.document_header}>
+                        <h4 className={styles.document_title}>{dict("proposal.title")}</h4>
+                        <div className={`${styles.status_badge} ${proposalStatus.color}`}>
+                          <proposalStatus.icon className={styles.status_icon} />
+                          <span className={styles.status_text}>{proposalStatus.text}</span>
+                        </div>
                       </div>
-                    </div>
-
-                    <div className='space-y-2'>
-                      <Label htmlFor='tiktok'>TikTok</Label>
-                      <div className='relative'>
-                        <MessageCircle className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
-                        <Input
-                          id='tiktok'
-                          value={businessData.tiktok}
-                          onChange={e => setBusinessData({ ...businessData, tiktok: e.target.value })}
-                          className='pl-10'
-                          placeholder='@tu_empresa_tk'
-                        />
-                      </div>
+                      <p className={styles.document_description}>
+                        {dict("proposal.status_label")}: {proposalStatus.text} • {dict("proposal.auto_generated")}
+                      </p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+                  {clientData?.proposal_url && (
+                    <div className={styles.button_group}>
+                      <Button
+                        className={styles.download_button}
+                        onClick={() => clientData.proposal_url && window.open(clientData.proposal_url, "_blank")}
+                      >
+                        <Download className='h-4 w-4 mr-2' />
+                        {dict("proposal.download_pdf")}
+                      </Button>
+                    </div>
+                  )}
+                </div>
 
-            {/* Configuración */}
-            <TabsContent value='settings' className='space-y-6'>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Configuración General</CardTitle>
-                  <CardDescription>Personaliza el comportamiento de tu cuenta y notificaciones</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className='text-center py-12 text-gray-500'>
-                    <Settings className='h-12 w-12 mx-auto mb-4 opacity-50' />
-                    <p>Configuraciones de la cuenta próximamente</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+                <div className={styles.info_box}>
+                  <p className={styles.info_content}>
+                    <span>💡</span>
+                    <span>
+                      {clientData?.proposal_status === "approved"
+                        ? dict("proposal.approved_message")
+                        : dict("proposal.auto_update_message")}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>

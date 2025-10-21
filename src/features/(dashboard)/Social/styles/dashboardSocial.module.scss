@@ -1,0 +1,44 @@
+// Social Media Page Styles
+.socialMediaPage {
+  display: flex;
+  height: 100%;
+  background-color: #f9fafb; // bg-gray-50
+  width: 100%;
+}
+
+// Loading Container
+.loadingContainer {
+  display: flex;
+  height: 100%;
+  background-color: #f9fafb; // bg-gray-50
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingContent {
+  text-align: center;
+}
+
+.loadingSpinner {
+  animation: spin 1s linear infinite;
+  border-radius: 50%;
+  height: 2rem; // h-8
+  width: 2rem; // w-8
+  border-bottom: 2px solid #2563eb; // border-blue-600
+  margin: 0 auto 1rem auto; // mx-auto mb-4
+}
+
+.loadingText {
+  color: #4b5563; // text-gray-600
+}
+
+// Keyframe for spinner animation
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

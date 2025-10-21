@@ -189,14 +189,78 @@
       "success_template": "Template selected",
       "error_template": "Error selecting template"
     },
-    "login": {
-      "description_one": "has the",
-      "description_two": "your business needs",
-      "login": "Login",
-      "register": "Register",
-      "account": "Don't have an account?",
-      "signup": "Sign up now",
-      "policy": "Policy privacy",
+    "business_dashboard": {
+      "header": {
+        "default_title": "My Business"
+      },
+      "sections": {
+        "basic_data": "Basic Data",
+        "branding": "Branding",
+        "commercial_proposal": "Commercial Proposal"
+      },
+      "fields": {
+        "business_name": "Business name",
+        "category": "Category",
+        "description": "Description",
+        "address": "Address",
+        "website": "Website",
+        "company_logo": "Company logo",
+        "color_palette": "Color palette",
+        "not_specified": "Not specified"
+      },
+      "branding": {
+        "no_logo_configured": "No logo configured",
+        "logo_alt": "Company logo",
+        "no_palette_configured": "No color palette configured"
+      },
+      "proposal": {
+        "title": "Commercial Proposal",
+        "status": {
+          "approved": "Approved",
+          "pending": "Pending",
+          "review": "Under review"
+        },
+        "download_pdf": "Download PDF",
+        "status_label": "Status",
+        "auto_generated": "Automatically generated",
+        "approved_message": "Your proposal has been approved and is ready to use",
+      "auto_update_message": "The proposal is automatically updated when you modify your business information"
+    }
+  },
+  "settings": {
+    "header": {
+      "title": "Settings",
+      "description": "Manage your personal information and account settings"
+    },
+    "sections": {
+      "personal_info": "Personal Information",
+      "account_actions": "Account Actions"
+    },
+    "fields": {
+      "name": "Name",
+      "lastname": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "role": "Role",
+      "registration_date": "Registration date",
+      "not_specified": "Not specified",
+      "not_available": "Not available"
+    },
+    "roles": {
+      "user": "User"
+    },
+    "actions": {
+      "logout": "Log Out"
+    }
+  },
+  "login": {
+    "description_one": "has the",
+    "description_two": "your business needs",
+    "login": "Login",
+    "register": "Register",
+    "account": "Don't have an account?",
+    "signup": "Sign up now",
+    "policy": "Policy privacy",
       "role": {
         "title": "Change user display:",
         "mentor": "Mentor",

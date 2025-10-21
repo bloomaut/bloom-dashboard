@@ -17,7 +17,7 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
   const pathname = usePathname();
   const { locale } = useParams() as { locale: string };
-  const userData = useAppSelector((state) => state.userData);
+  const userData = useAppSelector(state => state.userData);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const dict = useTranslations("dict.sidebar.dashboard");
 
@@ -41,26 +41,19 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
       {/* Logo Section */}
       <div className={styles.logo_section}>
         <Link href={`/${locale}/dashboard`} className={styles.logo_link}>
-          <img 
-            src="/bloomLogo.png" 
-            alt="Bloom Logo" 
-            className={styles.logo_image}
-          />
+          <img src='/bloomLogo.png' alt='Bloom Logo' className={styles.logo_image} />
         </Link>
       </div>
 
       {/* Main Navigation */}
       <nav className={styles.main_navigation}>
         <ul className={styles.navigation_list}>
-          {navigation.map((item) => {
+          {navigation.map(item => {
             const href = `/${locale}/${item.href}`;
             const isActive = pathname === href;
             return (
               <li key={item.name} className={styles.navigation_item}>
-                <Link
-                  href={href}
-                  className={cn(styles.navigation_link, isActive && styles.active)}
-                >
+                <Link href={href} className={cn(styles.navigation_link, isActive && styles.active)}>
                   <item.icon className={styles.navigation_icon} />
                   {!isCollapsed && (
                     <div className={styles.navigation_text}>
@@ -87,14 +80,10 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
       <div className={styles.user_section}>
         {!isCollapsed && (
           <Link href={`/${locale}/dashboard/settings`} className={styles.user_info}>
-            <div className={styles.user_avatar}>
-              {userData?.name?.charAt(0)?.toUpperCase() || "U"}
-            </div>
+            <div className={styles.user_avatar}>{userData?.name?.charAt(0)?.toUpperCase() || "U"}</div>
             <div className={styles.user_details}>
               <div className={styles.user_name}>{userData?.name || dict("user.default_name")}</div>
-              <div className={styles.user_business}>
-                 {userData?.client?.name || dict("user.default_business")}
-               </div>
+              <div className={styles.user_business}>{userData?.client?.name || dict("user.default_business")}</div>
             </div>
           </Link>
         )}

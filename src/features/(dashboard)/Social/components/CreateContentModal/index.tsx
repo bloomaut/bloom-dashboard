@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { X, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { createContentIdea } from "@/features/(dashboard)/Social/services/socialMediaService";
+import styles from "./style.module.scss";
 
 interface CreateContentModalProps {
   isOpen: boolean;
@@ -100,19 +101,16 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
   if (!isOpen) return null;
 
   return (
-    <div className='fixed inset-0 bg-[rgb(0,0,0,0.7)] flex items-center justify-center z-50 p-4'>
-      <div
-        className='bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto scrollbar-hide'
-        onClick={e => e.stopPropagation()}
-      >
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
         {/* Success State */}
         {showSuccess && (
-          <div className='p-6 text-center'>
-            <div className='flex justify-center mb-4'>
-              <CheckCircle className='h-16 w-16 text-green-500' />
+          <div className={styles.successContainer}>
+            <div className={styles.successIconContainer}>
+              <CheckCircle className={styles.successIcon} />
             </div>
-            <div className='text-xl font-semibold text-gray-900 mb-2'>¡Idea creada exitosamente!</div>
-            <div className='text-gray-600'>Tu nueva idea de contenido ha sido guardada correctamente.</div>
+            <div className={styles.successTitle}>¡Idea creada exitosamente!</div>
+            <div className={styles.successMessage}>Tu nueva idea de contenido ha sido guardada correctamente.</div>
           </div>
         )}
 
@@ -120,31 +118,27 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
         {!showSuccess && (
           <>
             {/* Header */}
-            <div className='p-6 border-b border-gray-200'>
-              <div className='flex items-center justify-between'>
-                <div className='text-xl font-semibold text-gray-900'>Generar Nueva Idea de Contenido</div>
-                <button
-                  onClick={handleClose}
-                  disabled={isLoading}
-                  className='p-1 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
-                >
-                  <X className='h-5 w-5' />
+            <div className={styles.header}>
+              <div className={styles.headerContent}>
+                <div className={styles.headerTitle}>Generar Nueva Idea de Contenido</div>
+                <button onClick={handleClose} disabled={isLoading} className={styles.closeButton}>
+                  <X className={styles.closeIcon} />
                 </button>
               </div>
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className='p-6 space-y-4'>
+            <form onSubmit={handleSubmit} className={styles.form}>
               {/* Error Message */}
               {error && (
-                <div className='flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700'>
-                  <AlertCircle className='h-4 w-4 flex-shrink-0' />
-                  <div className='text-sm'>{error}</div>
+                <div className={styles.errorContainer}>
+                  <AlertCircle className={styles.errorIcon} />
+                  <div className={styles.errorText}>{error}</div>
                 </div>
               )}
 
               {/* Pilar Field */}
-              <div className='space-y-2'>
+              <div className={styles.fieldContainer}>
                 <Label htmlFor='pillar'>Pilar de Contenido</Label>
                 <Input
                   id='pillar'
@@ -153,12 +147,12 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                   value={formData.pillar}
                   onChange={e => handleInputChange("pillar", e.target.value)}
                   disabled={isLoading}
-                  className='w-full'
+                  className={styles.inputField}
                 />
               </div>
 
               {/* Idea Field */}
-              <div className='space-y-2'>
+              <div className={styles.fieldContainer}>
                 <Label htmlFor='idea'>Idea de Contenido</Label>
                 <Textarea
                   id='idea'
@@ -167,12 +161,12 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                   onChange={e => handleInputChange("idea", e.target.value)}
                   disabled={isLoading}
                   rows={4}
-                  className='w-full resize-none'
+                  className={styles.textareaField}
                 />
               </div>
 
               {/* Date Field */}
-              <div className='space-y-2'>
+              <div className={styles.fieldContainer}>
                 <Label htmlFor='date'>Fecha de Publicación</Label>
                 <Input
                   id='date'
@@ -180,75 +174,75 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                   value={formData.date}
                   onChange={e => handleInputChange("date", e.target.value)}
                   disabled={isLoading}
-                  className='w-full'
+                  className={styles.inputField}
                   min={new Date().toISOString().split("T")[0]} // No permitir fechas pasadas
                 />
               </div>
 
               {/* Time Period Field */}
-              <div className='space-y-2'>
+              <div className={styles.fieldContainer}>
                 <Label htmlFor='dayTime'>Horario de Publicación</Label>
-                <div className='grid grid-cols-3 gap-2'>
+                <div className={styles.timePeriodGrid}>
                   <button
                     type='button'
                     onClick={() => handleInputChange("dayTime", "morning")}
                     disabled={isLoading}
-                    className={`p-3 rounded-lg border-2 text-sm font-medium transition-all ${
-                      formData.dayTime === "morning"
-                        ? "border-yellow-500 bg-yellow-50 text-yellow-800"
-                        : "border-gray-200 bg-white text-gray-600 hover:border-yellow-300"
-                    } ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                    className={`${styles.timePeriodButton} ${styles.morningButton} ${
+                      formData.dayTime === "morning" ? styles.active : ""
+                    }`}
                   >
-                    <div className='flex flex-col items-center space-y-1'>
-                      <div className='w-3 h-3 bg-yellow-500 rounded-full'></div>
+                    <div className={styles.timePeriodContent}>
+                      <div className={`${styles.timePeriodDot} ${styles.morningDot}`}></div>
                       <div>Mañana</div>
-                      <div className='text-xs opacity-75'>6:00 - 12:00</div>
+                      <div className={styles.timePeriodTime}>6:00 - 12:00</div>
                     </div>
                   </button>
                   <button
                     type='button'
                     onClick={() => handleInputChange("dayTime", "afternoon")}
                     disabled={isLoading}
-                    className={`p-3 rounded-lg border-2 text-sm font-medium transition-all ${
-                      formData.dayTime === "afternoon"
-                        ? "border-red-500 bg-red-50 text-red-800"
-                        : "border-gray-200 bg-white text-gray-600 hover:border-red-300"
-                    } ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                    className={`${styles.timePeriodButton} ${styles.afternoonButton} ${
+                      formData.dayTime === "afternoon" ? styles.active : ""
+                    }`}
                   >
-                    <div className='flex flex-col items-center space-y-1'>
-                      <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                    <div className={styles.timePeriodContent}>
+                      <div className={`${styles.timePeriodDot} ${styles.afternoonDot}`}></div>
                       <div>Tarde</div>
-                      <div className='text-xs opacity-75'>12:00 - 18:00</div>
+                      <div className={styles.timePeriodTime}>12:00 - 18:00</div>
                     </div>
                   </button>
                   <button
                     type='button'
                     onClick={() => handleInputChange("dayTime", "evening")}
                     disabled={isLoading}
-                    className={`p-3 rounded-lg border-2 text-sm font-medium transition-all ${
-                      formData.dayTime === "evening"
-                        ? "border-blue-500 bg-blue-50 text-blue-800"
-                        : "border-gray-200 bg-white text-gray-600 hover:border-blue-300"
-                    } ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                    className={`${styles.timePeriodButton} ${styles.eveningButton} ${
+                      formData.dayTime === "evening" ? styles.active : ""
+                    }`}
                   >
-                    <div className='flex flex-col items-center space-y-1'>
-                      <div className='w-3 h-3 bg-blue-500 rounded-full'></div>
+                    <div className={styles.timePeriodContent}>
+                      <div className={`${styles.timePeriodDot} ${styles.eveningDot}`}></div>
                       <div>Noche</div>
-                      <div className='text-xs opacity-75'>18:00 - 24:00</div>
+                      <div className={styles.timePeriodTime}>18:00 - 24:00</div>
                     </div>
                   </button>
                 </div>
               </div>
 
               {/* Actions */}
-              <div className='flex items-center space-x-3 pt-4'>
-                <Button type='button' variant='outline' onClick={handleClose} disabled={isLoading} className='flex-1'>
+              <div className={styles.actionsContainer}>
+                <Button
+                  type='button'
+                  variant='outline'
+                  onClick={handleClose}
+                  disabled={isLoading}
+                  className={styles.actionButton}
+                >
                   Cancelar
                 </Button>
-                <Button type='submit' disabled={isLoading} className='flex-1'>
+                <Button type='submit' disabled={isLoading} className={styles.actionButton}>
                   {isLoading ? (
                     <>
-                      <Loader2 className='h-4 w-4 mr-2 animate-spin' />
+                      <Loader2 className={styles.loadingIcon} />
                       Creando...
                     </>
                   ) : (
