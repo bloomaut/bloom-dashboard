@@ -21,6 +21,7 @@ export default function DashboardGuard({ children }: { children: React.ReactNode
     const checkAccess = async () => {
       try {
         const me = await get("user/me");
+        console.log("me", me);
         const user = me?.result?.user ?? me?.user ?? null;
         const status = user?.client?.proposal_status ?? null;
 

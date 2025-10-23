@@ -2,14 +2,17 @@
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
-  connectTikTok,
-  generateContent,
-  selectSocialMediaProfile,
-  selectIsLoading,
-  selectIsGenerating,
-  selectSocialMediaError,
+  connectTikTokAndGenerateInitialContent,
+  selectProfile,
+  selectIsConnectingTikTok,
+  selectIsGeneratingWeekContent,
+  selectTikTokError,
+  selectGenerationError,
+  selectError,
+  selectIsProfileConnected,
   clearError,
-} from "@/features/(dashboard)/Social/store/socialMediaSlice";
+  clearAllErrors,
+} from "../../store/socialMediaSlice";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -22,49 +25,82 @@ export function SocialMediaSetup() {
   const dispatch = useAppDispatch();
   const { notify, notifyError } = useMessageToast();
 
-  // Redux selectors
-  const profile = useAppSelector(selectSocialMediaProfile);
-  const isLoading = useAppSelector(selectIsLoading);
-  const isGenerating = useAppSelector(selectIsGenerating);
-  const error = useAppSelector(selectSocialMediaError);
+  // Redux selectors - usando los selectores correctos del slice refactorizado
+  const profile = useAppSelector(selectProfile);
+  const isConnectingTikTok = useAppSelector(selectIsConnectingTikTok);
+  const isGeneratingContent = useAppSelector(selectIsGeneratingWeekContent);
+  const tikTokError = useAppSelector(selectTikTokError);
+  const generationError = useAppSelector(selectGenerationError);
+  const generalError = useAppSelector(selectError);
+  const isProfileConnected = useAppSelector(selectIsProfileConnected);
 
-  // Handle errors
+  // Manejo de errores específicos
   useEffect(() => {
-    if (error) {
-      notifyError(error);
+    if (tikTokError) {
+      console.error("❌ Error de TikTok:", tikTokError);
+      notifyError(`Error al conectar TikTok: ${tikTokError}`);
       dispatch(clearError());
     }
-  }, [error, notifyError, dispatch]);
+  }, [tikTokError, notifyError, dispatch]);
 
+  useEffect(() => {
+    if (generationError) {
+      console.error("❌ Error de generación:", generationError);
+      notifyError(`Error al generar contenido: ${generationError}`);
+      dispatch(clearError());
+    }
+  }, [generationError, notifyError, dispatch]);
+
+  useEffect(() => {
+    if (generalError && !tikTokError && !generationError) {
+      console.error("❌ Error general:", generalError);
+      notifyError(`Error: ${generalError}`);
+      dispatch(clearError());
+    }
+  }, [generalError, tikTokError, generationError, notifyError, dispatch]);
+
+  // Función para conectar plataformas con flujo completo
   const handleConnectPlatform = async (platform: "instagram" | "tiktok") => {
     if (platform === "tiktok") {
       try {
-        // Simulate TikTok OAuth flow
-        const code = "mock_tiktok_auth_code";
+        console.log("🔄 Iniciando conexión de TikTok con generación de contenido...");
+
+        // Limpiar errores previos
+        dispatch(clearAllErrors());
+
+        // Simular código de autorización de TikTok OAuth
+        const mockAuthCode = "mock_tiktok_auth_code_1234";
 
         notify("Conectando cuenta de TikTok...");
-        const connectResult = await dispatch(connectTikTok(code)).unwrap();
 
-        if (connectResult) {
-          notify("Cuenta de TikTok conectada exitosamente");
+        // Usar el flujo completo: conectar TikTok + generar contenido inicial
+        const result = await dispatch(
+          connectTikTokAndGenerateInitialContent({
+            code: mockAuthCode,
+          }),
+        ).unwrap();
 
-          // Generate initial content
-          notify("Generando contenido inicial...");
-          await dispatch(generateContent("first-login")).unwrap();
-          notify("Contenido inicial generado exitosamente");
-        }
+        console.log("✅ Flujo completo exitoso:", {
+          profile: result.profile.username,
+          contentCount: result.contents.length,
+        });
+
+        notify("¡TikTok conectado exitosamente!");
+        notify(`Contenido inicial generado: ${result.contents.length} elementos`);
       } catch (error: any) {
-        console.error("Error connecting TikTok:", error);
-        notifyError(error || "Error al conectar la cuenta de TikTok");
+        console.error("❌ Error en flujo completo de TikTok:", error);
+        notifyError(error.message || "Error al conectar TikTok y generar contenido");
       }
-    } else {
-      // Instagram connection logic would go here
-      notifyError("La conexión de Instagram no está disponible aún");
+    } else if (platform === "instagram") {
+      // Instagram no está implementado aún
+      notifyError("La conexión de Instagram estará disponible próximamente");
     }
   };
 
+  // Función para obtener el badge de estado de cada plataforma
   const getStatusBadge = (platform: "instagram" | "tiktok") => {
-    const isConnected = profile?.connected_accounts?.[platform] || false;
+    // Verificar conexión basada en el perfil
+    const isConnected = platform === "tiktok" ? profile?.connected && profile?.socialMedia === "tiktok" : false; // Instagram no implementado
 
     if (isConnected) {
       return (
@@ -82,6 +118,10 @@ export function SocialMediaSetup() {
       );
     }
   };
+
+  // Estados derivados
+  const isTikTokConnected = profile?.socialMedia === "tiktok" && profile?.connected;
+  const isProcessing = isConnectingTikTok || isGeneratingContent;
 
   return (
     <div className={styles.container}>
@@ -122,7 +162,13 @@ export function SocialMediaSetup() {
                 <CardDescription>Conecta tu cuenta de TikTok para gestionar tu contenido</CardDescription>
               </CardHeader>
               <CardContent className={styles.setupCardContent}>
-                {getStatusBadge("tiktok")}
+                <div className={styles.statusBadge}>
+                  {isTikTokConnected ? (
+                    <Badge variant='default'>Conectado</Badge>
+                  ) : (
+                    <Badge variant='secondary'>No conectado</Badge>
+                  )}
+                </div>
 
                 <div className={styles.featuresList}>
                   <p className={styles.featureItem}>• Subir videos automáticamente</p>
@@ -132,20 +178,20 @@ export function SocialMediaSetup() {
 
                 <Button
                   onClick={() => handleConnectPlatform("tiktok")}
-                  disabled={profile?.connected_accounts?.tiktok || isLoading || isGenerating}
+                  disabled={isTikTokConnected || isProcessing}
                   className={`${styles.connectButton} ${styles.tiktok}`}
                 >
-                  {isLoading ? (
+                  {isConnectingTikTok ? (
                     <>
                       <Clock className={styles.spinning} />
-                      Conectando...
+                      Conectando TikTok...
                     </>
-                  ) : isGenerating ? (
+                  ) : isGeneratingContent ? (
                     <>
                       <Clock className={styles.spinning} />
                       Generando contenido...
                     </>
-                  ) : profile?.connected_accounts?.tiktok ? (
+                  ) : isTikTokConnected ? (
                     <>
                       <CheckCircle />
                       Conectado
@@ -178,27 +224,9 @@ export function SocialMediaSetup() {
                   <p className={styles.featureItem}>• Gestionar stories</p>
                 </div>
 
-                <Button
-                  onClick={() => handleConnectPlatform("instagram")}
-                  disabled={true}
-                  className={`${styles.connectButton} ${styles.instagram}`}
-                >
-                  {false ? (
-                    <>
-                      <Clock className={styles.spinning} />
-                      Conectando...
-                    </>
-                  ) : profile?.connected_accounts?.instagram ? (
-                    <>
-                      <CheckCircle />
-                      Conectado
-                    </>
-                  ) : (
-                    <>
-                      <Instagram />
-                      Proximamente
-                    </>
-                  )}
+                <Button disabled={true} className={`${styles.connectButton} ${styles.instagram}`}>
+                  <Instagram />
+                  Próximamente
                 </Button>
               </CardContent>
             </Card>

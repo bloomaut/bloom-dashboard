@@ -1,12 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/store/hooks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { X, Loader2, CheckCircle, AlertCircle } from "lucide-react";
-import { createContentIdea } from "@/features/(dashboard)/Social/services/socialMediaService";
+import {
+  createSingleContent,
+  selectIsCreatingContent,
+  selectCreationError,
+  clearError,
+} from "@/features/(dashboard)/Social/store/socialMediaSlice";
+import { CreateContentParams } from "@/features/(dashboard)/Social/types";
 import styles from "./style.module.scss";
 
 interface CreateContentModalProps {
@@ -16,54 +24,84 @@ interface CreateContentModalProps {
 }
 
 export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContentModalProps) {
+  const dispatch = useAppDispatch();
+  const isLoading = useSelector(selectIsCreatingContent);
+  const reduxError = useSelector(selectCreationError);
+
   const [formData, setFormData] = useState({
     pillar: "",
     idea: "",
     date: "",
     dayTime: "morning" as "morning" | "afternoon" | "evening",
   });
-  const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [localError, setLocalError] = useState<string | null>(null);
+
+  // Combinar errores de Redux y locales
+  const error = reduxError || localError;
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
     }));
-    // Clear error when user starts typing
-    if (error) setError(null);
+    // Clear errors when user starts typing
+    if (error) {
+      setLocalError(null);
+      if (reduxError) {
+        dispatch(clearError());
+      }
+    }
   };
 
-  const validateForm = () => {
-    if (!formData.pillar.trim()) {
-      setError("El pilar es requerido");
-      return false;
-    }
+  const validateForm = (): { isValid: boolean; error?: string } => {
     if (!formData.idea.trim()) {
-      setError("La idea es requerida");
-      return false;
+      return { isValid: false, error: "La idea es requerida" };
     }
     if (!formData.date) {
-      setError("La fecha es requerida");
-      return false;
+      return { isValid: false, error: "La fecha es requerida" };
     }
-    return true;
+
+    // Validar que la fecha no sea en el pasado
+    const selectedDate = new Date(formData.date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+      return { isValid: false, error: "La fecha no puede ser en el pasado" };
+    }
+
+    return { isValid: true };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    const validation = validateForm();
+    if (!validation.isValid) {
+      setLocalError(validation.error!);
+      return;
+    }
 
-    setIsLoading(true);
-    setError(null);
+    // Limpiar errores antes de enviar
+    setLocalError(null);
+    if (reduxError) {
+      dispatch(clearError());
+    }
 
     try {
-      // Convert date to ISO string format
-      const isoDate = new Date(formData.date).toISOString();
+      // Preparar parámetros para el thunk
+      const contentParams: CreateContentParams = {
+        idea: formData.idea.trim(),
+        pillar: formData.pillar.trim() || undefined, // Solo incluir si no está vacío
+        date: formData.date, // Ya está en formato YYYY-MM-DD
+        dayTime: formData.dayTime,
+      };
 
-      await createContentIdea(formData.pillar, formData.idea, isoDate, formData.dayTime);
+      // Usar el thunk de Redux con tipado correcto
+      const result = await dispatch(createSingleContent(contentParams)).unwrap();
+
+      console.log("✅ Contenido creado exitosamente:", result._id);
 
       // Mostrar mensaje de éxito
       setShowSuccess(true);
@@ -77,24 +115,34 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
       setTimeout(() => {
         setShowSuccess(false);
         onClose();
-        // Reset form
-        setFormData({ pillar: "", idea: "", date: "", dayTime: "morning" });
+        resetForm();
       }, 2000);
-    } catch (err) {
-      console.error("Error creating content idea:", err);
-      setError("Error al crear la idea de contenido. Por favor, intenta de nuevo.");
-    } finally {
-      setIsLoading(false);
+    } catch (error: unknown) {
+      console.error("❌ Error al crear contenido:", error);
+      // El error ya se maneja en Redux, pero podemos manejar casos específicos
+      if (typeof error === "string") {
+        setLocalError(error);
+      } else if (error instanceof Error) {
+        setLocalError(error.message);
+      } else {
+        setLocalError("Error inesperado al crear el contenido");
+      }
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({ pillar: "", idea: "", date: "", dayTime: "morning" });
+    setLocalError(null);
+    setShowSuccess(false);
+    if (reduxError) {
+      dispatch(clearError());
     }
   };
 
   const handleClose = () => {
     if (!isLoading) {
       onClose();
-      // Reset form and states
-      setFormData({ pillar: "", idea: "", date: "", dayTime: "morning" });
-      setError(null);
-      setShowSuccess(false);
+      resetForm();
     }
   };
 
@@ -139,7 +187,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
 
               {/* Pilar Field */}
               <div className={styles.fieldContainer}>
-                <Label htmlFor='pillar'>Pilar de Contenido</Label>
+                <Label htmlFor='pillar'>Pilar de Contenido (Opcional)</Label>
                 <Input
                   id='pillar'
                   type='text'
@@ -149,6 +197,9 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                   disabled={isLoading}
                   className={styles.inputField}
                 />
+                <div className={styles.fieldHint}>
+                  Si no especificas un pilar, se asignará automáticamente según el contenido de tu idea.
+                </div>
               </div>
 
               {/* Idea Field */}

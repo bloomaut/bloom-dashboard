@@ -4,7 +4,7 @@ import dataSchemaSlice from "./features/dataschemaSlice";
 import ricardoSlice from "./features/ricardoSlice";
 import subdomainsSlice from "./features/subdomainsSlice";
 import questSlice from "../features/(onboarding)/Questionary/store/questSlice";
-import socialMediaSlice from "../features/(dashboard)/Social/store/socialMediaSlice";
+import socialMediaSlice from "@/features/(dashboard)/Social/store/socialMediaSlice";
 
 export const store = configureStore({
   reducer: {

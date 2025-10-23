@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,48 +20,20 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import {
+  selectContent,
+  selectProfile,
+  selectIsLoadingContent,
+  selectContentError,
+  selectGenerationError,
+  selectError,
+  fetchContent,
+  clearAllErrors,
+  markContentAsCompleted,
+} from "../../store/socialMediaSlice";
+import { ContentItem } from "../../types";
 import styles from "./style.module.scss";
-
-// Type definitions
-interface ContentItem {
-  clientId: string;
-  socialMedia: "tiktok"; // Enum (tiktok)
-  publishType: "Video"; // Enum (Video)
-  pillar: string;
-  day: Date;
-  dayTime: "morning" | "afternoon" | "evening"; // Enum
-  completed: boolean;
-  skinxId: string;
-  presetId: string;
-  content: {
-    title: string;
-    script: string;
-    copy: string;
-    hashtags: string | null;
-    cta_copy: string | null;
-    key_words_copy: string | null;
-    feelings: string | null;
-    understanding: string | null;
-    make: string | null;
-    hook: string | null;
-  };
-}
-
-interface ProfileData {
-  _id: string;
-  clientId: string;
-  username: string;
-  bio: string;
-  avatar: string;
-  socialMedia: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface ContentCalendarProps {
-  contentItems: ContentItem[];
-  profileData?: ProfileData | null;
-}
 
 // Color scheme for time periods
 const TIME_PERIOD_COLORS = {
@@ -94,23 +66,138 @@ const TIME_PERIOD_COLORS = {
   },
 } as const;
 
-// Days of the week in divish
+// Constantes movidas al final para mejor organización
 const DAYS_OF_WEEK = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
-// Helper function to truncate text to 20 characters
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+/**
+ * Genera el rango de fechas para la semana actual (domingo a sábado)
+ */
+const getCurrentWeekRange = () => {
+  const today = new Date();
+
+  // Obtener el día de la semana (0 = domingo, 1 = lunes, ..., 6 = sábado)
+  const dayOfWeek = today.getDay();
+
+  // Calcular el domingo de la semana actual
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - dayOfWeek);
+
+  // Calcular el sábado de la semana actual (6 días después del domingo)
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+  return {
+    startDate: startOfWeek.toISOString().split("T")[0],
+    endDate: endOfWeek.toISOString().split("T")[0],
+  };
+};
+
+/**
+ * Genera el rango de fechas para una semana específica basada en el offset
+ * @param weekOffset - Offset de semanas desde la semana actual (0 = semana actual, -1 = semana anterior, 1 = semana siguiente)
+ */
+const getWeekRange = (weekOffset: number) => {
+  const today = new Date();
+
+  // Obtener el día de la semana (0 = domingo, 1 = lunes, ..., 6 = sábado)
+  const dayOfWeek = today.getDay();
+
+  // Calcular el domingo de la semana actual
+  const startOfCurrentWeek = new Date(today);
+  startOfCurrentWeek.setDate(today.getDate() - dayOfWeek);
+
+  // Aplicar el offset de semanas
+  const startOfTargetWeek = new Date(startOfCurrentWeek);
+  startOfTargetWeek.setDate(startOfCurrentWeek.getDate() + weekOffset * 7);
+
+  // Calcular el sábado de la semana objetivo (6 días después del domingo)
+  const endOfTargetWeek = new Date(startOfTargetWeek);
+  endOfTargetWeek.setDate(startOfTargetWeek.getDate() + 6);
+
+  return {
+    startDate: startOfTargetWeek.toISOString().split("T")[0],
+    endDate: endOfTargetWeek.toISOString().split("T")[0],
+  };
+};
+
+/**
+ * Función auxiliar para truncar texto
+ * @param text - Texto a truncar
+ * @param maxLength - Longitud máxima permitida
+ * @returns Texto truncado con "..." si excede la longitud
+ */
 const truncateText = (text: string, maxLength: number = 23): string => {
   if (!text) return "";
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + "...";
 };
 
-export function ContentCalendar({ contentItems, profileData }: ContentCalendarProps) {
-  console.log("PROFILEDATA: ", profileData);
-  const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
-  const [currentWeekOffset, setCurrentWeekOffset] = useState(0); // 0 = semana actual, -1 = semana anterior, 1 = semana siguiente
+/**
+ * Tipo para ContentItem con day como Date
+ */
+type ContentItemWithDateDay = Omit<ContentItem, "day"> & { day: Date };
 
-  // Get week dates based on offset
-  const getWeekDates = (weekOffset: number = 0) => {
+/**
+ * Convierte un ContentItem para uso en el calendario
+ * @param item - ContentItem original
+ * @returns ContentItem con formato compatible
+ */
+const convertContentItemForCalendar = (item: ContentItem): ContentItemWithDateDay => {
+  return {
+    ...item,
+    day: new Date(item.day), // Convertir string ISO a Date
+    socialMedia: item.socialMedia as "tiktok",
+    publishType: item.publishType as "Video",
+    content: {
+      ...item.content,
+      script: item.content.script || "", // Asegurar que script no sea null
+    },
+  };
+};
+
+/**
+ * Hook personalizado para manejar la navegación de semanas
+ * @returns Objeto con funciones y estado de navegación
+ */
+const useWeekNavigation = () => {
+  const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
+
+  const goToPreviousWeek = useCallback(() => {
+    setCurrentWeekOffset(prev => prev - 1);
+  }, []);
+
+  const goToNextWeek = useCallback(() => {
+    setCurrentWeekOffset(prev => prev + 1);
+  }, []);
+
+  const goToCurrentWeek = useCallback(() => {
+    setCurrentWeekOffset(0);
+  }, []);
+
+  const isCurrentWeek = useCallback(() => {
+    return currentWeekOffset === 0;
+  }, [currentWeekOffset]);
+
+  return {
+    currentWeekOffset,
+    goToPreviousWeek,
+    goToNextWeek,
+    goToCurrentWeek,
+    isCurrentWeek,
+  };
+};
+
+/**
+ * Hook personalizado para calcular las fechas de la semana
+ * @param weekOffset - Offset de la semana actual
+ * @returns Array de fechas de la semana
+ */
+const useWeekDates = (weekOffset: number) => {
+  return useMemo(() => {
     const today = new Date();
     const currentDay = today.getDay();
     const startOfWeek = new Date(today);
@@ -123,25 +210,78 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
       weekDates.push(date);
     }
     return weekDates;
-  };
+  }, [weekOffset]);
+};
 
-  const weekDates = getWeekDates(currentWeekOffset);
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 
-  // Navigation functions
-  const goToPreviousWeek = () => {
-    setCurrentWeekOffset(prev => prev - 1);
-  };
+export const ContentCalendar = () => {
+  const dispatch = useAppDispatch();
 
-  const goToNextWeek = () => {
-    setCurrentWeekOffset(prev => prev + 1);
-  };
+  // Redux selectors - siempre usa datos de Redux
+  const content = useAppSelector(selectContent);
+  const profile = useAppSelector(selectProfile);
+  const isLoadingContent = useAppSelector(selectIsLoadingContent);
 
-  const goToCurrentWeek = () => {
-    setCurrentWeekOffset(0);
-  };
+  // Errores específicos
+  const contentError = useAppSelector(selectContentError);
+  const generationError = useAppSelector(selectGenerationError);
+  const generalError = useAppSelector(selectError);
 
-  // Get week range text
-  const getWeekRangeText = () => {
+  // Estados derivados
+  const hasError = contentError || generationError || generalError;
+  const errorMessage = contentError || generationError || generalError;
+
+  // Estado local
+  const [selectedContent, setSelectedContent] = useState<ContentItemWithDateDay | null>(null);
+
+  // Hooks personalizados
+  const { currentWeekOffset, goToPreviousWeek, goToNextWeek, goToCurrentWeek, isCurrentWeek } = useWeekNavigation();
+
+  const weekDates = useWeekDates(currentWeekOffset);
+
+  // ========================================================================
+  // EFFECTS
+  // ========================================================================
+
+  // Cargar contenido cuando cambia la semana (incluyendo la carga inicial)
+  useEffect(() => {
+    console.log(`📅 Cargando contenido para semana con offset: ${currentWeekOffset}`);
+    const { startDate, endDate } = getWeekRange(currentWeekOffset);
+
+    dispatch(fetchContent({ startDate, endDate }));
+  }, [currentWeekOffset, dispatch]);
+
+  // Manejo de errores con notificaciones
+  useEffect(() => {
+    if (hasError) {
+      console.error("❌ Error en ContentCalendar:", errorMessage);
+
+      // Limpiar errores después de mostrar la notificación
+      const timer = setTimeout(() => {
+        dispatch(clearAllErrors());
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [hasError, errorMessage, dispatch]);
+
+  // ========================================================================
+  // EXPOSED METHODS
+  // ========================================================================
+
+  // Convertir contenido de Redux para uso en el calendario
+  const contentItems = useMemo(() => {
+    return content.map(convertContentItemForCalendar);
+  }, [content]);
+
+  /**
+   * Función para obtener el texto del rango de fechas de la semana
+   * @returns String con el rango de fechas formateado
+   */
+  const getWeekRangeText = useCallback(() => {
     const startDate = weekDates[0];
     const endDate = weekDates[6];
 
@@ -149,22 +289,17 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
       return `${date.getDate()}/${date.getMonth() + 1}`;
     };
 
-    if (startDate.getMonth() === endDate.getMonth()) {
-      return `${formatDate(startDate)} - ${formatDate(endDate)}`;
-    } else {
-      return `${formatDate(startDate)} - ${formatDate(endDate)}`;
-    }
-  };
+    return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+  }, [weekDates]);
 
-  // Check if it's current week
-  const isCurrentWeek = () => {
-    return currentWeekOffset === 0;
-  };
+  /**
+   * Función para agrupar contenido por día y horario
+   * @returns Objeto agrupado por fecha y horario
+   */
+  const groupContentByDay = useMemo(() => {
+    const grouped: Record<string, Record<string, ContentItemWithDateDay[]>> = {};
 
-  // Group content by day and time
-  const groupContentByDay = () => {
-    const grouped: Record<string, Record<string, ContentItem[]>> = {};
-
+    // Inicializar estructura para cada día de la semana
     weekDates.forEach(date => {
       const dateKey = date.toDateString();
       grouped[dateKey] = {
@@ -174,6 +309,7 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
       };
     });
 
+    // Agrupar contenido existente
     contentItems.forEach(item => {
       const dateKey = item.day.toDateString();
       if (grouped[dateKey]) {
@@ -182,18 +318,40 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
     });
 
     return grouped;
-  };
+  }, [weekDates, contentItems]);
 
-  const groupedContent = groupContentByDay();
+  /**
+   * Función para manejar el marcado de contenido como completado
+   * @param contentId - ID del contenido a marcar
+   */
+  const handleMarkAsCompleted = useCallback(
+    (contentId: string) => {
+      dispatch(markContentAsCompleted(contentId));
+    },
+    [dispatch],
+  );
 
-  // Render content tooltip
-  const renderContentTooltip = () => {
+  /**
+   * Componente para renderizar el modal de detalles del contenido
+   * @returns JSX del modal o null si no hay contenido seleccionado
+   */
+  const renderContentModal = useCallback(() => {
     if (!selectedContent) return null;
 
     const colors = TIME_PERIOD_COLORS[selectedContent.dayTime];
 
+    const handleCloseModal = () => setSelectedContent(null);
+
+    const handleToggleCompleted = () => {
+      if (selectedContent._id) {
+        handleMarkAsCompleted(selectedContent._id);
+        // Actualizar el estado local del modal
+        setSelectedContent(prev => (prev ? { ...prev, completed: !prev.completed } : null));
+      }
+    };
+
     return (
-      <div className={styles.modalOverlay} onClick={() => setSelectedContent(null)}>
+      <div className={styles.modalOverlay} onClick={handleCloseModal}>
         <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
           {/* Header */}
           <div className={`${styles.modalHeader} ${styles[colors.header]}`}>
@@ -217,7 +375,7 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
                   </div>
                 </div>
               </div>
-              <button onClick={() => setSelectedContent(null)} className={styles.closeButton}>
+              <button onClick={handleCloseModal} className={styles.closeButton}>
                 <X className='h-5 w-5' />
               </button>
             </div>
@@ -262,6 +420,17 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
                       </>
                     )}
                   </div>
+                  {/* Botón para marcar como completado */}
+                  {selectedContent._id && (
+                    <Button
+                      variant={selectedContent.completed ? "outline" : "default"}
+                      size='sm'
+                      onClick={handleToggleCompleted}
+                      className='mt-2'
+                    >
+                      {selectedContent.completed ? "Marcar como Pendiente" : "Marcar como Completado"}
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
@@ -278,10 +447,12 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
             )}
 
             {/* Script */}
-            <div className={styles.contentSection}>
-              <h4>Guión</h4>
-              <div className={`${styles.contentBox} ${styles.scriptBox}`}>{selectedContent.content.script}</div>
-            </div>
+            {selectedContent.content.script && (
+              <div className={styles.contentSection}>
+                <h4>Guión</h4>
+                <div className={`${styles.contentBox} ${styles.scriptBox}`}>{selectedContent.content.script}</div>
+              </div>
+            )}
 
             {/* Copy */}
             <div className={styles.contentSection}>
@@ -352,18 +523,20 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
         </div>
       </div>
     );
-  };
+  }, [selectedContent, handleMarkAsCompleted]);
 
-  // Render content item card
-  const renderContentItem = (item: ContentItem) => {
+  /**
+   * Componente para renderizar una tarjeta de contenido individual
+   * @param item - Item de contenido a renderizar
+   * @returns JSX de la tarjeta de contenido
+   */
+  const renderContentItem = useCallback((item: ContentItemWithDateDay) => {
     const colors = TIME_PERIOD_COLORS[item.dayTime];
 
+    const handleItemClick = () => setSelectedContent(item);
+
     return (
-      <div
-        key={`${item.clientId}-${item.skinxId}-${item.presetId}`}
-        className={`${styles.contentItem} ${styles[colors.bg]}`}
-        onClick={() => setSelectedContent(item)}
-      >
+      <div key={item._id} className={`${styles.contentItem} ${styles[colors.bg]}`} onClick={handleItemClick}>
         <div className={styles.contentItemHeader}>
           <div className={styles.contentItemTitle}>
             <Video className='h-3 w-3' />
@@ -374,39 +547,68 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
 
         <div className={styles.contentItemPillar}>{item.pillar}</div>
 
-        {item.content.hook ? (
-          <div className={styles.contentItemDescription}>{item.content.hook}</div>
-        ) : (
-          <div className={styles.contentItemDescription}>{item.content.script}</div>
-        )}
+        <div className={styles.contentItemDescription}>
+          {item.content.hook ? truncateText(item.content.hook, 50) : truncateText(item.content.script || "", 50)}
+        </div>
       </div>
     );
-  };
+  }, []);
 
-  // Render time period section
-  const renderTimePeriod = (dayContent: Record<string, ContentItem[]>, timePeriod: keyof typeof TIME_PERIOD_COLORS) => {
-    const items = dayContent[timePeriod] || [];
-    const colors = TIME_PERIOD_COLORS[timePeriod];
+  /**
+   * Componente para renderizar una sección de período de tiempo
+   * @param dayContent - Contenido agrupado por horario del día
+   * @param timePeriod - Período de tiempo (morning, afternoon, evening)
+   * @returns JSX de la sección de período de tiempo
+   */
+  const renderTimePeriod = useCallback(
+    (dayContent: Record<string, ContentItemWithDateDay[]>, timePeriod: keyof typeof TIME_PERIOD_COLORS) => {
+      const items = dayContent[timePeriod] || [];
+      const colors = TIME_PERIOD_COLORS[timePeriod];
 
-    if (items.length === 0) {
-      return (
-        <div className={`${styles.emptyTimePeriod} ${styles[colors.empty]}`}>
-          <div className={styles.emptyText}>Sin contenido</div>
-        </div>
-      );
-    }
+      if (items.length === 0) {
+        return (
+          <div className={`${styles.emptyTimePeriod} ${styles[colors.empty]}`}>
+            <div className={styles.emptyText}>Sin contenido</div>
+          </div>
+        );
+      }
 
-    return <div className={styles.timePeriodContainer}>{items.map(renderContentItem)}</div>;
-  };
+      return <div className={styles.timePeriodContainer}>{items.map(renderContentItem)}</div>;
+    },
+    [renderContentItem],
+  );
+
+  // Mostrar loading si está cargando contenido
+  if (isLoadingContent) {
+    return (
+      <div className={styles.contentCalendar}>
+        <Card>
+          <CardContent className='flex items-center justify-center p-8'>
+            <div className='text-center'>
+              <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4'></div>
+              <p>Cargando calendario...</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.contentCalendar}>
-      {/* Tooltip */}
-      {renderContentTooltip()}
+      {/* Modal de detalles */}
+      {renderContentModal()}
 
-      {/* Color Legend and Profile Cards */}
+      {/* Mensaje de error si existe */}
+      {hasError && (
+        <div className={styles.errorBanner}>
+          <div className={styles.errorMessage}>{errorMessage} - Mostrando datos disponibles</div>
+        </div>
+      )}
+
+      {/* Tarjetas de leyenda de colores y perfil */}
       <div className={styles.cardsGrid}>
-        {/* Color Legend */}
+        {/* Leyenda de colores */}
         <Card>
           <CardHeader className='pb-3'>
             <CardTitle className='text-lg'>Esquema de Colores - Horarios</CardTitle>
@@ -429,23 +631,30 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
           </CardContent>
         </Card>
 
-        {/* Profile Card */}
+        {/* Tarjeta de perfil */}
         <Card>
-          <CardHeader className='pb-3'></CardHeader>
+          <CardHeader className='pb-3'>
+            <CardTitle className='text-lg'>Perfil Conectado</CardTitle>
+          </CardHeader>
           <CardContent>
-            {profileData ? (
+            {profile ? (
               <div className={styles.profileContainer}>
                 <div className={styles.profileImageContainer}>
-                  <img src={profileData.avatar} alt={profileData.username} className={styles.profileImage} />
+                  <img src={profile.avatar} alt={profile.username} className={styles.profileImage} />
                 </div>
                 <div className={styles.profileInfo}>
                   <div className={styles.profileHeader}>
-                    <div className={styles.profileUsername}>@{profileData.username}</div>
+                    <div className={styles.profileUsername}>@{profile.username}</div>
                     <Badge variant='secondary' className={styles.profileBadge}>
-                      {profileData.socialMedia.toUpperCase()}
+                      {profile.socialMedia.toUpperCase()}
                     </Badge>
                   </div>
-                  <div className={styles.profileBio}>{profileData.bio}</div>
+                  <div className={styles.profileBio}>{profile.bio}</div>
+                  {profile.connected && (
+                    <Badge variant='outline' className='mt-2 text-green-600 border-green-600'>
+                      ✓ Conectado
+                    </Badge>
+                  )}
                 </div>
               </div>
             ) : (
@@ -460,13 +669,13 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
         </Card>
       </div>
 
-      {/* Calendar Grid */}
+      {/* Grid del calendario */}
       <Card>
         <CardHeader className='pb-3'>
           <div className='flex items-center justify-between'>
             <CardTitle className='text-lg'>Calendario de Contenido Semanal</CardTitle>
 
-            {/* Week Navigation */}
+            {/* Navegación de semanas */}
             <div className={styles.weekNavigation}>
               <div className={styles.weekControls}>
                 <Button variant='outline' size='sm' onClick={goToPreviousWeek} className='h-8 w-8 p-0'>
@@ -501,12 +710,12 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
           <div className={styles.calendarGrid}>
             {weekDates.map((date, index) => {
               const dateKey = date.toDateString();
-              const dayContent = groupedContent[dateKey] || { morning: [], afternoon: [], evening: [] };
+              const dayContent = groupContentByDay[dateKey] || { morning: [], afternoon: [], evening: [] };
               const isToday = date.toDateString() === new Date().toDateString();
 
               return (
                 <div key={dateKey} className={`${styles.dayColumn} ${index === 6 ? styles.lastColumn : ""}`}>
-                  {/* Day Header */}
+                  {/* Encabezado del día */}
                   <div className={`${styles.dayHeader} ${isToday ? styles.todayHeader : ""}`}>
                     <div className={styles.dayName}>{DAYS_OF_WEEK[index]}</div>
                     <div className={`${styles.dayDate} ${isToday ? styles.todayDate : ""}`}>
@@ -514,9 +723,9 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
                     </div>
                   </div>
 
-                  {/* Content Sections */}
+                  {/* Secciones de contenido */}
                   <div className={styles.dayContent}>
-                    {/* Morning */}
+                    {/* Mañana */}
                     <div className={styles.timePeriodSection}>
                       <h5>
                         <div className={`${styles.timePeriodDot} ${styles.morningTimeDot}`}></div>
@@ -525,7 +734,7 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
                       {renderTimePeriod(dayContent, "morning")}
                     </div>
 
-                    {/* Afternoon */}
+                    {/* Tarde */}
                     <div className={styles.timePeriodSection}>
                       <h5>
                         <div className={`${styles.timePeriodDot} ${styles.afternoonTimeDot}`}></div>
@@ -534,7 +743,7 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
                       {renderTimePeriod(dayContent, "afternoon")}
                     </div>
 
-                    {/* Evening */}
+                    {/* Noche */}
                     <div className={styles.timePeriodSection}>
                       <h5>
                         <div className={`${styles.timePeriodDot} ${styles.eveningTimeDot}`}></div>
@@ -551,4 +760,4 @@ export function ContentCalendar({ contentItems, profileData }: ContentCalendarPr
       </Card>
     </div>
   );
-}
+};
