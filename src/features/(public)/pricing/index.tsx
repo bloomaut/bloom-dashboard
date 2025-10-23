@@ -54,8 +54,9 @@ export default function PricingPage() {
         dict("pricing.plans.pro.features.8"),
       ],
       buttonText: dict("pricing.plans.pro.button"),
-      buttonVariant: "default" as const,
+      buttonVariant: "outline" as const,
       popular: true,
+      comingSoon: false,
       actionType: "pro",
     },
     {
@@ -79,11 +80,54 @@ export default function PricingPage() {
   ];
 
   const handlePlanClick = (actionType: string) => {
-    if (actionType === "free" || actionType === "pro") {
+    if (actionType === "free") {
       // Redirigir a la página de login/auth como en la landing page
       window.location.href = `/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`;
     }
-    // Para ecommerce no hacemos nada ya que está deshabilitado (coming soon)
+    // Para pro y ecommerce no hacemos nada ya que están deshabilitados (coming soon)
+  };
+
+  const handleEnterpriseClick = () => {
+    const subject = en ? "Enterprise Plan Inquiry - Bloom" : "Consulta Plan Enterprise - Bloom";
+
+    const body = en
+      ? `Hello Bloom Team,
+
+I hope this message finds you well. I am writing to express my interest in learning more about your Enterprise plan and would like to schedule a conversation to discuss how Bloom can meet our organization's needs.
+
+We are looking for a comprehensive solution that can scale with our business requirements, and your Enterprise offering seems to align perfectly with what we're seeking.
+
+Could we arrange a time to discuss:
+- Enterprise features and capabilities
+- Pricing and implementation timeline
+- Custom solutions for our specific use case
+- Support and onboarding process
+
+I would appreciate the opportunity to speak with your team at your earliest convenience.
+
+Thank you for your time and consideration.
+
+Best regards`
+      : `Hola equipo de Bloom,
+
+Espero que este mensaje los encuentre bien. Les escribo para expresar mi interés en conocer más sobre su plan Enterprise y me gustaría programar una conversación para discutir cómo Bloom puede satisfacer las necesidades de nuestra organización.
+
+Estamos buscando una solución integral que pueda escalar con los requerimientos de nuestro negocio, y su oferta Enterprise parece alinearse perfectamente con lo que buscamos.
+
+¿Podríamos coordinar un momento para discutir:
+- Características y capacidades del plan Enterprise
+- Precios y cronograma de implementación
+- Soluciones personalizadas para nuestro caso específico
+- Proceso de soporte y onboarding
+
+Agradecería la oportunidad de hablar con su equipo a la mayor brevedad posible.
+
+Gracias por su tiempo y consideración.
+
+Saludos cordiales`;
+
+    const mailtoLink = `mailto:hgazze0@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
   };
 
   return (
@@ -163,7 +207,7 @@ export default function PricingPage() {
                     {dict("pricing.enterprise.description")}
                   </CardDescription>
                 </div>
-                <Button variant='outline' size='lg' className={styles.enterpriseButton}>
+                <Button variant='outline' size='lg' className={styles.enterpriseButton} onClick={handleEnterpriseClick}>
                   {dict("pricing.enterprise.button")}
                 </Button>
               </div>

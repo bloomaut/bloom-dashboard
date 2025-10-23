@@ -1,9 +1,167 @@
+@import "../../styles/theme.scss";
+
 .loadingWrapper {
   @include width-height(100%, 100%);
   @include flex(column, center, center);
-  padding: 15px 0;
+  position: relative;
 }
 
 .loadingHome {
   @include width-height(100vw, 100vh);
+}
+
+.loadingSmall {
+  padding: 8px;
+  min-height: 32px;
+}
+
+.loadingMedium {
+  padding: 16px;
+  min-height: 48px;
+}
+
+.loadingLarge {
+  padding: 24px;
+  min-height: 64px;
+}
+
+.spinner {
+  @include flex(row, center, center, 4px);
+  
+  &[data-size="small"] {
+    gap: 0.125rem;
+  }
+  
+  &[data-size="medium"] {
+    gap: 0.25rem;
+  }
+  
+  &[data-size="large"] {
+    gap: 0.5rem;
+  }
+}
+
+.dot {
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4dc2f4, #5a0075);
+  animation: bounce 1.4s ease-in-out infinite both;
+  
+  .spinner[data-size="small"] & {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  
+  .spinner[data-size="medium"] & {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .spinner[data-size="large"] & {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  &:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+  
+  &:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+  
+  &:nth-child(3) {
+    animation-delay: 0s;
+  }
+}
+
+.placeholder {
+  @include flex(row, center, center, 4px);
+  opacity: 0.3;
+  
+  &[data-size="small"] {
+    gap: 3px;
+    
+    &::before,
+    &::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4dc2f4, #5a0075);
+    }
+    
+    &::before {
+      margin-right: 3px;
+    }
+    
+    &::after {
+      margin-left: 3px;
+    }
+  }
+  
+  &[data-size="medium"] {
+    gap: 4px;
+    
+    &::before,
+    &::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4dc2f4, #5a0075);
+    }
+    
+    &::before {
+      margin-right: 4px;
+    }
+    
+    &::after {
+      margin-left: 4px;
+    }
+  }
+  
+  &[data-size="large"] {
+    gap: 6px;
+    
+    &::before,
+    &::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4dc2f4, #5a0075);
+    }
+    
+    &::before {
+      margin-right: 6px;
+    }
+    
+    &::after {
+      margin-left: 6px;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// Estilos responsivos
+@media (max-width: $querySm) {
+  .loadingLarge {
+    padding: 16px;
+    min-height: 48px;
+  }
+  
+  .loadingMedium {
+    padding: 12px;
+    min-height: 36px;
+  }
 }

@@ -1,28 +1,31 @@
 "use client";
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import styles from "./styles.module.scss";
 
-// Cargamos el spinner sin SSR para evitar diferencias de marcado
-const Spinner = dynamic(() => import("react-loader-spinner").then(m => m.TailSpin), { ssr: false });
+export type LoadingSize = "small" | "medium" | "large";
 
-const LoadingSpinner = ({ home = false }: { home?: boolean }) => {
+interface LoadingSpinnerProps {
+  home?: boolean;
+  size?: LoadingSize;
+}
+
+const LoadingSpinner = ({ home = false, size = "small" }: LoadingSpinnerProps) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  const containerClass = `${styles.loadingWrapper} ${styles[`loading${size.charAt(0).toUpperCase() + size.slice(1)}`]} ${home ? styles.loadingHome : ""}`;
+
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: home ? "24px" : "12px",
-      }}
-    >
+    <div className={containerClass}>
       {mounted ? (
-        <Spinner height={48} width={48} color='#FD7E14' ariaLabel='loading' />
+        <div className={styles.spinner} data-size={size}>
+          <div className={styles.dot}></div>
+          <div className={styles.dot}></div>
+          <div className={styles.dot}></div>
+        </div>
       ) : (
-        // Placeholder estable en SSR para evitar mismatches
-        <div style={{ width: 48, height: 48 }} />
+        // Placeholder estable en SSR
+        <div className={styles.placeholder} data-size={size}></div>
       )}
     </div>
   );

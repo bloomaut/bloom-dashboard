@@ -1,99 +1,306 @@
-.container {
-  height: 100vh;
-  background: #FFFFFF;
-  width: 100%;
+// ============================================================================
+// VARIABLES Y MIXINS
+// ============================================================================
+
+// Breakpoints
+$breakpoint-tablet: 768px;
+$breakpoint-desktop-small: 1024px;
+$breakpoint-desktop: 1440px;
+$breakpoint-desktop-large: 1920px;
+
+// Espaciado
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+$spacing-2xl: 4rem;
+$spacing-3xl: 6rem;
+
+// Contenedor máximo
+$max-width-content: 80rem;
+$max-width-narrow: 32rem;
+
+// Transiciones
+$transition-base: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Mixins
+@mixin container-base {
+  max-width: $max-width-content;
+  margin: 0 auto;
+  padding: 0 $spacing-sm;
 }
 
-/* Header Section */
+@mixin badge-base {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 99px;
+  font-weight: 600;
+  transition: $transition-base;
+  
+  &:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-ring), 0 0 0 4px var(--color-ring);
+  }
+}
+
+@mixin card-base {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  background: #ffffff;
+  transition: $transition-base;
+}
+
+// ============================================================================
+// LAYOUT PRINCIPAL
+// ============================================================================
+
+.container {
+  min-height: 100vh;
+  background: #ffffff;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+// ============================================================================
+// SECCIÓN HEADER
+// ============================================================================
+
 .header {
   width: 100%;
-  padding: 4rem 1rem;
+  padding: $spacing-2xl $spacing-sm;
   text-align: center;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: $spacing-3xl $spacing-sm;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: 5rem $spacing-sm;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding: 6rem $spacing-sm;
+  }
 }
 
 .headerContent {
-  max-width: 80rem;
-  margin: 0 auto;
+  @include container-base;
 }
 
 .badgeWrapper {
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-sm;
+  
+  @media (min-width: $breakpoint-desktop) {
+    margin-bottom: $spacing-md;
+  }
 }
 
 .headerBadge {
-    background-color: #4DC2F444;
-    color: var(--color-primary);
-    border: 1px solid var(--color-primary);
-    display: inline-flex;
-    align-items: center;
-    border-radius: 99px; /* rounded-full */
-    padding: 0.125rem 0.625rem; /* px-2.5 py-0.5 */
-    font-size: .85rem; /* text-xs */
-    font-weight: 600; /* font-semibold */
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
-    
-    &:focus {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-        box-shadow: 0 0 0 2px var(--color-ring), 0 0 0 4px var(--color-ring);
-    }
+  @include badge-base;
+  background-color: rgba(77, 194, 244, 0.1);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: 0.375rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding: 0.625rem 1.5rem;
+    font-size: 1.125rem;
+  }
 }
 
 .title {
-  font-size: 2.25rem;
   font-weight: 700;
   color: hsl(var(--foreground));
-  margin-bottom: 1.5rem;
+  margin-bottom: $spacing-md;
   text-wrap: balance;
-
-  @media (min-width: 768px) {
-    font-size: 3.75rem;
+  line-height: 1.1;
+  
+  // Mobile
+  font-size: 2rem;
+  
+  @media (min-width: $breakpoint-tablet) {
+    font-size: 2.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 3rem;
+    margin-bottom: $spacing-lg;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 3.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 4rem;
   }
 }
 
 .subtitle {
-  font-size: 1.25rem;
   color: hsl(var(--muted-foreground));
-  max-width: 32rem;
+  max-width: $max-width-narrow;
   margin: 0 auto;
   text-wrap: balance;
+  line-height: 1.6;
+  
+  // Mobile
+  font-size: 1.125rem;
+  
+  @media (min-width: $breakpoint-tablet) {
+    font-size: 1.25rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 1.375rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 1.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 1.75rem;
+  }
 }
 
-/* Pricing Section */
+// ============================================================================
+// SECCIÓN PRICING
+// ============================================================================
+
 .pricingSection {
   width: 100%;
-  padding: 0 1rem 4rem;
+  padding: 0 $spacing-sm $spacing-2xl;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: 0 $spacing-sm $spacing-3xl;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: 0 $spacing-sm 5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding: 0 $spacing-sm 6rem;
+  }
 }
 
 .pricingContent {
-  max-width: 80rem;
-  margin: 0 auto;
+  @include container-base;
 }
 
 .pricingGrid {
   display: grid;
-  gap: 2rem;
-
-  @media (min-width: 768px) {
+  gap: $spacing-lg;
+  align-items: start; // Alinea las tarjetas desde arriba
+  
+  // Mobile: 1 columna
+  grid-template-columns: 1fr;
+  
+  @media (min-width: $breakpoint-tablet) {
     grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-md;
+  }
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    gap: $spacing-lg;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    gap: $spacing-xl;
+    max-width: 75rem;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    gap: 2.5rem;
+    max-width: 85rem;
   }
 }
 
+// ============================================================================
+// TARJETAS DE PLANES
+// ============================================================================
+
 .planCard {
+  @include card-base;
   position: relative;
   height: fit-content;
-  border: 1px solid #00000022;
-
+  padding: $spacing-md;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: $spacing-lg;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: $spacing-xl;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
   &.popularCard {
     border-color: var(--color-primary);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    transform: scale(1.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    transform-origin: center top; // Establece el punto de origen para el escalado
+    
+    @media (min-width: $breakpoint-tablet) {
+      transform: scale(1.05) translateY(-1rem);
+    }
+    
+    @media (min-width: $breakpoint-desktop-small) {
+      transform: scale(1.08) translateY(-1.25rem);
+    }
+    
+    @media (min-width: $breakpoint-desktop) {
+      transform: scale(1.1) translateY(-1.5rem);
+    }
+    
+    @media (min-width: $breakpoint-desktop-large) {
+      transform: scale(1.12) translateY(-1.75rem);
+    }
+    
+    &:hover {
+      @media (min-width: $breakpoint-tablet) {
+        transform: scale(1.05) translateY(-1.25rem);
+      }
+      
+      @media (min-width: $breakpoint-desktop-small) {
+        transform: scale(1.08) translateY(-1.5rem);
+      }
+      
+      @media (min-width: $breakpoint-desktop) {
+        transform: scale(1.1) translateY(-1.75rem);
+      }
+      
+      @media (min-width: $breakpoint-desktop-large) {
+        transform: scale(1.12) translateY(-2rem);
+      }
+    }
   }
-
+  
   &.comingSoonCard {
     opacity: 0.75;
+    
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 }
 
@@ -102,112 +309,365 @@
   top: -0.75rem;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 10;
+  
+  @media (min-width: $breakpoint-desktop) {
+    top: -1rem;
+  }
 }
 
 .popularBadge {
-    background-color: #4DC2F4;
-    color: #FFFFFF;
-    display: inline-flex;
-    align-items: center;
-    border-radius: 99px; /* rounded-full */
-    padding: 0.125rem 0.625rem; /* px-2.5 py-0.5 */
-    font-size: 0.75rem; /* text-xs */
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+  @include badge-base;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: 0.375rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding: 0.625rem 1.5rem;
+    font-size: 1rem;
+  }
 }
+
+// ============================================================================
+// CONTENIDO DE TARJETAS
+// ============================================================================
 
 .cardHeader {
   text-align: center;
-  padding-bottom: 2rem;
+  padding-bottom: $spacing-lg;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding-bottom: $spacing-xl;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding-bottom: 2.5rem;
+  }
 }
 
 .planName {
-  font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-font-primary);
+  margin-bottom: $spacing-sm;
+  
+  // Mobile
+  font-size: 1.25rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 1.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 1.75rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 2rem;
+  }
 }
 
 .priceWrapper {
-  margin-top: 1rem;
+  margin: $spacing-sm 0;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    margin: $spacing-md 0;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    margin: $spacing-lg 0;
+  }
 }
 
 .price {
-  font-size: 2.25rem;
   font-weight: 700;
   color: var(--color-font-primary);
+  
+  // Mobile
+  font-size: 2rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 2.25rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 2.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 3rem;
+  }
 }
 
 .period {
   color: #979797;
   margin-left: 0.25rem;
+  
+  // Mobile
+  font-size: 1rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 1.125rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 1.25rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 1.5rem;
+  }
 }
 
 .planDescription {
-  font-size: 1rem;
   font-weight: 400;
-  margin-top: 0.5rem;
-   color: #979797;
+  color: #979797;
+  line-height: 1.5;
+  
+  // Mobile
+  font-size: 0.875rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 1rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 1.125rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 1.25rem;
+  }
 }
 
 .cardContent {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $spacing-sm;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    gap: $spacing-md;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    gap: $spacing-lg;
+  }
 }
 
 .feature {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-   color: var(--color-font-primary);
+  color: var(--color-font-primary);
+  
+  @media (min-width: $breakpoint-desktop) {
+    gap: 1rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    gap: 1.25rem;
+  }
 }
 
 .checkIcon {
-  height: 1.25rem;
   width: 1.25rem;
+  height: 1.25rem;
   color: var(--color-primary);
   margin-top: 0.125rem;
   flex-shrink: 0;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
 }
 
 .featureText {
-  font-size: 0.875rem;
   color: var(--color-font-primary);
+  line-height: 1.5;
+  
+  // Mobile
+  font-size: 0.875rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 0.9rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 1rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 1.125rem;
+  }
 }
 
 .cardFooter {
-  padding-top: 1.5rem;
+  padding-top: $spacing-md;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding-top: $spacing-lg;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding-top: $spacing-xl;
+  }
 }
 
 .planButton {
   width: 100%;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.04);
+  
+  // Mobile
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: 1.25rem 1.5rem;
+    font-size: 1.125rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding: 1.5rem 2rem;
+    font-size: 1.25rem;
+  }
+  
+  // Estados de hover y focus para botones activos
+  &:not(:disabled) {
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      background-color: var(--color-primary);
+      color: white;
+    }
+    
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  // Estados para botones deshabilitados
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
 }
 
-/* Enterprise Section */
+// ============================================================================
+// SECCIÓN ENTERPRISE
+// ============================================================================
+
 .enterpriseSection {
   width: 100%;
-  padding: 0 1rem 4rem;
+  padding: 0 $spacing-sm $spacing-2xl;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: 0 $spacing-sm $spacing-3xl;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: 0 $spacing-sm 5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding: 0 $spacing-sm 6rem;
+  }
 }
 
 .enterpriseContent {
-  max-width: 80rem;
-  margin: 0 auto;
+  @include container-base;
+  
+  @media (min-width: $breakpoint-desktop) {
+    max-width: 70rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    max-width: 80rem;
+  }
 }
 
 .enterpriseCard {
-  border: 1px solid #00000022;
+  @include card-base;
+  padding: $spacing-lg;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: $spacing-xl;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: 2.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding: $spacing-3xl;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
 }
 
 .enterpriseHeader {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-
-  @media (min-width: 768px) {
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  
+  @media (min-width: $breakpoint-tablet) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    gap: $spacing-lg;
+  }
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    margin-bottom: $spacing-xl;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    gap: $spacing-xl;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
   }
 }
 
@@ -216,64 +676,264 @@
 }
 
 .enterpriseTitle {
-  font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-font-primary);
+  margin-bottom: $spacing-xs;
+  
+  // Mobile
+  font-size: 1.25rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 1.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 1.75rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 2rem;
+  }
 }
 
 .enterpriseDescription {
-  font-size: 1rem;
-  margin-top: 0.5rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.6;
+  
+  // Mobile
+  font-size: 0.875rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    font-size: 1rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    font-size: 1.125rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    font-size: 1.25rem;
+  }
 }
 
 .enterpriseButton {
   flex-shrink: 0;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.04);
+  
+  // Mobile
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    padding: 1.25rem 2.5rem;
+    font-size: 1.125rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    padding: 1.5rem 3rem;
+    font-size: 1.25rem;
+  }
+  
+  // Estados de hover y focus
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .enterpriseFeatures {
   display: grid;
-  gap: 1.5rem;
-
-  @media (min-width: 768px) {
+  gap: $spacing-md;
+  
+  // Mobile: 1 columna
+  grid-template-columns: 1fr;
+  
+  @media (min-width: $breakpoint-tablet) {
     grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+  }
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    gap: $spacing-xl;
+  }
+  
+  @media (min-width: $breakpoint-desktop) {
+    gap: 2.5rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    gap: $spacing-3xl;
   }
 }
 
 .enterpriseColumn {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: $spacing-sm;
+  
+  @media (min-width: $breakpoint-desktop-small) {
+    gap: $spacing-md;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    gap: $spacing-lg;
+  }
 }
 
 .enterpriseFeature {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
+  
+  @media (min-width: $breakpoint-desktop) {
+    gap: 1rem;
+  }
+  
+  @media (min-width: $breakpoint-desktop-large) {
+    gap: 1.25rem;
+  }
+  
+  .checkIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-primary);
+    margin-top: 0.125rem;
+    flex-shrink: 0;
+    
+    @media (min-width: $breakpoint-desktop-small) {
+      width: 1.375rem;
+      height: 1.375rem;
+    }
+    
+    @media (min-width: $breakpoint-desktop) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    
+    @media (min-width: $breakpoint-desktop-large) {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
+  
+  .featureText {
+    color: var(--color-font-primary);
+    line-height: 1.5;
+    
+    // Mobile
+    font-size: 0.875rem;
+    
+    @media (min-width: $breakpoint-desktop-small) {
+      font-size: 0.9rem;
+    }
+    
+    @media (min-width: $breakpoint-desktop) {
+      font-size: 1rem;
+    }
+    
+    @media (min-width: $breakpoint-desktop-large) {
+      font-size: 1.125rem;
+    }
+  }
 }
 
-/* Responsive adjustments */
+// ============================================================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================================================
+
 @media (max-width: 767px) {
   .header {
-    padding: 2rem 1rem;
+    padding: $spacing-lg $spacing-sm;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    margin-bottom: $spacing-sm;
   }
 
   .subtitle {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 
-  .pricingSection {
-    padding: 0 1rem 2rem;
-  }
-
+  .pricingSection,
   .enterpriseSection {
-    padding: 0 1rem 2rem;
+    padding: 0 $spacing-sm $spacing-lg;
   }
 
   .planCard.popularCard {
     transform: none;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  
+  .planCard {
+    padding: $spacing-sm;
+  }
+  
+  .enterpriseCard {
+    padding: $spacing-sm;
+  }
+}
+
+// ============================================================================
+// UTILIDADES Y ESTADOS
+// ============================================================================
+
+// Estados de hover mejorados
+@media (hover: hover) {
+  .planButton:hover {
+    transform: translateY(-1px);
+  }
+  
+  .enterpriseButton:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// Animaciones suaves para elementos interactivos
+.planCard,
+.enterpriseCard,
+.planButton,
+.enterpriseButton {
+  will-change: transform;
+}
+
+// Mejoras de accesibilidad
+@media (prefers-reduced-motion: reduce) {
+  .planCard,
+  .enterpriseCard,
+  .planButton,
+  .enterpriseButton {
+    transition: none;
+    transform: none !important;
+  }
+  
+  .planCard.popularCard {
+    transform: none !important;
   }
 }

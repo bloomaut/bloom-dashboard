@@ -8,8 +8,6 @@ import { FaLinkedinIn, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { useState } from "react";
 
-const BUTTONS_DISABLED = false; // Set to true to disable all main CTA buttons
-
 export default function SmallLanding() {
   const dict = useTranslations("dict");
   const pathname = usePathname();
@@ -34,15 +32,10 @@ export default function SmallLanding() {
             <Image src='/logotipo_horizontal.png' alt='Bloomit' width={203} height={73} priority />
           </div>
 
-          {/* Navigation Links */}
+          {/* Navigation Links Header*/}
           <div className={styles.headerLeft}>
-            <Link href={en ? "/en/pricing" : "/es/pricing"} className={styles.navLink}>
-              {en ? "Pricing" : "Precios"}
-            </Link>
-
-            {/* Botón CTA */}
-            <Link href={`/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`}>
-              <button className={styles.headerButton}>{dict("header.cta")}</button>
+            <Link href={en ? "/en/pricing" : "/es/pricing"}>
+              <button className={styles.headerButton}>{dict("header.pricing")}</button>
             </Link>
           </div>
         </div>
@@ -299,13 +292,13 @@ export default function SmallLanding() {
               <h4 className={styles.columnTitle}>{dict("footer.legal.title")}</h4>
               <ul className={styles.columnLinks}>
                 <li>
-                  <Link href='#'>{dict("footer.legal.terms")}</Link>
+                  <Link href={en ? "/en/policy" : "/es/policy"}>{dict("footer.legal.terms")}</Link>
                 </li>
                 <li>
-                  <Link href='#'>{dict("footer.legal.privacy")}</Link>
+                  <Link href={en ? "/en/policy" : "/es/policy"}>{dict("footer.legal.privacy")}</Link>
                 </li>
                 <li>
-                  <Link href='#'>{dict("footer.legal.cookies")}</Link>
+                  <Link href={en ? "/en/policy" : "/es/policy"}>{dict("footer.legal.cookies")}</Link>
                 </li>
               </ul>
             </div>

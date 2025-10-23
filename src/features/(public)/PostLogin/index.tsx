@@ -56,18 +56,17 @@ export default function PostLoginPage() {
     router.replace(`/${locale}/post-login`);
   };
 
-  return error ? (
+  return (
     <div className={styles.container}>
-      <ErrorMessage error={new Error(error)} reset={handleReset} />
-    </div>
-  ) : (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Redirigiendo…</h1>
-        <p className={styles.subtitle}>Preparando tu sesión y destino</p>
-        {/* El spinner se monta solo en cliente, evitando mismatches de SSR */}
-        <LoadingSpinner />
-      </div>
+      {error ? (
+        <div className={styles.errorContainer}>
+          <ErrorMessage error={new Error(error)} reset={handleReset} />
+        </div>
+      ) : (
+        <div className={styles.loadingContainer}>
+          <LoadingSpinner size='large' />
+        </div>
+      )}
     </div>
   );
 }
