@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { styles } from "../styles/styles";
+import styles from "./styles.module.scss";
 
 type LoadedPdf = {
   Document: any;
@@ -139,9 +139,9 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
   };
 
   return (
-    <div style={styles.pdfContainer}>
+    <div className={styles.pdfContainer}>
       {/* PDF Viewer */}
-      <div style={styles.pdfViewer}>
+      <div className={styles.pdfViewer}>
         <Document
           file={file}
           onLoadSuccess={onLoadSuccess}
@@ -163,10 +163,10 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
 
       {/* Navigation Controls */}
       {numPages && numPages > 1 && (
-        <div style={styles.pdfNavigation}>
+        <div className={styles.pdfNavigation}>
           <button
+            className={styles.navButton}
             style={{
-              ...styles.navButton,
               backgroundColor: currentPage === 1 ? "#cbd5e1" : "var(--color-primary)",
             }}
             onClick={goToPrevPage}
@@ -176,13 +176,13 @@ export default function NoSSRPDFViewer({ pdfUrl }: NoSSRPDFViewerProps) {
             Anterior
           </button>
 
-          <div style={styles.pageInfo}>
+          <div className={styles.pageInfo}>
             Página {currentPage} de {numPages}
           </div>
 
           <button
+            className={styles.navButton}
             style={{
-              ...styles.navButton,
               backgroundColor: currentPage === numPages ? "#cbd5e1" : "var(--color-primary)",
             }}
             onClick={goToNextPage}

@@ -573,7 +573,8 @@
         "checkbox_text": "I accept the",
         "terms_link": "Terms and Conditions",
         "checkbox_suffix": "and authorize the processing of my data as described.",
-        "continue_button": "Continue"
+        "continue_button": "Continue",
+        "processing": "Processing..."
       },
       "questionnaire": {
         "question": "Question",
@@ -584,6 +585,7 @@
         "selected_date": "Selected date: ",
         "transcribing": "Transcribing...",
         "continue_button": "Next",
+        "processing": "Processing...",
         "record_audio": "Record audio",
         "recording_audio": "Recording audio... (Click to stop)"
       },
@@ -592,7 +594,7 @@
         "completed": "Completed",
         "progress": "100%",
         "processing_title": "We are processing your response",
-        "processing_description": "This process will take between 15 and 20 minutes.",
+        "processing_description": "This process will take between 3 and 7 minutes.",
         "notification_description": "We will notify you by email and on this page when your document is ready.",
         "status_processing": "Processing...",
         "keep_page_open": "Keep this page open to receive real-time updates"
@@ -601,7 +603,7 @@
         "completed": "Proposal Ready",
         "title": "Your Proposal is Ready",
         "subtitle": "Review your personalized proposal and proceed with the next steps",
-        "pdf_title": "Bloom Marketing Proposal",
+        "pdf_title": "Review your Bloom Marketing Proposal",
         "download": "Download",
         "loading": "Loading PDF viewer...",
         "actions_title": "Actions",

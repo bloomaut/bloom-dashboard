@@ -509,7 +509,8 @@
       "checkbox_text": "Acepto los",
       "terms_link": "Términos y Condiciones",
       "checkbox_suffix": "y autorizo el procesamiento de mis datos según se describe.",
-      "continue_button": "Continuar"
+      "continue_button": "Continuar",
+      "processing": "Procesando..."
     },
     "questionnaire": {
       "question": "Pregunta",
@@ -520,15 +521,16 @@
       "selected_date": "Fecha seleccionada: ",
       "transcribing": "Transcribiendo...",
       "continue_button": "Siguiente",
+      "processing": "Procesando...",
       "record_audio": "Grabar audio",
       "recording_audio": "Grabando... (Click para parar)"
     },
     "completion": {
       "title": "Cuestionario",
       "completed": "Terminado",
-      "progress": "100%",
+      "progress": "Procesando...",
       "processing_title": "Estamos procesando tu respuesta",
-      "processing_description": "Este proceso tomará entre 15 y 20 minutos.",
+      "processing_description": "Este proceso tomará entre 3 y 7 minutos.",
       "notification_description": "Te notificaremos por correo electrónico y en esta página cuando tu documento esté listo.",
       "status_processing": "Procesando...",
       "keep_page_open": "Mantén esta página abierta para recibir actualizaciones en tiempo real"
@@ -537,14 +539,12 @@
       "completed": "Propuesta Lista",
       "title": "Tu Propuesta Está Lista",
       "subtitle": "Revisa tu propuesta personalizada y procede con los siguientes pasos",
-      "pdf_title": "Propuestas de Marketing de Bloom",
+      "pdf_title": "Revisa tu Propuestas de Marketing de Bloom",
       "download": "Descargar",
       "loading": "Cargando visor PDF...",
       "actions_title": "Acciones",
-
       "downloading": "Descargando...",
       "download_proposal": "Descargar Propuesta",
-      
       "terms_acceptance": "He leído y acepto los términos de esta propuesta comercial",
       "continue_proposal": "Continuar con la propuesta",
       "processing": "Procesando...",

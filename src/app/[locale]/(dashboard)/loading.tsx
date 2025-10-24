@@ -1,4 +1,4 @@
 import LoadingSpinner from "@/components/Loading";
 export default function Loading() {
-  return <LoadingSpinner home={true} />;
+  return <LoadingSpinner size='large' home={true} />;
 }

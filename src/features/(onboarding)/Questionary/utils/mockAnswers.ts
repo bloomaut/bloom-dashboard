@@ -2,7 +2,7 @@ export const MOCK_ANSWERS_ES: string[] = [
   // Basic Information Section
   `Mi nombre completo es Camila Rojas Fernández.`,
   `Mi fecha de nacimiento es el 12 de febrero de 1995.`,
-  `El nombre de mi negocio es PetHaven.`,
+  `PetHaven`,
   // Brand Heart Section
   `Existimos porque creemos que las mascotas son parte de la familia y merecen el mismo nivel de cuidado, amor y bienestar que cualquier ser querido.`,
   `Queremos ayudar a crear un futuro en el que todas las mascotas vivan sanas, felices y cuidadas, en hogares donde se promueva la tenencia responsable y la conexión emocional entre humanos y animales.`,

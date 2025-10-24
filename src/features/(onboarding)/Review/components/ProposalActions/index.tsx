@@ -1,7 +1,7 @@
 "use client";
 import { Download, HelpCircle, MessageCircle } from "lucide-react";
 import React, { useState } from "react";
-import { styles } from "../styles/styles";
+import styles from "./styles.module.scss";
 import { approveProposal, get } from "@/services/fetch";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -95,19 +95,24 @@ ${user?.email || ""}`,
   };
 
   return (
-    <div style={styles.sidebar}>
+    <div className={styles.sidebar}>
       {/* Actions */}
-      <div style={styles.sidebarCard}>
-        <h4 style={styles.sidebarTitle}>{dict("actions_title")}</h4>
+      <div className={styles.sidebarCard}>
+        <h4 className={styles.sidebarTitle}>{dict("actions_title")}</h4>
 
-        <div style={styles.checkboxContainer}>
-          <input type='checkbox' style={styles.checkbox} onChange={() => setChecked(!checked)} id='terms-checkbox' />
+        <div className={styles.checkboxContainer}>
+          <input
+            type='checkbox'
+            className={styles.checkbox}
+            onChange={() => setChecked(!checked)}
+            id='terms-checkbox'
+          />
           <label htmlFor='terms-checkbox'>{dict("terms_acceptance")}</label>
         </div>
 
         <button
+          className={styles.continueButton}
           style={{
-            ...styles.continueButton,
             backgroundColor: !checked || isSubmitting ? "#cbd5e1" : "var(--color-primary)",
           }}
           disabled={!checked || isSubmitting}
@@ -118,17 +123,17 @@ ${user?.email || ""}`,
           </p>
         </button>
 
-        <button style={styles.secondaryButton} onClick={handleFeedbackClick}>
+        <button className={styles.secondaryButton} onClick={handleFeedbackClick}>
           <MessageCircle size={"1.7rem"} color='#FFFFFF' />
           <p style={{ color: "#FFFFFF" }}>{dict("give_feedback")}</p>
         </button>
       </div>
 
       {/* Help Section */}
-      <div style={styles.helpSection}>
-        <HelpCircle style={styles.helpIcon} />
-        <h4 style={styles.helpTitle}>{dict("need_help")}</h4>
-        <p style={styles.helpText}>{dict("help_description")}</p>
+      <div className={styles.helpSection}>
+        <HelpCircle className={styles.helpIcon} />
+        <h4 className={styles.helpTitle}>{dict("need_help")}</h4>
+        <p className={styles.helpText}>{dict("help_description")}</p>
       </div>
     </div>
   );

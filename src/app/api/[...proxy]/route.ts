@@ -7,7 +7,7 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
     const res = new NextResponse();
     const { accessToken } = await getAccessToken(req, res);
 
-    //console.log("My Access Token:", accessToken);
+    console.log("My Access Token:", accessToken);
 
     const path = req.nextUrl.pathname.substring(req.nextUrl.pathname.indexOf("/api"));
 
@@ -18,14 +18,8 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
       throw new Error("No API base found");
     }
 
-    // Inyectamos el client_id
-    const clientId = req.headers.get("X-Client-ID");
+    // No inyectar client_id como query parameter
     const searchParams = new URLSearchParams(req.nextUrl.search);
-
-    // Verificamos que no haya un client_id en los params existentes y lo agregamos si no está
-    if (clientId && !searchParams.has("client_id")) {
-      searchParams.set("client_id", clientId);
-    }
 
     // Reconstruimos la URL con el query param inyectado
     const fullUrl = `${EXTERNAL_API_URL}${path}?${searchParams.toString()}`;
@@ -50,6 +44,8 @@ const handleRequest = withApiAuthRequired(async function handleFetch(req: NextRe
         }
       }
     }
+
+    console.log("Request Options:", fetchOptions);
 
     const { data } = await axios(fetchOptions);
     return NextResponse.json({ data });

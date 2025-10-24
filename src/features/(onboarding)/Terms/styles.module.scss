@@ -1,0 +1,312 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1.5rem 0.5rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 62.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.5rem;
+  margin: 0 auto;
+  min-height: 100%;
+  justify-content: space-around;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.headingGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem; /* gap reducido entre título y subtítulo */
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 0;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 47.5rem; /* 760px */
+  padding: 0 0.5rem;
+  align-self: center;
+}
+
+/* Disposición */
+.contentGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.videoColumn {
+  display: flex;
+  width: 100%;
+}
+
+.controlsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* más espacio entre checkbox y botón */
+  width: 100%;
+}
+
+.videoWrapper {
+  width: 100%;
+  position: relative;
+}
+
+.videoBox {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #d9d9d9;
+  border-radius: 1.125rem; /* 18px */
+  overflow: hidden;
+}
+
+.termsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+  font-size: 0.95rem;
+  color: #4b5563;
+  width: 100%;
+}
+
+/* Checkbox personalizado */
+.checkboxInput {
+  display: none;
+}
+
+.checkboxLabel {
+  width: 1.125rem;  /* 18px */
+  height: 1.125rem; /* 18px */
+  border: 0.125rem solid var(--color-primary); /* 2px */
+  border-radius: 0.25rem; /* 4px */
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkmark {
+  content: "";
+  position: absolute;
+  top: 0.0625rem; /* 1px */
+  left: 0.25rem;   /* 4px */
+  width: 0.3125rem; /* 5px */
+  height: 0.5rem;   /* 8px */
+  border: solid var(--color-primary);
+  border-width: 0 0.125rem 0.125rem 0; /* 2px */
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Mostrar checkmark cuando el input está checked */
+.termsRow input[type="checkbox"]:checked + .checkboxLabel .checkmark {
+  opacity: 1;
+}
+
+.termsText {
+  line-height: 1.5;
+}
+
+.termsLink {
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Botón continuar */
+.buttonContinue {
+  width: 11.875rem;   /* 190px */
+  height: 3rem;       /* 48px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.5rem; /* 24px */
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  gap: 0.75rem; /* 12px */
+  padding: 0;
+  transition: all 0.3s ease;
+
+  background-color: #d1d5db;
+  color: #9ca3af;
+}
+
+.buttonContinue:disabled {
+  cursor: not-allowed;
+}
+
+.buttonEnabled {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 0.375rem 1rem var(--color-primary); /* 0 6px 16px */
+}
+
+.buttonEnabled:hover {
+  background-color: #5a0075;
+  transform: translateY(-0.1875rem); /* 3px */
+  box-shadow: 0 0.5rem 1.25rem #5a0075; /* 0 8px 20px */
+}
+
+.buttonContinue[aria-busy="true"] {
+  opacity: 0.8;
+}
+
+/* Breakpoints solicitados únicamente */
+@media (min-width: 1024px) {
+  .container {
+    gap: 1.75rem;
+    max-width: 85%;
+  }
+  .contentGrid {
+    flex-direction: row;
+    gap: 1.5rem;
+    justify-content: space-around;
+  }
+  .videoColumn {
+    flex: 2 1 0;
+  }
+
+  .controlsColumn {
+    flex: 1 1 0;
+    align-self: flex-start;
+  }
+
+  .title {
+    font-size: 2.4rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    max-width: 50rem; /* 800px */
+    padding: 0;
+  }
+
+  .videoBox {
+    border-radius: 1.25rem; /* 20px */
+  }
+
+  .termsRow {
+    gap: 0.875rem; /* 14px */
+    font-size: 1rem;
+  }
+
+  .checkboxLabel {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .buttonContinue {
+    width: 13.125rem;  /* 210px */
+    height: 3.25rem;   /* 52px */
+    border-radius: 1.625rem; /* 26px */
+    font-size: 1.05rem;
+    gap: 0.875rem; /* 14px */
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    gap: 2rem; /* 32px */
+    max-width: 85%; /* 1200px */
+  }
+
+  .contentGrid {
+    gap: 1.75rem; /* 28px */
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    max-width: 53.75rem; /* 860px */
+  }
+
+  .videoBox {
+    border-radius: 1.375rem; /* 22px */
+  }
+
+  .termsRow {
+    gap: 1rem; /* 16px */
+    font-size: 1.05rem;
+  }
+
+  .checkboxLabel {
+    width: 1.1875rem; /* 19px */
+    height: 1.1875rem; /* 19px */
+  }
+
+  .buttonContinue {
+    width: 13.75rem; /* 220px */
+    height: 3.5rem;   /* 56px */
+    font-size: 1.1rem;
+    gap: 1rem;        /* 16px */
+  }
+}
+
+@media (min-width: 1920px) {
+  .container {
+    gap: 2.5rem; /* 40px */
+    max-width: 85%; /* 1300px */
+  }
+
+  .contentGrid {
+    gap: 2rem; /* 32px */
+  }
+
+  .title {
+    font-size: 3.8rem;
+  }
+
+  .subtitle {
+    font-size: 1.8rem;
+    max-width: 57.5rem; /* 920px */
+  }
+
+  .videoBox {
+    border-radius: 1.5rem; /* 24px */
+  }
+
+  .termsRow {
+    gap: 1.125rem; /* 18px */
+    font-size: 1.1rem;
+  }
+
+  .checkboxLabel {
+    width: 1.25rem; /* 20px */
+    height: 1.25rem; /* 20px */
+  }
+
+  .buttonContinue {
+    width: 15rem;     /* 240px */
+    height: 3.75rem;  /* 60px */
+    border-radius: 1.75rem; /* 28px */
+    font-size: 1.15rem;
+    gap: 1.125rem;    /* 18px */
+  }
+}

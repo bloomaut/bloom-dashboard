@@ -99,11 +99,19 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
   };
 
   if (error) {
-    return <ErrorMessage error={new Error(error)} reset={handleReset} />;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <ErrorMessage error={new Error(error)} reset={handleReset} />
+      </div>
+    );
   }
 
   if (!allowed) {
-    return <LoadingSpinner />;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <LoadingSpinner size='large' />
+      </div>
+    );
   }
 
   return <>{children}</>;

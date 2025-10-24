@@ -1,0 +1,186 @@
+@import "../../../styles/theme.scss";
+
+.wishlistPage {
+  @include width-height(100vw, 100vh);
+  background: $white;
+  position: relative;
+  overflow: hidden;
+  /* Eliminamos desplazamientos negativos para centrar de forma fiable */
+  /* margin-top: -1rem; */
+  /* margin-left: -2.5vw; */
+}
+
+.illustrationLeft,
+.illustrationRight {
+  display: none;
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: auto;
+  z-index: 10;
+}
+
+.illustrationLeft {
+  left: 0;
+}
+
+.illustrationRight {
+  right: 0;
+}
+
+.illustrationImage {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
+
+.mainContent {
+  position: relative;
+  z-index: 20;
+  @include width-height(100%, 100vh);
+  @include flex(column, center, center);
+  padding: 0 16px;
+}
+
+.contentInner {
+  @include flex(column, center, center);
+  text-align: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+}
+
+.logoImage {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+.flowersImage {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+}
+
+.title {
+  color: $text;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.description {
+  color: $lightGrey;
+  font-size: 1rem;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.highlight {
+  font-weight: 700;
+  color: $text;
+}
+
+.flowers {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.flowersImage {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+}
+
+/* Responsive únicamente para las resoluciones solicitadas */
+@media (min-width: 1024px) {
+  .illustrationLeft,
+  .illustrationRight {
+    display: block;
+  }
+
+  .mainContent {
+    padding: 0 32px;
+  }
+
+  .contentInner {
+    gap: 18px;
+  }
+
+  .logoImage {
+    max-width: 380px;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .description {
+    font-size: 1.125rem;
+  }
+
+  .flowers {
+    padding-top: 24px;
+  }
+
+  .flowersImage {
+    max-width: 420px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .mainContent {
+    padding: 0 48px;
+  }
+
+  .contentInner {
+    gap: 22px;
+  }
+
+  .logoImage {
+    max-width: 540px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .description {
+    font-size: 1.25rem;
+  }
+
+  .flowersImage {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .mainContent {
+    padding: 0 64px;
+  }
+
+  .contentInner {
+    gap: 24px;
+  }
+
+  .logoImage {
+    max-width: 640px;
+  }
+
+  .title {
+    font-size: 1.875rem;
+  }
+
+  .description {
+    font-size: 1.375rem;
+  }
+
+  .flowersImage {
+    max-width: 680px;
+  }
+}

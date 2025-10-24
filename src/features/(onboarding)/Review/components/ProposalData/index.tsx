@@ -2,11 +2,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { Download, FileText } from "lucide-react";
-import { styles } from "../styles/styles";
+import styles from "./styles.module.scss";
 import { useTranslations } from "next-intl";
 
 // client-only dynamic import to ensure react-pdf bundle isn't required during SSR
-const PDFViewer = dynamic(() => import("./NoSSRPDFViewer"), { ssr: false });
+const PDFViewer = dynamic(() => import("../NoSSRPDFViewer"), { ssr: false });
 
 interface ProposalDataProps {
   pdfFile?: string | null;
@@ -66,18 +66,18 @@ function ProposalData({ pdfFile }: ProposalDataProps) {
   };
 
   return (
-    <div style={styles.mainContent}>
-      <div style={styles.pdfSection}>
-        <div style={styles.pdfLeft}>
+    <div className={styles.mainContent}>
+      <div className={styles.pdfSection}>
+        <div className={styles.pdfLeft}>
           <FileText size={"2.5rem"} color='#FFFFFF' />
-          <span style={styles.pdfText}>{dict("pdf_title")}</span>
+          <span className={styles.pdfText}>{dict("pdf_title")}</span>
         </div>
-        <button type='button' style={styles.downloadButton} onClick={handleDownload}>
+        <button type='button' className={styles.downloadButton} onClick={handleDownload}>
           <Download size={"1.3rem"} />
           <p>{dict("download")}</p>
         </button>
       </div>
-      <div style={styles.pdfContainer}>
+      <div className={styles.pdfContainer}>
         <PDFViewer pdfUrl={pdfFile} />
       </div>
     </div>
