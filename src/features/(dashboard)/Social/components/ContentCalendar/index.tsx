@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import {
   CheckCircle,
   Clock,
@@ -34,6 +32,10 @@ import {
 } from "../../store/socialMediaSlice";
 import { ContentItem } from "../../types";
 import styles from "./style.module.scss";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import LoadingSpinner from "@/components/Loading";
 
 // Color scheme for time periods
 const TIME_PERIOD_COLORS = {
@@ -67,7 +69,15 @@ const TIME_PERIOD_COLORS = {
 } as const;
 
 // Constantes movidas al final para mejor organización
-const DAYS_OF_WEEK = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+const getDaysOfWeek = (dict: any) => [
+  dict("calendar.days.sunday"),
+  dict("calendar.days.monday"),
+  dict("calendar.days.tuesday"),
+  dict("calendar.days.wednesday"),
+  dict("calendar.days.thursday"),
+  dict("calendar.days.friday"),
+  dict("calendar.days.saturday"),
+];
 
 // ============================================================================
 // UTILITY FUNCTIONS
@@ -219,6 +229,7 @@ const useWeekDates = (weekOffset: number) => {
 
 export const ContentCalendar = () => {
   const dispatch = useAppDispatch();
+  const dict = useTranslations("dict.social");
 
   // Redux selectors - siempre usa datos de Redux
   const content = useAppSelector(selectContent);
@@ -241,6 +252,9 @@ export const ContentCalendar = () => {
   const { currentWeekOffset, goToPreviousWeek, goToNextWeek, goToCurrentWeek, isCurrentWeek } = useWeekNavigation();
 
   const weekDates = useWeekDates(currentWeekOffset);
+
+  // Obtener días de la semana traducidos
+  const DAYS_OF_WEEK = getDaysOfWeek(dict);
 
   // ========================================================================
   // EFFECTS
@@ -364,12 +378,12 @@ export const ContentCalendar = () => {
                     <Calendar className='h-3 w-3' />
                     <div>{selectedContent.day.toLocaleDateString("es-ES")}</div>
                     <div>•</div>
-                    <div className='capitalize'>{selectedContent.dayTime}</div>
+                    <div className='capitalize'>{dict(`calendar.time_periods.${selectedContent.dayTime}`)}</div>
                     {selectedContent.completed && (
                       <>
                         <div>•</div>
                         <CheckCircle className='h-3 w-3 text-green-600' />
-                        <div>Completado</div>
+                        <div>{dict("calendar.content.status.completed")}</div>
                       </>
                     )}
                   </div>
@@ -386,37 +400,37 @@ export const ContentCalendar = () => {
             {/* Basic Info */}
             <div className={styles.basicInfoGrid}>
               <div className={styles.infoSection}>
-                <h4>Información Básica</h4>
+                <h4>{dict("calendar.modal.basic_info")}</h4>
                 <div className={styles.infoList}>
                   <div className={styles.infoItem}>
                     <Target className='h-4 w-4 text-gray-500' />
-                    <div className={styles.infoLabel}>Pilar:</div>
+                    <div className={styles.infoLabel}>{dict("calendar.modal.pillar")}:</div>
                     <Badge variant='secondary'>{selectedContent.pillar}</Badge>
                   </div>
                   <div className={styles.infoItem}>
                     <Play className='h-4 w-4 text-gray-500' />
-                    <div className={styles.infoLabel}>Tipo:</div>
+                    <div className={styles.infoLabel}>{dict("calendar.modal.type")}:</div>
                     <div>{selectedContent.publishType}</div>
                   </div>
                   <div className={styles.infoItem}>
-                    <div className={styles.infoLabel}>Red Social:</div>
+                    <div className={styles.infoLabel}>{dict("calendar.modal.social_media")}:</div>
                     <Badge variant='outline'>{selectedContent.socialMedia.toUpperCase()}</Badge>
                   </div>
                 </div>
               </div>
               <div className={styles.infoSection}>
-                <h4>Estado</h4>
+                <h4>{dict("calendar.modal.status")}</h4>
                 <div className={styles.infoList}>
                   <div className={styles.infoItem}>
                     {selectedContent.completed ? (
                       <>
                         <CheckCircle className='h-4 w-4 text-green-600' />
-                        <div className={styles.statusCompleted}>Completado</div>
+                        <div className={styles.statusCompleted}>{dict("calendar.content.completed")}</div>
                       </>
                     ) : (
                       <>
                         <Clock className='h-4 w-4 text-orange-600' />
-                        <div className={styles.statusPending}>Pendiente</div>
+                        <div className={styles.statusPending}>{dict("calendar.content.pending")}</div>
                       </>
                     )}
                   </div>
@@ -428,7 +442,9 @@ export const ContentCalendar = () => {
                       onClick={handleToggleCompleted}
                       className='mt-2'
                     >
-                      {selectedContent.completed ? "Marcar como Pendiente" : "Marcar como Completado"}
+                      {selectedContent.completed
+                        ? dict("calendar.modal.mark_pending")
+                        : dict("calendar.modal.mark_completed")}
                     </Button>
                   )}
                 </div>
@@ -440,7 +456,7 @@ export const ContentCalendar = () => {
               <div className={styles.contentSection}>
                 <h4>
                   <Lightbulb className='h-4 w-4' />
-                  <div>Hook</div>
+                  <div>{dict("calendar.modal.hook")}</div>
                 </h4>
                 <div className={styles.contentBox}>{selectedContent.content.hook}</div>
               </div>
@@ -449,7 +465,7 @@ export const ContentCalendar = () => {
             {/* Script */}
             {selectedContent.content.script && (
               <div className={styles.contentSection}>
-                <h4>Guión</h4>
+                <h4>{dict("calendar.modal.script")}</h4>
                 <div className={`${styles.contentBox} ${styles.scriptBox}`}>{selectedContent.content.script}</div>
               </div>
             )}
@@ -458,7 +474,7 @@ export const ContentCalendar = () => {
             <div className={styles.contentSection}>
               <h4>
                 <MessageSquare className='h-4 w-4' />
-                <div>Copy</div>
+                <div>{dict("calendar.modal.copy")}</div>
               </h4>
               <div className={styles.contentBox}>{selectedContent.content.copy}</div>
             </div>
@@ -468,7 +484,7 @@ export const ContentCalendar = () => {
               <div className={styles.contentSection}>
                 <h4>
                   <Hash className='h-4 w-4' />
-                  <div>Hashtags</div>
+                  <div>{dict("calendar.modal.hashtags")}</div>
                 </h4>
                 <div className={`${styles.contentBox} ${styles.hashtagsBox}`}>{selectedContent.content.hashtags}</div>
               </div>
@@ -477,7 +493,7 @@ export const ContentCalendar = () => {
             {/* CTA */}
             {selectedContent.content.cta_copy && (
               <div className={styles.contentSection}>
-                <h4>Call to Action</h4>
+                <h4>{dict("calendar.modal.cta")}</h4>
                 <div className={`${styles.contentBox} ${styles.ctaBox}`}>{selectedContent.content.cta_copy}</div>
               </div>
             )}
@@ -488,7 +504,7 @@ export const ContentCalendar = () => {
                 <div className={styles.contentSection}>
                   <h4>
                     <Heart className='h-4 w-4' />
-                    <div>Sentimientos</div>
+                    <div>{dict("calendar.modal.feelings")}</div>
                   </h4>
                   <Badge variant='outline'>{selectedContent.content.feelings}</Badge>
                 </div>
@@ -497,7 +513,7 @@ export const ContentCalendar = () => {
                 <div className={styles.contentSection}>
                   <h4>
                     <Brain className='h-4 w-4' />
-                    <div>Comprensión</div>
+                    <div>{dict("calendar.modal.understanding")}</div>
                   </h4>
                   <Badge variant='outline'>{selectedContent.content.understanding}</Badge>
                 </div>
@@ -506,7 +522,7 @@ export const ContentCalendar = () => {
 
             {selectedContent.content.key_words_copy && (
               <div className={styles.contentSection}>
-                <h4>Palabras Clave</h4>
+                <h4>{dict("calendar.modal.keywords")}</h4>
                 <div className={`${styles.contentBox} ${styles.keywordsBox}`}>
                   {selectedContent.content.key_words_copy}
                 </div>
@@ -515,7 +531,7 @@ export const ContentCalendar = () => {
 
             {selectedContent.content.make && (
               <div className={styles.contentSection}>
-                <h4>Tipo de Contenido</h4>
+                <h4>{dict("calendar.modal.content_type")}</h4>
                 <Badge variant='secondary'>{selectedContent.content.make}</Badge>
               </div>
             )}
@@ -568,7 +584,7 @@ export const ContentCalendar = () => {
       if (items.length === 0) {
         return (
           <div className={`${styles.emptyTimePeriod} ${styles[colors.empty]}`}>
-            <div className={styles.emptyText}>Sin contenido</div>
+            <div className={styles.emptyText}>{dict("calendar.content.no_content")}</div>
           </div>
         );
       }
@@ -581,104 +597,134 @@ export const ContentCalendar = () => {
   // Mostrar loading si está cargando contenido
   if (isLoadingContent) {
     return (
-      <div className={styles.contentCalendar}>
-        <Card>
-          <CardContent className='flex items-center justify-center p-8'>
-            <div className='text-center'>
-              <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4'></div>
-              <p>Cargando calendario...</p>
-            </div>
-          </CardContent>
-        </Card>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <LoadingSpinner size='large' />
       </div>
     );
   }
 
   return (
     <div className={styles.contentCalendar}>
-      {/* Modal de detalles */}
+      {/* Modal y banners de error */}
       {renderContentModal()}
-
-      {/* Mensaje de error si existe */}
       {hasError && (
         <div className={styles.errorBanner}>
-          <div className={styles.errorMessage}>{errorMessage} - Mostrando datos disponibles</div>
+          <div className={styles.errorMessage}>
+            {errorMessage} {dict("calendar.error.banner")}
+          </div>
         </div>
       )}
 
       {/* Tarjetas de leyenda de colores y perfil */}
       <div className={styles.cardsGrid}>
-        {/* Leyenda de colores */}
-        <Card>
-          <CardHeader className='pb-3'>
-            <CardTitle className='text-lg'>Esquema de Colores - Horarios</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className={styles.colorLegend}>
-              <div className={styles.legendItem}>
-                <div className={`${styles.legendDot} ${styles.morningDot}`}></div>
-                <div className={styles.legendText}>Mañana (6:00 - 12:00)</div>
-              </div>
-              <div className={styles.legendItem}>
-                <div className={`${styles.legendDot} ${styles.afternoonDot}`}></div>
-                <div className={styles.legendText}>Tarde (12:00 - 18:00)</div>
-              </div>
-              <div className={styles.legendItem}>
-                <div className={`${styles.legendDot} ${styles.eveningDot}`}></div>
-                <div className={styles.legendText}>Noche (18:00 - 24:00)</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Tarjeta de perfil */}
-        <Card>
-          <CardHeader className='pb-3'>
-            <CardTitle className='text-lg'>Perfil Conectado</CardTitle>
-          </CardHeader>
-          <CardContent>
+        <div className={styles.profileCard}>
+          <div className={styles.profileCardHeader}>
+            <h3 className={styles.profileCardTitle}>{dict("calendar.profile_card.title")}</h3>
+          </div>
+          <div className={styles.profileCardContent}>
             {profile ? (
               <div className={styles.profileContainer}>
                 <div className={styles.profileImageContainer}>
                   <img src={profile.avatar} alt={profile.username} className={styles.profileImage} />
+                  <div className={styles.profileImageOverlay}>
+                    <div className={styles.profileImageBadge}>{profile.socialMedia.charAt(0).toUpperCase()}</div>
+                  </div>
                 </div>
                 <div className={styles.profileInfo}>
                   <div className={styles.profileHeader}>
                     <div className={styles.profileUsername}>@{profile.username}</div>
-                    <Badge variant='secondary' className={styles.profileBadge}>
-                      {profile.socialMedia.toUpperCase()}
-                    </Badge>
+                    <div className={styles.profilePlatformBadge}>{profile.socialMedia.toUpperCase()}</div>
                   </div>
                   <div className={styles.profileBio}>{profile.bio}</div>
-                  {profile.connected && (
-                    <Badge variant='outline' className='mt-2 text-green-600 border-green-600'>
-                      ✓ Conectado
-                    </Badge>
-                  )}
                 </div>
               </div>
             ) : (
               <div className={styles.noProfile}>
+                <div className={styles.noProfileIcon}>
+                  <svg className={styles.noProfileIconSvg} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+                    />
+                  </svg>
+                </div>
                 <div className={styles.noProfileContent}>
-                  <div className={styles.noProfileTitle}>No hay perfil conectado</div>
-                  <div className={styles.noProfileSubtitle}>Conecta tu cuenta de TikTok</div>
+                  <div className={styles.noProfileTitle}>{dict("calendar.profile_card.no_profile")}</div>
+                  <div className={styles.noProfileSubtitle}>{dict("calendar.profile_card.connect_subtitle")}</div>
+                  <button className={styles.connectButton}>
+                    <span>{dict("calendar.profile_card.connect_button")}</span>
+                    <svg className={styles.connectButtonIcon} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M13 7l5 5m0 0l-5 5m5-5H6' />
+                    </svg>
+                  </button>
                 </div>
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+
+        {/* Leyenda de colores */}
+        <div className={styles.legendCard}>
+          <div className={styles.legendCardHeader}>
+            <h3 className={styles.legendCardTitle}>
+              <svg className={styles.legendCardIcon} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z'
+                />
+              </svg>
+              {dict("calendar.legend_card.title")}
+            </h3>
+          </div>
+          <div className={styles.legendCardContent}>
+            <div className={styles.colorLegend}>
+              <div className={styles.legendItem}>
+                <div className={`${styles.legendDot} ${styles.morningDot}`}></div>
+                <div className={styles.legendInfo}>
+                  <span className={styles.legendText}>{dict("calendar.legend_card.morning")}</span>
+                  <span className={styles.legendTime}>{dict("calendar.legend_card.morning_time")}</span>
+                </div>
+              </div>
+              <div className={styles.legendItem}>
+                <div className={`${styles.legendDot} ${styles.afternoonDot}`}></div>
+                <div className={styles.legendInfo}>
+                  <span className={styles.legendText}>{dict("calendar.legend_card.afternoon")}</span>
+                  <span className={styles.legendTime}>{dict("calendar.legend_card.afternoon_time")}</span>
+                </div>
+              </div>
+              <div className={styles.legendItem}>
+                <div className={`${styles.legendDot} ${styles.eveningDot}`}></div>
+                <div className={styles.legendInfo}>
+                  <span className={styles.legendText}>{dict("calendar.legend_card.evening")}</span>
+                  <span className={styles.legendTime}>{dict("calendar.legend_card.evening_time")}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Grid del calendario */}
       <Card>
         <CardHeader className='pb-3'>
           <div className='flex items-center justify-between'>
-            <CardTitle className='text-lg'>Calendario de Contenido Semanal</CardTitle>
+            <h2 className={styles.calendarTitle}>{dict("calendar.title")}</h2>
 
             {/* Navegación de semanas */}
             <div className={styles.weekNavigation}>
               <div className={styles.weekControls}>
-                <Button variant='outline' size='sm' onClick={goToPreviousWeek} className='h-8 w-8 p-0'>
+                <Button
+                  variant='outline'
+                  size='sm'
+                  onClick={goToPreviousWeek}
+                  className='h-8 w-8 p-0'
+                  title={dict("calendar.navigation.previous_week")}
+                >
                   <ChevronLeft className='h-4 w-4' />
                 </Button>
 
@@ -686,75 +732,75 @@ export const ContentCalendar = () => {
                   <div className={styles.weekRange}>{getWeekRangeText()}</div>
                   <div className={styles.weekStatus}>
                     {isCurrentWeek()
-                      ? "Semana actual"
+                      ? dict("calendar.navigation.current_week")
                       : currentWeekOffset > 0
-                        ? `+${currentWeekOffset} semana${currentWeekOffset > 1 ? "s" : ""}`
-                        : `${currentWeekOffset} semana${currentWeekOffset < -1 ? "s" : ""}`}
+                        ? `+${currentWeekOffset} ${dict("calendar.navigation.week")}${currentWeekOffset > 1 ? "s" : ""}`
+                        : `${currentWeekOffset} ${dict("calendar.navigation.week")}${currentWeekOffset < -1 ? "s" : ""}`}
                   </div>
                 </div>
 
-                <Button variant='outline' size='sm' onClick={goToNextWeek} className='h-8 w-8 p-0'>
+                <Button
+                  variant='outline'
+                  size='sm'
+                  onClick={goToNextWeek}
+                  className='h-8 w-8 p-0'
+                  title={dict("calendar.navigation.next_week")}
+                >
                   <ChevronRight className='h-4 w-4' />
                 </Button>
               </div>
 
               {!isCurrentWeek() && (
                 <Button variant='outline' size='sm' onClick={goToCurrentWeek} className={styles.todayButton}>
-                  Hoy
+                  {dict("calendar.navigation.today")}
                 </Button>
               )}
             </div>
           </div>
         </CardHeader>
         <CardContent className='p-0'>
-          <div className={styles.calendarGrid}>
-            {weekDates.map((date, index) => {
-              const dateKey = date.toDateString();
-              const dayContent = groupContentByDay[dateKey] || { morning: [], afternoon: [], evening: [] };
-              const isToday = date.toDateString() === new Date().toDateString();
+          <div className={styles.calendarScroll}>
+            <div className={styles.calendarGrid}>
+              {weekDates.map((date, index) => {
+                const dateKey = date.toDateString();
+                const dayContent = groupContentByDay[dateKey] || { morning: [], afternoon: [], evening: [] };
+                const isToday = date.toDateString() === new Date().toDateString();
 
-              return (
-                <div key={dateKey} className={`${styles.dayColumn} ${index === 6 ? styles.lastColumn : ""}`}>
-                  {/* Encabezado del día */}
-                  <div className={`${styles.dayHeader} ${isToday ? styles.todayHeader : ""}`}>
-                    <div className={styles.dayName}>{DAYS_OF_WEEK[index]}</div>
-                    <div className={`${styles.dayDate} ${isToday ? styles.todayDate : ""}`}>
-                      {date.getDate()}/{date.getMonth() + 1}
+                return (
+                  <div key={dateKey} className={`${styles.dayColumn} ${index === 6 ? styles.lastColumn : ""}`}>
+                    <div className={`${styles.dayHeader} ${isToday ? styles.todayHeader : ""}`}>
+                      <div className={styles.dayName}>{DAYS_OF_WEEK[index]}</div>
+                      <div className={`${styles.dayDate} ${isToday ? styles.todayDate : ""}`}>
+                        {date.getDate()}/{date.getMonth() + 1}
+                      </div>
+                    </div>
+                    <div className={styles.dayContent}>
+                      <div className={styles.timePeriodSection}>
+                        <h5>
+                          <div className={`${styles.timePeriodDot} ${styles.morningTimeDot}`}></div>
+                          <div>{dict("calendar.time_periods.morning")}</div>
+                        </h5>
+                        {renderTimePeriod(dayContent, "morning")}
+                      </div>
+                      <div className={styles.timePeriodSection}>
+                        <h5>
+                          <div className={`${styles.timePeriodDot} ${styles.afternoonTimeDot}`}></div>
+                          <div>{dict("calendar.time_periods.afternoon")}</div>
+                        </h5>
+                        {renderTimePeriod(dayContent, "afternoon")}
+                      </div>
+                      <div className={styles.timePeriodSection}>
+                        <h5>
+                          <div className={`${styles.timePeriodDot} ${styles.eveningTimeDot}`}></div>
+                          <div>{dict("calendar.time_periods.evening")}</div>
+                        </h5>
+                        {renderTimePeriod(dayContent, "evening")}
+                      </div>
                     </div>
                   </div>
-
-                  {/* Secciones de contenido */}
-                  <div className={styles.dayContent}>
-                    {/* Mañana */}
-                    <div className={styles.timePeriodSection}>
-                      <h5>
-                        <div className={`${styles.timePeriodDot} ${styles.morningTimeDot}`}></div>
-                        <div>Mañana</div>
-                      </h5>
-                      {renderTimePeriod(dayContent, "morning")}
-                    </div>
-
-                    {/* Tarde */}
-                    <div className={styles.timePeriodSection}>
-                      <h5>
-                        <div className={`${styles.timePeriodDot} ${styles.afternoonTimeDot}`}></div>
-                        <div>Tarde</div>
-                      </h5>
-                      {renderTimePeriod(dayContent, "afternoon")}
-                    </div>
-
-                    {/* Noche */}
-                    <div className={styles.timePeriodSection}>
-                      <h5>
-                        <div className={`${styles.timePeriodDot} ${styles.eveningTimeDot}`}></div>
-                        <div>Noche</div>
-                      </h5>
-                      {renderTimePeriod(dayContent, "evening")}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </CardContent>
       </Card>

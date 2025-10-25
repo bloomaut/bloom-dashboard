@@ -53,11 +53,19 @@ export default function DashboardGuard({ children }: { children: React.ReactNode
   };
 
   if (error) {
-    return <ErrorMessage error={new Error(error)} reset={handleReset} />;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <ErrorMessage error={new Error(error)} reset={handleReset} />
+      </div>
+    );
   }
 
   if (!allowed) {
-    return <LoadingSpinner />;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <LoadingSpinner size='large' home />
+      </div>
+    );
   }
 
   return <>{children}</>;

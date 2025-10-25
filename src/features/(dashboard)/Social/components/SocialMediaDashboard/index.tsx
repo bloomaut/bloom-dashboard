@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Sparkles } from "lucide-react";
 import { ContentCalendar } from "../ContentCalendar";
@@ -21,6 +22,7 @@ import styles from "./style.module.scss";
 
 export function SocialMediaDashboard() {
   const dispatch = useAppDispatch();
+  const dict = useTranslations("dict.social.dashboard");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   // ========================================================================
@@ -98,7 +100,7 @@ export function SocialMediaDashboard() {
       {/* Header con acciones */}
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <div className={styles.headerTitle}>Dashboard de Redes Sociales</div>
+          <div className={styles.headerTitle}>{dict("header.title")}</div>
           <div className={styles.headerActions}>
             <Button
               variant='outline'
@@ -108,7 +110,7 @@ export function SocialMediaDashboard() {
               disabled={isGenerating}
             >
               <RefreshCw className={isGenerating ? styles.spinning : ""} />
-              {isGenerating ? "Generando..." : "Generar Semana"}
+              {isGenerating ? dict("actions.generating") : dict("actions.generate_week")}
             </Button>
             <Button
               variant='outline'
@@ -118,7 +120,7 @@ export function SocialMediaDashboard() {
               disabled={isCreatingContent}
             >
               <Sparkles />
-              {isCreatingContent ? "Creando..." : "Crear Contenido"}
+              {isCreatingContent ? dict("actions.creating") : dict("actions.create_content")}
             </Button>
           </div>
         </div>
@@ -126,9 +128,6 @@ export function SocialMediaDashboard() {
 
       {/* Área de contenido principal */}
       <div className={styles.contentArea}>
-        <div className={styles.contentDescription}>
-          <div className={styles.descriptionText}>Visualiza y gestiona todo tu contenido programado de la semana</div>
-        </div>
         <ContentCalendar />
       </div>
     </div>

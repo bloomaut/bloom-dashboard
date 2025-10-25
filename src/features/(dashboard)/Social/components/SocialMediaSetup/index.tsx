@@ -20,10 +20,12 @@ import { Instagram, MessageCircle, CheckCircle, Clock, AlertCircle } from "lucid
 import { useMessageToast } from "@/hooks/useMessageToast";
 import { useEffect } from "react";
 import styles from "./style.module.scss";
+import { useTranslations } from "next-intl";
 
 export function SocialMediaSetup() {
   const dispatch = useAppDispatch();
   const { notify, notifyError } = useMessageToast();
+  const dict = useTranslations("dict.social.setup");
 
   // Redux selectors - usando los selectores correctos del slice refactorizado
   const profile = useAppSelector(selectProfile);
@@ -38,26 +40,26 @@ export function SocialMediaSetup() {
   useEffect(() => {
     if (tikTokError) {
       console.error("❌ Error de TikTok:", tikTokError);
-      notifyError(`Error al conectar TikTok: ${tikTokError}`);
+      notifyError(dict("errors.tiktok_connect_and_generate"));
       dispatch(clearError());
     }
-  }, [tikTokError, notifyError, dispatch]);
+  }, [tikTokError, notifyError, dispatch, dict]);
 
   useEffect(() => {
     if (generationError) {
       console.error("❌ Error de generación:", generationError);
-      notifyError(`Error al generar contenido: ${generationError}`);
+      notifyError(dict("errors.tiktok_connect_and_generate"));
       dispatch(clearError());
     }
-  }, [generationError, notifyError, dispatch]);
+  }, [generationError, notifyError, dispatch, dict]);
 
   useEffect(() => {
     if (generalError && !tikTokError && !generationError) {
       console.error("❌ Error general:", generalError);
-      notifyError(`Error: ${generalError}`);
+      notifyError(`${dict("errors.general_error_prefix")} ${generalError}`);
       dispatch(clearError());
     }
-  }, [generalError, tikTokError, generationError, notifyError, dispatch]);
+  }, [generalError, tikTokError, generationError, notifyError, dispatch, dict]);
 
   // Función para conectar plataformas con flujo completo
   const handleConnectPlatform = async (platform: "instagram" | "tiktok") => {
@@ -89,31 +91,29 @@ export function SocialMediaSetup() {
         notify(`Contenido inicial generado: ${result.contents.length} elementos`);
       } catch (error: any) {
         console.error("❌ Error en flujo completo de TikTok:", error);
-        notifyError(error.message || "Error al conectar TikTok y generar contenido");
+        notifyError(error.message || dict("errors.tiktok_connect_and_generate"));
       }
     } else if (platform === "instagram") {
-      // Instagram no está implementado aún
-      notifyError("La conexión de Instagram estará disponible próximamente");
+      notifyError(dict("errors.instagram_not_implemented"));
     }
   };
 
   // Función para obtener el badge de estado de cada plataforma
   const getStatusBadge = (platform: "instagram" | "tiktok") => {
-    // Verificar conexión basada en el perfil
-    const isConnected = platform === "tiktok" ? profile?.connected && profile?.socialMedia === "tiktok" : false; // Instagram no implementado
+    const isConnected = platform === "tiktok" ? profile?.connected && profile?.socialMedia === "tiktok" : false;
 
     if (isConnected) {
       return (
         <Badge variant='default' className={styles.connectedBadge}>
           <CheckCircle className={styles.badgeIcon} />
-          Conectado
+          {dict("status.connected")}
         </Badge>
       );
     } else {
       return (
         <Badge variant='secondary' className={styles.disconnectedBadge}>
           <Clock className={styles.badgeIcon} />
-          No conectado
+          {dict("status.not_connected")}
         </Badge>
       );
     }
@@ -128,54 +128,56 @@ export function SocialMediaSetup() {
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <div className={styles.headerTitle}>Configuración de Redes Sociales</div>
+          <div className={styles.headerTitle}>{dict("header.title")}</div>
         </div>
       </header>
-
       {/* Main Content */}
       <main className={styles.main}>
         <div className={styles.mainContent}>
           {/* Instructions Card */}
           <Card className={styles.instructionsCard}>
-            <CardHeader>
-              <CardTitle className={styles.instructionsTitle}>Instrucciones</CardTitle>
+            <CardHeader className={styles.instructionsHeader}>
+              <CardTitle className={styles.instructionsTitle}>
+                <AlertCircle className={styles.instructionIcon} />
+                {dict("instructions.title")}
+              </CardTitle>
               <CardDescription className={styles.instructionsDescription}>
-                Página inicial donde primero tienes que registrar tus cuentas de Instagram y TikTok
+                {dict("instructions.description")}
               </CardDescription>
             </CardHeader>
             <CardContent className={styles.instructionsContent}>
-              <p>Deberían haber dos botones uno para IG, otro para TikTok.</p>
-              <p>Y alguna UI que indique el estatus de registro.</p>
-              <p>Si ya se registró una cuenta envíos verde completado, si todavía no se hizo nada con otro color.</p>
+              <div className={styles.instructionStep}>
+                <div className={styles.stepNumber}>1</div>
+                <p>{dict("instructions.steps.0")}</p>
+              </div>
+              <div className={styles.instructionStep}>
+                <div className={styles.stepNumber}>2</div>
+                <p>{dict("instructions.steps.1")}</p>
+              </div>
+              <div className={styles.instructionStep}>
+                <div className={styles.stepNumber}>3</div>
+                <p>{dict("instructions.steps.2")}</p>
+              </div>
             </CardContent>
           </Card>
-
           {/* Setup Cards */}
           <div className={styles.setupGrid}>
             {/* TikTok Setup */}
-            <Card className={styles.setupCard}>
+            <Card className={`${styles.setupCard} ${styles.tiktokCard}`}>
               <CardHeader className={styles.setupCardHeader}>
                 <div className={`${styles.setupCardIcon} ${styles.tiktok}`}>
                   <MessageCircle />
                 </div>
-                <CardTitle className={styles.setupCardTitle}>TikTok</CardTitle>
-                <CardDescription>Conecta tu cuenta de TikTok para gestionar tu contenido</CardDescription>
+                <CardTitle className={styles.setupCardTitle}>{dict("platform.tiktok.title")}</CardTitle>
+                <CardDescription>{dict("platform.tiktok.description")}</CardDescription>
               </CardHeader>
               <CardContent className={styles.setupCardContent}>
-                <div className={styles.statusBadge}>
-                  {isTikTokConnected ? (
-                    <Badge variant='default'>Conectado</Badge>
-                  ) : (
-                    <Badge variant='secondary'>No conectado</Badge>
-                  )}
-                </div>
-
+                <div className={styles.statusBadge}>{getStatusBadge("tiktok")}</div>
                 <div className={styles.featuresList}>
-                  <p className={styles.featureItem}>• Subir videos automáticamente</p>
-                  <p className={styles.featureItem}>• Analizar rendimiento</p>
-                  <p className={styles.featureItem}>• Programar contenido</p>
+                  <p className={styles.featureItem}>{dict("platform.tiktok.features.0")}</p>
+                  <p className={styles.featureItem}>{dict("platform.tiktok.features.1")}</p>
+                  <p className={styles.featureItem}>{dict("platform.tiktok.features.2")}</p>
                 </div>
-
                 <Button
                   onClick={() => handleConnectPlatform("tiktok")}
                   disabled={isTikTokConnected || isProcessing}
@@ -184,49 +186,46 @@ export function SocialMediaSetup() {
                   {isConnectingTikTok ? (
                     <>
                       <Clock className={styles.spinning} />
-                      Conectando TikTok...
+                      {dict("status.connecting_tiktok")}
                     </>
                   ) : isGeneratingContent ? (
                     <>
                       <Clock className={styles.spinning} />
-                      Generando contenido...
+                      {dict("status.generating_content")}
                     </>
                   ) : isTikTokConnected ? (
                     <>
                       <CheckCircle />
-                      Conectado
+                      {dict("status.connected")}
                     </>
                   ) : (
                     <>
                       <MessageCircle />
-                      Conectar TikTok
+                      {dict("cta.connect_tiktok")}
                     </>
                   )}
                 </Button>
               </CardContent>
             </Card>
-
             {/* Instagram Setup */}
-            <Card className={styles.setupCard}>
+            <Card className={`${styles.setupCard} ${styles.instagramCard}`}>
               <CardHeader className={styles.setupCardHeader}>
                 <div className={`${styles.setupCardIcon} ${styles.instagram}`}>
                   <Instagram />
                 </div>
-                <CardTitle className={styles.setupCardTitle}>Instagram</CardTitle>
-                <CardDescription>Conecta tu cuenta de Instagram para gestionar tus publicaciones</CardDescription>
+                <CardTitle className={styles.setupCardTitle}>{dict("platform.instagram.title")}</CardTitle>
+                <CardDescription>{dict("platform.instagram.description")}</CardDescription>
               </CardHeader>
               <CardContent className={styles.setupCardContent}>
-                {getStatusBadge("instagram")}
-
+                <div className={styles.statusBadge}>{getStatusBadge("instagram")}</div>
                 <div className={styles.featuresList}>
-                  <p className={styles.featureItem}>• Programar publicaciones</p>
-                  <p className={styles.featureItem}>• Ver métricas de engagement</p>
-                  <p className={styles.featureItem}>• Gestionar stories</p>
+                  <p className={styles.featureItem}>{dict("platform.instagram.features.0")}</p>
+                  <p className={styles.featureItem}>{dict("platform.instagram.features.1")}</p>
+                  <p className={styles.featureItem}>{dict("platform.instagram.features.2")}</p>
                 </div>
-
                 <Button disabled={true} className={`${styles.connectButton} ${styles.instagram}`}>
                   <Instagram />
-                  Próximamente
+                  {dict("cta.coming_soon")}
                 </Button>
               </CardContent>
             </Card>

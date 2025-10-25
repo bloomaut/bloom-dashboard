@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchProfile,
@@ -16,10 +17,12 @@ import { SocialMediaSetup } from "@/features/(dashboard)/Social/components/Socia
 import { SocialMediaDashboard } from "@/features/(dashboard)/Social/components/SocialMediaDashboard";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import styles from "./styles/dashboardSocial.module.scss";
+import LoadingSpinner from "@/components/Loading";
 
 export default function SocialMediaPage() {
   const dispatch = useAppDispatch();
   const { notifyError } = useMessageToast();
+  const dict = useTranslations("dict.social.page");
 
   // Redux selectors - usando los selectores correctos del slice
   const profile = useAppSelector(selectProfile);
@@ -38,29 +41,26 @@ export default function SocialMediaPage() {
   useEffect(() => {
     if (profileError) {
       console.error("❌ Error de perfil:", profileError);
-      notifyError(`Error al cargar el perfil: ${profileError}`);
+      notifyError(`${dict("notifications.profile_error")} ${profileError}`);
       // Limpiar solo el error de perfil después de mostrarlo
       dispatch(clearError());
     }
-  }, [profileError, notifyError, dispatch]);
+  }, [profileError, notifyError, dispatch, dict]);
 
   // Manejo de errores generales
   useEffect(() => {
     if (generalError && !profileError) {
       console.error("❌ Error general:", generalError);
-      notifyError(`Error: ${generalError}`);
+      notifyError(`${dict("notifications.general_error")} ${generalError}`);
       dispatch(clearError());
     }
-  }, [generalError, profileError, notifyError, dispatch]);
+  }, [generalError, profileError, notifyError, dispatch, dict]);
 
   // Estado de carga inicial
-  if (isLoadingProfile && !profile) {
+  if (!isLoadingProfile && !profile) {
     return (
       <div className={styles.loadingContainer} id='social-media-page'>
-        <div className={styles.loadingContent}>
-          <div className={styles.loadingSpinner}></div>
-          <p className={styles.loadingText}>Cargando perfil de redes sociales...</p>
-        </div>
+        <LoadingSpinner size='medium' />
       </div>
     );
   }
@@ -70,8 +70,8 @@ export default function SocialMediaPage() {
     return (
       <div className={styles.errorContainer} id='social-media-page'>
         <div className={styles.errorContent}>
-          <h2>Error al cargar el perfil</h2>
-          <p>No se pudo cargar la información de tu perfil de redes sociales.</p>
+          <h2>{dict("error.title")}</h2>
+          <p>{dict("error.description")}</p>
           <button
             onClick={() => {
               dispatch(clearAllErrors());
@@ -79,7 +79,7 @@ export default function SocialMediaPage() {
             }}
             className={styles.retryButton}
           >
-            Reintentar
+            {dict("error.retry_button")}
           </button>
         </div>
       </div>

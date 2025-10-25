@@ -58,11 +58,15 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
   };
 
   if (error) {
-    return <ErrorMessage error={new Error(error)} reset={handleReset} />;
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <ErrorMessage error={new Error(error)} reset={handleReset} />
+    </div>;
   }
 
   if (!allowed) {
-    return <LoadingSpinner />;
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <LoadingSpinner size='large' home />
+    </div>;
   }
 
   return <>{children}</>;

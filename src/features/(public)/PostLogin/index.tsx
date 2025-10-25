@@ -64,7 +64,7 @@ export default function PostLoginPage() {
         </div>
       ) : (
         <div className={styles.loadingContainer}>
-          <LoadingSpinner size='large' />
+          <LoadingSpinner size='large' home />
         </div>
       )}
     </div>

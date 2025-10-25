@@ -85,17 +85,17 @@
     "sidebar": {
       "home": "Home",
       "guide": "Guide",
-      "my_business": "My Business",
+      "my_business": "My business",
       "gallery": "Gallery",
       "hotlink": "Hotlink",
       "inbox": "Inbox",
       "catalog": "Catalog",
-      "clients": "Clients",
       "designs": "Designs",
+      "clients": "Clients",
       "templates": "Templates",
       "link_inbox": "Go to Inbox",
       "setup": {
-        "title": "Let's setup your business",
+        "title": "Let's set up your business",
         "completed": "completed"
       },
       "dashboard": {
@@ -108,6 +108,192 @@
         "user": {
           "default_name": "User",
           "default_business": "My Business"
+        }
+      }
+    },
+    "social": {
+      "setup": {
+        "header": {
+          "title": "Social Media Setup"
+        },
+        "instructions": {
+          "title": "Initial Setup",
+          "description": "Connect your social networks to start managing your content",
+          "steps": {
+            "0": "Select the platform you want to connect (Instagram or TikTok)",
+            "1": "Click the \"Connect\" button to authorize access",
+            "2": "Once connected, manage your content from the calendar"
+          }
+        },
+        "platform": {
+          "tiktok": {
+            "title": "TikTok",
+            "description": "Connect your TikTok account to manage your content",
+            "features": {
+              "0": "• Upload videos automatically",
+              "1": "• Analyze performance",
+              "2": "• Schedule content"
+            }
+          },
+          "instagram": {
+            "title": "Instagram",
+            "description": "Connect your Instagram account to manage your content",
+            "features": {
+              "0": "• Schedule posts",
+              "1": "• View engagement metrics",
+              "2": "• Manage stories"
+            }
+          }
+        },
+        "status": {
+          "connected": "Connected",
+          "not_connected": "Not connected",
+          "connecting_tiktok": "Connecting TikTok...",
+          "generating_content": "Generating content..."
+        },
+        "cta": {
+          "connect_tiktok": "Connect TikTok",
+          "coming_soon": "Coming Soon"
+        },
+        "notifications": {
+          "connecting_tiktok": "Connecting TikTok account...",
+          "tiktok_connected": "TikTok connected successfully!",
+          "initial_content_count": "Initial content generated: {count} items"
+        },
+        "errors": {
+          "instagram_not_implemented": "Instagram connection will be available soon",
+          "tiktok_connect_and_generate": "Error connecting TikTok and generating content",
+          "general_error_prefix": "Error:"
+        }
+      },
+      "page": {
+        "loading": {
+          "title": "Loading...",
+          "description": "Loading social media information"
+        },
+        "error": {
+          "title": "Error loading profile",
+          "description": "Could not load your social media profile information.",
+          "retry_button": "Retry"
+        },
+        "notifications": {
+          "profile_error": "Error loading profile:",
+          "general_error": "Error:"
+        }
+      },
+      "dashboard": {
+        "header": {
+          "title": "Social Media Dashboard"
+        },
+        "actions": {
+          "generate_week": "Generate Week",
+          "generating": "Generating...",
+          "create_content": "Create Content",
+          "creating": "Creating..."
+        }
+      },
+      "create_modal": {
+        "header": {
+          "title": "Generate New Content Idea"
+        },
+        "success": {
+          "title": "Idea created successfully!",
+          "message": "Your new content idea has been saved correctly."
+        },
+        "form": {
+          "pillar": {
+            "label": "Content Pillar (Optional)",
+            "placeholder": "E.g.: Educational, Entertainment, Inspirational...",
+            "hint": "If you don't specify a pillar, it will be assigned automatically based on your idea content."
+          },
+          "idea": {
+            "label": "Content Idea",
+            "placeholder": "Describe your content idea in detail..."
+          },
+          "date": {
+            "label": "Publication Date"
+          },
+          "time_period": {
+            "label": "Publication Time",
+            "morning": "Morning",
+            "afternoon": "Afternoon",
+            "evening": "Evening",
+            "morning_time": "6:00 - 12:00",
+            "afternoon_time": "12:00 - 18:00",
+            "evening_time": "18:00 - 24:00"
+          }
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "create": "Create Idea",
+          "creating": "Creating..."
+        },
+        "validation": {
+          "idea_required": "The idea is required",
+          "date_required": "The date is required",
+          "date_past": "The date cannot be in the past",
+          "unexpected_error": "Unexpected error creating content"
+        }
+      },
+      "calendar": {
+        "title": "Weekly Content Calendar",
+        "days": {
+          "sunday": "Sunday",
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday"
+        },
+        "time_periods": {
+          "morning": "Morning",
+          "afternoon": "Afternoon",
+          "evening": "Evening"
+        },
+        "navigation": {
+          "previous_week": "Previous Week",
+          "next_week": "Next Week",
+          "current_week": "Current Week"
+        },
+        "profile_card": {
+          "title": "Active Profile",
+          "no_profile": "No profile selected"
+        },
+        "legend_card": {
+          "title": "Time Schedule Legend",
+          "morning": "Morning",
+          "afternoon": "Afternoon",
+          "evening": "Evening", 
+          "morning_time": "(6:00 - 12:00)",
+          "afternoon_time": "(12:00 - 18:00)",
+          "evening_time": "(18:00 - 24:00)"
+        },
+        "content": {
+          "no_content": "No content",
+          "completed": "Completed",
+          "pending": "Pending"
+        },
+        "modal": {
+          "basic_info": "Basic Information",
+          "pillar": "Pillar:",
+          "type": "Type:",
+          "social_media": "Social Media:",
+          "status": "Status",
+          "mark_completed": "Mark as Completed",
+          "mark_pending": "Mark as Pending",
+          "hook": "Hook",
+          "script": "Script",
+          "copy": "Copy",
+          "hashtags": "Hashtags",
+          "cta": "Call to Action",
+          "feelings": "Feelings",
+          "understanding": "Understanding",
+          "keywords": "Keywords",
+          "content_type": "Content Type"
+        },
+        "error": {
+          "banner": "- Showing available data"
         }
       }
     },

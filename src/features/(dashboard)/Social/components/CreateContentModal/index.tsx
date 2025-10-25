@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 import { useAppDispatch } from "@/store/hooks";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+// Removed v0 component imports - using standard HTML elements with SCSS styling
 import { X, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import {
   createSingleContent,
@@ -25,6 +23,7 @@ interface CreateContentModalProps {
 
 export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContentModalProps) {
   const dispatch = useAppDispatch();
+  const dict = useTranslations("dict.social.create_modal");
   const isLoading = useSelector(selectIsCreatingContent);
   const reduxError = useSelector(selectCreationError);
 
@@ -56,10 +55,10 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
 
   const validateForm = (): { isValid: boolean; error?: string } => {
     if (!formData.idea.trim()) {
-      return { isValid: false, error: "La idea es requerida" };
+      return { isValid: false, error: dict("validation.idea_required") };
     }
     if (!formData.date) {
-      return { isValid: false, error: "La fecha es requerida" };
+      return { isValid: false, error: dict("validation.date_required") };
     }
 
     // Validar que la fecha no sea en el pasado
@@ -68,7 +67,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     today.setHours(0, 0, 0, 0);
 
     if (selectedDate < today) {
-      return { isValid: false, error: "La fecha no puede ser en el pasado" };
+      return { isValid: false, error: dict("validation.date_past") };
     }
 
     return { isValid: true };
@@ -125,7 +124,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
       } else if (error instanceof Error) {
         setLocalError(error.message);
       } else {
-        setLocalError("Error inesperado al crear el contenido");
+        setLocalError(dict("validation.unexpected_error"));
       }
     }
   };
@@ -157,8 +156,8 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
             <div className={styles.successIconContainer}>
               <CheckCircle className={styles.successIcon} />
             </div>
-            <div className={styles.successTitle}>¡Idea creada exitosamente!</div>
-            <div className={styles.successMessage}>Tu nueva idea de contenido ha sido guardada correctamente.</div>
+            <div className={styles.successTitle}>{dict("success.title")}</div>
+            <div className={styles.successMessage}>{dict("success.message")}</div>
           </div>
         )}
 
@@ -166,142 +165,150 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
         {!showSuccess && (
           <>
             {/* Header */}
-            <div className={styles.header}>
+            <div className={styles.modalHeader}>
               <div className={styles.headerContent}>
-                <div className={styles.headerTitle}>Generar Nueva Idea de Contenido</div>
-                <button onClick={handleClose} disabled={isLoading} className={styles.closeButton}>
-                  <X className={styles.closeIcon} />
-                </button>
+                <h2 className={styles.headerTitle}>{dict("header.title")}</h2>
               </div>
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className={styles.form}>
-              {/* Error Message */}
-              {error && (
-                <div className={styles.errorContainer}>
-                  <AlertCircle className={styles.errorIcon} />
-                  <div className={styles.errorText}>{error}</div>
+            <div className={styles.modalBody}>
+              <form onSubmit={handleSubmit} className={styles.form}>
+                {/* Error Message */}
+                {error && (
+                  <div className={styles.errorContainer}>
+                    <AlertCircle className={styles.errorIcon} />
+                    <div className={styles.errorText}>{error}</div>
+                  </div>
+                )}
+
+                {/* Pilar Field */}
+                <div className={styles.fieldContainer}>
+                  <label htmlFor='pillar' className={styles.fieldLabel}>
+                    {dict("form.pillar.label")}
+                  </label>
+                  <input
+                    id='pillar'
+                    type='text'
+                    placeholder={dict("form.pillar.placeholder")}
+                    value={formData.pillar}
+                    onChange={e => handleInputChange("pillar", e.target.value)}
+                    disabled={isLoading}
+                    className={styles.inputField}
+                  />
+                  <div className={styles.fieldHint}>{dict("form.pillar.hint")}</div>
                 </div>
-              )}
 
-              {/* Pilar Field */}
-              <div className={styles.fieldContainer}>
-                <Label htmlFor='pillar'>Pilar de Contenido (Opcional)</Label>
-                <Input
-                  id='pillar'
-                  type='text'
-                  placeholder='Ej: Educativo, Entretenimiento, Inspiracional...'
-                  value={formData.pillar}
-                  onChange={e => handleInputChange("pillar", e.target.value)}
-                  disabled={isLoading}
-                  className={styles.inputField}
-                />
-                <div className={styles.fieldHint}>
-                  Si no especificas un pilar, se asignará automáticamente según el contenido de tu idea.
+                {/* Idea Field */}
+                <div className={styles.fieldContainer}>
+                  <label htmlFor='idea' className={styles.fieldLabel}>
+                    {dict("form.idea.label")}
+                  </label>
+                  <textarea
+                    id='idea'
+                    placeholder={dict("form.idea.placeholder")}
+                    value={formData.idea}
+                    onChange={e => handleInputChange("idea", e.target.value)}
+                    disabled={isLoading}
+                    rows={4}
+                    className={styles.textareaField}
+                  />
                 </div>
-              </div>
 
-              {/* Idea Field */}
-              <div className={styles.fieldContainer}>
-                <Label htmlFor='idea'>Idea de Contenido</Label>
-                <Textarea
-                  id='idea'
-                  placeholder='Describe tu idea de contenido en detalle...'
-                  value={formData.idea}
-                  onChange={e => handleInputChange("idea", e.target.value)}
-                  disabled={isLoading}
-                  rows={4}
-                  className={styles.textareaField}
-                />
-              </div>
+                {/* Date Field */}
+                <div className={styles.fieldContainer}>
+                  <label htmlFor='date' className={styles.fieldLabel}>
+                    {dict("form.date.label")}
+                  </label>
+                  <input
+                    id='date'
+                    type='date'
+                    value={formData.date}
+                    onChange={e => handleInputChange("date", e.target.value)}
+                    disabled={isLoading}
+                    className={styles.inputField}
+                    min={new Date().toISOString().split("T")[0]} // No permitir fechas pasadas
+                  />
+                </div>
 
-              {/* Date Field */}
-              <div className={styles.fieldContainer}>
-                <Label htmlFor='date'>Fecha de Publicación</Label>
-                <Input
-                  id='date'
-                  type='date'
-                  value={formData.date}
-                  onChange={e => handleInputChange("date", e.target.value)}
-                  disabled={isLoading}
-                  className={styles.inputField}
-                  min={new Date().toISOString().split("T")[0]} // No permitir fechas pasadas
-                />
-              </div>
+                {/* Time Period Field */}
+                <div className={styles.fieldContainer}>
+                  <label htmlFor='dayTime' className={styles.fieldLabel}>
+                    {dict("form.time_period.label")}
+                  </label>
+                  <div className={styles.timePeriodGrid}>
+                    <button
+                      type='button'
+                      onClick={() => handleInputChange("dayTime", "morning")}
+                      disabled={isLoading}
+                      className={`${styles.timePeriodButton} ${styles.morningButton} ${
+                        formData.dayTime === "morning" ? styles.active : ""
+                      }`}
+                    >
+                      <div className={styles.timePeriodContent}>
+                        <div className={`${styles.timePeriodDot} ${styles.morningDot}`}></div>
+                        <div>{dict("form.time_period.morning")}</div>
+                        <div className={styles.timePeriodTime}>{dict("form.time_period.morning_time")}</div>
+                      </div>
+                    </button>
+                    <button
+                      type='button'
+                      onClick={() => handleInputChange("dayTime", "afternoon")}
+                      disabled={isLoading}
+                      className={`${styles.timePeriodButton} ${styles.afternoonButton} ${
+                        formData.dayTime === "afternoon" ? styles.active : ""
+                      }`}
+                    >
+                      <div className={styles.timePeriodContent}>
+                        <div className={`${styles.timePeriodDot} ${styles.afternoonDot}`}></div>
+                        <div>{dict("form.time_period.afternoon")}</div>
+                        <div className={styles.timePeriodTime}>{dict("form.time_period.afternoon_time")}</div>
+                      </div>
+                    </button>
+                    <button
+                      type='button'
+                      onClick={() => handleInputChange("dayTime", "evening")}
+                      disabled={isLoading}
+                      className={`${styles.timePeriodButton} ${styles.eveningButton} ${
+                        formData.dayTime === "evening" ? styles.active : ""
+                      }`}
+                    >
+                      <div className={styles.timePeriodContent}>
+                        <div className={`${styles.timePeriodDot} ${styles.eveningDot}`}></div>
+                        <div>{dict("form.time_period.evening")}</div>
+                        <div className={styles.timePeriodTime}>{dict("form.time_period.evening_time")}</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
 
-              {/* Time Period Field */}
-              <div className={styles.fieldContainer}>
-                <Label htmlFor='dayTime'>Horario de Publicación</Label>
-                <div className={styles.timePeriodGrid}>
+                {/* Actions */}
+                <div className={styles.actionsContainer}>
                   <button
                     type='button'
-                    onClick={() => handleInputChange("dayTime", "morning")}
+                    onClick={handleClose}
                     disabled={isLoading}
-                    className={`${styles.timePeriodButton} ${styles.morningButton} ${
-                      formData.dayTime === "morning" ? styles.active : ""
-                    }`}
+                    className={`${styles.actionButton} ${styles.cancelButton}`}
                   >
-                    <div className={styles.timePeriodContent}>
-                      <div className={`${styles.timePeriodDot} ${styles.morningDot}`}></div>
-                      <div>Mañana</div>
-                      <div className={styles.timePeriodTime}>6:00 - 12:00</div>
-                    </div>
+                    {dict("actions.cancel")}
                   </button>
                   <button
-                    type='button'
-                    onClick={() => handleInputChange("dayTime", "afternoon")}
+                    type='submit'
                     disabled={isLoading}
-                    className={`${styles.timePeriodButton} ${styles.afternoonButton} ${
-                      formData.dayTime === "afternoon" ? styles.active : ""
-                    }`}
+                    className={`${styles.actionButton} ${styles.submitButton}`}
                   >
-                    <div className={styles.timePeriodContent}>
-                      <div className={`${styles.timePeriodDot} ${styles.afternoonDot}`}></div>
-                      <div>Tarde</div>
-                      <div className={styles.timePeriodTime}>12:00 - 18:00</div>
-                    </div>
-                  </button>
-                  <button
-                    type='button'
-                    onClick={() => handleInputChange("dayTime", "evening")}
-                    disabled={isLoading}
-                    className={`${styles.timePeriodButton} ${styles.eveningButton} ${
-                      formData.dayTime === "evening" ? styles.active : ""
-                    }`}
-                  >
-                    <div className={styles.timePeriodContent}>
-                      <div className={`${styles.timePeriodDot} ${styles.eveningDot}`}></div>
-                      <div>Noche</div>
-                      <div className={styles.timePeriodTime}>18:00 - 24:00</div>
-                    </div>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className={styles.loadingIcon} />
+                        {dict("actions.creating")}
+                      </>
+                    ) : (
+                      dict("actions.create")
+                    )}
                   </button>
                 </div>
-              </div>
-
-              {/* Actions */}
-              <div className={styles.actionsContainer}>
-                <Button
-                  type='button'
-                  variant='outline'
-                  onClick={handleClose}
-                  disabled={isLoading}
-                  className={styles.actionButton}
-                >
-                  Cancelar
-                </Button>
-                <Button type='submit' disabled={isLoading} className={styles.actionButton}>
-                  {isLoading ? (
-                    <>
-                      <Loader2 className={styles.loadingIcon} />
-                      Creando...
-                    </>
-                  ) : (
-                    "Crear Idea"
-                  )}
-                </Button>
-              </div>
-            </form>
+              </form>
+            </div>
           </>
         )}
       </div>

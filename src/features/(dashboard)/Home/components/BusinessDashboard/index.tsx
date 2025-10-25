@@ -14,14 +14,8 @@ export function BusinessDashboard() {
   const clientData = userData.client;
   const dict = useTranslations("dict.business_dashboard");
 
-  console.log("screen size", window.innerWidth);
-
   // Convertir la paleta de string a array para mostrar
   const paletteArray = parsePaletteString(clientData?.palette);
-
-  console.log("userData", userData);
-  console.log("clientData", clientData);
-  console.log("paletteArray", paletteArray);
 
   // Función para obtener el estado de la propuesta
   const getProposalStatus = (status: string) => {

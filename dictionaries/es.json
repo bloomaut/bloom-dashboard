@@ -111,6 +111,192 @@
         }
       }
     },
+    "social": {
+      "setup": {
+        "header": {
+          "title": "Configuración de Redes Sociales"
+        },
+        "instructions": {
+          "title": "Configuración Inicial",
+          "description": "Conecta tus redes sociales para comenzar a gestionar tu contenido",
+          "steps": {
+            "0": "Selecciona la plataforma que deseas conectar (Instagram o TikTok)",
+            "1": "Haz clic en el botón \"Conectar\" para autorizar el acceso",
+            "2": "Una vez conectada, podrás gestionar tu contenido desde el calendario"
+          }
+        },
+        "platform": {
+          "tiktok": {
+            "title": "TikTok",
+            "description": "Conecta tu cuenta de TikTok para gestionar tu contenido",
+            "features": {
+              "0": "• Subir videos automáticamente",
+              "1": "• Analizar rendimiento",
+              "2": "• Programar contenido"
+            }
+          },
+          "instagram": {
+            "title": "Instagram",
+            "description": "Conecta tu cuenta de Instagram para gestionar tu contenido",
+            "features": {
+              "0": "• Programar publicaciones",
+              "1": "• Ver métricas de engagement",
+              "2": "• Gestionar stories"
+            }
+          }
+        },
+        "status": {
+          "connected": "Conectado",
+          "not_connected": "No conectado",
+          "connecting_tiktok": "Conectando TikTok...",
+          "generating_content": "Generando contenido..."
+        },
+        "cta": {
+          "connect_tiktok": "Conectar TikTok",
+          "coming_soon": "Próximamente"
+        },
+        "notifications": {
+          "connecting_tiktok": "Conectando cuenta de TikTok...",
+          "tiktok_connected": "¡TikTok conectado exitosamente!",
+          "initial_content_count": "Contenido inicial generado: {count} elementos"
+        },
+        "errors": {
+          "instagram_not_implemented": "La conexión de Instagram estará disponible próximamente",
+          "tiktok_connect_and_generate": "Error al conectar TikTok y generar contenido",
+          "general_error_prefix": "Error:"
+        }
+      },
+      "page": {
+        "loading": {
+          "title": "Cargando...",
+          "description": "Cargando información de redes sociales"
+        },
+        "error": {
+          "title": "Error al cargar el perfil",
+          "description": "No se pudo cargar la información de tu perfil de redes sociales.",
+          "retry_button": "Reintentar"
+        },
+        "notifications": {
+          "profile_error": "Error al cargar el perfil:",
+          "general_error": "Error:"
+        }
+      },
+      "dashboard": {
+        "header": {
+          "title": "Dashboard de Redes Sociales"
+        },
+        "actions": {
+          "generate_week": "Generar Semana",
+          "generating": "Generando...",
+          "create_content": "Crear Contenido",
+          "creating": "Creando..."
+        }
+      },
+      "create_modal": {
+        "header": {
+          "title": "Generar Nueva Idea de Contenido"
+        },
+        "success": {
+          "title": "¡Idea creada exitosamente!",
+          "message": "Tu nueva idea de contenido ha sido guardada correctamente."
+        },
+        "form": {
+          "pillar": {
+            "label": "Pilar de Contenido (Opcional)",
+            "placeholder": "Ej: Educativo, Entretenimiento, Inspiracional...",
+            "hint": "Si no especificas un pilar, se asignará automáticamente según el contenido de tu idea."
+          },
+          "idea": {
+            "label": "Idea de Contenido",
+            "placeholder": "Describe tu idea de contenido en detalle..."
+          },
+          "date": {
+            "label": "Fecha de Publicación"
+          },
+          "time_period": {
+            "label": "Horario de Publicación",
+            "morning": "Mañana",
+            "afternoon": "Tarde",
+            "evening": "Noche",
+            "morning_time": "6:00 - 12:00",
+            "afternoon_time": "12:00 - 18:00",
+            "evening_time": "18:00 - 24:00"
+          }
+        },
+        "actions": {
+          "cancel": "Cancelar",
+          "create": "Crear Idea",
+          "creating": "Creando..."
+        },
+        "validation": {
+          "idea_required": "La idea es requerida",
+          "date_required": "La fecha es requerida",
+          "date_past": "La fecha no puede ser en el pasado",
+          "unexpected_error": "Error inesperado al crear el contenido"
+        }
+      },
+      "calendar": {
+        "title": "Calendario de Contenido Semanal",
+        "days": {
+          "sunday": "Domingo",
+          "monday": "Lunes",
+          "tuesday": "Martes",
+          "wednesday": "Miércoles",
+          "thursday": "Jueves",
+          "friday": "Viernes",
+          "saturday": "Sábado"
+        },
+        "time_periods": {
+          "morning": "Mañana",
+          "afternoon": "Tarde",
+          "evening": "Noche"
+        },
+        "navigation": {
+          "previous_week": "Semana Anterior",
+          "next_week": "Semana Siguiente",
+          "current_week": "Semana Actual"
+        },
+        "profile_card": {
+          "title": "Perfil Activo",
+          "no_profile": "Sin perfil seleccionado"
+        },
+        "legend_card": {
+          "title": "Leyenda de Horarios",
+          "morning": "Mañana",
+          "afternoon": "Tarde", 
+          "evening": "Noche",
+          "morning_time": "(6:00 - 12:00)",
+          "afternoon_time": "(12:00 - 18:00)",
+          "evening_time": "(18:00 - 24:00)"
+        },
+        "content": {
+          "no_content": "Sin contenido",
+          "completed": "Completado",
+          "pending": "Pendiente"
+        },
+        "modal": {
+          "basic_info": "Información Básica",
+          "pillar": "Pilar:",
+          "type": "Tipo:",
+          "social_media": "Red Social:",
+          "status": "Estado",
+          "mark_completed": "Marcar como Completado",
+          "mark_pending": "Marcar como Pendiente",
+          "hook": "Hook",
+          "script": "Guión",
+          "copy": "Copy",
+          "hashtags": "Hashtags",
+          "cta": "Call to Action",
+          "feelings": "Sentimientos",
+          "understanding": "Comprensión",
+          "keywords": "Palabras Clave",
+          "content_type": "Tipo de Contenido"
+        },
+        "error": {
+          "banner": "- Mostrando datos disponibles"
+        }
+      }
+    },
     "sidetrack": {
       "title": "Paso",
       "step_1": "Información de tu negocio",
