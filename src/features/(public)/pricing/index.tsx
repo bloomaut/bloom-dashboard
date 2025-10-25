@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import styles from "./styles/pricing.module.scss";
 import { usePathname } from "next/navigation";
 
-export default function PricingPage() {
+export default function Pricing() {
   const dict = useTranslations("dict");
   const pathname = usePathname();
   const en = pathname.includes("/en");
