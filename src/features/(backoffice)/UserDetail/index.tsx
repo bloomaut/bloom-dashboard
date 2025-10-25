@@ -24,7 +24,7 @@ export default async function UserDetailPage({ params }: { params: { locale: str
       <div className='flex items-center justify-between'>
         <h1 className='text-xl font-semibold'>Usuario #{id}</h1>
         <Link href={`/${locale}/backoffice/users`}>
-          <Button variant='outline'>Volver a Usuarios</Button>
+          <Button variant='outline'>Volver a Usuarioss</Button>
         </Link>
       </div>
 

@@ -8,7 +8,7 @@ import { FaLinkedinIn, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { useState } from "react";
 
-export default function SmallLanding() {
+export default function Landing() {
   const dict = useTranslations("dict");
   const pathname = usePathname();
   const en = pathname.includes("/en");
