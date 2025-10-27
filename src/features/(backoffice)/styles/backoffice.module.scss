@@ -1,0 +1,20 @@
+.wrapper {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  overflow: auto;
+  
+  @media (min-width: 768px) {
+    margin-left: 16rem; // 64 * 0.25rem = 16rem (ml-64)
+  }
+}

@@ -1,0 +1,36 @@
+// Main container
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+// Header section
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+// Error message
+.errorMessage {
+  color: var(--text-error);
+  font-size: 0.875rem;
+}
+
+// Data display
+.dataDisplay {
+  font-size: 0.875rem;
+  white-space: pre-wrap;
+  word-break: break-words;
+  background-color: var(--bg-muted);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  font-family: 'Courier New', Courier, monospace;
+}

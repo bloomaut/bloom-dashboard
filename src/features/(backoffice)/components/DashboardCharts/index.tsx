@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { XAxis, YAxis, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Tooltip } from "recharts";
+import styles from "./styles.module.scss";
 
 interface UserStats {
   total: number;
@@ -26,32 +27,40 @@ export function DashboardCharts({ userStats }: { userStats: UserStats | null }) 
   ];
 
   return (
-    <div className='space-y-4'>
+    <div className={styles.chartsContainer}>
       {/* Second row with two charts */}
-      <div className='grid gap-4 md:grid-cols-2'>
+      <div className={styles.chartsGrid}>
         {/* User Status Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Estado de Usuarios</CardTitle>
+        <Card className={styles.chartCard}>
+          <CardHeader className={styles.chartHeader}>
+            <CardTitle className={styles.chartTitle}>Estado de Usuarios</CardTitle>
+            <p className={styles.chartDescription}>Distribución de usuarios por estado actual</p>
           </CardHeader>
           <CardContent>
-            <div className='h-[250px] sm:h-[300px]'>
+            <div className={styles.chartContainer}>
               <ResponsiveContainer width='100%' height='100%'>
                 <PieChart>
                   <Pie
                     data={statusData}
                     cx='50%'
                     cy='50%'
-                    innerRadius={40}
-                    outerRadius={80}
-                    paddingAngle={5}
+                    innerRadius={50}
+                    outerRadius={90}
+                    paddingAngle={8}
                     dataKey='value'
                   >
                     {statusData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#ffffff",
+                      border: "none",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -59,23 +68,32 @@ export function DashboardCharts({ userStats }: { userStats: UserStats | null }) 
         </Card>
 
         {/* User Flow Funnel */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Flujo de Usuarios</CardTitle>
+        <Card className={styles.chartCard}>
+          <CardHeader className={styles.chartHeader}>
+            <CardTitle className={styles.chartTitle}>Flujo de Usuarios</CardTitle>
+            <p className={styles.chartDescription}>Progresión de usuarios a través del sistema</p>
           </CardHeader>
           <CardContent>
-            <div className='h-[250px] sm:h-[300px]'>
+            <div className={styles.chartContainer}>
               <ResponsiveContainer width='100%' height='100%'>
                 <LineChart data={userFlowData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                  <XAxis dataKey='step' angle={-45} textAnchor='end' height={60} fontSize={12} />
-                  <YAxis />
-                  <Tooltip />
+                  <XAxis dataKey='step' angle={-45} textAnchor='end' height={60} fontSize={12} stroke='#64748b' />
+                  <YAxis stroke='#64748b' />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#ffffff",
+                      border: "none",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                    }}
+                  />
                   <Line
                     type='monotone'
                     dataKey='value'
-                    stroke='#4DC2F4'
-                    strokeWidth={3}
-                    dot={{ fill: "#4DC2F4", strokeWidth: 2, r: 4 }}
+                    stroke='#667eea'
+                    strokeWidth={4}
+                    dot={{ fill: "#667eea", strokeWidth: 2, r: 6 }}
+                    activeDot={{ r: 8, fill: "#764ba2" }}
                   />
                 </LineChart>
               </ResponsiveContainer>

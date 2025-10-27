@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, UserPlus, FileText, TrendingUp } from "lucide-react";
+import styles from "./styles.module.scss";
 
 interface UserStats {
   total: number;
@@ -59,10 +60,10 @@ export function DashboardStats({
 
   if (error) {
     return (
-      <div className='grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'>
-        <Card className='col-span-full'>
-          <CardContent className='pt-6'>
-            <div className='text-center text-red-600'>Error al cargar estadísticas: {error}</div>
+      <div className={styles.statsGrid}>
+        <Card className={styles.errorCard}>
+          <CardContent className={styles.errorContent}>
+            <div className={styles.errorMessage}>Error al cargar estadísticas: {error}</div>
           </CardContent>
         </Card>
       </div>
@@ -70,16 +71,18 @@ export function DashboardStats({
   }
 
   return (
-    <div className='grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'>
+    <div className={styles.statsGrid}>
       {dashboardStats.map(stat => (
-        <Card key={stat.title}>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <div className='text-sm font-medium text-muted-foreground'>{stat.title}</div>
-            <stat.icon className='h-4 w-4 text-muted-foreground' />
+        <Card key={stat.title} className={styles.statCard}>
+          <CardHeader className={styles.cardHeader}>
+            <div className={styles.cardTitle}>{stat.title}</div>
+            <stat.icon className={styles.cardIcon} />
           </CardHeader>
-          <CardContent>
-            <div className='text-2xl font-bold'>{stat.value}</div>
-            <div className='text-xs text-secondary'>{stat.change} desde el mes pasado</div>
+          <CardContent className={styles.cardContent}>
+            <div className={styles.statValue}>{stat.value}</div>
+            <div className={`${styles.statChange} ${stat.changeType === "negative" ? styles.negative : ""}`}>
+              {stat.change} desde el mes pasado
+            </div>
           </CardContent>
         </Card>
       ))}

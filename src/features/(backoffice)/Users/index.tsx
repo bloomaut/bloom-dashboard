@@ -21,7 +21,7 @@ import {
   MoreHorizontal,
   Eye,
 } from "lucide-react";
-import styles from "./styles/users.module.css";
+import styles from "./styles.module.css";
 
 // service helpers
 import {
@@ -183,31 +183,15 @@ export default function UserManagement() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "con-propuesta-revision":
-        return (
-          <Badge className='bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100 font-medium'>
-            Con Propuesta - En Revisión
-          </Badge>
-        );
+        return <Badge className={styles.badgeAmber}>Con Propuesta - En Revisión</Badge>;
       case "con-propuesta-aprobada":
-        return (
-          <Badge className='bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 font-medium'>
-            Con Propuesta - Aprobada
-          </Badge>
-        );
+        return <Badge className={styles.badgeEmerald}>Con Propuesta - Aprobada</Badge>;
       case "lista-espera":
-        return (
-          <Badge className='bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 font-medium'>
-            En Lista de Espera
-          </Badge>
-        );
+        return <Badge className={styles.badgeBlue}>En Lista de Espera</Badge>;
       case "sin-propuesta":
-        return (
-          <Badge className='bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 font-medium'>
-            Sin Propuesta
-          </Badge>
-        );
+        return <Badge className={styles.badgeSlate}>Sin Propuesta</Badge>;
       case "rechazado":
-        return <Badge className='bg-red-50 text-red-700 border-red-200 hover:bg-red-100 font-medium'>Rechazado</Badge>;
+        return <Badge className={styles.badgeRed}>Rechazado</Badge>;
       default:
         return (
           <Badge variant='outline' className='font-medium'>
@@ -227,45 +211,45 @@ export default function UserManagement() {
   };
 
   return (
-    <div className={`${styles.root} min-h-screen bg-slate-50/50`}>
-      <div className='mx-0 p-4 sm:p-6 lg:p-1 space-y-6'>
+    <div className={`${styles.root}`}>
+      <div className={styles.container}>
         {/* Header */}
-        <div className='bg-white rounded-lg border border-slate-200 p-6 shadow-sm'>
-          <div className='flex items-center gap-3 mb-2'>
-            <div className='p-2 bg-blue-100 rounded-lg'>
-              <Users className='h-6 w-6 text-blue-600' />
+        <div className={styles.header}>
+          <div className={styles.headerContent}>
+            <div className={styles.headerIcon}>
+              <Users className={styles.headerIconSvg} />
             </div>
             <div>
-              <h1 className='text-2xl sm:text-3xl font-bold text-slate-900'>Gestión de Usuarios</h1>
-              <p className='text-slate-600 mt-1'>Administra y supervisa todos los usuarios del sistema</p>
+              <h1 className={styles.headerTitle}>Gestión de Usuarios</h1>
+              <p className={styles.headerSubtitle}>Administra y supervisa todos los usuarios del sistema</p>
             </div>
           </div>
         </div>
 
         {/* Filters and Search */}
-        <Card className='border-slate-200 shadow-sm'>
-          <CardHeader className='pb-4'>
-            <CardTitle className='flex items-center gap-2 text-slate-900'>
-              <Filter className='h-5 w-5 text-slate-600' />
+        <Card className={styles.filtersCard}>
+          <CardHeader className={styles.filtersHeader}>
+            <CardTitle className={styles.filtersTitle}>
+              <Filter className={styles.filtersTitleIcon} />
               Filtros y Búsqueda
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='flex flex-col lg:flex-row gap-4'>
+            <div className={styles.filtersContent}>
               {/* Search Input */}
-              <div className='relative flex-1 max-w-md'>
-                <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400' />
+              <div className={styles.searchContainer}>
+                <Search className={styles.searchIcon} />
                 <Input
                   placeholder='Buscar por nombre o email...'
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
-                  className='pl-10 border-slate-300 focus:border-blue-500 focus:ring-blue-500'
+                  className={styles.searchInput}
                 />
               </div>
 
               {/* Status Filter */}
               <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
-                <SelectTrigger className='w-full lg:w-[280px] border-slate-300 focus:border-blue-500 focus:ring-blue-500'>
+                <SelectTrigger className={styles.selectFilter}>
                   <SelectValue placeholder='Filtrar por estado' />
                 </SelectTrigger>
                 <SelectContent>
@@ -282,31 +266,31 @@ export default function UserManagement() {
         </Card>
 
         {/* Users Table */}
-        <Card className='border-slate-200 shadow-sm'>
-          <CardHeader className='pb-4'>
-            <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
-              <CardTitle className='text-slate-900'>
+        <Card className={styles.usersCard}>
+          <CardHeader className={styles.usersHeader}>
+            <div className={styles.usersHeaderContent}>
+              <CardTitle className={styles.usersTitle}>
                 Lista de Usuarios ({totalUsers ?? filteredUsers.length}{" "}
                 {(totalUsers ?? filteredUsers.length) === 1 ? "usuario" : "usuarios"})
               </CardTitle>
             </div>
           </CardHeader>
-          <CardContent className='p-0'>
+          <CardContent className={styles.usersContent}>
             {/* Mobile Cards View */}
-            <div className='block lg:hidden'>
+            <div className={styles.mobileView}>
               {loading ? (
-                <div className='p-8 text-center'>
-                  <div className='inline-flex items-center gap-2 text-slate-600'>
-                    <div className='w-4 h-4 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin'></div>
+                <div className={styles.loadingContainer}>
+                  <div className={styles.loadingContent}>
+                    <div className={styles.loadingSpinner}></div>
                     Cargando usuarios...
                   </div>
                 </div>
               ) : filteredUsers.length === 0 ? (
-                <div className='p-8 text-center'>
+                <div className={styles.emptyContainer}>
                   {error ? (
-                    <div className='text-red-600 font-medium'>{error}</div>
+                    <div className={styles.errorMessage}>{error}</div>
                   ) : (
-                    <div className='text-slate-500'>
+                    <div className={styles.emptyMessage}>
                       {searchTerm
                         ? "No se encontraron usuarios que coincidan con la búsqueda."
                         : "No se encontraron usuarios."}
@@ -314,36 +298,36 @@ export default function UserManagement() {
                   )}
                 </div>
               ) : (
-                <div className='divide-y divide-slate-200'>
+                <div className={styles.userCardsList}>
                   {filteredUsers.map(user => (
-                    <div key={user.id} className='p-4 hover:bg-slate-50 transition-colors'>
-                      <div className='flex items-start justify-between'>
-                        <div className='flex-1 min-w-0'>
-                          <div className='flex items-center gap-2 mb-2'>
-                            <div className='p-1.5 bg-slate-100 rounded-full'>
-                              <User className='h-3 w-3 text-slate-600' />
+                    <div key={user.id} className={styles.userCard}>
+                      <div className={styles.userCardContent}>
+                        <div className={styles.userCardInfo}>
+                          <div className={styles.userCardHeader}>
+                            <div className={styles.userCardIcon}>
+                              <User className={styles.userCardIconSvg} />
                             </div>
-                            <h3 className='font-semibold text-slate-900 truncate'>{user.name}</h3>
+                            <h3 className={styles.userCardName}>{user.name}</h3>
                           </div>
 
-                          <div className='space-y-2 text-sm'>
-                            <div className='flex items-center gap-2 text-slate-600'>
-                              <Mail className='h-3 w-3' />
-                              <span className='truncate'>{user.email}</span>
+                          <div className={styles.userCardDetails}>
+                            <div className={styles.userCardDetail}>
+                              <Mail className={styles.userCardDetailIcon} />
+                              <span className={styles.userCardDetailText}>{user.email}</span>
                             </div>
 
-                            <div className='flex items-center gap-2 text-slate-600'>
-                              <Calendar className='h-3 w-3' />
+                            <div className={styles.userCardDetail}>
+                              <Calendar className={styles.userCardDetailIcon} />
                               <span>{formatDate(user.registrationDate)}</span>
                             </div>
 
-                            <div className='flex items-center gap-2'>{getStatusBadge(user.status)}</div>
+                            <div className={styles.userCardDetail}>{getStatusBadge(user.status)}</div>
                           </div>
                         </div>
 
-                        <div className='ml-4 flex-shrink-0'>
+                        <div className={styles.userCardActions}>
                           <Link href={`/${locale}/backoffice/users/${user.id}`}>
-                            <Button variant='ghost' size='sm' className='h-8 w-8 p-0'>
+                            <Button variant='ghost' size='sm' className={styles.userCardButton}>
                               <Eye className='h-4 w-4' />
                             </Button>
                           </Link>
@@ -356,35 +340,35 @@ export default function UserManagement() {
             </div>
 
             {/* Desktop Table View */}
-            <div className='hidden lg:block overflow-x-auto'>
+            <div className={styles.desktopView}>
               <Table>
                 <TableHeader>
-                  <TableRow className='border-slate-200'>
-                    <TableHead className='font-semibold text-slate-700'>Usuario</TableHead>
-                    <TableHead className='font-semibold text-slate-700'>Email</TableHead>
-                    <TableHead className='font-semibold text-slate-700'>Estado</TableHead>
-                    <TableHead className='font-semibold text-slate-700'>Rol</TableHead>
-                    <TableHead className='font-semibold text-slate-700'>Fecha Registro</TableHead>
-                    <TableHead className='text-right font-semibold text-slate-700'>Acciones</TableHead>
+                  <TableRow className={styles.tableHeader}>
+                    <TableHead className={styles.tableHeaderCell}>Usuario</TableHead>
+                    <TableHead className={styles.tableHeaderCell}>Email</TableHead>
+                    <TableHead className={styles.tableHeaderCell}>Estado</TableHead>
+                    <TableHead className={styles.tableHeaderCell}>Rol</TableHead>
+                    <TableHead className={styles.tableHeaderCell}>Fecha Registro</TableHead>
+                    <TableHead className={`${styles.tableHeaderCell} ${styles.userTableActions}`}>Acciones</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {loading ? (
                     <TableRow>
-                      <TableCell colSpan={6} className='text-center py-12'>
-                        <div className='inline-flex items-center gap-2 text-slate-600'>
-                          <div className='w-4 h-4 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin'></div>
+                      <TableCell colSpan={6} className={styles.loadingContainer}>
+                        <div className={styles.loadingContent}>
+                          <div className={styles.loadingSpinner}></div>
                           Cargando usuarios...
                         </div>
                       </TableCell>
                     </TableRow>
                   ) : filteredUsers.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={6} className='text-center py-12'>
+                      <TableCell colSpan={6} className={styles.emptyContainer}>
                         {error ? (
-                          <div className='text-red-600 font-medium'>{error}</div>
+                          <div className={styles.errorMessage}>{error}</div>
                         ) : (
-                          <div className='text-slate-500'>
+                          <div className={styles.emptyMessage}>
                             {searchTerm
                               ? "No se encontraron usuarios que coincidan con la búsqueda."
                               : "No se encontraron usuarios."}
@@ -394,30 +378,26 @@ export default function UserManagement() {
                     </TableRow>
                   ) : (
                     filteredUsers.map(user => (
-                      <TableRow key={user.id} className='border-slate-200 hover:bg-slate-50/50 transition-colors'>
-                        <TableCell className='font-medium text-slate-900'>
-                          <div className='flex items-center gap-3'>
-                            <div className='p-2 bg-slate-100 rounded-full'>
-                              <User className='h-4 w-4 text-slate-600' />
+                      <TableRow key={user.id} className={styles.tableRow}>
+                        <TableCell className={styles.tableCellPrimary}>
+                          <div className={styles.userTableInfo}>
+                            <div className={styles.userTableIcon}>
+                              <User className={styles.userTableIconSvg} />
                             </div>
                             <div>
-                              <div className='font-semibold'>{user.name}</div>
-                              <div className='text-xs text-slate-500'>{user.role}</div>
+                              <div className={styles.userTableName}>{user.name}</div>
+                              <div className={styles.userTableRole}>{user.role}</div>
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell className='text-slate-600'>{user.email}</TableCell>
+                        <TableCell className={styles.tableCell}>{user.email}</TableCell>
                         <TableCell>{getStatusBadge(user.status)}</TableCell>
-                        <TableCell className='text-slate-600 capitalize'>{user.role}</TableCell>
-                        <TableCell className='text-slate-600'>{formatDate(user.registrationDate)}</TableCell>
-                        <TableCell className='text-right'>
-                          <div className='flex justify-center mr-7'>
+                        <TableCell className={`${styles.tableCell} ${styles.capitalize}`}>{user.role}</TableCell>
+                        <TableCell className={styles.tableCell}>{formatDate(user.registrationDate)}</TableCell>
+                        <TableCell className={styles.userTableActions}>
+                          <div className={styles.userTableActionsContainer}>
                             <Link href={`/${locale}/backoffice/users/${user.id}`}>
-                              <Button
-                                variant='ghost'
-                                size='sm'
-                                className='h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600 transition-colors'
-                              >
+                              <Button variant='ghost' size='sm' className={styles.userTableButton}>
                                 <Eye className='h-4 w-4' />
                               </Button>
                             </Link>
@@ -434,26 +414,26 @@ export default function UserManagement() {
 
         {/* Pagination */}
         {(totalUsers ?? 0) > usersPerPage && (
-          <Card className='border-slate-200 shadow-sm'>
-            <CardContent className='p-4'>
-              <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
-                <div className='text-sm text-slate-600 text-center sm:text-left'>
+          <Card className={styles.paginationCard}>
+            <CardContent className={styles.paginationContent}>
+              <div className={styles.paginationContainer}>
+                <div className={styles.paginationInfo}>
                   Mostrando {startIndex + 1} a {Math.min(endIndex, totalUsers ?? 0)} de {totalUsers} usuarios
                 </div>
 
-                <div className='flex items-center justify-center gap-2'>
+                <div className={styles.paginationControls}>
                   <Button
                     variant='outline'
                     size='sm'
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
-                    className='border-slate-300 hover:bg-slate-50 disabled:opacity-50'
+                    className={styles.paginationButton}
                   >
                     <ChevronLeft className='h-4 w-4' />
-                    <span className='hidden sm:inline ml-1'>Anterior</span>
+                    <span className={styles.paginationButtonText}>Anterior</span>
                   </Button>
 
-                  <div className='flex items-center gap-1'>
+                  <div className={styles.paginationNumbers}>
                     {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
                       let page;
                       if (totalPages <= 5) {
@@ -472,10 +452,8 @@ export default function UserManagement() {
                           variant={currentPage === page ? "default" : "outline"}
                           size='sm'
                           onClick={() => setCurrentPage(page)}
-                          className={`w-8 h-8 p-0 ${
-                            currentPage === page
-                              ? "bg-blue-600 hover:bg-blue-700 text-white"
-                              : "border-slate-300 hover:bg-slate-50"
+                          className={`${styles.paginationNumber} ${
+                            currentPage === page ? styles.paginationNumberActive : styles.paginationNumberInactive
                           }`}
                         >
                           {page}
@@ -489,9 +467,9 @@ export default function UserManagement() {
                     size='sm'
                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
-                    className='border-slate-300 hover:bg-slate-50 disabled:opacity-50'
+                    className={styles.paginationButton}
                   >
-                    <span className='hidden sm:inline mr-1'>Siguiente</span>
+                    <span className={styles.paginationButtonText}>Siguiente</span>
                     <ChevronRight className='h-4 w-4' />
                   </Button>
                 </div>
