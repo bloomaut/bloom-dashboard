@@ -288,6 +288,8 @@
           "mark_completed": "Mark as Completed",
           "mark_pending": "Mark as Pending",
           "hook": "Hook",
+          "body": "Body",
+          "making": "Making",
           "script": "Script",
           "copy": "Copy",
           "hashtags": "Hashtags",

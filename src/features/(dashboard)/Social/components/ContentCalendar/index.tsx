@@ -17,6 +17,8 @@ import {
   Play,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  Settings,
 } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import {
@@ -383,7 +385,7 @@ export const ContentCalendar = () => {
                       <>
                         <div>•</div>
                         <CheckCircle className='h-3 w-3 text-green-600' />
-                        <div>{dict("calendar.content.status.completed")}</div>
+                        <div>{dict("calendar.content.completed")}</div>
                       </>
                     )}
                   </div>
@@ -459,6 +461,28 @@ export const ContentCalendar = () => {
                   <div>{dict("calendar.modal.hook")}</div>
                 </h4>
                 <div className={styles.contentBox}>{selectedContent.content.hook}</div>
+              </div>
+            )}
+
+            {/* Body */}
+            {selectedContent.content.body && (
+              <div className={styles.contentSection}>
+                <h4>
+                  <FileText className='h-4 w-4' />
+                  <div>{dict("calendar.modal.body")}</div>
+                </h4>
+                <div className={styles.contentBox}>{selectedContent.content.body}</div>
+              </div>
+            )}
+
+            {/* Making */}
+            {selectedContent.content.making && (
+              <div className={styles.contentSection}>
+                <h4>
+                  <Settings className='h-4 w-4' />
+                  <div>{dict("calendar.modal.making")}</div>
+                </h4>
+                <div className={styles.contentBox}>{selectedContent.content.making}</div>
               </div>
             )}
 
