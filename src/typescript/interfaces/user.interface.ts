@@ -26,14 +26,3 @@ export interface UserDataProps {
   password: string;
   phone: string;
 }
-
-export interface Subdomain {
-  id: number;
-  base_url: string;
-  subdomain: string;
-  full_domain: string;
-  registration: "free" | "purchased";
-  created_at: Date;
-  updated_at: Date;
-  flake_landing: null | { _id: string };
-}
