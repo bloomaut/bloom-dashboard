@@ -22,9 +22,6 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
     // TODO: Settear wishlist a true en el condicional
     if (client.wish_list === false) return `/${loc}/onboarding/wishlist`;
 
-    // Temporal hasta que arregle error de api que no actualiza el proposal_status. Revisar la propiedad proposal_url
-    // if (client.proposal_url) return `/${loc}/onboarding/review`;
-
     switch (client.proposal_status) {
       case "initial":
         return `/${loc}/onboarding/terms`;

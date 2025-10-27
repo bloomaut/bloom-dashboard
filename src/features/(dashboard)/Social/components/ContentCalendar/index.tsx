@@ -17,6 +17,8 @@ import {
   Play,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  Settings,
 } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import {
@@ -383,7 +385,7 @@ export const ContentCalendar = () => {
                       <>
                         <div>•</div>
                         <CheckCircle className='h-3 w-3 text-green-600' />
-                        <div>{dict("calendar.content.status.completed")}</div>
+                        <div>{dict("calendar.content.completed")}</div>
                       </>
                     )}
                   </div>
@@ -459,6 +461,28 @@ export const ContentCalendar = () => {
                   <div>{dict("calendar.modal.hook")}</div>
                 </h4>
                 <div className={styles.contentBox}>{selectedContent.content.hook}</div>
+              </div>
+            )}
+
+            {/* Body */}
+            {selectedContent.content.body && (
+              <div className={styles.contentSection}>
+                <h4>
+                  <FileText className='h-4 w-4' />
+                  <div>{dict("calendar.modal.body")}</div>
+                </h4>
+                <div className={styles.contentBox}>{selectedContent.content.body}</div>
+              </div>
+            )}
+
+            {/* Making */}
+            {selectedContent.content.making && (
+              <div className={styles.contentSection}>
+                <h4>
+                  <Settings className='h-4 w-4' />
+                  <div>{dict("calendar.modal.making")}</div>
+                </h4>
+                <div className={styles.contentBox}>{selectedContent.content.making}</div>
               </div>
             )}
 
@@ -594,15 +618,6 @@ export const ContentCalendar = () => {
     [renderContentItem],
   );
 
-  // Mostrar loading si está cargando contenido
-  if (isLoadingContent) {
-    return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-        <LoadingSpinner size='large' />
-      </div>
-    );
-  }
-
   return (
     <div className={styles.contentCalendar}>
       {/* Modal y banners de error */}
@@ -724,6 +739,7 @@ export const ContentCalendar = () => {
                   onClick={goToPreviousWeek}
                   className='h-8 w-8 p-0'
                   title={dict("calendar.navigation.previous_week")}
+                  disabled={isLoadingContent}
                 >
                   <ChevronLeft className='h-4 w-4' />
                 </Button>
@@ -745,13 +761,20 @@ export const ContentCalendar = () => {
                   onClick={goToNextWeek}
                   className='h-8 w-8 p-0'
                   title={dict("calendar.navigation.next_week")}
+                  disabled={isLoadingContent}
                 >
                   <ChevronRight className='h-4 w-4' />
                 </Button>
               </div>
 
               {!isCurrentWeek() && (
-                <Button variant='outline' size='sm' onClick={goToCurrentWeek} className={styles.todayButton}>
+                <Button
+                  variant='outline'
+                  size='sm'
+                  onClick={goToCurrentWeek}
+                  className={styles.todayButton}
+                  disabled={isLoadingContent}
+                >
                   {dict("calendar.navigation.today")}
                 </Button>
               )}
@@ -759,49 +782,58 @@ export const ContentCalendar = () => {
           </div>
         </CardHeader>
         <CardContent className='p-0'>
-          <div className={styles.calendarScroll}>
-            <div className={styles.calendarGrid}>
-              {weekDates.map((date, index) => {
-                const dateKey = date.toDateString();
-                const dayContent = groupContentByDay[dateKey] || { morning: [], afternoon: [], evening: [] };
-                const isToday = date.toDateString() === new Date().toDateString();
-
-                return (
-                  <div key={dateKey} className={`${styles.dayColumn} ${index === 6 ? styles.lastColumn : ""}`}>
-                    <div className={`${styles.dayHeader} ${isToday ? styles.todayHeader : ""}`}>
-                      <div className={styles.dayName}>{DAYS_OF_WEEK[index]}</div>
-                      <div className={`${styles.dayDate} ${isToday ? styles.todayDate : ""}`}>
-                        {date.getDate()}/{date.getMonth() + 1}
-                      </div>
-                    </div>
-                    <div className={styles.dayContent}>
-                      <div className={styles.timePeriodSection}>
-                        <h5>
-                          <div className={`${styles.timePeriodDot} ${styles.morningTimeDot}`}></div>
-                          <div>{dict("calendar.time_periods.morning")}</div>
-                        </h5>
-                        {renderTimePeriod(dayContent, "morning")}
-                      </div>
-                      <div className={styles.timePeriodSection}>
-                        <h5>
-                          <div className={`${styles.timePeriodDot} ${styles.afternoonTimeDot}`}></div>
-                          <div>{dict("calendar.time_periods.afternoon")}</div>
-                        </h5>
-                        {renderTimePeriod(dayContent, "afternoon")}
-                      </div>
-                      <div className={styles.timePeriodSection}>
-                        <h5>
-                          <div className={`${styles.timePeriodDot} ${styles.eveningTimeDot}`}></div>
-                          <div>{dict("calendar.time_periods.evening")}</div>
-                        </h5>
-                        {renderTimePeriod(dayContent, "evening")}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+          {isLoadingContent ? (
+            <div className={styles.calendarLoadingContainer}>
+              <div className={styles.calendarLoadingContent}>
+                <LoadingSpinner size='medium' />
+                <p className={styles.calendarLoadingText}>Cargando contenido del calendario...</p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={styles.calendarScroll}>
+              <div className={styles.calendarGrid}>
+                {weekDates.map((date, index) => {
+                  const dateKey = date.toDateString();
+                  const dayContent = groupContentByDay[dateKey] || { morning: [], afternoon: [], evening: [] };
+                  const isToday = date.toDateString() === new Date().toDateString();
+
+                  return (
+                    <div key={dateKey} className={`${styles.dayColumn} ${index === 6 ? styles.lastColumn : ""}`}>
+                      <div className={`${styles.dayHeader} ${isToday ? styles.todayHeader : ""}`}>
+                        <div className={styles.dayName}>{DAYS_OF_WEEK[index]}</div>
+                        <div className={`${styles.dayDate} ${isToday ? styles.todayDate : ""}`}>
+                          {date.getDate()}/{date.getMonth() + 1}
+                        </div>
+                      </div>
+                      <div className={styles.dayContent}>
+                        <div className={styles.timePeriodSection}>
+                          <h5>
+                            <div className={`${styles.timePeriodDot} ${styles.morningTimeDot}`}></div>
+                            <div>{dict("calendar.time_periods.morning")}</div>
+                          </h5>
+                          {renderTimePeriod(dayContent, "morning")}
+                        </div>
+                        <div className={styles.timePeriodSection}>
+                          <h5>
+                            <div className={`${styles.timePeriodDot} ${styles.afternoonTimeDot}`}></div>
+                            <div>{dict("calendar.time_periods.afternoon")}</div>
+                          </h5>
+                          {renderTimePeriod(dayContent, "afternoon")}
+                        </div>
+                        <div className={styles.timePeriodSection}>
+                          <h5>
+                            <div className={`${styles.timePeriodDot} ${styles.eveningTimeDot}`}></div>
+                            <div>{dict("calendar.time_periods.evening")}</div>
+                          </h5>
+                          {renderTimePeriod(dayContent, "evening")}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

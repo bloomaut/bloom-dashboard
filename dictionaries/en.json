@@ -254,7 +254,12 @@
         "navigation": {
           "previous_week": "Previous Week",
           "next_week": "Next Week",
-          "current_week": "Current Week"
+          "current_week": "Current Week",
+          "today": "Today",
+          "week_range": "Week of {start} to {end}",
+          "week_status": "Week {status}",
+          "week": "week",
+          "weeks": "weeks"
         },
         "profile_card": {
           "title": "Active Profile",
@@ -283,6 +288,8 @@
           "mark_completed": "Mark as Completed",
           "mark_pending": "Mark as Pending",
           "hook": "Hook",
+          "body": "Body",
+          "making": "Making",
           "script": "Script",
           "copy": "Copy",
           "hashtags": "Hashtags",

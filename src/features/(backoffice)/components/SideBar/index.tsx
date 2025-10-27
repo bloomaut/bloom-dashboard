@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Users, Settings, Menu, X } from "lucide-react";
+import styles from "./styles.module.scss";
 
 const navigation = [
   { name: "Métricas", href: "metrics", icon: LayoutDashboard },
@@ -21,38 +21,28 @@ export function Sidebar() {
   return (
     <div>
       {/* Mobile menu button */}
-      <Button
-        variant='ghost'
-        size='sm'
-        className='fixed top-4 left-4 z-50 md:hidden bg-background border border-border'
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <X className='h-6 w-6' /> : <Menu className='h-6 w-6' />}
+      <Button variant='ghost' size='sm' className={styles.mobileMenuButton} onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? <X className={styles.icon} /> : <Menu className={styles.icon} />}
       </Button>
 
       {/* Sidebar */}
-      <div
-        className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-sidebar border-r border-sidebar-border transform transition-transform duration-200 ease-in-out md:translate-x-0",
-          isOpen ? "translate-x-0" : "-translate-x-full",
-        )}
-      >
-        <div className='flex flex-col h-full'>
+      <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
+        <div className={styles.sidebarContent}>
           {/* Logo */}
-          <div className='flex items-center h-16 pr-6 border-b border-sidebar-border justify-center'>
-            <div className='flex justify-start items-center'>
+          <div className={styles.logoSection}>
+            <div className={styles.logoContainer}>
               <img
                 src='https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ePi40gb0kXJhXH9GYmnfN47nNuYLNA.png'
                 alt='Bloom Logo'
                 width='236'
                 height='100'
-                className='w-35 h-auto object-contain'
+                className={styles.logo}
               />
             </div>
           </div>
 
           {/* Navigation */}
-          <nav className='flex-1 px-4 py-6 space-y-2'>
+          <nav className={styles.navigation}>
             {navigation.map(item => {
               const href = `/${locale}/backoffice/${item.href}`;
               const isActive = pathname?.startsWith(href);
@@ -60,15 +50,10 @@ export function Sidebar() {
                 <Link
                   key={item.name}
                   href={href}
-                  className={cn(
-                    "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group",
-                    isActive
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
-                      : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                  )}
+                  className={`${styles.navLink} ${isActive ? styles.active : ""}`}
                   onClick={() => setIsOpen(false)}
                 >
-                  <item.icon className='mr-3 h-5 w-5' />
+                  <item.icon className={styles.navIcon} />
                   {item.name}
                 </Link>
               );
@@ -76,19 +61,17 @@ export function Sidebar() {
           </nav>
 
           {/* Footer */}
-          <div className='p-4 border-t border-sidebar-border'>
-            <div className='text-xs text-muted-foreground text-center'>
+          <div className={styles.footer}>
+            <div className={styles.footerContent}>
               <div>Bloom Admin v1.0</div>
-              <div className='mt-1'>© 2025 Bloom</div>
+              <div className={styles.copyright}>© 2025 Bloom</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Overlay for mobile */}
-      {isOpen && (
-        <div className='fixed inset-0 z-30 bg-black bg-opacity-50 md:hidden' onClick={() => setIsOpen(false)} />
-      )}
+      {isOpen && <div className={styles.overlay} onClick={() => setIsOpen(false)} />}
     </div>
   );
 }
