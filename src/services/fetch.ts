@@ -239,9 +239,13 @@ export const remove = async (url: string, id: string, api?: EnvironmentApi) => {
 export const postProp = async (answers: string[]) => {
   try {
     // TODO: Actualizar endpoint de envio de cuestionario de onboarding a nuevo endpoint
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/interview/block`, { answers }, {
-      timeout: 30000, // 30 segundos de timeout
-    });
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/interview/block`,
+      { answers },
+      {
+        timeout: 30000, // 30 segundos de timeout
+      },
+    );
 
     // Verificar que la respuesta sea exitosa
     if (response.status < 200 || response.status >= 300) {

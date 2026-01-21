@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Icon from "../../../components/Icon";
-import { questions, questionsES, generatePropPayload } from "./utils/questions";
+import { questions, questionsES } from "./utils/questions";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { get, postProp, postOnboarding } from "@/services/fetch";

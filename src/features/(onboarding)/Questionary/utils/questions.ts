@@ -14,10 +14,8 @@ export const questions = [
     id: "Q2",
     type: "simple_text",
     mandatory: true,
-    question:
-      "Which country are you in and which market do you want to position yourself in?",
-    short_description:
-      "Specify your location and the target market you are aiming for.",
+    question: "Which country are you in and which market do you want to position yourself in?",
+    short_description: "Specify your location and the target market you are aiming for.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -49,10 +47,8 @@ export const questions = [
     id: "Q5",
     type: "extended_text",
     mandatory: true,
-    question:
-      "What part of your personal story would you like to be part of your brand?",
-    short_description:
-      "Share aspects of your journey that resonate with your brand values.",
+    question: "What part of your personal story would you like to be part of your brand?",
+    short_description: "Share aspects of your journey that resonate with your brand values.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -62,8 +58,7 @@ export const questions = [
     id: "Q6",
     type: "extended_text",
     mandatory: true,
-    question:
-      "Is there anything in your personal or professional life that you do NOT want to show?",
+    question: "Is there anything in your personal or professional life that you do NOT want to show?",
     short_description: "Set boundaries on what should remain private.",
     options: [""],
     hasConditionalQuestion: false,
@@ -96,8 +91,7 @@ export const questions = [
     id: "Q9",
     type: "extended_text",
     mandatory: true,
-    question:
-      "What concrete result do you want them to achieve by working with you?",
+    question: "What concrete result do you want them to achieve by working with you?",
     short_description: "The outcome or transformation your customers can expect.",
     options: [""],
     hasConditionalQuestion: false,
@@ -130,8 +124,7 @@ export const questions = [
     id: "Q12",
     type: "extended_text",
     mandatory: true,
-    question:
-      "What frustrations, fears, or obstacles do they have before buying from you?",
+    question: "What frustrations, fears, or obstacles do they have before buying from you?",
     short_description: "Understand the barriers your customers face.",
     options: [""],
     hasConditionalQuestion: false,
@@ -241,8 +234,7 @@ export const questions = [
     id: "Q22",
     type: "extended_text",
     mandatory: true,
-    question:
-      "What wrong perception do you NOT want people to have about your business or product?",
+    question: "What wrong perception do you NOT want people to have about your business or product?",
     short_description: "Misconceptions to avoid.",
     options: [""],
     hasConditionalQuestion: false,
@@ -264,8 +256,7 @@ export const questions = [
     id: "Q24",
     type: "extended_text",
     mandatory: true,
-    question:
-      "What do you want your customers to feel or experience after using your product or working with you?",
+    question: "What do you want your customers to feel or experience after using your product or working with you?",
     short_description: "The emotional aftermath or user experience.",
     options: [""],
     hasConditionalQuestion: false,
@@ -291,8 +282,7 @@ export const questionsES = [
     type: "simple_text",
     mandatory: true,
     question: "¿En qué país estás y en qué mercado querés posicionarte?",
-    short_description:
-      "Indica tu ubicación y el mercado al que apuntas.",
+    short_description: "Indica tu ubicación y el mercado al que apuntas.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -324,10 +314,8 @@ export const questionsES = [
     id: "Q5",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Qué parte de tu historia personal te gustaría que forme parte de tu marca?",
-    short_description:
-      "Comparte aspectos de tu historia que resuenen con tu marca.",
+    question: "¿Qué parte de tu historia personal te gustaría que forme parte de tu marca?",
+    short_description: "Comparte aspectos de tu historia que resuenen con tu marca.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -337,8 +325,7 @@ export const questionsES = [
     id: "Q6",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Hay algo de tu vida personal o profesional que NO querés mostrar?",
+    question: "¿Hay algo de tu vida personal o profesional que NO querés mostrar?",
     short_description: "Establece límites sobre lo que prefieres mantener privado.",
     options: [""],
     hasConditionalQuestion: false,
@@ -371,8 +358,7 @@ export const questionsES = [
     id: "Q9",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Qué resultado concreto querés que obtengan al trabajar con vos?",
+    question: "¿Qué resultado concreto querés que obtengan al trabajar con vos?",
     short_description: "El resultado o transformación que pueden esperar.",
     options: [""],
     hasConditionalQuestion: false,
@@ -405,8 +391,7 @@ export const questionsES = [
     id: "Q12",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Qué frustraciones, miedos u obstáculos tiene antes de comprarte?",
+    question: "¿Qué frustraciones, miedos u obstáculos tiene antes de comprarte?",
     short_description: "Entiende las barreras que enfrentan tus clientes.",
     options: [""],
     hasConditionalQuestion: false,
@@ -428,8 +413,7 @@ export const questionsES = [
     id: "Q14",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Qué objeción o duda te mencionan más seguido antes de comprar?",
+    question: "¿Qué objeción o duda te mencionan más seguido antes de comprar?",
     short_description: "Dudas comunes que frenan la venta.",
     options: [""],
     hasConditionalQuestion: false,
@@ -451,8 +435,7 @@ export const questionsES = [
     id: "Q16",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Qué cosas ellos hacen bien que te gustaría igualar o superar?",
+    question: "¿Qué cosas ellos hacen bien que te gustaría igualar o superar?",
     short_description: "Fortalezas ajenas que admiras.",
     options: [""],
     hasConditionalQuestion: false,
@@ -496,8 +479,7 @@ export const questionsES = [
     id: "Q20",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Qué te llevó a crear este producto o servicio específicamente?",
+    question: "¿Qué te llevó a crear este producto o servicio específicamente?",
     short_description: "La historia de origen o motivación detrás de tu oferta.",
     options: [""],
     hasConditionalQuestion: false,
@@ -519,8 +501,7 @@ export const questionsES = [
     id: "Q22",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Qué percepción equivocada NO querés que la gente tenga sobre tu negocio o producto?",
+    question: "¿Qué percepción equivocada NO querés que la gente tenga sobre tu negocio o producto?",
     short_description: "Malentendidos a evitar.",
     options: [""],
     hasConditionalQuestion: false,
@@ -542,8 +523,7 @@ export const questionsES = [
     id: "Q24",
     type: "extended_text",
     mandatory: true,
-    question:
-      "¿Qué querés que tus clientes sientan o experimenten después de usar tu producto o trabajar con vos?",
+    question: "¿Qué querés que tus clientes sientan o experimenten después de usar tu producto o trabajar con vos?",
     short_description: "El resultado emocional o experiencia de usuario.",
     options: [""],
     hasConditionalQuestion: false,
@@ -552,192 +532,4 @@ export const questionsES = [
   },
 ];
 
-export const generatePropPayload = (questData: { userId: string; answers: string[] }) => {
-  return {
-    blocks: [
-      {
-        block: "P0_basicInfo",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q1",
-            answer: questData.answers[0],
-          },
-          {
-            id: "P0_Q2",
-            answer: questData.answers[1],
-          },
-          {
-            id: "P0_Q3",
-            answer: questData.answers[2],
-          },
-          {
-            id: "P0_Q4",
-            answer: "",
-          },
-        ],
-      },
-      {
-        block: "P0_brandHeart",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q5",
-            answer: questData.answers[3],
-          },
-          {
-            id: "P0_Q6",
-            answer: questData.answers[4],
-          },
-          {
-            id: "P0_Q7",
-            answer: questData.answers[5],
-          },
-          {
-            id: "P0_Q8",
-            answer: questData.answers[6],
-          },
-        ],
-      },
-      {
-        block: "P0_persona",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q9",
-            answer: questData.answers[7],
-          },
-          {
-            id: "P0_Q10",
-            answer: questData.answers[8],
-          },
-          {
-            id: "P0_Q11",
-            answer: questData.answers[9],
-          },
-          {
-            id: "P0_Q12",
-            answer: questData.answers[10],
-          },
-        ],
-      },
-      {
-        block: "P0_competitors",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q13",
-            answer: questData.answers[11],
-          },
-          {
-            id: "P0_Q14",
-            answer: questData.answers[12],
-          },
-          {
-            id: "P0_Q15",
-            answer: questData.answers[13],
-          },
-          {
-            id: "P0_Q16",
-            answer: questData.answers[14],
-          },
-          {
-            id: "P0_Q17",
-            answer: questData.answers[15],
-          },
-          {
-            id: "P0_Q18",
-            answer: questData.answers[16],
-          },
-          {
-            id: "P0_Q19",
-            answer: "",
-          },
-        ],
-      },
-      {
-        block: "P0_brandVoice",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q20",
-            answer: questData.answers[17],
-          },
-          {
-            id: "P0_Q21",
-            answer: questData.answers[18],
-          },
-          {
-            id: "P0_Q22",
-            answer: questData.answers[19],
-          },
-          {
-            id: "P0_Q23",
-            answer: questData.answers[20],
-          },
-          {
-            id: "P0_Q24",
-            answer: questData.answers[21],
-          },
-          {
-            id: "P0_Q25",
-            answer: questData.answers[22],
-          },
-          {
-            id: "P0_Q26",
-            answer: questData.answers[23],
-          },
-        ],
-      },
-      {
-        block: "P0_offer",
-        clientId: questData.userId,
-        questions: [
-          {
-            id: "P0_Q27",
-            answer: questData.answers[24],
-          },
-          {
-            id: "P0_Q28",
-            answer: questData.answers[25],
-          },
-          {
-            id: "P0_Q29",
-            answer: questData.answers[26],
-          },
-          {
-            id: "P0_Q30",
-            answer: questData.answers[27],
-          },
-        ],
-      },
-    ],
-  };
-};
-
-export const answers = [
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  ""
-];
+export const answers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
