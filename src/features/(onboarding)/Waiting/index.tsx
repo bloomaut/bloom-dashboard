@@ -26,7 +26,7 @@ function Waiting() {
           const user = resUser.result.user;
           dispatch(setUserData(user));
 
-          // TODO: Change proposal_status for the new status property to verify
+          // TODO: Change proposal_status for the new status property to verify and values
           const client = user?.client ?? user;
           const status = client?.proposal_status;
 
