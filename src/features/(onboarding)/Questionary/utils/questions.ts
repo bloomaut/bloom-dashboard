@@ -1,11 +1,10 @@
 export const questions = [
-  // --- Basic Information Section ---
   {
     id: "Q1",
     type: "simple_text",
     mandatory: true,
-    question: "What is your full name?",
-    short_description: "Tell us your full name so we can create your entrepreneur profile.",
+    question: "What is your business currently called?",
+    short_description: "Enter the current name of your business or project.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -13,10 +12,12 @@ export const questions = [
   },
   {
     id: "Q2",
-    type: "date_text",
+    type: "simple_text",
     mandatory: true,
-    question: "What is your date of birth?",
-    short_description: "This helps us understand your background and context as an entrepreneur.",
+    question:
+      "Which country are you in and which market do you want to position yourself in?",
+    short_description:
+      "Specify your location and the target market you are aiming for.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -25,24 +26,20 @@ export const questions = [
   {
     id: "Q3",
     type: "simple_text",
-    mandatory: false,
-    question: "What is your business name?",
-    short_description:
-      "Share the name of your business or idea. If you don’t have one yet, you can skip this and we’ll help you create one later.",
+    mandatory: true,
+    question: "In which language do you want to generate content for TikTok?",
+    short_description: "Indicate the primary language for your content.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
-
-  // --- Brand Heart Section ---
   {
     id: "Q4",
     type: "extended_text",
     mandatory: true,
-    question: "Why does your business exist?",
-    short_description:
-      "Explain the main purpose of your business. Example: 'We believe businesses can improve our world by building strong communities.'",
+    question: "Briefly tell me who you are.",
+    short_description: "A short bio about yourself and your background.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -52,9 +49,10 @@ export const questions = [
     id: "Q5",
     type: "extended_text",
     mandatory: true,
-    question: "What future do you want to help create?",
+    question:
+      "What part of your personal story would you like to be part of your brand?",
     short_description:
-      "Describe the future you want to contribute to. Example: 'We want a world where companies make good choices for people, profit, and the planet.'",
+      "Share aspects of your journey that resonate with your brand values.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -64,9 +62,9 @@ export const questions = [
     id: "Q6",
     type: "extended_text",
     mandatory: true,
-    question: "What is your mission? What are you here to do?",
-    short_description:
-      "Explain what your business does every day to move toward that future. Example: 'We help brands build meaningful relationships through storytelling.'",
+    question:
+      "Is there anything in your personal or professional life that you do NOT want to show?",
+    short_description: "Set boundaries on what should remain private.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -76,23 +74,19 @@ export const questions = [
     id: "Q7",
     type: "extended_text",
     mandatory: true,
-    question: "What values guide your business?",
-    short_description:
-      "Write down 3–5 values that define how you work. Example: 'Be curious, do good work, embrace diversity, act courageously, be kind.'",
+    question: "Describe your main product or service in 1–2 sentences.",
+    short_description: "A concise summary of what you offer.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
-
-  // --- Persona Section ---
   {
     id: "Q8",
     type: "extended_text",
     mandatory: true,
-    question: "Who is your ideal customer?",
-    short_description:
-      "Describe them with a fictitious name, approximate age, gender, and occupation. Example: 'Mariana, 28, architect, values sustainability.'",
+    question: "What real problem do you solve for your customers?",
+    short_description: "Identify the core pain point your business addresses.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -102,8 +96,9 @@ export const questions = [
     id: "Q9",
     type: "extended_text",
     mandatory: true,
-    question: "What are your customer’s main goals or desires?",
-    short_description: "Think about what your ideal customer wants most in life or business.",
+    question:
+      "What concrete result do you want them to achieve by working with you?",
+    short_description: "The outcome or transformation your customers can expect.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -113,8 +108,8 @@ export const questions = [
     id: "Q10",
     type: "extended_text",
     mandatory: true,
-    question: "What problems or frustrations stop them from reaching those goals?",
-    short_description: "Identify the obstacles or challenges your customer faces.",
+    question: "What makes your business unique or different?",
+    short_description: "Your unique selling proposition or differentiator.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -124,21 +119,20 @@ export const questions = [
     id: "Q11",
     type: "extended_text",
     mandatory: true,
-    question: "How does your product or service help them?",
-    short_description: "Explain how what you offer solves their problems or helps them reach their goals.",
+    question: "Describe your ideal customer.",
+    short_description: "Who are they? Demographics, interests, behaviors.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
-
-  // --- Competitors Section ---
   {
     id: "Q12",
     type: "extended_text",
     mandatory: true,
-    question: "Who are your main competitors?",
-    short_description: "List 3 other businesses or brands that offer similar products or services.",
+    question:
+      "What frustrations, fears, or obstacles do they have before buying from you?",
+    short_description: "Understand the barriers your customers face.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -148,8 +142,8 @@ export const questions = [
     id: "Q13",
     type: "extended_text",
     mandatory: true,
-    question: "What products or services do they offer?",
-    short_description: "Briefly describe what your competitors sell.",
+    question: "What important goal or objective does your customer want to achieve?",
+    short_description: "The main aspiration or desire of your target audience.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -159,8 +153,8 @@ export const questions = [
     id: "Q14",
     type: "extended_text",
     mandatory: true,
-    question: "What does their brand look and feel like?",
-    short_description: "Describe their brand identity. Example: colors, style, atmosphere, or store design.",
+    question: "What objection or doubt do they mention most often before buying?",
+    short_description: "Common hesitations that prevent sales.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -170,8 +164,8 @@ export const questions = [
     id: "Q15",
     type: "extended_text",
     mandatory: true,
-    question: "What do your competitors do really well?",
-    short_description: "Write about the things they do that customers appreciate most.",
+    question: "Mention 1 to 3 accounts, businesses, or creators similar to you.",
+    short_description: "Competitors or inspirations in your niche.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -181,8 +175,8 @@ export const questions = [
     id: "Q16",
     type: "extended_text",
     mandatory: true,
-    question: "What are their weaknesses?",
-    short_description: "Identify what they don’t do well or where they could improve.",
+    question: "What things do they do well that you would like to match or exceed?",
+    short_description: "Strengths of others you admire.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -192,21 +186,19 @@ export const questions = [
     id: "Q17",
     type: "extended_text",
     mandatory: true,
-    question: "In what ways are they similar or different from your business?",
-    short_description: "Compare your business to theirs. What’s the same and what makes you unique?",
+    question: "In what things are you better or different than them?",
+    short_description: "Your competitive advantage.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
-
-  // --- Brand Voice Section ---
   {
     id: "Q18",
     type: "extended_text",
     mandatory: true,
-    question: "How do you want people to feel when they interact with your brand?",
-    short_description: "Think about the emotions you want to inspire. Example: safe, excited, cared for, inspired.",
+    question: "How do you want your brand to sound and feel?",
+    short_description: "Tone of voice and emotional vibe of your brand.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -214,10 +206,10 @@ export const questions = [
   },
   {
     id: "Q19",
-    type: "simple_text",
+    type: "extended_text",
     mandatory: true,
-    question: "What 3–5 adjectives describe your brand?",
-    short_description: "Choose words that reflect your brand personality. Example: friendly, innovative, trustworthy.",
+    question: "What topics do you want your brand to cover on TikTok?",
+    short_description: "Content themes and pillars for social media.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -227,8 +219,8 @@ export const questions = [
     id: "Q20",
     type: "extended_text",
     mandatory: true,
-    question: "What does your competition sound like?",
-    short_description: "Describe the tone and communication style your competitors use.",
+    question: "What led you to create this specific product or service?",
+    short_description: "The origin story or motivation behind your offer.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -238,8 +230,8 @@ export const questions = [
     id: "Q21",
     type: "extended_text",
     mandatory: true,
-    question: "What is another brand with a voice you admire?",
-    short_description: "Name a brand whose way of speaking inspires you, and explain why.",
+    question: "What stage is your business currently in?",
+    short_description: "E.g., Idea, Launch, Growth, Scaling.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -247,10 +239,11 @@ export const questions = [
   },
   {
     id: "Q22",
-    type: "simple_text",
+    type: "extended_text",
     mandatory: true,
-    question: "If your brand were a celebrity, who would it be?",
-    short_description: "Pick a celebrity that matches your brand’s personality and style.",
+    question:
+      "What wrong perception do you NOT want people to have about your business or product?",
+    short_description: "Misconceptions to avoid.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -260,8 +253,8 @@ export const questions = [
     id: "Q23",
     type: "extended_text",
     mandatory: true,
-    question: "How do you want to talk about your brand?",
-    short_description: "Explain what kind of language and messages you want to use to describe your business.",
+    question: "How would you describe your way of working?",
+    short_description: "Your methodology or work style.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -271,54 +264,9 @@ export const questions = [
     id: "Q24",
     type: "extended_text",
     mandatory: true,
-    question: "What do you NOT want your brand to sound like?",
-    short_description: "Write down tones, buzzwords, or phrases you want to avoid because they don’t fit your brand.",
-    options: [""],
-    hasConditionalQuestion: false,
-    conditionalQuestion: "",
-    defaultAnswer: "",
-  },
-
-  // --- Offer Section ---
-  {
-    id: "Q25",
-    type: "extended_text",
-    mandatory: true,
-    question: "What are the main products or services you currently offer?",
-    short_description: "List the core things your business sells right now.",
-    options: [""],
-    hasConditionalQuestion: false,
-    conditionalQuestion: "",
-    defaultAnswer: "",
-  },
-  {
-    id: "Q26",
-    type: "extended_text",
-    mandatory: true,
-    question: "Which products or services are the most popular?",
-    short_description: "Tell us which ones your customers buy the most or ask for the most.",
-    options: [""],
-    hasConditionalQuestion: false,
-    conditionalQuestion: "",
-    defaultAnswer: "",
-  },
-  {
-    id: "Q27",
-    type: "extended_text",
-    mandatory: true,
-    question: "How do customers usually find out about your business?",
-    short_description: "Explain the main ways they discover you. Example: social media, ads, location, word of mouth.",
-    options: [""],
-    hasConditionalQuestion: false,
-    conditionalQuestion: "",
-    defaultAnswer: "",
-  },
-  {
-    id: "Q28",
-    type: "extended_text",
-    mandatory: true,
-    question: "Once customers know about you, how do they usually make a purchase?",
-    short_description: "Describe the typical buying process. Example: store visit, WhatsApp, website, booking system.",
+    question:
+      "What do you want your customers to feel or experience after using your product or working with you?",
+    short_description: "The emotional aftermath or user experience.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -327,13 +275,12 @@ export const questions = [
 ];
 
 export const questionsES = [
-  // --- Basic Information Section ---
   {
     id: "Q1",
     type: "simple_text",
     mandatory: true,
-    question: "¿Cuál es tu nombre completo?",
-    short_description: "Cuéntanos tu nombre completo para poder crear tu perfil de emprendedor.",
+    question: "¿Cómo se llama tu negocio actualmente?",
+    short_description: "Ingresa el nombre actual de tu negocio o proyecto.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -341,10 +288,11 @@ export const questionsES = [
   },
   {
     id: "Q2",
-    type: "date_text",
+    type: "simple_text",
     mandatory: true,
-    question: "¿Cuál es tu fecha de nacimiento?",
-    short_description: "Esto nos ayuda a entender mejor tu contexto y trayectoria como emprendedor.",
+    question: "¿En qué país estás y en qué mercado querés posicionarte?",
+    short_description:
+      "Indica tu ubicación y el mercado al que apuntas.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -353,24 +301,20 @@ export const questionsES = [
   {
     id: "Q3",
     type: "simple_text",
-    mandatory: false,
-    question: "¿Cómo se llama tu negocio?",
-    short_description:
-      "Comparte el nombre de tu negocio o idea. Si aún no tienes uno, puedes saltar esta pregunta y luego te ayudaremos a crear uno.",
+    mandatory: true,
+    question: "¿En qué idioma querés generar contenido para TikTok?",
+    short_description: "Define el idioma principal para tu contenido.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
-
-  // --- Brand Heart Section ---
   {
     id: "Q4",
     type: "extended_text",
     mandatory: true,
-    question: "¿Por qué existe tu negocio?",
-    short_description:
-      "Explica el propósito principal de tu negocio. Ejemplo: 'Creemos que los negocios pueden mejorar el mundo construyendo comunidades fuertes.'",
+    question: "Contame brevemente quién sos",
+    short_description: "Una breve biografía sobre ti y tu trayectoria.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -380,9 +324,10 @@ export const questionsES = [
     id: "Q5",
     type: "extended_text",
     mandatory: true,
-    question: "¿Qué futuro quieres ayudar a crear?",
+    question:
+      "¿Qué parte de tu historia personal te gustaría que forme parte de tu marca?",
     short_description:
-      "Describe el futuro al que deseas contribuir. Ejemplo: 'Queremos un mundo donde las empresas tomen buenas decisiones para las personas, las ganancias y el planeta.'",
+      "Comparte aspectos de tu historia que resuenen con tu marca.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -392,9 +337,9 @@ export const questionsES = [
     id: "Q6",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cuál es tu misión? ¿Qué vienes a hacer?",
-    short_description:
-      "Explica lo que tu negocio hace día a día para construir ese futuro. Ejemplo: 'Ayudamos a las marcas a crear relaciones significativas a través de historias.'",
+    question:
+      "¿Hay algo de tu vida personal o profesional que NO querés mostrar?",
+    short_description: "Establece límites sobre lo que prefieres mantener privado.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -404,23 +349,19 @@ export const questionsES = [
     id: "Q7",
     type: "extended_text",
     mandatory: true,
-    question: "¿Qué valores guían tu negocio?",
-    short_description:
-      "Escribe entre 3 y 5 valores que definan cómo trabajas. Ejemplo: 'Ser curioso, hacer un buen trabajo, abrazar la diversidad, actuar con valentía, ser amable.'",
+    question: "Describí en 1–2 frases tu producto o servicio principal",
+    short_description: "Un resumen conciso de lo que ofreces.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
-
-  // --- Persona Section ---
   {
     id: "Q8",
     type: "extended_text",
     mandatory: true,
-    question: "¿Quién es tu cliente ideal?",
-    short_description:
-      "Descríbelo con un nombre ficticio, edad aproximada, género y ocupación. Ejemplo: 'Mariana, 28, arquitecta, valora la sostenibilidad.'",
+    question: "¿Qué problema real solucionás para tus clientes?",
+    short_description: "Identifica el dolor principal que resuelve tu negocio.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -430,8 +371,9 @@ export const questionsES = [
     id: "Q9",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cuáles son los principales objetivos o deseos de tu cliente?",
-    short_description: "Piensa en lo que tu cliente ideal más quiere lograr en su vida o negocio.",
+    question:
+      "¿Qué resultado concreto querés que obtengan al trabajar con vos?",
+    short_description: "El resultado o transformación que pueden esperar.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -441,8 +383,8 @@ export const questionsES = [
     id: "Q10",
     type: "extended_text",
     mandatory: true,
-    question: "¿Qué problemas o frustraciones le impiden alcanzar esos objetivos?",
-    short_description: "Identifica los obstáculos o desafíos que enfrenta tu cliente.",
+    question: "¿Qué hace único o diferente a tu negocio?",
+    short_description: "Tu propuesta única de valor o diferenciador.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -452,21 +394,20 @@ export const questionsES = [
     id: "Q11",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cómo ayuda tu producto o servicio a tu cliente?",
-    short_description: "Explica cómo lo que ofreces resuelve sus problemas o le ayuda a alcanzar sus metas.",
+    question: "Describí a tu cliente ideal",
+    short_description: "¿Quiénes son? Demografía, intereses, comportamientos.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
-
-  // --- Competitors Section ---
   {
     id: "Q12",
     type: "extended_text",
     mandatory: true,
-    question: "¿Quiénes son tus principales competidores?",
-    short_description: "Escribe 3 negocios o marcas que ofrezcan productos o servicios similares.",
+    question:
+      "¿Qué frustraciones, miedos u obstáculos tiene antes de comprarte?",
+    short_description: "Entiende las barreras que enfrentan tus clientes.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -476,8 +417,8 @@ export const questionsES = [
     id: "Q13",
     type: "extended_text",
     mandatory: true,
-    question: "¿Qué productos o servicios ofrecen?",
-    short_description: "Describe brevemente lo que venden tus competidores.",
+    question: "¿Qué objetivo o meta importante quiere lograr tu cliente?",
+    short_description: "La principal aspiración o deseo de tu público.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -487,8 +428,9 @@ export const questionsES = [
     id: "Q14",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cómo se ve y se siente su marca?",
-    short_description: "Describe su identidad de marca. Ejemplo: colores, estilo, ambiente o diseño de la tienda.",
+    question:
+      "¿Qué objeción o duda te mencionan más seguido antes de comprar?",
+    short_description: "Dudas comunes que frenan la venta.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -498,8 +440,8 @@ export const questionsES = [
     id: "Q15",
     type: "extended_text",
     mandatory: true,
-    question: "¿Qué hacen muy bien tus competidores?",
-    short_description: "Escribe sobre las cosas que hacen y que los clientes valoran más.",
+    question: "Mencioná 1 a 3 cuentas, negocios o creadores parecidos a vos",
+    short_description: "Competencia o inspiración en tu nicho.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -509,8 +451,9 @@ export const questionsES = [
     id: "Q16",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cuáles son sus debilidades?",
-    short_description: "Identifica lo que no hacen bien o en lo que podrían mejorar.",
+    question:
+      "¿Qué cosas ellos hacen bien que te gustaría igualar o superar?",
+    short_description: "Fortalezas ajenas que admiras.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -520,22 +463,19 @@ export const questionsES = [
     id: "Q17",
     type: "extended_text",
     mandatory: true,
-    question: "¿En qué se parecen y en qué se diferencian de tu negocio?",
-    short_description: "Compara tu negocio con el de ellos. ¿Qué tienen en común y qué te hace único?",
+    question: "¿En qué cosas vos sos mejor o diferente que ellos?",
+    short_description: "Tu ventaja competitiva.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
-
-  // --- Brand Voice Section ---
   {
     id: "Q18",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cómo quieres que las personas se sientan al interactuar con tu marca?",
-    short_description:
-      "Piensa en las emociones que quieres transmitir. Ejemplo: seguridad, entusiasmo, cuidado, inspiración.",
+    question: "¿Cómo querés que tu marca suene y se sienta?",
+    short_description: "Tono de voz y vibra emocional de tu marca.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -543,11 +483,10 @@ export const questionsES = [
   },
   {
     id: "Q19",
-    type: "simple_text",
+    type: "extended_text",
     mandatory: true,
-    question: "¿Qué 3 a 5 adjetivos describen tu marca?",
-    short_description:
-      "Elige palabras que reflejen la personalidad de tu marca. Ejemplo: amigable, innovadora, confiable.",
+    question: "¿Qué temas querés que tu marca trate en TikTok?",
+    short_description: "Temas y pilares de contenido para redes.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -557,8 +496,9 @@ export const questionsES = [
     id: "Q20",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cómo suena tu competencia?",
-    short_description: "Describe el tono y estilo de comunicación que usan tus competidores.",
+    question:
+      "¿Qué te llevó a crear este producto o servicio específicamente?",
+    short_description: "La historia de origen o motivación detrás de tu oferta.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -568,8 +508,8 @@ export const questionsES = [
     id: "Q21",
     type: "extended_text",
     mandatory: true,
-    question: "¿Qué otra marca tiene una voz que admires?",
-    short_description: "Menciona una marca cuya forma de comunicarse te inspire y explica por qué.",
+    question: "¿En qué etapa está tu negocio actualmente?",
+    short_description: "Ej: Idea, Lanzamiento, Crecimiento, Escala.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -577,10 +517,11 @@ export const questionsES = [
   },
   {
     id: "Q22",
-    type: "simple_text",
+    type: "extended_text",
     mandatory: true,
-    question: "Si tu marca fuera una celebridad, ¿quién sería?",
-    short_description: "Elige una celebridad que refleje la personalidad y estilo de tu marca.",
+    question:
+      "¿Qué percepción equivocada NO querés que la gente tenga sobre tu negocio o producto?",
+    short_description: "Malentendidos a evitar.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -590,8 +531,8 @@ export const questionsES = [
     id: "Q23",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cómo quieres hablar sobre tu marca?",
-    short_description: "Explica qué tipo de lenguaje y mensajes quieres usar para describir tu negocio.",
+    question: "¿Cómo describirías tu forma de trabajar?",
+    short_description: "Tu metodología o estilo de trabajo.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -601,56 +542,9 @@ export const questionsES = [
     id: "Q24",
     type: "extended_text",
     mandatory: true,
-    question: "¿Cómo NO quieres que suene tu marca?",
-    short_description: "Escribe los tonos, palabras o frases que quieres evitar porque no representan a tu marca.",
-    options: [""],
-    hasConditionalQuestion: false,
-    conditionalQuestion: "",
-    defaultAnswer: "",
-  },
-
-  // --- Offer Section ---
-  {
-    id: "Q25",
-    type: "extended_text",
-    mandatory: true,
-    question: "¿Cuáles son los principales productos o servicios que ofreces actualmente?",
-    short_description: "Enumera las cosas principales que tu negocio vende ahora mismo.",
-    options: [""],
-    hasConditionalQuestion: false,
-    conditionalQuestion: "",
-    defaultAnswer: "",
-  },
-  {
-    id: "Q26",
-    type: "extended_text",
-    mandatory: true,
-    question: "¿Cuáles de tus productos o servicios son los más populares?",
-    short_description: "Cuéntanos cuáles son los que más compran o piden tus clientes.",
-    options: [""],
-    hasConditionalQuestion: false,
-    conditionalQuestion: "",
-    defaultAnswer: "",
-  },
-  {
-    id: "Q27",
-    type: "extended_text",
-    mandatory: true,
-    question: "¿Cómo suelen enterarse los clientes de tu negocio?",
-    short_description:
-      "Explica las principales formas en que te descubren. Ejemplo: redes sociales, anuncios, ubicación, recomendaciones.",
-    options: [""],
-    hasConditionalQuestion: false,
-    conditionalQuestion: "",
-    defaultAnswer: "",
-  },
-  {
-    id: "Q28",
-    type: "extended_text",
-    mandatory: true,
-    question: "Una vez que los clientes te conocen, ¿cómo suelen comprar?",
-    short_description:
-      "Describe el proceso de compra típico. Ejemplo: visita a la tienda, WhatsApp, sitio web, sistema de reservas.",
+    question:
+      "¿Qué querés que tus clientes sientan o experimenten después de usar tu producto o trabajar con vos?",
+    short_description: "El resultado emocional o experiencia de usuario.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -821,186 +715,6 @@ export const generatePropPayload = (questData: { userId: string; answers: string
   };
 };
 
-export const generatePayload = (questData: {
-  userId: string;
-  answers: string[];
-  terms: boolean;
-  completed: boolean;
-  prop: boolean;
-}) => {
-  return [
-    {
-      completed: questData.completed || false,
-      terms: questData.terms || false,
-      block: "P0_basicInfo",
-      clientId: questData.userId,
-      prop: questData.prop,
-      questions: [
-        {
-          id: "P0_Q1",
-          answer: questData.answers[0],
-        },
-        {
-          id: "P0_Q2",
-          answer: questData.answers[1],
-        },
-        {
-          id: "P0_Q3",
-          answer: questData.answers[2],
-        },
-        {
-          id: "P0_Q4",
-          answer: questData.answers[3],
-        },
-        {
-          id: "P0_Q5",
-          answer: questData.answers[4],
-        },
-        {
-          id: "P0_Q6",
-          answer: questData.answers[5],
-        },
-        {
-          id: "P0_Q7",
-          answer: questData.answers[6],
-        },
-        {
-          id: "P0_Q8",
-          answer: questData.answers[7],
-        },
-        {
-          id: "P0_Q9",
-          answer: questData.answers[8],
-        },
-        {
-          id: "P0_Q10",
-          answer: questData.answers[9],
-        },
-        {
-          id: "P0_Q11",
-          answer: questData.answers[10],
-        },
-        {
-          id: "P0_Q12",
-          answer: questData.answers[11],
-        },
-      ],
-    },
-    {
-      completed: questData.completed || false,
-      terms: questData.terms || false,
-      block: "P0_offer",
-      clientId: questData.userId,
-
-      prop: questData.prop,
-      questions: [
-        {
-          id: "P0_Q13",
-          answer: questData.answers[12],
-        },
-      ],
-    },
-    {
-      completed: questData.completed || false,
-      terms: questData.terms || false,
-      block: "P0_product",
-      clientId: questData.userId,
-
-      prop: questData.prop,
-      questions: [
-        {
-          id: "P0_Q14",
-          answer: questData.answers[13],
-        },
-        {
-          id: "P0_Q15",
-          answer: questData.answers[14],
-        },
-        {
-          id: "P0_Q16",
-          answer: questData.answers[15],
-        },
-        {
-          id: "P0_Q17",
-          answer: questData.answers[16],
-        },
-        {
-          id: "P0_Q18",
-          answer: questData.answers[17],
-        },
-        {
-          id: "P0_Q19",
-          answer: questData.answers[18],
-        },
-      ],
-    },
-    {
-      completed: questData.completed || false,
-      terms: questData.terms || false,
-      block: "P0_service",
-      clientId: questData.userId,
-
-      prop: questData.prop,
-      questions: [
-        {
-          id: "P0_Q20",
-          answer: questData.answers[19],
-        },
-        {
-          id: "P0_Q21",
-          answer: questData.answers[20],
-        },
-        {
-          id: "P0_Q22",
-          answer: questData.answers[21],
-        },
-        {
-          id: "P0_Q23",
-          answer: questData.answers[22],
-        },
-      ],
-    },
-    {
-      completed: questData.completed || false,
-      terms: questData.terms || false,
-      block: "P0_businessProfile",
-      clientId: questData.userId,
-
-      prop: questData.prop,
-      questions: [
-        {
-          id: "P0_Q24",
-          answer: questData.answers[23],
-        },
-        {
-          id: "P0_Q25",
-          answer: questData.answers[24],
-        },
-        {
-          id: "P0_Q26",
-          answer: questData.answers[25],
-        },
-        {
-          id: "P0_Q27",
-          answer: questData.answers[26],
-        },
-        {
-          id: "P0_Q28",
-          answer: questData.answers[27],
-        },
-        {
-          id: "P0_Q29",
-          answer: questData.answers[28],
-        },
-        {
-          id: "P0_Q30",
-          answer: questData.answers[29],
-        },
-      ],
-    },
-  ];
-};
-
 export const answers = [
   "",
   "",
@@ -1025,12 +739,5 @@ export const answers = [
   "",
   "",
   "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
+  ""
 ];

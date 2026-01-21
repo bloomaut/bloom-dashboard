@@ -19,8 +19,8 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
 
   const resolveOnboardingPath = (client: any, loc: string): string | null => {
     if (!client) return `/${loc}`;
-    // TODO: Settear wishlist a true en el condicional
-    if (client.wish_list === false) return `/${loc}/onboarding/wishlist`;
+
+    if (client.wish_list === true) return `/${loc}/onboarding/wishlist`;
 
     switch (client.proposal_status) {
       case "initial":

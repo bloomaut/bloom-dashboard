@@ -130,18 +130,8 @@ function Questionary() {
         throw new Error("No pudimos resolver tu usuario para enviar el cuestionario.");
       }
 
-      // 1) Enviar respuestas estructuradas (entrevista por bloques)
-      const payload = generatePropPayload({ userId: String(uid), answers: questData.answers });
-      console.log("=== PAYLOAD GENERADO ===");
-      console.log("payload:", JSON.stringify(payload, null, 2));
-      console.log("Número de bloques:", payload.blocks?.length);
-      console.log(
-        "Bloques:",
-        payload.blocks?.map(b => ({ block: b.block, questionsCount: b.questions?.length })),
-      );
-
       console.log("=== ENVIANDO A POSTPROP ===");
-      const propRes = await postProp(payload);
+      const propRes = await postProp(questData.answers);
       console.log("=== RESPUESTA DE POSTPROP ===");
       console.log("propRes:", propRes);
 
@@ -152,6 +142,7 @@ function Questionary() {
         throw new Error(errorMsg);
       }
 
+      // TODO: Consultar si la logica de inicio de onboarding sigue siendo la misma o si esta va a cambiar (Logica Actual: Se suben preguntas -> Se pide el inicio del pipeline)
       console.log("=== POSTPROP EXITOSO, ENVIANDO ONBOARDING ===");
       // 2) Notificar avance de onboarding (proxy interno a pipeline/onboarding)
       const onboardingRes = await postOnboarding();
