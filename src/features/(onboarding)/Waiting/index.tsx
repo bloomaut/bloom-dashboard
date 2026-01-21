@@ -26,16 +26,9 @@ function Waiting() {
           const user = resUser.result.user;
           dispatch(setUserData(user));
 
+          // TODO: Change proposal_status for the new status property to verify
           const client = user?.client ?? user;
           const status = client?.proposal_status;
-          const proposalUrl = client?.proposal_url;
-
-          // Cuando el documento esté listo, ir a la revisión
-          if (!redirected && proposalUrl && status === "pending") {
-            redirected = true;
-            if (intervalId) clearInterval(intervalId);
-            router.push(`/${locale}/onboarding/review`);
-          }
 
           // Si ya fue aprobada, salir del onboarding al dashboard
           if (!redirected && status === "approved") {

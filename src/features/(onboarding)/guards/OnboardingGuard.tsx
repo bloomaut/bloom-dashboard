@@ -29,8 +29,6 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
         return `/${loc}/onboarding/questionary`;
       case "processing":
         return `/${loc}/onboarding/waiting`;
-      case "pending":
-        return `/${loc}/onboarding/review`;
       case "approved":
         return `/${loc}/dashboard`;
       default:
