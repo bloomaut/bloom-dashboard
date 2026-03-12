@@ -1,28 +1,23 @@
-// Definición de tipos comunes
-type ID = number | null;
-type Timestamp = string;
 type Nullable<T> = T | null;
 
-export interface ClientDataProps {
-  active: Nullable<number>;
-  company_web: string;
-  created_at: Timestamp;
-  cuit: string;
-  id: ID;
-  logo: string;
-  name: string;
-  razon_social: string;
-}
+export type UserRole = string;
+export type OnboardingStatus = string;
+export type SubscriptionType = string;
 
-export interface UserDataProps {
-  active: Nullable<number>;
-  auth0_id: string;
-  client: ClientDataProps;
-  company_position: string;
-  created_at: Timestamp;
-  email: string;
-  id: ID;
+export type ClientInfo = Record<string, unknown>;
+
+export interface IUser {
+  id: string | number;
   name: string;
-  password: string;
-  phone: string;
+  lastname: Nullable<string>;
+  phone: Nullable<string>;
+  email: string;
+  active: boolean;
+  role: UserRole;
+  onboardingStatus: OnboardingStatus;
+  wishList: boolean;
+  suscription: SubscriptionType;
+  client: ClientInfo | null;
+  created_at?: string;
+  updated_at?: string;
 }

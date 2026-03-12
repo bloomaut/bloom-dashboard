@@ -5,6 +5,7 @@ import { get } from "@/services/fetch";
 import styles from "./styles/postLogin.module.scss";
 import LoadingSpinner from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
+import { extractUserFromMeResponse, getRouteForUser } from "@/lib/userMe";
 
 export default function PostLoginPage() {
   const router = useRouter();
@@ -17,26 +18,16 @@ export default function PostLoginPage() {
 
     const resolveDestination = async () => {
       try {
-        const {
-          result: { user },
-        } = await get("user/me");
-        const role = user?.role ?? user?.app_metadata?.role ?? "user";
-        const onboarding = user?.client?.proposal_status ?? user?.client?.proposal_status ?? "initial";
+        const me = await get("user/me");
+        const user = extractUserFromMeResponse(me);
+        if (!user) throw new Error("Missing user");
 
         // Cachea señales para guards cliente
-        document.cookie = `app-role=${role}; path=/; samesite=lax`;
-        document.cookie = `onboarding=${onboarding === "completed" ? "completed" : "incomplete"}; path=/; samesite=lax`;
+        document.cookie = `app-role=${user.role}; path=/; samesite=lax`;
+        document.cookie = `onboarding=${user.onboardingStatus}; path=/; samesite=lax`;
 
         // Decide destino
-        if (role === "admin") {
-          router.replace(`/${locale}/backoffice/metrics`);
-          return;
-        }
-        if (onboarding !== "approved") {
-          router.replace(`/${locale}/onboarding`);
-          return;
-        }
-        router.replace(`/${locale}/dashboard/home`);
+        router.replace(getRouteForUser(user, locale));
       } catch (e) {
         if (!cancelled) {
           setError("No pudimos resolver tu sesión. Intenta nuevamente.");

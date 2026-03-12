@@ -21,7 +21,8 @@ export const get = async (url: string, api?: EnvironmentApi) => {
       headers: headers,
     });
 
-    return response.data.data;
+    const payload = response.data;
+    return payload?.data ?? payload;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return error.response;

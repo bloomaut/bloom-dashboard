@@ -7,6 +7,7 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { update, get } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
 import styles from "./styles.module.scss";
+import { extractUserFromMeResponse } from "@/lib/userMe";
 
 export default function Terms() {
   const [term, setTerm] = useState(false);
@@ -21,26 +22,15 @@ export default function Terms() {
   const handleTerms = async () => {
     if (!term || loading) return;
 
-    const clientId = user?.client?.id;
-    if (!clientId) {
-      console.error("Client ID no disponible en userData");
-      return;
-    }
-
     try {
       setLoading(true);
       await update("user", {
-        client: {
-          id: clientId,
-          proposal_status: "terms_accepted",
-        },
+        onboardingStatus: "TERMS_ACCEPTED",
       });
 
       const resUser = await get("user/me");
-      console.log("resUser:", resUser);
-      if (resUser?.statusCode === 200 && resUser?.result?.user) {
-        dispatch(setUserData(resUser.result.user));
-      }
+      const freshUser = extractUserFromMeResponse(resUser);
+      if (freshUser) dispatch(setUserData(freshUser));
 
       router.replace(`/${locale}/onboarding/questionary`);
     } catch (error) {

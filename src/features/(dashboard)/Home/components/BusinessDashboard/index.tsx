@@ -15,7 +15,7 @@ export function BusinessDashboard() {
   const dict = useTranslations("dict.business_dashboard");
 
   // Convertir la paleta de string a array para mostrar
-  const paletteArray = parsePaletteString(clientData?.palette);
+  const paletteArray = parsePaletteString(clientData?.palette ?? null);
 
   // Función para obtener el estado de la propuesta
   const getProposalStatus = (status: string) => {
@@ -29,7 +29,11 @@ export function BusinessDashboard() {
     }
   };
 
-  const proposalStatus = getProposalStatus(clientData.proposal_status || "pending");
+  const proposalStatus = getProposalStatus(
+    ["BRAND_COMPLETED", "SOCIAL_CONNECTED", "ONBOARDING_COMPLETED"].includes(userData.onboardingStatus)
+      ? "approved"
+      : "pending",
+  );
 
   return (
     <div className={styles.container}>

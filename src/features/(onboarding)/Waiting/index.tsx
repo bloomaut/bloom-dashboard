@@ -8,6 +8,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { setUserData } from "@/store/features/userSlice";
 import { get } from "@/services/fetch";
 import styles from "./styles.module.scss";
+import { extractUserFromMeResponse } from "@/lib/userMe";
 
 function Waiting() {
   const dict = useTranslations("dict.completion");
@@ -22,20 +23,17 @@ function Waiting() {
     const checkStatus = async () => {
       try {
         const resUser = await get("user/me");
-        if (resUser?.statusCode === 200) {
-          const user = resUser.result.user;
+        const user = extractUserFromMeResponse(resUser);
+        if (user) {
           dispatch(setUserData(user));
 
-          // TODO: Change proposal_status for the new status property to verify and values (New property onboarding_status) FIRST_LOGIN TERMS_ACEPTED BRAND_PROCESSING BRAND_COMPLETED SOCIAL_CONNECTED ONBOARDING_REJECTED ONBARDING_COMPLETED
-
-          const client = user?.client ?? user;
-          const status = client?.onboarding_status;
+          const status = user.onboardingStatus;
 
           // Si ya fue aprobada, salir del onboarding al dashboard
-          if (!redirected && status === "BRAND_COMPLETED") {
+          if (!redirected && ["BRAND_COMPLETED", "SOCIAL_CONNECTED", "ONBOARDING_COMPLETED"].includes(status)) {
             redirected = true;
             if (intervalId) clearInterval(intervalId);
-            router.push(`/${locale}/dashboard`);
+            router.push(`/${locale}/dashboard/home`);
           }
         }
       } catch (err) {

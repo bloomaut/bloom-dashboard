@@ -1,72 +1,37 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { UserBusiness } from "@/typescript/interfaces/business.interface";
+import { IUser } from "@/typescript/interfaces/business.interface";
 
-export const userInitialState: UserBusiness = {
+export const userInitialState: IUser = {
   id: null,
-  auth0_id: "",
-  role: "default",
   name: "",
   lastname: null,
-  email: "",
   phone: null,
-  active: true,
-  created_at: "",
-  updated_at: "",
-  client: {
-    id: null,
-    name: "",
-    cuit: null,
-    company_web: null,
-    logo: null,
-    role: "ricardo",
-    banner: null,
-    address: null,
-    active: true,
-    wish_list: false,
-    instagram: null,
-    facebook: null,
-    tiktok: null,
-    description: null,
-    category: null,
-    palette: null,
-    proposal_url: null,
-    suscription: "free",
-    proposal_status: "pending",
-    created_at: "",
-    updated_at: "",
-  },
-  isCatalogComplete: false,
+  email: "",
+  active: false,
+  role: "user",
+  onboardingStatus: "FIRST_LOGIN",
+  wishList: false,
+  suscription: "free",
+  client: null,
 };
 
 export const userSlice = createSlice({
   name: "userData",
   initialState: userInitialState,
   reducers: {
-    setUserData: (state, action: PayloadAction<UserBusiness>) => {
-      return {
-        ...state,
-        ...action.payload,
-        client: {
-          ...state.client,
-          ...action.payload.client,
-        },
-      };
+    setUserData: (_state, action: PayloadAction<IUser>) => {
+      return action.payload;
     },
-    setCatalogComplete: (state, action: PayloadAction<boolean>) => {
-      return { ...state, isCatalogComplete: action.payload };
+    updateClientData: (state, action: PayloadAction<Partial<NonNullable<IUser["client"]>>>) => {
+      state.client = { ...(state.client || {}), ...action.payload };
     },
-    // Nuevo reducer para actualizar solo datos del cliente
-    updateClientData: (state, action: PayloadAction<Partial<UserBusiness["client"]>>) => {
-      state.client = { ...state.client, ...action.payload };
-    },
-    // Nuevo reducer para limpiar datos del usuario
-    clearUserData: state => {
+    clearUserData: _state => {
       return userInitialState;
     },
   },
 });
 
-export const { setUserData, setCatalogComplete, updateClientData, clearUserData } = userSlice.actions;
+export const { setUserData, updateClientData, clearUserData } = userSlice.actions;
 export const userState = (state: RootState) => state.userData;
 export default userSlice.reducer;

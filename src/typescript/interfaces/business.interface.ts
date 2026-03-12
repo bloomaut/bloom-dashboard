@@ -1,48 +1,47 @@
-// Definición de tipos comunes
 type Nullable<T> = T | null;
 
-// Interfaces principales
-export interface UserBusiness {
-  id?: number | null;
-  auth0_id?: string;
-  role?: string;
-  name: Nullable<string>;
-  lastname: Nullable<string>;
-  email?: string;
-  phone: Nullable<string>;
-  active?: boolean;
+export type UserRole = string;
+export type OnboardingStatus = string;
+export type SubscriptionType = string;
+
+export type ClientInfo = {
+  id?: string | number | null;
+  name?: Nullable<string>;
+  cuit?: Nullable<string>;
+  company_web?: Nullable<string>;
+  logo?: Nullable<string>;
+  banner?: Nullable<string>;
+  address?: Nullable<string>;
+  instagram?: Nullable<string>;
+  facebook?: Nullable<string>;
+  tiktok?: Nullable<string>;
+  description?: Nullable<string>;
+  category?: Nullable<string>;
+  palette?: string | null;
+  proposal_url?: Nullable<string>;
   created_at?: string;
   updated_at?: string;
-  client: Client;
-  isCatalogComplete?: boolean;
+  [key: string]: unknown;
+};
+
+export interface IUser {
+  id: string | number | null;
+  name: string;
+  lastname: Nullable<string>;
+  phone: Nullable<string>;
+  email: string;
+  active: boolean;
+  role: UserRole;
+  onboardingStatus: OnboardingStatus;
+  wishList: boolean;
+  suscription: SubscriptionType;
+  client: ClientInfo | null;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface UserBusinessSelector {
-  userData: UserBusiness;
-}
-
-export interface Client {
-  id?: number | null;
-  name: Nullable<string>;
-  cuit: Nullable<string>;
-  company_web: Nullable<string>;
-  logo: Nullable<string>;
-  role?: string;
-  banner: Nullable<string>;
-  address: Nullable<string>;
-  active?: boolean;
-  wish_list?: boolean;
-  instagram: Nullable<string>;
-  facebook: Nullable<string>;
-  tiktok: Nullable<string>;
-  description: Nullable<string>;
-  category: Nullable<string>;
-  palette: string | null; // Cambiado a string para manejar el formato del API
-  proposal_url: Nullable<string>;
-  suscription?: string;
-  proposal_status?: string;
-  created_at?: string;
-  updated_at?: string;
+  userData: IUser;
 }
 
 // Interfaces para actualización de datos

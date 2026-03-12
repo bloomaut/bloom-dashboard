@@ -7,6 +7,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { get } from "@/services/fetch";
 import { useAppDispatch } from "@/store/hooks";
 import { setUserData } from "@/store/features/userSlice";
+import { extractUserFromMeResponse, getRouteForUser } from "@/lib/userMe";
 
 export default function OnboardingGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -17,34 +18,14 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
   const [allowed, setAllowed] = useState(false);
   const dispatch = useAppDispatch();
 
-  const resolveOnboardingPath = (client: any, loc: string): string | null => {
-    if (!client) return `/${loc}`;
-
-    if (client.wish_list === true) return `/${loc}/onboarding/wishlist`;
-
-    // TODO: Change proposal_status for the new status property to verify and values (New property onboarding_status) FIRST_LOGIN TERMS_ACEPTED BRAND_PROCESSING BRAND_COMPLETED SOCIAL_CONNECTED ONBOARDING_REJECTED ONBARDING_COMPLETED
-    switch (client.onboarding_status) {
-      case "FIRST_LOGIN":
-        return `/${loc}/onboarding/terms`;
-      case "TERMS_ACCEPTED":
-        return `/${loc}/onboarding/questionary`;
-      case "BRAND_PROCESSING":
-        return `/${loc}/onboarding/waiting`;
-      case "BRAND_COMPLETED":
-        return `/${loc}/dashboard`;
-      default:
-        return `/${loc}`;
-    }
-  };
-
   useEffect(() => {
     let cancelled = false;
 
     const checkOnboarding = async () => {
       try {
-        const {
-          result: { user },
-        } = await get("user/me");
+        const me = await get("user/me");
+        const user = extractUserFromMeResponse(me);
+        if (!user) throw new Error("Missing user");
 
         // Hidratar Redux: userData disponible para el resto de la UI
         if (!cancelled && user) {
@@ -54,17 +35,8 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
             localStorage.setItem("client_id", String(user.client.id));
           }
         }
-        console.log("USER: ", user);
         const loc = locale || "en";
-        const target = resolveOnboardingPath(user?.client, loc);
-
-        // Si está aprobado, saca al usuario del onboarding
-        if (!target) {
-          if (!cancelled) {
-            router.replace(`/${loc}`);
-          }
-          return;
-        }
+        const target = getRouteForUser(user, loc);
 
         // Si ya está en la ruta correcta de onboarding, permitir render
         if (pathname && pathname.startsWith(target)) {

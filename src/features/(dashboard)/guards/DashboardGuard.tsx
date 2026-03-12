@@ -7,6 +7,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { get } from "@/services/fetch";
 import { useAppDispatch } from "@/store/hooks";
 import { setUserData } from "@/store/features/userSlice";
+import { extractUserFromMeResponse } from "@/lib/userMe";
 
 export default function DashboardGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -21,16 +22,15 @@ export default function DashboardGuard({ children }: { children: React.ReactNode
     const checkAccess = async () => {
       try {
         const me = await get("user/me");
-        console.log("me", me);
-        const user = me?.result?.user ?? me?.user ?? null;
-        const status = user?.client?.proposal_status ?? null;
+        const user = extractUserFromMeResponse(me);
+        const status = user?.onboardingStatus ?? null;
 
         // Actualizar Redux con los datos del usuario
         if (user && !cancelled) {
           dispatch(setUserData(user));
         }
 
-        if (status !== "approved") {
+        if (!status || !["BRAND_COMPLETED", "SOCIAL_CONNECTED", "ONBOARDING_COMPLETED"].includes(status)) {
           router.replace(`/${locale || "en"}/post-login`);
           return;
         }
