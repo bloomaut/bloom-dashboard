@@ -1,8 +1,15 @@
 import { POST } from "@/typescript/types/post.type";
 import { UPDATE } from "@/typescript/types/update.type";
 import { EnvironmentApi } from "@/typescript/types/api";
-import axios from "axios";
+import axios, { getCsrfTokenFromCookies } from "@/utils/axiosConfig";
 const API = "/api";
+const apiUrl = (path: string) => {
+  const base = process.env.NEXT_PUBLIC_API_DASH;
+  if (!base) return path;
+  const trimmed = base.trim().replace(/\/+$/, "");
+  const normalized = trimmed.endsWith("/api") ? trimmed.slice(0, -4) : trimmed;
+  return `${normalized}${path}`;
+};
 
 export const get = async (url: string, api?: EnvironmentApi) => {
   try {
@@ -26,8 +33,10 @@ export const get = async (url: string, api?: EnvironmentApi) => {
 
 export const getExcel = async (id: string) => {
   try {
-    const response = await fetch(`/api/getExcel`, {
+    const response = await fetch(apiUrl(`/api/getExcel`), {
+      credentials: "include",
       headers: {
+        "x-client-type": "web",
         "X-ID": id,
       },
     });
@@ -46,9 +55,11 @@ export const getExcel = async (id: string) => {
 export const getExcelCatalog = async (id: string, type: string, path: string) => {
   try {
     if (id) {
-      const response = await fetch(`/api/${path}`, {
+      const response = await fetch(apiUrl(`/api/${path}`), {
         method: "GET",
+        credentials: "include",
         headers: {
+          "x-client-type": "web",
           "X-ID": id,
           "type-download": type,
         },
@@ -90,10 +101,15 @@ export const postFile = async (url: string, file: File, api?: EnvironmentApi) =>
 
     const headers = new Headers();
     if (api) headers.append("X-API", api);
+    headers.append("x-client-type", "web");
+    const csrf = getCsrfTokenFromCookies();
+    if (!csrf) throw new Error("Missing CSRF token");
+    headers.append("x-csrf-token", csrf);
 
-    const response = await fetch(`${API}/${url}`, {
+    const response = await fetch(apiUrl(`${API}/${url}`), {
       method: "POST",
       headers,
+      credentials: "include",
       body: formData,
     });
 
@@ -107,9 +123,16 @@ export const postExcel = async (file: File) => {
   try {
     const formData = new FormData();
     formData.append("file", file);
+    const csrf = getCsrfTokenFromCookies();
+    if (!csrf) throw new Error("Missing CSRF token");
 
-    const response = await fetch(`/api/generator-ai`, {
+    const response = await fetch(apiUrl(`/api/generator-ai`), {
       method: "POST",
+      credentials: "include",
+      headers: {
+        "x-client-type": "web",
+        "x-csrf-token": csrf,
+      },
       body: formData,
     });
 
@@ -139,8 +162,16 @@ export const postQuest = async (questData: {
   prop: boolean;
 }) => {
   try {
-    const response = await fetch(`/api/quest`, {
+    const csrf = getCsrfTokenFromCookies();
+    if (!csrf) throw new Error("Missing CSRF token");
+    const response = await fetch(apiUrl(`/api/quest`), {
       method: "POST",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+        "x-client-type": "web",
+        "x-csrf-token": csrf,
+      },
       body: JSON.stringify(questData),
     });
 
@@ -161,8 +192,12 @@ export const postQuest = async (questData: {
 
 export const getQuest = async (userId: number) => {
   try {
-    const response = await fetch(`/api/quest/${userId}`, {
+    const response = await fetch(apiUrl(`/api/quest/${userId}`), {
       method: "GET",
+      credentials: "include",
+      headers: {
+        "x-client-type": "web",
+      },
     });
 
     if (!response.ok) {
@@ -184,10 +219,15 @@ export const putFile = async (url: string, file: File, api?: EnvironmentApi) => 
 
     const headers = new Headers();
     if (api) headers.append("X-API", api);
+    headers.append("x-client-type", "web");
+    const csrf = getCsrfTokenFromCookies();
+    if (!csrf) throw new Error("Missing CSRF token");
+    headers.append("x-csrf-token", csrf);
 
-    const response = await fetch(`${API}/${url}`, {
+    const response = await fetch(apiUrl(`${API}/${url}`), {
       method: "PUT",
       headers,
+      credentials: "include",
       body: formData,
     });
 

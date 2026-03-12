@@ -13,6 +13,13 @@ export default function Landing() {
   const pathname = usePathname();
   const en = pathname.includes("/en");
   const [showVideo, setShowVideo] = useState(false);
+  const apiDash = process.env.NEXT_PUBLIC_API_DASH;
+  const apiDashBase =
+    apiDash
+      ?.trim()
+      .replace(/\/+$/, "")
+      .replace(/\/api$/, "") || "";
+  const loginHref = apiDashBase ? `${apiDashBase}/api/auth/google` : `/api/auth/google`;
 
   const handleVideoClick = () => {
     setShowVideo(true);
@@ -63,7 +70,7 @@ export default function Landing() {
             <span className={styles.boldText}>{dict("hero.description_ecommerce")}</span> {dict("hero.description_end")}{" "}
             <span className={styles.secondaryBold}>{dict("hero.description_free")}</span>
           </p>
-          <Link href={`/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`}>
+          <Link href={loginHref}>
             <button className={styles.heroButton}>{dict("hero.cta")}</button>
           </Link>
         </div>
@@ -128,7 +135,7 @@ export default function Landing() {
           </div>
 
           <div className={styles.ctaButtonContainer}>
-            <Link href={`/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`}>
+            <Link href={loginHref}>
               <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
             </Link>
             <p className={styles.ctaDisclaimer}>{dict("cta_section.disclaimer")}</p>

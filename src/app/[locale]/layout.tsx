@@ -1,7 +1,6 @@
 import "@/styles/globals.scss";
 import type { Metadata } from "next";
 import { locales } from "@/navigation";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Providers } from "@/store/provider";
 import { notFound } from "next/navigation";
 import { Barlow, Roboto } from "next/font/google";
@@ -48,11 +47,9 @@ export default function AppLayout({
 
   return (
     <Providers>
-      <UserProvider>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className={`${barlow.className} ${barlow.variable} ${roboto.variable}`}>{children}</div>
-        </NextIntlClientProvider>
-      </UserProvider>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <div className={`${barlow.className} ${barlow.variable} ${roboto.variable}`}>{children}</div>
+      </NextIntlClientProvider>
     </Providers>
   );
 }

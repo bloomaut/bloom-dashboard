@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/utils/axiosConfig";
 
 type ListParams = {
   page?: number;
@@ -9,17 +9,9 @@ type ListParams = {
   [key: string]: unknown;
 };
 
-const api = axios.create({
-  baseURL: "",
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
 async function request(url: string) {
   try {
-    const res = await api.get(url);
+    const res = await axios.get(url);
     return res.data;
   } catch (err: any) {
     // normalize error message similar to previous behavior

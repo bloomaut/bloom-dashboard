@@ -40,7 +40,6 @@ export default function PostLoginPage() {
       } catch (e) {
         if (!cancelled) {
           setError("No pudimos resolver tu sesión. Intenta nuevamente.");
-          router.replace(`/${locale}`);
         }
       }
     };

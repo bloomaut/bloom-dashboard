@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { get, postProp, postOnboarding } from "@/services/fetch";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getCsrfTokenFromCookies } from "@/utils/axiosConfig";
 import {
   updateQuestData,
   setCurrentIndex,
@@ -295,8 +296,17 @@ function Questionary() {
       formData.append("audio", audioBlob, "recording.wav");
       formData.append("questionIndex", currentIndex.toString());
 
-      const response = await fetch("/api/transcription", {
+      const csrf = getCsrfTokenFromCookies();
+      if (!csrf) throw new Error("Missing CSRF token");
+      const apiDash = process.env.NEXT_PUBLIC_API_DASH;
+      const url = apiDash ? `${apiDash}/api/transcription` : "/api/transcription";
+      const response = await fetch(url, {
         method: "POST",
+        credentials: "include",
+        headers: {
+          "x-client-type": "web",
+          "x-csrf-token": csrf,
+        },
         body: formData,
       });
 

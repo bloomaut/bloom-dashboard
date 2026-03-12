@@ -11,6 +11,13 @@ export default function Pricing() {
   const dict = useTranslations("dict");
   const pathname = usePathname();
   const en = pathname.includes("/en");
+  const apiDash = process.env.NEXT_PUBLIC_API_DASH;
+  const apiDashBase =
+    apiDash
+      ?.trim()
+      .replace(/\/+$/, "")
+      .replace(/\/api$/, "") || "";
+  const loginHref = apiDashBase ? `${apiDashBase}/api/auth/google` : `/api/auth/google`;
 
   const plans = [
     {
@@ -82,7 +89,7 @@ export default function Pricing() {
   const handlePlanClick = (actionType: string) => {
     if (actionType === "free") {
       // Redirigir a la página de login/auth como en la landing page
-      window.location.href = `/api/auth/login?returnTo=${en ? "/en" : "/es"}/post-login`;
+      window.location.href = loginHref;
     }
     // Para pro y ecommerce no hacemos nada ya que están deshabilitados (coming soon)
   };
