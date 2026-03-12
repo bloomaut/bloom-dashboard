@@ -22,9 +22,9 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
 
     if (client.wish_list === true) return `/${loc}/onboarding/wishlist`;
 
-    // TODO: Change proposal_status for the new status property to verify and values
-    switch (client.proposal_status) {
-      case "initial":
+    // TODO: Change proposal_status for the new status property to verify and values (New property onboarding_status) FIRST_LOGIN TERMS_ACEPTED BRAND_PROCESSING BRAND_COMPLETED SOCIAL_CONNECTED ONBOARDING_REJECTED ONBARDING_COMPLETED
+    switch (client.onboarding_status) {
+      case "FIRST_LOGIN":
         return `/${loc}/onboarding/terms`;
       case "terms_accepted":
         return `/${loc}/onboarding/questionary`;

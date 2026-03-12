@@ -359,6 +359,7 @@ export const postProp = async (answers: string[]) => {
   }
 };
 
+// TODO: Ahora este endpoint es el que recibe las respuestas stringificadas por body y da inicio al onboarding
 export const postOnboarding = async () => {
   try {
     const response = await axios.post(

@@ -26,9 +26,11 @@ function Waiting() {
           const user = resUser.result.user;
           dispatch(setUserData(user));
 
-          // TODO: Change proposal_status for the new status property to verify and values
+          // TODO: Change proposal_status for the new status property to verify and values (New property onboarding_status) FIRST_LOGIN TERMS_ACEPTED BRAND_PROCESSING BRAND_COMPLETED SOCIAL_CONNECTED ONBOARDING_REJECTED ONBARDING_COMPLETED
+
+
           const client = user?.client ?? user;
-          const status = client?.proposal_status;
+          const status = client?.onboarding_status;
 
           // Si ya fue aprobada, salir del onboarding al dashboard
           if (!redirected && status === "approved") {
