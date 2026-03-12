@@ -28,7 +28,6 @@ function Waiting() {
 
           // TODO: Change proposal_status for the new status property to verify and values (New property onboarding_status) FIRST_LOGIN TERMS_ACEPTED BRAND_PROCESSING BRAND_COMPLETED SOCIAL_CONNECTED ONBOARDING_REJECTED ONBARDING_COMPLETED
 
-
           const client = user?.client ?? user;
           const status = client?.onboarding_status;
 
