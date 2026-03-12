@@ -32,7 +32,7 @@ function Waiting() {
           const status = client?.onboarding_status;
 
           // Si ya fue aprobada, salir del onboarding al dashboard
-          if (!redirected && status === "approved") {
+          if (!redirected && status === "BRAND_COMPLETED") {
             redirected = true;
             if (intervalId) clearInterval(intervalId);
             router.push(`/${locale}/dashboard`);

@@ -354,8 +354,7 @@ export const createNextWeekContent = async (params: CreateNextWeekContentParams)
         throw new Error("Rango de fechas inválido para 'next-week'");
       }
     }
-    // TODO: Cambiar endpoint de PUT a POST
-    // Realizar la petición PUT con query parameter
+
     const response = await axios.post<{ data: CreateNextWeekContentResponse }>("/api/social-media/pipeline", null, {
       params: {
         pipelineType,

@@ -26,11 +26,11 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
     switch (client.onboarding_status) {
       case "FIRST_LOGIN":
         return `/${loc}/onboarding/terms`;
-      case "terms_accepted":
+      case "TERMS_ACCEPTED":
         return `/${loc}/onboarding/questionary`;
-      case "processing":
+      case "BRAND_PROCESSING":
         return `/${loc}/onboarding/waiting`;
-      case "approved":
+      case "BRAND_COMPLETED":
         return `/${loc}/dashboard`;
       default:
         return `/${loc}`;
