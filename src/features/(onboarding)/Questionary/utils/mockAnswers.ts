@@ -23,4 +23,6 @@ export const MOCK_ANSWERS_ES: string[] = [
   "Que por ser casero es poco profesional o de menor calidad.",
   "Ordenada, responsable, detallista y comprometida con cada pedido.",
   "Satisfacción, tranquilidad, alegría y ganas de volver a comprar.",
+  "No quiero sonar arrogante, agresiva o demasiado formal; prefiero evitar un tono frío o distante.",
+  "Soy pastelera y emprendedora; actualmente me dedico a la pastelería artesanal a pedido.",
 ];

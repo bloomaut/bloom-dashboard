@@ -10,7 +10,7 @@ export const userInitialState: IUser = {
   email: "",
   active: false,
   role: "user",
-  onboardingStatus: "FIRST_LOGIN",
+  onboarding_status: "FIRST_LOGIN",
   wishList: false,
   suscription: "free",
   client: null,

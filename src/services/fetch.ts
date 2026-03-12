@@ -95,6 +95,19 @@ export const post = async (url: string, data: POST, api?: EnvironmentApi) => {
   }
 };
 
+export const patchUserStatus = async (onboarding_status: string) => {
+  try {
+    const response = await axios.patch(`${API}/user/status`, { onboarding_status });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
 export const postFile = async (url: string, file: File, api?: EnvironmentApi) => {
   try {
     const formData = new FormData();
@@ -277,14 +290,13 @@ export const remove = async (url: string, id: string, api?: EnvironmentApi) => {
   }
 };
 
-export const postProp = async (answers: string[]) => {
+export const postPipelineOnboarding = async (answers: string) => {
   try {
-    // TODO: Actualizar endpoint de envio de cuestionario de onboarding a nuevo endpoint
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_DASH}/api/pipeline/interview/block`,
+      "/api/pipeline/onboarding",
       { answers },
       {
-        timeout: 30000, // 30 segundos de timeout
+        timeout: 30000,
       },
     );
 
@@ -304,7 +316,7 @@ export const postProp = async (answers: string[]) => {
 
     return { success: true, data: responseData };
   } catch (error) {
-    console.error("Request failed postProp:", error);
+    console.error("Request failed postPipelineOnboarding:", error);
 
     // Log detallado para debugging
     if (axios.isAxiosError(error)) {
@@ -396,106 +408,6 @@ export const postProp = async (answers: string[]) => {
     return {
       success: false,
       error: error instanceof Error ? error.message : "Error inesperado al procesar tu solicitud.",
-    };
-  }
-};
-
-// TODO: Ahora este endpoint es el que recibe las respuestas stringificadas por body y da inicio al onboarding
-export const postOnboarding = async () => {
-  try {
-    const response = await axios.post(
-      "/api/post-onboarding",
-      {},
-      {
-        timeout: 30000, // 30 segundos de timeout
-      },
-    );
-
-    // Verificar que la respuesta sea exitosa
-    if (response.status < 200 || response.status >= 300) {
-      throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
-    }
-
-    const responseData = response.data;
-
-    // Verificar si la respuesta contiene un error explícito
-    if (responseData?.error) {
-      throw new Error(
-        typeof responseData.error === "string" ? responseData.error : "Error en la respuesta del servidor",
-      );
-    }
-
-    return { success: true, data: responseData };
-  } catch (error) {
-    console.error("Request failed postOnboarding:", error);
-
-    if (axios.isAxiosError(error)) {
-      // Errores de red o timeout
-      if (error.code === "ECONNABORTED") {
-        return {
-          success: false,
-          error: "La notificación tardó demasiado tiempo. Por favor, intenta nuevamente.",
-        };
-      }
-
-      // Errores de respuesta del servidor
-      if (error.response) {
-        const status = error.response.status;
-        const errorMessage = error.response.data?.message || error.response.data?.error || error.message;
-
-        switch (status) {
-          case 400:
-            return {
-              success: false,
-              error: `Error en la notificación: ${errorMessage}`,
-            };
-          case 401:
-            return {
-              success: false,
-              error: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
-            };
-          case 403:
-            return {
-              success: false,
-              error: "No tienes permisos para completar el onboarding.",
-            };
-          case 404:
-            return {
-              success: false,
-              error: "El servicio de onboarding no está disponible.",
-            };
-          case 429:
-            return {
-              success: false,
-              error: "Demasiadas solicitudes. Por favor, espera un momento.",
-            };
-          case 500:
-          case 502:
-          case 503:
-          case 504:
-            return {
-              success: false,
-              error: "Error del servidor al procesar el onboarding. Intenta nuevamente en unos minutos.",
-            };
-          default:
-            return {
-              success: false,
-              error: `Error del servidor (${status}): ${errorMessage}`,
-            };
-        }
-      }
-
-      // Errores de red sin respuesta
-      return {
-        success: false,
-        error: "Error de conexión al notificar el progreso. Verifica tu conexión a internet.",
-      };
-    }
-
-    // Otros tipos de errores
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Error inesperado al notificar el progreso.",
     };
   }
 };

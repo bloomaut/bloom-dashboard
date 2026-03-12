@@ -10,6 +10,7 @@ import { setUserData } from "@/store/features/userSlice";
 import { extractUserFromMeResponse, getRouteForUser } from "@/lib/userMe";
 
 export default function OnboardingGuard({ children }: { children: React.ReactNode }) {
+  console.log("OnboardingGuard");
   const router = useRouter();
   const { locale } = useParams() as { locale?: string };
   const pathname = usePathname();
@@ -37,6 +38,7 @@ export default function OnboardingGuard({ children }: { children: React.ReactNod
         }
         const loc = locale || "en";
         const target = getRouteForUser(user, loc);
+        console.log("target", target);
 
         // Si ya está en la ruta correcta de onboarding, permitir render
         if (pathname && pathname.startsWith(target)) {

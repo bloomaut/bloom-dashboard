@@ -10,7 +10,7 @@ const baseUser: IUser = {
   email: "a@b.com",
   active: true,
   role: "user",
-  onboardingStatus: "FIRST_LOGIN",
+  onboarding_status: "FIRST_LOGIN",
   wishList: false,
   suscription: "free",
   client: null,
@@ -40,22 +40,22 @@ describe("getRouteForUser", () => {
   });
 
   it("redirige FIRST_LOGIN a terms", () => {
-    const path = getRouteForUser({ ...baseUser, onboardingStatus: "FIRST_LOGIN" }, "en");
+    const path = getRouteForUser({ ...baseUser, onboarding_status: "FIRST_LOGIN" }, "en");
     expect(path).toBe("/en/onboarding/terms");
   });
 
   it("redirige TERMS_ACCEPTED a questionary", () => {
-    const path = getRouteForUser({ ...baseUser, onboardingStatus: "TERMS_ACCEPTED" }, "en");
+    const path = getRouteForUser({ ...baseUser, onboarding_status: "TERMS_ACCEPTED" }, "en");
     expect(path).toBe("/en/onboarding/questionary");
   });
 
   it("redirige BRAND_PROCESSING a waiting", () => {
-    const path = getRouteForUser({ ...baseUser, onboardingStatus: "BRAND_PROCESSING" }, "en");
+    const path = getRouteForUser({ ...baseUser, onboarding_status: "BRAND_PROCESSING" }, "en");
     expect(path).toBe("/en/onboarding/waiting");
   });
 
   it("redirige ONBOARDING_COMPLETED a dashboard/home", () => {
-    const path = getRouteForUser({ ...baseUser, onboardingStatus: "ONBOARDING_COMPLETED" }, "en");
+    const path = getRouteForUser({ ...baseUser, onboarding_status: "ONBOARDING_COMPLETED" }, "en");
     expect(path).toBe("/en/dashboard/home");
   });
 });

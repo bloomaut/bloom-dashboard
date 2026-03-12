@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { update, get } from "@/services/fetch";
+import { get, patchUserStatus } from "@/services/fetch";
 import { setUserData } from "@/store/features/userSlice";
 import styles from "./styles.module.scss";
 import { extractUserFromMeResponse } from "@/lib/userMe";
@@ -24,9 +24,7 @@ export default function Terms() {
 
     try {
       setLoading(true);
-      await update("user", {
-        onboardingStatus: "TERMS_ACCEPTED",
-      });
+      await patchUserStatus("TERMS_ACCEPTED");
 
       const resUser = await get("user/me");
       const freshUser = extractUserFromMeResponse(resUser);

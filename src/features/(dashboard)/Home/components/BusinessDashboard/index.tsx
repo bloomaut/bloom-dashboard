@@ -30,7 +30,7 @@ export function BusinessDashboard() {
   };
 
   const proposalStatus = getProposalStatus(
-    ["BRAND_COMPLETED", "SOCIAL_CONNECTED", "ONBOARDING_COMPLETED"].includes(userData.onboardingStatus)
+    ["BRAND_COMPLETED", "SOCIAL_CONNECTED", "ONBOARDING_COMPLETED"].includes(userData.onboarding_status)
       ? "approved"
       : "pending",
   );

@@ -34,6 +34,62 @@ export function getCsrfTokenFromCookies(cookieString?: string): string | null {
   return null;
 }
 
+let csrfTokenCache: string | null = null;
+let csrfTokenPromise: Promise<string | null> | null = null;
+
+function getApiDashBaseUrl() {
+  const fromEnv = process.env.NEXT_PUBLIC_API_DASH;
+  if (fromEnv) return normalizeApiBase(fromEnv);
+  const fromAxios = typeof axios.defaults.baseURL === "string" ? axios.defaults.baseURL : "";
+  return fromAxios ? normalizeApiBase(fromAxios) : "";
+}
+
+async function fetchCsrfTokenFromBackend(): Promise<string | null> {
+  if (typeof window === "undefined") return null;
+  if (typeof fetch !== "function") return null;
+  const base = getApiDashBaseUrl();
+  if (!base) return null;
+
+  try {
+    const res = await fetch(`${base}/api/auth/csrf`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "x-client-type": "web",
+      },
+    });
+    const data = (await res.json().catch(() => null)) as {
+      csrfToken?: string | null;
+      csrf_token?: string | null;
+    } | null;
+    const token = data?.csrfToken ?? data?.csrf_token ?? null;
+    return token && typeof token === "string" ? token : null;
+  } catch {
+    return null;
+  }
+}
+
+async function resolveCsrfToken(): Promise<string | null> {
+  if (csrfTokenCache) return csrfTokenCache;
+
+  const fromCookies = getCsrfTokenFromCookies();
+  if (fromCookies) {
+    csrfTokenCache = fromCookies;
+    return fromCookies;
+  }
+
+  if (!csrfTokenPromise) {
+    csrfTokenPromise = (async () => {
+      const token = await fetchCsrfTokenFromBackend();
+      csrfTokenCache = token;
+      csrfTokenPromise = null;
+      return token;
+    })();
+  }
+
+  return csrfTokenPromise;
+}
+
 function setHeader(config: any, key: string, value: string) {
   if (!config.headers) config.headers = {};
   const headers = config.headers;
@@ -55,7 +111,7 @@ axios.interceptors.request.use(async config => {
 
   const method = String(config.method || "get").toUpperCase();
   if (method !== "GET") {
-    const csrf = getCsrfTokenFromCookies();
+    const csrf = await resolveCsrfToken();
     if (!csrf) throw new Error("Missing CSRF token");
     setHeader(config, "x-csrf-token", csrf);
   }

@@ -5,7 +5,7 @@ import Icon from "../../../components/Icon";
 import { questions, questionsES } from "./utils/questions";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { get, postProp, postOnboarding } from "@/services/fetch";
+import { get, postPipelineOnboarding } from "@/services/fetch";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getCsrfTokenFromCookies } from "@/utils/axiosConfig";
 import {
@@ -17,6 +17,8 @@ import {
 import { setUserData } from "@/store/features/userSlice";
 import { MOCK_ANSWERS_ES } from "./utils/mockAnswers";
 import styles from "./styles.module.scss";
+import { stringifyOnboardingAnswersPayload } from "@/lib/onboardingPayload";
+import { extractUserFromMeResponse } from "@/lib/userMe";
 
 function Questionary() {
   const [isRecording, setIsRecording] = useState(false);
@@ -44,10 +46,9 @@ function Questionary() {
     let cancelled = false;
     const boot = async () => {
       try {
-        const {
-          result: { user },
-        } = await get("user/me");
-        const uid = user?.client?.id ?? user?.id ?? null;
+        const me = await get("user/me");
+        const user = extractUserFromMeResponse(me);
+        const uid = user?.id ?? null;
         if (cancelled) return;
         dispatch(setUserId(uid));
 
@@ -131,28 +132,17 @@ function Questionary() {
         throw new Error("No pudimos resolver tu usuario para enviar el cuestionario.");
       }
 
-      console.log("=== ENVIANDO A POSTPROP ===");
-      const propRes = await postProp(questData.answers);
-      console.log("=== RESPUESTA DE POSTPROP ===");
-      console.log("propRes:", propRes);
+      const qList = en ? questions : questionsES;
+      const answersString = stringifyOnboardingAnswersPayload(qList, questData.answers);
 
-      // Verificar si la respuesta de postProp fue exitosa
-      if (!propRes || !propRes.success) {
-        const errorMsg = propRes?.error || "Error al enviar las respuestas del cuestionario";
-        console.error("Error en postProp:", errorMsg);
-        throw new Error(errorMsg);
-      }
-
-      // TODO: Consultar si la logica de inicio de onboarding sigue siendo la misma o si esta va a cambiar (Logica Actual: Se suben preguntas -> Se pide el inicio del pipeline)
-      console.log("=== POSTPROP EXITOSO, ENVIANDO ONBOARDING ===");
-      // 2) Notificar avance de onboarding (proxy interno a pipeline/onboarding)
-      const onboardingRes = await postOnboarding();
-      console.log("=== RESPUESTA DE POSTONBOARDING ===");
+      console.log("=== ENVIANDO ONBOARDING PIPELINE ===");
+      const onboardingRes = await postPipelineOnboarding(answersString);
+      console.log("=== RESPUESTA ONBOARDING PIPELINE ===");
       console.log("onboardingRes:", onboardingRes);
 
-      // Verificar si la respuesta de postOnboarding fue exitosa
-      if (!onboardingRes.success) {
-        throw new Error(onboardingRes.error || "Error al notificar el progreso del onboarding");
+      if (!onboardingRes || !onboardingRes.success) {
+        const errorMsg = onboardingRes?.error || "Error al enviar el onboarding";
+        throw new Error(errorMsg);
       }
 
       console.log("=== ACTUALIZANDO DATOS DE USUARIO ===");
@@ -162,8 +152,9 @@ function Questionary() {
         console.log("=== RESPUESTA GET USER/ME ===");
         console.log("resUser questionary:", resUser);
 
-        if (resUser?.statusCode === 200 && resUser?.result?.user) {
-          dispatch(setUserData(resUser.result.user));
+        const freshUser = extractUserFromMeResponse(resUser);
+        if (freshUser) {
+          dispatch(setUserData(freshUser));
           console.log("Usuario actualizado en Redux");
         } else {
           console.warn("No se pudo actualizar los datos del usuario, pero continuando con el flujo");

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
 import axios from "@/utils/axiosConfig";
-import { getQuest, postQuest } from "@/services/fetch";
+import { getQuest, postQuest, patchUserStatus } from "@/services/fetch";
 
 function setBrowserGlobals(cookie: string) {
   (globalThis as any).window = {};
@@ -40,11 +40,53 @@ describe("Axios interceptors", () => {
       return { data: { ok: true }, status: 200, statusText: "OK", headers: {}, config };
     };
 
+    (globalThis as any).fetch = vi.fn(async () => ({ json: async () => ({ csrfToken: null }) })) as any;
     await expect(axios.post("/api/ping", { a: 1 })).rejects.toThrow(/Missing CSRF token/);
 
     setBrowserGlobals("csrfToken=token123");
     await axios.post("/api/ping", { a: 1 });
 
+    const headers = seenConfig.headers;
+    const csrf = typeof headers?.get === "function" ? headers.get("x-csrf-token") : headers?.["x-csrf-token"];
+    expect(csrf).toBe("token123");
+  });
+
+  it("en no-GET usa /api/auth/csrf si no hay cookie legible", async () => {
+    setBrowserGlobals("");
+    process.env.NEXT_PUBLIC_API_DASH = "https://api.example";
+
+    let seenConfig: any = null;
+    axios.defaults.adapter = async (config: any) => {
+      seenConfig = config;
+      return { data: { ok: true }, status: 200, statusText: "OK", headers: {}, config };
+    };
+
+    (globalThis as any).fetch = vi.fn(async (url: string, init: any) => {
+      expect(url).toBe("https://api.example/api/auth/csrf");
+      expect(init.credentials).toBe("include");
+      expect(init.headers["x-client-type"]).toBe("web");
+      return { json: async () => ({ csrfToken: "token123" }) } as any;
+    });
+
+    await axios.post("/api/ping", { a: 1 });
+
+    const headers = seenConfig.headers;
+    const csrf = typeof headers?.get === "function" ? headers.get("x-csrf-token") : headers?.["x-csrf-token"];
+    expect(csrf).toBe("token123");
+  });
+
+  it("patchUserStatus usa PATCH y adjunta x-csrf-token", async () => {
+    setBrowserGlobals("csrfToken=token123");
+    let seenConfig: any = null;
+    axios.defaults.adapter = async (config: any) => {
+      seenConfig = config;
+      return { data: { ok: true }, status: 200, statusText: "OK", headers: {}, config };
+    };
+
+    await patchUserStatus("TERMS_ACCEPTED");
+
+    expect(String(seenConfig.method).toLowerCase()).toBe("patch");
+    expect(String(seenConfig.url)).toBe("/api/user/status");
     const headers = seenConfig.headers;
     const csrf = typeof headers?.get === "function" ? headers.get("x-csrf-token") : headers?.["x-csrf-token"];
     expect(csrf).toBe("token123");

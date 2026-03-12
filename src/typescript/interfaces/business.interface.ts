@@ -32,7 +32,7 @@ export interface IUser {
   email: string;
   active: boolean;
   role: UserRole;
-  onboardingStatus: OnboardingStatus;
+  onboarding_status: OnboardingStatus;
   wishList: boolean;
   suscription: SubscriptionType;
   client: ClientInfo | null;

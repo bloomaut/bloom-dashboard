@@ -24,7 +24,7 @@ export default function PostLoginPage() {
 
         // Cachea señales para guards cliente
         document.cookie = `app-role=${user.role}; path=/; samesite=lax`;
-        document.cookie = `onboarding=${user.onboardingStatus}; path=/; samesite=lax`;
+        document.cookie = `onboarding=${user.onboarding_status}; path=/; samesite=lax`;
 
         // Decide destino
         router.replace(getRouteForUser(user, locale));

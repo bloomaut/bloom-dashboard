@@ -23,7 +23,7 @@ export default function DashboardGuard({ children }: { children: React.ReactNode
       try {
         const me = await get("user/me");
         const user = extractUserFromMeResponse(me);
-        const status = user?.onboardingStatus ?? null;
+        const status = user?.onboarding_status ?? null;
 
         // Actualizar Redux con los datos del usuario
         if (user && !cancelled) {

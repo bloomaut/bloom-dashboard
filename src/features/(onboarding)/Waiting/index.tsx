@@ -27,7 +27,7 @@ function Waiting() {
         if (user) {
           dispatch(setUserData(user));
 
-          const status = user.onboardingStatus;
+          const status = user.onboarding_status;
 
           // Si ya fue aprobada, salir del onboarding al dashboard
           if (!redirected && ["BRAND_COMPLETED", "SOCIAL_CONNECTED", "ONBOARDING_COMPLETED"].includes(status)) {
