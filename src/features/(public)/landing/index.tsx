@@ -36,7 +36,7 @@ export default function Landing() {
         <div className={styles.headerContent}>
           {/* Logotipo */}
           <div className={styles.logo}>
-            <Image src='/logotipo_horizontal.png' alt='Bloomit' width={203} height={73} priority />
+            <Image src='/logotipo_horizontal.png' alt='Bloomaut' width={203} height={73} priority />
           </div>
 
           {/* Navigation Links Header*/}
@@ -158,7 +158,7 @@ export default function Landing() {
           <div className={styles.platformsImageContainer}>
             <Image
               src={getImageSrc("/platform_mobile")}
-              alt='Bloomit Platforms Features'
+              alt='Bloomaut Platforms Features'
               width={2520}
               height={1626}
               className={styles.platformsImage}
@@ -181,7 +181,7 @@ export default function Landing() {
           <div className={styles.communityImageContainer}>
             <Image
               src={getImageSrc("/peers_network")}
-              alt='Bloomit Peers Network'
+              alt='Bloomaut Peers Network'
               width={1536}
               height={1024}
               className={styles.communityImage}
@@ -236,7 +236,7 @@ export default function Landing() {
           <div className={styles.footerBrand}>
             <Image
               src='/logotipo_horizontal.png'
-              alt='Bloomit Logo'
+              alt='Bloomaut Logo'
               width={203}
               height={73}
               className={styles.footerLogo}
