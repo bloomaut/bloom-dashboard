@@ -79,6 +79,7 @@ async function resolveCsrfToken(): Promise<string | null> {
   }
 
   if (!csrfTokenPromise) {
+    console.debug("Resolving CSRF token from backend");
     csrfTokenPromise = (async () => {
       const token = await fetchCsrfTokenFromBackend();
       csrfTokenCache = token;
