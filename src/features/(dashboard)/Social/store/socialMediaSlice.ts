@@ -8,7 +8,9 @@ import {
 } from "../services/socialMediaService";
 import {
   SocialMediaProfile,
-  ContentItem,
+  ContentStatus,
+  DayTime,
+  IContentPiece,
   GetContentParams,
   ConnectTikTokParams,
   CreateContentParams,
@@ -26,7 +28,7 @@ import {
  */
 interface ContentCache {
   [key: string]: {
-    contents: ContentItem[];
+    contents: IContentPiece[];
     timestamp: number;
     expiresAt: number;
   };
@@ -38,7 +40,7 @@ interface ContentCache {
 export interface SocialMediaState {
   // Datos principales
   profile: SocialMediaProfile | null;
-  content: ContentItem[];
+  content: IContentPiece[];
 
   // Sistema de caché
   contentCache: ContentCache;
@@ -174,7 +176,7 @@ export const fetchContent = createAsyncThunk(
         if (isCacheValid(cacheEntry)) {
           console.log("📦 Contenido obtenido desde caché");
           return {
-            contents: cacheEntry.contents,
+            contentPieces: cacheEntry.contents,
             dateRange: { startDate, endDate },
             fromCache: true,
           };
@@ -182,11 +184,11 @@ export const fetchContent = createAsyncThunk(
       }
 
       // Obtener datos frescos de la API
-      const { contents } = await getAndFixSocialMediaContent({ startDate, endDate });
-      console.log("✅ Contenido obtenido desde API:", contents.length, "elementos");
+      const { contentPieces } = await getAndFixSocialMediaContent({ startDate, endDate });
+      console.log("✅ Contenido obtenido desde API:", contentPieces.length, "elementos");
 
       return {
-        contents,
+        contentPieces,
         dateRange: { startDate, endDate },
         fromCache: false,
       };
@@ -225,11 +227,11 @@ export const generateWeekContent = createAsyncThunk(
       const { options, ...contentParams } = params;
       console.log("🔄 Generando contenido semanal:", contentParams.pipelineType);
 
-      const { contents } = await createAndWaitForContent(contentParams, options);
-      console.log("✅ Contenido semanal generado:", contents.length, "elementos");
+      const { contentPieces } = await createAndWaitForContent(contentParams, options);
+      console.log("✅ Contenido semanal generado:", contentPieces.length, "elementos");
 
       return {
-        contents,
+        contentPieces,
         pipelineType: contentParams.pipelineType,
       };
     } catch (error: any) {
@@ -250,7 +252,7 @@ export const createSingleContent = createAsyncThunk(
       console.log("🔄 Creando contenido individual:", contentParams.idea);
 
       const newContent = await createAndWaitForNewContent(contentParams, options);
-      console.log("✅ Contenido individual creado:", newContent._id);
+      console.log("✅ Contenido individual creado:", newContent.id);
 
       return newContent;
     } catch (error: any) {
@@ -283,7 +285,7 @@ export const connectTikTokAndGenerateInitialContent = createAsyncThunk(
       console.log("✅ Flujo completo exitoso");
       return {
         profile,
-        contents: contentResult.contents,
+        contentPieces: contentResult.contentPieces,
       };
     } catch (error: any) {
       console.error("❌ Error en flujo completo:", error);
@@ -317,16 +319,16 @@ const socialMediaSlice = createSlice({
     resetSocialMediaState: () => initialState,
 
     // Gestión de contenido
-    updateContentItem: (state, action: PayloadAction<{ id: string; updates: Partial<ContentItem> }>) => {
+    updateContentItem: (state, action: PayloadAction<{ id: string; updates: Partial<IContentPiece> }>) => {
       const { id, updates } = action.payload;
-      const contentIndex = state.content.findIndex(item => item._id === id);
+      const contentIndex = state.content.findIndex(item => item.id === id);
       if (contentIndex !== -1) {
         state.content[contentIndex] = { ...state.content[contentIndex], ...updates };
 
         // Actualizar también en caché si existe
         Object.keys(state.contentCache).forEach(cacheKey => {
           const cacheEntry = state.contentCache[cacheKey];
-          const cacheContentIndex = cacheEntry.contents.findIndex(item => item._id === id);
+          const cacheContentIndex = cacheEntry.contents.findIndex(item => item.id === id);
           if (cacheContentIndex !== -1) {
             cacheEntry.contents[cacheContentIndex] = { ...cacheEntry.contents[cacheContentIndex], ...updates };
           }
@@ -336,16 +338,16 @@ const socialMediaSlice = createSlice({
 
     markContentAsCompleted: (state, action: PayloadAction<string>) => {
       const id = action.payload;
-      const contentIndex = state.content.findIndex(item => item._id === id);
+      const contentIndex = state.content.findIndex(item => item.id === id);
       if (contentIndex !== -1) {
-        state.content[contentIndex].completed = true;
+        state.content[contentIndex].status = ContentStatus.APPROVED;
 
         // Actualizar también en caché
         Object.keys(state.contentCache).forEach(cacheKey => {
           const cacheEntry = state.contentCache[cacheKey];
-          const cacheContentIndex = cacheEntry.contents.findIndex(item => item._id === id);
+          const cacheContentIndex = cacheEntry.contents.findIndex(item => item.id === id);
           if (cacheContentIndex !== -1) {
-            cacheEntry.contents[cacheContentIndex].completed = true;
+            cacheEntry.contents[cacheContentIndex].status = ContentStatus.APPROVED;
           }
         });
       }
@@ -365,16 +367,16 @@ const socialMediaSlice = createSlice({
     },
 
     // Agregar contenido al estado actual (para contenido nuevo)
-    addContentItem: (state, action: PayloadAction<ContentItem>) => {
+    addContentItem: (state, action: PayloadAction<IContentPiece>) => {
       const newContent = action.payload;
-      const existingIndex = state.content.findIndex(item => item._id === newContent._id);
+      const existingIndex = state.content.findIndex(item => item.id === newContent.id);
 
       if (existingIndex === -1) {
         state.content.push(newContent);
         state.totalContentCount += 1;
 
         // Invalidar caché relacionado
-        const contentDate = newContent.day.split("T")[0]; // Extraer fecha YYYY-MM-DD
+        const contentDate = newContent.publishDate.date.split("T")[0]; // Extraer fecha YYYY-MM-DD
         Object.keys(state.contentCache).forEach(cacheKey => {
           const [startDate, endDate] = cacheKey.split("_");
           if (contentDate >= startDate && contentDate <= endDate) {
@@ -418,8 +420,8 @@ const socialMediaSlice = createSlice({
       })
       .addCase(fetchContent.fulfilled, (state, action) => {
         state.isLoadingContent = false;
-        state.content = action.payload.contents;
-        state.totalContentCount = action.payload.contents.length;
+        state.content = action.payload.contentPieces;
+        state.totalContentCount = action.payload.contentPieces.length;
         state.lastFetchedDateRange = action.payload.dateRange;
         state.contentError = null;
 
@@ -432,7 +434,7 @@ const socialMediaSlice = createSlice({
 
           // Agregar al caché
           state.contentCache[cacheKey] = {
-            contents: action.payload.contents,
+            contents: action.payload.contentPieces,
             timestamp: Date.now(),
             expiresAt: Date.now() + state.cacheExpirationTime,
           };
@@ -478,9 +480,9 @@ const socialMediaSlice = createSlice({
         state.isGeneratingWeekContent = false;
 
         // Agregar nuevo contenido al estado actual
-        const newContents = action.payload.contents;
+        const newContents = action.payload.contentPieces;
         newContents.forEach(newContent => {
-          const existingIndex = state.content.findIndex(item => item._id === newContent._id);
+          const existingIndex = state.content.findIndex(item => item.id === newContent.id);
           if (existingIndex === -1) {
             state.content.push(newContent);
           }
@@ -512,7 +514,7 @@ const socialMediaSlice = createSlice({
 
         // Agregar el nuevo contenido
         const newContent = action.payload;
-        const existingIndex = state.content.findIndex(item => item._id === newContent._id);
+        const existingIndex = state.content.findIndex(item => item.id === newContent.id);
 
         if (existingIndex === -1) {
           state.content.push(newContent);
@@ -522,7 +524,7 @@ const socialMediaSlice = createSlice({
         state.creationError = null;
 
         // Invalidar caché relacionado con la fecha del contenido
-        const contentDate = newContent.day.split("T")[0];
+        const contentDate = newContent.publishDate.date.split("T")[0];
         Object.keys(state.contentCache).forEach(cacheKey => {
           const [startDate, endDate] = cacheKey.split("_");
           if (contentDate >= startDate && contentDate <= endDate) {
@@ -556,8 +558,8 @@ const socialMediaSlice = createSlice({
         state.lastProfileUpdate = Date.now();
 
         // Actualizar contenido
-        state.content = action.payload.contents;
-        state.totalContentCount = action.payload.contents.length;
+        state.content = action.payload.contentPieces;
+        state.totalContentCount = action.payload.contentPieces.length;
 
         // Limpiar errores
         state.tikTokError = null;
@@ -641,32 +643,30 @@ export const selectIsProfileConnected = (state: { socialMedia: SocialMediaState 
   state.socialMedia.profile?.connected || false;
 
 export const selectContentByDay = (state: { socialMedia: SocialMediaState }, day: string) =>
-  state.socialMedia.content.filter(item => item.day.startsWith(day));
+  state.socialMedia.content.filter(item => item.publishDate.date.startsWith(day));
 
 export const selectContentByPillar = (state: { socialMedia: SocialMediaState }, pillar: string) =>
-  state.socialMedia.content.filter(item => item.pillar === pillar);
+  state.socialMedia.content.filter(item => item.strategy.intention === pillar);
 
-export const selectContentByDayTime = (
-  state: { socialMedia: SocialMediaState },
-  dayTime: "morning" | "afternoon" | "evening",
-) => state.socialMedia.content.filter(item => item.dayTime === dayTime);
+export const selectContentByDayTime = (state: { socialMedia: SocialMediaState }, dayTime: DayTime) =>
+  state.socialMedia.content.filter(item => item.dayTime === dayTime);
 
 export const selectCompletedContent = (state: { socialMedia: SocialMediaState }) =>
-  state.socialMedia.content.filter(item => item.completed);
+  state.socialMedia.content.filter(item => item.status === ContentStatus.APPROVED);
 
 export const selectIncompleteContent = (state: { socialMedia: SocialMediaState }) =>
-  state.socialMedia.content.filter(item => !item.completed);
+  state.socialMedia.content.filter(item => item.status !== ContentStatus.APPROVED);
 
 export const selectContentStats = (state: { socialMedia: SocialMediaState }) => {
   const content = state.socialMedia.content;
   return {
     total: content.length,
-    completed: content.filter(item => item.completed).length,
-    incomplete: content.filter(item => !item.completed).length,
+    completed: content.filter(item => item.status === ContentStatus.APPROVED).length,
+    incomplete: content.filter(item => item.status !== ContentStatus.APPROVED).length,
     byDayTime: {
-      morning: content.filter(item => item.dayTime === "morning").length,
-      afternoon: content.filter(item => item.dayTime === "afternoon").length,
-      evening: content.filter(item => item.dayTime === "evening").length,
+      morning: content.filter(item => item.dayTime === DayTime.MORNING).length,
+      afternoon: content.filter(item => item.dayTime === DayTime.AFTERNOON).length,
+      evening: content.filter(item => item.dayTime === DayTime.EVENING).length,
     },
   };
 };

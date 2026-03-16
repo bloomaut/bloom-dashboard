@@ -31,9 +31,10 @@ import {
   fetchContent,
   clearAllErrors,
   markContentAsCompleted,
+  updateContentItem,
 } from "../../store/socialMediaSlice";
 import { isSocialProfileDisabled } from "@/utils/featureFlags";
-import { ContentItem } from "../../types";
+import { ContentStatus, IContentPiece } from "../../types";
 import styles from "./style.module.scss";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -149,26 +150,12 @@ const truncateText = (text: string, maxLength: number = 23): string => {
   return text.substring(0, maxLength) + "...";
 };
 
-/**
- * Tipo para ContentItem con day como Date
- */
-type ContentItemWithDateDay = Omit<ContentItem, "day"> & { day: Date };
+type ContentPieceWithDate = IContentPiece & { publishDateObj: Date };
 
-/**
- * Convierte un ContentItem para uso en el calendario
- * @param item - ContentItem original
- * @returns ContentItem con formato compatible
- */
-const convertContentItemForCalendar = (item: ContentItem): ContentItemWithDateDay => {
+const convertContentPieceForCalendar = (item: IContentPiece): ContentPieceWithDate => {
   return {
     ...item,
-    day: new Date(item.day), // Convertir string ISO a Date
-    socialMedia: item.socialMedia as "tiktok",
-    publishType: item.publishType as "Video",
-    content: {
-      ...item.content,
-      script: item.content.script || "", // Asegurar que script no sea null
-    },
+    publishDateObj: new Date(item.publishDate.date),
   };
 };
 
@@ -250,7 +237,7 @@ export const ContentCalendar = () => {
   const errorMessage = contentError || generationError || generalError;
 
   // Estado local
-  const [selectedContent, setSelectedContent] = useState<ContentItemWithDateDay | null>(null);
+  const [selectedContent, setSelectedContent] = useState<ContentPieceWithDate | null>(null);
 
   // Hooks personalizados
   const { currentWeekOffset, goToPreviousWeek, goToNextWeek, goToCurrentWeek, isCurrentWeek } = useWeekNavigation();
@@ -292,7 +279,7 @@ export const ContentCalendar = () => {
 
   // Convertir contenido de Redux para uso en el calendario
   const contentItems = useMemo(() => {
-    return content.map(convertContentItemForCalendar);
+    return (content as IContentPiece[]).map(convertContentPieceForCalendar);
   }, [content]);
 
   /**
@@ -315,7 +302,7 @@ export const ContentCalendar = () => {
    * @returns Objeto agrupado por fecha y horario
    */
   const groupContentByDay = useMemo(() => {
-    const grouped: Record<string, Record<string, ContentItemWithDateDay[]>> = {};
+    const grouped: Record<string, Record<string, ContentPieceWithDate[]>> = {};
 
     // Inicializar estructura para cada día de la semana
     weekDates.forEach(date => {
@@ -329,9 +316,9 @@ export const ContentCalendar = () => {
 
     // Agrupar contenido existente
     contentItems.forEach(item => {
-      const dateKey = item.day.toDateString();
+      const dateKey = item.publishDateObj.toDateString();
       if (grouped[dateKey]) {
-        grouped[dateKey][item.dayTime].push(item);
+        grouped[dateKey][item.dayTime as unknown as keyof typeof TIME_PERIOD_COLORS].push(item);
       }
     });
 
@@ -356,17 +343,32 @@ export const ContentCalendar = () => {
   const renderContentModal = useCallback(() => {
     if (!selectedContent) return null;
 
-    const colors = TIME_PERIOD_COLORS[selectedContent.dayTime];
+    const colors = TIME_PERIOD_COLORS[selectedContent.dayTime as unknown as keyof typeof TIME_PERIOD_COLORS];
 
     const handleCloseModal = () => setSelectedContent(null);
 
     const handleToggleCompleted = () => {
-      if (selectedContent._id) {
-        handleMarkAsCompleted(selectedContent._id);
-        // Actualizar el estado local del modal
-        setSelectedContent(prev => (prev ? { ...prev, completed: !prev.completed } : null));
+      const nextStatus =
+        selectedContent.status === ContentStatus.APPROVED ? ContentStatus.DRAFT : ContentStatus.APPROVED;
+
+      if (nextStatus === ContentStatus.APPROVED) {
+        handleMarkAsCompleted(selectedContent.id);
+      } else {
+        dispatch(updateContentItem({ id: selectedContent.id, updates: { status: ContentStatus.DRAFT } }));
       }
+
+      setSelectedContent(prev => (prev ? { ...prev, status: nextStatus } : null));
     };
+
+    const title =
+      selectedContent.narrativeDetails.message ||
+      selectedContent.script?.[0]?.[0] ||
+      `${selectedContent.strategy.intention} • ${selectedContent.strategy.narrative}`;
+
+    const scriptText = (selectedContent.script || [])
+      .map(block => block.join(" "))
+      .filter(Boolean)
+      .join("\n\n");
 
     return (
       <div className={styles.modalOverlay} onClick={handleCloseModal}>
@@ -377,13 +379,13 @@ export const ContentCalendar = () => {
               <div className={styles.modalHeaderInfo}>
                 <Video className='h-5 w-5' />
                 <div>
-                  <div className={styles.modalTitle}>{selectedContent.content.title}</div>
+                  <div className={styles.modalTitle}>{title}</div>
                   <div className={styles.modalSubtitle}>
                     <Calendar className='h-3 w-3' />
-                    <div>{selectedContent.day.toLocaleDateString("es-ES")}</div>
+                    <div>{selectedContent.publishDateObj.toLocaleDateString("es-ES")}</div>
                     <div>•</div>
                     <div className='capitalize'>{dict(`calendar.time_periods.${selectedContent.dayTime}`)}</div>
-                    {selectedContent.completed && (
+                    {selectedContent.status === ContentStatus.APPROVED && (
                       <>
                         <div>•</div>
                         <CheckCircle className='h-3 w-3 text-green-600' />
@@ -409,16 +411,16 @@ export const ContentCalendar = () => {
                   <div className={styles.infoItem}>
                     <Target className='h-4 w-4 text-gray-500' />
                     <div className={styles.infoLabel}>{dict("calendar.modal.pillar")}:</div>
-                    <Badge variant='secondary'>{selectedContent.pillar}</Badge>
+                    <Badge variant='secondary'>{selectedContent.strategy.intention}</Badge>
                   </div>
                   <div className={styles.infoItem}>
                     <Play className='h-4 w-4 text-gray-500' />
                     <div className={styles.infoLabel}>{dict("calendar.modal.type")}:</div>
-                    <div>{selectedContent.publishType}</div>
+                    <div>{selectedContent.strategy.narrative}</div>
                   </div>
                   <div className={styles.infoItem}>
                     <div className={styles.infoLabel}>{dict("calendar.modal.social_media")}:</div>
-                    <Badge variant='outline'>{selectedContent.socialMedia.toUpperCase()}</Badge>
+                    <Badge variant='outline'>{selectedContent.platform.toUpperCase()}</Badge>
                   </div>
                 </div>
               </div>
@@ -426,7 +428,7 @@ export const ContentCalendar = () => {
                 <h4>{dict("calendar.modal.status")}</h4>
                 <div className={styles.infoList}>
                   <div className={styles.infoItem}>
-                    {selectedContent.completed ? (
+                    {selectedContent.status === ContentStatus.APPROVED ? (
                       <>
                         <CheckCircle className='h-4 w-4 text-green-600' />
                         <div className={styles.statusCompleted}>{dict("calendar.content.completed")}</div>
@@ -439,159 +441,110 @@ export const ContentCalendar = () => {
                     )}
                   </div>
                   {/* Botón para marcar como completado */}
-                  {selectedContent._id && (
-                    <Button
-                      variant={selectedContent.completed ? "outline" : "default"}
-                      size='sm'
-                      onClick={handleToggleCompleted}
-                      className='mt-2'
-                    >
-                      {selectedContent.completed
-                        ? dict("calendar.modal.mark_pending")
-                        : dict("calendar.modal.mark_completed")}
-                    </Button>
-                  )}
+                  <Button
+                    variant={selectedContent.status === ContentStatus.APPROVED ? "outline" : "default"}
+                    size='sm'
+                    onClick={handleToggleCompleted}
+                    className='mt-2'
+                  >
+                    {selectedContent.status === ContentStatus.APPROVED
+                      ? dict("calendar.modal.mark_pending")
+                      : dict("calendar.modal.mark_completed")}
+                  </Button>
                 </div>
               </div>
             </div>
 
-            {/* Hook */}
-            {selectedContent.content.hook && (
-              <div className={styles.contentSection}>
-                <h4>
-                  <Lightbulb className='h-4 w-4' />
-                  <div>{dict("calendar.modal.hook")}</div>
-                </h4>
-                <div className={styles.contentBox}>{selectedContent.content.hook}</div>
-              </div>
-            )}
-
-            {/* Body */}
-            {selectedContent.content.body && (
-              <div className={styles.contentSection}>
-                <h4>
-                  <FileText className='h-4 w-4' />
-                  <div>{dict("calendar.modal.body")}</div>
-                </h4>
-                <div className={styles.contentBox}>{selectedContent.content.body}</div>
-              </div>
-            )}
-
-            {/* Making */}
-            {selectedContent.content.making && (
-              <div className={styles.contentSection}>
-                <h4>
-                  <Settings className='h-4 w-4' />
-                  <div>{dict("calendar.modal.making")}</div>
-                </h4>
-                <div className={styles.contentBox}>{selectedContent.content.making}</div>
-              </div>
-            )}
-
             {/* Script */}
-            {selectedContent.content.script && (
+            {scriptText && (
               <div className={styles.contentSection}>
                 <h4>{dict("calendar.modal.script")}</h4>
-                <div className={`${styles.contentBox} ${styles.scriptBox}`}>{selectedContent.content.script}</div>
+                <div className={`${styles.contentBox} ${styles.scriptBox}`}>{scriptText}</div>
               </div>
             )}
 
-            {/* Copy */}
             <div className={styles.contentSection}>
               <h4>
                 <MessageSquare className='h-4 w-4' />
                 <div>{dict("calendar.modal.copy")}</div>
               </h4>
-              <div className={styles.contentBox}>{selectedContent.content.copy}</div>
+              <div className={styles.contentBox}>{selectedContent.caption ?? ""}</div>
             </div>
 
-            {/* Hashtags */}
-            {selectedContent.content.hashtags && (
+            {selectedContent.narrativeDetails.message && (
               <div className={styles.contentSection}>
                 <h4>
-                  <Hash className='h-4 w-4' />
-                  <div>{dict("calendar.modal.hashtags")}</div>
+                  <Lightbulb className='h-4 w-4' />
+                  <div>{dict("calendar.modal.hook")}</div>
                 </h4>
-                <div className={`${styles.contentBox} ${styles.hashtagsBox}`}>{selectedContent.content.hashtags}</div>
+                <div className={styles.contentBox}>{selectedContent.narrativeDetails.message}</div>
               </div>
             )}
 
-            {/* CTA */}
-            {selectedContent.content.cta_copy && (
+            {selectedContent.narrativeDetails.proofType && (
               <div className={styles.contentSection}>
                 <h4>{dict("calendar.modal.cta")}</h4>
-                <div className={`${styles.contentBox} ${styles.ctaBox}`}>{selectedContent.content.cta_copy}</div>
+                <div className={`${styles.contentBox} ${styles.ctaBox}`}>
+                  {selectedContent.narrativeDetails.proofType}
+                </div>
               </div>
             )}
 
-            {/* Additional Fields */}
             <div className={styles.basicInfoGrid}>
-              {selectedContent.content.feelings && (
-                <div className={styles.contentSection}>
-                  <h4>
-                    <Heart className='h-4 w-4' />
-                    <div>{dict("calendar.modal.feelings")}</div>
-                  </h4>
-                  <Badge variant='outline'>{selectedContent.content.feelings}</Badge>
-                </div>
-              )}
-              {selectedContent.content.understanding && (
-                <div className={styles.contentSection}>
-                  <h4>
-                    <Brain className='h-4 w-4' />
-                    <div>{dict("calendar.modal.understanding")}</div>
-                  </h4>
-                  <Badge variant='outline'>{selectedContent.content.understanding}</Badge>
-                </div>
-              )}
+              <div className={styles.contentSection}>
+                <h4>
+                  <Heart className='h-4 w-4' />
+                  <div>{dict("calendar.modal.feelings")}</div>
+                </h4>
+                <Badge variant='outline'>{selectedContent.strategy.tensionLevel}</Badge>
+              </div>
+              <div className={styles.contentSection}>
+                <h4>
+                  <Brain className='h-4 w-4' />
+                  <div>{dict("calendar.modal.understanding")}</div>
+                </h4>
+                <Badge variant='outline'>{selectedContent.strategy.hookFunction}</Badge>
+              </div>
             </div>
 
-            {selectedContent.content.key_words_copy && (
+            {selectedContent.blueprint.sound && (
               <div className={styles.contentSection}>
                 <h4>{dict("calendar.modal.keywords")}</h4>
-                <div className={`${styles.contentBox} ${styles.keywordsBox}`}>
-                  {selectedContent.content.key_words_copy}
-                </div>
-              </div>
-            )}
-
-            {selectedContent.content.make && (
-              <div className={styles.contentSection}>
-                <h4>{dict("calendar.modal.content_type")}</h4>
-                <Badge variant='secondary'>{selectedContent.content.make}</Badge>
+                <div className={`${styles.contentBox} ${styles.keywordsBox}`}>{selectedContent.blueprint.sound}</div>
               </div>
             )}
           </div>
         </div>
       </div>
     );
-  }, [selectedContent, handleMarkAsCompleted]);
+  }, [selectedContent, handleMarkAsCompleted, dispatch, dict]);
 
   /**
    * Componente para renderizar una tarjeta de contenido individual
    * @param item - Item de contenido a renderizar
    * @returns JSX de la tarjeta de contenido
    */
-  const renderContentItem = useCallback((item: ContentItemWithDateDay) => {
-    const colors = TIME_PERIOD_COLORS[item.dayTime];
+  const renderContentItem = useCallback((item: ContentPieceWithDate) => {
+    const colors = TIME_PERIOD_COLORS[item.dayTime as unknown as keyof typeof TIME_PERIOD_COLORS];
 
     const handleItemClick = () => setSelectedContent(item);
 
+    const title = item.narrativeDetails.message || item.script?.[0]?.[0] || `${item.strategy.intention}`;
+    const description = item.script?.[0]?.join(" ") || item.narrativeDetails.message || "";
+
     return (
-      <div key={item._id} className={`${styles.contentItem} ${styles[colors.bg]}`} onClick={handleItemClick}>
+      <div key={item.id} className={`${styles.contentItem} ${styles[colors.bg]}`} onClick={handleItemClick}>
         <div className={styles.contentItemHeader}>
           <div className={styles.contentItemTitle}>
             <Video className='h-3 w-3' />
-            <div className={styles.contentItemTitleText}>{truncateText(item.content.title)}</div>
+            <div className={styles.contentItemTitleText}>{truncateText(title)}</div>
           </div>
-          {item.completed && <CheckCircle className='h-3 w-3 text-green-600' />}
+          {item.status === ContentStatus.APPROVED && <CheckCircle className='h-3 w-3 text-green-600' />}
         </div>
 
-        <div className={styles.contentItemPillar}>{item.pillar}</div>
+        <div className={styles.contentItemPillar}>{item.strategy.intention}</div>
 
-        <div className={styles.contentItemDescription}>
-          {item.content.hook ? truncateText(item.content.hook, 50) : truncateText(item.content.script || "", 50)}
-        </div>
+        <div className={styles.contentItemDescription}>{truncateText(description, 50)}</div>
       </div>
     );
   }, []);
@@ -603,7 +556,7 @@ export const ContentCalendar = () => {
    * @returns JSX de la sección de período de tiempo
    */
   const renderTimePeriod = useCallback(
-    (dayContent: Record<string, ContentItemWithDateDay[]>, timePeriod: keyof typeof TIME_PERIOD_COLORS) => {
+    (dayContent: Record<string, ContentPieceWithDate[]>, timePeriod: keyof typeof TIME_PERIOD_COLORS) => {
       const items = dayContent[timePeriod] || [];
       const colors = TIME_PERIOD_COLORS[timePeriod];
 

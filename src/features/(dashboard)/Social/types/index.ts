@@ -36,60 +36,139 @@ export interface ApiResponse<T = any> {
 }
 
 /**
- * Interfaz para el contenido de redes sociales
+ * Modelos de contenido (nuevo pipeline)
  */
-export interface ContentItem {
-  _id: string;
-  clientId: string;
-  socialMedia: string;
-  publishType: string;
-  day: string; // ISODate
-  dayTime: "morning" | "afternoon" | "evening";
-  status: string;
-  pillar: string;
-  completed: boolean;
-  skinxId: string;
-  presetId: string;
-  content: {
-    title: string;
-    hook: string;
-    body: string;
-    making: string;
-    copy: string;
-    feelings: string;
-    understanding: string;
-    hashtags: string;
-    cta_copy: string;
-    key_words_copy: string;
-    script: string | null;
-    make: string | null;
-  };
-  createdAt: string; // ISODate
-  updatedAt: string; // ISODate
+export enum Platform {
+  TIKTOK = "tiktok",
+  INSTAGRAM = "instagram",
+  YOUTUBE = "youtube",
 }
 
-/**
- * Interfaz para las ideas de contenido
- */
-export interface IdeaItem {
-  _id: string;
-  clientId: string;
-  SMPWeekStrategy: string;
-  day: string; // ISODate
-  dayContent: string[];
-  completed: boolean;
-  createdAt: string; // ISODate
-  updatedAt: string; // ISODate
+export enum DayOfWeek {
+  MONDAY = "monday",
+  TUESDAY = "tuesday",
+  WEDNESDAY = "wednesday",
+  THURSDAY = "thursday",
+  FRIDAY = "friday",
+  SATURDAY = "saturday",
+  SUNDAY = "sunday",
 }
 
-/**
- * Respuesta del API para contenido e ideas
- */
+export enum DayTime {
+  MORNING = "morning",
+  AFTERNOON = "afternoon",
+  EVENING = "evening",
+}
+
+export enum ContentStatus {
+  DRAFT = "draft",
+  IN_REVIEW = "in_review",
+  APPROVED = "approved",
+}
+
+export enum ContentIntention {
+  CONNECTION = "connection",
+  CONVERSION = "conversion",
+  AUTHORITY = "authority",
+  EDUCATION = "education",
+}
+
+export enum ContentNarrative {
+  STORYTELLING = "storytelling",
+  HOW_TO = "how-to",
+}
+
+export enum TensionLevel {
+  LOW = "low",
+  MEDIUM = "medium",
+  HIGH = "high",
+}
+
+export enum CtaType {
+  COMMENT = "comment",
+  DM = "dm",
+  PERFIL = "perfil",
+  SAVE = "save",
+  FOLLOW = "follow",
+  BIO = "bio",
+  SHARE = "share",
+  CLICK = "click",
+}
+
+export enum CameraType {
+  SELFIE = "selfie",
+  SCREEN = "screen",
+  BACK = "back",
+}
+
+export enum ShotType {
+  SHORT_PLANE = "short_plane",
+  MEDIUM_PLANE = "medium_plane",
+  OPEN_PLANE = "open_plane",
+}
+
+export enum OverlayType {
+  SIMPLE_TEXT = "simple_text",
+  SUBTITLES = "subtitles",
+  MEDIA = "media",
+  NARRATIVE_TEXT = "narrative_text",
+}
+
+export interface PublishDate {
+  date: string;
+}
+
+export interface StrategyDetails {
+  intention: ContentIntention;
+  narrative: ContentNarrative;
+  sceneStrategyId: string;
+  tensionLevel: TensionLevel;
+  ctaType: CtaType;
+  hookFunction: string;
+}
+
+export interface NarrativeDetails {
+  message: string;
+  proofType: string;
+}
+
+export interface ContentBlueprint {
+  scenes: SceneBlueprint[];
+  sound: string;
+}
+
+export interface SceneBlueprint {
+  camera: CameraType;
+  shot: ShotType;
+  action: string;
+  instruction: string;
+  overlays: OverlayBlueprint[];
+}
+
+export interface OverlayBlueprint {
+  type: OverlayType;
+  value: string;
+}
+
+export interface IContentPiece {
+  id: string;
+  weekStrategyId: string;
+  platform: Platform;
+  day: DayOfWeek;
+  dayTime: DayTime;
+  publishDate: PublishDate;
+  status: ContentStatus;
+  strategy: StrategyDetails;
+  narrativeDetails: NarrativeDetails;
+  blueprint: ContentBlueprint;
+  script: string[][];
+  caption?: string;
+}
+
 export interface ContentApiResponse {
   statusCode: number;
   result: {
-    contents: ContentItem[];
-    ideas: IdeaItem[];
+    contentPieces: unknown[];
   };
 }
 
@@ -150,7 +229,7 @@ export interface CreateContentParams {
   idea: string;
   pillar?: string; // Campo opcional
   date: string; // Formato YYYY-MM-DD
-  dayTime: "morning" | "afternoon" | "evening";
+  dayTime: DayTime;
 }
 
 export interface CreateContentResponse {

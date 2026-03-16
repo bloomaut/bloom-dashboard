@@ -2,13 +2,9 @@ import axios from "@/utils/axiosConfig";
 import {
   ProfileApiResponse,
   SocialMediaProfile,
-  ContentItem,
-  IdeaItem,
   ContentApiResponse,
   GetContentParams,
-  FixContentIdeasParams,
-  FixContentIdeasResponse,
-  FixContentOptions,
+  IContentPiece,
   ConnectTikTokParams,
   ConnectTikTokResponse,
   CreateContentParams,
@@ -18,6 +14,7 @@ import {
   CreateNextWeekContentResponse,
   CreateContentOptions,
 } from "../types";
+import { mapLegacyContentItemToContentPiece, mapRawContentPieceToContentPiece } from "../utils/contentPieces";
 
 // ============================================================================
 // SERVICIOS DE API
@@ -68,9 +65,7 @@ export const getSocialMediaProfile = async (): Promise<SocialMediaProfile> => {
  * @returns Promise<{contents: ContentItem[], ideas: IdeaItem[]}> - Contenido e ideas del usuario
  * @throws Error si la petición falla o el rango de fechas es inválido
  */
-export const getSocialMediaContent = async (
-  params: GetContentParams,
-): Promise<{ contents: ContentItem[]; ideas: IdeaItem[] }> => {
+export const getSocialMediaContent = async (params: GetContentParams): Promise<{ contentPieces: IContentPiece[] }> => {
   try {
     const { startDate, endDate } = params;
 
@@ -101,14 +96,15 @@ export const getSocialMediaContent = async (
       throw new Error(`Error del servidor: ${apiResponse.statusCode}`);
     }
 
-    const { contents, ideas } = apiResponse.result;
+    const result: any = apiResponse.result ?? {};
+    const isNewShape = Array.isArray(result.contentPieces);
+    const raw: unknown[] = isNewShape ? result.contentPieces : Array.isArray(result.contents) ? result.contents : [];
 
-    // Validar que la respuesta tenga la estructura esperada
-    if (!Array.isArray(contents) || !Array.isArray(ideas)) {
-      throw new Error("Estructura de respuesta inválida: contents e ideas deben ser arrays");
-    }
+    const contentPieces = raw
+      .map(item => (isNewShape ? mapRawContentPieceToContentPiece(item) : mapLegacyContentItemToContentPiece(item)))
+      .filter(Boolean) as IContentPiece[];
 
-    return { contents, ideas };
+    return { contentPieces };
   } catch (error) {
     console.error("Error al obtener el contenido de redes sociales:", error);
 
@@ -124,129 +120,10 @@ export const getSocialMediaContent = async (
   }
 };
 
-/**
- * Servicio para reparar ideas de contenido específicas
- *
- * @param params - Parámetros con array de IDs de ideas a reparar
- * @returns Promise<string> - Mensaje de confirmación
- * @throws Error si la petición falla
- */
-export const fixContentIdeas = async (params: FixContentIdeasParams): Promise<string> => {
-  try {
-    const { ids } = params;
-
-    // Validar que se proporcionen IDs
-    if (!Array.isArray(ids) || ids.length === 0) {
-      throw new Error("Se requiere al menos un ID de idea para reparar");
-    }
-
-    // Validar que todos los IDs sean strings válidos
-    if (!ids.every(id => typeof id === "string" && id.trim().length > 0)) {
-      throw new Error("Todos los IDs deben ser strings válidos");
-    }
-
-    // Realizar la petición POST
-    const response = await axios.post<{ data: FixContentIdeasResponse }>("/api/social-media/fix-content-idea", {
-      ids,
-    });
-
-    // Validar que la respuesta tenga la estructura esperada
-    if (!response.data?.data?.result) {
-      throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
-    }
-
-    const { data: apiResponse } = response.data;
-
-    // Validar que el statusCode sea exitoso
-    if (apiResponse.statusCode !== 200) {
-      throw new Error(`Error del servidor: ${apiResponse.statusCode}`);
-    }
-
-    return apiResponse.result.message;
-  } catch (error) {
-    console.error("Error al reparar las ideas de contenido:", error);
-
-    // Re-lanzar el error con información más específica
-    if (axios.isAxiosError(error)) {
-      const statusCode = error.response?.status;
-      const errorMessage = error.response?.data?.message || error.message;
-
-      throw new Error(`Error HTTP ${statusCode}: ${errorMessage}`);
-    }
-
-    throw error;
-  }
-};
-
-/**
- * Función unificada que obtiene contenido y repara ideas incompletas automáticamente. Funcion GET CONTENT principal
- *
- * @param params - Parámetros con startDate y endDate
- * @param options - Opciones de configuración para reintentos
- * @returns Promise<{contents: ContentItem[], ideas: IdeaItem[]}> - Contenido e ideas completamente reparadas
- * @throws Error si no se puede reparar después del máximo de intentos
- */
 export const getAndFixSocialMediaContent = async (
   params: GetContentParams,
-  options: FixContentOptions = {},
-): Promise<{ contents: ContentItem[]; ideas: IdeaItem[] }> => {
-  const { maxRetries = 3, retryDelay = 180000 } = options;
-  let attempt = 0;
-  console.log("startDate " + params.startDate, "endDate", params.endDate);
-  while (attempt < maxRetries) {
-    try {
-      // Obtener el contenido actual
-      const { contents, ideas } = await getSocialMediaContent(params);
-
-      // Identificar ideas incompletas
-      const incompleteIdeas = ideas.filter(idea => !idea.completed);
-
-      // Si no hay ideas incompletas, retornar el resultado
-      if (incompleteIdeas.length === 0) {
-        return { contents, ideas };
-      }
-
-      // Si es el último intento y aún hay ideas incompletas, lanzar error
-      if (attempt === maxRetries - 1) {
-        throw new Error(
-          `No se pudieron reparar todas las ideas después de ${maxRetries} intentos. ` +
-            `Ideas incompletas restantes: ${incompleteIdeas.length}`,
-        );
-      }
-
-      // Extraer los IDs de las ideas incompletas
-      const incompleteIds = incompleteIdeas.map(idea => idea._id);
-
-      console.log(`Intento ${attempt + 1}: Reparando ${incompleteIds.length} ideas incompletas`);
-
-      // Solicitar reparación
-      await fixContentIdeas({ ids: incompleteIds });
-
-      // Esperar antes del siguiente intento
-      if (retryDelay > 0) {
-        await new Promise(resolve => setTimeout(resolve, retryDelay));
-      }
-
-      attempt++;
-    } catch (error) {
-      // Si es un error de la función de reparación y no es el último intento, continuar
-      if (attempt < maxRetries - 1) {
-        console.warn(`Error en intento ${attempt + 1}, reintentando:`, error);
-        attempt++;
-
-        if (retryDelay > 0) {
-          await new Promise(resolve => setTimeout(resolve, retryDelay));
-        }
-        continue;
-      }
-
-      // Si es el último intento o un error crítico, lanzar el error
-      throw error;
-    }
-  }
-
-  // Este punto no debería alcanzarse, pero por seguridad
-  throw new Error(`Error inesperado: se agotaron los ${maxRetries} intentos sin resultado`);
+): Promise<{ contentPieces: IContentPiece[] }> => {
+  return getSocialMediaContent(params);
 };
 
 /**
@@ -400,8 +277,8 @@ export const createNextWeekContent = async (params: CreateNextWeekContentParams)
 export const createAndWaitForContent = async (
   params: CreateNextWeekContentParams,
   options: CreateContentOptions = {},
-): Promise<{ contents: ContentItem[]; ideas: IdeaItem[] }> => {
-  const { maxRetries = 10, retryDelay = 60000, fixIncompleteIdeas = true } = options;
+): Promise<{ contentPieces: IContentPiece[] }> => {
+  const { maxRetries = 10, retryDelay = 60000 } = options;
 
   try {
     const { pipelineType } = params;
@@ -450,29 +327,15 @@ export const createAndWaitForContent = async (
         console.log(`Verificación ${attempt + 1}: Obteniendo contenido...`);
 
         // Obtener el contenido actual
-        const { contents, ideas } = await getSocialMediaContent({ startDate, endDate });
+        const { contentPieces } = await getSocialMediaContent({ startDate, endDate });
 
         // Verificar si hay nuevo contenido (comparar con intento anterior)
-        if (contents.length > previousContentCount) {
-          console.log(`Nuevo contenido detectado: ${contents.length} elementos`);
-
-          // Si se debe reparar ideas incompletas automáticamente
-          if (fixIncompleteIdeas) {
-            const incompleteIdeas = getIncompleteIdeas(ideas);
-
-            if (incompleteIdeas.length > 0) {
-              console.log(`Reparando ${incompleteIdeas.length} ideas incompletas...`);
-
-              // Usar la función unificada de reparación
-              return await getAndFixSocialMediaContent({ startDate, endDate });
-            }
-          }
-
-          // Si todas las ideas están completas o no se debe reparar automáticamente
-          return { contents, ideas };
+        if (contentPieces.length > previousContentCount) {
+          console.log(`Nuevo contenido detectado: ${contentPieces.length} elementos`);
+          return { contentPieces };
         }
 
-        previousContentCount = contents.length;
+        previousContentCount = contentPieces.length;
         attempt++;
 
         console.log(`Intento ${attempt}: Contenido aún no disponible, reintentando...`);
@@ -557,7 +420,7 @@ export const createContent = async (params: CreateContentParams): Promise<string
 export const createAndWaitForNewContent = async (
   params: CreateContentParams,
   options: CreateContentPollingOptions = {},
-): Promise<ContentItem> => {
+): Promise<IContentPiece> => {
   const { maxRetries = 20, retryDelay = 30000 } = options; // 30 segundos por defecto
 
   console.log("🎯 Iniciando proceso completo de creación de contenido:", params);
@@ -576,7 +439,7 @@ export const createAndWaitForNewContent = async (
       endDate: params.date,
     });
 
-    const existingContentIds = new Set(initialContent.contents.map(item => item._id));
+    const existingContentIds = new Set(initialContent.contentPieces.map(item => item.id));
     console.log("🔍 IDs de contenido existentes:", Array.from(existingContentIds));
 
     // Paso 2: Solicitar creación del nuevo contenido
@@ -598,16 +461,15 @@ export const createAndWaitForNewContent = async (
         });
 
         // Buscar contenido nuevo comparando IDs
-        const newContent = updatedContent.contents.find(item => !existingContentIds.has(item._id));
+        const newContent = updatedContent.contentPieces.find(item => !existingContentIds.has(item.id));
 
         if (newContent) {
-          console.log("🎉 ¡Nuevo contenido detectado!:", newContent._id);
+          console.log("🎉 ¡Nuevo contenido detectado!:", newContent.id);
           console.log("📝 Contenido generado:", {
-            id: newContent._id,
+            id: newContent.id,
             day: newContent.day,
             dayTime: newContent.dayTime,
-            pillar: newContent.pillar,
-            completed: newContent.completed,
+            status: newContent.status,
           });
 
           return newContent;
@@ -707,58 +569,20 @@ export const isValidDateRange = (startDate: string, endDate: string): boolean =>
  * @param content - Elemento de contenido a validar
  * @returns boolean - true si el contenido es válido
  */
-export const isValidContentItem = (content: ContentItem): boolean => {
+export const isValidContentItem = (content: IContentPiece): boolean => {
   return Boolean(
-    content._id &&
-      content.clientId &&
-      content.socialMedia &&
+    content.id &&
+      content.weekStrategyId !== undefined &&
+      content.platform &&
       content.day &&
       content.dayTime &&
-      content.content &&
-      typeof content.content === "object",
+      content.publishDate?.date &&
+      content.status &&
+      content.strategy &&
+      content.narrativeDetails &&
+      content.blueprint &&
+      Array.isArray(content.script),
   );
-};
-
-/**
- * Valida si un elemento de idea tiene la estructura correcta
- *
- * @param idea - Elemento de idea a validar
- * @returns boolean - true si la idea es válida
- */
-export const isValidIdeaItem = (idea: IdeaItem): boolean => {
-  return Boolean(
-    idea._id && idea.clientId && idea.day && Array.isArray(idea.dayContent) && typeof idea.completed === "boolean",
-  );
-};
-
-/**
- * Filtra y retorna solo las ideas que están incompletas
- *
- * @param ideas - Array de ideas a filtrar
- * @returns IdeaItem[] - Array de ideas incompletas
- */
-export const getIncompleteIdeas = (ideas: IdeaItem[]): IdeaItem[] => {
-  return ideas.filter(idea => !idea.completed);
-};
-
-/**
- * Verifica si todas las ideas están completas
- *
- * @param ideas - Array de ideas a verificar
- * @returns boolean - true si todas las ideas están completas
- */
-export const areAllIdeasComplete = (ideas: IdeaItem[]): boolean => {
-  return ideas.every(idea => idea.completed === true);
-};
-
-/**
- * Extrae los IDs de un array de ideas
- *
- * @param ideas - Array de ideas
- * @returns string[] - Array de IDs
- */
-export const extractIdeaIds = (ideas: IdeaItem[]): string[] => {
-  return ideas.map(idea => idea._id);
 };
 
 /**

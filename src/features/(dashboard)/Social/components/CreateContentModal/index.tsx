@@ -12,7 +12,7 @@ import {
   selectCreationError,
   clearError,
 } from "@/features/(dashboard)/Social/store/socialMediaSlice";
-import { CreateContentParams } from "@/features/(dashboard)/Social/types";
+import { CreateContentParams, DayTime } from "@/features/(dashboard)/Social/types";
 import styles from "./style.module.scss";
 
 interface CreateContentModalProps {
@@ -31,7 +31,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     pillar: "",
     idea: "",
     date: "",
-    dayTime: "morning" as "morning" | "afternoon" | "evening",
+    dayTime: DayTime.MORNING,
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
@@ -100,7 +100,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
       // Usar el thunk de Redux con tipado correcto
       const result = await dispatch(createSingleContent(contentParams)).unwrap();
 
-      console.log("✅ Contenido creado exitosamente:", result._id);
+      console.log("✅ Contenido creado exitosamente:", result.id);
 
       // Mostrar mensaje de éxito
       setShowSuccess(true);
@@ -130,7 +130,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
   };
 
   const resetForm = () => {
-    setFormData({ pillar: "", idea: "", date: "", dayTime: "morning" });
+    setFormData({ pillar: "", idea: "", date: "", dayTime: DayTime.MORNING });
     setLocalError(null);
     setShowSuccess(false);
     if (reduxError) {
@@ -239,10 +239,10 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                   <div className={styles.timePeriodGrid}>
                     <button
                       type='button'
-                      onClick={() => handleInputChange("dayTime", "morning")}
+                      onClick={() => handleInputChange("dayTime", DayTime.MORNING)}
                       disabled={isLoading}
                       className={`${styles.timePeriodButton} ${styles.morningButton} ${
-                        formData.dayTime === "morning" ? styles.active : ""
+                        formData.dayTime === DayTime.MORNING ? styles.active : ""
                       }`}
                     >
                       <div className={styles.timePeriodContent}>
@@ -253,10 +253,10 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                     </button>
                     <button
                       type='button'
-                      onClick={() => handleInputChange("dayTime", "afternoon")}
+                      onClick={() => handleInputChange("dayTime", DayTime.AFTERNOON)}
                       disabled={isLoading}
                       className={`${styles.timePeriodButton} ${styles.afternoonButton} ${
-                        formData.dayTime === "afternoon" ? styles.active : ""
+                        formData.dayTime === DayTime.AFTERNOON ? styles.active : ""
                       }`}
                     >
                       <div className={styles.timePeriodContent}>
@@ -267,10 +267,10 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                     </button>
                     <button
                       type='button'
-                      onClick={() => handleInputChange("dayTime", "evening")}
+                      onClick={() => handleInputChange("dayTime", DayTime.EVENING)}
                       disabled={isLoading}
                       className={`${styles.timePeriodButton} ${styles.eveningButton} ${
-                        formData.dayTime === "evening" ? styles.active : ""
+                        formData.dayTime === DayTime.EVENING ? styles.active : ""
                       }`}
                     >
                       <div className={styles.timePeriodContent}>

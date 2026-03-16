@@ -84,11 +84,11 @@ export function SocialMediaSetup() {
 
         console.log("✅ Flujo completo exitoso:", {
           profile: result.profile.username,
-          contentCount: result.contents.length,
+          contentCount: result.contentPieces.length,
         });
 
         notify("¡TikTok conectado exitosamente!");
-        notify(`Contenido inicial generado: ${result.contents.length} elementos`);
+        notify(`Contenido inicial generado: ${result.contentPieces.length} elementos`);
       } catch (error: any) {
         console.error("❌ Error en flujo completo de TikTok:", error);
         notifyError(error.message || dict("errors.tiktok_connect_and_generate"));
