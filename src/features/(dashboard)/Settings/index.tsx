@@ -138,16 +138,25 @@ const SettingsPage = () => {
                     size='sm'
                     onClick={() => setIsEditing(false)}
                     disabled={isSaving}
-                    className='border-primary bg-primary/10 text-primary hover:bg-primary/15 hover:text-primary'
+                    className='border-[#ef4444] bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20 hover:text-[#ef4444] h-9 px-4'
                   >
                     Cancelar
                   </Button>
-                  <Button size='sm' onClick={handleSave} disabled={isSaving} className='shadow-sm'>
+                  <Button
+                    size='sm'
+                    onClick={handleSave}
+                    disabled={isSaving}
+                    className='bg-[#ef4444] text-white hover:bg-[#dc2626] shadow-sm h-9 px-4'
+                  >
                     Guardar
                   </Button>
                 </>
               ) : (
-                <Button size='sm' onClick={() => setIsEditing(true)} className='shadow-sm'>
+                <Button
+                  size='sm'
+                  onClick={() => setIsEditing(true)}
+                  className='bg-[#ef4444] text-white hover:bg-[#dc2626] shadow-sm h-9 px-4'
+                >
                   Editar
                 </Button>
               )}
