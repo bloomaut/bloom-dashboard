@@ -1126,6 +1126,23 @@
   margin: 1rem;
 }
 
+.calendarWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.calendarLoadingOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 250, 252, 0.75);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
 .calendarLoadingContent {
   display: flex;
   flex-direction: column;

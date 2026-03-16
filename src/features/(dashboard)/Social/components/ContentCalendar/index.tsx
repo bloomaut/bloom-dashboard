@@ -744,14 +744,7 @@ export const ContentCalendar = () => {
           </div>
         </CardHeader>
         <CardContent className='p-0'>
-          {isLoadingContent ? (
-            <div className={styles.calendarLoadingContainer}>
-              <div className={styles.calendarLoadingContent}>
-                <LoadingSpinner size='medium' />
-                <p className={styles.calendarLoadingText}>Cargando contenido del calendario...</p>
-              </div>
-            </div>
-          ) : (
+          <div className={styles.calendarWrapper}>
             <div className={styles.calendarScroll}>
               <div className={styles.calendarGrid}>
                 {weekDates.map((date, index) => {
@@ -795,7 +788,15 @@ export const ContentCalendar = () => {
                 })}
               </div>
             </div>
-          )}
+            {isLoadingContent && (
+              <div className={styles.calendarLoadingOverlay}>
+                <div className={styles.calendarLoadingContent}>
+                  <LoadingSpinner size='medium' />
+                  <p className={styles.calendarLoadingText}>Cargando contenido del calendario...</p>
+                </div>
+              </div>
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>
