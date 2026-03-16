@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LogOut, User, Mail, Phone, Calendar, Shield } from "lucide-react";
+import { LogOut, User, Mail, Phone, Calendar, FileText } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { userState, clearUserData } from "@/store/features/userSlice";
 import { useRouter } from "next/navigation";
@@ -40,6 +40,13 @@ const SettingsPage = () => {
       day: "numeric",
     });
   };
+
+  const subscriptionLabel = (() => {
+    const raw = String(userData.suscription || "").trim();
+    if (!raw) return dict("fields.not_available");
+    if (raw.toLowerCase() === "free") return "Plan Base";
+    return raw;
+  })();
 
   return (
     <div className={styles.settings_container}>
@@ -94,10 +101,10 @@ const SettingsPage = () => {
 
             <div className={styles.info_field}>
               <label className={styles.field_label}>
-                <Shield className={styles.label_icon} />
-                {dict("fields.role")}
+                <FileText className={styles.label_icon} />
+                Suscripción
               </label>
-              <p className={styles.field_value}>{userData.role || dict("roles.user")}</p>
+              <p className={styles.field_value}>{subscriptionLabel}</p>
             </div>
 
             <div className={styles.info_field}>
