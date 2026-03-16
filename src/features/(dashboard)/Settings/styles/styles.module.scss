@@ -227,6 +227,48 @@
   }
 }
 
+.cardHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.profileActions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.field_input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 0.875rem;
+  color: #111827;
+}
+
+.field_input:disabled {
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.formMessage {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.formError {
+  color: #b91c1c;
+}
+
+.formSuccess {
+  color: #047857;
+}
+
 .info_field {
   display: flex;
   flex-direction: column;

@@ -108,6 +108,19 @@ export const patchUserStatus = async (onboarding_status: string) => {
   }
 };
 
+export const patchUserProfile = async (data: { name?: string; lastname?: string; phone?: string }) => {
+  try {
+    const response = await axios.patch(`${API}/user/profile`, data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
+};
+
 export const postFile = async (url: string, file: File, api?: EnvironmentApi) => {
   try {
     const formData = new FormData();

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
 import axios from "@/utils/axiosConfig";
-import { getQuest, postQuest, patchUserStatus } from "@/services/fetch";
+import { getQuest, postQuest, patchUserProfile, patchUserStatus } from "@/services/fetch";
 
 function setBrowserGlobals(cookie: string) {
   (globalThis as any).window = {};
@@ -90,6 +90,25 @@ describe("Axios interceptors", () => {
     const headers = seenConfig.headers;
     const csrf = typeof headers?.get === "function" ? headers.get("x-csrf-token") : headers?.["x-csrf-token"];
     expect(csrf).toBe("token123");
+  });
+
+  it("patchUserProfile usa PATCH /api/user/profile y adjunta x-csrf-token", async () => {
+    setBrowserGlobals("csrfToken=token123");
+    let seenConfig: any = null;
+    axios.defaults.adapter = async (config: any) => {
+      seenConfig = config;
+      return { data: { ok: true }, status: 200, statusText: "OK", headers: {}, config };
+    };
+
+    await patchUserProfile({ name: "A", lastname: "B", phone: "1" });
+
+    expect(String(seenConfig.method).toLowerCase()).toBe("patch");
+    expect(String(seenConfig.url)).toBe("/api/user/profile");
+    const headers = seenConfig.headers;
+    const csrf = typeof headers?.get === "function" ? headers.get("x-csrf-token") : headers?.["x-csrf-token"];
+    expect(csrf).toBe("token123");
+    const data = typeof seenConfig.data === "string" ? JSON.parse(seenConfig.data) : seenConfig.data;
+    expect(data).toEqual({ name: "A", lastname: "B", phone: "1" });
   });
 });
 

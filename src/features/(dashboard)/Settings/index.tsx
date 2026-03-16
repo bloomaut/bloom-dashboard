@@ -1,13 +1,16 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LogOut, User, Mail, Phone, Calendar, FileText } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { userState, clearUserData } from "@/store/features/userSlice";
+import { setUserData, userState, clearUserData } from "@/store/features/userSlice";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { get, patchUserProfile } from "@/services/fetch";
+import { extractUserFromMeResponse } from "@/lib/userMe";
 import styles from "./styles/styles.module.scss";
 
 const SettingsPage = () => {
@@ -16,6 +19,23 @@ const SettingsPage = () => {
   const router = useRouter();
   const { locale } = useParams() as { locale?: string };
   const dict = useTranslations("dict.settings");
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [formSuccess, setFormSuccess] = useState<string | null>(null);
+  const initialForm = useMemo(
+    () => ({
+      name: userData.name || "",
+      lastname: userData.lastname || "",
+      phone: userData.phone || "",
+    }),
+    [userData.name, userData.lastname, userData.phone],
+  );
+  const [form, setForm] = useState(initialForm);
+
+  useEffect(() => {
+    if (!isEditing) setForm(initialForm);
+  }, [initialForm, isEditing]);
 
   const handleLogout = () => {
     // Limpiar datos del usuario en Redux
@@ -48,6 +68,53 @@ const SettingsPage = () => {
     return raw;
   })();
 
+  const updateField = (key: "name" | "lastname" | "phone", value: string) => {
+    setForm(prev => ({ ...prev, [key]: value }));
+    setFormError(null);
+    setFormSuccess(null);
+  };
+
+  const handleSave = async () => {
+    if (isSaving) return;
+    setFormError(null);
+    setFormSuccess(null);
+
+    const normalize = (v: string) => v.trim();
+    const payload: { name?: string; lastname?: string; phone?: string } = {};
+
+    const nextName = normalize(form.name);
+    const nextLastname = normalize(form.lastname);
+    const nextPhone = normalize(form.phone);
+
+    if (nextName !== normalize(initialForm.name)) payload.name = nextName;
+    if (nextLastname !== normalize(initialForm.lastname)) payload.lastname = nextLastname;
+    if (nextPhone !== normalize(initialForm.phone)) payload.phone = nextPhone;
+
+    if (Object.keys(payload).length === 0) {
+      setIsEditing(false);
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      const res = await patchUserProfile(payload);
+      if ((res as any)?.statusCode && (res as any).statusCode !== 200) {
+        throw new Error(String((res as any)?.message || "Error"));
+      }
+
+      const me = await get("user/me");
+      const freshUser = extractUserFromMeResponse(me);
+      if (freshUser) dispatch(setUserData(freshUser));
+
+      setIsEditing(false);
+      setFormSuccess("Cambios guardados");
+    } catch (e: any) {
+      setFormError(e?.message || "No se pudieron guardar los cambios");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className={styles.settings_container}>
       <div className={styles.header_section}>
@@ -60,19 +127,52 @@ const SettingsPage = () => {
       {/* Información del Usuario */}
       <Card className={styles.settings_card}>
         <CardHeader className={styles.card_header}>
-          <CardTitle className={styles.card_title}>
-            <User className={styles.title_icon} />
-            {dict("sections.personal_info")}
-          </CardTitle>
+          <div className={styles.cardHeaderRow}>
+            <CardTitle className={styles.card_title}>
+              <User className={styles.title_icon} />
+              {dict("sections.personal_info")}
+            </CardTitle>
+            <div className={styles.profileActions}>
+              {isEditing ? (
+                <>
+                  <Button variant='outline' size='sm' onClick={() => setIsEditing(false)} disabled={isSaving}>
+                    Cancelar
+                  </Button>
+                  <Button size='sm' onClick={handleSave} disabled={isSaving}>
+                    Guardar
+                  </Button>
+                </>
+              ) : (
+                <Button variant='outline' size='sm' onClick={() => setIsEditing(true)}>
+                  Editar
+                </Button>
+              )}
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
+          {(formError || formSuccess) && (
+            <div className={styles.formMessage}>
+              {formError && <div className={styles.formError}>{formError}</div>}
+              {formSuccess && <div className={styles.formSuccess}>{formSuccess}</div>}
+            </div>
+          )}
           <div className={styles.user_info_grid}>
             <div className={styles.info_field}>
               <label className={styles.field_label}>
                 <User className={styles.label_icon} />
                 {dict("fields.name")}
               </label>
-              <p className={styles.field_value}>{userData.name || dict("fields.not_specified")}</p>
+              {isEditing ? (
+                <input
+                  className={styles.field_input}
+                  value={form.name}
+                  onChange={e => updateField("name", e.target.value)}
+                  disabled={isSaving}
+                />
+              ) : (
+                <p className={styles.field_value}>{userData.name || dict("fields.not_specified")}</p>
+              )}
             </div>
 
             <div className={styles.info_field}>
@@ -80,7 +180,16 @@ const SettingsPage = () => {
                 <User className={styles.label_icon} />
                 {dict("fields.lastname")}
               </label>
-              <p className={styles.field_value}>{userData.lastname || dict("fields.not_specified")}</p>
+              {isEditing ? (
+                <input
+                  className={styles.field_input}
+                  value={form.lastname}
+                  onChange={e => updateField("lastname", e.target.value)}
+                  disabled={isSaving}
+                />
+              ) : (
+                <p className={styles.field_value}>{userData.lastname || dict("fields.not_specified")}</p>
+              )}
             </div>
 
             <div className={styles.info_field}>
@@ -96,7 +205,17 @@ const SettingsPage = () => {
                 <Phone className={styles.label_icon} />
                 {dict("fields.phone")}
               </label>
-              <p className={styles.field_value}>{userData.phone || dict("fields.not_specified")}</p>
+              {isEditing ? (
+                <input
+                  className={styles.field_input}
+                  type='tel'
+                  value={form.phone}
+                  onChange={e => updateField("phone", e.target.value)}
+                  disabled={isSaving}
+                />
+              ) : (
+                <p className={styles.field_value}>{userData.phone || dict("fields.not_specified")}</p>
+              )}
             </div>
 
             <div className={styles.info_field}>
