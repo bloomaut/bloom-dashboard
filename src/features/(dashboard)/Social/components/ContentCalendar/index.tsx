@@ -32,6 +32,7 @@ import {
   clearAllErrors,
   markContentAsCompleted,
 } from "../../store/socialMediaSlice";
+import { isSocialProfileDisabled } from "@/utils/featureFlags";
 import { ContentItem } from "../../types";
 import styles from "./style.module.scss";
 import { Badge } from "@/components/ui/badge";
@@ -232,6 +233,7 @@ const useWeekDates = (weekOffset: number) => {
 export const ContentCalendar = () => {
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict.social");
+  const disableSocialProfile = isSocialProfileDisabled();
 
   // Redux selectors - siempre usa datos de Redux
   const content = useAppSelector(selectContent);
@@ -632,54 +634,61 @@ export const ContentCalendar = () => {
 
       {/* Tarjetas de leyenda de colores y perfil */}
       <div className={styles.cardsGrid}>
-        {/* Tarjeta de perfil */}
-        <div className={styles.profileCard}>
-          <div className={styles.profileCardHeader}>
-            <h3 className={styles.profileCardTitle}>{dict("calendar.profile_card.title")}</h3>
-          </div>
-          <div className={styles.profileCardContent}>
-            {profile ? (
-              <div className={styles.profileContainer}>
-                <div className={styles.profileImageContainer}>
-                  <img src={profile.avatar} alt={profile.username} className={styles.profileImage} />
-                  <div className={styles.profileImageOverlay}>
-                    <div className={styles.profileImageBadge}>{profile.socialMedia.charAt(0).toUpperCase()}</div>
+        {/* Social Profile UI (conexión/validación) temporalmente deshabilitable */}
+        {!disableSocialProfile && (
+          <div className={styles.profileCard}>
+            <div className={styles.profileCardHeader}>
+              <h3 className={styles.profileCardTitle}>{dict("calendar.profile_card.title")}</h3>
+            </div>
+            <div className={styles.profileCardContent}>
+              {profile ? (
+                <div className={styles.profileContainer}>
+                  <div className={styles.profileImageContainer}>
+                    <img src={profile.avatar} alt={profile.username} className={styles.profileImage} />
+                    <div className={styles.profileImageOverlay}>
+                      <div className={styles.profileImageBadge}>{profile.socialMedia.charAt(0).toUpperCase()}</div>
+                    </div>
+                  </div>
+                  <div className={styles.profileInfo}>
+                    <div className={styles.profileHeader}>
+                      <div className={styles.profileUsername}>@{profile.username}</div>
+                      <div className={styles.profilePlatformBadge}>{profile.socialMedia.toUpperCase()}</div>
+                    </div>
+                    <div className={styles.profileBio}>{profile.bio}</div>
                   </div>
                 </div>
-                <div className={styles.profileInfo}>
-                  <div className={styles.profileHeader}>
-                    <div className={styles.profileUsername}>@{profile.username}</div>
-                    <div className={styles.profilePlatformBadge}>{profile.socialMedia.toUpperCase()}</div>
-                  </div>
-                  <div className={styles.profileBio}>{profile.bio}</div>
-                </div>
-              </div>
-            ) : (
-              <div className={styles.noProfile}>
-                <div className={styles.noProfileIcon}>
-                  <svg className={styles.noProfileIconSvg} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
-                    />
-                  </svg>
-                </div>
-                <div className={styles.noProfileContent}>
-                  <div className={styles.noProfileTitle}>{dict("calendar.profile_card.no_profile")}</div>
-                  <div className={styles.noProfileSubtitle}>{dict("calendar.profile_card.connect_subtitle")}</div>
-                  <button className={styles.connectButton}>
-                    <span>{dict("calendar.profile_card.connect_button")}</span>
-                    <svg className={styles.connectButtonIcon} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M13 7l5 5m0 0l-5 5m5-5H6' />
+              ) : (
+                <div className={styles.noProfile}>
+                  <div className={styles.noProfileIcon}>
+                    <svg className={styles.noProfileIconSvg} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+                      />
                     </svg>
-                  </button>
+                  </div>
+                  <div className={styles.noProfileContent}>
+                    <div className={styles.noProfileTitle}>{dict("calendar.profile_card.no_profile")}</div>
+                    <div className={styles.noProfileSubtitle}>{dict("calendar.profile_card.connect_subtitle")}</div>
+                    <button className={styles.connectButton}>
+                      <span>{dict("calendar.profile_card.connect_button")}</span>
+                      <svg className={styles.connectButtonIcon} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth={2}
+                          d='M13 7l5 5m0 0l-5 5m5-5H6'
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Leyenda de colores */}
         <div className={styles.legendCard}>

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
+  fetchContent,
   fetchProfile,
   selectProfile,
   selectIsLoadingProfile,
@@ -15,6 +16,8 @@ import {
 } from "@/features/(dashboard)/Social/store/socialMediaSlice";
 import { SocialMediaSetup } from "@/features/(dashboard)/Social/components/SocialMediaSetup";
 import { SocialMediaDashboard } from "@/features/(dashboard)/Social/components/SocialMediaDashboard";
+import { resolveSocialMediaView } from "@/features/(dashboard)/Social/utils/socialProfileMode";
+import { isSocialProfileDisabled } from "@/utils/featureFlags";
 import { useMessageToast } from "@/hooks/useMessageToast";
 import styles from "./styles/dashboardSocial.module.scss";
 import LoadingSpinner from "@/components/Loading";
@@ -31,30 +34,63 @@ export default function SocialMediaPage() {
   const generalError = useAppSelector(selectError);
   const isProfileConnected = useAppSelector(selectIsProfileConnected);
 
-  // Inicialización: Cargar perfil al montar el componente
+  const disableSocialProfile = isSocialProfileDisabled();
+
+  // Validación de Social Profile (temporalmente desactivable)
+  // Para desactivar el flujo de conexión/validación de redes, seteá:
+  // NEXT_PUBLIC_DISABLE_SOCIAL_PROFILE=true
   useEffect(() => {
     console.log("🚀 Inicializando página de Social Media...");
+
+    if (disableSocialProfile) {
+      const today = new Date();
+      const dayOfWeek = today.getDay();
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - dayOfWeek);
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+      const startDate = startOfWeek.toISOString().split("T")[0];
+      const endDate = endOfWeek.toISOString().split("T")[0];
+
+      dispatch(fetchContent({ startDate, endDate }));
+      return;
+    }
+
     dispatch(fetchProfile());
-  }, [dispatch]);
+  }, [dispatch, disableSocialProfile]);
 
   // Manejo de errores del perfil
   useEffect(() => {
+    if (disableSocialProfile) return;
+
     if (profileError) {
       console.error("❌ Error de perfil:", profileError);
       notifyError(`${dict("notifications.profile_error")} ${profileError}`);
       // Limpiar solo el error de perfil después de mostrarlo
       dispatch(clearError());
     }
-  }, [profileError, notifyError, dispatch, dict]);
+  }, [profileError, notifyError, dispatch, dict, disableSocialProfile]);
 
   // Manejo de errores generales
   useEffect(() => {
+    if (disableSocialProfile) return;
+
     if (generalError && !profileError) {
       console.error("❌ Error general:", generalError);
       notifyError(`${dict("notifications.general_error")} ${generalError}`);
       dispatch(clearError());
     }
-  }, [generalError, profileError, notifyError, dispatch, dict]);
+  }, [generalError, profileError, notifyError, dispatch, dict, disableSocialProfile]);
+
+  // Modo directo al calendario (sin validación de Social Profile)
+  if (disableSocialProfile) {
+    return (
+      <div className={styles.socialMediaPage} id='social-media-page'>
+        <SocialMediaDashboard />
+      </div>
+    );
+  }
 
   // Estado de carga inicial
   if (!isLoadingProfile && !profile) {
@@ -86,21 +122,18 @@ export default function SocialMediaPage() {
     );
   }
 
-  // Lógica de derivación de pantallas
-  // Si no hay perfil conectado o no tiene cuentas conectadas -> Setup
-  // Si tiene perfil conectado -> Dashboard
-  const shouldShowSetup = !isProfileConnected || !profile?.connected;
+  const view = resolveSocialMediaView({ disableSocialProfile, profile, isProfileConnected });
 
   console.log("📊 Estado actual:", {
     hasProfile: Boolean(profile),
     isConnected: isProfileConnected,
     profileConnected: profile?.connected,
-    shouldShowSetup,
+    view,
   });
 
   return (
     <div className={styles.socialMediaPage} id='social-media-page'>
-      {shouldShowSetup ? <SocialMediaSetup /> : <SocialMediaDashboard />}
+      {view === "setup" ? <SocialMediaSetup /> : <SocialMediaDashboard />}
     </div>
   );
 }
