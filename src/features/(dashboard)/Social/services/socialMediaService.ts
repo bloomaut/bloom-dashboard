@@ -28,14 +28,11 @@ import { mapLegacyContentItemToContentPiece, mapRawContentPieceToContentPiece } 
  */
 export const getSocialMediaProfile = async (): Promise<SocialMediaProfile> => {
   try {
-    const response = await axios.get<{ data: ProfileApiResponse }>("/api/social-media/profile");
-
-    // Validar que la respuesta tenga la estructura esperada
-    if (!response.data?.data?.result?.profile) {
-      throw new Error("Estructura de respuesta inválida: no se encontró el perfil");
-    }
-
-    const { data: apiResponse } = response.data;
+    const response = await axios.get<any>("/api/social-media/profile");
+    const apiResponse: ProfileApiResponse | null = (response.data?.data ??
+      response.data ??
+      null) as ProfileApiResponse | null;
+    if (!apiResponse?.result?.profile) throw new Error("Estructura de respuesta inválida: no se encontró el perfil");
 
     // Validar que el statusCode sea exitoso
     if (apiResponse.statusCode !== 200) {
@@ -77,19 +74,17 @@ export const getSocialMediaContent = async (params: GetContentParams): Promise<{
     }
 
     // Realizar la petición con query parameters
-    const response = await axios.get<{ data: ContentApiResponse }>("/api/social-media/content", {
+    const response = await axios.get<any>("/api/social-media/content", {
       params: {
         startDate,
         endDate,
       },
     });
 
-    // Validar que la respuesta tenga la estructura esperada
-    if (!response.data?.data?.result) {
-      throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
-    }
-
-    const { data: apiResponse } = response.data;
+    const apiResponse: ContentApiResponse | null = (response.data?.data ??
+      response.data ??
+      null) as ContentApiResponse | null;
+    if (!apiResponse?.result) throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
 
     // Validar que el statusCode sea exitoso
     if (apiResponse.statusCode !== 200) {
@@ -143,16 +138,14 @@ export const connectTikTokAccount = async (params: ConnectTikTokParams): Promise
     }
 
     // Realizar la petición PUT
-    const response = await axios.put<{ data: ConnectTikTokResponse }>("/api/social-media/connect/tiktok", {
+    const response = await axios.put<any>("/api/social-media/connect/tiktok", {
       code: code.trim(),
     });
 
-    // Validar que la respuesta tenga la estructura esperada
-    if (!response.data?.data?.result) {
-      throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
-    }
-
-    const { data: apiResponse } = response.data;
+    const apiResponse: ConnectTikTokResponse | null = (response.data?.data ??
+      response.data ??
+      null) as ConnectTikTokResponse | null;
+    if (!apiResponse?.result) throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
 
     // Validar que el statusCode sea exitoso
     if (apiResponse.statusCode !== 200) {
@@ -232,18 +225,16 @@ export const createNextWeekContent = async (params: CreateNextWeekContentParams)
       }
     }
 
-    const response = await axios.post<{ data: CreateNextWeekContentResponse }>("/api/social-media/pipeline", null, {
+    const response = await axios.post<any>("/api/social-media/pipeline", null, {
       params: {
         pipelineType,
       },
     });
 
-    // Validar que la respuesta tenga la estructura esperada
-    if (!response.data?.data?.result) {
-      throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
-    }
-
-    const { data: apiResponse } = response.data;
+    const apiResponse: CreateNextWeekContentResponse | null = (response.data?.data ??
+      response.data ??
+      null) as CreateNextWeekContentResponse | null;
+    if (!apiResponse?.result) throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
 
     // Validar que el statusCode sea exitoso
     if (apiResponse.statusCode !== 200) {
