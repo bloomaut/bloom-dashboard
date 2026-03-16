@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { LogOut, User, Mail, Phone, Calendar, FileText } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setUserData, userState, clearUserData } from "@/store/features/userSlice";
-import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { get, patchUserProfile } from "@/services/fetch";
@@ -16,7 +15,6 @@ import styles from "./styles/styles.module.scss";
 const SettingsPage = () => {
   const userData = useAppSelector(userState);
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const { locale } = useParams() as { locale?: string };
   const dict = useTranslations("dict.settings");
   const [isEditing, setIsEditing] = useState(false);
@@ -135,15 +133,21 @@ const SettingsPage = () => {
             <div className={styles.profileActions}>
               {isEditing ? (
                 <>
-                  <Button variant='outline' size='sm' onClick={() => setIsEditing(false)} disabled={isSaving}>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    onClick={() => setIsEditing(false)}
+                    disabled={isSaving}
+                    className='border-primary bg-primary/10 text-primary hover:bg-primary/15 hover:text-primary'
+                  >
                     Cancelar
                   </Button>
-                  <Button size='sm' onClick={handleSave} disabled={isSaving}>
+                  <Button size='sm' onClick={handleSave} disabled={isSaving} className='shadow-sm'>
                     Guardar
                   </Button>
                 </>
               ) : (
-                <Button variant='outline' size='sm' onClick={() => setIsEditing(true)}>
+                <Button size='sm' onClick={() => setIsEditing(true)} className='shadow-sm'>
                   Editar
                 </Button>
               )}
