@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { LogOut, User, Mail, Phone, Calendar, FileText } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setUserData, userState, clearUserData } from "@/store/features/userSlice";
@@ -133,32 +132,22 @@ const SettingsPage = () => {
             <div className={styles.profileActions}>
               {isEditing ? (
                 <>
-                  <Button
-                    variant='outline'
-                    size='sm'
+                  <button
+                    type='button'
                     onClick={() => setIsEditing(false)}
                     disabled={isSaving}
-                    className='border-[#ef4444] bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20 hover:text-[#ef4444] h-9 px-4'
+                    className={styles.secondaryActionButton}
                   >
                     Cancelar
-                  </Button>
-                  <Button
-                    size='sm'
-                    onClick={handleSave}
-                    disabled={isSaving}
-                    className='bg-[#ef4444] text-white hover:bg-[#dc2626] shadow-sm h-9 px-4'
-                  >
+                  </button>
+                  <button type='button' onClick={handleSave} disabled={isSaving} className={styles.primaryActionButton}>
                     Guardar
-                  </Button>
+                  </button>
                 </>
               ) : (
-                <Button
-                  size='sm'
-                  onClick={() => setIsEditing(true)}
-                  className='bg-[#ef4444] text-white hover:bg-[#dc2626] shadow-sm h-9 px-4'
-                >
+                <button type='button' onClick={() => setIsEditing(true)} className={styles.primaryActionButton}>
                   Editar
-                </Button>
+                </button>
               )}
             </div>
           </div>
