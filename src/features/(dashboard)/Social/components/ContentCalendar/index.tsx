@@ -34,7 +34,7 @@ import {
   updateContentItem,
 } from "../../store/socialMediaSlice";
 import { isSocialProfileDisabled } from "@/utils/featureFlags";
-import { ContentStatus, IContentPiece } from "../../types";
+import { ContentStatus, IContentPiece, Platform } from "../../types";
 import styles from "./style.module.scss";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -360,10 +360,7 @@ export const ContentCalendar = () => {
       setSelectedContent(prev => (prev ? { ...prev, status: nextStatus } : null));
     };
 
-    const title =
-      selectedContent.narrativeDetails.message ||
-      selectedContent.script?.[0]?.[0] ||
-      `${selectedContent.strategy.intention} • ${selectedContent.strategy.narrative}`;
+    const title = selectedContent.title ?? "Sin titulo";
 
     const scriptText = (selectedContent.script || [])
       .map(block => block.join(" "))
@@ -529,8 +526,9 @@ export const ContentCalendar = () => {
 
     const handleItemClick = () => setSelectedContent(item);
 
-    const title = item.narrativeDetails.message || item.script?.[0]?.[0] || `${item.strategy.intention}`;
+    const title = item.title ?? "Sin titulo";
     const description = item.script?.[0]?.join(" ") || item.narrativeDetails.message || "";
+    const platformLabel = String((item.platform ?? Platform.TIKTOK) || Platform.TIKTOK).toUpperCase();
 
     return (
       <div key={item.id} className={`${styles.contentItem} ${styles[colors.bg]}`} onClick={handleItemClick}>
@@ -542,7 +540,7 @@ export const ContentCalendar = () => {
           {item.status === ContentStatus.APPROVED && <CheckCircle className='h-3 w-3 text-green-600' />}
         </div>
 
-        <div className={styles.contentItemPillar}>{item.strategy.intention}</div>
+        <div className={styles.contentItemPillar}>{platformLabel}</div>
 
         <div className={styles.contentItemDescription}>{truncateText(description, 50)}</div>
       </div>

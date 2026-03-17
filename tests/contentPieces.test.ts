@@ -58,6 +58,7 @@ describe("mapRawContentPieceToContentPiece", () => {
       id: "69b44572f748b259065d69f3",
       weekStrategyId: "69b44567f748b259065d69cf",
       platform: Platform.TIKTOK,
+      title: null,
       day: DayOfWeek.MONDAY,
       dayTime: DayTime.MORNING,
       publishDate: { date: "2026-03-17T17:12:01.239Z" },

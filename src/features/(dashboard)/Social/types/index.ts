@@ -154,6 +154,7 @@ export interface IContentPiece {
   id: string;
   weekStrategyId: string;
   platform: Platform;
+  title: string | null;
   day: DayOfWeek;
   dayTime: DayTime;
   publishDate: PublishDate;

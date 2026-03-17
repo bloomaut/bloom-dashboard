@@ -19,6 +19,7 @@ type RawContentPiece = {
   weeklyStrategy?: unknown;
   weekStrategyId?: unknown;
   platform?: unknown;
+  title?: unknown;
   day?: unknown;
   dayTime?: unknown;
   publishDate?: unknown;
@@ -157,6 +158,7 @@ export function mapRawContentPieceToContentPiece(raw: unknown): IContentPiece | 
   const dayTime = isEnumValue(DayTime, r.dayTime) ? (r.dayTime as DayTime) : null;
   const status = isEnumValue(ContentStatus, r.status) ? (r.status as ContentStatus) : null;
   const platform = isEnumValue(Platform, r.platform) ? (r.platform as Platform) : Platform.TIKTOK;
+  const title = asString(r.title) ?? asString((raw as any)?.title) ?? null;
 
   const publishDateValue = asString(r.publishDate) ?? asString((r.publishDate as any)?.date) ?? null;
   const script = asStringArray2D(r.script) ?? [];
@@ -167,6 +169,7 @@ export function mapRawContentPieceToContentPiece(raw: unknown): IContentPiece | 
     id,
     weekStrategyId,
     platform,
+    title,
     day,
     dayTime,
     publishDate: { date: publishDateValue },
@@ -195,12 +198,14 @@ export function mapLegacyContentItemToContentPiece(raw: unknown): IContentPiece 
   if (!id || !dayIso || !day || !dayTime) return null;
 
   const content = isRecord(r.content) ? r.content : {};
+  const title = asString(content.title) ?? null;
   const caption = asString(content.copy) ?? asString(content.cta_copy) ?? undefined;
 
   return {
     id,
     weekStrategyId: "",
     platform,
+    title,
     day,
     dayTime,
     publishDate: { date: dayIso },
