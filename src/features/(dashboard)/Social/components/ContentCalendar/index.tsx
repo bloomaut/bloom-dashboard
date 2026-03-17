@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { CheckCircle, Clock, Video, X, Calendar, ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import { CheckCircle, Video, Calendar, ChevronLeft, ChevronRight, Volume2 } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import {
   selectContent,
@@ -19,7 +19,6 @@ import {
 import { isSocialProfileDisabled } from "@/utils/featureFlags";
 import { ContentStatus, IContentPiece, Platform } from "../../types";
 import styles from "./style.module.scss";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LoadingSpinner from "@/components/Loading";
@@ -326,8 +325,6 @@ export const ContentCalendar = () => {
   const renderContentModal = useCallback(() => {
     if (!selectedContent) return null;
 
-    const colors = TIME_PERIOD_COLORS[selectedContent.dayTime as unknown as keyof typeof TIME_PERIOD_COLORS];
-
     const handleCloseModal = () => setSelectedContent(null);
 
     const handleToggleCompleted = () => {
@@ -365,14 +362,6 @@ export const ContentCalendar = () => {
       }
     })();
 
-    const tensionMeta = (() => {
-      const raw = String(selectedContent.strategy.tensionLevel || "").toLowerCase();
-      if (raw === "high") return { label: "Alta", className: styles.tensionHigh };
-      if (raw === "medium") return { label: "Media", className: styles.tensionMedium };
-      if (raw === "low") return { label: "Baja", className: styles.tensionLow };
-      return { label: String(selectedContent.strategy.tensionLevel), className: styles.tensionMedium };
-    })();
-
     const scriptScenes = selectedContent.script || [];
     const scriptPlain = scriptScenes
       .map(scene => scene.join(" "))
@@ -380,24 +369,50 @@ export const ContentCalendar = () => {
       .join("\n\n");
 
     const firstScene = selectedContent.blueprint?.scenes?.[0];
-    const blueprintCameraLabel = firstScene?.camera ? String(firstScene.camera) : "";
-    const blueprintShotLabel = firstScene?.shot ? String(firstScene.shot) : "";
-    const blueprintOverlays = Array.isArray(firstScene?.overlays) ? firstScene!.overlays : [];
+    const toLabel = (input: string) => input.replace(/_/g, " ").replace(/-/g, " ").trim();
 
-    const chipLabel = (input: string) => {
-      const v = input.replace(/_/g, " ").replace(/-/g, " ").trim();
-      return v.length ? v.charAt(0).toUpperCase() + v.slice(1) : v;
-    };
+    const cameraLabel = (() => {
+      const raw = firstScene?.camera ? String(firstScene.camera) : "";
+      if (!raw) return null;
+      if (raw === "selfie") return "selfie";
+      if (raw === "screen") return "pantalla";
+      if (raw === "back") return "trasera";
+      return toLabel(raw).toLowerCase();
+    })();
 
-    const overlayLabel = (o: any) => {
-      const type = typeof o?.type === "string" ? o.type : "";
-      const value = typeof o?.value === "string" ? o.value : "";
-      if (!type && !value) return "";
-      if (type === "subtitles") return value ? `Subtítulos ${value}` : "Subtítulos";
-      if (type === "simple_text") return value ? `Texto ${value}` : "Texto";
-      if (type === "narrative_text") return value ? `Narrativa ${value}` : "Narrativa";
-      if (type === "media") return value ? `Media ${value}` : "Media";
-      return value || chipLabel(type);
+    const shotLabel = (() => {
+      const raw = firstScene?.shot ? String(firstScene.shot) : "";
+      if (!raw) return null;
+      if (raw === "short_plane") return "plano corto";
+      if (raw === "medium_plane") return "plano medio";
+      if (raw === "open_plane") return "plano abierto";
+      return toLabel(raw).toLowerCase();
+    })();
+
+    const overlayChips = (() => {
+      const overlays = Array.isArray(firstScene?.overlays) ? firstScene!.overlays : [];
+      return overlays
+        .map(o => {
+          const type = typeof (o as any)?.type === "string" ? String((o as any).type) : "";
+          const value = typeof (o as any)?.value === "string" ? String((o as any).value) : "";
+          if (!type) return null;
+          if (type === "subtitles") return value ? `subtítulos · ${value}` : "subtítulos";
+          if (type === "simple_text") return value ? `texto · ${value}` : "texto";
+          if (type === "narrative_text") return value ? `narrativa · ${value}` : "narrativa";
+          if (type === "media") return value ? `media · ${value}` : "media";
+          return value ? `${toLabel(type).toLowerCase()} · ${value}` : toLabel(type).toLowerCase();
+        })
+        .filter(Boolean)
+        .slice(0, 3) as string[];
+    })();
+
+    const hookText = (selectedContent.narrativeDetails.message || "").trim() || (scriptScenes[0]?.[0] || "").trim();
+
+    const getSceneLines = (sceneIndex: number) => {
+      const scene = scriptScenes[sceneIndex] || [];
+      const lines = scene.map(s => String(s || "").trim()).filter(Boolean);
+      if (sceneIndex === 0 && hookText) return lines.filter(l => l !== hookText);
+      return lines;
     };
 
     const handleCopyScript = async () => {
@@ -424,7 +439,7 @@ export const ContentCalendar = () => {
     return (
       <div className={styles.modalOverlay} onClick={handleCloseModal}>
         <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-          <div className={`${styles.modalHeader} ${styles[colors.header]}`}>
+          <div className={styles.modalHeaderSimple}>
             <div className={styles.modalHeaderContent}>
               <div className={styles.modalHeaderInfo}>
                 <div className={styles.modalMetaRow}>
@@ -441,105 +456,101 @@ export const ContentCalendar = () => {
               </div>
               <div className={styles.modalHeaderActions}>
                 <span className={`${styles.statusBadge} ${statusMeta.className}`}>{statusMeta.label}</span>
-                <button type='button' onClick={handleCloseModal} className={styles.closeButton}>
-                  <X className='h-5 w-5' />
-                </button>
               </div>
             </div>
           </div>
 
           <div className={styles.modalBody}>
             <div className={styles.modalSection}>
-              <div className={styles.metaGrid}>
-                <div className={styles.metaCard}>
-                  <div className={styles.metaLabel}>Pilar</div>
-                  <div className={styles.metaValue}>{chipLabel(String(selectedContent.strategy.intention))}</div>
-                </div>
-                <div className={styles.metaCard}>
-                  <div className={styles.metaLabel}>Narrativa</div>
-                  <div className={styles.metaValue}>{chipLabel(String(selectedContent.strategy.narrative))}</div>
-                </div>
-                <div className={styles.metaCard}>
-                  <div className={styles.metaLabel}>Tensión</div>
-                  <div className={`${styles.metaValue} ${tensionMeta.className}`}>{tensionMeta.label}</div>
-                </div>
-                <div className={styles.metaCard}>
-                  <div className={styles.metaLabel}>CTA</div>
-                  <div className={styles.metaValue}>{chipLabel(String(selectedContent.strategy.ctaType))}</div>
-                </div>
-                <div className={styles.metaCard}>
-                  <div className={styles.metaLabel}>Hook</div>
-                  <div className={styles.metaValue}>{chipLabel(String(selectedContent.strategy.hookFunction))}</div>
-                </div>
-                <div className={styles.metaCard}>
-                  <div className={styles.metaLabel}>Escena</div>
-                  <div className={styles.metaValue}>{selectedContent.strategy.sceneStrategyId || "-"}</div>
-                </div>
+              <div className={styles.sectionTitle}>Guión</div>
+              <div className={styles.scriptStack}>
+                {scriptScenes.map((_, idx) => {
+                  const lines = getSceneLines(idx);
+                  const hasAny = lines.length > 0 || (idx === 0 && Boolean(hookText));
+                  if (!hasAny) return null;
+
+                  const isLast = idx === scriptScenes.length - 1;
+                  return (
+                    <div key={idx}>
+                      {idx > 0 && <div className={styles.scriptDivider} />}
+                      {isLast ? (
+                        <div className={styles.sceneTitleRow}>
+                          <div className={styles.sceneTitle}>Escena {idx + 1}</div>
+                          <span className={styles.sceneCtaBadge}>cta</span>
+                        </div>
+                      ) : (
+                        <div className={styles.sceneTitle}>Escena {idx + 1}</div>
+                      )}
+                      <div className={styles.sceneBody}>
+                        {idx === 0 && hookText && (
+                          <div className={styles.hookHighlight}>
+                            <div className={styles.hookLabel}>Hook</div>
+                            <div className={styles.hookText}>{hookText}</div>
+                          </div>
+                        )}
+                        {lines.map((line, lineIdx) => (
+                          <div key={lineIdx} className={styles.bulletRow}>
+                            <div className={styles.bulletDash}>—</div>
+                            <div className={styles.bulletText}>{line}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            <div className={styles.modalSection}>
-              <div className={styles.sectionTitle}>Mensaje principal</div>
-              <div className={styles.sectionBodyText}>{selectedContent.narrativeDetails.message || "-"}</div>
-              {selectedContent.narrativeDetails.proofType && (
-                <div className={styles.inlineMetaRow}>
-                  <span className={styles.inlineMetaLabel}>Prueba:</span>
-                  <span className={styles.inlineMetaChip}>{selectedContent.narrativeDetails.proofType}</span>
-                </div>
-              )}
-            </div>
-
-            {scriptScenes.length > 0 && (
+            {firstScene && (
               <div className={styles.modalSection}>
-                <div className={styles.sectionTitle}>Guión · {scriptScenes.length} escenas</div>
-                <div className={styles.scriptScenes}>
-                  {scriptScenes.map((scene, idx) => {
-                    const text = scene.join(" ").trim();
-                    if (!text) return null;
-                    const isLast = idx === scriptScenes.length - 1;
-                    return (
-                      <div key={idx} className={styles.scriptScene}>
-                        <div className={styles.scriptSceneHeader}>
-                          <div className={styles.scriptSceneLabel}>
-                            Escena {idx + 1}
-                            {isLast && <span className={styles.ctaPill}>CTA</span>}
-                          </div>
-                        </div>
-                        <div className={styles.scriptSceneText}>{text}</div>
+                <div className={styles.sectionTitle}>Escenas</div>
+                <div className={styles.sceneCard}>
+                  <div className={styles.sceneCardHeader}>
+                    <div className={styles.sceneCardTitle}>Escena 1</div>
+                    <div className={styles.sceneCardChips}>
+                      {cameraLabel && <span className={styles.sceneChip}>{cameraLabel}</span>}
+                      {shotLabel && <span className={styles.sceneChip}>{shotLabel}</span>}
+                    </div>
+                  </div>
+                  <div className={styles.sceneCardBody}>
+                    {(firstScene.action || "").trim().length > 0 && (
+                      <div>
+                        <div className={styles.sceneFieldLabel}>Acción</div>
+                        <div className={styles.sceneFieldValue}>{firstScene.action}</div>
                       </div>
-                    );
-                  })}
+                    )}
+                    {(firstScene.instruction || "").trim().length > 0 && (
+                      <div>
+                        <div className={styles.sceneFieldLabel}>Instrucción de grabación</div>
+                        <div className={styles.sceneFieldValueSecondary}>{firstScene.instruction}</div>
+                      </div>
+                    )}
+                    {overlayChips.length > 0 && (
+                      <div>
+                        <div className={styles.sceneFieldLabel}>Overlays</div>
+                        <div className={styles.overlayChips}>
+                          {overlayChips.map((c, idx) => (
+                            <span key={idx} className={styles.overlayChip}>
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
 
-            {firstScene && (
+            {(selectedContent.blueprint.sound || "").trim().length > 0 && (
               <div className={styles.modalSection}>
-                <div className={styles.sectionTitle}>Blueprint · Escena 1</div>
-                <div className={styles.blueprintChips}>
-                  {blueprintCameraLabel && (
-                    <span className={styles.blueprintChip}>{chipLabel(blueprintCameraLabel)}</span>
-                  )}
-                  {blueprintShotLabel && <span className={styles.blueprintChip}>{chipLabel(blueprintShotLabel)}</span>}
-                  {blueprintOverlays
-                    .map(overlayLabel)
-                    .filter(Boolean)
-                    .slice(0, 3)
-                    .map((label, idx) => (
-                      <span key={idx} className={styles.blueprintChip}>
-                        {label}
-                      </span>
-                    ))}
-                </div>
-                {(firstScene.instruction || firstScene.action) && (
-                  <div className={styles.blueprintText}>{firstScene.instruction || firstScene.action}</div>
-                )}
-                {selectedContent.blueprint.sound && (
-                  <div className={styles.inlineMetaRow}>
-                    <span className={styles.inlineMetaLabel}>Sonido:</span>
-                    <span className={styles.inlineMetaValue}>{selectedContent.blueprint.sound}</span>
+                <div className={styles.soundRow}>
+                  <Volume2 className={styles.soundIcon} />
+                  <div>
+                    <div className={styles.soundLabel}>Sonido</div>
+                    <div className={styles.soundValue}>{selectedContent.blueprint.sound}</div>
                   </div>
-                )}
+                </div>
               </div>
             )}
 
