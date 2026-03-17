@@ -2,24 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import {
-  CheckCircle,
-  Clock,
-  Video,
-  X,
-  Calendar,
-  Hash,
-  Target,
-  MessageSquare,
-  Lightbulb,
-  Heart,
-  Brain,
-  Play,
-  ChevronLeft,
-  ChevronRight,
-  FileText,
-  Settings,
-} from "lucide-react";
+import { CheckCircle, Clock, Video, X, Calendar, ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import {
   selectContent,
@@ -362,154 +345,219 @@ export const ContentCalendar = () => {
 
     const title = selectedContent.title ?? "Sin titulo";
 
-    const scriptText = (selectedContent.script || [])
-      .map(block => block.join(" "))
+    const dayNames = getDaysOfWeek(dict);
+    const dayLabel = dayNames[selectedContent.publishDateObj.getDay()] || "";
+    const timeLabel = dict(`calendar.time_periods.${selectedContent.dayTime}`);
+    const dateLabel = selectedContent.publishDateObj
+      .toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })
+      .replace(/\./g, "");
+
+    const statusMeta = (() => {
+      switch (selectedContent.status) {
+        case ContentStatus.DRAFT:
+          return { label: "Borrador", className: styles.statusDraft };
+        case ContentStatus.IN_REVIEW:
+          return { label: "En revisión", className: styles.statusReview };
+        case ContentStatus.APPROVED:
+          return { label: "Completado", className: styles.statusApproved };
+        default:
+          return { label: String(selectedContent.status), className: styles.statusDraft };
+      }
+    })();
+
+    const tensionMeta = (() => {
+      const raw = String(selectedContent.strategy.tensionLevel || "").toLowerCase();
+      if (raw === "high") return { label: "Alta", className: styles.tensionHigh };
+      if (raw === "medium") return { label: "Media", className: styles.tensionMedium };
+      if (raw === "low") return { label: "Baja", className: styles.tensionLow };
+      return { label: String(selectedContent.strategy.tensionLevel), className: styles.tensionMedium };
+    })();
+
+    const scriptScenes = selectedContent.script || [];
+    const scriptPlain = scriptScenes
+      .map(scene => scene.join(" "))
       .filter(Boolean)
       .join("\n\n");
+
+    const firstScene = selectedContent.blueprint?.scenes?.[0];
+    const blueprintCameraLabel = firstScene?.camera ? String(firstScene.camera) : "";
+    const blueprintShotLabel = firstScene?.shot ? String(firstScene.shot) : "";
+    const blueprintOverlays = Array.isArray(firstScene?.overlays) ? firstScene!.overlays : [];
+
+    const chipLabel = (input: string) => {
+      const v = input.replace(/_/g, " ").replace(/-/g, " ").trim();
+      return v.length ? v.charAt(0).toUpperCase() + v.slice(1) : v;
+    };
+
+    const overlayLabel = (o: any) => {
+      const type = typeof o?.type === "string" ? o.type : "";
+      const value = typeof o?.value === "string" ? o.value : "";
+      if (!type && !value) return "";
+      if (type === "subtitles") return value ? `Subtítulos ${value}` : "Subtítulos";
+      if (type === "simple_text") return value ? `Texto ${value}` : "Texto";
+      if (type === "narrative_text") return value ? `Narrativa ${value}` : "Narrativa";
+      if (type === "media") return value ? `Media ${value}` : "Media";
+      return value || chipLabel(type);
+    };
+
+    const handleCopyScript = async () => {
+      if (!scriptPlain) return;
+      try {
+        if (navigator?.clipboard?.writeText) {
+          await navigator.clipboard.writeText(scriptPlain);
+          return;
+        }
+      } catch {}
+
+      try {
+        const el = document.createElement("textarea");
+        el.value = scriptPlain;
+        el.style.position = "fixed";
+        el.style.opacity = "0";
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+      } catch {}
+    };
 
     return (
       <div className={styles.modalOverlay} onClick={handleCloseModal}>
         <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-          {/* Header */}
           <div className={`${styles.modalHeader} ${styles[colors.header]}`}>
             <div className={styles.modalHeaderContent}>
               <div className={styles.modalHeaderInfo}>
-                <Video className='h-5 w-5' />
-                <div>
+                <div className={styles.modalMetaRow}>
+                  <span className={styles.modalMetaText}>
+                    {dayLabel} · {timeLabel}
+                  </span>
+                  <span className={styles.modalMetaDot} />
+                  <span className={styles.modalMetaText}>{dateLabel}</span>
+                </div>
+                <div className={styles.modalTitleRow}>
+                  <Video className={styles.modalTitleIcon} />
                   <div className={styles.modalTitle}>{title}</div>
-                  <div className={styles.modalSubtitle}>
-                    <Calendar className='h-3 w-3' />
-                    <div>{selectedContent.publishDateObj.toLocaleDateString("es-ES")}</div>
-                    <div>•</div>
-                    <div className='capitalize'>{dict(`calendar.time_periods.${selectedContent.dayTime}`)}</div>
-                    {selectedContent.status === ContentStatus.APPROVED && (
-                      <>
-                        <div>•</div>
-                        <CheckCircle className='h-3 w-3 text-green-600' />
-                        <div>{dict("calendar.content.completed")}</div>
-                      </>
-                    )}
-                  </div>
                 </div>
               </div>
-              <button onClick={handleCloseModal} className={styles.closeButton}>
-                <X className='h-5 w-5' />
-              </button>
+              <div className={styles.modalHeaderActions}>
+                <span className={`${styles.statusBadge} ${statusMeta.className}`}>{statusMeta.label}</span>
+                <button type='button' onClick={handleCloseModal} className={styles.closeButton}>
+                  <X className='h-5 w-5' />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Content */}
           <div className={styles.modalBody}>
-            {/* Basic Info */}
-            <div className={styles.basicInfoGrid}>
-              <div className={styles.infoSection}>
-                <h4>{dict("calendar.modal.basic_info")}</h4>
-                <div className={styles.infoList}>
-                  <div className={styles.infoItem}>
-                    <Target className='h-4 w-4 text-gray-500' />
-                    <div className={styles.infoLabel}>{dict("calendar.modal.pillar")}:</div>
-                    <Badge variant='secondary'>{selectedContent.strategy.intention}</Badge>
-                  </div>
-                  <div className={styles.infoItem}>
-                    <Play className='h-4 w-4 text-gray-500' />
-                    <div className={styles.infoLabel}>{dict("calendar.modal.type")}:</div>
-                    <div>{selectedContent.strategy.narrative}</div>
-                  </div>
-                  <div className={styles.infoItem}>
-                    <div className={styles.infoLabel}>{dict("calendar.modal.social_media")}:</div>
-                    <Badge variant='outline'>{selectedContent.platform.toUpperCase()}</Badge>
-                  </div>
+            <div className={styles.modalSection}>
+              <div className={styles.metaGrid}>
+                <div className={styles.metaCard}>
+                  <div className={styles.metaLabel}>Pilar</div>
+                  <div className={styles.metaValue}>{chipLabel(String(selectedContent.strategy.intention))}</div>
                 </div>
-              </div>
-              <div className={styles.infoSection}>
-                <h4>{dict("calendar.modal.status")}</h4>
-                <div className={styles.infoList}>
-                  <div className={styles.infoItem}>
-                    {selectedContent.status === ContentStatus.APPROVED ? (
-                      <>
-                        <CheckCircle className='h-4 w-4 text-green-600' />
-                        <div className={styles.statusCompleted}>{dict("calendar.content.completed")}</div>
-                      </>
-                    ) : (
-                      <>
-                        <Clock className='h-4 w-4 text-orange-600' />
-                        <div className={styles.statusPending}>{dict("calendar.content.pending")}</div>
-                      </>
-                    )}
-                  </div>
-                  {/* Botón para marcar como completado */}
-                  <Button
-                    variant={selectedContent.status === ContentStatus.APPROVED ? "outline" : "default"}
-                    size='sm'
-                    onClick={handleToggleCompleted}
-                    className='mt-2'
-                  >
-                    {selectedContent.status === ContentStatus.APPROVED
-                      ? dict("calendar.modal.mark_pending")
-                      : dict("calendar.modal.mark_completed")}
-                  </Button>
+                <div className={styles.metaCard}>
+                  <div className={styles.metaLabel}>Narrativa</div>
+                  <div className={styles.metaValue}>{chipLabel(String(selectedContent.strategy.narrative))}</div>
+                </div>
+                <div className={styles.metaCard}>
+                  <div className={styles.metaLabel}>Tensión</div>
+                  <div className={`${styles.metaValue} ${tensionMeta.className}`}>{tensionMeta.label}</div>
+                </div>
+                <div className={styles.metaCard}>
+                  <div className={styles.metaLabel}>CTA</div>
+                  <div className={styles.metaValue}>{chipLabel(String(selectedContent.strategy.ctaType))}</div>
+                </div>
+                <div className={styles.metaCard}>
+                  <div className={styles.metaLabel}>Hook</div>
+                  <div className={styles.metaValue}>{chipLabel(String(selectedContent.strategy.hookFunction))}</div>
+                </div>
+                <div className={styles.metaCard}>
+                  <div className={styles.metaLabel}>Escena</div>
+                  <div className={styles.metaValue}>{selectedContent.strategy.sceneStrategyId || "-"}</div>
                 </div>
               </div>
             </div>
 
-            {/* Script */}
-            {scriptText && (
-              <div className={styles.contentSection}>
-                <h4>{dict("calendar.modal.script")}</h4>
-                <div className={`${styles.contentBox} ${styles.scriptBox}`}>{scriptText}</div>
-              </div>
-            )}
-
-            <div className={styles.contentSection}>
-              <h4>
-                <MessageSquare className='h-4 w-4' />
-                <div>{dict("calendar.modal.copy")}</div>
-              </h4>
-              <div className={styles.contentBox}>{selectedContent.caption ?? ""}</div>
+            <div className={styles.modalSection}>
+              <div className={styles.sectionTitle}>Mensaje principal</div>
+              <div className={styles.sectionBodyText}>{selectedContent.narrativeDetails.message || "-"}</div>
+              {selectedContent.narrativeDetails.proofType && (
+                <div className={styles.inlineMetaRow}>
+                  <span className={styles.inlineMetaLabel}>Prueba:</span>
+                  <span className={styles.inlineMetaChip}>{selectedContent.narrativeDetails.proofType}</span>
+                </div>
+              )}
             </div>
 
-            {selectedContent.narrativeDetails.message && (
-              <div className={styles.contentSection}>
-                <h4>
-                  <Lightbulb className='h-4 w-4' />
-                  <div>{dict("calendar.modal.hook")}</div>
-                </h4>
-                <div className={styles.contentBox}>{selectedContent.narrativeDetails.message}</div>
-              </div>
-            )}
-
-            {selectedContent.narrativeDetails.proofType && (
-              <div className={styles.contentSection}>
-                <h4>{dict("calendar.modal.cta")}</h4>
-                <div className={`${styles.contentBox} ${styles.ctaBox}`}>
-                  {selectedContent.narrativeDetails.proofType}
+            {scriptScenes.length > 0 && (
+              <div className={styles.modalSection}>
+                <div className={styles.sectionTitle}>Guión · {scriptScenes.length} escenas</div>
+                <div className={styles.scriptScenes}>
+                  {scriptScenes.map((scene, idx) => {
+                    const text = scene.join(" ").trim();
+                    if (!text) return null;
+                    const isLast = idx === scriptScenes.length - 1;
+                    return (
+                      <div key={idx} className={styles.scriptScene}>
+                        <div className={styles.scriptSceneHeader}>
+                          <div className={styles.scriptSceneLabel}>
+                            Escena {idx + 1}
+                            {isLast && <span className={styles.ctaPill}>CTA</span>}
+                          </div>
+                        </div>
+                        <div className={styles.scriptSceneText}>{text}</div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
 
-            <div className={styles.basicInfoGrid}>
-              <div className={styles.contentSection}>
-                <h4>
-                  <Heart className='h-4 w-4' />
-                  <div>{dict("calendar.modal.feelings")}</div>
-                </h4>
-                <Badge variant='outline'>{selectedContent.strategy.tensionLevel}</Badge>
-              </div>
-              <div className={styles.contentSection}>
-                <h4>
-                  <Brain className='h-4 w-4' />
-                  <div>{dict("calendar.modal.understanding")}</div>
-                </h4>
-                <Badge variant='outline'>{selectedContent.strategy.hookFunction}</Badge>
-              </div>
-            </div>
-
-            {selectedContent.blueprint.sound && (
-              <div className={styles.contentSection}>
-                <h4>{dict("calendar.modal.keywords")}</h4>
-                <div className={`${styles.contentBox} ${styles.keywordsBox}`}>{selectedContent.blueprint.sound}</div>
+            {firstScene && (
+              <div className={styles.modalSection}>
+                <div className={styles.sectionTitle}>Blueprint · Escena 1</div>
+                <div className={styles.blueprintChips}>
+                  {blueprintCameraLabel && (
+                    <span className={styles.blueprintChip}>{chipLabel(blueprintCameraLabel)}</span>
+                  )}
+                  {blueprintShotLabel && <span className={styles.blueprintChip}>{chipLabel(blueprintShotLabel)}</span>}
+                  {blueprintOverlays
+                    .map(overlayLabel)
+                    .filter(Boolean)
+                    .slice(0, 3)
+                    .map((label, idx) => (
+                      <span key={idx} className={styles.blueprintChip}>
+                        {label}
+                      </span>
+                    ))}
+                </div>
+                {(firstScene.instruction || firstScene.action) && (
+                  <div className={styles.blueprintText}>{firstScene.instruction || firstScene.action}</div>
+                )}
+                {selectedContent.blueprint.sound && (
+                  <div className={styles.inlineMetaRow}>
+                    <span className={styles.inlineMetaLabel}>Sonido:</span>
+                    <span className={styles.inlineMetaValue}>{selectedContent.blueprint.sound}</span>
+                  </div>
+                )}
               </div>
             )}
+
+            {(selectedContent.caption ?? "").trim().length > 0 && (
+              <div className={styles.modalSection}>
+                <div className={styles.sectionTitle}>Caption</div>
+                <div className={styles.sectionBodyText}>{selectedContent.caption}</div>
+              </div>
+            )}
+          </div>
+
+          <div className={styles.modalFooter}>
+            <button type='button' className={styles.footerButton} onClick={handleCopyScript} disabled={!scriptPlain}>
+              Copiar guión
+            </button>
+            <button type='button' className={styles.footerButtonPrimary} onClick={handleToggleCompleted}>
+              {selectedContent.status === ContentStatus.APPROVED ? "Marcar pendiente" : "Marcar completado"}
+            </button>
           </div>
         </div>
       </div>
