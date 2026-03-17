@@ -527,7 +527,6 @@ export const ContentCalendar = () => {
     const handleItemClick = () => setSelectedContent(item);
 
     const title = item.title ?? "Sin titulo";
-    const description = item.script?.[0]?.join(" ") || item.narrativeDetails.message || "";
     const platformLabel = String((item.platform ?? Platform.TIKTOK) || Platform.TIKTOK).toUpperCase();
 
     return (
@@ -541,8 +540,6 @@ export const ContentCalendar = () => {
         </div>
 
         <div className={styles.contentItemPillar}>{platformLabel}</div>
-
-        <div className={styles.contentItemDescription}>{truncateText(description, 50)}</div>
       </div>
     );
   }, []);
