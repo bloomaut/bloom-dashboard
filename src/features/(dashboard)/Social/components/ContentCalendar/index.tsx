@@ -368,31 +368,30 @@ export const ContentCalendar = () => {
       .filter(Boolean)
       .join("\n\n");
 
-    const firstScene = selectedContent.blueprint?.scenes?.[0];
     const toLabel = (input: string) => input.replace(/_/g, " ").replace(/-/g, " ").trim();
 
-    const cameraLabel = (() => {
-      const raw = firstScene?.camera ? String(firstScene.camera) : "";
+    const getCameraLabel = (scene: any) => {
+      const raw = scene?.camera ? String(scene.camera) : "";
       if (!raw) return null;
       if (raw === "selfie") return "selfie";
       if (raw === "screen") return "pantalla";
       if (raw === "back") return "trasera";
       return toLabel(raw).toLowerCase();
-    })();
+    };
 
-    const shotLabel = (() => {
-      const raw = firstScene?.shot ? String(firstScene.shot) : "";
+    const getShotLabel = (scene: any) => {
+      const raw = scene?.shot ? String(scene.shot) : "";
       if (!raw) return null;
       if (raw === "short_plane") return "plano corto";
       if (raw === "medium_plane") return "plano medio";
       if (raw === "open_plane") return "plano abierto";
       return toLabel(raw).toLowerCase();
-    })();
+    };
 
-    const overlayChips = (() => {
-      const overlays = Array.isArray(firstScene?.overlays) ? firstScene!.overlays : [];
+    const getOverlayChips = (scene: any) => {
+      const overlays = Array.isArray(scene?.overlays) ? scene.overlays : [];
       return overlays
-        .map(o => {
+        .map((o: unknown) => {
           const type = typeof (o as any)?.type === "string" ? String((o as any).type) : "";
           const value = typeof (o as any)?.value === "string" ? String((o as any).value) : "";
           if (!type) return null;
@@ -404,7 +403,7 @@ export const ContentCalendar = () => {
         })
         .filter(Boolean)
         .slice(0, 3) as string[];
-    })();
+    };
 
     const hookText = (selectedContent.narrativeDetails.message || "").trim() || (scriptScenes[0]?.[0] || "").trim();
 
@@ -462,7 +461,7 @@ export const ContentCalendar = () => {
 
           <div className={styles.modalBody}>
             <div className={styles.modalSection}>
-              <div className={styles.sectionTitle}>Guión</div>
+              <div className={styles.sectionTitlePrimary}>Guión</div>
               <div className={styles.scriptStack}>
                 {scriptScenes.map((_, idx) => {
                   const lines = getSceneLines(idx);
@@ -501,43 +500,57 @@ export const ContentCalendar = () => {
               </div>
             </div>
 
-            {firstScene && (
+            {Array.isArray(selectedContent.blueprint?.scenes) && selectedContent.blueprint.scenes.length > 0 && (
               <div className={styles.modalSection}>
-                <div className={styles.sectionTitle}>Escenas</div>
-                <div className={styles.sceneCard}>
-                  <div className={styles.sceneCardHeader}>
-                    <div className={styles.sceneCardTitle}>Escena 1</div>
-                    <div className={styles.sceneCardChips}>
-                      {cameraLabel && <span className={styles.sceneChip}>{cameraLabel}</span>}
-                      {shotLabel && <span className={styles.sceneChip}>{shotLabel}</span>}
-                    </div>
-                  </div>
-                  <div className={styles.sceneCardBody}>
-                    {(firstScene.action || "").trim().length > 0 && (
-                      <div>
-                        <div className={styles.sceneFieldLabel}>Acción</div>
-                        <div className={styles.sceneFieldValue}>{firstScene.action}</div>
-                      </div>
-                    )}
-                    {(firstScene.instruction || "").trim().length > 0 && (
-                      <div>
-                        <div className={styles.sceneFieldLabel}>Instrucción de grabación</div>
-                        <div className={styles.sceneFieldValueSecondary}>{firstScene.instruction}</div>
-                      </div>
-                    )}
-                    {overlayChips.length > 0 && (
-                      <div>
-                        <div className={styles.sceneFieldLabel}>Overlays</div>
-                        <div className={styles.overlayChips}>
-                          {overlayChips.map((c, idx) => (
-                            <span key={idx} className={styles.overlayChip}>
-                              {c}
-                            </span>
-                          ))}
+                <div className={styles.sectionTitlePrimary}>Escenas</div>
+                <div className={styles.sceneCardsStack}>
+                  {selectedContent.blueprint.scenes.map((scene, idx) => {
+                    const cameraLabel = getCameraLabel(scene);
+                    const shotLabel = getShotLabel(scene);
+                    const overlayChips = getOverlayChips(scene);
+
+                    const actionText = typeof (scene as any)?.action === "string" ? (scene as any).action : "";
+                    const instructionText =
+                      typeof (scene as any)?.instruction === "string" ? (scene as any).instruction : "";
+
+                    return (
+                      <div key={idx} className={styles.sceneCard}>
+                        <div className={styles.sceneCardHeader}>
+                          <div className={styles.sceneCardTitle}>Escena {idx + 1}</div>
+                          <div className={styles.sceneCardChips}>
+                            {cameraLabel && <span className={styles.sceneChip}>{cameraLabel}</span>}
+                            {shotLabel && <span className={styles.sceneChip}>{shotLabel}</span>}
+                          </div>
+                        </div>
+                        <div className={styles.sceneCardBody}>
+                          {actionText.trim().length > 0 && (
+                            <div>
+                              <div className={styles.sceneFieldLabel}>Acción</div>
+                              <div className={styles.sceneFieldValue}>{actionText}</div>
+                            </div>
+                          )}
+                          {instructionText.trim().length > 0 && (
+                            <div>
+                              <div className={styles.sceneFieldLabel}>Instrucción de grabación</div>
+                              <div className={styles.sceneFieldValueSecondary}>{instructionText}</div>
+                            </div>
+                          )}
+                          {overlayChips.length > 0 && (
+                            <div>
+                              <div className={styles.sceneFieldLabel}>Overlays</div>
+                              <div className={styles.overlayChips}>
+                                {overlayChips.map((c, overlayIdx) => (
+                                  <span key={overlayIdx} className={styles.overlayChip}>
+                                    {c}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    )}
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
