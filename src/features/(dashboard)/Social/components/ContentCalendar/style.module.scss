@@ -386,6 +386,19 @@
   color: #0f172a;
 }
 
+.scriptContainer {
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 0.75rem;
+  background: rgba(248, 250, 252, 0.6);
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .scriptContainer {
+    padding: 0.875rem;
+  }
+}
+
 .scriptStack {
   display: flex;
   flex-direction: column;

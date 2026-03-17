@@ -462,41 +462,43 @@ export const ContentCalendar = () => {
           <div className={styles.modalBody}>
             <div className={styles.modalSection}>
               <div className={styles.sectionTitlePrimary}>Guión</div>
-              <div className={styles.scriptStack}>
-                {scriptScenes.map((_, idx) => {
-                  const lines = getSceneLines(idx);
-                  const hasAny = lines.length > 0 || (idx === 0 && Boolean(hookText));
-                  if (!hasAny) return null;
+              <div className={styles.scriptContainer}>
+                <div className={styles.scriptStack}>
+                  {scriptScenes.map((_, idx) => {
+                    const lines = getSceneLines(idx);
+                    const hasAny = lines.length > 0 || (idx === 0 && Boolean(hookText));
+                    if (!hasAny) return null;
 
-                  const isLast = idx === scriptScenes.length - 1;
-                  return (
-                    <div key={idx}>
-                      {idx > 0 && <div className={styles.scriptDivider} />}
-                      {isLast ? (
-                        <div className={styles.sceneTitleRow}>
+                    const isLast = idx === scriptScenes.length - 1;
+                    return (
+                      <div key={idx}>
+                        {idx > 0 && <div className={styles.scriptDivider} />}
+                        {isLast ? (
+                          <div className={styles.sceneTitleRow}>
+                            <div className={styles.sceneTitle}>Escena {idx + 1}</div>
+                            <span className={styles.sceneCtaBadge}>cta</span>
+                          </div>
+                        ) : (
                           <div className={styles.sceneTitle}>Escena {idx + 1}</div>
-                          <span className={styles.sceneCtaBadge}>cta</span>
-                        </div>
-                      ) : (
-                        <div className={styles.sceneTitle}>Escena {idx + 1}</div>
-                      )}
-                      <div className={styles.sceneBody}>
-                        {idx === 0 && hookText && (
-                          <div className={styles.hookHighlight}>
-                            <div className={styles.hookLabel}>Hook</div>
-                            <div className={styles.hookText}>{hookText}</div>
-                          </div>
                         )}
-                        {lines.map((line, lineIdx) => (
-                          <div key={lineIdx} className={styles.bulletRow}>
-                            <div className={styles.bulletDash}>—</div>
-                            <div className={styles.bulletText}>{line}</div>
-                          </div>
-                        ))}
+                        <div className={styles.sceneBody}>
+                          {idx === 0 && hookText && (
+                            <div className={styles.hookHighlight}>
+                              <div className={styles.hookLabel}>Hook</div>
+                              <div className={styles.hookText}>{hookText}</div>
+                            </div>
+                          )}
+                          {lines.map((line, lineIdx) => (
+                            <div key={lineIdx} className={styles.bulletRow}>
+                              <div className={styles.bulletDash}>—</div>
+                              <div className={styles.bulletText}>{line}</div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
