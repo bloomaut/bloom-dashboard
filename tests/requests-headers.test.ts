@@ -2,7 +2,11 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 
 import axios from "@/utils/axiosConfig";
 import { getQuest, postQuest, patchUserProfile, patchUserStatus } from "@/services/fetch";
-import { transcribeSocialMediaUpload } from "@/features/(dashboard)/Social/services/socialMediaService";
+import {
+  createSocialMediaContentFromIdea,
+  createSocialMediaIdea,
+  transcribeSocialMediaUpload,
+} from "@/features/(dashboard)/Social/services/socialMediaService";
 
 function setBrowserGlobals(cookie: string) {
   (globalThis as any).window = {};
@@ -127,6 +131,64 @@ describe("Axios interceptors", () => {
     const headers = seenConfig.headers;
     const csrf = typeof headers?.get === "function" ? headers.get("x-csrf-token") : headers?.["x-csrf-token"];
     expect(csrf).toBe("token123");
+  });
+
+  it("createSocialMediaIdea usa POST /api/social-media/idea con action create-idea", async () => {
+    setBrowserGlobals("csrfToken=token123");
+    let seenConfig: any = null;
+    axios.defaults.adapter = async (config: any) => {
+      seenConfig = config;
+      return {
+        data: {
+          data: {
+            statusCode: 201,
+            result: { idea: { title: "t", message: "m", proofType: "", intention: "", narrative: "" } },
+          },
+        },
+        status: 201,
+        statusText: "Created",
+        headers: {},
+        config,
+      };
+    };
+
+    await createSocialMediaIdea({ userId: "u1", idea: "hola" });
+
+    expect(String(seenConfig.method).toLowerCase()).toBe("post");
+    expect(String(seenConfig.url)).toBe("/api/social-media/idea");
+    const data = typeof seenConfig.data === "string" ? JSON.parse(seenConfig.data) : seenConfig.data;
+    expect(data.action).toBe("create-idea");
+    expect(data.userId).toBe("u1");
+  });
+
+  it("createSocialMediaContentFromIdea usa POST /api/social-media/idea con action create-content", async () => {
+    setBrowserGlobals("csrfToken=token123");
+    let seenConfig: any = null;
+    axios.defaults.adapter = async (config: any) => {
+      seenConfig = config;
+      return {
+        data: { data: { statusCode: 200, result: { idea: "Creating content piece" } } },
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config,
+      };
+    };
+
+    await createSocialMediaContentFromIdea({
+      userId: "u1",
+      title: "t",
+      message: "m",
+      proofType: "p",
+      intention: "i",
+      narrative: "n",
+    });
+
+    expect(String(seenConfig.method).toLowerCase()).toBe("post");
+    expect(String(seenConfig.url)).toBe("/api/social-media/idea");
+    const data = typeof seenConfig.data === "string" ? JSON.parse(seenConfig.data) : seenConfig.data;
+    expect(data.action).toBe("create-content");
+    expect(data.userId).toBe("u1");
   });
 });
 

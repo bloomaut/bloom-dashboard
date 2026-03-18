@@ -3,16 +3,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Mic, PencilLine, Square, Loader2, CheckCircle, AlertCircle, RotateCcw, Check, ArrowLeft } from "lucide-react";
 import {
-  createSingleContent,
   selectIsCreatingContent,
   selectCreationError,
   clearError,
 } from "@/features/(dashboard)/Social/store/socialMediaSlice";
-import { CreateContentParams, DayTime } from "@/features/(dashboard)/Social/types";
-import { transcribeSocialMediaUpload } from "@/features/(dashboard)/Social/services/socialMediaService";
+import { DayTime } from "@/features/(dashboard)/Social/types";
+import {
+  createSocialMediaContentFromIdea,
+  createSocialMediaIdea,
+  transcribeSocialMediaUpload,
+  type SocialIdea,
+} from "@/features/(dashboard)/Social/services/socialMediaService";
+import { userState } from "@/store/features/userSlice";
 import styles from "./style.module.scss";
 
 interface CreateContentModalProps {
@@ -24,6 +29,8 @@ interface CreateContentModalProps {
 export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContentModalProps) {
   const dispatch = useAppDispatch();
   const dict = useTranslations("dict.social.create_modal");
+  const user = useAppSelector(userState);
+  const userId = user?.id ? String(user.id) : "";
   const isLoading = useSelector(selectIsCreatingContent);
   const reduxError = useSelector(selectCreationError);
 
@@ -35,10 +42,13 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
   const [formData, setFormData] = useState({ pillar: "", date: todayIso, dayTime: DayTime.MORNING });
   const [rawIdea, setRawIdea] = useState("");
   const [processedIdea, setProcessedIdea] = useState("");
+  const [ideaMeta, setIdeaMeta] = useState<SocialIdea | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [isGeneratingIdea, setIsGeneratingIdea] = useState(false);
+  const [isCreatingFromIdea, setIsCreatingFromIdea] = useState(false);
   const [recordSeconds, setRecordSeconds] = useState(0);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -68,10 +78,13 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     setFormData({ pillar: "", date: todayIso, dayTime: DayTime.MORNING });
     setRawIdea("");
     setProcessedIdea("");
+    setIdeaMeta(null);
     setLocalError(null);
     setShowSuccess(false);
     setIsRecording(false);
     setIsTranscribing(false);
+    setIsGeneratingIdea(false);
+    setIsCreatingFromIdea(false);
     setRecordSeconds(0);
   };
 
@@ -93,23 +106,8 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     };
   }, []);
 
-  const normalizeIdeaText = (input: string) => {
-    const cleaned = input.replace(/\s+/g, " ").trim();
-    if (!cleaned) return "";
-    return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
-  };
-
-  const validateSchedule = () => {
-    if (!formData.date) return { isValid: false, error: dict("validation.date_required") };
-    const selectedDate = new Date(formData.date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (selectedDate < today) return { isValid: false, error: dict("validation.date_past") };
-    return { isValid: true as const };
-  };
-
   const handleClose = () => {
-    if (isLoading || isTranscribing) return;
+    if (isLoading || isTranscribing || isGeneratingIdea || isCreatingFromIdea) return;
     try {
       mediaRecorderRef.current?.stop();
     } catch {}
@@ -118,6 +116,35 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     mediaStreamRef.current = null;
     onClose();
     clearAllLocalState();
+  };
+
+  const generateImprovedIdea = async (input: string) => {
+    const ideaText = input.trim();
+    if (!ideaText) {
+      setLocalError(dict("validation.idea_required"));
+      return;
+    }
+    if (!userId) {
+      setLocalError("No pudimos resolver tu usuario para procesar la idea.");
+      return;
+    }
+
+    setLocalError(null);
+    if (reduxError) dispatch(clearError());
+    setIsGeneratingIdea(true);
+    setStep("processing");
+
+    try {
+      const idea = await createSocialMediaIdea({ userId, idea: ideaText });
+      setIdeaMeta(idea);
+      setProcessedIdea(String(idea.message || "").trim());
+      setStep("review");
+    } catch (e: any) {
+      setLocalError(e?.message || "Error procesando la idea");
+      setStep("write");
+    } finally {
+      setIsGeneratingIdea(false);
+    }
   };
 
   const startRecording = async () => {
@@ -251,9 +278,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
       if (!transcription) throw new Error("No pudimos transcribir el audio");
 
       setRawIdea(transcription);
-      const cleaned = normalizeIdeaText(transcription);
-      setProcessedIdea(cleaned);
-      setStep("review");
+      await generateImprovedIdea(transcription);
     } catch (e: any) {
       setLocalError(e?.message || "Error transcribiendo audio");
       setStep("record");
@@ -270,51 +295,46 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
   };
 
   const beginReviewFromWrite = async () => {
-    const cleaned = normalizeIdeaText(rawIdea);
-    if (!cleaned) {
-      setLocalError(dict("validation.idea_required"));
-      return;
-    }
-    setLocalError(null);
-    setStep("processing");
-    await new Promise(resolve => setTimeout(resolve, 650));
-    setProcessedIdea(cleaned);
-    setStep("review");
+    await generateImprovedIdea(rawIdea);
   };
 
   const redoIdea = () => {
     setLocalError(null);
     setRawIdea("");
     setProcessedIdea("");
+    setIdeaMeta(null);
     setStep("choose");
   };
 
-  const acceptIdeaAndCreate = async () => {
-    const validation = validateSchedule();
-    if (!validation.isValid) {
-      setLocalError(validation.error);
+  const createContentFromImprovedIdea = async () => {
+    if (!userId) {
+      setLocalError("No pudimos resolver tu usuario para generar contenido.");
+      return;
+    }
+    if (!ideaMeta) {
+      setLocalError("Primero necesitamos procesar la idea.");
       return;
     }
 
-    const ideaFinal = normalizeIdeaText(processedIdea);
-    if (!ideaFinal) {
+    const msg = processedIdea.trim();
+    if (!msg) {
       setLocalError(dict("validation.idea_required"));
       return;
     }
 
     setLocalError(null);
     if (reduxError) dispatch(clearError());
+    setIsCreatingFromIdea(true);
 
     try {
-      const contentParams: CreateContentParams = {
-        idea: ideaFinal,
-        pillar: formData.pillar.trim() || undefined,
-        date: formData.date,
-        dayTime: formData.dayTime,
-      };
-
-      const result = await dispatch(createSingleContent(contentParams)).unwrap();
-      console.log("✅ Contenido creado exitosamente:", result.id);
+      await createSocialMediaContentFromIdea({
+        userId,
+        title: ideaMeta.title,
+        message: msg,
+        proofType: ideaMeta.proofType,
+        intention: ideaMeta.intention,
+        narrative: ideaMeta.narrative,
+      });
       setShowSuccess(true);
       setStep("success");
       if (onSuccess) onSuccess();
@@ -323,11 +343,11 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
         onClose();
         clearAllLocalState();
       }, 2000);
-    } catch (e: unknown) {
-      if (typeof e === "string") setLocalError(e);
-      else if (e instanceof Error) setLocalError(e.message);
-      else setLocalError(dict("validation.unexpected_error"));
+    } catch (e: any) {
+      setLocalError(e?.message || dict("validation.unexpected_error"));
       setStep("review");
+    } finally {
+      setIsCreatingFromIdea(false);
     }
   };
 
@@ -451,7 +471,11 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                   </div>
                   <div className={styles.stepTitle}>Procesando idea...</div>
                   <div className={styles.stepSubtitle}>
-                    {isTranscribing ? "Transcribiendo audio" : "Preparando texto"}
+                    {isTranscribing
+                      ? "Transcribiendo audio"
+                      : isGeneratingIdea
+                        ? "Mejorando idea con IA"
+                        : "Preparando"}
                   </div>
                 </div>
               )}
@@ -461,19 +485,31 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                   <div className={styles.stepTitle}>Revisá tu idea</div>
                   <div className={styles.reviewBox}>
                     <div className={styles.reviewHeader}>
-                      <div className={styles.reviewHeaderTitle}>Idea procesada</div>
+                      <div className={styles.reviewHeaderTitle}>Transcripción original</div>
                       <div className={styles.reviewHeaderActions}>
-                        <button type='button' className={styles.iconButton} onClick={redoIdea} disabled={isLoading}>
+                        <button
+                          type='button'
+                          className={styles.iconButton}
+                          onClick={redoIdea}
+                          disabled={isLoading || isCreatingFromIdea || isGeneratingIdea}
+                        >
                           <RotateCcw className={styles.iconSmall} />
                         </button>
                       </div>
+                    </div>
+                    <textarea className={styles.reviewTextarea} value={rawIdea} disabled rows={4} />
+                  </div>
+
+                  <div className={styles.reviewBox}>
+                    <div className={styles.reviewHeader}>
+                      <div className={styles.reviewHeaderTitle}>Idea procesada</div>
                     </div>
                     <textarea
                       className={styles.reviewTextarea}
                       value={processedIdea}
                       onChange={e => setProcessedIdea(e.target.value)}
-                      disabled={isLoading}
-                      rows={4}
+                      disabled={isLoading || isCreatingFromIdea}
+                      rows={6}
                     />
                   </div>
 
@@ -532,22 +568,27 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                   </div>
 
                   <div className={styles.bottomActions}>
-                    <button type='button' className={styles.secondaryButton} onClick={redoIdea} disabled={isLoading}>
+                    <button
+                      type='button'
+                      className={styles.secondaryButton}
+                      onClick={redoIdea}
+                      disabled={isLoading || isCreatingFromIdea || isGeneratingIdea}
+                    >
                       Rehacer
                     </button>
                     <button
                       type='button'
                       className={styles.primaryButton}
-                      onClick={acceptIdeaAndCreate}
-                      disabled={isLoading}
+                      onClick={createContentFromImprovedIdea}
+                      disabled={isLoading || isCreatingFromIdea || isGeneratingIdea}
                     >
-                      {isLoading ? (
+                      {isCreatingFromIdea ? (
                         <>
-                          <Loader2 className={styles.loadingIcon} /> {dict("actions.creating")}
+                          <Loader2 className={styles.loadingIcon} /> Generando content...
                         </>
                       ) : (
                         <>
-                          <Check className={styles.iconSmall} /> Aceptar
+                          <Check className={styles.iconSmall} /> Generar content
                         </>
                       )}
                     </button>

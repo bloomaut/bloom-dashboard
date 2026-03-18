@@ -25,6 +25,28 @@ export type SttResponse = {
   } | null;
 };
 
+export type SocialIdea = {
+  title: string;
+  message: string;
+  proofType: string;
+  intention: string;
+  narrative: string;
+};
+
+export type CreateIdeaResponse = {
+  statusCode?: number;
+  result?: {
+    idea?: SocialIdea | null;
+  } | null;
+};
+
+export type CreateContentFromIdeaResponse = {
+  statusCode?: number;
+  result?: {
+    idea?: string | null;
+  } | null;
+};
+
 // ============================================================================
 // SERVICIOS DE API
 // ============================================================================
@@ -178,6 +200,65 @@ export const transcribeSocialMediaUpload = async (
     return Array.isArray(segments) ? segments : [];
   } catch (error) {
     console.error("Error al transcribir audio:", error);
+    if (axios.isAxiosError(error)) {
+      const statusCode = error.response?.status;
+      const errorMessage = error.response?.data?.message || error.message;
+      throw new Error(`Error HTTP ${statusCode}: ${errorMessage}`);
+    }
+    throw error;
+  }
+};
+
+export const createSocialMediaIdea = async (params: { userId: string; idea: string }): Promise<SocialIdea> => {
+  try {
+    const response = await axios.post<any>("/api/social-media/idea", {
+      userId: params.userId,
+      action: "create-idea",
+      idea: params.idea,
+    });
+    const apiResponse: CreateIdeaResponse | null = (response.data?.data ??
+      response.data ??
+      null) as CreateIdeaResponse | null;
+    const idea = apiResponse?.result?.idea ?? null;
+    if (!idea) throw new Error("Estructura de respuesta inválida: no se encontró la idea");
+    return idea;
+  } catch (error) {
+    console.error("Error al crear idea:", error);
+    if (axios.isAxiosError(error)) {
+      const statusCode = error.response?.status;
+      const errorMessage = error.response?.data?.message || error.message;
+      throw new Error(`Error HTTP ${statusCode}: ${errorMessage}`);
+    }
+    throw error;
+  }
+};
+
+export const createSocialMediaContentFromIdea = async (params: {
+  userId: string;
+  title: string;
+  message: string;
+  proofType: string;
+  intention: string;
+  narrative: string;
+}): Promise<string> => {
+  try {
+    const response = await axios.post<any>("/api/social-media/idea", {
+      userId: params.userId,
+      action: "create-content",
+      title: params.title,
+      message: params.message,
+      proofType: params.proofType,
+      intention: params.intention,
+      narrative: params.narrative,
+    });
+    const apiResponse: CreateContentFromIdeaResponse | null = (response.data?.data ??
+      response.data ??
+      null) as CreateContentFromIdeaResponse | null;
+    const msg = apiResponse?.result?.idea ?? null;
+    if (!msg) throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
+    return msg;
+  } catch (error) {
+    console.error("Error al crear content desde idea:", error);
     if (axios.isAxiosError(error)) {
       const statusCode = error.response?.status;
       const errorMessage = error.response?.data?.message || error.message;
