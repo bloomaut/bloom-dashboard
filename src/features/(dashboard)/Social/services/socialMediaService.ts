@@ -151,7 +151,7 @@ export const transcribeSocialMediaUpload = async (
 
     const formData = new FormData();
     formData.append("audio", file, filename);
-    formData.append("options", new Blob([JSON.stringify(options)], { type: "application/json" }));
+    formData.append("options", JSON.stringify(options ?? {}));
 
     if (debug) {
       const entries = Array.from(formData.entries()).map(([k, v]) => {
@@ -168,7 +168,13 @@ export const transcribeSocialMediaUpload = async (
     const response = await axios.post<any>("/api/social-media/transcription", formData);
     const apiResponse: SttResponse | null = (response.data?.data ?? response.data ?? null) as SttResponse | null;
     const segments = apiResponse?.result?.transcription?.segments;
-    if (debug) console.log("[stt] upload done", { segmentsCount: Array.isArray(segments) ? segments.length : 0 });
+    if (debug) {
+      console.log("[stt] upload response", {
+        status: response.status,
+        segmentsCount: Array.isArray(segments) ? segments.length : 0,
+        firstSegmentPreview: Array.isArray(segments) && segments.length > 0 ? segments[0] : null,
+      });
+    }
     return Array.isArray(segments) ? segments : [];
   } catch (error) {
     console.error("Error al transcribir audio:", error);
