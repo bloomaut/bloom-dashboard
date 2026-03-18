@@ -554,17 +554,6 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                         </button>
                       </div>
                     </div>
-                    <div className={styles.fieldContainer}>
-                      <label className={styles.fieldLabel}>{dict("form.pillar.label")}</label>
-                      <input
-                        type='text'
-                        placeholder={dict("form.pillar.placeholder")}
-                        value={formData.pillar}
-                        onChange={e => handleInputChange("pillar", e.target.value)}
-                        disabled={isLoading}
-                        className={styles.inputField}
-                      />
-                    </div>
                   </div>
 
                   <div className={styles.bottomActions}>
