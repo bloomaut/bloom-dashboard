@@ -138,7 +138,7 @@ export const transcribeSocialMediaUpload = async (
     const formData = new FormData();
     formData.append("audio", file, "recording.wav");
     formData.append("options", new Blob([JSON.stringify(options)], { type: "application/json" }));
-
+    console.log("FORMDATA STT:", formData);
     const response = await axios.post<any>("/api/social-media/transcription", formData);
     const apiResponse: SttResponse | null = (response.data?.data ?? response.data ?? null) as SttResponse | null;
     const segments = apiResponse?.result?.transcription?.segments;
