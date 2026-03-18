@@ -150,7 +150,7 @@ export const transcribeSocialMediaUpload = async (
     }
 
     const formData = new FormData();
-    formData.append("file", file, filename);
+    formData.append("audio", file, filename);
     formData.append("options", new Blob([JSON.stringify(options)], { type: "application/json" }));
 
     if (debug) {
