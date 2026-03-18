@@ -135,6 +135,7 @@ export const transcribeSocialMediaUpload = async (
   options: Record<string, unknown> = {},
 ): Promise<SttSegment[]> => {
   try {
+    console.log("FILE STT:", file);
     const formData = new FormData();
     formData.append("audio", file, "recording.wav");
     formData.append("options", new Blob([JSON.stringify(options)], { type: "application/json" }));
