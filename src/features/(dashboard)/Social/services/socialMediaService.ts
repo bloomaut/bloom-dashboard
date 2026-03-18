@@ -134,15 +134,41 @@ export const transcribeSocialMediaUpload = async (
   file: Blob,
   options: Record<string, unknown> = {},
 ): Promise<SttSegment[]> => {
+  const debug = true;
   try {
-    console.log("FILE STT:", file);
+    const mimeType = typeof file?.type === "string" ? file.type : "";
+    const size = typeof (file as any)?.size === "number" ? (file as any).size : null;
+    const filename = "recording.wav";
+    const isWav = mimeType === "audio/wav" || mimeType === "audio/wave" || mimeType === "";
+    if (debug) {
+      console.log("[stt] upload start", { mimeType, size, filename, optionsKeys: Object.keys(options || {}) });
+    }
+
+    if (!isWav) {
+      if (debug) console.warn("[stt] expected audio/wav but got", { mimeType });
+      throw new Error(`Se esperaba un archivo WAV (audio/wav). MIME recibido: ${mimeType || "desconocido"}`);
+    }
+
     const formData = new FormData();
-    formData.append("audio", file, "recording.wav");
+    formData.append("file", file, filename);
     formData.append("options", new Blob([JSON.stringify(options)], { type: "application/json" }));
-    console.log("FORMDATA STT:", formData);
+
+    if (debug) {
+      const entries = Array.from(formData.entries()).map(([k, v]) => {
+        const isBlob = typeof (v as any)?.arrayBuffer === "function";
+        if (!isBlob) return { key: k, valueType: typeof v };
+        const b = v as Blob;
+        const bSize = typeof (b as any)?.size === "number" ? (b as any).size : null;
+        const bType = typeof b.type === "string" ? b.type : "";
+        return { key: k, blobType: bType, blobSize: bSize };
+      });
+      console.log("[stt] formData entries", entries);
+    }
+
     const response = await axios.post<any>("/api/social-media/transcription", formData);
     const apiResponse: SttResponse | null = (response.data?.data ?? response.data ?? null) as SttResponse | null;
     const segments = apiResponse?.result?.transcription?.segments;
+    if (debug) console.log("[stt] upload done", { segmentsCount: Array.isArray(segments) ? segments.length : 0 });
     return Array.isArray(segments) ? segments : [];
   } catch (error) {
     console.error("Error al transcribir audio:", error);
