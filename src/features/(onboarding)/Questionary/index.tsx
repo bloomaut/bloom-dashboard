@@ -285,7 +285,7 @@ function Questionary() {
     try {
       const formData = new FormData();
       formData.append("audio", audioBlob, "recording.wav");
-      formData.append("questionIndex", currentIndex.toString());
+      // formData.append("questionIndex", currentIndex.toString());
 
       const csrf = getCsrfTokenFromCookies();
       if (!csrf) throw new Error("Missing CSRF token");
