@@ -507,6 +507,7 @@
   flex: 1;
   min-height: 0;
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 1.5rem;
   
   &::-webkit-scrollbar {
     width: 6px;
@@ -530,4 +531,347 @@
     padding: 1.5rem;
   }
 
+}
+
+.modalHeader {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #1f2937;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.headerBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.headerIconButton {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+
+.headerIconButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(100, 116, 139, 0.7);
+}
+
+.headerIconButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.headerIcon {
+  width: 18px;
+  height: 18px;
+  color: #475569;
+}
+
+.headerClose {
+  font-size: 18px;
+  line-height: 1;
+  color: #475569;
+}
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stepTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.stepSubtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.choiceGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .choiceGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.choiceCard {
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.choiceCard:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(102, 126, 234, 0.35);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.choiceCard:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.choiceIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 9999px;
+  background: rgba(102, 126, 234, 0.12);
+  color: #667eea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.choiceIcon :global(svg) {
+  width: 20px;
+  height: 20px;
+}
+
+.choiceText {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ideaTextarea {
+  width: 100%;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.ideaTextarea:focus {
+  outline: none;
+  border-color: rgba(102, 126, 234, 0.6);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+}
+
+.bottomActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.primaryButton {
+  border: 1px solid rgba(102, 126, 234, 0.7);
+  background: linear-gradient(135deg, #667eea 0%, #6b46c1 100%);
+  color: white;
+}
+
+.primaryButton:hover:not(:disabled) {
+  filter: brightness(0.98);
+}
+
+.secondaryButton {
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(255, 255, 255, 0.9);
+  color: #475569;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: rgba(248, 250, 252, 1);
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.recordTimer {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.recordButton {
+  width: 76px;
+  height: 76px;
+  border-radius: 9999px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0.5rem 0;
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.recordButton:hover:not(:disabled) {
+  transform: scale(1.02);
+  background: rgba(239, 68, 68, 0.16);
+}
+
+.recordButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.recordButton :global(svg) {
+  width: 24px;
+  height: 24px;
+}
+
+.processingIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 9999px;
+  background: rgba(102, 126, 234, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #667eea;
+}
+
+.reviewBox {
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.reviewHeader {
+  padding: 0.75rem 1rem;
+  background: rgba(248, 250, 252, 0.9);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.reviewHeaderTitle {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.reviewHeaderActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.iconButton {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.iconButton:hover:not(:disabled) {
+  background: rgba(248, 250, 252, 1);
+}
+
+.iconButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.iconSmall {
+  width: 16px;
+  height: 16px;
+}
+
+.reviewTextarea {
+  width: 100%;
+  border: none;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+  background: transparent;
+}
+
+.reviewTextarea:focus {
+  outline: none;
+}
+
+.scheduleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .scheduleGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dayTimeRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.dayTimeButton {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+}
+
+.activeDayTime {
+  border-color: rgba(102, 126, 234, 0.6);
+  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.08);
 }

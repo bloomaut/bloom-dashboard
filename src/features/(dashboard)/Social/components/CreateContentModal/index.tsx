@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 import { useAppDispatch } from "@/store/hooks";
-// Removed v0 component imports - using standard HTML elements with SCSS styling
-import { X, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Mic, PencilLine, Square, Loader2, CheckCircle, AlertCircle, RotateCcw, Check, ArrowLeft } from "lucide-react";
 import {
   createSingleContent,
   selectIsCreatingContent,
@@ -27,14 +26,24 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
   const isLoading = useSelector(selectIsCreatingContent);
   const reduxError = useSelector(selectCreationError);
 
-  const [formData, setFormData] = useState({
-    pillar: "",
-    idea: "",
-    date: "",
-    dayTime: DayTime.MORNING,
-  });
+  type Step = "choose" | "write" | "record" | "processing" | "review" | "success";
+
+  const todayIso = useMemo(() => new Date().toISOString().split("T")[0], []);
+
+  const [step, setStep] = useState<Step>("choose");
+  const [formData, setFormData] = useState({ pillar: "", date: todayIso, dayTime: DayTime.MORNING });
+  const [rawIdea, setRawIdea] = useState("");
+  const [processedIdea, setProcessedIdea] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const [recordSeconds, setRecordSeconds] = useState(0);
+
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const audioChunksRef = useRef<BlobPart[]>([]);
+  const recordTimerRef = useRef<number | null>(null);
 
   // Combinar errores de Redux y locales
   const error = reduxError || localError;
@@ -53,97 +62,224 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     }
   };
 
-  const validateForm = (): { isValid: boolean; error?: string } => {
-    if (!formData.idea.trim()) {
-      return { isValid: false, error: dict("validation.idea_required") };
-    }
-    if (!formData.date) {
-      return { isValid: false, error: dict("validation.date_required") };
-    }
+  const clearAllLocalState = () => {
+    setStep("choose");
+    setFormData({ pillar: "", date: todayIso, dayTime: DayTime.MORNING });
+    setRawIdea("");
+    setProcessedIdea("");
+    setLocalError(null);
+    setShowSuccess(false);
+    setIsRecording(false);
+    setIsTranscribing(false);
+    setRecordSeconds(0);
+  };
 
-    // Validar que la fecha no sea en el pasado
+  useEffect(() => {
+    if (!isOpen) return;
+    clearAllLocalState();
+  }, [isOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (recordTimerRef.current) window.clearInterval(recordTimerRef.current);
+      recordTimerRef.current = null;
+      try {
+        mediaRecorderRef.current?.stop();
+      } catch {}
+      mediaRecorderRef.current = null;
+      mediaStreamRef.current?.getTracks().forEach(t => t.stop());
+      mediaStreamRef.current = null;
+    };
+  }, []);
+
+  const normalizeIdeaText = (input: string) => {
+    const cleaned = input.replace(/\s+/g, " ").trim();
+    if (!cleaned) return "";
+    return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+  };
+
+  const validateSchedule = () => {
+    if (!formData.date) return { isValid: false, error: dict("validation.date_required") };
     const selectedDate = new Date(formData.date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    if (selectedDate < today) {
-      return { isValid: false, error: dict("validation.date_past") };
-    }
-
-    return { isValid: true };
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const validation = validateForm();
-    if (!validation.isValid) {
-      setLocalError(validation.error!);
-      return;
-    }
-
-    // Limpiar errores antes de enviar
-    setLocalError(null);
-    if (reduxError) {
-      dispatch(clearError());
-    }
-
-    try {
-      // Preparar parámetros para el thunk
-      const contentParams: CreateContentParams = {
-        idea: formData.idea.trim(),
-        pillar: formData.pillar.trim() || undefined, // Solo incluir si no está vacío
-        date: formData.date, // Ya está en formato YYYY-MM-DD
-        dayTime: formData.dayTime,
-      };
-
-      // Usar el thunk de Redux con tipado correcto
-      const result = await dispatch(createSingleContent(contentParams)).unwrap();
-
-      console.log("✅ Contenido creado exitosamente:", result.id);
-
-      // Mostrar mensaje de éxito
-      setShowSuccess(true);
-
-      // Llamar callback de éxito si existe
-      if (onSuccess) {
-        onSuccess();
-      }
-
-      // Cerrar modal después de 2 segundos
-      setTimeout(() => {
-        setShowSuccess(false);
-        onClose();
-        resetForm();
-      }, 2000);
-    } catch (error: unknown) {
-      console.error("❌ Error al crear contenido:", error);
-      // El error ya se maneja en Redux, pero podemos manejar casos específicos
-      if (typeof error === "string") {
-        setLocalError(error);
-      } else if (error instanceof Error) {
-        setLocalError(error.message);
-      } else {
-        setLocalError(dict("validation.unexpected_error"));
-      }
-    }
-  };
-
-  const resetForm = () => {
-    setFormData({ pillar: "", idea: "", date: "", dayTime: DayTime.MORNING });
-    setLocalError(null);
-    setShowSuccess(false);
-    if (reduxError) {
-      dispatch(clearError());
-    }
+    if (selectedDate < today) return { isValid: false, error: dict("validation.date_past") };
+    return { isValid: true as const };
   };
 
   const handleClose = () => {
-    if (!isLoading) {
-      onClose();
-      resetForm();
+    if (isLoading || isTranscribing) return;
+    try {
+      mediaRecorderRef.current?.stop();
+    } catch {}
+    mediaRecorderRef.current = null;
+    mediaStreamRef.current?.getTracks().forEach(t => t.stop());
+    mediaStreamRef.current = null;
+    onClose();
+    clearAllLocalState();
+  };
+
+  const startRecording = async () => {
+    setLocalError(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaStreamRef.current = stream;
+      audioChunksRef.current = [];
+      const recorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = recorder;
+
+      recorder.ondataavailable = e => {
+        if (e.data && e.data.size > 0) audioChunksRef.current.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+        mediaStreamRef.current?.getTracks().forEach(t => t.stop());
+        mediaStreamRef.current = null;
+        transcribeIdeaAudio(blob);
+      };
+
+      recorder.start();
+      setRecordSeconds(0);
+      if (recordTimerRef.current) window.clearInterval(recordTimerRef.current);
+      recordTimerRef.current = window.setInterval(() => setRecordSeconds(s => s + 1), 1000);
+      setIsRecording(true);
+      setStep("record");
+    } catch (e: any) {
+      setLocalError(e?.message || "No pudimos iniciar la grabación");
+      setIsRecording(false);
     }
   };
+
+  const stopRecording = () => {
+    if (!isRecording) return;
+    setIsRecording(false);
+    if (recordTimerRef.current) window.clearInterval(recordTimerRef.current);
+    recordTimerRef.current = null;
+    setStep("processing");
+    setIsTranscribing(true);
+    try {
+      mediaRecorderRef.current?.stop();
+    } catch {
+      setIsTranscribing(false);
+      setStep("record");
+      setLocalError("No pudimos detener la grabación");
+    }
+  };
+
+  const transcribeIdeaAudio = async (audioBlob: Blob) => {
+    try {
+      const csrf = (await import("@/utils/axiosConfig")).getCsrfTokenFromCookies();
+      if (!csrf) throw new Error("Missing CSRF token");
+
+      const formData = new FormData();
+      formData.append("audio", audioBlob, "recording.wav");
+      formData.append("questionIndex", "0");
+
+      const apiDash = process.env.NEXT_PUBLIC_API_DASH;
+      const url = apiDash ? `${apiDash}/api/transcription` : "/api/transcription";
+
+      const response = await fetch(url, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "x-client-type": "web",
+          "x-csrf-token": csrf,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Transcription failed");
+      const data = await response.json();
+      const transcription = String(data?.transcription || "").trim();
+      if (!transcription) throw new Error("No pudimos transcribir el audio");
+
+      setRawIdea(transcription);
+      const cleaned = normalizeIdeaText(transcription);
+      setProcessedIdea(cleaned);
+      setStep("review");
+    } catch (e: any) {
+      setLocalError(e?.message || "Error transcribiendo audio");
+      setStep("record");
+    } finally {
+      setIsTranscribing(false);
+    }
+  };
+
+  const beginWrite = () => {
+    setLocalError(null);
+    setRawIdea("");
+    setProcessedIdea("");
+    setStep("write");
+  };
+
+  const beginReviewFromWrite = async () => {
+    const cleaned = normalizeIdeaText(rawIdea);
+    if (!cleaned) {
+      setLocalError(dict("validation.idea_required"));
+      return;
+    }
+    setLocalError(null);
+    setStep("processing");
+    await new Promise(resolve => setTimeout(resolve, 650));
+    setProcessedIdea(cleaned);
+    setStep("review");
+  };
+
+  const redoIdea = () => {
+    setLocalError(null);
+    setRawIdea("");
+    setProcessedIdea("");
+    setStep("choose");
+  };
+
+  const acceptIdeaAndCreate = async () => {
+    const validation = validateSchedule();
+    if (!validation.isValid) {
+      setLocalError(validation.error);
+      return;
+    }
+
+    const ideaFinal = normalizeIdeaText(processedIdea);
+    if (!ideaFinal) {
+      setLocalError(dict("validation.idea_required"));
+      return;
+    }
+
+    setLocalError(null);
+    if (reduxError) dispatch(clearError());
+
+    try {
+      const contentParams: CreateContentParams = {
+        idea: ideaFinal,
+        pillar: formData.pillar.trim() || undefined,
+        date: formData.date,
+        dayTime: formData.dayTime,
+      };
+
+      const result = await dispatch(createSingleContent(contentParams)).unwrap();
+      console.log("✅ Contenido creado exitosamente:", result.id);
+      setShowSuccess(true);
+      setStep("success");
+      if (onSuccess) onSuccess();
+      setTimeout(() => {
+        setShowSuccess(false);
+        onClose();
+        clearAllLocalState();
+      }, 2000);
+    } catch (e: unknown) {
+      if (typeof e === "string") setLocalError(e);
+      else if (e instanceof Error) setLocalError(e.message);
+      else setLocalError(dict("validation.unexpected_error"));
+      setStep("review");
+    }
+  };
+
+  const formattedTimer = useMemo(() => {
+    const mm = String(Math.floor(recordSeconds / 60)).padStart(2, "0");
+    const ss = String(recordSeconds % 60).padStart(2, "0");
+    return `${mm}:${ss}`;
+  }, [recordSeconds]);
 
   if (!isOpen) return null;
 
@@ -151,7 +287,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
         {/* Success State */}
-        {showSuccess && (
+        {showSuccess && step === "success" && (
           <div className={styles.successContainer}>
             <div className={styles.successIconContainer}>
               <CheckCircle className={styles.successIcon} />
@@ -161,153 +297,207 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
           </div>
         )}
 
-        {/* Form State */}
-        {!showSuccess && (
+        {step !== "success" && (
           <>
-            {/* Header */}
             <div className={styles.modalHeader}>
-              <div className={styles.headerContent}>
-                <h2 className={styles.headerTitle}>{dict("header.title")}</h2>
+              <div className={styles.headerBar}>
+                {step !== "choose" && (
+                  <button
+                    type='button'
+                    className={styles.headerIconButton}
+                    onClick={() => setStep("choose")}
+                    disabled={isLoading || isTranscribing}
+                  >
+                    <ArrowLeft className={styles.headerIcon} />
+                  </button>
+                )}
+                <div className={styles.headerTitle}>Nueva idea</div>
+                <button type='button' className={styles.headerIconButton} onClick={handleClose} disabled={isLoading}>
+                  <span className={styles.headerClose}>✕</span>
+                </button>
               </div>
             </div>
 
-            {/* Form */}
             <div className={styles.modalBody}>
-              <form onSubmit={handleSubmit} className={styles.form}>
-                {/* Error Message */}
-                {error && (
-                  <div className={styles.errorContainer}>
-                    <AlertCircle className={styles.errorIcon} />
-                    <div className={styles.errorText}>{error}</div>
-                  </div>
-                )}
-
-                {/* Pilar Field */}
-                <div className={styles.fieldContainer}>
-                  <label htmlFor='pillar' className={styles.fieldLabel}>
-                    {dict("form.pillar.label")}
-                  </label>
-                  <input
-                    id='pillar'
-                    type='text'
-                    placeholder={dict("form.pillar.placeholder")}
-                    value={formData.pillar}
-                    onChange={e => handleInputChange("pillar", e.target.value)}
-                    disabled={isLoading}
-                    className={styles.inputField}
-                  />
-                  <div className={styles.fieldHint}>{dict("form.pillar.hint")}</div>
+              {error && (
+                <div className={styles.errorContainer}>
+                  <AlertCircle className={styles.errorIcon} />
+                  <div className={styles.errorText}>{error}</div>
                 </div>
+              )}
 
-                {/* Idea Field */}
-                <div className={styles.fieldContainer}>
-                  <label htmlFor='idea' className={styles.fieldLabel}>
-                    {dict("form.idea.label")}
-                  </label>
+              {step === "choose" && (
+                <div className={styles.stepContainer}>
+                  <div className={styles.stepTitle}>Contame la idea</div>
+                  <div className={styles.stepSubtitle}>Podés grabarla o escribirla</div>
+                  <div className={styles.choiceGrid}>
+                    <button type='button' className={styles.choiceCard} onClick={startRecording} disabled={isLoading}>
+                      <div className={styles.choiceIcon}>
+                        <Mic />
+                      </div>
+                      <div className={styles.choiceText}>Empezar grabación</div>
+                    </button>
+                    <button type='button' className={styles.choiceCard} onClick={beginWrite} disabled={isLoading}>
+                      <div className={styles.choiceIcon}>
+                        <PencilLine />
+                      </div>
+                      <div className={styles.choiceText}>Escribir idea</div>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {step === "write" && (
+                <div className={styles.stepContainer}>
+                  <div className={styles.stepTitle}>Escribí tu idea</div>
                   <textarea
-                    id='idea'
-                    placeholder={dict("form.idea.placeholder")}
-                    value={formData.idea}
-                    onChange={e => handleInputChange("idea", e.target.value)}
+                    className={styles.ideaTextarea}
+                    placeholder='Escribí tu idea acá...'
+                    value={rawIdea}
+                    onChange={e => {
+                      setRawIdea(e.target.value);
+                      if (error) setLocalError(null);
+                    }}
                     disabled={isLoading}
-                    rows={4}
-                    className={styles.textareaField}
+                    rows={6}
                   />
-                </div>
-
-                {/* Date Field */}
-                <div className={styles.fieldContainer}>
-                  <label htmlFor='date' className={styles.fieldLabel}>
-                    {dict("form.date.label")}
-                  </label>
-                  <input
-                    id='date'
-                    type='date'
-                    value={formData.date}
-                    onChange={e => handleInputChange("date", e.target.value)}
-                    disabled={isLoading}
-                    className={styles.inputField}
-                    min={new Date().toISOString().split("T")[0]} // No permitir fechas pasadas
-                  />
-                </div>
-
-                {/* Time Period Field */}
-                <div className={styles.fieldContainer}>
-                  <label htmlFor='dayTime' className={styles.fieldLabel}>
-                    {dict("form.time_period.label")}
-                  </label>
-                  <div className={styles.timePeriodGrid}>
-                    <button
-                      type='button'
-                      onClick={() => handleInputChange("dayTime", DayTime.MORNING)}
-                      disabled={isLoading}
-                      className={`${styles.timePeriodButton} ${styles.morningButton} ${
-                        formData.dayTime === DayTime.MORNING ? styles.active : ""
-                      }`}
-                    >
-                      <div className={styles.timePeriodContent}>
-                        <div className={`${styles.timePeriodDot} ${styles.morningDot}`}></div>
-                        <div>{dict("form.time_period.morning")}</div>
-                        <div className={styles.timePeriodTime}>{dict("form.time_period.morning_time")}</div>
-                      </div>
+                  <div className={styles.bottomActions}>
+                    <button type='button' className={styles.secondaryButton} onClick={() => setStep("choose")}>
+                      Volver
                     </button>
                     <button
                       type='button'
-                      onClick={() => handleInputChange("dayTime", DayTime.AFTERNOON)}
+                      className={styles.primaryButton}
+                      onClick={beginReviewFromWrite}
                       disabled={isLoading}
-                      className={`${styles.timePeriodButton} ${styles.afternoonButton} ${
-                        formData.dayTime === DayTime.AFTERNOON ? styles.active : ""
-                      }`}
                     >
-                      <div className={styles.timePeriodContent}>
-                        <div className={`${styles.timePeriodDot} ${styles.afternoonDot}`}></div>
-                        <div>{dict("form.time_period.afternoon")}</div>
-                        <div className={styles.timePeriodTime}>{dict("form.time_period.afternoon_time")}</div>
-                      </div>
-                    </button>
-                    <button
-                      type='button'
-                      onClick={() => handleInputChange("dayTime", DayTime.EVENING)}
-                      disabled={isLoading}
-                      className={`${styles.timePeriodButton} ${styles.eveningButton} ${
-                        formData.dayTime === DayTime.EVENING ? styles.active : ""
-                      }`}
-                    >
-                      <div className={styles.timePeriodContent}>
-                        <div className={`${styles.timePeriodDot} ${styles.eveningDot}`}></div>
-                        <div>{dict("form.time_period.evening")}</div>
-                        <div className={styles.timePeriodTime}>{dict("form.time_period.evening_time")}</div>
-                      </div>
+                      Continuar
                     </button>
                   </div>
                 </div>
+              )}
 
-                {/* Actions */}
-                <div className={styles.actionsContainer}>
-                  <button
-                    type='button'
-                    onClick={handleClose}
-                    disabled={isLoading}
-                    className={`${styles.actionButton} ${styles.cancelButton}`}
-                  >
-                    {dict("actions.cancel")}
+              {step === "record" && (
+                <div className={styles.stepContainer}>
+                  <div className={styles.stepTitle}>Grabando idea</div>
+                  <div className={styles.recordTimer}>{formattedTimer}</div>
+                  <button type='button' className={styles.recordButton} onClick={stopRecording} disabled={!isRecording}>
+                    <Square />
                   </button>
-                  <button
-                    type='submit'
-                    disabled={isLoading}
-                    className={`${styles.actionButton} ${styles.submitButton}`}
-                  >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className={styles.loadingIcon} />
-                        {dict("actions.creating")}
-                      </>
-                    ) : (
-                      dict("actions.create")
-                    )}
-                  </button>
+                  <div className={styles.stepSubtitle}>Tocá para detener</div>
                 </div>
-              </form>
+              )}
+
+              {step === "processing" && (
+                <div className={styles.stepContainer}>
+                  <div className={styles.processingIcon}>
+                    <Loader2 className={styles.loadingIcon} />
+                  </div>
+                  <div className={styles.stepTitle}>Procesando idea...</div>
+                  <div className={styles.stepSubtitle}>
+                    {isTranscribing ? "Transcribiendo audio" : "Preparando texto"}
+                  </div>
+                </div>
+              )}
+
+              {step === "review" && (
+                <div className={styles.stepContainer}>
+                  <div className={styles.stepTitle}>Revisá tu idea</div>
+                  <div className={styles.reviewBox}>
+                    <div className={styles.reviewHeader}>
+                      <div className={styles.reviewHeaderTitle}>Idea procesada</div>
+                      <div className={styles.reviewHeaderActions}>
+                        <button type='button' className={styles.iconButton} onClick={redoIdea} disabled={isLoading}>
+                          <RotateCcw className={styles.iconSmall} />
+                        </button>
+                      </div>
+                    </div>
+                    <textarea
+                      className={styles.reviewTextarea}
+                      value={processedIdea}
+                      onChange={e => setProcessedIdea(e.target.value)}
+                      disabled={isLoading}
+                      rows={4}
+                    />
+                  </div>
+
+                  <div className={styles.scheduleGrid}>
+                    <div className={styles.fieldContainer}>
+                      <label className={styles.fieldLabel}>{dict("form.date.label")}</label>
+                      <input
+                        type='date'
+                        value={formData.date}
+                        onChange={e => handleInputChange("date", e.target.value)}
+                        disabled={isLoading}
+                        className={styles.inputField}
+                        min={todayIso}
+                      />
+                    </div>
+                    <div className={styles.fieldContainer}>
+                      <label className={styles.fieldLabel}>{dict("form.time_period.label")}</label>
+                      <div className={styles.dayTimeRow}>
+                        <button
+                          type='button'
+                          className={`${styles.dayTimeButton} ${formData.dayTime === DayTime.MORNING ? styles.activeDayTime : ""}`}
+                          onClick={() => handleInputChange("dayTime", DayTime.MORNING)}
+                          disabled={isLoading}
+                        >
+                          {dict("form.time_period.morning")}
+                        </button>
+                        <button
+                          type='button'
+                          className={`${styles.dayTimeButton} ${formData.dayTime === DayTime.AFTERNOON ? styles.activeDayTime : ""}`}
+                          onClick={() => handleInputChange("dayTime", DayTime.AFTERNOON)}
+                          disabled={isLoading}
+                        >
+                          {dict("form.time_period.afternoon")}
+                        </button>
+                        <button
+                          type='button'
+                          className={`${styles.dayTimeButton} ${formData.dayTime === DayTime.EVENING ? styles.activeDayTime : ""}`}
+                          onClick={() => handleInputChange("dayTime", DayTime.EVENING)}
+                          disabled={isLoading}
+                        >
+                          {dict("form.time_period.evening")}
+                        </button>
+                      </div>
+                    </div>
+                    <div className={styles.fieldContainer}>
+                      <label className={styles.fieldLabel}>{dict("form.pillar.label")}</label>
+                      <input
+                        type='text'
+                        placeholder={dict("form.pillar.placeholder")}
+                        value={formData.pillar}
+                        onChange={e => handleInputChange("pillar", e.target.value)}
+                        disabled={isLoading}
+                        className={styles.inputField}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.bottomActions}>
+                    <button type='button' className={styles.secondaryButton} onClick={redoIdea} disabled={isLoading}>
+                      Rehacer
+                    </button>
+                    <button
+                      type='button'
+                      className={styles.primaryButton}
+                      onClick={acceptIdeaAndCreate}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <>
+                          <Loader2 className={styles.loadingIcon} /> {dict("actions.creating")}
+                        </>
+                      ) : (
+                        <>
+                          <Check className={styles.iconSmall} /> Aceptar
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
