@@ -16,6 +16,15 @@ import {
 } from "../types";
 import { mapLegacyContentItemToContentPiece, mapRawContentPieceToContentPiece } from "../utils/contentPieces";
 
+export type SttSegment = { start: number; end: number; text: string };
+export type SttResponse = {
+  result?: {
+    transcription?: {
+      segments?: SttSegment[];
+    } | null;
+  } | null;
+};
+
 // ============================================================================
 // SERVICIOS DE API
 // ============================================================================
@@ -119,6 +128,30 @@ export const getAndFixSocialMediaContent = async (
   params: GetContentParams,
 ): Promise<{ contentPieces: IContentPiece[] }> => {
   return getSocialMediaContent(params);
+};
+
+export const transcribeSocialMediaUpload = async (
+  file: Blob,
+  options: Record<string, unknown> = {},
+): Promise<SttSegment[]> => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file, "recording.wav");
+    formData.append("options", new Blob([JSON.stringify(options)], { type: "application/json" }));
+
+    const response = await axios.post<any>("/api/social-media/transcription", formData);
+    const apiResponse: SttResponse | null = (response.data?.data ?? response.data ?? null) as SttResponse | null;
+    const segments = apiResponse?.result?.transcription?.segments;
+    return Array.isArray(segments) ? segments : [];
+  } catch (error) {
+    console.error("Error al transcribir audio:", error);
+    if (axios.isAxiosError(error)) {
+      const statusCode = error.response?.status;
+      const errorMessage = error.response?.data?.message || error.message;
+      throw new Error(`Error HTTP ${statusCode}: ${errorMessage}`);
+    }
+    throw error;
+  }
 };
 
 /**

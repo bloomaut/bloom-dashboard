@@ -2,6 +2,7 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 
 import axios from "@/utils/axiosConfig";
 import { getQuest, postQuest, patchUserProfile, patchUserStatus } from "@/services/fetch";
+import { transcribeSocialMediaUpload } from "@/features/(dashboard)/Social/services/socialMediaService";
 
 function setBrowserGlobals(cookie: string) {
   (globalThis as any).window = {};
@@ -109,6 +110,23 @@ describe("Axios interceptors", () => {
     expect(csrf).toBe("token123");
     const data = typeof seenConfig.data === "string" ? JSON.parse(seenConfig.data) : seenConfig.data;
     expect(data).toEqual({ name: "A", lastname: "B", phone: "1" });
+  });
+
+  it("transcribeSocialMediaUpload usa POST /api/social-media/transcription y adjunta x-csrf-token", async () => {
+    setBrowserGlobals("csrfToken=token123");
+    let seenConfig: any = null;
+    axios.defaults.adapter = async (config: any) => {
+      seenConfig = config;
+      return { data: { ok: true }, status: 200, statusText: "OK", headers: {}, config };
+    };
+
+    await transcribeSocialMediaUpload(new Blob(["x"], { type: "audio/wav" }), {});
+
+    expect(String(seenConfig.method).toLowerCase()).toBe("post");
+    expect(String(seenConfig.url)).toBe("/api/social-media/transcription");
+    const headers = seenConfig.headers;
+    const csrf = typeof headers?.get === "function" ? headers.get("x-csrf-token") : headers?.["x-csrf-token"];
+    expect(csrf).toBe("token123");
   });
 });
 
