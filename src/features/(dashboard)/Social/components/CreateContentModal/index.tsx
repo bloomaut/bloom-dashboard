@@ -502,7 +502,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
 
                   <div className={styles.reviewBox}>
                     <div className={styles.reviewHeader}>
-                      <div className={styles.reviewHeaderTitle}>Idea procesada</div>
+                      <div className={styles.reviewHeaderTitle}>Idea Optimizada</div>
                     </div>
                     <textarea
                       className={styles.reviewTextarea}
@@ -577,7 +577,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
                         </>
                       ) : (
                         <>
-                          <Check className={styles.iconSmall} /> Generar content
+                          <Check className={styles.iconSmall} /> Generar Video
                         </>
                       )}
                     </button>
