@@ -117,8 +117,7 @@ export function SocialMediaDashboard() {
               size='sm'
               className={styles.generateButton}
               onClick={() => setIsCreateModalOpen(true)}
-              disabled={true}
-              title='Temporalmente deshabilitado'
+              disabled={isCreatingContent}
             >
               <Sparkles />
               {isCreatingContent ? dict("actions.creating") : dict("actions.create_content")}
