@@ -405,7 +405,7 @@ export const ContentCalendar = () => {
         .slice(0, 3) as string[];
     };
 
-    const hookText = (selectedContent.narrativeDetails.message || "").trim() || (scriptScenes[0]?.[0] || "").trim();
+    const hookText = (scriptScenes[0]?.[0] || "").trim();
 
     const getSceneLines = (sceneIndex: number) => {
       const scene = scriptScenes[sceneIndex] || [];
