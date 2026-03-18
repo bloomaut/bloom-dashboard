@@ -154,13 +154,19 @@ export function mapRawContentPieceToContentPiece(raw: unknown): IContentPiece | 
   const r = raw as RawContentPiece;
   const id = asString(r._id) ?? asString((raw as any)?.id);
   const weekStrategyId = asString(r.weeklyStrategy) ?? asString(r.weekStrategyId) ?? "";
-  const day = isEnumValue(DayOfWeek, r.day) ? (r.day as DayOfWeek) : null;
+  const publishDateValue = asString(r.publishDate) ?? asString((r.publishDate as any)?.date) ?? null;
+  const day = isEnumValue(DayOfWeek, r.day)
+    ? (r.day as DayOfWeek)
+    : publishDateValue
+      ? dayOfWeekFromIsoDate(publishDateValue)
+      : null;
   const dayTime = isEnumValue(DayTime, r.dayTime) ? (r.dayTime as DayTime) : null;
   const status = isEnumValue(ContentStatus, r.status) ? (r.status as ContentStatus) : null;
   const platform = isEnumValue(Platform, r.platform) ? (r.platform as Platform) : Platform.TIKTOK;
-  const title = asString(r.title) ?? asString((raw as any)?.title) ?? null;
+  const narrativeTitle =
+    asString((r.narrativeDetails as any)?.title) ?? asString(((raw as any)?.narrativeDetails as any)?.title);
+  const title = asString(r.title) ?? asString((raw as any)?.title) ?? narrativeTitle ?? null;
 
-  const publishDateValue = asString(r.publishDate) ?? asString((r.publishDate as any)?.date) ?? null;
   const script = asStringArray2D(r.script) ?? [];
 
   if (!id || !day || !dayTime || !status || !publishDateValue) return null;
