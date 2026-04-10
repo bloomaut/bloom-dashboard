@@ -83,7 +83,7 @@ function Questionary() {
     return () => {
       cancelled = true;
     };
-  }, [dispatch, en]);
+  }, [dispatch, en, questData.answers]);
 
   useEffect(() => {
     if (!storageKey) return;
@@ -226,7 +226,7 @@ function Questionary() {
         dispatch(setCurrentIndex(index));
       }
     }
-  }, []);
+  }, [dispatch, questData.answers]);
 
   useEffect(() => {
     // Autocompletar (mock) activado por query param ?mock=1

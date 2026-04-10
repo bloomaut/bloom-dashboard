@@ -61,7 +61,7 @@ const ImageDropzone = ({ file, setFile, currentImage, name, variableName, setVar
     } else {
       setImageUrl(currentImage || null);
     }
-  }, [file, currentImage]);
+  }, [file, currentImage, name, variableName]);
 
   const containerClass = `${styles.container} ${isDragActive ? styles.isActive : ""}`;
 

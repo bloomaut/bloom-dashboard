@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -73,7 +73,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     }
   };
 
-  const clearAllLocalState = () => {
+  const clearAllLocalState = useCallback(() => {
     setStep("choose");
     setFormData({ pillar: "", date: todayIso, dayTime: DayTime.MORNING });
     setRawIdea("");
@@ -86,12 +86,12 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
     setIsGeneratingIdea(false);
     setIsCreatingFromIdea(false);
     setRecordSeconds(0);
-  };
+  }, [todayIso]);
 
   useEffect(() => {
     if (!isOpen) return;
     clearAllLocalState();
-  }, [isOpen]);
+  }, [isOpen, clearAllLocalState]);
 
   useEffect(() => {
     return () => {

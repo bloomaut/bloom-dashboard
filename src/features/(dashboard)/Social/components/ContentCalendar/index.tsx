@@ -639,7 +639,7 @@ export const ContentCalendar = () => {
 
       return <div className={styles.timePeriodContainer}>{items.map(renderContentItem)}</div>;
     },
-    [renderContentItem],
+    [renderContentItem, dict],
   );
 
   return (

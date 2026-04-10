@@ -204,7 +204,7 @@ const useFormValidator = (
     };
 
     validateFormData();
-  }, [formData, file]);
+  }, [formData, file, dict, fieldsToValidate, path]);
 
   return errors;
 };

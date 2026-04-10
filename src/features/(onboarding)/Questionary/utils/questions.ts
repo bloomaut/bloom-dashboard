@@ -15,7 +15,8 @@ export const questions = [
     type: "simple_text",
     mandatory: true,
     question: "In which country do you operate and in what language do you want to create content?",
-    short_description: "Define your main location and the language you will use to communicate your brand. (e.g., Argentina, Spanish)",
+    short_description:
+      "Define your main location and the language you will use to communicate your brand. (e.g., Argentina, Spanish)",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -26,7 +27,8 @@ export const questions = [
     type: "extended_text",
     mandatory: true,
     question: "Tell us who you are, what you do, and how you present yourself professionally",
-    short_description: "Include your full name, profession(s), and a brief description of your background or experience.",
+    short_description:
+      "Include your full name, profession(s), and a brief description of your background or experience.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -59,7 +61,8 @@ export const questions = [
     type: "extended_text",
     mandatory: true,
     question: "Why do your customers choose you over other options?",
-    short_description: "Describe your differentiators, advantages, or what you believe makes you unique compared to competitors.",
+    short_description:
+      "Describe your differentiators, advantages, or what you believe makes you unique compared to competitors.",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -92,7 +95,8 @@ export const questions = [
     type: "extended_text",
     mandatory: true,
     question: "How do you currently sell your products or services?",
-    short_description: "Describe your current sales channels (e.g., social media, website, WhatsApp, in-person, marketplaces, etc.).",
+    short_description:
+      "Describe your current sales channels (e.g., social media, website, WhatsApp, in-person, marketplaces, etc.).",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -117,7 +121,8 @@ export const questionsES = [
     type: "simple_text",
     mandatory: true,
     question: "¿En qué país operás y en qué idioma querés crear contenido?",
-    short_description: "Define tu ubicación principal y el idioma en el que vas a comunicar tu marca. (Ej: Argentina, Español)",
+    short_description:
+      "Define tu ubicación principal y el idioma en el que vas a comunicar tu marca. (Ej: Argentina, Español)",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
@@ -194,14 +199,14 @@ export const questionsES = [
     type: "extended_text",
     mandatory: true,
     question: "¿Cómo vendés hoy tus productos o servicios?",
-    short_description: "Describe tus canales de venta actuales (ej: redes sociales, web, WhatsApp, presencial, marketplaces, etc.).",
+    short_description:
+      "Describe tus canales de venta actuales (ej: redes sociales, web, WhatsApp, presencial, marketplaces, etc.).",
     options: [""],
     hasConditionalQuestion: false,
     conditionalQuestion: "",
     defaultAnswer: "",
   },
 ];
-
 
 export const answers = [
   "",
