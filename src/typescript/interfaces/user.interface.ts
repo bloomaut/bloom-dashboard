@@ -8,13 +8,16 @@ export type ClientInfo = Record<string, unknown>;
 
 export interface IUser {
   id: string | number;
+  oauth_id?: string | null;
   name: string;
   lastname: Nullable<string>;
   phone: Nullable<string>;
   email: string;
   active: boolean;
   role: UserRole;
+  onboardingStatus?: OnboardingStatus;
   onboarding_status: OnboardingStatus;
+  wish_list?: boolean;
   wishList: boolean;
   suscription: SubscriptionType;
   client: ClientInfo | null;

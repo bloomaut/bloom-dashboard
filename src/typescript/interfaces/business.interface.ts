@@ -26,13 +26,16 @@ export type ClientInfo = {
 
 export interface IUser {
   id: string | number | null;
+  oauth_id?: string | null;
   name: string;
   lastname: Nullable<string>;
   phone: Nullable<string>;
   email: string;
   active: boolean;
   role: UserRole;
+  onboardingStatus?: OnboardingStatus;
   onboarding_status: OnboardingStatus;
+  wish_list?: boolean;
   wishList: boolean;
   suscription: SubscriptionType;
   client: ClientInfo | null;

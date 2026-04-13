@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 import { get } from "@/services/fetch";
+import { extractUserFromMeResponse } from "@/lib/userMe";
 
 export default function AdminGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -30,10 +31,9 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
 
       // 2) Fallback: consulta backend si no hay cookie
       try {
-        const {
-          result: { user },
-        } = await get("user/me");
-        const role = user?.role ?? user?.app_metadata?.role ?? "user";
+        const me = await get("user/me");
+        const user = extractUserFromMeResponse(me);
+        const role = user?.role ?? "user";
 
         if (role !== "admin") {
           router.replace(`/${locale || "en"}/dashboard/home`);
@@ -58,15 +58,19 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
   };
 
   if (error) {
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <ErrorMessage error={new Error(error)} reset={handleReset} />
-    </div>;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <ErrorMessage error={new Error(error)} reset={handleReset} />
+      </div>
+    );
   }
 
   if (!allowed) {
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <LoadingSpinner size='large' home />
-    </div>;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <LoadingSpinner size='large' home />
+      </div>
+    );
   }
 
   return <>{children}</>;

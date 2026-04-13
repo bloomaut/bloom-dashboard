@@ -9,14 +9,25 @@ export type UserMeResponse = {
 };
 
 export function extractUserFromMeResponse(me: unknown): IUser | null {
-  const data = me as UserMeResponse | null | undefined;
-  const user = (data?.result?.user ?? data?.user ?? null) as any;
+  const data = me as any;
+  const user = (data?.result?.user ?? data?.user ?? data?.data?.result?.user ?? data?.data?.user ?? null) as any;
   if (!user) return null;
+
   if (user.onboarding_status === null || user.onboarding_status === undefined) {
-    if (user.onboardingStatus !== null && user.onboardingStatus !== undefined) {
+    if (user.onboardingStatus !== null && user.onboardingStatus !== undefined)
       user.onboarding_status = user.onboardingStatus;
-    }
   }
+
+  if (user.wishList === null || user.wishList === undefined) {
+    if (user.wish_list !== null && user.wish_list !== undefined) user.wishList = user.wish_list;
+  }
+
+  if (typeof user.wishList !== "boolean") {
+    if (user.wishList === "true") user.wishList = true;
+    else if (user.wishList === "false") user.wishList = false;
+    else user.wishList = Boolean(user.wishList);
+  }
+
   return user as IUser;
 }
 
