@@ -15,13 +15,14 @@ export default function DashboardPage() {
   const [stats, setStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reloadToken, setReloadToken] = useState(0);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
         setLoading(true);
+        setError(null);
         const response = await getUsersStats();
-        console.log("response: ", response);
         const payload: any = response;
         const statusCode = payload?.statusCode ?? payload?.data?.statusCode;
         const users = payload?.result?.users ?? payload?.data?.result?.users;
@@ -35,14 +36,16 @@ export default function DashboardPage() {
         setStats(next);
       } catch (err: any) {
         console.error("Error fetching user stats:", err);
-        setError(err?.message || "Error al cargar estadísticas");
+        setError("No pudimos cargar las estadísticas. Intentá nuevamente.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchStats();
-  }, []);
+  }, [reloadToken]);
+
+  const handleRetry = () => setReloadToken(v => v + 1);
 
   return (
     <div className={styles.dashboard}>
@@ -53,12 +56,12 @@ export default function DashboardPage() {
 
       {/* Stats Cards */}
       <div className={styles.statsSection}>
-        <DashboardStats stats={stats} loading={loading} error={error} />
+        <DashboardStats stats={stats} loading={loading} error={error} onRetry={handleRetry} />
       </div>
 
       {/* Charts */}
       <div className={styles.chartsSection}>
-        <DashboardCharts userStats={stats} />
+        <DashboardCharts userStats={stats} loading={loading} error={error} onRetry={handleRetry} />
       </div>
     </div>
   );

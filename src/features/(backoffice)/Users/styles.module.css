@@ -59,7 +59,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--bo-accent) 0%, var(--bo-primary) 60%, var(--bo-secondary) 120%);
+  background: linear-gradient(90deg, var(--bo-primary) 0%, var(--bo-secondary) 100%);
 }
 
 .headerContent {
@@ -121,7 +121,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--bo-accent) 0%, var(--bo-primary) 60%, var(--bo-secondary) 120%);
+  background: linear-gradient(90deg, var(--bo-primary) 0%, var(--bo-secondary) 100%);
 }
 
 .filtersHeader {
@@ -141,7 +141,7 @@
   height: 1rem;
   width: 1rem;
   color: var(--bo-primary);
-  background: rgba(106, 32, 164, 0.12);
+  background: rgba(77, 194, 244, 0.12);
   padding: 0.375rem;
   border-radius: 0.375rem;
   box-sizing: content-box;
@@ -244,7 +244,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--bo-accent) 0%, var(--bo-primary) 60%, var(--bo-secondary) 120%);
+  background: linear-gradient(90deg, var(--bo-primary) 0%, var(--bo-secondary) 100%);
 }
 
 .usersHeader {
@@ -321,7 +321,7 @@
 }
 
 .errorMessage {
-  color: var(--bo-danger);
+  color: var(--bo-error);
   font-weight: 700;
   font-size: 1rem;
 }
@@ -605,7 +605,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--bo-accent) 0%, var(--bo-primary) 60%, var(--bo-secondary) 120%);
+  background: linear-gradient(90deg, var(--bo-primary) 0%, var(--bo-secondary) 100%);
 }
 
 .paginationContent {

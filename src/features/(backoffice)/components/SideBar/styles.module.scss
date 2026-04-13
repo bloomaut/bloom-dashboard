@@ -12,7 +12,7 @@
 
   &:hover {
     background-color: var(--bo-surface-2);
-    border-color: rgba(15, 23, 42, 0.18);
+    border-color: rgba(68, 68, 68, 0.18);
     transform: translateY(-1px);
     box-shadow: var(--bo-shadow-md);
   }
@@ -36,7 +36,7 @@
   left: 0;
   z-index: 40;
   width: 16rem;
-  background: linear-gradient(135deg, var(--bo-secondary) 0%, var(--bo-primary-dark) 100%);
+  background: var(--bo-secondary-dark);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   transform: translateX(-100%);
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -56,7 +56,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  backdrop-filter: blur(10px);
 }
 
 // Logo section
@@ -129,10 +128,10 @@
   }
 
   &.active {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.12) 100%);
-    color: #ffffff;
-    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.24);
-    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: var(--bo-primary);
+    color: var(--bo-secondary-dark);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(77, 194, 244, 0.35);
     transform: translateX(4px);
 
     &::before {

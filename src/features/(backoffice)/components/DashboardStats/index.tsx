@@ -14,10 +14,12 @@ export function DashboardStats({
   stats,
   loading,
   error,
+  onRetry,
 }: {
   stats: UserStats | null;
   loading: boolean;
   error: string | null;
+  onRetry?: () => void;
 }) {
   const withOnBoardingCompleted = stats?.withOnBoardingCompleted ?? 0;
 
@@ -50,7 +52,14 @@ export function DashboardStats({
       <div className={styles.statsGrid}>
         <Card className={styles.errorCard}>
           <CardContent className={styles.errorContent}>
-            <div className={styles.errorMessage}>Error al cargar estadísticas: {error}</div>
+            <div className={styles.errorMessage}>{error}</div>
+            {onRetry ? (
+              <div className={styles.errorActions}>
+                <button className={styles.retryButton} type='button' onClick={onRetry}>
+                  Reintentar
+                </button>
+              </div>
+            ) : null}
           </CardContent>
         </Card>
       </div>

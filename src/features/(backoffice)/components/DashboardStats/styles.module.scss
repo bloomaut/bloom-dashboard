@@ -11,7 +11,7 @@
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
   }
 }
@@ -34,12 +34,12 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--bo-accent) 0%, var(--bo-primary) 60%, var(--bo-secondary) 120%);
+    background: linear-gradient(90deg, var(--bo-primary) 0%, var(--bo-secondary) 100%);
   }
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(15, 23, 42, 0.18);
+    border-color: rgba(68, 68, 68, 0.18);
     box-shadow: var(--bo-shadow-md);
   }
 }
@@ -60,9 +60,38 @@
 
 .errorMessage {
   text-align: center;
-  color: var(--bo-danger);
-  font-weight: 600;
+  color: var(--bo-error);
+  font-weight: 700;
   font-size: 1rem;
+}
+
+.errorActions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.retryButton {
+  appearance: none;
+  border: 1px solid rgba(77, 194, 244, 0.35);
+  background: var(--bo-primary);
+  color: var(--bo-secondary-dark);
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+}
+
+.retryButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(68, 68, 68, 0.12);
+  filter: brightness(0.98);
+}
+
+.retryButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--bo-ring), 0 12px 24px rgba(68, 68, 68, 0.12);
 }
 
 // Card header
@@ -116,7 +145,7 @@
     }
 
     &.negative {
-      color: var(--bo-danger);
+      color: var(--bo-error);
 
       &::before {
         content: '↘';

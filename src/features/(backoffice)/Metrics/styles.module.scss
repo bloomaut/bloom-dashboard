@@ -7,46 +7,32 @@
   min-height: 100vh;
   background: var(--bo-bg);
   position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: linear-gradient(135deg, var(--bo-secondary) 0%, var(--bo-primary-dark) 100%);
-    border-radius: 0 0 2rem 2rem;
-    z-index: -1;
-  }
 }
 
 // Header section
 .header {
   text-align: center;
-  padding: 2.5rem 1.5rem 0;
-  margin-bottom: 2rem;
+  padding: 0.5rem 0 0;
+  margin-bottom: 0.5rem;
   position: relative;
   z-index: 1;
 
   .title {
     font-size: clamp(2rem, 3vw, 2.5rem);
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    line-height: 1.15;
-    color: #ffffff;
-    margin-bottom: 0.75rem;
-    text-shadow: 0 6px 18px rgba(15, 23, 42, 0.28);
+    font-weight: 850;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--bo-text);
+    margin-bottom: 0.25rem;
   }
 
   .subtitle {
-    color: #ffffff;
+    color: var(--bo-text-muted);
     font-size: clamp(1rem, 1.4vw, 1.125rem);
     font-weight: 600;
     margin-top: 0.25rem;
     margin-bottom: 0;
-    opacity: 0.92;
-    text-shadow: 0 6px 18px rgba(15, 23, 42, 0.22);
+    opacity: 1;
   }
 }
 
@@ -54,11 +40,11 @@
 .statsSection {
   position: relative;
   z-index: 2;
-  margin-top: -2.5rem;
-  padding: 0 1.5rem;
+  margin-top: 0;
+  padding: 0;
 
   @media (min-width: 1024px) {
-    padding: 0 2.5rem;
+    padding: 0;
   }
 }
 
@@ -66,9 +52,9 @@
 .chartsSection {
   position: relative;
   z-index: 2;
-  padding: 0 1.5rem 2.5rem;
+  padding: 0 0 2.5rem;
 
   @media (min-width: 1024px) {
-    padding: 0 2.5rem 3rem;
+    padding: 0 0 3rem;
   }
 }
