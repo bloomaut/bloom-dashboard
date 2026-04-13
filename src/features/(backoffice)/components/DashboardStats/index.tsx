@@ -1,14 +1,13 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, UserPlus, FileText, TrendingUp } from "lucide-react";
+import { Users, UserPlus, CheckCircle2 } from "lucide-react";
 import styles from "./styles.module.scss";
 
 interface UserStats {
   total: number;
-  withoutProposal: number;
   inWishList: number;
-  withProposal: number;
+  withOnBoardingCompleted?: number;
 }
 
 export function DashboardStats({
@@ -20,12 +19,7 @@ export function DashboardStats({
   loading: boolean;
   error: string | null;
 }) {
-  // Calcular tasa de conversión
-  const conversionRate = stats
-    ? stats.total > 0
-      ? ((stats.withProposal / stats.total) * 100).toFixed(1)
-      : "0.0"
-    : "0.0";
+  const withOnBoardingCompleted = stats?.withOnBoardingCompleted ?? 0;
 
   const dashboardStats = [
     {
@@ -43,18 +37,11 @@ export function DashboardStats({
       icon: UserPlus,
     },
     {
-      title: "Con Propuestas",
-      value: loading ? "..." : stats?.withProposal?.toLocaleString() || "0",
+      title: "Onboarding Completado",
+      value: loading ? "..." : withOnBoardingCompleted.toLocaleString(),
       change: "--%", // Esto podría venir del endpoint en el futuro
       changeType: "positive" as const,
-      icon: FileText,
-    },
-    {
-      title: "Tasa de Conversión",
-      value: loading ? "..." : `${conversionRate}%`,
-      change: "--%", // Esto podría venir del endpoint en el futuro
-      changeType: "negative" as const,
-      icon: TrendingUp,
+      icon: CheckCircle2,
     },
   ];
 
@@ -80,9 +67,7 @@ export function DashboardStats({
           </CardHeader>
           <CardContent className={styles.cardContent}>
             <div className={styles.statValue}>{stat.value}</div>
-            <div className={`${styles.statChange} ${stat.changeType === "negative" ? styles.negative : ""}`}>
-              {stat.change} desde el mes pasado
-            </div>
+            <div className={styles.statChange}>{stat.change} desde el mes pasado</div>
           </CardContent>
         </Card>
       ))}

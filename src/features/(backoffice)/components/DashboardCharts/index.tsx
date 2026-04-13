@@ -6,24 +6,27 @@ import styles from "./styles.module.scss";
 
 interface UserStats {
   total: number;
-  withoutProposal: number;
   inWishList: number;
-  withProposal: number;
+  withOnBoardingCompleted?: number;
 }
 
 export function DashboardCharts({ userStats }: { userStats: UserStats | null }) {
+  const total = userStats?.total ?? 0;
+  const inWishList = userStats?.inWishList ?? 0;
+  const withOnBoardingCompleted = userStats?.withOnBoardingCompleted ?? 0;
+  const others = Math.max(0, total - inWishList - withOnBoardingCompleted);
+
   // Prepare data for status distribution chart
   const statusData = [
-    { name: "Sin Propuesta", value: userStats?.withoutProposal || 0, color: "#3D0050" },
-    { name: "En Lista de Espera", value: userStats?.inWishList || 0, color: "#4DC2F4" },
-    { name: "Con Propuesta", value: userStats?.withProposal || 0, color: "#F44336" },
+    { name: "Lista de Espera", value: inWishList, color: "#4DC2F4" },
+    { name: "Onboarding Completado", value: withOnBoardingCompleted, color: "#5A0075" },
+    { name: "Otros", value: others, color: "#767676" },
   ];
 
   const userFlowData = [
-    { step: "Total", value: userStats?.total || 0 },
-    { step: "En Lista de Espera", value: userStats?.inWishList || 0 },
-    { step: "Sin Propuesta", value: userStats?.withoutProposal || 0 },
-    { step: "Con Propuesta", value: userStats?.withProposal || 0 },
+    { step: "Total", value: total },
+    { step: "Lista de Espera", value: inWishList },
+    { step: "Onboarding Completado", value: withOnBoardingCompleted },
   ];
 
   return (

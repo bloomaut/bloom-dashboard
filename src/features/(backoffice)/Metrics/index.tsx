@@ -7,9 +7,8 @@ import styles from "./styles.module.scss";
 
 interface UserStats {
   total: number;
-  withoutProposal: number;
   inWishList: number;
-  withProposal: number;
+  withOnBoardingCompleted?: number;
 }
 
 export default function DashboardPage() {
@@ -23,11 +22,17 @@ export default function DashboardPage() {
         setLoading(true);
         const response = await getUsersStats();
         console.log("response: ", response);
-        if (response?.data?.statusCode === 200 && response?.data?.result?.users) {
-          setStats(response.data.result.users);
-        } else {
-          throw new Error("Formato de respuesta inválido");
-        }
+        const payload: any = response;
+        const statusCode = payload?.statusCode ?? payload?.data?.statusCode;
+        const users = payload?.result?.users ?? payload?.data?.result?.users;
+        if (statusCode !== 200 || !users) throw new Error("Formato de respuesta inválido");
+
+        const next: UserStats = {
+          total: Number(users?.total ?? 0),
+          inWishList: Number(users?.inWishList ?? 0),
+          withOnBoardingCompleted: Number(users?.withOnBoardingCompleted ?? 0),
+        };
+        setStats(next);
       } catch (err: any) {
         console.error("Error fetching user stats:", err);
         setError(err?.message || "Error al cargar estadísticas");
