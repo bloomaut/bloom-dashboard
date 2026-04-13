@@ -66,6 +66,19 @@ export async function getUsersStats() {
   return request(url);
 }
 
+export async function removeFromWishlist(userId: string) {
+  const url = `/api/pipeline/wishlist/${userId}`;
+  try {
+    const res = await axios.put(url, { wish_list: false });
+    return res.data;
+  } catch (err: any) {
+    const message = err?.response
+      ? `${err.response.status} ${err.response.statusText}`
+      : err?.message ?? "Network Error";
+    throw new Error(message);
+  }
+}
+
 export default {
   listUsers,
   getAllUsers,
@@ -75,4 +88,5 @@ export default {
   getProposalApprovedUsers,
   getProposalRejectedUsers,
   getUsersStats,
+  removeFromWishlist,
 };
