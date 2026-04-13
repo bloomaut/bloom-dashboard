@@ -8,74 +8,82 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import Table, { TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import {
-  Filter,
-  Edit,
-  ChevronLeft,
-  ChevronRight,
-  Search,
-  Users,
-  Calendar,
-  Mail,
-  User,
-  MoreHorizontal,
-  Eye,
-} from "lucide-react";
+import { Filter, ChevronLeft, ChevronRight, Search, Users, Calendar, Mail, User, Eye } from "lucide-react";
 import styles from "./styles.module.css";
 
 // service helpers
-import {
-  getAllUsers,
-  getWishListUsers,
-  getInProgressUsers,
-  getProposalPendingUsers,
-  getProposalApprovedUsers,
-  getProposalRejectedUsers,
-} from "@/services/userFetch";
+import { getAllUsers, getWishListUsers } from "@/services/userFetch";
 
 // fallback mapping for fields coming from the API to the shape used by the UI
-function normalizeUser(u: any, appliedFilter?: string) {
+function normalizeUser(u: any) {
+  const email = String(u.email ?? u.emailAddress ?? "").trim();
+  const rawName = typeof u.name === "string" ? u.name.trim() : u.name;
+  const rawLastname = typeof u.lastname === "string" ? u.lastname.trim() : u.lastname;
+  const fullName = `${rawName ?? ""} ${rawLastname ?? ""}`.trim();
+  const emailFallbackName = email ? email.split("@")[0] : "";
+
+  const onboardingStatus = (u.onboarding_status ??
+    u.onboardingStatus ??
+    u.onboarding?.status ??
+    u.client?.onboarding_status ??
+    u.client?.onboardingStatus ??
+    null) as string | null;
+
+  const wishList = Boolean(u.wish_list ?? u.wishList ?? u.client?.wish_list ?? u.client?.wishList ?? false);
+  const active = u.active === undefined || u.active === null ? true : Boolean(u.active);
+  const roleRaw = String(u.role ?? u.roleName ?? "default").trim();
+  const role =
+    roleRaw === "default"
+      ? "Usuario"
+      : roleRaw === "admin"
+        ? "Admin"
+        : roleRaw.charAt(0).toUpperCase() + roleRaw.slice(1);
+
+  const status = (() => {
+    if (!active) return "inactivo";
+    if (wishList) return "lista-espera";
+    if (onboardingStatus === "ONBOARDING_REJECTED") return "rechazado";
+    if (["ONBOARDING_COMPLETED", "BRAND_COMPLETED", "SOCIAL_CONNECTED"].includes(String(onboardingStatus)))
+      return "onboarding-completado";
+    return "onboarding-en-progreso";
+  })();
+
   return {
     id: u.id ?? u._id ?? u.userId,
-    // name may be split into name/lastname or firstName/lastName
-    name:
-      (u.name ??
-        (u.firstName ? `${u.firstName} ${u.lastName ?? ""}`.trim() : null) ??
-        (u.name || u.lastname ? `${u.name ?? ""} ${u.lastname ?? ""}`.trim() : null)) ||
-      "Sin nombre",
-    email: u.email ?? u.emailAddress ?? "-",
-    // proposal fields may live under `client` in the new API
-    role: u.role ?? u.roleName ?? "usuario",
+    name: fullName || emailFallbackName || "Sin nombre",
+    email: email || "-",
+    role,
+    roleRaw,
     registrationDate: u.registrationDate ?? u.created_at ?? u.createdAt ?? null,
     lastLogin: u.lastLogin ?? u.last_login ?? null,
-    // derive status from many possible shapes, preferring explicit status
-    status: (() => {
-      // Si tenemos un filtro aplicado y no es "todos", confiamos en él
-      if (appliedFilter && appliedFilter !== "todos") {
-        return appliedFilter;
-      }
-
-      // Si hay un status explícito, lo usamos
-      if (u.status) return u.status;
-
-      const proposalUrl = u.proposal_url ?? u.client?.proposal_url ?? u.client?.proposalUrl;
-      const proposalStatus = u.proposal_status ?? u.client?.proposal_status ?? u.client?.proposalStatus;
-      const wishList = u.wish_list ?? u.client?.wish_list ?? false;
-
-      // if there is a proposal URL, map proposal_status to readable state
-      if (proposalUrl !== null && proposalUrl !== undefined && String(proposalUrl) !== "null") {
-        if (proposalStatus === "approved") return "con-propuesta-aprobada";
-        if (proposalStatus === "pending") return "con-propuesta-revision";
-        if (proposalStatus === "rejected") return "rechazado";
-        return "con-propuesta";
-      }
-
-      if (wishList) return "lista-espera";
-      // no proposal URL -> treat as in-progress / sin-propuesta
-      return "sin-propuesta";
-    })(),
+    status,
+    onboardingStatus,
+    wishList,
+    suscription: u.suscription ?? u.subscription ?? null,
     raw: u,
   };
+}
+
+function formatOnboardingStatus(status: string | null): string {
+  if (!status) return "-";
+  switch (status) {
+    case "FIRST_LOGIN":
+      return "Primer ingreso";
+    case "TERMS_ACCEPTED":
+      return "Términos aceptados";
+    case "BRAND_PROCESSING":
+      return "Procesando marca";
+    case "BRAND_COMPLETED":
+      return "Marca completada";
+    case "SOCIAL_CONNECTED":
+      return "Redes conectadas";
+    case "ONBOARDING_COMPLETED":
+      return "Onboarding completado";
+    case "ONBOARDING_REJECTED":
+      return "Onboarding rechazado";
+    default:
+      return status;
+  }
 }
 
 export default function UserManagement() {
@@ -95,14 +103,6 @@ export default function UserManagement() {
     switch (filter) {
       case "lista-espera":
         return getWishListUsers;
-      case "sin-propuesta":
-        return getInProgressUsers;
-      case "con-propuesta-revision":
-        return getProposalPendingUsers;
-      case "con-propuesta-aprobada":
-        return getProposalApprovedUsers;
-      case "rechazado":
-        return getProposalRejectedUsers;
       case "todos":
       default:
         return getAllUsers;
@@ -141,7 +141,7 @@ export default function UserManagement() {
             null;
         }
 
-        const normalized = (items || []).map(user => normalizeUser(user, statusFilter));
+        const normalized = (items || []).map(user => normalizeUser(user));
         if (!mounted) return;
         setUsers(normalized);
         setTotalUsers(
@@ -170,6 +170,9 @@ export default function UserManagement() {
       user.email.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  const statusFilteredUsers =
+    statusFilter === "todos" ? filteredUsers : filteredUsers.filter(u => String(u.status) === statusFilter);
+
   // compute pagination UI values from totalUsers
   const totalPages = totalUsers ? Math.max(1, Math.ceil(totalUsers / usersPerPage)) : 1;
   const startIndex = (currentPage - 1) * usersPerPage;
@@ -182,16 +185,16 @@ export default function UserManagement() {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "con-propuesta-revision":
-        return <Badge className={styles.badgeAmber}>Con Propuesta - En Revisión</Badge>;
-      case "con-propuesta-aprobada":
-        return <Badge className={styles.badgeEmerald}>Con Propuesta - Aprobada</Badge>;
       case "lista-espera":
         return <Badge className={styles.badgeBlue}>En Lista de Espera</Badge>;
-      case "sin-propuesta":
-        return <Badge className={styles.badgeSlate}>Sin Propuesta</Badge>;
+      case "onboarding-completado":
+        return <Badge className={styles.badgeEmerald}>Onboarding Completado</Badge>;
+      case "onboarding-en-progreso":
+        return <Badge className={styles.badgeSlate}>Onboarding en Progreso</Badge>;
       case "rechazado":
         return <Badge className={styles.badgeRed}>Rechazado</Badge>;
+      case "inactivo":
+        return <Badge className={styles.badgeMuted}>Inactivo</Badge>;
       default:
         return (
           <Badge variant='outline' className='font-medium'>
@@ -254,11 +257,11 @@ export default function UserManagement() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value='todos'>Todos los estados</SelectItem>
-                  <SelectItem value='con-propuesta-revision'>Con Propuesta - En Revisión</SelectItem>
-                  <SelectItem value='con-propuesta-aprobada'>Con Propuesta - Aprobada</SelectItem>
                   <SelectItem value='lista-espera'>En Lista de Espera</SelectItem>
-                  <SelectItem value='sin-propuesta'>Sin Propuesta</SelectItem>
+                  <SelectItem value='onboarding-en-progreso'>Onboarding en Progreso</SelectItem>
+                  <SelectItem value='onboarding-completado'>Onboarding Completado</SelectItem>
                   <SelectItem value='rechazado'>Rechazado</SelectItem>
+                  <SelectItem value='inactivo'>Inactivo</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -270,8 +273,8 @@ export default function UserManagement() {
           <CardHeader className={styles.usersHeader}>
             <div className={styles.usersHeaderContent}>
               <CardTitle className={styles.usersTitle}>
-                Lista de Usuarios ({totalUsers ?? filteredUsers.length}{" "}
-                {(totalUsers ?? filteredUsers.length) === 1 ? "usuario" : "usuarios"})
+                Lista de Usuarios ({totalUsers ?? statusFilteredUsers.length}{" "}
+                {(totalUsers ?? statusFilteredUsers.length) === 1 ? "usuario" : "usuarios"})
               </CardTitle>
             </div>
           </CardHeader>
@@ -285,7 +288,7 @@ export default function UserManagement() {
                     Cargando usuarios...
                   </div>
                 </div>
-              ) : filteredUsers.length === 0 ? (
+              ) : statusFilteredUsers.length === 0 ? (
                 <div className={styles.emptyContainer}>
                   {error ? (
                     <div className={styles.errorMessage}>{error}</div>
@@ -299,7 +302,7 @@ export default function UserManagement() {
                 </div>
               ) : (
                 <div className={styles.userCardsList}>
-                  {filteredUsers.map(user => (
+                  {statusFilteredUsers.map(user => (
                     <div key={user.id} className={styles.userCard}>
                       <div className={styles.userCardContent}>
                         <div className={styles.userCardInfo}>
@@ -321,7 +324,10 @@ export default function UserManagement() {
                               <span>{formatDate(user.registrationDate)}</span>
                             </div>
 
-                            <div className={styles.userCardDetail}>{getStatusBadge(user.status)}</div>
+                            <div className={styles.userCardMetaRow}>
+                              {getStatusBadge(user.status)}
+                              <Badge className={styles.badgeRole}>{user.role}</Badge>
+                            </div>
                           </div>
                         </div>
 
@@ -362,7 +368,7 @@ export default function UserManagement() {
                         </div>
                       </TableCell>
                     </TableRow>
-                  ) : filteredUsers.length === 0 ? (
+                  ) : statusFilteredUsers.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className={styles.emptyContainer}>
                         {error ? (
@@ -377,7 +383,7 @@ export default function UserManagement() {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    filteredUsers.map(user => (
+                    statusFilteredUsers.map(user => (
                       <TableRow key={user.id} className={styles.tableRow}>
                         <TableCell className={styles.tableCellPrimary}>
                           <div className={styles.userTableInfo}>
@@ -386,13 +392,17 @@ export default function UserManagement() {
                             </div>
                             <div>
                               <div className={styles.userTableName}>{user.name}</div>
-                              <div className={styles.userTableRole}>{user.role}</div>
+                              <div className={styles.userTableSecondary}>
+                                {formatOnboardingStatus(user.onboardingStatus ?? null)}
+                              </div>
                             </div>
                           </div>
                         </TableCell>
                         <TableCell className={styles.tableCell}>{user.email}</TableCell>
                         <TableCell>{getStatusBadge(user.status)}</TableCell>
-                        <TableCell className={`${styles.tableCell} ${styles.capitalize}`}>{user.role}</TableCell>
+                        <TableCell className={styles.tableCell}>
+                          <Badge className={styles.badgeRole}>{user.role}</Badge>
+                        </TableCell>
                         <TableCell className={styles.tableCell}>{formatDate(user.registrationDate)}</TableCell>
                         <TableCell className={styles.userTableActions}>
                           <div className={styles.userTableActionsContainer}>
