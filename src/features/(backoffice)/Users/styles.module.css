@@ -469,6 +469,8 @@
   display: none;
   overflow-x: auto;
   border-radius: 1rem;
+  table-layout: fixed;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -598,9 +600,18 @@
 
 .userTableActionsContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
   margin-right: 0;
 }
+
+/* Agregar anchos fijos a las celdas del header */
+.tableHeaderCell:nth-child(1) { width: 22%; }  /* Usuario */
+.tableHeaderCell:nth-child(2) { width: 26%; }  /* Email */
+.tableHeaderCell:nth-child(3) { width: 18%; }  /* Estado */
+.tableHeaderCell:nth-child(4) { width: 10%; }  /* Rol */
+.tableHeaderCell:nth-child(5) { width: 14%; }  /* Fecha */
+.tableHeaderCell:nth-child(6) { width: 10%; }  /* Acciones */
 
 .userTableButton {
   height: 2rem;

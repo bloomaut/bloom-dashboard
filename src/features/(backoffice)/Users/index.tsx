@@ -8,11 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import Table, { TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Filter, ChevronLeft, ChevronRight, Search, Users, Calendar, Mail, User, Eye } from "lucide-react";
+import { Filter, ChevronLeft, ChevronRight, Search, Users, Calendar, Mail, User, Eye, UserCheck } from "lucide-react";
 import styles from "./styles.module.css";
+import { useMessageToast } from "@/hooks/useMessageToast";
 
 // service helpers
-import { getAllUsers, getWishListUsers } from "@/services/userFetch";
+import { getAllUsers, getWishListUsers, removeFromWishlist } from "@/services/userFetch";
 
 // fallback mapping for fields coming from the API to the shape used by the UI
 function normalizeUser(u: any) {
@@ -88,6 +89,7 @@ function formatOnboardingStatus(status: string | null): string {
 
 export default function UserManagement() {
   const { locale } = useParams() as { locale: string };
+  const { notify, notifyError } = useMessageToast();
   const [statusFilter, setStatusFilter] = useState("todos");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -97,6 +99,7 @@ export default function UserManagement() {
   const [totalUsers, setTotalUsers] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   // choose API function according to the selected filter
   const chooseFetcher = (filter: string) => {
@@ -106,6 +109,32 @@ export default function UserManagement() {
       case "todos":
       default:
         return getAllUsers;
+    }
+  };
+
+  const handleRemoveFromWishlist = async (userId: string) => {
+    try {
+      setActionLoading(userId);
+      await removeFromWishlist(userId);
+      notify("Usuario actualizado correctamente (removido de la lista de espera)");
+
+      // Update local state to reflect the change without full reload
+      setUsers(prev =>
+        prev.map(u => {
+          if (u.id === userId) {
+            return {
+              ...u,
+              wishList: false,
+              status: u.status === "lista-espera" ? "onboarding-en-progreso" : u.status,
+            };
+          }
+          return u;
+        }),
+      );
+    } catch (err: any) {
+      notifyError(err.message || "Error al actualizar el usuario");
+    } finally {
+      setActionLoading(null);
     }
   };
 
@@ -332,8 +361,27 @@ export default function UserManagement() {
                         </div>
 
                         <div className={styles.userCardActions}>
+                          {user.wishList && (
+                            <Button
+                              variant='outline'
+                              size='sm'
+                              className={styles.userCardButton}
+                              onClick={() => handleRemoveFromWishlist(user.id)}
+                              disabled={actionLoading === user.id}
+                              title='Remover de lista de espera'
+                            >
+                              {actionLoading === user.id ? (
+                                <div
+                                  className={styles.loadingSpinner}
+                                  style={{ width: 16, height: 16, borderWidth: 2 }}
+                                />
+                              ) : (
+                                <UserCheck className='h-4 w-4' />
+                              )}
+                            </Button>
+                          )}
                           <Link href={`/${locale}/backoffice/users/${user.id}`}>
-                            <Button variant='ghost' size='sm' className={styles.userCardButton}>
+                            <Button variant='ghost' size='sm' className={styles.userCardButton} title='Ver detalle'>
                               <Eye className='h-4 w-4' />
                             </Button>
                           </Link>
@@ -406,8 +454,27 @@ export default function UserManagement() {
                         <TableCell className={styles.tableCell}>{formatDate(user.registrationDate)}</TableCell>
                         <TableCell className={styles.userTableActions}>
                           <div className={styles.userTableActionsContainer}>
+                            {user.wishList && (
+                              <Button
+                                variant='outline'
+                                size='sm'
+                                className={styles.userTableButton}
+                                onClick={() => handleRemoveFromWishlist(user.id)}
+                                disabled={actionLoading === user.id}
+                                title='Remover de lista de espera'
+                              >
+                                {actionLoading === user.id ? (
+                                  <div
+                                    className={styles.loadingSpinner}
+                                    style={{ width: 16, height: 16, borderWidth: 2 }}
+                                  />
+                                ) : (
+                                  <UserCheck className='h-4 w-4' />
+                                )}
+                              </Button>
+                            )}
                             <Link href={`/${locale}/backoffice/users/${user.id}`}>
-                              <Button variant='ghost' size='sm' className={styles.userTableButton}>
+                              <Button variant='ghost' size='sm' className={styles.userTableButton} title='Ver detalle'>
                                 <Eye className='h-4 w-4' />
                               </Button>
                             </Link>
