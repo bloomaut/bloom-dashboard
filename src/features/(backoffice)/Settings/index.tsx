@@ -21,8 +21,7 @@ export default function Config() {
     // Limpiar localStorage
     localStorage.removeItem("client_id");
 
-    // Redirigir a Auth0 logout
-    window.location.href = `/api/auth/logout?returnTo=${window.location.origin}/${locale || "es"}`;
+    window.location.href = `/${locale || "es"}`;
   };
 
   return (
