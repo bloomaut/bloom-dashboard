@@ -605,14 +605,6 @@
   margin-right: 0;
 }
 
-/* Agregar anchos fijos a las celdas del header */
-.tableHeaderCell:nth-child(1) { width: 22%; }  /* Usuario */
-.tableHeaderCell:nth-child(2) { width: 26%; }  /* Email */
-.tableHeaderCell:nth-child(3) { width: 20%; }  /* Estado */
-.tableHeaderCell:nth-child(4) { width: 10%; }  /* Rol */
-.tableHeaderCell:nth-child(5) { width: 13%; }  /* Fecha */
-.tableHeaderCell:nth-child(6) { width: 8%; }  /* Acciones */
-
 .badgeBlue, .badgeAmber, .badgeEmerald, .badgeSlate, .badgeRed {
   white-space: nowrap;
 }
