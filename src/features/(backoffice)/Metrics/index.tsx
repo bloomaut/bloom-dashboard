@@ -23,6 +23,7 @@ export default function DashboardPage() {
         setLoading(true);
         setError(null);
         const response = await getUsersStats();
+        console.log("response 13: ", response);
         const payload: any = response;
         const users = payload?.result?.users ?? payload?.data?.result?.users;
 
