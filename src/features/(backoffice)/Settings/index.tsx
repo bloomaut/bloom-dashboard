@@ -40,7 +40,7 @@ export default function Config() {
           </div>
         </div>
 
-        <Card className={styles.card}>
+        <Card>
           <CardHeader>
             <CardTitle className={styles.cardTitle}>Panel en desarrollo</CardTitle>
           </CardHeader>

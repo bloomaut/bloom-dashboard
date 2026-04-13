@@ -4,17 +4,17 @@
   top: 1rem;
   left: 1rem;
   z-index: 50;
-  background-color: var(--bo-secondary-dark);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: var(--bo-surface);
+  border: 1px solid var(--bo-border);
   border-radius: 0.75rem;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--bo-shadow-sm);
   transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease, border-color 150ms ease;
 
   &:hover {
-    background-color: var(--bo-secondary);
-    border-color: rgba(77, 194, 244, 0.28);
+    background-color: var(--bo-surface-2);
+    border-color: rgba(77, 194, 244, 0.35);
     transform: translateY(-1px);
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+    box-shadow: var(--bo-shadow-md);
   }
 
   @media (min-width: 768px) {
@@ -24,7 +24,7 @@
   .icon {
     height: 1.5rem;
     width: 1.5rem;
-    color: rgba(255, 255, 255, 0.92);
+    color: var(--bo-text);
   }
 }
 
@@ -36,11 +36,11 @@
   left: 0;
   z-index: 40;
   width: 16rem;
-  background: var(--bo-secondary-dark);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bo-surface);
+  border-right: 1px solid var(--bo-border);
   transform: translateX(-100%);
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 8px 0 28px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--bo-shadow-md);
 
   &.open {
     transform: translateX(0);
@@ -64,7 +64,7 @@
   align-items: center;
   height: 4.5rem;
   padding: 0 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--bo-border);
   justify-content: center;
 
   .logoContainer {
@@ -77,7 +77,7 @@
       width: 8.25rem;
       height: auto;
       object-fit: contain;
-      filter: brightness(1.1) contrast(1.1);
+      filter: none;
     }
   }
 }
@@ -99,7 +99,7 @@
   font-weight: 700;
   border-radius: 0.875rem;
   transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, color 150ms ease;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--bo-text);
   text-decoration: none;
   position: relative;
   overflow: hidden;
@@ -112,16 +112,16 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(77, 194, 244, 0.08);
     border-radius: 0.875rem;
     opacity: 0;
     transition: opacity 0.3s ease;
   }
 
   &:hover {
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    color: var(--bo-text);
+    border-color: rgba(77, 194, 244, 0.28);
+    box-shadow: var(--bo-shadow-sm);
 
     &::before {
       opacity: 1;
@@ -130,8 +130,8 @@
 
   &.active {
     background: rgba(77, 194, 244, 0.18);
-    color: #ffffff;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+    color: var(--bo-text);
+    box-shadow: var(--bo-shadow-sm);
     border: 1px solid rgba(77, 194, 244, 0.35);
 
     &::before {
@@ -155,12 +155,12 @@
     margin-right: 0.875rem;
     height: 1.25rem;
     width: 1.25rem;
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(68, 68, 68, 0.72);
     transition: color 150ms ease;
   }
 
   &:hover .navIcon {
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(68, 68, 68, 0.88);
   }
 
   &.active .navIcon {
@@ -171,12 +171,12 @@
 // Footer
 .footer {
   padding: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid var(--bo-border);
+  background: var(--bo-surface);
 
   .footerContent {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.62);
+    color: var(--bo-text-muted);
     text-align: center;
     line-height: 1.4;
 
