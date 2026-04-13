@@ -101,6 +101,28 @@ function setHeader(config: any, key: string, value: string) {
   }
 }
 
+async function tryRefreshSession(): Promise<boolean> {
+  if (typeof window === "undefined") return false;
+  if (typeof fetch !== "function") return false;
+  const base = getApiDashBaseUrl();
+  if (!base) return false;
+
+  try {
+    const res = await fetch(`${base}/api/user/me`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "x-client-type": "web",
+        "X-Client-Type": "web",
+        "client-type": "web",
+      },
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 axios.interceptors.request.use(async config => {
   config.withCredentials = true;
   setHeader(config, "x-client-type", "web");
@@ -129,5 +151,30 @@ axios.interceptors.request.use(async config => {
 
   return config;
 });
+
+axios.interceptors.response.use(
+  response => response,
+  async error => {
+    const status = error?.response?.status;
+    const config = error?.config as any;
+    const url = String(config?.url || "");
+
+    const is401 = status === 401;
+    const alreadyRetried = Boolean(config?.__bloomRetried);
+    const isAuthOrMe =
+      url.includes("/api/auth/") ||
+      url.includes("/api/user/me") ||
+      url.includes("/api/auth/csrf") ||
+      url.includes("/auth/csrf");
+
+    if (is401 && config && !alreadyRetried && !isAuthOrMe) {
+      config.__bloomRetried = true;
+      const refreshed = await tryRefreshSession();
+      if (refreshed) return axios(config);
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 export default axios;
