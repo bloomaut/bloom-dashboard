@@ -2,8 +2,8 @@
 .chartsContainer {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 0 1rem;
+  gap: 1.5rem;
+  padding: 0;
 
   @media (min-width: 1024px) {
     padding: 0;
@@ -13,7 +13,7 @@
 // Charts grid
 .chartsGrid {
   display: grid;
-  gap: 2rem;
+  gap: 1.5rem;
   grid-template-columns: 1fr;
 
   @media (min-width: 768px) {
@@ -23,12 +23,12 @@
 
 // Chart card
 .chartCard {
-  background: #ffffff;
-  border-radius: 1.5rem;
-  padding: 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bo-surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--bo-shadow-sm);
+  border: 1px solid var(--bo-border);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
   position: relative;
   overflow: hidden;
 
@@ -38,13 +38,14 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 6px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    height: 3px;
+    background: linear-gradient(90deg, var(--bo-accent) 0%, var(--bo-primary) 55%, var(--bo-secondary) 120%);
   }
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    border-color: rgba(15, 23, 42, 0.18);
+    box-shadow: var(--bo-shadow-md);
   }
 }
 
@@ -53,16 +54,16 @@
   margin-bottom: 1.5rem;
 
   .chartTitle {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1e293b;
+    font-size: clamp(1.5rem, 1.8vw, 1.75rem);
+    font-weight: 800;
+    color: var(--bo-text);
     margin-bottom: 0.5rem;
   }
 
   .chartDescription {
-    font-size: 0.875rem;
-    color: #64748b;
-    font-weight: 500;
+    font-size: 0.9375rem;
+    color: var(--bo-text-muted);
+    font-weight: 600;
   }
 }
 
@@ -80,15 +81,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(45deg, #f8fafc, #e2e8f0);
-    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(90, 0, 117, 0.04), rgba(77, 194, 244, 0.04));
+    border-radius: calc(var(--radius) - 0.125rem);
 
     &::after {
       content: '';
       width: 40px;
       height: 40px;
-      border: 4px solid #e2e8f0;
-      border-top: 4px solid #667eea;
+      border: 4px solid rgba(68, 68, 68, 0.10);
+      border-top: 4px solid rgba(77, 194, 244, 0.85);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }

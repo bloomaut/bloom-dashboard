@@ -40,7 +40,7 @@ export function Table<T extends Record<string, any>>({
           style={{
             width: "100%",
             borderCollapse: "collapse",
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "inherit",
           }}
         >
           {children}
@@ -59,7 +59,7 @@ export function Table<T extends Record<string, any>>({
         style={{
           width: "100%",
           borderCollapse: "collapse",
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "inherit",
         }}
       >
         <thead>
@@ -70,9 +70,9 @@ export function Table<T extends Record<string, any>>({
                 style={{
                   textAlign: "left",
                   padding: "12px 16px",
-                  borderBottom: "1px solid rgba(0,0,0,0.08)",
+                  borderBottom: "1px solid var(--bo-border, rgba(0,0,0,0.08))",
                   fontSize: 14,
-                  color: "#333",
+                  color: "var(--bo-text, #333)",
                   width: col.width,
                 }}
               >
@@ -93,10 +93,18 @@ export function Table<T extends Record<string, any>>({
             rows.map((row, rowIndex) => (
               <tr
                 key={rowKey ? rowKey(row, rowIndex) : rowIndex}
-                style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}
+                style={{ borderBottom: "1px solid var(--bo-border, rgba(0,0,0,0.04))" }}
               >
                 {cols.map(col => (
-                  <td key={col.key} style={{ padding: "12px 16px", verticalAlign: "top", fontSize: 14, color: "#444" }}>
+                  <td
+                    key={col.key}
+                    style={{
+                      padding: "12px 16px",
+                      verticalAlign: "top",
+                      fontSize: 14,
+                      color: "var(--bo-text-muted, #444)",
+                    }}
+                  >
                     {col.render ? col.render(row, rowIndex) : String(row[col.key] ?? "")}
                   </td>
                 ))}
@@ -122,9 +130,9 @@ export const TableHead: React.FC<React.ThHTMLAttributes<HTMLTableCellElement>> =
     style={{
       textAlign: "left",
       padding: "12px 16px",
-      borderBottom: "1px solid rgba(0,0,0,0.08)",
+      borderBottom: "1px solid var(--bo-border, rgba(0,0,0,0.08))",
       fontSize: 14,
-      color: "#333",
+      color: "var(--bo-text, #333)",
       ...style,
     }}
   >
@@ -137,7 +145,7 @@ export const TableBody: React.FC<React.HTMLAttributes<HTMLTableSectionElement>> 
 );
 
 export const TableRow: React.FC<React.HTMLAttributes<HTMLTableRowElement>> = ({ children, style, ...props }) => (
-  <tr {...props} style={{ borderBottom: "1px solid rgba(0,0,0,0.04)", ...style }}>
+  <tr {...props} style={{ borderBottom: "1px solid var(--bo-border, rgba(0,0,0,0.04))", ...style }}>
     {children}
   </tr>
 );

@@ -3,6 +3,11 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  padding: 1.5rem;
+
+  @media (min-width: 640px) {
+    padding: 2rem;
+  }
 }
 
 // Header section
@@ -10,27 +15,60 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: clamp(2rem, 2.2vw, 2.5rem);
+  font-weight: 850;
+  color: var(--bo-text);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.backButton {
+  border-radius: 0.75rem;
+  border: 1px solid var(--bo-border);
+  background: rgba(255, 255, 255, 0.92);
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+
+.backButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--bo-shadow-sm);
+  border-color: rgba(15, 23, 42, 0.18);
+  background: #ffffff;
+}
+
+.card {
+  border-radius: var(--radius);
+  border: 1px solid var(--bo-border);
+  box-shadow: var(--bo-shadow-sm);
+  overflow: hidden;
+}
+
+.cardTitle {
+  font-size: clamp(1.5rem, 1.8vw, 1.75rem);
+  font-weight: 800;
+  color: var(--bo-text);
 }
 
 // Error message
 .errorMessage {
-  color: var(--text-error);
-  font-size: 0.875rem;
+  color: var(--bo-danger);
+  font-size: 0.9375rem;
+  font-weight: 600;
 }
 
 // Data display
 .dataDisplay {
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   white-space: pre-wrap;
   word-break: break-words;
-  background-color: var(--bg-muted);
+  background-color: rgba(15, 23, 42, 0.03);
   padding: 1rem;
-  border-radius: var(--border-radius);
-  font-family: 'Courier New', Courier, monospace;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }

@@ -1,50 +1,130 @@
-// Main layout container
-.layoutContainer {
-  display: flex;
+.root {
   min-height: 100vh;
-  background-color: #ffffff;
-  align-items: center;
-  justify-content: center;
+  background: var(--bo-bg);
+  position: relative;
 }
 
-.centerContent {
-  text-align: center;
+.root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 220px;
+  background: linear-gradient(135deg, var(--bo-secondary) 0%, var(--bo-primary-dark) 100%);
+  border-radius: 0 0 1.5rem 1.5rem;
+  z-index: -1;
+}
+
+.container {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+
+  @media (min-width: 640px) {
+    padding: 2rem;
+    gap: 2rem;
+  }
 }
 
-.developmentMessage {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #6b7280;
+.header {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 1.5rem;
+  box-shadow: var(--bo-shadow-md);
+  position: relative;
+  overflow: hidden;
 }
 
-// Logout button styles
-.logoutButton {
-  background-color: #dc2626;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--bo-accent) 0%, var(--bo-primary) 60%, var(--bo-secondary) 120%);
+}
+
+.headerContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.headerIcon {
+  padding: 0.75rem;
+  background: linear-gradient(135deg, var(--bo-primary) 0%, var(--bo-secondary) 100%);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+}
+
+.headerIconSvg {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: #ffffff;
+}
+
+.headerTitle {
+  font-size: clamp(2rem, 2.4vw, 2.5rem);
+  font-weight: 850;
+  color: var(--bo-text);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.headerSubtitle {
+  color: var(--bo-text-muted);
+  margin-top: 0.25rem;
+  font-weight: 600;
   font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  line-height: 1.5;
 }
 
-.logoutButton:hover {
-  background-color: #b91c1c;
+.card {
+  border-radius: var(--radius);
+  border: 1px solid var(--bo-border);
+  box-shadow: var(--bo-shadow-sm);
 }
 
-.logoutButton:focus {
-  outline: 2px solid #dc2626;
-  outline-offset: 2px;
+.cardTitle {
+  font-size: clamp(1.5rem, 1.8vw, 1.75rem);
+  font-weight: 800;
+  color: var(--bo-text);
 }
 
 .mutedText {
-  color: #6b7280;
+  color: var(--bo-text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.logoutButton {
+  background: var(--bo-error);
+  color: #ffffff;
+  border: 1px solid rgba(244, 67, 54, 0.25);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.logoutButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(68, 68, 68, 0.12);
+  background: #D32F2F;
+}
+
+.logoutButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.22), 0 12px 24px rgba(68, 68, 68, 0.12);
 }

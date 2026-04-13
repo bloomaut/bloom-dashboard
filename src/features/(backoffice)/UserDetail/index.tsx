@@ -26,7 +26,7 @@ export default async function UserDetailPage({ params }: { params: { locale: str
         <h1 className={styles.title}>Usuario #{id}</h1>
         <Link href={`/${locale}/backoffice/users`}>
           <Button variant='outline' className={styles.backButton}>
-            Volver a Usuarioss
+            Volver a Usuarios
           </Button>
         </Link>
       </div>

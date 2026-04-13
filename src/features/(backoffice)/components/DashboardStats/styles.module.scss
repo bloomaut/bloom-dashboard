@@ -1,28 +1,29 @@
 // Stats grid container
 .statsGrid {
   display: grid;
-  gap: 1.5rem;
+  gap: 1rem;
   grid-template-columns: 1fr;
-  padding: 0 1rem;
+  padding: 0;
 
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 
   @media (min-width: 1024px) {
     grid-template-columns: repeat(4, 1fr);
-    padding: 0;
+    gap: 1.25rem;
   }
 }
 
 // Individual stat card
 .statCard {
-  background: #ffffff;
-  border-radius: 1rem;
+  background: var(--bo-surface);
+  border-radius: var(--radius);
   padding: 1.5rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--bo-shadow-sm);
+  border: 1px solid var(--bo-border);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
   position: relative;
   overflow: hidden;
 
@@ -32,24 +33,25 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    height: 3px;
+    background: linear-gradient(90deg, var(--bo-accent) 0%, var(--bo-primary) 60%, var(--bo-secondary) 120%);
   }
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    border-color: rgba(15, 23, 42, 0.18);
+    box-shadow: var(--bo-shadow-md);
   }
 }
 
 // Error card
 .errorCard {
   grid-column: 1 / -1;
-  background: #ffffff;
-  border-radius: 1rem;
+  background: var(--bo-surface);
+  border-radius: var(--radius);
   padding: 2rem;
-  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.1);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  box-shadow: var(--bo-shadow-sm);
+  border: 1px solid rgba(244, 67, 54, 0.24);
 }
 
 .errorContent {
@@ -58,8 +60,8 @@
 
 .errorMessage {
   text-align: center;
-  color: #dc2626;
-  font-weight: 500;
+  color: var(--bo-danger);
+  font-weight: 600;
   font-size: 1rem;
 }
 
@@ -72,9 +74,9 @@
   margin-bottom: 1rem;
 
   .cardTitle {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #64748b;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--bo-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -82,8 +84,8 @@
   .cardIcon {
     height: 1.25rem;
     width: 1.25rem;
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+    color: var(--bo-primary);
+    background: rgba(77, 194, 244, 0.12);
     padding: 0.5rem;
     border-radius: 0.5rem;
     box-sizing: content-box;
@@ -93,17 +95,17 @@
 // Card content
 .cardContent {
   .statValue {
-    font-size: 2rem;
+    font-size: clamp(1.75rem, 2.4vw, 2.25rem);
     font-weight: 800;
-    line-height: 1.2;
-    color: #1e293b;
+    line-height: 1.1;
+    color: var(--bo-text);
     margin-bottom: 0.5rem;
   }
 
   .statChange {
     font-size: 0.875rem;
-    color: #10b981;
-    font-weight: 500;
+    color: #047857;
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -114,7 +116,7 @@
     }
 
     &.negative {
-      color: #ef4444;
+      color: var(--bo-danger);
 
       &::before {
         content: '↘';

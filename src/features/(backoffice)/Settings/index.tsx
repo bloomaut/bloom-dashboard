@@ -1,20 +1,12 @@
 "use client";
-import type React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import styles from "./styles.module.scss";
 import { useAppDispatch } from "@/store/hooks";
 import { clearUserData } from "@/store/features/userSlice";
 import { useParams } from "next/navigation";
 
-interface LayoutWrapperProps {
-  children: React.ReactNode;
-  title: string;
-  description?: string;
-  breadcrumbs?: Array<{ label: string; href?: string }>;
-}
-
-function LayoutWrapper({ children, title, description, breadcrumbs }: LayoutWrapperProps) {
+export default function Config() {
   const dispatch = useAppDispatch();
   const { locale } = useParams() as { locale?: string };
 
@@ -34,33 +26,37 @@ function LayoutWrapper({ children, title, description, breadcrumbs }: LayoutWrap
   };
 
   return (
-    <div className={styles.layoutContainer}>
-      <div className={styles.centerContent}>
-        <div className={styles.developmentMessage}>Panel de configuracion en desarrollo.</div>
-        <button onClick={handleLogout} className={styles.logoutButton} type='button'>
-          <LogOut size={20} />
-          Cerrar Sesión
-        </button>
+    <div className={styles.root}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <div className={styles.headerContent}>
+            <div className={styles.headerIcon}>
+              <Settings className={styles.headerIconSvg} />
+            </div>
+            <div>
+              <h1 className={styles.headerTitle}>Configuración</h1>
+              <p className={styles.headerSubtitle}>Ajustes y configuración del sistema</p>
+            </div>
+          </div>
+        </div>
+
+        <Card className={styles.card}>
+          <CardHeader>
+            <CardTitle className={styles.cardTitle}>Panel en desarrollo</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className={styles.mutedText}>
+              Esta sección está en construcción. Mientras tanto, podés cerrar sesión desde aquí.
+            </p>
+            <div style={{ marginTop: "1rem", display: "flex", justifyContent: "flex-start" }}>
+              <button onClick={handleLogout} className={styles.logoutButton} type='button'>
+                <LogOut size={18} />
+                Cerrar sesión
+              </button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
-  );
-}
-
-export default function Config() {
-  return (
-    <LayoutWrapper
-      title='Configuración'
-      description='Ajustes y configuración del sistema'
-      breadcrumbs={[{ label: "Configuración" }]}
-    >
-      <Card className={styles.card}>
-        <CardHeader className={styles.cardHeader}>
-          <CardTitle className={styles.cardTitle}>Configuración del Sistema</CardTitle>
-        </CardHeader>
-        <CardContent className={styles.cardContent}>
-          <p className={styles.mutedText}>Panel de configuración en desarrollo.</p>
-        </CardContent>
-      </Card>
-    </LayoutWrapper>
   );
 }

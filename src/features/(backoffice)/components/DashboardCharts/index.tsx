@@ -14,9 +14,9 @@ interface UserStats {
 export function DashboardCharts({ userStats }: { userStats: UserStats | null }) {
   // Prepare data for status distribution chart
   const statusData = [
-    { name: "Sin Propuesta", value: userStats?.withoutProposal || 0, color: "#4DC2F4" },
-    { name: "En Lista de Espera", value: userStats?.inWishList || 0, color: "#6A20A4" },
-    { name: "Con Propuesta", value: userStats?.withProposal || 0, color: "#2BA8D4" },
+    { name: "Sin Propuesta", value: userStats?.withoutProposal || 0, color: "#3D0050" },
+    { name: "En Lista de Espera", value: userStats?.inWishList || 0, color: "#4DC2F4" },
+    { name: "Con Propuesta", value: userStats?.withProposal || 0, color: "#F44336" },
   ];
 
   const userFlowData = [
@@ -56,9 +56,9 @@ export function DashboardCharts({ userStats }: { userStats: UserStats | null }) 
                   <Tooltip
                     contentStyle={{
                       backgroundColor: "#ffffff",
-                      border: "none",
+                      border: "1px solid rgba(15, 23, 42, 0.12)",
                       borderRadius: "8px",
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                      boxShadow: "0 10px 24px rgba(15, 23, 42, 0.12)",
                     }}
                   />
                 </PieChart>
@@ -82,18 +82,18 @@ export function DashboardCharts({ userStats }: { userStats: UserStats | null }) 
                   <Tooltip
                     contentStyle={{
                       backgroundColor: "#ffffff",
-                      border: "none",
+                      border: "1px solid rgba(15, 23, 42, 0.12)",
                       borderRadius: "8px",
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                      boxShadow: "0 10px 24px rgba(15, 23, 42, 0.12)",
                     }}
                   />
                   <Line
                     type='monotone'
                     dataKey='value'
-                    stroke='#667eea'
+                    stroke='#4DC2F4'
                     strokeWidth={4}
-                    dot={{ fill: "#667eea", strokeWidth: 2, r: 6 }}
-                    activeDot={{ r: 8, fill: "#764ba2" }}
+                    dot={{ fill: "#4DC2F4", strokeWidth: 2, r: 6 }}
+                    activeDot={{ r: 8, fill: "#F44336" }}
                   />
                 </LineChart>
               </ResponsiveContainer>

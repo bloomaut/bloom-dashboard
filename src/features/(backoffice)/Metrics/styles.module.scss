@@ -5,7 +5,7 @@
   gap: 2rem;
   padding: 2rem;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: var(--bo-bg);
   position: relative;
 
   &::before {
@@ -15,7 +15,7 @@
     left: 0;
     right: 0;
     height: 200px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--bo-secondary) 0%, var(--bo-primary-dark) 100%);
     border-radius: 0 0 2rem 2rem;
     z-index: -1;
   }
@@ -24,30 +24,29 @@
 // Header section
 .header {
   text-align: center;
-  margin-bottom: 3rem;
+  padding: 2.5rem 1.5rem 0;
+  margin-bottom: 2rem;
   position: relative;
   z-index: 1;
 
   .title {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 3vw, 2.5rem);
     font-weight: 800;
     letter-spacing: -0.025em;
-    line-height: 1.2;
+    line-height: 1.15;
     color: #ffffff;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
-    margin-bottom: 1rem;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    margin-bottom: 0.75rem;
+    text-shadow: 0 6px 18px rgba(15, 23, 42, 0.28);
   }
 
   .subtitle {
     color: #ffffff;
-    font-size: 1.125rem;
-    font-weight: 500;
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
-    opacity: 0.95;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    font-weight: 600;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    opacity: 0.92;
+    text-shadow: 0 6px 18px rgba(15, 23, 42, 0.22);
   }
 }
 
@@ -55,11 +54,21 @@
 .statsSection {
   position: relative;
   z-index: 2;
-  margin-top: -3rem;
+  margin-top: -2.5rem;
+  padding: 0 1.5rem;
+
+  @media (min-width: 1024px) {
+    padding: 0 2.5rem;
+  }
 }
 
 // Charts section
 .chartsSection {
   position: relative;
   z-index: 2;
+  padding: 0 1.5rem 2.5rem;
+
+  @media (min-width: 1024px) {
+    padding: 0 2.5rem 3rem;
+  }
 }
