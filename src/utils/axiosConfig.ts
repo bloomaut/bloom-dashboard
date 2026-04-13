@@ -124,6 +124,7 @@ async function tryRefreshSession(): Promise<boolean> {
 }
 
 let isRedirectingToPostLogin = false;
+let last401RedirectAt = 0;
 
 function getLocaleFromPathname(): "en" | "es" {
   if (typeof window === "undefined") return "en";
@@ -145,8 +146,12 @@ function clearLocalSessionCache() {
 
 function redirectToPostLogin() {
   if (typeof window === "undefined") return;
+  if (window.location.pathname.includes("/post-login")) return;
+  const now = Date.now();
+  if (now - last401RedirectAt < 10_000) return;
   if (isRedirectingToPostLogin) return;
   isRedirectingToPostLogin = true;
+  last401RedirectAt = now;
   clearLocalSessionCache();
   const locale = getLocaleFromPathname();
   window.location.assign(`/${locale}/post-login`);
