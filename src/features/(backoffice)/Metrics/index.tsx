@@ -17,6 +17,8 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
 
+  console.log("Primer linea de console.log");
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
