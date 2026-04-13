@@ -190,7 +190,7 @@
 }
 
 .searchInput:focus {
-  border-color: rgba(106, 32, 164, 0.6);
+  border-color: rgba(77, 194, 244, 0.6);
   box-shadow: 0 0 0 3px var(--bo-ring);
   background: #ffffff;
   outline: none;
@@ -214,7 +214,7 @@
 }
 
 .selectFilter:focus {
-  border-color: rgba(106, 32, 164, 0.6);
+  border-color: rgba(77, 194, 244, 0.6);
   box-shadow: 0 0 0 3px var(--bo-ring);
   background: #ffffff;
   outline: none;
@@ -415,6 +415,13 @@
   font-size: 0.9375rem;
 }
 
+.userCardMetaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .userCardDetail {
   display: flex;
   align-items: center;
@@ -556,6 +563,33 @@
   color: var(--bo-text-muted);
   font-weight: 600;
   text-transform: capitalize;
+}
+
+.userTableSecondary {
+  font-size: 0.8125rem;
+  color: var(--bo-text-muted);
+  font-weight: 600;
+  margin-top: 0.125rem;
+}
+
+.badgeRole {
+  background: rgba(90, 0, 117, 0.08);
+  color: var(--bo-secondary);
+  border: 1px solid rgba(90, 0, 117, 0.14);
+  border-radius: 0.75rem;
+  font-weight: 700;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.badgeMuted {
+  background: rgba(118, 118, 118, 0.10);
+  color: #475569;
+  border: 1px solid rgba(118, 118, 118, 0.18);
+  border-radius: 0.75rem;
+  font-weight: 700;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
 }
 
 .userTableActions {
