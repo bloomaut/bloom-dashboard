@@ -9,7 +9,7 @@ export function buildOnboardingAnswersPayload(questions: Question[], answers: st
     out[`${i + 1}. ${q}`] = a;
   }
   return out;
-} 
+}
 
 export function stringifyOnboardingAnswersPayload(questions: Question[], answers: string[]) {
   return JSON.stringify(buildOnboardingAnswersPayload(questions, answers));
