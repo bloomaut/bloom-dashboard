@@ -104,9 +104,19 @@ function setHeader(config: any, key: string, value: string) {
 axios.interceptors.request.use(async config => {
   config.withCredentials = true;
   setHeader(config, "x-client-type", "web");
+  setHeader(config, "X-Client-Type", "web");
+  setHeader(config, "client-type", "web");
 
   if (typeof window !== "undefined") {
-    const clientId = localStorage.getItem("client_id");
+    let clientId = localStorage.getItem("client_id");
+    if (!clientId) {
+      const uuid =
+        typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+          ? crypto.randomUUID()
+          : `cid_${Math.random().toString(16).slice(2)}${Date.now().toString(16)}`;
+      clientId = uuid;
+      localStorage.setItem("client_id", clientId);
+    }
     if (clientId) setHeader(config, "X-Client-ID", clientId);
   }
 
