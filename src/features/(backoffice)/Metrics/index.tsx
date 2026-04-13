@@ -24,10 +24,7 @@ export default function DashboardPage() {
         setError(null);
         const response = await getUsersStats();
         const payload: any = response;
-        const statusCodeRaw = payload?.statusCode ?? payload?.data?.statusCode;
-        const statusCode = Number(statusCodeRaw);
         const users = payload?.result?.users ?? payload?.data?.result?.users;
-        if (statusCode !== 200 || !users || typeof users !== "object") throw new Error("Formato de respuesta inválido");
 
         const next: UserStats = {
           total: Number(users?.total ?? 0),
