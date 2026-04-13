@@ -123,6 +123,35 @@ async function tryRefreshSession(): Promise<boolean> {
   }
 }
 
+let isRedirectingToPostLogin = false;
+
+function getLocaleFromPathname(): "en" | "es" {
+  if (typeof window === "undefined") return "en";
+  const m = window.location.pathname.match(/^\/(en|es)\b/);
+  return (m?.[1] as "en" | "es" | undefined) ?? "en";
+}
+
+function clearLocalSessionCache() {
+  if (typeof document !== "undefined") {
+    document.cookie = "app-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; samesite=lax";
+    document.cookie = "onboarding=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; samesite=lax";
+  }
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("client_id");
+  }
+  csrfTokenCache = null;
+  csrfTokenPromise = null;
+}
+
+function redirectToPostLogin() {
+  if (typeof window === "undefined") return;
+  if (isRedirectingToPostLogin) return;
+  isRedirectingToPostLogin = true;
+  clearLocalSessionCache();
+  const locale = getLocaleFromPathname();
+  window.location.assign(`/${locale}/post-login`);
+}
+
 axios.interceptors.request.use(async config => {
   config.withCredentials = true;
   setHeader(config, "x-client-type", "web");
@@ -167,10 +196,14 @@ axios.interceptors.response.use(
       url.includes("/api/auth/csrf") ||
       url.includes("/auth/csrf");
 
-    if (is401 && config && !alreadyRetried && !isAuthOrMe) {
-      config.__bloomRetried = true;
-      const refreshed = await tryRefreshSession();
-      if (refreshed) return axios(config);
+    if (is401) {
+      if (config && !alreadyRetried && !isAuthOrMe) {
+        config.__bloomRetried = true;
+        const refreshed = await tryRefreshSession();
+        if (refreshed) return axios(config);
+      }
+
+      redirectToPostLogin();
     }
 
     return Promise.reject(error);
