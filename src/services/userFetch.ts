@@ -69,7 +69,7 @@ export async function getUsersStats() {
 export async function removeFromWishlist(userId: string) {
   const url = `/api/pipeline/wishlist/${userId}`;
   try {
-    const res = await axios.put(url, { wish_list: false });
+    const res = await axios.post(url, { wish_list: false });
     return res.data;
   } catch (err: any) {
     const message = err?.response
