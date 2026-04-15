@@ -34,8 +34,9 @@ export function extractUserFromMeResponse(me: unknown): IUser | null {
 export function getRouteForUser(user: IUser, locale: string) {
   console.log("user", user);
   const loc = locale || "en";
+  const disableWishlist = process.env.NEXT_PUBLIC_DISABLE_WISHLIST === "true";
   if (user.role === "admin") return `/${loc}/backoffice/metrics`;
-  if (user.wishList) return `/${loc}/onboarding/wishlist`;
+  if (!disableWishlist && user.wishList) return `/${loc}/onboarding/wishlist`;
   console.log("user.onboarding_status", user.onboarding_status);
   switch (user.onboarding_status) {
     case "FIRST_LOGIN":
