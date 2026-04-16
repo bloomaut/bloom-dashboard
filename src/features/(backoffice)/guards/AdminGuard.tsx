@@ -15,24 +15,21 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     let cancelled = false;
+    let intervalId: ReturnType<typeof setInterval> | null = null;
 
     const checkAdmin = async () => {
-      // 1) Fast-path: confía en cookie seteada por post-login
-      const cookies = typeof document !== "undefined" ? document.cookie : "";
-      const fromCookie = cookies
-        .split("; ")
-        .find(c => c.startsWith("app-role="))
-        ?.split("=")[1];
-
-      if (fromCookie === "admin") {
-        if (!cancelled) setAllowed(true);
-        return;
-      }
-
-      // 2) Fallback: consulta backend si no hay cookie
       try {
         const me = await get("user/me");
+        const status = (me as any)?.status ?? (me as any)?.statusCode ?? null;
+        if (status === 401) {
+          router.replace(`/${locale || "en"}/post-login`);
+          return;
+        }
         const user = extractUserFromMeResponse(me);
+        if (!user) {
+          router.replace(`/${locale || "en"}/post-login`);
+          return;
+        }
         const role = user?.role ?? "user";
 
         if (role !== "admin") {
@@ -47,8 +44,20 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
     };
 
     checkAdmin();
+
+    const pingIfVisible = () => {
+      if (document.visibilityState === "visible") checkAdmin();
+    };
+
+    intervalId = setInterval(pingIfVisible, 2 * 60 * 1000);
+    window.addEventListener("focus", checkAdmin);
+    document.addEventListener("visibilitychange", pingIfVisible);
+
     return () => {
       cancelled = true;
+      if (intervalId) clearInterval(intervalId);
+      window.removeEventListener("focus", checkAdmin);
+      document.removeEventListener("visibilitychange", pingIfVisible);
     };
   }, [router, locale]);
 
