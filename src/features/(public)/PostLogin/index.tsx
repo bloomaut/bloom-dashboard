@@ -6,6 +6,7 @@ import styles from "./styles/postLogin.module.scss";
 import LoadingSpinner from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 import { extractUserFromMeResponse, getRouteForUser } from "@/lib/userMe";
+import { getUsersStats } from "@/services/userFetch";
 
 export default function PostLoginPage() {
   const router = useRouter();
@@ -21,6 +22,10 @@ export default function PostLoginPage() {
         const me = await get("user/me");
         const user = extractUserFromMeResponse(me);
         if (!user) throw new Error("Missing user");
+
+        if (user.role === "admin") {
+          await getUsersStats();
+        }
 
         // Cachea señales para guards cliente
         document.cookie = `app-role=${user.role}; path=/; samesite=lax`;
