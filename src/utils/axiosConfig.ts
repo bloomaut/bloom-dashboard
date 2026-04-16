@@ -113,8 +113,6 @@ async function tryRefreshSession(): Promise<boolean> {
       credentials: "include",
       headers: {
         "x-client-type": "web",
-        "X-Client-Type": "web",
-        "client-type": "web",
       },
     });
     return res.ok;
@@ -160,8 +158,6 @@ function redirectToPostLogin() {
 axios.interceptors.request.use(async config => {
   config.withCredentials = true;
   setHeader(config, "x-client-type", "web");
-  setHeader(config, "X-Client-Type", "web");
-  setHeader(config, "client-type", "web");
 
   if (typeof window !== "undefined") {
     let clientId = localStorage.getItem("client_id");

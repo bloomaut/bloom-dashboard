@@ -13,6 +13,8 @@ function setBrowserGlobals(cookie: string) {
   (globalThis as any).document = { cookie };
   (globalThis as any).localStorage = {
     getItem: vi.fn(() => null),
+    setItem: vi.fn(() => undefined),
+    removeItem: vi.fn(() => undefined),
   };
 }
 
