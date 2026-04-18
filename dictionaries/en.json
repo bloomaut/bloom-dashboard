@@ -1,28 +1,37 @@
 {
   "dict": {
-   "header": {
-      "pricing": "Pricing"
+    "header": {
+      "pricing": "DISCOVER BLOOMAUT"
     },
     "hero": {
       "title": {
-        "launch": "Launch",
-        "fast": "marketing",
-        "and": ",",
-        "confidently": "confidently"
+        "part1": "You have a ",
+        "part2": "great product",
+        "part3": ", but on ",
+        "part4": "social media ",
+        "part5": "you are ",
+        "part6": "invisible"
       },
-      "subtitle1": "Break the molds of fear",
-      "subtitle2": "with",
-      "subtitle2_handle": "your peers",
-      "subtitle2_and": "and",
-      "subtitle2_rest": "mentor",
-      "description": "instantly creates your personalized marketing plan, strategy, brand identity, and content workflow. With a",
-      "description_mentored": "mentored video recording app",
-      "description_middle": ", record guided content and share it with",
-      "description_ecommerce": " your private peer comunity",
-      "description_end": "for pre-publication validation before you go to real —",
-      "description_free": "all free 🎁",
-      "cta": "LAUNCH YOUR MARKETING TODAY!",
-      "bloom_ai": "Bloom AI"
+      "subtitle": {
+        "part1": "With ",
+        "part2": "Bloomaut, ",
+        "part3": "creating ",
+        "part4": "content ",
+        "part5": "and",
+        "part6": "selling is ",
+        "part7": "simpler ",
+        "part8": "than you think."
+      },
+      "body": {
+        "part1": "Bloomaut ",
+        "part2": "helps you sell on social media, even if you don’t know where to start. We plan your content, guide you to record it from your phone, and leave it ready to publish. You can even validate it in ",
+        "part3": "our community",
+        "part4": ", get feedback, and ship with confidence. No team, no experience, and ",
+        "part5": "no fear of posting blind."
+      },
+      "button": {
+        "cta": "SHOW ME HOW BLOOMAUT WORKS"
+      }
     },
     "platforms": {
       "mobile": "Mobile",
@@ -51,12 +60,6 @@
     },
     "footer": {
       "follow": "Follow us on:",
-      "services": {
-        "title": "Services",
-        "online_store": "Online Store",
-        "digital_management": "Digital Management",
-        "digital_marketing": "Digital Marketing"
-      },
       "company": {
         "title": "Company",
         "about": "About Us",
@@ -890,4 +893,3 @@
       }
     }
 }
-
