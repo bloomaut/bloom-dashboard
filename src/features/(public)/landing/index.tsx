@@ -6,13 +6,14 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { FaLinkedinIn, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Landing() {
   const dict = useTranslations("dict");
   const pathname = usePathname();
   const en = pathname.includes("/en");
   const [showVideo, setShowVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const apiDash = process.env.NEXT_PUBLIC_API_DASH;
   const apiDashBase =
     apiDash
@@ -20,6 +21,19 @@ export default function Landing() {
       .replace(/\/+$/, "")
       .replace(/\/api$/, "") || "";
   const loginHref = apiDashBase ? `${apiDashBase}/api/auth/google` : `/api/auth/google`;
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+    const media = window.matchMedia("(max-width: 768px)");
+    const onChange = () => setIsMobile(media.matches);
+    onChange();
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", onChange);
+      return () => media.removeEventListener("change", onChange);
+    }
+    media.addListener(onChange);
+    return () => media.removeListener(onChange);
+  }, []);
 
   const handleVideoClick = () => {
     setShowVideo(true);
@@ -92,13 +106,23 @@ export default function Landing() {
       {/* 2. Community Section */}
       <section className={styles.onboardingRoadmap}>
         <div className={styles.roadmapImageContainer}>
-          <Image
-            src={getImageSrc("/community")}
-            alt='Community'
-            width={1728}
-            height={1117}
-            className={styles.roadmapImage}
-          />
+          {isMobile ? (
+            <Image
+              src='/community_(mobile)_(ES).png'
+              alt='Community'
+              width={440}
+              height={478}
+              className={styles.roadmapImage}
+            />
+          ) : (
+            <Image
+              src={getImageSrc("/community")}
+              alt='Community'
+              width={1728}
+              height={1117}
+              className={styles.roadmapImage}
+            />
+          )}
         </div>
       </section>
 
@@ -122,13 +146,23 @@ export default function Landing() {
       {/* 4. Onboarding Roadmap Section */}
       <section className={styles.onboardingRoadmap}>
         <div className={styles.roadmapImageContainer}>
-          <Image
-            src={getImageSrc("/bloomaut_working")}
-            alt='Bloomaut Working Process'
-            width={1728}
-            height={4474}
-            className={styles.roadmapImage}
-          />
+          {isMobile ? (
+            <Image
+              src='/bloomaut_working_(mobile)_(ES).png'
+              alt='Bloomaut Working Process'
+              width={440}
+              height={2070}
+              className={styles.roadmapImage}
+            />
+          ) : (
+            <Image
+              src={getImageSrc("/bloomaut_working")}
+              alt='Bloomaut Working Process'
+              width={1728}
+              height={4474}
+              className={styles.roadmapImage}
+            />
+          )}
         </div>
       </section>
 
@@ -138,8 +172,7 @@ export default function Landing() {
       {/* 5. Footer Section */}
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          {/* Logo y redes sociales */}
-          <div className={styles.footerBrand}>
+          <div className={styles.footerTop}>
             <Image
               src='/logotipo_horizontal.png'
               alt='Bloomaut Logo'
@@ -147,30 +180,26 @@ export default function Landing() {
               height={74}
               className={styles.footerLogo}
             />
-            <div className={styles.socialSection}>
-              <p className={styles.followText}>{dict("footer.follow")}</p>
-              <div className={styles.socialIcons}>
-                <a href='#' className={styles.socialIcon}>
-                  <FaLinkedinIn />
-                </a>
-                <a href='#' className={styles.socialIcon}>
-                  <FaXTwitter />
-                </a>
-                <a href='#' className={styles.socialIcon}>
-                  <FaInstagram />
-                </a>
-                <a href='#' className={styles.socialIcon}>
-                  <FaTiktok />
-                </a>
-                <a href='#' className={styles.socialIcon}>
-                  <FaYoutube />
-                </a>
-              </div>
+            <div className={styles.socialIcons}>
+              <a href='#' className={styles.socialIcon} aria-label='LinkedIn'>
+                <FaLinkedinIn />
+              </a>
+              <a href='#' className={styles.socialIcon} aria-label='X'>
+                <FaXTwitter />
+              </a>
+              <a href='#' className={styles.socialIcon} aria-label='Instagram'>
+                <FaInstagram />
+              </a>
+              <a href='#' className={styles.socialIcon} aria-label='TikTok'>
+                <FaTiktok />
+              </a>
+              <a href='#' className={styles.socialIcon} aria-label='YouTube'>
+                <FaYoutube />
+              </a>
             </div>
           </div>
 
-          {/* Columnas de enlaces */}
-          <div className={styles.footerColumns}>
+          <nav className={styles.footerNav} aria-label='Footer'>
             <div className={styles.footerColumn}>
               <h4 className={styles.columnTitle}>{dict("footer.company.title")}</h4>
               <ul className={styles.columnLinks}>
@@ -200,19 +229,19 @@ export default function Landing() {
                 </li>
               </ul>
             </div>
+          </nav>
 
+          <div className={styles.footerCta}>
             <Link href={loginHref}>
-              <button className={styles.heroButtonGradient}>PROBAR BLOOMAUT</button>
+              <button className={styles.footerCtaButton}>PROBAR BLOOMAUT</button>
             </Link>
           </div>
-        </div>
 
-        {/* Línea divisoria */}
-        <div className={styles.footerDivider}></div>
+          <div className={styles.footerDivider} />
 
-        {/* Copyright */}
-        <div className={styles.footerBottom}>
-          <p className={styles.copyright}>{dict("footer.copyright")}</p>
+          <div className={styles.footerBottom}>
+            <p className={styles.copyright}>{dict("footer.copyright")}</p>
+          </div>
         </div>
       </footer>
     </div>

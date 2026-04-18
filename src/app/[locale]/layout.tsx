@@ -21,11 +21,11 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Bloomaut",
+  title: "Bloom",
   description: "We transform ideas into businesses. Free, simple, and straightforward.",
   // metadataBase: new URL(""),
   openGraph: {
-    title: "Bloomaut",
+    title: "Bloom",
     description: "We transform ideas into businesses. Free, simple, and straightforward.",
   },
   icons: {
