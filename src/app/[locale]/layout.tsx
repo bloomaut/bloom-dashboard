@@ -5,6 +5,7 @@ import { Providers } from "@/store/provider";
 import { notFound } from "next/navigation";
 import { Barlow, Roboto } from "next/font/google";
 import { NextIntlClientProvider, useMessages } from "next-intl";
+import Script from "next/script";
 
 const barlow = Barlow({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -44,12 +45,14 @@ export default function AppLayout({
 }) {
   if (!locales.includes(locale as "en" | "es")) notFound();
   const messages = useMessages();
+  const disableLogin = process.env.NEXT_PUBLIC_DIABLE_LOGIN === "true";
 
   return (
     <Providers>
       <NextIntlClientProvider locale={locale} messages={messages}>
         <div className={`${barlow.className} ${barlow.variable} ${roboto.variable}`}>{children}</div>
       </NextIntlClientProvider>
+      {disableLogin && <Script src='https://tally.so/widgets/embed.js' strategy='lazyOnload' />}
     </Providers>
   );
 }

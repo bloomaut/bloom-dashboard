@@ -14,6 +14,7 @@ export default function Landing() {
   const en = pathname.includes("/en");
   const [showVideo, setShowVideo] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const disableLogin = process.env.NEXT_PUBLIC_DIABLE_LOGIN === "true";
   const apiDash = process.env.NEXT_PUBLIC_API_DASH;
   const apiDashBase =
     apiDash
@@ -42,6 +43,17 @@ export default function Landing() {
   const getImageSrc = (baseName: string) => {
     return en ? `${baseName}.png` : `${baseName}_(ES).png`;
   };
+
+  const tallyButtonProps = disableLogin
+    ? {
+        type: "button" as const,
+        "data-tally-open": "81pjjl",
+        "data-tally-layout": "modal",
+        "data-tally-width": "500",
+        "data-tally-emoji-text": "👋",
+        "data-tally-emoji-animation": "wave",
+      }
+    : null;
 
   return (
     <div className={styles.container}>
@@ -94,9 +106,15 @@ export default function Landing() {
             {dict("hero.body.part4")}
             <span className={styles.boldText}>{dict("hero.body.part5")}</span>
           </p>
-          <Link href={loginHref}>
-            <button className={styles.heroButton}>{dict("hero.button.cta")}</button>
-          </Link>
+          {disableLogin ? (
+            <button className={styles.heroButton} {...tallyButtonProps}>
+              {dict("hero.button.cta")}
+            </button>
+          ) : (
+            <Link href={loginHref}>
+              <button className={styles.heroButton}>{dict("hero.button.cta")}</button>
+            </Link>
+          )}
         </div>
       </section>
 
@@ -135,9 +153,15 @@ export default function Landing() {
           </div>
 
           <div className={styles.ctaButtonContainer}>
-            <Link href={loginHref}>
-              <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
-            </Link>
+            {disableLogin ? (
+              <button className={styles.ctaButton} {...tallyButtonProps}>
+                {dict("cta_section.button")}
+              </button>
+            ) : (
+              <Link href={loginHref}>
+                <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
+              </Link>
+            )}
             <p className={styles.ctaDisclaimer}>{dict("cta_section.disclaimer")}</p>
           </div>
         </div>
@@ -232,9 +256,15 @@ export default function Landing() {
           </nav>
 
           <div className={styles.footerCta}>
-            <Link href={loginHref}>
-              <button className={styles.footerCtaButton}>PROBAR BLOOMAUT</button>
-            </Link>
+            {disableLogin ? (
+              <button className={styles.footerCtaButton} {...tallyButtonProps}>
+                PROBAR BLOOMAUT
+              </button>
+            ) : (
+              <Link href={loginHref}>
+                <button className={styles.footerCtaButton}>PROBAR BLOOMAUT</button>
+              </Link>
+            )}
           </div>
 
           <div className={styles.footerDivider} />
