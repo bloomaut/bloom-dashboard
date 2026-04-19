@@ -1255,26 +1255,43 @@
 
   .footerContent {
     max-width: 1200px;
-    align-items: flex-start;
-    gap: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    grid-template-areas:
+      "top nav cta"
+      "divider divider divider"
+      "bottom bottom bottom";
+    align-items: start;
+    column-gap: 6rem;
+    row-gap: 2.75rem;
   }
 
   .footerTop {
+    grid-area: top;
     align-items: flex-start;
   }
 
   .footerNav {
+    grid-area: nav;
     width: auto;
     gap: 6rem;
+    justify-content: flex-start;
   }
 
   .footerCta {
-    justify-content: flex-start;
+    grid-area: cta;
+    justify-content: flex-end;
+    align-self: end;
     margin-top: 0;
   }
 
   .footerDivider {
-    margin: 2.5rem 0 1.75rem;
+    grid-area: divider;
+    margin: 0;
+  }
+
+  .footerBottom {
+    grid-area: bottom;
   }
 }
 
