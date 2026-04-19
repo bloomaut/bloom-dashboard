@@ -2,15 +2,18 @@ import createMiddleware from "next-intl/middleware";
 import { locales, localePrefix } from "./navigation";
 import { NextRequest, NextResponse } from "next/server";
 
+const disableMultilanguage = process.env.NEXT_PUBLIC_DISABLE_MULTILANGUAGE === "true";
+
 const intlMiddleware = createMiddleware({
   locales,
   localePrefix,
-  defaultLocale: "en",
+  defaultLocale: disableMultilanguage ? "es" : "en",
 });
 
-function extractLocaleFromPath(pathname: string): "en" | "es" | null {
-  const m = pathname.match(/^\/(en|es)\b/);
-  return m ? (m[1] as "en" | "es") : null;
+function swapEnToEs(pathname: string) {
+  if (pathname === "/en") return "/es";
+  if (pathname.startsWith("/en/")) return `/es/${pathname.slice(4)}`;
+  return pathname;
 }
 
 function getPreferredLocale(acceptLanguage: string | null, fallback: string = "en") {
@@ -35,7 +38,16 @@ function getPreferredLocale(acceptLanguage: string | null, fallback: string = "e
 export default async function authMiddleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Redirige "/" al locale preferido (en/es) según Accept-Language
+  if (disableMultilanguage) {
+    if (pathname === "/") {
+      return NextResponse.redirect(new URL("/es", req.url));
+    }
+    if (pathname === "/en" || pathname.startsWith("/en/")) {
+      return NextResponse.redirect(new URL(swapEnToEs(pathname), req.url));
+    }
+  }
+
+  // Redirect "/" to preferred locale (en/es) based on Accept-Language
   if (pathname === "/") {
     const preferred = getPreferredLocale(req.headers.get("accept-language"), "en");
     return NextResponse.redirect(new URL(`/${preferred}`, req.url));

@@ -21,6 +21,10 @@ function getPreferredLocale(acceptLanguage: string | null, fallback: "en" | "es"
 }
 
 export default function PostLoginAliasPage() {
+  const disableMultilanguage = process.env.NEXT_PUBLIC_DISABLE_MULTILANGUAGE === "true";
+  if (disableMultilanguage) {
+    redirect(`/es/post-login`);
+  }
   const acceptLanguage = headers().get("accept-language");
   const locale = getPreferredLocale(acceptLanguage, "en");
   redirect(`/${locale}/post-login`);

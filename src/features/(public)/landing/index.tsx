@@ -6,13 +6,15 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { FaLinkedinIn, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Landing() {
   const dict = useTranslations("dict");
   const pathname = usePathname();
   const en = pathname.includes("/en");
   const [showVideo, setShowVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const disableLogin = process.env.NEXT_PUBLIC_DISABLE_LOGIN === "true";
   const apiDash = process.env.NEXT_PUBLIC_API_DASH;
   const apiDashBase =
     apiDash
@@ -20,6 +22,19 @@ export default function Landing() {
       .replace(/\/+$/, "")
       .replace(/\/api$/, "") || "";
   const loginHref = apiDashBase ? `${apiDashBase}/api/auth/google` : `/api/auth/google`;
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+    const media = window.matchMedia("(max-width: 768px)");
+    const onChange = () => setIsMobile(media.matches);
+    onChange();
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", onChange);
+      return () => media.removeEventListener("change", onChange);
+    }
+    media.addListener(onChange);
+    return () => media.removeListener(onChange);
+  }, []);
 
   const handleVideoClick = () => {
     setShowVideo(true);
@@ -29,6 +44,17 @@ export default function Landing() {
     return en ? `${baseName}.png` : `${baseName}_(ES).png`;
   };
 
+  const tallyButtonProps = disableLogin
+    ? {
+        type: "button" as const,
+        "data-tally-open": "81pjjl",
+        "data-tally-layout": "modal",
+        "data-tally-width": "500",
+        "data-tally-emoji-text": "👋",
+        "data-tally-emoji-animation": "wave",
+      }
+    : null;
+
   return (
     <div className={styles.container}>
       {/* Header flotante */}
@@ -36,7 +62,7 @@ export default function Landing() {
         <div className={styles.headerContent}>
           {/* Logotipo */}
           <div className={styles.logo}>
-            <Image src='/logotipo_horizontal.png' alt='Bloomaut' width={203} height={73} priority />
+            <Image src='/logotipo_horizontal.png' alt='Bloomaut' width={331} height={74} priority />
           </div>
 
           {/* Navigation Links Header*/}
@@ -51,82 +77,74 @@ export default function Landing() {
       {/* 1. Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroIllustration}>
-          <Image src='/illustrations/hero.png' alt='Hero illustration' width={635} height={636} priority />
+          <Image src='/illustrations/hero.png' alt='Hero illustration' width={937} height={937} priority />
         </div>
         <div className={styles.heroContentContainer}>
           <h1 className={styles.heroTitle}>
-            {dict("hero.title.launch")} <span className={styles.primaryColor}>{dict("hero.title.fast")}</span>
-            {dict("hero.title.and")} <span className={styles.secondaryColor}>{dict("hero.title.confidently")}</span>
+            {dict("hero.title.part1")} <span className={styles.primaryColor}>{dict("hero.title.part2")}</span>
+            {dict("hero.title.part3")}
           </h1>
-          <h2 className={styles.heroSubtitle}>{dict("hero.subtitle1")}</h2>
+          <h1 className={styles.heroTitle}>
+            <span className={styles.secondaryColor}>{dict("hero.title.part4")}</span>
+            {dict("hero.title.part5")} <span className={styles.primaryColor}>{dict("hero.title.part6")}</span>
+          </h1>
           <h2 className={styles.heroSubtitle}>
-            {dict("hero.subtitle2")} <span className={styles.secondaryColor}>{dict("hero.subtitle2_handle")}</span>{" "}
-            {dict("hero.subtitle2_and")} <span className={styles.primaryColor}>{dict("hero.subtitle2_rest")}</span>
+            {dict("hero.subtitle.part1")}
+            <span className={styles.boldTextBlack}>{dict("hero.subtitle.part2")}</span>
+            {dict("hero.subtitle.part3")}
+            <span className={styles.secondaryColor}>{dict("hero.subtitle.part4")}</span>
+            {dict("hero.subtitle.part5")}
+          </h2>
+          <h2 className={styles.heroSubtitle}>
+            {dict("hero.subtitle.part6")}
+            <span className={styles.primaryColor}>{dict("hero.subtitle.part7")}</span>
+            {dict("hero.subtitle.part8")}
           </h2>
           <p className={styles.heroDescription}>
-            <span className={styles.primaryBold}>{dict("hero.bloom_ai")}</span> {dict("hero.description")}{" "}
-            <span className={styles.boldText}>{dict("hero.description_mentored")}</span>
-            {dict("hero.description_middle")}{" "}
-            <span className={styles.boldText}>{dict("hero.description_ecommerce")}</span> {dict("hero.description_end")}{" "}
-            <span className={styles.secondaryBold}>{dict("hero.description_free")}</span>
+            <span className={styles.primaryBold}>{dict("hero.body.part1")}</span> {dict("hero.body.part2")}
+            <span className={styles.secondaryBold}>{dict("hero.body.part3")}</span>
+            {dict("hero.body.part4")}
+            <span className={styles.boldText}>{dict("hero.body.part5")}</span>
           </p>
-          <Link href={loginHref}>
-            <button className={styles.heroButton}>{dict("hero.cta")}</button>
-          </Link>
-        </div>
-      </section>
-
-      {/* 2. VSL Video Section */}
-      <section className={styles.vslVideo}>
-        {/* Ilustración izquierda */}
-        <div className={styles.vslLeftIllustration}>
-          <Image src='/illustrations/video_left.png' alt='Video left illustration' width={385} height={540} />
-        </div>
-
-        {/* Ilustración derecha */}
-        <div className={styles.vslRightIllustration}>
-          <Image src='/illustrations/video_right.png' alt='Video right illustration' width={421} height={540} />
-        </div>
-
-        {/* Video thumbnail centrado o iframe de Vimeo */}
-        <div className={styles.vslVideoContainer}>
-          {!showVideo ? (
-            <Image
-              src={getImageSrc("/video_thumnail")}
-              alt='Video thumbnail'
-              width={1056}
-              height={594}
-              className={styles.vslVideoThumbnail}
-              onClick={handleVideoClick}
-            />
+          {disableLogin ? (
+            <button className={styles.heroButton} {...tallyButtonProps}>
+              {dict("hero.button.cta")}
+            </button>
           ) : (
-            <iframe
-              src={`${en ? "https://player.vimeo.com/video/1110327162" : "https://player.vimeo.com/video/1119261420"}?loop=1&autoplay=1&title=0&byline=0&portrait=0`}
-              width='1056'
-              height='594'
-              frameBorder='0'
-              allow='autoplay; fullscreen; picture-in-picture'
-              allowFullScreen
-              className={styles.vslVideoPlayer}
-            ></iframe>
+            <Link href={loginHref}>
+              <button className={styles.heroButton}>{dict("hero.button.cta")}</button>
+            </Link>
           )}
         </div>
       </section>
 
-      {/* 3. Onboarding Roadmap Section */}
+      {/* Divisor de seccion*/}
+      <div className={styles.divider} />
+
+      {/* 2. Community Section */}
       <section className={styles.onboardingRoadmap}>
         <div className={styles.roadmapImageContainer}>
-          <Image
-            src={getImageSrc("/onboarding_roadmap")}
-            alt='Onboarding Roadmap'
-            width={1440}
-            height={1641}
-            className={styles.roadmapImage}
-          />
+          {isMobile ? (
+            <Image
+              src='/community_(mobile)_(ES).png'
+              alt='Community'
+              width={440}
+              height={478}
+              className={styles.roadmapImage}
+            />
+          ) : (
+            <Image
+              src={getImageSrc("/community")}
+              alt='Community'
+              width={1728}
+              height={1117}
+              className={styles.roadmapImage}
+            />
+          )}
         </div>
       </section>
 
-      {/* 4. CTA Section */}
+      {/* 3. CTA Section */}
       <section className={styles.ctaSection}>
         <div className={styles.ctaContent}>
           <div className={styles.ctaTextContainer}>
@@ -135,151 +153,77 @@ export default function Landing() {
           </div>
 
           <div className={styles.ctaButtonContainer}>
-            <Link href={loginHref}>
-              <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
-            </Link>
+            {disableLogin ? (
+              <button className={styles.ctaButton} {...tallyButtonProps}>
+                {dict("cta_section.button")}
+              </button>
+            ) : (
+              <Link href={loginHref}>
+                <button className={styles.ctaButton}>{dict("cta_section.button")}</button>
+              </Link>
+            )}
             <p className={styles.ctaDisclaimer}>{dict("cta_section.disclaimer")}</p>
           </div>
         </div>
       </section>
 
-      {/* 5. Bloomit Platforms Section */}
-      <section className={styles.bloomitPlatforms}>
-        <div className={styles.platformsContent}>
-          <div className={styles.platformsContentText}>
-            <h1 className={styles.platformsTitle}>
-              <span className={styles.secondaryColor}>{dict("platforms.mobile")}</span>{" "}
-              <span className={styles.primaryColor}>{dict("platforms.mentor")}</span>{" "}
-              <span className={styles.secondaryColor}>{dict("platforms.app")}</span>
-            </h1>
-
-            <h4 className={styles.platformsSubtitle}>{dict("platforms.subtitle")}</h4>
-          </div>
-          <div className={styles.platformsImageContainer}>
+      {/* 4. Onboarding Roadmap Section */}
+      <section className={styles.onboardingRoadmap}>
+        <div className={styles.roadmapImageContainer}>
+          {isMobile ? (
             <Image
-              src={getImageSrc("/platform_mobile")}
-              alt='Bloomaut Platforms Features'
-              width={2520}
-              height={1626}
-              className={styles.platformsImage}
+              src='/bloomaut_working_(mobile)_(ES).png'
+              alt='Bloomaut Working Process'
+              width={440}
+              height={2070}
+              className={styles.roadmapImage}
             />
-          </div>
+          ) : (
+            <Image
+              src={getImageSrc("/bloomaut_working")}
+              alt='Bloomaut Working Process'
+              width={1728}
+              height={4474}
+              className={styles.roadmapImage}
+            />
+          )}
         </div>
       </section>
 
-      {/* 5.2 Bloomit Peers Community */}
-      <section className={styles.bloomitCommunity}>
-        <div className={styles.communityContent}>
-          <div className={styles.communityContentText}>
-            <h1 className={styles.communityTitle}>
-              <span className={styles.primaryColor}>{dict("community.peers")}</span>{" "}
-              <span className={styles.secondaryColor}>{dict("community.network")}</span>
-            </h1>
+      {/* Divisor de seccion*/}
+      <div className={styles.dividerGradient} />
 
-            <h4 className={styles.communitySubtitle}>{dict("community.subtitle")}</h4>
-          </div>
-          <div className={styles.communityImageContainer}>
-            <Image
-              src={getImageSrc("/peers_network")}
-              alt='Bloomaut Peers Network'
-              width={1536}
-              height={1024}
-              className={styles.communityImage}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Desktools Section */}
-      <section className={styles.desktoolsSection}>
-        <div className={styles.desktoolsContent}>
-          <h1 className={styles.desktoolsTitle}>
-            {dict("desktools.title")} <span className={styles.secondaryColor}>{dict("desktools.ecommerce")}</span>
-          </h1>
-
-          <div className={styles.desktoolsImageContainer}>
-            <Image
-              src={getImageSrc("/desktools")}
-              alt='Desktools Features'
-              width={2762}
-              height={2128}
-              className={styles.desktoolsImage}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 7. All-in-One Business Platform Section */}
-      <section className={styles.allInOneSection}>
-        <div className={styles.allInOneContent}>
-          <h1 className={styles.allInOneTitle}>
-            <span className={styles.primaryColor}>{dict("all_in_one.title")}</span>{" "}
-            <span className={styles.secondaryColor}>{dict("all_in_one.rest")}</span>
-          </h1>
-
-          <div className={styles.allInOneImageContainer}>
-            <Image
-              src={getImageSrc("/platforms")}
-              alt='All-in-One Business Platform'
-              width={2465}
-              height={1479}
-              className={styles.allInOneImage}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 8. Footer Section */}
+      {/* 5. Footer Section */}
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          {/* Logo y redes sociales */}
-          <div className={styles.footerBrand}>
+          <div className={styles.footerTop}>
             <Image
               src='/logotipo_horizontal.png'
               alt='Bloomaut Logo'
-              width={203}
-              height={73}
+              width={331}
+              height={74}
               className={styles.footerLogo}
             />
-            <div className={styles.socialSection}>
-              <p className={styles.followText}>{dict("footer.follow")}</p>
-              <div className={styles.socialIcons}>
-                <a href='#' className={styles.socialIcon}>
-                  <FaLinkedinIn />
-                </a>
-                <a href='#' className={styles.socialIcon}>
-                  <FaXTwitter />
-                </a>
-                <a href='#' className={styles.socialIcon}>
-                  <FaInstagram />
-                </a>
-                <a href='#' className={styles.socialIcon}>
-                  <FaTiktok />
-                </a>
-                <a href='#' className={styles.socialIcon}>
-                  <FaYoutube />
-                </a>
-              </div>
+            <div className={styles.socialIcons}>
+              <a href='#' className={styles.socialIcon} aria-label='LinkedIn'>
+                <FaLinkedinIn />
+              </a>
+              <a href='#' className={styles.socialIcon} aria-label='X'>
+                <FaXTwitter />
+              </a>
+              <a href='#' className={styles.socialIcon} aria-label='Instagram'>
+                <FaInstagram />
+              </a>
+              <a href='#' className={styles.socialIcon} aria-label='TikTok'>
+                <FaTiktok />
+              </a>
+              <a href='#' className={styles.socialIcon} aria-label='YouTube'>
+                <FaYoutube />
+              </a>
             </div>
           </div>
 
-          {/* Columnas de enlaces */}
-          <div className={styles.footerColumns}>
-            <div className={styles.footerColumn}>
-              <h4 className={styles.columnTitle}>{dict("footer.services.title")}</h4>
-              <ul className={styles.columnLinks}>
-                <li>
-                  <Link href='#'>{dict("footer.services.online_store")}</Link>
-                </li>
-                <li>
-                  <Link href='#'>{dict("footer.services.digital_management")}</Link>
-                </li>
-                <li>
-                  <Link href='#'>{dict("footer.services.digital_marketing")}</Link>
-                </li>
-              </ul>
-            </div>
-
+          <nav className={styles.footerNav} aria-label='Footer'>
             <div className={styles.footerColumn}>
               <h4 className={styles.columnTitle}>{dict("footer.company.title")}</h4>
               <ul className={styles.columnLinks}>
@@ -309,15 +253,25 @@ export default function Landing() {
                 </li>
               </ul>
             </div>
+          </nav>
+
+          <div className={styles.footerCta}>
+            {disableLogin ? (
+              <button className={styles.footerCtaButton} {...tallyButtonProps}>
+                PROBAR BLOOMAUT
+              </button>
+            ) : (
+              <Link href={loginHref}>
+                <button className={styles.footerCtaButton}>PROBAR BLOOMAUT</button>
+              </Link>
+            )}
           </div>
-        </div>
 
-        {/* Línea divisoria */}
-        <div className={styles.footerDivider}></div>
+          <div className={styles.footerDivider} />
 
-        {/* Copyright */}
-        <div className={styles.footerBottom}>
-          <p className={styles.copyright}>{dict("footer.copyright")}</p>
+          <div className={styles.footerBottom}>
+            <p className={styles.copyright}>{dict("footer.copyright")}</p>
+          </div>
         </div>
       </footer>
     </div>

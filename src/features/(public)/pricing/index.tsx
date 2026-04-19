@@ -95,12 +95,12 @@ export default function Pricing() {
   };
 
   const handleEnterpriseClick = () => {
-    const subject = en ? "Enterprise Plan Inquiry - Bloom" : "Consulta Plan Enterprise - Bloom";
+    const subject = en ? "Enterprise Plan Inquiry - Bloomaut" : "Consulta Plan Enterprise - Bloomaut";
 
     const body = en
-      ? `Hello Bloom Team,
+      ? `Hello Bloomaut Team,
 
-I hope this message finds you well. I am writing to express my interest in learning more about your Enterprise plan and would like to schedule a conversation to discuss how Bloom can meet our organization's needs.
+I hope this message finds you well. I am writing to express my interest in learning more about your Enterprise plan and would like to schedule a conversation to discuss how Bloomaut can meet our organization's needs.
 
 We are looking for a comprehensive solution that can scale with our business requirements, and your Enterprise offering seems to align perfectly with what we're seeking.
 
@@ -115,9 +115,9 @@ I would appreciate the opportunity to speak with your team at your earliest conv
 Thank you for your time and consideration.
 
 Best regards`
-      : `Hola equipo de Bloom,
+      : `Hola equipo de Bloomaut,
 
-Espero que este mensaje los encuentre bien. Les escribo para expresar mi interés en conocer más sobre su plan Enterprise y me gustaría programar una conversación para discutir cómo Bloom puede satisfacer las necesidades de nuestra organización.
+Espero que este mensaje los encuentre bien. Les escribo para expresar mi interés en conocer más sobre su plan Enterprise y me gustaría programar una conversación para discutir cómo Bloomaut puede satisfacer las necesidades de nuestra organización.
 
 Estamos buscando una solución integral que pueda escalar con los requerimientos de nuestro negocio, y su oferta Enterprise parece alinearse perfectamente con lo que buscamos.
 

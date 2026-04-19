@@ -1,28 +1,37 @@
 {
   "dict": {
     "header": {
-      "pricing": "Suscripciones"
+      "pricing": "CONOCE BLOOMAUT"
     },
     "hero": {
       "title": {
-        "launch": "Lanza",
-        "fast": "rápido",
-        "and": " y",
-        "confidently": "con confianza"
+        "part1": "Tenés un ",
+        "part2": "producto ",
+        "part3": "que vale, pero en ",
+        "part4": "redes ",
+        "part5": "sos ",
+        "part6": "invisible"
       },
-      "subtitle1": "Supera tus miedos junto con tu",
-      "subtitle2": "",
-      "subtitle2_handle": "comunidad de pares",
-      "subtitle2_and": "y",
-      "subtitle2_rest": "mentores",
-      "description": "crea instantáneamente tu plan de marketing personalizado, estrategia, identidad de marca y flujo de trabajo de contenido. Con una",
-      "description_mentored": "app de grabación con mentoría integrada",
-      "description_middle": ", graba contenido guiado y compártelo con tu",
-      "description_ecommerce": "comunidad privada de emprendedores",
-      "description_end": "para validación previa antes de lanzar al mundo real —",
-      "description_free": "todo completamente gratis 🎁",
-      "cta": "¡LANZA TU MARKETING HOY!",
-      "bloom_ai": "Bloom AI"
+      "subtitle": {
+        "part1": "Con ",
+        "part2": "bloomaut, ",
+        "part3": "crear ",
+        "part4": "contenido ",
+        "part5": "y",
+        "part6": "vender es más ",
+        "part7": "simple ",
+        "part8": "de lo que pensás."
+      },
+      "body": {
+        "part1": "bloomaut ",
+        "part2": "te ayuda a vender en redes, aunque hoy no sepas por dónde arrancar. Planificamos tu contenido, te guiamos para grabarlo desde tu celular y lo dejamos listo para publicar. Incluso podés validarlo en ",
+        "part3": "nuestra comunidad",
+        "part4": ", recibir feedback y salir con confianza. Sin equipos, sin experiencia y ",
+        "part5": "sin miedo a publicar a ciegas."
+      },
+      "button": {
+        "cta": "MOSTRAME COMO FUNCIONA BLOOMAUT"
+      }
     },
     "platforms": {
       "mobile": "App",
@@ -44,21 +53,15 @@
       "rest": "Todo-en-Uno"
     },
     "cta_section": {
-      "title": "¿Listo para lanzar tu marketing?",
-      "subtitle": "Inicia tu viaje hacia una nueva vida hoy mismo",
-      "button": "¡COMIENZA HOY!",
-      "disclaimer": "Sin compromiso • Soporte incluido"
+      "title": "Únete hoy a la comunidad de bloomaut",
+      "subtitle": "Empezá rodeado de personas que están en el mismo camino que vos.",
+      "button": "QUIERO UNIRME",
+      "disclaimer": "Sin compromiso · Comunidad activa todos los días"
     },
     "footer": {
       "follow": "Síguenos en:",
-      "services": {
-        "title": "Servicios",
-        "online_store": "Tienda Online",
-        "digital_management": "Gestión Digital",
-        "digital_marketing": "Marketing Digital"
-      },
       "company": {
-        "title": "Empresa",
+        "title": "Organizacion",
         "about": "Acerca de Nosotros",
         "blog": "Blog",
         "contact": "Contacto"
