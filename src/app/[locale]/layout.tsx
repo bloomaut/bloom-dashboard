@@ -45,7 +45,7 @@ export default function AppLayout({
 }) {
   if (!locales.includes(locale as "en" | "es")) notFound();
   const messages = useMessages();
-  const disableLogin = process.env.NEXT_PUBLIC_DIABLE_LOGIN === "true";
+  const disableLogin = process.env.NEXT_PUBLIC_DISABLE_LOGIN === "true";
 
   return (
     <Providers>

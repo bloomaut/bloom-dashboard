@@ -14,7 +14,7 @@ export default function Landing() {
   const en = pathname.includes("/en");
   const [showVideo, setShowVideo] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const disableLogin = process.env.NEXT_PUBLIC_DIABLE_LOGIN === "true";
+  const disableLogin = process.env.NEXT_PUBLIC_DISABLE_LOGIN === "true";
   const apiDash = process.env.NEXT_PUBLIC_API_DASH;
   const apiDashBase =
     apiDash
