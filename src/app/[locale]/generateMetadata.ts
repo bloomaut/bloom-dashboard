@@ -5,10 +5,10 @@ export async function generateMetadata({ params: { locale } }: { params: { local
   const t = await getTranslations({ locale, namespace: "dict.landing" });
 
   return {
-    title: `Bloom - ${t("hero.title")} ${t("hero.title_accent")}`,
+    title: `Bloomaut - ${t("hero.title")} ${t("hero.title_accent")}`,
     description: t("hero.description"),
     openGraph: {
-      title: `Bloom - ${t("hero.title")} ${t("hero.title_accent")}`,
+      title: `Bloomaut - ${t("hero.title")} ${t("hero.title_accent")}`,
       description: t("hero.description"),
       locale: locale,
     },

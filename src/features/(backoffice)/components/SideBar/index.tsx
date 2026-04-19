@@ -63,8 +63,8 @@ export function Sidebar() {
           {/* Footer */}
           <div className={styles.footer}>
             <div className={styles.footerContent}>
-              <div>Bloom Admin v1.0</div>
-              <div className={styles.copyright}>© 2025 Bloom</div>
+              <div>Bloomaut Admin v1.1</div>
+              <div className={styles.copyright}>© 2025 Bloomaut</div>
             </div>
           </div>
         </div>
