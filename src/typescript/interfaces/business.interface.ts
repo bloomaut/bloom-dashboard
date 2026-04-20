@@ -35,6 +35,7 @@ export interface IUser {
   role: UserRole;
   onboardingStatus?: OnboardingStatus;
   onboarding_status: OnboardingStatus;
+  avatar: string | null;
   wish_list?: boolean;
   wishList: boolean;
   suscription: SubscriptionType;

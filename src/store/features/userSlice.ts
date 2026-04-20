@@ -11,6 +11,7 @@ export const userInitialState: IUser = {
   active: false,
   role: "user",
   onboarding_status: "FIRST_LOGIN",
+  avatar: null,
   wishList: false,
   suscription: "free",
   client: null,

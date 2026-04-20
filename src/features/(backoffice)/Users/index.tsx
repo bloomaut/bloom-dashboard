@@ -60,6 +60,7 @@ function normalizeUser(u: any) {
     status,
     onboardingStatus,
     wishList,
+    avatar: u.avatar ?? u.profile_image ?? u.picture ?? null,
     suscription: u.suscription ?? u.subscription ?? null,
     raw: u,
   };
@@ -337,7 +338,11 @@ export default function UserManagement() {
                         <div className={styles.userCardInfo}>
                           <div className={styles.userCardHeader}>
                             <div className={styles.userCardIcon}>
-                              <User className={styles.userCardIconSvg} />
+                              {user.avatar ? (
+                                <img src={user.avatar} alt={user.name} className={styles.userAvatarImg} />
+                              ) : (
+                                <User className={styles.userCardIconSvg} />
+                              )}
                             </div>
                             <h3 className={styles.userCardName}>{user.name}</h3>
                           </div>
@@ -436,7 +441,11 @@ export default function UserManagement() {
                         <TableCell className={styles.tableCellPrimary}>
                           <div className={styles.userTableInfo}>
                             <div className={styles.userTableIcon}>
-                              <User className={styles.userTableIconSvg} />
+                              {user.avatar ? (
+                                <img src={user.avatar} alt={user.name} className={styles.userAvatarImg} />
+                              ) : (
+                                <User className={styles.userTableIconSvg} />
+                              )}
                             </div>
                             <div>
                               <div className={styles.userTableName}>{user.name}</div>

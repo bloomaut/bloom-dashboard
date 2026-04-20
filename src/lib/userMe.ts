@@ -22,6 +22,11 @@ export function extractUserFromMeResponse(me: unknown): IUser | null {
     if (user.wish_list !== null && user.wish_list !== undefined) user.wishList = user.wish_list;
   }
 
+  if (user.avatar === undefined || user.avatar === null) {
+    if (user.profile_image !== null && user.profile_image !== undefined) user.avatar = user.profile_image;
+    else if (user.picture !== null && user.picture !== undefined) user.avatar = user.picture;
+  }
+
   if (typeof user.wishList !== "boolean") {
     if (user.wishList === "true") user.wishList = true;
     else if (user.wishList === "false") user.wishList = false;
