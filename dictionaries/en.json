@@ -58,6 +58,30 @@
       "button": "I WANT TO JOIN",
       "disclaimer": "No commitment · Community active every day"
     },
+    "about": {
+      "title": "About Bloomaut",
+      "intro": {
+        "title": "Our Mission",
+        "description": "At Bloomaut, we transform ideas into businesses in a simple and straightforward way. Our platform helps entrepreneurs overcome the fear of social media and build a digital presence through video content."
+      },
+      "team": {
+        "title": "Founding Team",
+        "members": {
+          "jose": {
+            "name": "Jose Vigil",
+            "role": "Co-Founder & CEO"
+          },
+          "homero": {
+            "name": "Homero Gazze",
+            "role": "Co-Founder & COO"
+          },
+          "franco": {
+            "name": "Franco Rodriguez",
+            "role": "Co-Founder & CTO"
+          }
+        }
+      }
+    },
     "footer": {
       "follow": "Follow us on:",
       "company": {
