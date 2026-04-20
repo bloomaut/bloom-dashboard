@@ -30,7 +30,7 @@ function normalizeUser(u: any) {
     u.client?.onboardingStatus ??
     null) as string | null;
 
-  const wishList = Boolean(u.wish_list ?? u.wishList ?? u.client?.wish_list ?? u.client?.wishList ?? false);
+  const wish_list = Boolean(u.wish_list ?? u.wishList ?? u.client?.wish_list ?? u.client?.wishList ?? false);
   const active = u.active === undefined || u.active === null ? true : Boolean(u.active);
   const roleRaw = String(u.role ?? u.roleName ?? "default").trim();
   const role =
@@ -42,7 +42,7 @@ function normalizeUser(u: any) {
 
   const status = (() => {
     if (!active) return "inactivo";
-    if (wishList) return "lista-espera";
+    if (wish_list) return "lista-espera";
     if (onboardingStatus === "ONBOARDING_REJECTED") return "rechazado";
     if (["ONBOARDING_COMPLETED", "BRAND_COMPLETED", "SOCIAL_CONNECTED"].includes(String(onboardingStatus)))
       return "onboarding-completado";
@@ -59,7 +59,7 @@ function normalizeUser(u: any) {
     lastLogin: u.lastLogin ?? u.last_login ?? null,
     status,
     onboardingStatus,
-    wishList,
+    wish_list,
     avatar: u.avatar ?? u.profile_image ?? u.picture ?? null,
     suscription: u.suscription ?? u.subscription ?? null,
     raw: u,
@@ -125,7 +125,7 @@ export default function UserManagement() {
           if (u.id === userId) {
             return {
               ...u,
-              wishList: false,
+              wish_list: false,
               status: u.status === "lista-espera" ? "onboarding-en-progreso" : u.status,
             };
           }
@@ -366,7 +366,7 @@ export default function UserManagement() {
                         </div>
 
                         <div className={styles.userCardActions}>
-                          {user.wishList && (
+                          {user.wish_list && (
                             <Button
                               variant='outline'
                               size='sm'
@@ -463,7 +463,7 @@ export default function UserManagement() {
                         <TableCell className={styles.tableCell}>{formatDate(user.registrationDate)}</TableCell>
                         <TableCell className={styles.userTableActions}>
                           <div className={styles.userTableActionsContainer}>
-                            {user.wishList && (
+                            {user.wish_list && (
                               <Button
                                 variant='outline'
                                 size='sm'

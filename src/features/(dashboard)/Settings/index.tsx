@@ -250,6 +250,14 @@ const SettingsPage = () => {
               </label>
               <p className={styles.field_value}>{formatDate(userData.created_at || "")}</p>
             </div>
+
+            <div className={styles.info_field}>
+              <label className={styles.field_label}>
+                <FileText className={styles.label_icon} />
+                Wish List
+              </label>
+              <p className={styles.field_value}>{userData.wish_list ? "Sí" : "No"}</p>
+            </div>
           </div>
         </CardContent>
       </Card>

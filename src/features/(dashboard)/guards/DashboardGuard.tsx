@@ -28,6 +28,11 @@ export default function DashboardGuard({ children }: { children: React.ReactNode
         // Actualizar Redux con los datos del usuario
         if (user && !cancelled) {
           dispatch(setUserData(user));
+          const disableWishlist = process.env.NEXT_PUBLIC_DISABLE_WISHLIST === "true";
+          if (!disableWishlist && user.wish_list) {
+            router.replace(`/${locale || "en"}/onboarding/wishlist`);
+            return;
+          }
         }
 
         if (!status || !["BRAND_COMPLETED", "SOCIAL_CONNECTED", "ONBOARDING_COMPLETED"].includes(status)) {

@@ -18,8 +18,7 @@ export interface IUser {
   onboardingStatus?: OnboardingStatus;
   onboarding_status: OnboardingStatus;
   avatar: string | null;
-  wish_list?: boolean;
-  wishList: boolean;
+  wish_list: boolean;
   suscription: SubscriptionType;
   client: ClientInfo | null;
   created_at?: string;
