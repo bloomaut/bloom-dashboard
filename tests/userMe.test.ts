@@ -11,7 +11,8 @@ const baseUser: IUser = {
   active: true,
   role: "user",
   onboarding_status: "FIRST_LOGIN",
-  wishList: false,
+  avatar: null,
+  wish_list: false,
   suscription: "free",
   client: null,
 };
@@ -34,8 +35,8 @@ describe("getRouteForUser", () => {
     expect(path).toBe("/es/backoffice/metrics");
   });
 
-  it("redirige wishList a onboarding/wishlist", () => {
-    const path = getRouteForUser({ ...baseUser, wishList: true }, "en");
+  it("redirige wish_list a onboarding/wishlist", () => {
+    const path = getRouteForUser({ ...baseUser, wish_list: true }, "en");
     expect(path).toBe("/en/onboarding/wishlist");
   });
 

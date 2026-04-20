@@ -18,25 +18,23 @@ export function extractUserFromMeResponse(me: unknown): IUser | null {
       user.onboarding_status = user.onboardingStatus;
   }
 
-  if (user.wishList === null || user.wishList === undefined) {
-    if (user.wish_list !== null && user.wish_list !== undefined) user.wishList = user.wish_list;
+  if (user.avatar === undefined || user.avatar === null) {
+    if (user.profile_image !== null && user.profile_image !== undefined) user.avatar = user.profile_image;
+    else if (user.picture !== null && user.picture !== undefined) user.avatar = user.picture;
   }
 
-  if (typeof user.wishList !== "boolean") {
-    if (user.wishList === "true") user.wishList = true;
-    else if (user.wishList === "false") user.wishList = false;
-    else user.wishList = Boolean(user.wishList);
+  if (typeof user.wish_list !== "boolean") {
+    if (user.wish_list === "true") user.wish_list = true;
+    else if (user.wish_list === "false") user.wish_list = false;
+    else user.wish_list = Boolean(user.wish_list);
   }
 
   return user as IUser;
 }
 
-export function getRouteForUser(user: IUser, locale: string) {
-  console.log("user", user);
-  const loc = locale || "en";
+export function getRouteForUser(user: IUser, loc: string): string {
   const disableWishlist = process.env.NEXT_PUBLIC_DISABLE_WISHLIST === "true";
-  if (user.role === "admin") return `/${loc}/backoffice/metrics`;
-  if (!disableWishlist && user.wishList) return `/${loc}/onboarding/wishlist`;
+  if (!disableWishlist && user.wish_list) return `/${loc}/onboarding/wishlist`;
   console.log("user.onboarding_status", user.onboarding_status);
   switch (user.onboarding_status) {
     case "FIRST_LOGIN":

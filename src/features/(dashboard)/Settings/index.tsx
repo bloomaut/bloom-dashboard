@@ -158,6 +158,22 @@ const SettingsPage = () => {
               {formSuccess && <div className={styles.formSuccess}>{formSuccess}</div>}
             </div>
           )}
+          <div className={styles.profileSummary}>
+            <div className={styles.settingsAvatar}>
+              {userData.avatar ? (
+                <img src={userData.avatar} alt={userData.name} className={styles.settingsAvatarImg} />
+              ) : (
+                <div className={styles.settingsAvatarPlaceholder}>{userData.name?.charAt(0)?.toUpperCase() || "U"}</div>
+              )}
+            </div>
+            <div className={styles.profileSummaryInfo}>
+              <h3 className={styles.summaryName}>
+                {userData.name} {userData.lastname}
+              </h3>
+              <p className={styles.summaryEmail}>{userData.email}</p>
+            </div>
+          </div>
+
           <div className={styles.user_info_grid}>
             <div className={styles.info_field}>
               <label className={styles.field_label}>
@@ -233,6 +249,14 @@ const SettingsPage = () => {
                 {dict("fields.registration_date")}
               </label>
               <p className={styles.field_value}>{formatDate(userData.created_at || "")}</p>
+            </div>
+
+            <div className={styles.info_field}>
+              <label className={styles.field_label}>
+                <FileText className={styles.label_icon} />
+                Wish List
+              </label>
+              <p className={styles.field_value}>{userData.wish_list ? "Sí" : "No"}</p>
             </div>
           </div>
         </CardContent>

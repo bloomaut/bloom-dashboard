@@ -328,10 +328,9 @@ export const ContentCalendar = () => {
     const handleCloseModal = () => setSelectedContent(null);
 
     const handleToggleCompleted = () => {
-      const nextStatus =
-        selectedContent.status === ContentStatus.APPROVED ? ContentStatus.DRAFT : ContentStatus.APPROVED;
+      const nextStatus = selectedContent.status === ContentStatus.READY ? ContentStatus.DRAFT : ContentStatus.READY;
 
-      if (nextStatus === ContentStatus.APPROVED) {
+      if (nextStatus === ContentStatus.READY) {
         handleMarkAsCompleted(selectedContent.id);
       } else {
         dispatch(updateContentItem({ id: selectedContent.id, updates: { status: ContentStatus.DRAFT } }));
@@ -353,10 +352,16 @@ export const ContentCalendar = () => {
       switch (selectedContent.status) {
         case ContentStatus.DRAFT:
           return { label: "Borrador", className: styles.statusDraft };
-        case ContentStatus.IN_REVIEW:
-          return { label: "En revisión", className: styles.statusReview };
-        case ContentStatus.APPROVED:
-          return { label: "Completado", className: styles.statusApproved };
+        case ContentStatus.IN_PROCESS:
+          return { label: "En proceso", className: styles.statusProcess };
+        case ContentStatus.READY:
+          return { label: "Listo", className: styles.statusReady };
+        case ContentStatus.INTERNAL_PUBLISHED:
+          return { label: "Publicado (Interno)", className: styles.statusInternal };
+        case ContentStatus.SOCIAL_PUBLISHED:
+          return { label: "Publicado (Redes)", className: styles.statusSocial };
+        case ContentStatus.REJECTED:
+          return { label: "Rechazado", className: styles.statusRejected };
         default:
           return { label: String(selectedContent.status), className: styles.statusDraft };
       }
@@ -582,7 +587,7 @@ export const ContentCalendar = () => {
               Copiar guión
             </button>
             <button type='button' className={styles.footerButtonPrimary} onClick={handleToggleCompleted}>
-              {selectedContent.status === ContentStatus.APPROVED ? "Marcar pendiente" : "Marcar completado"}
+              {selectedContent.status === ContentStatus.READY ? "Marcar pendiente" : "Marcar listo"}
             </button>
           </div>
         </div>
@@ -610,7 +615,7 @@ export const ContentCalendar = () => {
             <Video className='h-3 w-3' />
             <div className={styles.contentItemTitleText}>{truncateText(title)}</div>
           </div>
-          {item.status === ContentStatus.APPROVED && <CheckCircle className='h-3 w-3 text-green-600' />}
+          {item.status === ContentStatus.READY && <CheckCircle className='h-3 w-3 text-green-600' />}
         </div>
 
         <div className={styles.contentItemPillar}>{platformLabel}</div>

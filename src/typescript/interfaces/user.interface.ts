@@ -17,8 +17,8 @@ export interface IUser {
   role: UserRole;
   onboardingStatus?: OnboardingStatus;
   onboarding_status: OnboardingStatus;
-  wish_list?: boolean;
-  wishList: boolean;
+  avatar: string | null;
+  wish_list: boolean;
   suscription: SubscriptionType;
   client: ClientInfo | null;
   created_at?: string;

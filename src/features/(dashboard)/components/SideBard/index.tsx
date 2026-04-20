@@ -80,7 +80,13 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
       <div className={styles.user_section}>
         {!isCollapsed && (
           <Link href={`/${locale}/dashboard/settings`} className={styles.user_info}>
-            <div className={styles.user_avatar}>{userData?.name?.charAt(0)?.toUpperCase() || "U"}</div>
+            <div className={styles.user_avatar}>
+              {userData?.avatar ? (
+                <img src={userData.avatar} alt={userData.name} className={styles.avatar_image} />
+              ) : (
+                userData?.name?.charAt(0)?.toUpperCase() || "U"
+              )}
+            </div>
             <div className={styles.user_details}>
               <div className={styles.user_name}>{userData?.name || dict("user.default_name")}</div>
               <div className={styles.user_business}>{userData?.client?.name || dict("user.default_business")}</div>
