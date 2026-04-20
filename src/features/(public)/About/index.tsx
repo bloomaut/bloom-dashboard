@@ -37,19 +37,17 @@ export default function About() {
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <Link href={`/${locale}`}>
-            <Image 
-              src="/logotipo_horizontal.png" 
-              alt="Bloomaut" 
-              width={331} 
-              height={74} 
+            <Image
+              src='/logotipo_horizontal.png'
+              alt='Bloomaut'
+              width={331}
+              height={74}
               className={styles.headerLogo}
-              priority 
+              priority
             />
           </Link>
           <Link href={`/${locale}`}>
-            <button className={styles.headerButton}>
-              {dict("header.pricing")}
-            </button>
+            <button className={styles.headerButton}>{dict("header.pricing")}</button>
           </Link>
         </div>
       </header>
@@ -59,16 +57,14 @@ export default function About() {
           <h1 className={styles.title}>{dict("about.title")}</h1>
           <div className={styles.introContent}>
             <h2 className={styles.subtitle}>{dict("about.intro.title")}</h2>
-            <p className={styles.description}>
-              {dict("about.intro.description")}
-            </p>
+            <p className={styles.description}>{dict("about.intro.description")}</p>
           </div>
         </section>
 
         <section className={styles.section}>
           <h2 className={styles.subtitle}>{dict("about.team.title")}</h2>
           <div className={styles.teamGrid}>
-            {teamMembers.map((member) => (
+            {teamMembers.map(member => (
               <div key={member.id} className={styles.memberCard}>
                 <div className={styles.imageWrapper}>
                   <Image
@@ -76,7 +72,7 @@ export default function About() {
                     alt={member.name}
                     fill
                     style={{ objectFit: "cover" }}
-                    sizes="(max-width: 768px) 100vw, 200px"
+                    sizes='(max-width: 768px) 100vw, 200px'
                   />
                 </div>
                 <h3 className={styles.memberName}>{member.name}</h3>
