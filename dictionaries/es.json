@@ -58,6 +58,30 @@
       "button": "QUIERO UNIRME",
       "disclaimer": "Sin compromiso · Comunidad activa todos los días"
     },
+    "about": {
+      "title": "Acerca de Bloomaut",
+      "intro": {
+        "title": "Nuestra Misión",
+        "description": "En Bloomaut, transformamos ideas en negocios de manera sencilla y directa. Nuestra plataforma ayuda a emprendedores a superar el miedo a las redes sociales y a construir una presencia digital sólida a través del contenido en video."
+      },
+      "team": {
+        "title": "Equipo Fundador",
+        "members": {
+          "jose": {
+            "name": "Jose Vigil",
+            "role": "Co-Founder & CEO"
+          },
+          "homero": {
+            "name": "Homero Gazze",
+            "role": "Co-Founder & COO"
+          },
+          "franco": {
+            "name": "Franco Rodriguez",
+            "role": "Co-Founder & CTO"
+          }
+        }
+      }
+    },
     "footer": {
       "follow": "Síguenos en:",
       "company": {

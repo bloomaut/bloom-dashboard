@@ -228,7 +228,7 @@ export default function Landing() {
               <h4 className={styles.columnTitle}>{dict("footer.company.title")}</h4>
               <ul className={styles.columnLinks}>
                 <li>
-                  <Link href='#'>{dict("footer.company.about")}</Link>
+                  <Link href={en ? "/en/about" : "/es/about"}>{dict("footer.company.about")}</Link>
                 </li>
                 <li>
                   <Link href='#'>{dict("footer.company.blog")}</Link>
