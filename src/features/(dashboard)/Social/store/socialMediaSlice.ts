@@ -340,14 +340,14 @@ const socialMediaSlice = createSlice({
       const id = action.payload;
       const contentIndex = state.content.findIndex(item => item.id === id);
       if (contentIndex !== -1) {
-        state.content[contentIndex].status = ContentStatus.APPROVED;
+        state.content[contentIndex].status = ContentStatus.READY;
 
         // Actualizar también en caché
         Object.keys(state.contentCache).forEach(cacheKey => {
           const cacheEntry = state.contentCache[cacheKey];
           const cacheContentIndex = cacheEntry.contents.findIndex(item => item.id === id);
           if (cacheContentIndex !== -1) {
-            cacheEntry.contents[cacheContentIndex].status = ContentStatus.APPROVED;
+            cacheEntry.contents[cacheContentIndex].status = ContentStatus.READY;
           }
         });
       }
@@ -652,17 +652,17 @@ export const selectContentByDayTime = (state: { socialMedia: SocialMediaState },
   state.socialMedia.content.filter(item => item.dayTime === dayTime);
 
 export const selectCompletedContent = (state: { socialMedia: SocialMediaState }) =>
-  state.socialMedia.content.filter(item => item.status === ContentStatus.APPROVED);
+  state.socialMedia.content.filter(item => item.status === ContentStatus.READY);
 
 export const selectIncompleteContent = (state: { socialMedia: SocialMediaState }) =>
-  state.socialMedia.content.filter(item => item.status !== ContentStatus.APPROVED);
+  state.socialMedia.content.filter(item => item.status !== ContentStatus.READY);
 
 export const selectContentStats = (state: { socialMedia: SocialMediaState }) => {
   const content = state.socialMedia.content;
   return {
     total: content.length,
-    completed: content.filter(item => item.status === ContentStatus.APPROVED).length,
-    incomplete: content.filter(item => item.status !== ContentStatus.APPROVED).length,
+    completed: content.filter(item => item.status === ContentStatus.READY).length,
+    incomplete: content.filter(item => item.status !== ContentStatus.READY).length,
     byDayTime: {
       morning: content.filter(item => item.dayTime === DayTime.MORNING).length,
       afternoon: content.filter(item => item.dayTime === DayTime.AFTERNOON).length,

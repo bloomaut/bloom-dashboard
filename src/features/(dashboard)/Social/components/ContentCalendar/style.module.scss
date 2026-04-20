@@ -290,16 +290,34 @@
   border-color: rgba(245, 158, 11, 0.25);
 }
 
-.statusReview {
+.statusProcess {
   color: #1d4ed8;
   background: rgba(59, 130, 246, 0.12);
   border-color: rgba(59, 130, 246, 0.22);
 }
 
-.statusApproved {
+.statusReady {
   color: #166534;
   background: rgba(34, 197, 94, 0.12);
   border-color: rgba(34, 197, 94, 0.22);
+}
+
+.statusInternal {
+  color: #7c3aed;
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(124, 58, 237, 0.22);
+}
+
+.statusSocial {
+  color: #db2777;
+  background: rgba(219, 39, 119, 0.12);
+  border-color: rgba(219, 39, 119, 0.22);
+}
+
+.statusRejected {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.22);
 }
 
 .modalSection {

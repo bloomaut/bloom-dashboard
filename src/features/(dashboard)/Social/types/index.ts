@@ -62,8 +62,11 @@ export enum DayTime {
 
 export enum ContentStatus {
   DRAFT = "draft",
-  IN_REVIEW = "in_review",
-  APPROVED = "approved",
+  IN_PROCESS = "in_process",
+  READY = "ready",
+  INTERNAL_PUBLISHED = "internal_published",
+  SOCIAL_PUBLISHED = "social_published",
+  REJECTED = "rejected",
 }
 
 export enum ContentIntention {
