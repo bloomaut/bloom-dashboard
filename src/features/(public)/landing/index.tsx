@@ -67,9 +67,15 @@ export default function Landing() {
 
           {/* Navigation Links Header*/}
           <div className={styles.headerLeft}>
-            <Link href={en ? "/en/pricing" : "/es/pricing"}>
-              <button className={styles.headerButton}>{dict("header.pricing")}</button>
-            </Link>
+            {disableLogin ? (
+              <button className={styles.headerButton} {...tallyButtonProps}>
+                {dict("header.pricing")}
+              </button>
+            ) : (
+              <Link href={en ? "/en/pricing" : "/es/pricing"}>
+                <button className={styles.headerButton}>{dict("header.pricing")}</button>
+              </Link>
+            )}
           </div>
         </div>
       </header>
