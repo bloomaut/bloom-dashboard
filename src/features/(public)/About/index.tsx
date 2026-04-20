@@ -10,6 +10,18 @@ export default function About() {
   const pathname = usePathname();
   const en = pathname.includes("/en");
   const locale = en ? "en" : "es";
+  const disableLogin = process.env.NEXT_PUBLIC_DISABLE_LOGIN === "true";
+
+  const tallyButtonProps = disableLogin
+    ? {
+        type: "button" as const,
+        "data-tally-open": "81pjjl",
+        "data-tally-layout": "modal",
+        "data-tally-width": "500",
+        "data-tally-emoji-text": "👋",
+        "data-tally-emoji-animation": "wave",
+      }
+    : null;
 
   const teamMembers = [
     {
@@ -46,9 +58,15 @@ export default function About() {
               priority
             />
           </Link>
-          <Link href={`/${locale}`}>
-            <button className={styles.headerButton}>{dict("header.pricing")}</button>
-          </Link>
+          {disableLogin ? (
+            <button className={styles.headerButton} {...tallyButtonProps}>
+              {dict("header.pricing")}
+            </button>
+          ) : (
+            <Link href={`/${locale}`}>
+              <button className={styles.headerButton}>{dict("header.pricing")}</button>
+            </Link>
+          )}
         </div>
       </header>
 
