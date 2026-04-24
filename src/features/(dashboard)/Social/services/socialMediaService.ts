@@ -414,6 +414,59 @@ export const createNextWeekContent = async (params: CreateNextWeekContentParams)
 };
 
 /**
+ * Servicio para reintentar la generación de contenido semanal
+ *
+ * @param params - Parámetros con el tipo de pipeline
+ * @returns Promise<string> - Mensaje de confirmación
+ * @throws Error si la petición falla o los parámetros son inválidos
+ */
+export const retryNextWeekContent = async (params: CreateNextWeekContentParams): Promise<string> => {
+  try {
+    const { pipelineType } = params;
+
+    if (!pipelineType || !["first-login", "next-week"].includes(pipelineType)) {
+      throw new Error("Tipo de pipeline inválido. Debe ser 'first-login' o 'next-week'");
+    }
+
+    if (pipelineType === "next-week") {
+      const { startDate, endDate } = params;
+      if (!startDate || !endDate) {
+        throw new Error("Para el tipo 'next-week' se requieren startDate y endDate");
+      }
+
+      if (!isValidDateRange(startDate, endDate)) {
+        throw new Error("Rango de fechas inválido para 'next-week'");
+      }
+    }
+
+    const response = await axios.post<any>("/api/social-media/retry-pipeline", null, {
+      params: {
+        pipelineType,
+      },
+    });
+
+    const apiResponse: CreateNextWeekContentResponse | null = (response.data?.data ??
+      response.data ??
+      null) as CreateNextWeekContentResponse | null;
+    if (!apiResponse?.result) throw new Error("Estructura de respuesta inválida: no se encontró el resultado");
+
+    if (apiResponse.statusCode !== 200) {
+      throw new Error(`Error del servidor: ${apiResponse.statusCode}`);
+    }
+
+    return apiResponse.result.message;
+  } catch (error) {
+    console.error("Error al reintentar contenido semanal:", error);
+    if (axios.isAxiosError(error)) {
+      const statusCode = error.response?.status;
+      const errorMessage = error.response?.data?.message || error.message;
+      throw new Error(`Error HTTP ${statusCode}: ${errorMessage}`);
+    }
+    throw error;
+  }
+};
+
+/**
  * Función unificada que crea contenido y espera hasta que esté disponible y completo. Funcion CREATE WEEK CONTENT principal
  *
  * @param params - Parámetros con el tipo de pipeline y fechas opcionales
@@ -457,8 +510,14 @@ export const createAndWaitForContent = async (
     console.log(`Creando contenido ${pipelineType} para el rango: ${startDate} - ${endDate}`);
 
     // Solicitar la creación del contenido
-    const message = await createNextWeekContent(params);
-    console.log("Solicitud de creación enviada:", message);
+    try {
+      const message = await createNextWeekContent(params);
+      console.log("Solicitud de creación enviada:", message);
+    } catch (error) {
+      console.warn("Fallo el pipeline inicial; reintentando con retry-pipeline...", error);
+      const retryMessage = await retryNextWeekContent(params);
+      console.log("Solicitud de reintento enviada:", retryMessage);
+    }
 
     // Esperar y verificar periódicamente hasta que el contenido esté disponible
     let attempt = 0;
