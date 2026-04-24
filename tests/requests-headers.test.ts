@@ -5,6 +5,7 @@ import { getQuest, postQuest, patchUserProfile, patchUserStatus } from "@/servic
 import {
   createSocialMediaContentFromIdea,
   createSocialMediaIdea,
+  createAndWaitForContent,
   transcribeSocialMediaUpload,
 } from "@/features/(dashboard)/Social/services/socialMediaService";
 
@@ -13,6 +14,8 @@ function setBrowserGlobals(cookie: string) {
   (globalThis as any).document = { cookie };
   (globalThis as any).localStorage = {
     getItem: vi.fn(() => null),
+    setItem: vi.fn(),
+    removeItem: vi.fn(),
   };
 }
 
@@ -142,7 +145,10 @@ describe("Axios interceptors", () => {
         data: {
           data: {
             statusCode: 201,
-            result: { idea: { title: "t", message: "m", proofType: "", intention: "", narrative: "" } },
+            result: {
+              idea: { title: "t", message: "m", proofType: "", intention: "", narrative: "" },
+              ideaRegistry: "r1",
+            },
           },
         },
         status: 201,
@@ -152,13 +158,14 @@ describe("Axios interceptors", () => {
       };
     };
 
-    await createSocialMediaIdea({ userId: "u1", idea: "hola" });
+    const res = await createSocialMediaIdea({ userId: "u1", idea: "hola" });
 
     expect(String(seenConfig.method).toLowerCase()).toBe("post");
     expect(String(seenConfig.url)).toBe("/api/social-media/idea");
     const data = typeof seenConfig.data === "string" ? JSON.parse(seenConfig.data) : seenConfig.data;
     expect(data.action).toBe("create-idea");
     expect(data.userId).toBe("u1");
+    expect(res.ideaRegistry).toBe("r1");
   });
 
   it("createSocialMediaContentFromIdea usa POST /api/social-media/idea con action create-content", async () => {
@@ -182,6 +189,7 @@ describe("Axios interceptors", () => {
       proofType: "p",
       intention: "i",
       narrative: "n",
+      ideaRegistry: "r1",
     });
 
     expect(String(seenConfig.method).toLowerCase()).toBe("post");
@@ -189,6 +197,80 @@ describe("Axios interceptors", () => {
     const data = typeof seenConfig.data === "string" ? JSON.parse(seenConfig.data) : seenConfig.data;
     expect(data.action).toBe("create-content");
     expect(data.userId).toBe("u1");
+    expect(data.ideaRegistry).toBe("r1");
+  });
+
+  it("si falla el pipeline semanal usa retry-pipeline y luego hace polling a /content", async () => {
+    setBrowserGlobals("csrfToken=token123");
+
+    const seenUrls: string[] = [];
+    axios.defaults.adapter = async (config: any) => {
+      const url = String(config.url || "");
+      seenUrls.push(url);
+
+      if (url === "/api/social-media/pipeline") {
+        return {
+          data: { data: { statusCode: 500, result: { message: "fail" } } },
+          status: 500,
+          statusText: "Internal Server Error",
+          headers: {},
+          config,
+        };
+      }
+
+      if (url === "/api/social-media/retry-pipeline") {
+        return {
+          data: { data: { statusCode: 200, result: { message: "retry ok" } } },
+          status: 200,
+          statusText: "OK",
+          headers: {},
+          config,
+        };
+      }
+
+      if (url === "/api/social-media/content") {
+        return {
+          data: {
+            data: {
+              statusCode: 200,
+              result: {
+                contentPieces: [
+                  {
+                    _id: "c1",
+                    day: "monday",
+                    dayTime: "morning",
+                    publishDate: "2026-03-17",
+                    status: "draft",
+                    platform: "tiktok",
+                    strategy: {},
+                    narrativeDetails: {},
+                    blueprint: { scenes: [], sound: "" },
+                    script: [["x"]],
+                  },
+                ],
+              },
+            },
+          },
+          status: 200,
+          statusText: "OK",
+          headers: {},
+          config,
+        };
+      }
+
+      return { data: { ok: true }, status: 200, statusText: "OK", headers: {}, config };
+    };
+
+    await createAndWaitForContent(
+      { pipelineType: "next-week", startDate: "2026-03-17", endDate: "2026-03-17" },
+      { maxRetries: 1, retryDelay: 0 },
+    );
+
+    expect(seenUrls).toEqual([
+      "/api/social-media/pipeline",
+      "/api/social-media/retry-pipeline",
+      "/api/social-media/content",
+    ]);
   });
 });
 

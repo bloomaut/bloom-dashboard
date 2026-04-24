@@ -334,6 +334,7 @@ export function CreateContentModal({ isOpen, onClose, onSuccess }: CreateContent
         proofType: ideaMeta.proofType,
         intention: ideaMeta.intention,
         narrative: ideaMeta.narrative,
+        ideaRegistry: ideaMeta.ideaRegistry,
       });
       setShowSuccess(true);
       setStep("success");
