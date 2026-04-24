@@ -13,6 +13,8 @@ function setBrowserGlobals(cookie: string) {
   (globalThis as any).document = { cookie };
   (globalThis as any).localStorage = {
     getItem: vi.fn(() => null),
+    setItem: vi.fn(),
+    removeItem: vi.fn(),
   };
 }
 
@@ -142,7 +144,10 @@ describe("Axios interceptors", () => {
         data: {
           data: {
             statusCode: 201,
-            result: { idea: { title: "t", message: "m", proofType: "", intention: "", narrative: "" } },
+            result: {
+              idea: { title: "t", message: "m", proofType: "", intention: "", narrative: "" },
+              ideaRegistry: "r1",
+            },
           },
         },
         status: 201,
@@ -152,13 +157,14 @@ describe("Axios interceptors", () => {
       };
     };
 
-    await createSocialMediaIdea({ userId: "u1", idea: "hola" });
+    const res = await createSocialMediaIdea({ userId: "u1", idea: "hola" });
 
     expect(String(seenConfig.method).toLowerCase()).toBe("post");
     expect(String(seenConfig.url)).toBe("/api/social-media/idea");
     const data = typeof seenConfig.data === "string" ? JSON.parse(seenConfig.data) : seenConfig.data;
     expect(data.action).toBe("create-idea");
     expect(data.userId).toBe("u1");
+    expect(res.ideaRegistry).toBe("r1");
   });
 
   it("createSocialMediaContentFromIdea usa POST /api/social-media/idea con action create-content", async () => {
@@ -182,6 +188,7 @@ describe("Axios interceptors", () => {
       proofType: "p",
       intention: "i",
       narrative: "n",
+      ideaRegistry: "r1",
     });
 
     expect(String(seenConfig.method).toLowerCase()).toBe("post");
@@ -189,6 +196,7 @@ describe("Axios interceptors", () => {
     const data = typeof seenConfig.data === "string" ? JSON.parse(seenConfig.data) : seenConfig.data;
     expect(data.action).toBe("create-content");
     expect(data.userId).toBe("u1");
+    expect(data.ideaRegistry).toBe("r1");
   });
 });
 

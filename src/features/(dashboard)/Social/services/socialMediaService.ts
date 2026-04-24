@@ -31,12 +31,14 @@ export type SocialIdea = {
   proofType: string;
   intention: string;
   narrative: string;
+  ideaRegistry?: string;
 };
 
 export type CreateIdeaResponse = {
   statusCode?: number;
   result?: {
     idea?: SocialIdea | null;
+    ideaRegistry?: string | null;
   } | null;
 };
 
@@ -221,7 +223,10 @@ export const createSocialMediaIdea = async (params: { userId: string; idea: stri
       null) as CreateIdeaResponse | null;
     const idea = apiResponse?.result?.idea ?? null;
     if (!idea) throw new Error("Estructura de respuesta inválida: no se encontró la idea");
-    return idea;
+    const rawIdeaRegistry = (apiResponse?.result as any)?.ideaRegistry ?? (idea as any)?.ideaRegistry ?? null;
+    const ideaRegistry =
+      typeof rawIdeaRegistry === "string" && rawIdeaRegistry.trim().length > 0 ? rawIdeaRegistry : undefined;
+    return ideaRegistry ? { ...idea, ideaRegistry } : idea;
   } catch (error) {
     console.error("Error al crear idea:", error);
     if (axios.isAxiosError(error)) {
@@ -240,6 +245,7 @@ export const createSocialMediaContentFromIdea = async (params: {
   proofType: string;
   intention: string;
   narrative: string;
+  ideaRegistry?: string;
 }): Promise<string> => {
   try {
     const response = await axios.post<any>("/api/social-media/idea", {
@@ -250,6 +256,9 @@ export const createSocialMediaContentFromIdea = async (params: {
       proofType: params.proofType,
       intention: params.intention,
       narrative: params.narrative,
+      ...(typeof params.ideaRegistry === "string" && params.ideaRegistry.trim().length > 0
+        ? { ideaRegistry: params.ideaRegistry }
+        : {}),
     });
     const apiResponse: CreateContentFromIdeaResponse | null = (response.data?.data ??
       response.data ??
